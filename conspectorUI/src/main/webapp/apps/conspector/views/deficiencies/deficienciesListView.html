@@ -1,0 +1,63 @@
+<table style="width:100%" >
+	<tr>
+		<td>
+<!-- 				<span	class="pxInputLabel cnpVerticalBeforeSpacingX2">{{statusesTE}}</span>
+				<div 
+				    multi-select 
+				    input-model="oSelectCriterias.aStatuses"
+				    button-label="icon name"         
+				    item-label="icon name" 
+				    tick-property="ticked" 
+				    orientation="vertical" 
+				    group-property="multiSelectGroup"
+				    on-close="selectData()">
+				</div> -->
+		</td>
+		<td style="vertical-align: top;">
+			<div class="pxViewTitle">{{viewTitleTE}}</div>			
+		</td>
+	</tr>
+</table>
+
+<div static-include="apps/conspector/views/fragments/listTableSubHeader.html"></div>
+
+<table id="deficienciesListTable" ng-table="oListTable" class="table pxListTable" style="margin-bottom: 1em; table-layout: fixed;" show-filter="bShowFilters">
+
+    <tbody ng-repeat="group in $groups">
+        <tr class="ng-table-group">
+            <td colspan="{{$columns.length}}">
+						<a href="" ng-click="group.$hideRows = !group.$hideRows">
+                    <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                    <strong>{{group.value}}</strong>
+                </a>
+            </td>
+        </tr>
+
+	<tr ng-hide="group.$hideRows" ng-repeat="deficiency in group.data" ng-style="{ 'color' : deficiency._associatedColor}">
+
+		<td data-title="actionsTE" ng-style="{ 'border-left-color' : deficiency._associatedColor}">
+			<i class="fa fa-eye" style="margin-right:0.5em; cursor: pointer;" ng-click="goToDisplayDetails(deficiency)"></i>			
+			<i class="fa fa-pencil-square-o" style="cursor: pointer;" ng-click="goToEditDetails(deficiency)"></i>
+		</td>
+
+		<td data-title="unitTE" ng-bind-html="deficiency.trHtmlUnitName| highlight:filter.$" sortable="'unitName'" filter="{ 'unitName': 'text' }"></td>	
+
+		<td data-title="statusTE" sortable="'_sortingSequence'" filter="{ '_associatedStatusName': 'text' }">
+			<div popover-placement="top" popover="{{deficiency._associatedStatusName}}" popover-trigger="mouseenter" ng-class="deficiency._associatedStatusIcon" style="left: 0; bottom: -4px; margin-left: 3rem"></div></td>
+
+		<td data-title="tagsTE" ng-bind-html="deficiency.trHtmlLabels | highlight:filter.$" sortable="'labels'" filter="{ 'labels': 'text' }"></td>
+
+		<td data-title="locationTE" ng-bind-html="deficiency.trHtmlEnvironment | highlight:filter.$" sortable="'environment'" filter="{ 'environment': 'text' }"></td>		
+		<td data-title="accountTE" ng-bind-html="deficiency.trHtmlAccountFirstName | highlight:filter.$" sortable="'accountFirstName'" filter="{ 'accountFirstName': 'text' }" ></td>	
+
+		<td data-title="durationTE" sortable="'_durationNumber'" filter="{ '_duration': 'text' }" style="text-align: center;">{{deficiency._duration}}</td>			
+
+		<td data-title="imagesTE" sortable="'_attachmentsNumber'" filter="{ '_attachmentsNumber': 'text' }" ><a class="pxLink"	ng-click="showDeficiencyPhotos($event, deficiency)">{{deficiency._attachmentsNumber}}</a></td>			
+
+	</tr>
+
+	</tbody>
+		<tr ng-hide="oTableData.aDisplayedListItems.length > 0">
+			<td colspan="8" >{{noDataSelectedTE}}</td>
+		</tr>
+</table>

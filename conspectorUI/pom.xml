@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>conspector</groupId>
+  <artifactId>conspector</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  
+  <profiles>
+    <profile>
+      <id>GAE</id>
+  	  <dependencies>
+	    <dependency>
+	      <groupId>com.google.appengine.orm</groupId>
+	      <artifactId>datanucleus-appengine</artifactId>
+	      <version>2.1.1</version>
+	      <exclusions>
+	        <exclusion>
+	          <groupId>org.datanucleus</groupId>
+	          <artifactId>datanucleus-enhancer</artifactId>
+	        </exclusion>
+	      </exclusions>
+	    </dependency>
+  	  </dependencies>
+    </profile>
+  </profiles>
+
+  <repositories>
+    <repository>
+      <id>GitHub mvn-repo releases</id>
+      <url>https://github.com/Autushka/mvn-repo/raw/master/releases/</url>
+    </repository>
+    <repository>
+      <id>GitHub mvn-repo snapshots</id>
+      <url>https://github.com/Autushka/mvn-repo/raw/master/snapshots/</url>
+    </repository>
+  </repositories>
+  
+  <build>
+    <finalName>conspector</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+	  <plugin>
+		<groupId>com.google.appengine</groupId>
+		<artifactId>appengine-maven-plugin</artifactId>
+		<version>1.9.9</version>
+	  </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>ProjectX2013_03_23</groupId>
+  		<artifactId>ProjectX2013_03_23_web</artifactId>
+  		<version>1.0.1-SNAPSHOT</version>
+  		<type>war</type>
+  	</dependency>
+  	<dependency>
+  		<groupId>ProjectX2013_03_23</groupId>
+  		<artifactId>ProjectX2013_03_23_web</artifactId>
+  		<version>1.0.1-SNAPSHOT</version>
+  		<classifier>classes</classifier>
+  	</dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,86 @@
+<table style="width:100%">
+	<tr>
+		<td>
+		</td>
+		<td>
+			<div class="pxViewTitle">{{viewTitleTE}}</div>			
+		</td>
+	</tr>
+</table>	
+
+
+<div static-include="apps/conspector/views/fragments/listTableSubHeader.html"></div>
+ 
+
+<table id="unitsListTable" ng-table="oListTable" class="table pxListTable" style="margin-bottom: 1em; table-layout: fixed;" show-filter="bShowFilters">
+
+    <tbody ng-repeat="group in $groups">
+        <tr class="ng-table-group">
+            <td colspan="{{$columns.length}}">
+							<a href="" ng-click="group.$hideRows = !group.$hideRows">
+                    <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                    <strong>{{ group.value }}</strong>
+                </a>
+            </td>
+        </tr>
+
+
+	<tr ng-hide="group.$hideRows" ng-repeat="unit in group.data">
+
+		<td data-title="actionTE">
+			<i class="fa fa-eye" style="margin-right:0.5em; cursor: pointer;" ng-click="goToDisplayDetails(unit)"></i>			
+			<i class="fa fa-pencil-square-o" style="cursor: pointer;" ng-click="goToEditDetails(unit)"></i>
+		</td>
+		<td data-title="unitTE" ng-bind-html="unit.trHtmlName| highlight:filter.$" sortable="'name'" filter ="{ 'name': 'text' }"></td>
+	</tr>
+
+	</tbody>
+	<tr ng-hide="oTableData.aDisplayedListItems.length > 0"><td colspan="6" >No data selected</td></tr>	
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="pxViewTitle ng-binding">{{viewTitleTE}}</div>
+<div id="subheader" class="ng-scope">
+	<div class="icons listing" style="width: 100%;">
+		<button ng-click="onAddNew()" class="pxButton add-new cnpFloatLeft">{{newTE}}</button>
+		<i class="fa fa-info-circle cnpFloatRight" popover-placement="left" popover="{{pageTE + ' ' + oUnitsTable.page() + '; ' + countPerPageTE + ' ' + oUnitsTable.count() +  + '; ' + totalTE + ' ' + oTableDataArrays.aUnits.length}}" popover-trigger="mouseenter"></i>		
+		<i class="fa fa-refresh cnpFloatRight" ng-click="onRefreshUnitsList()"></i>		
+		<i class="fa fa-filter cnpFloatRight" ng-click="onFilterIconClick()">Filter</i>					
+		<button ng-click="onClearFiltering()" class="pxButton cnpFloatRight">{{clearSortingTE}}</button> 
+	</div> 
+</div>  --> 
+
+<!-- <table id="unitsListTable" ng-table="oUnitsTable" class="table pxListTable" style="margin-bottom: 1em; table-layout: fixed;" show-filter="bShowFilters">
+	<tr ng-repeat="unit in oTableData.aDisplayedUnits">
+		<td data-title="actionTE">
+			<i class="fa fa-eye" style="margin-right:0.5em; cursor: pointer;" ng-click="goToDisplayDetails(unit)"></i>			
+			<i class="fa fa-pencil-square-o" style="cursor: pointer;" ng-click="goToEditDetails(unit)"></i>
+		</td>
+		<td data-title="unitTE" sortable="'name'" filter="{ 'name': 'text' }" class="tableCelltextInOneLine">{{unit.name}}</td>
+		<td data-title="projectTE" sortable="'project.name'" filter="{ 'project.name': 'text' }" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{unit.project.name}}</td>
+		<td data-title="phaseTE" sortable="'phase.name'" filter="{ 'phase.name': 'text' }">{{unit.phase.name}}</td>
+
+	</tr>
+</table> -->
+
+
+

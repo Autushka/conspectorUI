@@ -1,0 +1,52 @@
+<div class="pxViewTitle ng-binding">{{viewTitleTE}}</div>
+<div id="subheader" class="ng-scope">
+	<div class="icons listing" style="width: 100%;">
+		<button ng-click="onAddNew()" class="pxButton add-new cnpFloatLeft">{{newTE}}</button>
+
+<!-- 		<button ng-click="onSaveAll()" class="pxButton save cnpFloatRight">Save All</button>	 -->		
+		<i class="fa fa-info-circle cnpFloatRight" popover-placement="left" popover="{{pageTE + ' ' + oUsersTable.page() + '; ' + countPerPageTE + ' ' + oUsersTable.count() +  + '; ' + totalTE + ' ' + oTableDataArrays.aUsers.length}}" popover-trigger="mouseenter"></i>	
+
+
+		<i class="fa fa-refresh cnpFloatRight" ng-click="onRefresh()"></i>		
+
+	</div> 
+</div> 
+
+<table id="usersListTable" ng-table="oUsersTable" class="table pxListTable" style="margin-bottom: 1em;" show-filter="bShowFilters">
+	<tr ng-repeat="user in oTableData.aDisplayedUsers">
+		<td data-title="actionTE" style="height: 4.5rem;">
+			<i class="fa fa-trash-o" ng-click="onRemove(user)" style="cursor: pointer; font-size: 1.2rem; color: #1590be;"></i> 				
+		</td>		
+		<td data-title="'User Name'" sortable="'name'" filter="{ 'name': 'text' }">{{user.name}}</td>
+		<td data-title="'Email'" sortable="'email'" filter="{ 'email': 'text' }">{{user.email}}</td>
+		<td data-title="'Roles'">
+
+			<div ng-repeat-start="role in aRoles" stylw="float:left">
+						<input customData="{{'{&quot;userName&quot;: &quot;' + user.name + '&quot;, &quot;role&quot;: &quot;' + role +'&quot;}'}}" type=checkbox ng-model=user[role] ng-click="onRoleClick($event)" style="margin-top: 3px !important"></input>			
+			</div>
+			<div ng-repeat-end>{{role}}	 </div>
+
+<!-- 			<table>
+				<tr ng-repeat="role in aRoles" style="background-color: initial;">
+					<td>
+						<input customData="{{'{&quot;userName&quot;: &quot;' + user.name + '&quot;, &quot;role&quot;: &quot;' + role +'&quot;}'}}" type=checkbox ng-model=user[role] ng-click="onRoleClick($event)"></input>
+					</td>
+					<td>
+						{{role}}	            	
+					</td>			            	
+				</tr>
+			</table> -->
+		</td> 
+	</tr>
+</table>
+<!-- <button ng-click="onAddRoleClick()" class="pxButton  pxVerticalAfterSpacing" style="display: block;">{{addRoleTE}}</button> -->
+<div ng-hide='hideAddRoleForm' class="pxFormBox fadeInAnimationForHideShow" style="float: left;">
+	<form name="addRoleForm" class="pxForm">
+		<span class="pxInputLabel">{{newRoleTE}}</span>
+		<span class=pxFieldRequiredSign>*</span>
+		<input type=text ng-model="newRole" required class="pxInputTextField pxVerticalAfterSpacing">
+	</form>
+	<button ng-click="onCancelAddRoleClick()" style="float: right; margin-left: 0.1em;" class='pxDoubleVerticalAfterSpacing pxButton'>{{cancelTE}}</button>
+	<button ng-click="onSubmitAddRoleClick()" ng-disabled='!addRoleForm.$valid' style="float: right" class='pxDoubleVerticalAfterSpacing pxButton'>{{addRoleTE}}</button>
+	<label class="pxLabel" style="width: 200px; color: gray;">{{noteTE}}</label>
+</div>

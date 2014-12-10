@@ -1,0 +1,37 @@
+<div id="generalWrapper" style="height: auto; padding: 2rem; margin: 1.5% auto 1.5%; min-height: 98%;">
+	
+		<img  ng-src="{{sLogoUrl}}" alt="logo" style="margin-bottom: 2rem;">
+
+		<table id = "deficienciesListPrintFormTable"; ng-table="oListTable" class="table pxListTable" style="margin-bottom: 1em; table-layout: fixed;" show-filter="bShowFilters">
+
+		    <tbody ng-repeat="group in $groups">
+		        <tr class="ng-table-group">
+		            <td colspan="{{$columns.length}}">
+									<a href="" ng-click="group.$hideRows = !group.$hideRows">
+		                    <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+		                    <strong>{{ group.value }}</strong>
+		                </a>
+		            </td>
+		        </tr>
+
+			<tr ng-hide="group.$hideRows" ng-repeat="deficiency in group.data" ng-style="{ 'color' : deficiency._associatedColor}">
+
+				<td data-title="unitTE">{{deficiency.unitName}}</td>	
+
+				<td data-title="statusTE"><img popover-placement="top" popover="{{deficiency._associatedStatusName}}" popover-trigger="mouseenter" ng-src="{{deficiency._iconImgPath}}"></td>
+
+				<td data-title="tagsTE">{{deficiency.labels}}</td>
+				<td data-title="locationTE">{{deficiency.environment}}</td>		
+				<td data-title="accountTE">{{deficiency.accountFirstName}}</td>	
+				<td data-title="noteTE">{{deficiency._note}}</td>					
+			</tr>
+			</tbody>
+
+			<tr ng-hide="!bShowNoDataMessage"><td colspan="6" >{{noDataSelectedTE}}</td></tr>
+		</table>	
+
+		<div style="">
+			<img src="apps/conspector/img/footerIconForReport.png"><span style="color: black;">  {{poweredByConspectorTE}}</span>
+		</div>
+
+</div>

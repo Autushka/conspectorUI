@@ -1,0 +1,242 @@
+	<table style="width: 100%;">
+		<tr>
+			<td>
+				<button ng-click="onBackClick()" class="pxButton ng-scope back">Back</button>
+			</td>
+			<td>
+				<div class="pxViewTitle">{{viewTitleTE}}</div>				
+			</td>
+		</tr>
+		<tr>
+			<td>
+				
+			</td>
+			<td style="float: right; padding-top: 1rem;">
+				<button ng-click="onEdit()" ng-hide="!bDeficiencyDisplayMode" class="pxButton ng-hide edit">Edit</button>
+				<button ng-click="onSave()" ng-hide="bDeficiencyDisplayMode" class="pxButton save">Save changes</button>
+				<button ng-click="onSaveAndNew()" ng-hide="!bNewDeficiencyCreation" class="pxButton">{{saveAndNewTE}}</button>		
+				<button ng-click="onDelete()" ng-hide="bNewDeficiencyCreation" class="pxButton">{{deleteTE}}</button>
+			</td>			
+		</tr>
+	</table>
+
+<tabset> <tab heading="Details" select="setIsDetailsTabActive(true)" active="isDetailsTabActive">
+
+
+<table style="width: 100%;">
+	<tr>
+		<td style="width: 15%; padding: 1rem; padding-top: 3rem;">
+		</td>
+		<td style="padding: 1rem;">
+			<span ng-switch="bDeficiencyDisplayMode">
+				<span	style="margin-bottom: 2rem;" class="pxInputLabel cnpVerticalBeforeSpacingX4">1. Enter your condo unit #:</span> 			
+				<label  ng-switch-when="true" class="pxDisabledFld">{{oDeficiency.component.name}}</label>
+
+				<select  ng-switch-when="false" ng-model="oDeficiency.component"
+				required-reference class="pxSelect form-control"
+				ng-options="unit.name for unit in aUnits" ng-change="onDataChange()"></select>
+			</span>			
+		</td>		
+	</tr>
+
+	<tr>
+		<td style="font-size: 0.9rem; padding: 1rem; padding-top: 3rem;">
+			Enter a word then hit "Enter" key to set the tag
+		</td>
+		<td style="padding: 1rem; padding-top: 3rem;">
+			<span style="margin-bottom: 2rem;" class="pxInputLabel" ng-hide="bDeficiencyDisplayMode && !oDeficiency.aTags.length">2. Decribe the issue with </span> <img style="width: 4rem;" src="apps/conspector/img/endUserForm/Tag.png"></img>
+			<tags-input ng-model="oDeficiency.aTags" placeholder="{{addATagTE}}"
+			ng-hide="bDeficiencyDisplayMode" on-tag-added="onDataChange()"
+			on-tag-removed="onDataChange()"> </tags-input>
+
+			<div class="tags-wrapper" ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aTags.length" class="form-control">
+				<ul class="tags-list">
+					<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
+						<span	style="padding: 2px;">{{tag.text}}</span>
+					</li>
+				</ul>
+			</div>
+
+			<span style="margin-top: 2rem;" class="pxInputLabel" ng-hide="bDeficiencyDisplayMode && !oDeficiency.aTags.length">For example: </span> <img style="width: 14rem;" src="apps/conspector/img/endUserForm/exampleTags.png"></img>		
+		</td>		
+	</tr>	
+
+	<tr>
+		<td style="font-size: 0.9rem; padding: 1rem; padding-top: 3rem;">
+			Enter a word then hit "Enter" key to set the tag
+		</td>
+		<td style="padding: 1rem; padding-top: 3rem;">
+			<span style="margin-bottom: 2rem;" class="pxInputLabel cnpVerticalBeforeSpacingX4" ng-hide="bDeficiencyDisplayMode && !oDeficiency.aTags.length">3. Tell us where the issue is located with </span> <img style="width: 8rem;" style="width: 4rem;" src="apps/conspector/img/endUserForm/locationTag.png"></img>
+			<tags-input class="locationTags" ng-model="oDeficiency.aLocations"
+			placeholder="{{addALocationTE}}" ng-hide="bDeficiencyDisplayMode"
+			on-tag-added="onDataChange()" on-tag-removed="onDataChange()"> </tags-input>
+
+			<div class="tags-wrapper"ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aLocations.length" class="form-control">
+				<ul class="tags-list">
+					<li class="tag-item" style="background-color:#81c2db;" 
+					ng-repeat="location in oDeficiency.aLocations"><span
+					style="padding: 2px;">{{location.text}}</span></li>
+				</ul>
+			</div>
+
+			<span style="margin-top: 2rem;" class="pxInputLabel" ng-hide="bDeficiencyDisplayMode && !oDeficiency.aTags.length">For example: </span> <img style="width: 19rem;" src="apps/conspector/img/endUserForm/locationTagExample.png"></img>	
+		</td>		
+	</tr>		
+
+	<tr>
+		<td style="font-size: 0.9rem; padding: 1rem; padding-top: 3rem;">
+			
+		</td>
+		<td style="padding: 1rem; padding-top: 3rem;">
+			<span	style="margin-bottom: 2rem;" class="pxInputLabel cnpVerticalBeforeSpacingX4">4. Please provide the name, email and phone number of the person in charge</span>
+			<div ng-hide="!bDeficiencyDisplayMode" class="pxDisabledTxtArea">{{oDeficiency.description}}</div>
+			<textarea ng-hide="bDeficiencyDisplayMode" ng-model="oDeficiency.description" style="height: 100px !important; margin-bottom: 0px !important; width: 100%;" class="form-control"  ng-change="onDataChange()"></textarea>	
+		</td>		
+	</tr>		
+
+	<tr>
+		<td style="font-size: 0.9rem; padding: 1rem; padding-top: 3rem;">
+			
+		</td>
+		<td style="padding: 1rem; padding-top: 3rem;">
+			<span	class="pxInputLabel cnpVerticalBeforeSpacingX4">5. Attach images associeated with the issue:</span>
+			<div class="container" ng-hide="bDeficiencyDisplayMode">
+				<div class="row">
+
+					<div class="col-md-3">
+						<h3 class="pxMainHeader">Select files</h3>
+
+						<div ng-show="uploader.isHTML5">
+							<div class="well my-drop-zone pxMainTE"
+							ng-file-drop="{ url: '/foo' }"
+							ng-file-over="another-file-over-class" style="height: 125px;">
+							File drop zone</div>
+						</div>
+
+						<!-- 2. ng-file-select | ng-file-select="options" -->
+						<input ng-file-select type="file" multiple />
+
+					</div>
+
+					<div class="col-md-9">
+						<!-- 			<h2>Uploads images</h2> -->
+						<h3 class="pxMainHeader">The queue</h3>
+						<p class="pxMainTE">Queue length: {{ uploader.queue.length }}</p>
+
+						<table class="table">
+							<thead>
+								<tr>
+									<th width="50%" class="pxMainHeader">Name</th>
+									<th ng-show="uploader.isHTML5" class="pxMainHeader">Size</th>
+									<th ng-show="uploader.isHTML5" class="pxMainHeader">Progress</th>
+									<th class="pxMainHeader">Status</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in uploader.queue">
+									<td><strong class="pxMainTE">{{ item.file.name }}</strong> <!-- Image preview -->
+
+										<div ng-show="uploader.isHTML5"
+										ng-thumb="{ file: item.file, height: 100 }"></div> <!--fixed width and height -->
+
+									</td>
+									<td ng-show="uploader.isHTML5" nowrap class="pxMainTE">{{
+										item.file.size/1024/1024|number:2 }} MB</td>
+										<td ng-show="uploader.isHTML5">
+											<div class="progress" style="margin-bottom: 0;">
+												<div class="progress-bar" role="progressbar"
+												ng-style="{ 'width': item.progress + '%' }"></div>
+											</div>
+										</td>
+										<td class="text-center"><span ng-show="item.isSuccess"><i
+											class="glyphicon glyphicon-ok"></i></span> <span
+											ng-show="item.isCancel"><i
+											class="glyphicon glyphicon-ban-circle"></i></span> <span
+											ng-show="item.isError"><i
+											class="glyphicon glyphicon-remove"></i></span></td>
+
+										</tr>
+									</tbody>
+								</table>
+
+								<div>
+									<p class="pxMainTE">Queue progress:
+										<div class="progress" style="">
+											<div class="progress-bar" role="progressbar"
+											ng-style="{ 'width': uploader.progress + '%' }"></div>
+										</div>
+									</p>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>						
+		</td>		
+	</tr>		
+</table>	
+
+
+
+
+
+
+</tab> 
+
+<tab heading="Attachments" ng-if="oDeficiency.attachmentsNumber" select="setIsDetailsTabActive(false)" active="isAttachmentsTabActive">
+	<table style="width: auto;">
+		<tr ng-repeat="photo in aPhotos">
+			<td>File: {{photo.originalFileName ? photo.originalFileName : photo.rowId}}</td>
+			<td style="vertical-align: center;">
+				<i ng-hide="bDeficiencyDisplayMode" ng-repeat-end class="fa fa-trash-o" ng-click="onRemovePhoto(photo)" style="cursor: pointer; margin-left: 1em; font-size: 1.2rem; color: #1590be;"></i>				
+			</td>
+		</tr>
+	</table>
+</tab>
+
+<tab heading="History" ng-if="aHistoryOperations.length">
+
+	<table>
+		<tr>
+			<td style="width: 20%; padding: 0.5rem; border: 1px solid gray;">Date&Time</td>
+			<td style="width: 15%; padding: 0.5rem; border: 1px solid gray;">Operation</td>
+			<td style="width: 15%; padding: 0.5rem; border: 1px solid gray;">User</td>
+			<td style="width: 50%; padding: 0.5rem; border: 1px solid gray;">Details</td>
+		</tr>
+		<tr ng-repeat="operation in aHistoryOperations" >
+			<td style="padding: 0.5rem; border: 1px solid gray;">{{operation.timeStamp}}</td>
+			<td style="padding: 0.5rem; border: 1px solid gray;">{{operation.operation}}</td>
+			<td style="padding: 0.5rem; border: 1px solid gray;">{{operation.userName}}</td>
+			<td style="padding: 0.5rem; border: 1px solid gray;">
+				<table ng-if="operation.aDetails.length">
+					<tr>
+						<td style="width: 33%; padding: 0.5rem; border: 1px solid gray;">Field name</td>
+						<td style="width: 33%; padding: 0.5rem; border: 1px solid gray;">Old value</td>
+						<td style="width: 33%; padding: 0.5rem; border: 1px solid gray;">New value</td>
+					</tr>
+					<tr ng-repeat="detail in operation.aDetails">
+						<td style="padding: 0.5rem; border: 1px solid gray; vertical-align: top;">{{detail.fieldName}}</td>
+						<td style="padding: 0.5rem; border: 1px solid gray; vertical-align: top;">{{detail.oldValue}}</td>
+						<td style="padding: 0.5rem; border: 1px solid gray; vertical-align: top;">{{detail.currentValue}}</td>
+					</tr>
+				</table>
+			</td>
+		</tr>				
+	</table>
+
+</tab>
+</tabset>
+
+
+
+
+
+
+
+
+
+
+

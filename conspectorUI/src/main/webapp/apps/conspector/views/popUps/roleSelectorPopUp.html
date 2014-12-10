@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h3 class="pxPopupHeader">{{selectRoleTE}}</h3>
+</div>
+<div class="modal-body">
+  <table>
+    <tr ng-repeat="role in roles | orderBy:'description'">
+      <td>
+        <input id="{{role.description}}" type="radio" ng-model="selectedRole" ng-click="onRBClick($event)" name="userRole" value="{{role.description}}" class="pxRadioButton">
+      </td>
+      <td>
+        <label class="roleLabels" for="{{role.description}}"> {{role.description}}</label>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="modal-footer">
+  <button class="pxButton" ng-click="ok()" autofocus>{{okTE}}</button>
+  <button class="pxButton" ng-click="cancel()">{{cancelTE}}</button>
+</div>

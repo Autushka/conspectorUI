@@ -1,0 +1,77 @@
+<div id="spinnerBox" ng-show="$root.showSpinner">
+  <div id="floatingBarsG">
+    <div class="blockG" id="rotateG_01">
+    </div>
+    <div class="blockG" id="rotateG_02">
+    </div>
+    <div class="blockG" id="rotateG_03">
+    </div>
+    <div class="blockG" id="rotateG_04">
+    </div>
+    <div class="blockG" id="rotateG_05">
+    </div>
+    <div class="blockG" id="rotateG_06">
+    </div>
+    <div class="blockG" id="rotateG_07">
+    </div>
+    <div class="blockG" id="rotateG_08">
+    </div>
+  </div> 
+</div>   
+
+<div class="login" data-pinterest-extension-installed="cr1.3.3">
+  <div id="generalWrapper">
+    <div id="header">
+      <table id="headerLbs">
+        <tbody>
+          <tr>
+            <td>
+              <label id="languageBtnLb" ng-click="onLanguageBtnLbClick()">{{currentLanguageLb}}
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <table id="logo">
+      <tbody>
+        <tr>
+          <td>
+            <img src="img/logo_conspector@2x.png" alt="logo" id="logo_image" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="contentArea">
+    <div ui-view="" class="fadeInAnimation ">
+      <div class="pxViewContent ">
+        <table style="width:100%">
+          <tbody>
+            <tr>
+              <td>
+                <div class="pxFormBox">
+                  <table style="width:100%;">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <form name="signInForm" class="pxForm ng-pristine ng-invalid ng-invalid-required">
+                            <input type="text" ng-model="viewData.userName" required="" class="pxInputTextField pxVerticalAfterSpacing ng-pristine ng-invalid ng-invalid-required" placeholder="{{userNameTE}}">
+                            <input type="password" ng-model="viewData.password" required="" class="pxInputTextField pxVerticalAfterSpacing ng-pristine ng-invalid ng-invalid-required" placeholder="{{passwordTE}}">
+                            <button ng-click="onSignInClick()" ng-disabled="!signInForm.$valid" style="float: right" class="pxDoubleVerticalAfterSpacing pxButton" disabled="disabled">{{loginTE}}</button>
+                          </form>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <a ui-sref="forgotPassword" class="pxLink" href="#/forgotPassword">{{forgotPasswordTE}}</a> 
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

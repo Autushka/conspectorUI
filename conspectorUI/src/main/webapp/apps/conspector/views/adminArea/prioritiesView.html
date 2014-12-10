@@ -1,0 +1,74 @@
+<table style="width:100%" class="cnpVerticalAfterSpacingX4">
+	<tr>
+		<td>
+			<div class="pxViewTitle">{{viewTitleTE}}</div>			
+		</td>
+	</tr>
+</table>	
+
+<div static-include="apps/conspector/views/fragments/listTableSubHeader.html"></div>
+
+<table id="prioritiesListTable" ng-table="oListTable" class="table pxListTable" style="margin-bottom: 1em; table-layout: fixed;">
+	<tr ng-repeat="entity in oTableData.aDisplayedEntities">
+		<td data-title="actionTE" style="padding: 1rem; padding-left: 2rem; height: 4.5rem;">
+			<i class="fa fa-pencil-square-o" style="cursor: pointer; float: left;" ng-click="onEdit(entity)" ng-if="!entity._editMode"></i>
+			<i class="fa fa-floppy-o" style="cursor: pointer; margin-right: 2px; font-size: 1.2rem; color: #1590be; float: left;" ng-click="onSave(entity)" ng-if="entity._editMode"></i>		
+			<i class="fa fa-trash-o" ng-click="onRemove(entity)" style="cursor: pointer; margin-left: 0.5em; font-size: 1.2rem; color: #1590be; float: left;"></i> 				
+		</td>	
+		<td data-title="idTE" sortable="'rowId'">
+			<span>{{entity.rowId}}</span>
+		</td>
+		<td data-title="descriptionTE" sortable="'name'">
+         <span ng-if="!entity._editMode">{{entity.name}}</span>
+         <div ng-if="entity._editMode"><input class="form-control pxFld" type="text" ng-model="entity.name"/></div>
+		</td>
+
+		<td data-title="associatedColorTE">
+         <div ng-if="!entity._editMode" class="colorDisplayBox" ng-style="{background: entity.associatedColor}"></div>
+         <div ng-if="entity._editMode"><input colorpicker colorpicker-position="right" class="span2 form-control" type="text" ng-model="entity.associatedColor"/>
+		</td>	
+
+		<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+        <span ng-if="!entity._editMode">{{entity.sortingSequence}}</span>
+         <div ng-if="entity._editMode"><input type="number" class="form-control pxFld" ng-model="entity.sortingSequence"></div>	
+		</td>					
+	</tr>
+</table>	
+
+
+
+<!-- <div class="pxViewTitle ng-binding">{{viewTitleTE}}</div>
+<div id="subheader" class="ng-scope">
+	<div class="icons listing" style="width: 100%;">
+		<button ng-click="onAddNew()" class="pxButton add-new cnpFloatLeft">{{newTE}}</button>
+
+		<button ng-click="onSaveAll()" class="pxButton save cnpFloatRight">Save All</button>			
+		<i class="fa fa-info-circle cnpFloatRight" popover-placement="left" popover="{{pageTE + ' ' + oPrioritiesTable.page() + '; ' + countPerPageTE + ' ' + oPrioritiesTable.count() +  + '; ' + totalTE + ' ' + oTableDataArrays.aPriorities.length}}" popover-trigger="mouseenter"></i>	
+
+
+		<i class="fa fa-refresh cnpFloatRight" ng-click="onRefresh()"></i>		
+
+	</div> 
+</div>  
+
+<table id="prioritiesListTable" ng-table="oPrioritiesTable" class="table pxListTable" style="margin-bottom: 1em; table-layout: fixed;">
+	<tr ng-repeat="priority in oTableData.aDisplayedPriorities">
+		<td data-title="actionTE" style="padding: 1rem; padding-left: 2rem; height: 4.5rem;">
+			<i class="fa fa-pencil-square-o" style="cursor: pointer; float: left;" ng-click="onEdit(priority)" ng-if="!priority._editMode"></i>
+			<i class="fa fa-floppy-o" style="cursor: pointer; margin-right: 2px; font-size: 1.2rem; color: #1590be; float: left;" ng-click="onSave(priority)" ng-if="priority._editMode"></i>		
+			<i class="fa fa-trash-o" ng-click="onRemove(priority)" style="cursor: pointer; margin-left: 0.5em; font-size: 1.2rem; color: #1590be; float: left;"></i> 				
+		</td>	
+		<td data-title="idTE" sortable="'rowid'">
+			<span>{{priority.rowId}}</span>
+		</td>
+		<td data-title="descriptionTE" sortable="'name'">
+         <span ng-if="!priority._editMode">{{priority.name}}</span>
+         <div ng-if="priority._editMode"><input class="form-control pxFld" type="text" ng-model="priority.name"/></div>
+		</td>
+		<td data-title="associatedColorTE">
+         <div ng-if="!priority._editMode" class="colorDisplayBox" ng-style="{background: priority.associatedColor}"></div>
+         <div ng-if="priority._editMode"><input colorpicker colorpicker-position="right" class="span2 form-control" type="text" ng-model="priority.associatedColor"/>
+		</td>			
+	</tr>
+</table>		
+ -->

@@ -1,0 +1,27 @@
+<div>
+	<table id="subheader" style="width:100%">
+		<tr ng-if="oTableDisplayParameters.bShowSearchBox">
+			<td style="height: 5rem;">
+				<input  class="form-control ng-pristine ng-valid" type="text" ng-model="filter.$" placeholder={{searchTE}} style="width:13rem;">
+			</td>
+		</tr>
+	<tr>
+		<td style="height: 2rem;">
+			<button ng-click="onAddNew()" class="pxButton add-new cnpFloatLeft">{{newTE}}</button>
+
+			<button ng-if="oTableDisplayParameters.bShowSaveAllButton" ng-click="onSaveAll()" class="pxButton save cnpFloatRight" style="margin-left: 10px;">{{saveAllTE}}</button>
+
+			<i class="fa fa-info-circle cnpFloatRight" popover-placement="left" popover="{{pageTE + ' ' + oListTable.page() + '; ' + countPerPageTE + ' ' + oListTable.count() +  + '; ' + totalTE + ' ' + tableInfoTotal}}" popover-trigger="mouseenter"></i>		
+
+			<i class="fa fa-refresh cnpFloatRight" ng-click="onRefreshList()"></i>	
+
+			<button ng-if="oTableDisplayParameters.bShowPrintButton" ng-click="onPrint()" class="pxButton cnpFloatRight" style="margin-left: 10px;">{{printTE}}</button>
+
+			<!-- Just always hiding the Filter button for now -->
+			<!-- <i ng-if="oTableDisplayParameters.bShowFilterButton" class="fa fa-filter cnpFloatRight" ng-click="onFilterIconClick()">Filter</i>	 -->
+
+			<button ng-if="oTableDisplayParameters.bShowClearFilterButton" ng-click="onClearFiltering()" class="pxButton cnpFloatRight">{{clearSortingTE}}</button> 	
+			</td>
+		</tr>
+	</table>
+</div>

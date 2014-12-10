@@ -1,0 +1,416 @@
+<div class="pxViewTitle">{{viewTitleTE}}</div>
+
+  <div id="subheader" class="ng-scope" style="margin-bottom: 25px;">
+	<table style="width: 65%;">
+		<tr>
+			<td>
+				<button ng-click="onBackClick()" class="pxButton ng-scope back">{{goBackTE}}</button>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="cnpSubHeaderTable cnpVerticalBeforeSpacingX4 subheader-fields" style="width: 100%">
+					<tr style="height: 4.5em;">
+
+							<td style="width: 40%;">
+								<span class="pxInputLabel">Project & Phase </span>							
+					          <div 
+					              multi-select 
+					              input-model="aProjects"
+					              button-label="parentName name"         
+					              item-label="name" 
+					              tick-property="ticked" 
+					              orientation="vertical" 
+					              selection-mode="single"
+					              group-property="multiSelectGroup"
+					              helper-elements=""
+					              on-close="onSelectedPhaseChanged()"
+									  is-disabled=bDeficiencyDisplayMode>
+					          </div>								
+							</td>
+
+
+<!-- 						<td style="width: 25%;">
+							<span class="pxInputLabel">{{projectTE}} </span>
+							<label ng-hide="!bDeficiencyDisplayMode" class="pxDisabledFld">{{oDeficiency.project.name}}</label>
+
+							<select ng-hide="bDeficiencyDisplayMode" ng-model="oDeficiency.project"
+							required-reference class="pxSelect form-control"
+							ng-options="project.name for project in aProjects" ng-change="onProjectChange()"></select>											
+						</td>
+						<td style="width: 25%;">
+							<span	class="pxInputLabel">{{phaseTE}}</span> 
+							<label ng-hide="!bDeficiencyDisplayMode" class="pxDisabledFld">{{oDeficiency.phase.name}}</label>
+
+							<select ng-hide="bDeficiencyDisplayMode" ng-model="oDeficiency.phase"
+							required-reference class="pxSelect form-control"
+							ng-options="phase.name for phase in aPhases" ng-change="onPhaseChange()"></select>											
+						</td> -->
+						<td style="width: 30%;">
+							<span class="pxInputLabel">{{unitTE}}</span>
+
+							<div ng-switch="bDeficiencyDisplayMode">
+								<a  ng-switch-when="true" class="cnpLink"style="display: block; margin-top: 8px;" ng-click="onUnitLink()">{{oDeficiency.component.name}}</a>
+
+								<select  ng-switch-when="false" ng-model="oDeficiency.component"
+								required-reference class="pxSelect form-control"
+								ng-options="unit.name for unit in aUnits" ng-change="onDataChange()"></select>		
+							</div>
+		
+						</td>
+						<td style="width: 30%;">
+							<span class="pxInputLabel">{{statusTE}}</span> 
+							<div ng-hide="!bDeficiencyDisplayMode" class="wrapper-status" style="border: 0px; background: none;"> 
+								<div ng-class="oDeficiency.status.associatedIcon" style="left: 0; bottom: -4px;"></div>
+
+								<label class="pxDisabledFld" style="margin-left: 30px;">{{oDeficiency.status.name}}</label>	
+
+							</div>
+
+							<div ng-hide="bDeficiencyDisplayMode" class="wrapper-status"> 
+								<div ng-class="oDeficiency.status.associatedIcon"></div>
+
+								<select 
+								ng-model="oDeficiency.status" required-reference class="pxSelect form-control"
+								ng-options="status.name for status in aStatuses"  ng-change="onDataChange()">										
+							</div>							
+
+						
+						</td>
+					</tr> 
+				</table>				
+			</td>
+		</tr>
+	</table>
+	
+	<div class="icons" style="margin-top: 0em;">
+		<button ng-click="onEdit()" ng-hide="!bDeficiencyDisplayMode" class="pxButton ng-hide edit">{{editTE}}</button>
+
+		<button ng-click="onSave()" ng-hide="bDeficiencyDisplayMode" class="pxButton save">{{saveTE}}</button>
+
+		<button ng-click="onSaveAndNew()" ng-hide="!bNewDeficiencyCreation" class="pxButton">{{saveAndNewTE}}</button>		
+
+		<button ng-click="onDelete()" ng-hide="bNewDeficiencyCreation" class="pxButton">{{deleteTE}}</button>		
+	</div>
+  </div> 
+
+<tabset> <tab heading={{detailsTabTE}} select="setIsDetailsTabActive(true)" active="isDetailsTabActive">
+
+<table>
+	<tr>
+		<td style="width: 50%; vertical-align: top; padding-right: 2em;">
+
+			<table style="width: 100%;">
+				<tr>
+					<td>
+						<span class="pxInputLabel" ng-hide="bDeficiencyDisplayMode && !oDeficiency.aTags.length">{{tagsTE}}</span>
+						<tags-input ng-model="oDeficiency.aTags" placeholder="{{addATagTE}}"
+						ng-hide="bDeficiencyDisplayMode" on-tag-added="onDataChange()"
+						on-tag-removed="onDataChange()"> <!-- <auto-complete
+						source="getDeficienciesTags($query)"></auto-complete> --> </tags-input>
+
+						<div class="tags-wrapper" ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aTags.length" class="form-control">
+							<ul class="tags-list">
+								<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
+									<span	style="padding: 2px;">{{tag.text}}</span>
+								</li>
+							</ul>
+						</div>					
+					</td>
+					
+				</tr>
+				<tr>
+					
+					<td>
+						<span class="pxInputLabel cnpVerticalBeforeSpacingX4" ng-hide="bDeficiencyDisplayMode && !oDeficiency.aTags.length">{{locationTE}}</span>
+
+						<tags-input class="locationTags" ng-model="oDeficiency.aLocations"
+						placeholder="{{addALocationTE}}" ng-hide="bDeficiencyDisplayMode"
+						on-tag-added="onDataChange()" on-tag-removed="onDataChange()"> <!-- <auto-complete
+						source="getDeficienciesLocations($query)"></auto-complete> --> </tags-input>
+
+						<div class="tags-wrapper"ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aLocations.length" class="form-control">
+							<ul class="tags-list">
+								<li class="tag-item" style="background-color:#81c2db;" 
+								ng-repeat="location in oDeficiency.aLocations"><span
+								style="padding: 2px;">{{location.text}}</span></li>
+							</ul>
+						</div>				
+					</td>
+				</tr>	
+				<tr>
+					<td>
+						<span	class="pxInputLabel cnpVerticalBeforeSpacingX4">{{noteTE}}</span>
+						<div ng-hide="!bDeficiencyDisplayMode" class="pxDisabledTxtArea">{{oDeficiency.description}}</div>
+						<textarea ng-hide="bDeficiencyDisplayMode" ng-model="oDeficiency.description" style="height: 100px !important; margin-bottom: 0px !important; width: 100%;" class="form-control"  ng-change="onDataChange()"></textarea>						
+					</td>
+				</tr>	
+				<tr>
+					<td>
+						<span	class="pxInputLabel cnpVerticalBeforeSpacingX4">{{imagesTE}}</span>
+						<a class="pxLink"	ng-click="showDeficiencyPhotos($event)">{{oAttachments.aPhotos.length}}</a>				
+					</td>
+				</tr>										
+			</table>
+		</td>
+		<td style="width: 50%; vertical-align: top; padding-left: 2em;">
+			<table>
+				<tr>
+					<td>
+						<span	class="pxInputLabel">{{accountTE}}</span> 
+						<a ng-hide="!bDeficiencyDisplayMode" class="cnpLink"
+						style="display: block; margin-top: 5px;" ng-click="onAccountLink()">{{oDeficiency.assigneeContact.firstName}}</a>
+						<select ng-hide="bDeficiencyDisplayMode"
+						ng-model="oDeficiency.assigneeContact" required-reference
+						class="pxSelect form-control"
+						ng-options="account.firstName for account in aAccounts" ng-change="onDataChange()">						
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span	class="pxInputLabel cnpVerticalBeforeSpacingX4">{{priorityTE}}</span> 
+						<label ng-hide="!bDeficiencyDisplayMode" class="pxDisabledFld">{{oDeficiency.priority.name}}</label>
+						<select ng-hide="bDeficiencyDisplayMode"
+						ng-model="oDeficiency.priority" required-reference
+						class="pxSelect form-control"
+						ng-options="priority.name for priority in aPriorities" ng-change="onDataChange()">				
+					</td>
+				</tr>		
+				<tr>
+					<td>
+						<span class="pxInputLabel cnpVerticalBeforeSpacingX4">{{creationDateTE}}</span> 
+						<label class="pxDisabledFld">{{oDeficiency.createdDateFormated}}</label>				
+					</td>
+				</tr>							
+			</table>
+		</td>
+	</tr>
+</table>
+
+<!-- Uploader -->
+
+<div class="container" ng-hide="bDeficiencyDisplayMode">
+	<div class="row">
+
+		<div class="col-md-3">
+
+			<h3 class="pxMainHeader">{{selectFilesTE}}</h3>
+
+			<div ng-show="uploader.isHTML5">
+				<div class="well my-drop-zone pxMainTE"
+					uploader="uploader"
+					nv-file-drop="{ url: '/foo' }"
+					style="height: 125px;">
+					{{filesDropZoneTE}}
+				</div>
+			</div>
+
+			<!-- 2. ng-file-select | ng-file-select="options" -->
+			<input nv-file-select uploader="uploader" type="file" multiple />
+
+		</div>
+
+		<div class="col-md-9">
+			<h3 class="pxMainHeader">{{queueTE}}</h3>
+				<p class="pxMainTE">{{queueLengthTE}} {{ uploader.queue.length }}</p>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th width="50%" class="pxMainHeader">{{fileNameTE}}</th>
+						<th ng-show="uploader.isHTML5" class="pxMainHeader">{{fileSizeTE}}</th>
+						<th ng-show="uploader.isHTML5" class="pxMainHeader">{{progressTE}}</th>
+						<th class="pxMainHeader">{{uploadStatut}}</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in uploader.queue">
+						<td><strong class="pxMainTE">{{ item.file.name }}</strong> <!-- Image preview -->
+							<div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 100 }"></div>
+<!-- 							<div ng-show="uploader.isHTML5"
+								ng-thumb="{ file: item.file, height: 100 }"></div> --> <!--fixed width and height -->
+
+						</td>
+						<td ng-show="uploader.isHTML5" ng-file-selectnowrap class="pxMainTE">{{
+							item.file.size/1024/1024|number:2 }} MB</td>
+						<td ng-show="uploader.isHTML5">
+							<div class="progress" style="margin-bottom: 0;">
+								<div class="progress-bar" role="progressbar"
+									ng-style="{ 'width': item.progress + '%' }"></div>
+							</div>
+						</td>
+						<td class="text-center"><span ng-show="item.isSuccess"><i
+								class="glyphicon glyphicon-ok"></i></span> <span
+							ng-show="item.isCancel"><i
+								class="glyphicon glyphicon-ban-circle"></i></span> <span
+							ng-show="item.isError"><i
+								class="glyphicon glyphicon-remove"></i></span></td>
+
+					</tr>
+				</tbody>
+			</table>
+
+			<div>
+				<p class="pxMainTE">{{queueProgressTE}}
+				<div class="progress" style="">
+					<div class="progress-bar" role="progressbar"
+						ng-style="{ 'width': uploader.progress + '%' }"></div>
+				</div>
+				</p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+</tab> 
+
+<tab heading={{attachmentsTabTE}} ng-if="oAttachments.aPhotos.length || oAttachments.aPDFs.length" select="setIsDetailsTabActive(false)" active="isAttachmentsTabActive">
+	<table style="width: auto;">
+		<tr ng-repeat="photo in oAttachments.aPhotos">
+			<td>{{fileNameTE}}: {{photo.originalFileName ? photo.originalFileName : photo.rowId}}</td>
+			<td style="vertical-align: center;">
+				<i class="fa fa-eye" ng-click="onDisplayAttachment(photo)" style="cursor: pointer; margin-left: 1em; font-size: 1.2rem; color: #1590be;"></i>			
+				<i ng-hide="bDeficiencyDisplayMode" class="fa fa-trash-o" ng-click="onRemoveAttachment(photo)" style="cursor: pointer; margin-left: 1em; font-size: 1.2rem; color: #1590be;"></i>				
+			</td>
+		</tr>
+
+		<tr ng-repeat="pdf in oAttachments.aPDFs">
+			<td>File: {{pdf.originalFileName ? pdf.originalFileName : pdf.rowId}}</td>
+			<td style="vertical-align: center;">
+				<i class="fa fa-eye" ng-click="onDisplayAttachment(pdf)" style="cursor: pointer; margin-left: 1em; font-size: 1.2rem; color: #1590be;"></i>				
+				<i ng-hide="bDeficiencyDisplayMode" ng-repeat-end class="fa fa-trash-o" ng-click="onRemoveAttachment(pdf)" style="cursor: pointer; margin-left: 1em; font-size: 1.2rem; color: #1590be;"></i>				
+			</td>
+		</tr>		
+	</table>
+
+
+</tab>
+
+<tab heading={{historyTabTE}} ng-if="aHistoryOperations.length">
+
+	<table>
+		<tr>
+			<td style="width: 20%; padding: 0.5rem; border: 1px solid gray;
+">{{dateAndTimeTE}}</td>
+			<td style="width: 15%; padding: 0.5rem; border: 1px solid gray;">{{operationTE}}</td>
+			<td style="width: 15%; padding: 0.5rem; border: 1px solid gray;">{{usernameTE}}</td>
+			<td style="width: 50%; padding: 0.5rem; border: 1px solid gray;">{{changesTE}}</td>
+		</tr>
+		<tr ng-repeat="operation in aHistoryOperations" >
+			<td style="padding: 0.5rem; border: 1px solid gray;">{{operation.timeStamp}}</td>
+			<td style="padding: 0.5rem; border: 1px solid gray;">{{operation.operation}}</td>
+			<td style="padding: 0.5rem; border: 1px solid gray;">{{operation.userName}}</td>
+			<td style="padding: 0.5rem; border: 1px solid gray;">
+				<table ng-if="operation.aDetails.length">
+					<tr>
+						<td style="width: 33%; padding: 0.5rem; border: 1px solid gray;">{{fieldNameTE}}</td>
+						<td style="width: 33%; padding: 0.5rem; border: 1px solid gray;">{{oldValueTE}}</td>
+						<td style="width: 33%; padding: 0.5rem; border: 1px solid gray;">{{newValueTE}}</td>
+					</tr>
+					<tr ng-repeat="detail in operation.aDetails">
+						<td style="padding: 0.5rem; border: 1px solid gray; vertical-align: top;">{{detail.fieldName}}</td>
+						<td style="padding: 0.5rem; border: 1px solid gray; vertical-align: top;">{{detail.oldValue}}</td>
+						<td style="padding: 0.5rem; border: 1px solid gray; vertical-align: top;">{{detail.currentValue}}</td>
+					</tr>
+				</table>
+			</td>
+		</tr>				
+	</table>
+
+</tab>
+<!-- <div class="container">
+	<div class="row">
+
+		<div class="col-md-3">
+
+			<h3 class="pxMainHeader">Select files</h3>
+
+			<div ng-show="uploader.isHTML5">
+				<div class="well my-drop-zone pxMainTE"
+					ng-file-drop="{ url: '/foo' }"
+					ng-file-over="another-file-over-class" style="height: 125px;">
+					File drop zone</div>
+			</div>
+
+			
+			<input ng-file-select type="file" multiple />
+
+		</div>
+
+		<div class="col-md-9">
+			
+			<h3 class="pxMainHeader">The queue</h3>
+			<p class="pxMainTE">Queue length: {{ uploader.queue.length }}</p>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th width="50%" class="pxMainHeader">Name</th>
+						<th ng-show="uploader.isHTML5" class="pxMainHeader">Size</th>
+						<th ng-show="uploader.isHTML5" class="pxMainHeader">Progress</th>
+						<th class="pxMainHeader">Status</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in uploader.queue">
+						<td><strong class="pxMainTE">{{ item.file.name }}</strong> 
+
+							<div ng-show="uploader.isHTML5"
+								ng-thumb="{ file: item.file, height: 100 }"></div>
+
+						</td>
+						<td ng-show="uploader.isHTML5" nowrap class="pxMainTE">{{
+							item.file.size/1024/1024|number:2 }} MB</td>
+						<td ng-show="uploader.isHTML5">
+							<div class="progress" style="margin-bottom: 0;">
+								<div class="progress-bar" role="progressbar"
+									ng-style="{ 'width': item.progress + '%' }"></div>
+							</div>
+						</td>
+						<td class="text-center"><span ng-show="item.isSuccess"><i
+								class="glyphicon glyphicon-ok"></i></span> <span
+							ng-show="item.isCancel"><i
+								class="glyphicon glyphicon-ban-circle"></i></span> <span
+							ng-show="item.isError"><i
+								class="glyphicon glyphicon-remove"></i></span></td>
+
+					</tr>
+				</tbody>
+			</table>
+
+			<div>
+				<p class="pxMainTE">Queue progress:
+				<div class="progress" style="">
+					<div class="progress-bar" role="progressbar"
+						ng-style="{ 'width': uploader.progress + '%' }"></div>
+				</div>
+				</p>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</div> -->
+<!-- </tab>  -->
+
+</tabset>
+
+
+
+
+
+
+
+
+
+
+

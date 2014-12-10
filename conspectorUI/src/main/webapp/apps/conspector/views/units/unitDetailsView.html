@@ -1,0 +1,77 @@
+
+<div class="pxViewTitle">{{viewTitleTE}}</div>
+
+<div id="subheader" class="ng-scope">
+	<button ng-click="onBackClick()" class="pxButton ng-scope back">{{goBackTE}}</button>
+
+	<div class="icons">
+		<button ng-click="onEdit()" ng-hide="!bUnitDisplayMode" class="pxButton ng-hide edit">{{editTE}}</button>
+		<button ng-click="onSave()" ng-hide="bUnitDisplayMode" class="pxButton save">{{saveTE}}</button>
+		<button ng-click="onSaveAndNew()" ng-hide="!bNewUnitCreation" class="pxButton">{{saveAndNewTE}}</button>		
+		<button ng-click="onDelete()" ng-hide="bNewUnitCreation" class="pxButton">{{deleteTE}}</button>		
+
+<!-- 		<button ng-click="onCancel()" ng-hide="bUnitDisplayMode || bNewUnitCreation" class="pxButton pxButtonSecondary">Cancel</button> -->
+	</div>
+ </div> 
+
+<tabset>
+	<tab heading="{{unitDetailsTabTE}}" select="setIsDetailsTabActive(true)">
+		<form name="unitForm" ng-keypress="onFormKeyPress($event)">
+		   <table id="accountAttributeTable" style="width:40%;">	
+			   <tr>
+					<td>
+						<span class="pxInputLabel">{{unitTE}}</span>
+						<label ng-hide="!bUnitDisplayMode" class="pxDisabledFld">{{oUnit.name}}</label>
+						<input ng-hide="bUnitDisplayMode" type=text ng-model="oUnit.name" required class="pxFld form-control">				
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="pxInputLabel cnpVerticalBeforeSpacingX4">Project & Phase</span>
+					          <div 
+					              multi-select 
+					              input-model="aProjects"
+					              button-label="parentName name"         
+					              item-label="name" 
+					              tick-property="ticked" 
+					              orientation="vertical" 
+					              selection-mode="single"
+					              group-property="multiSelectGroup"
+					              helper-elements=""
+					              on-close="onSelectedPhaseChanged()"
+									  is-disabled=bUnitDisplayMode>
+					          </div>						
+<!-- 						<label ng-hide="!bUnitDisplayMode" class="pxDisabledFld">{{oUnit.project.name}}</label>		
+						<select ng-hide="bUnitDisplayMode" ng-model="oUnit.project" required-reference class="pxSelect form-control" ng-options="project.name for project in aProjects" ng-change="onProjectChange()"> -->		
+					</td>				
+				</tr>
+<!-- 				<tr>
+					<td>
+						<span class="pxInputLabel cnpVerticalBeforeSpacingX4">{{phaseTE}}</span>
+						<label ng-hide="!bUnitDisplayMode" class="pxDisabledFld">{{oUnit.phase.name}}</label>		
+						<select ng-hide="bUnitDisplayMode" ng-model="oUnit.phase" required-reference ng-options="phase.name for phase in aPhases" class="pxSelect form-control" ></select>
+					</td>				
+				</tr> -->
+
+				<tr>
+					<td>
+						<span class="pxInputLabel cnpVerticalBeforeSpacingX4">{{ownerTE}}</span>
+						<a ng-hide="!bUnitDisplayMode" class="cnpLink"
+						style="display: block; margin-top: 5px;" ng-click="onAccountLink()">{{oUnit.owner.firstName}}</a>
+						
+<!-- 						<label ng-hide="!bUnitDisplayMode" class="pxDisabledFld">{{oUnit.owner.firstName}}</label> -->
+						<select ng-hide="bUnitDisplayMode" ng-model="oUnit.owner" required-reference ng-options="owner.firstName for owner in aOwners" class="pxSelect form-control" ></select>
+					</td>				
+				</tr>				
+			</table> 
+
+		</form>
+	</tab>	
+</tabset>	
+
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+<table>
+  <tr>
+    <td>
+    </td>
+    <td>
+      <div class="pxViewTitle">{{viewTitleTE}}</div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    </td>
+    <td style="float: right; padding-top: 1rem;">
+      <button ng-click="onSaveClick()" class="pxButton">{{saveTE}}</button>
+    </td>
+  </tr>
+</table>
+<tabset>
+<tab heading="{{viewTitleTE}}">
+<table>
+  <tr>
+    <td class="pxInputLabelTd">
+      <span class="pxInputLabel">{{userNameTE}}</span>
+      <label class="pxDisabledFld">{{oProfileData.userName}}</label>
+    </td>
+  </tr>
+  <tr>
+    <td style="height: 4em;">
+      <span class="pxInputLabel">{{emailTE}}</span>
+      <input type=email ng-model="oProfileData.email" required class="pxInputTextField pxVerticalAfterSpacing">
+    </td>
+  </tr>
+  <tr>
+    <td style="height: 4em;">
+      <span class="pxInputLabel">{{communicationLnTE}}</span>
+    <select ng-model="communicationLn" ng-options="communicationLn.description for communicationLn in communicationLns" class="pxSelect pxVerticalAfterSpacing"></select>
+  </td>
+</tr>
+</table>
+</tabset>
