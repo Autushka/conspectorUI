@@ -1,4 +1,4 @@
-app.factory('CONSTANTS', ['dataProvider', function(dataProvider) {
+app.factory('CONSTANTS', [function() {
 	return {
 		messageDisplayTime: 5000,
 		messageDisplayLayout: 'topCenter',

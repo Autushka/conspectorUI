@@ -46,7 +46,7 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS', function($resource
 	});
 }]);
 
-app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', function(genericODataFactory, utilsProvider, $q, $rootScope) {
+app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', function(genericODataFactory, utilsProvider, $q, $rootScope, $http) {
 	return {
 		commonOnSuccess: function(oParameters) {
 			if (oParameters.bShowSpinner) {
@@ -238,13 +238,13 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 			
 			deffered = $q.defer();
 			
-			if(oParameters.bShowBusyIndicator){
+			if(oParameters.bShowSpinner){
 				$rootScope.$emit('LOAD');				
 			}
 			
 			oHttp = $http({
 				url: oParameters.sPath,
-				method: sRequestType,
+				method: oParameters.sRequestType,
 				headers: {
 					'Content-Type': sContentType
 				},
