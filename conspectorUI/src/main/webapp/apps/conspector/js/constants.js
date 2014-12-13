@@ -1,16 +1,26 @@
-var CONSTANTS = (function ($) {
-	var constants = {};
-	constants.messageDisplayTime = 5000;
-	constants.messageDisplayLayout = 'topCenter';
-	constants.currentProject = 'conspector';
-	//constants.isDataFake = false;
-	constants.appPathname = "";
-	constants.sServicePath = "odata.svc/";
-	//constants.deficiencyTagLabelType = "0";
-	//constants.deficiencyLocationLabelType = "1";
-	//constants.accountTagLabelType = "2";	
-	return constants;
-}(jQuery));
+app.factory('CONSTANTS', ['dataProvider', function(dataProvider) {
+	return {
+		messageDisplayTime: 5000,
+		messageDisplayLayout: 'topCenter',
+		currentProject: 'conspector',
+		appPathname: "",
+		sServicePath: "odata.svc/"
+	}
+}]);
+
+
+
+
+
+// var CONSTANTS = (function ($) {
+// 	var constants = {};
+// 	constants.messageDisplayTime = 5000;
+// 	constants.messageDisplayLayout = 'topCenter';
+// 	constants.currentProject = 'conspector';
+// 	constants.appPathname = "";
+// 	constants.sServicePath = "odata.svc/";	
+// 	return constants;
+// }(jQuery));
 
 
 
