@@ -17,5 +17,6 @@
   "angular-material": "0.6.x",
 	"ng-table": "0.3.x",
   "jquery": "2.1.x", 
+  "jshashes": "1.0.x"
   }
 }
