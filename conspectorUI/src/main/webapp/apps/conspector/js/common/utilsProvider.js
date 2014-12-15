@@ -1,6 +1,15 @@
-app.factory('utilsProvider', [
-	function() {
+app.factory('utilsProvider', ['$mdToast',
+	function($mdToast) {
 		return {
+			displayMessage: function(oParameters) { //sText, sType
+				var oToast = $mdToast.simple();
+				oToast.content(oParameters.sText);
+				oToast.hideDelay(2000);
+				oToast.position("top right");
+
+				$mdToast.show(oToast);
+			},
+
 			setCookieFromJson: function(sKey, oObj) {
 				$.removeCookie(sKey);
 				$.cookie(sKey, JSON.stringify(oObj));

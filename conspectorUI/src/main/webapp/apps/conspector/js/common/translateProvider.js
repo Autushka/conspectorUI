@@ -1,6 +1,10 @@
-app.config(['$translateProvider', function ($translateProvider) {
-  $translateProvider.translations('en', {
-      m100: 'Operation was successfully finished',
+app.config(['$translateProvider',
+  function($translateProvider) {
+    $translateProvider.translations('en', {
+      successOperation: "Operation finished successfully.",
+      errorOperation: "Operation failed.",
+      //backendMessages
+      m100: 'Operation finished successfully.',
       m101: 'Email with instructions to recover your password was successfully sent.',
       m102: 'Your password was successfully changed.',
       m200: 'Username already exists',
@@ -8,19 +12,29 @@ app.config(['$translateProvider', function ($translateProvider) {
       m203: 'Can not login. Check your Username and Password.',
       m204: 'Email not found.',
       m205: 'Provided Old Password is not correct',
-      m206: 'Username not found',    
-  	  //signIn
-  	  signIn_userName: 'Username',
-  	  signIn_password: 'Password',
-  	  signIn_logIn: 'Log In',
-  	  signIn_languageCode: 'EN',
-  	  signIn_forgotPassword: 'Forgot your password? Click here',
+      m206: 'Username not found',
+      //signIn
+      signIn_userName: 'Username',
+      signIn_password: 'Password',
+      signIn_logIn: 'Log In',
+      signIn_languageCode: 'EN',
+      signIn_forgotPassword: 'Forgot your password? Click here',
       signIn_rememberUserName: 'Remember Username',
+      //initialPasswordReset
+      initialPasswordReset_headerLabel: 'This is the first time you login. Please enter a new password:',
+      initialPasswordReset_newPassword: "New password",
+      initialPasswordReset_newPasswordConfirmation: "New password confirmation",
+      initialPasswordReset_reset: "Set new password",
+      initialPasswordReset_passwordsDontMatch: "Provided passwords don't match.",
 
-  });
-  
-  $translateProvider.translations('fr', {
-      m100: 'Operation was successfully finished',
+
+    });
+
+    $translateProvider.translations('fr', {
+      successOperation: "Operation finished successfully.",
+      errorOperation: "Operation failed.",
+      //backendMessages      
+      m100: 'Operation finished successfully.',
       m101: 'Email with instructions to recover your password was successfully sent.',
       m102: 'Your password was successfully changed.',
       m200: 'Username already exists',
@@ -28,17 +42,24 @@ app.config(['$translateProvider', function ($translateProvider) {
       m203: 'Can not login. Check your Username and Password.',
       m204: 'Email not found.',
       m205: 'Provided Old Password is not correct',
-      m206: 'Username not found',     
-   	  //signIn
-  	  signIn_userName: 'Utilisateur',
-  	  signIn_password: 'Mot de pass',
-  	  signIn_logIn: 'Connection',
-  	  signIn_languageCode: 'FR',
-  	  signIn_forgotPassword: 'Mot de passe oubli\u00E9?',
+      m206: 'Username not found',
+      //signIn
+      signIn_userName: 'Utilisateur',
+      signIn_password: 'Mot de pass',
+      signIn_logIn: 'Connection',
+      signIn_languageCode: 'FR',
+      signIn_forgotPassword: 'Mot de passe oubli\u00E9?',
       signIn_rememberUserName: 'Remember Username',
-     
-  });  
-  
-  $translateProvider.preferredLanguage('en');
-  $translateProvider.useCookieStorage(); 
-}]);
+      //initialPasswordReset
+      initialPasswordReset_headerLabel: 'This is the first time you login. Please enter a new password:',
+      initialPasswordReset_newPassword: "New password",
+      initialPasswordReset_newPasswordConfirmation: "New password confirmation",
+      initialPasswordReset_reset: "Set new password",
+      initialPasswordReset_passwordsDontMatch: "Provided passwords don't match.",
+
+    });
+
+    $translateProvider.preferredLanguage('en');
+    $translateProvider.useCookieStorage();
+  }
+]);

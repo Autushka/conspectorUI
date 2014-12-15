@@ -19,7 +19,7 @@ viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider'
 			var SHA512 = new Hashes.SHA512;
 			var oData = {
 				userName: $scope.logInData.sUserName,
-				password: SHA512.hex($scope.logInData.sPassword)
+				password: $scope.logInData.sPassword
 			};
 
 			servicesProvider.logIn(oData, $scope.logInData.bRememberUserName);

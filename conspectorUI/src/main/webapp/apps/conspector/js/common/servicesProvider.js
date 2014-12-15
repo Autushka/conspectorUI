@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['ngTableParams', '$translate', '$mdToast', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore',
-	function(ngTableParams, $translate, $mdToast, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore) {
+app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore',
+	function(ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -14,6 +14,9 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', '$mdToast', 'cac
 			},
 
 			logIn: function(oParameters, bRememberUserName) {
+				var SHA512 = new Hashes.SHA512;
+				var sCurrentPassword = oParameters.password;
+				oParameters.password = SHA512.hex(oParameters.password);
 				var oSignInSrv = dataProvider.httpRequest({
 					sPath: "jsp/account/login.jsp",
 					sRequestType: "POST",
@@ -32,7 +35,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', '$mdToast', 'cac
 							$cookieStore.remove("userName");
 						}
 
-						this.onLogInSuccessHandler(oParameters.userName);
+						this.onLogInSuccessHandler(oParameters.userName, sCurrentPassword);
 					}
 				}, this));
 			},
@@ -48,12 +51,12 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', '$mdToast', 'cac
 				});
 			},
 
-			onLogInSuccessHandler: function(sUserName) {
+			onLogInSuccessHandler: function(sUserName, sPassword) {
 				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
-
+				cacheProvider.oUserProfile.sCurrentPassword = sPassword;
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					this.displayMessage("Contact your system administrator (No role assignment to the user)", "error");
+					ustilsProvider.displayMessage("Contact your system administrator (No role assignment to the user)", "error");
 					return;
 				}
 
@@ -61,7 +64,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', '$mdToast', 'cac
 					window.location.href = "#/initialPasswordReset";
 					return;
 				}
-
+				cacheProvider.oUserProfile.sPassword = ""; //current password needed onlyl for initialPassword scenario
 				if (cacheProvider.oUserProfile.aUserRoles.length === 1) {
 					cacheProvider.oUserProfile.sCurrentRole = cacheProvider.oUserProfile.aUserRoles[0];
 					apiProvider.setCurrentRole(cacheProvider.oUserProfile.sCurrentRole); //current role should be saved here				
@@ -79,7 +82,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', '$mdToast', 'cac
 
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					this.displayMessage("Contact your system administrator (No role assignment to the user)", "error");
+					ustilsProvider.displayMessage("Contact your system administrator (No role assignment to the user)", "error");
 					return;
 				}
 
@@ -96,15 +99,6 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', '$mdToast', 'cac
 				}
 			},
 
-			displayMessage: function(oParameters) { //sText, sType
-				var oToast = $mdToast.simple();
-				oToast.content(oParameters.sText);
-				oToast.hideDelay(2000);
-				oToast.position("top right");
-
-				$mdToast.show(oToast);
-			},
-
 			messagesHandler: function(aMessages) {
 				var bNoErrorMessages = true;
 
@@ -113,20 +107,20 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', '$mdToast', 'cac
 					var sMessageText = $translate.instant("m" + aMessages[i].messageCode);
 					switch (sMessageCode[i].substring(0, 1)) { // 1 - success; 2 - warning; 3 - error;
 						case '1': // success
-							this.displayMessage({
+							utilsProvider.displayMessage({
 								sText: sMessageText,
 								sType: 'success'
 							});
 							break;
 						case '2': // error
-							this.displayMessage({
+							utilsProvider.displayMessage({
 								sText: sMessageText,
 								sType: 'error'
 							});
 							bNoErrorMessages = false;
 							break;
 						case '3': // warning
-							this.displayMessage({
+							utilsProvider.displayMessage({
 								sText: sMessageText,
 								sType: 'warning'
 							});

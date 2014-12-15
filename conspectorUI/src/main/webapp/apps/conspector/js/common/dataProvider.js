@@ -27,7 +27,7 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS', function($resource
 			params: {
 				key: "@key"
 			},
-			url: sServicePath + ":path" + "(':key')" + '?$format=json'
+			url: sServicePath + ":path" + "(':key')"
 		},
 		'getEntity': {
 			method: 'GET',
@@ -46,7 +46,7 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS', function($resource
 	});
 }]);
 
-app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', function(genericODataFactory, utilsProvider, $q, $rootScope, $http) {
+app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', '$translate', function(genericODataFactory, utilsProvider, $q, $rootScope, $http, $translate) {
 	return {
 		commonOnSuccess: function(oParameters) {
 			if (oParameters.bShowSpinner) {
@@ -54,7 +54,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 			}
 			if (oParameters.bShowSuccessMessage) {
 				utilsProvider.displayMessage({
-					sText: jQuery.i18n.prop('globalTE.successOperationNoticeTE'),
+					sText: $translate.instant("successOperation"),
 					sType: 'success'
 				});
 			}
@@ -65,7 +65,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 			}
 			if (oParameters.bShowErrorMessage) {
 				utilsProvider.displayMessage({
-					sText: jQuery.i18n.prop('globalTE.failureOperationNoticeTE'),
+					sText: $translate.instant("errorOperation"),
 					sType: 'error'
 				});
 			}
