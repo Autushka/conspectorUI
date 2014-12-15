@@ -48,6 +48,15 @@ app.factory('cacheProvider', ['TYPES', function(TYPES) {
 			for (var sAttribute in this.oEntitiesCache) {
 				this.oEntitiesCache[sAttribute] = TYPES.oEntityCacheStructure;
 			}
+		},
+
+		cleanProfileCache: function(){
+			this.oUserProfile = {};
+		},
+
+		cleanAllCache: function(){
+			this.cleanEntitiesCache();
+			this.cleanProfileCache();
 		}
 	}
 }]);

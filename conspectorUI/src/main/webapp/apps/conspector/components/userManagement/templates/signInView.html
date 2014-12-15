@@ -1,6 +1,12 @@
 <form name="signInForm">
 	<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
-	<input type="text" ng-model="logInData.userName" placeholder="{{'signIn_userName' | translate}}">
-	<input type="password" ng-model="logInData.password" placeholder="{{'signIn_password' | translate}}">
+	<input type="text" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}">
+	<input type="password" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}">
 	<button ng-click="login()">{{'signIn_logIn' | translate}}</button>
+
+	<md-checkbox ng-model="logInData.bRememberUserName" aria-label="{{'signIn_rememberUserName' | translate}}">
+		{{'signIn_rememberUserName' | translate}}
+	</md-checkbox>
+
+	<label ng-click="onForgotPassword()">{{'signIn_forgotPassword' | translate}}</label>
 </form>

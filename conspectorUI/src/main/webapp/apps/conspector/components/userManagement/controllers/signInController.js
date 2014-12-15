@@ -1,72 +1,47 @@
-viewControllers.controller('signInView', ['$scope', '$state', 'utilsProvider', 'dataProvider', 
-    function($scope, $state, utilsProvider, dataProvider) {
-        $scope.logInData = {
-            userName: "",
-            password: ""
-        };
+viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider', 'dataProvider', '$cookieStore',
+	function($scope, $state, servicesProvider, dataProvider, $cookieStore) {
+		var sUserName = "";
+		if ($cookieStore.get("userName")) {
+			sUserName = $cookieStore.get("userName").sUserName;
+		}
 
+		$scope.logInData = {
+			sUserName: sUserName,
+			sPassword: "",
+			bRememberUserName: true
+		};
 
-        $scope.onChangeLanguage = function() {
-            utilsProvider.changeLanguage();
-        }
+		$scope.onChangeLanguage = function() {
+			servicesProvider.changeLanguage();
+		}
 
-        $scope.login = function() {
-        	var SHA512 = new Hashes.SHA512;
+		$scope.login = function() {
+			var SHA512 = new Hashes.SHA512;
+			var oData = {
+				userName: $scope.logInData.sUserName,
+				password: SHA512.hex($scope.logInData.sPassword)
+			};
 
-            var oData = {
-                userName: $scope.logInData.userName,
-                password:  SHA512.hex($scope.logInData.password)
-            };
+			servicesProvider.logIn(oData, $scope.logInData.bRememberUserName);
+		};
 
-            var oSignInSrv = dataProvider.httpRequest({
-                sPath: "jsp/account/login.jsp",
-                sRequestType: "POST",
-                oUrlParameters: oData,
-                bShowSpinner: true
-            });
+		$scope.passwordFldKeyDown = function(event) {
+			if (event.keyCode === 13) {
+				//$("#passwordFld").blur();
+				this.login();
+			}
+		};
 
-            oSignInSrv.then(function(oData) {
+		$scope.onSignInClick = function() {
+			this.login();
+		};
 
-                var bNoErrorMessages = utilsProvider.messagesHandler(oData.messages);
-                if (bNoErrorMessages) {
-                	alert("success!");
-                	// cacheProvider.oUserProfile = apiProvider.getUserProfile($scope.viewData.userName);
+		$scope.onSwitchLanguage = function() {
+			utilsProvider.switchLanguage();
+		};
 
-                	// if(!cacheProvider.oUserProfile.aUserRoles.length){
-                	// 	utilsProvider.displayMessage("Contact your system administrator", "error");
-                	// 	return;
-                	// }
-
-                	// if(cacheProvider.oUserProfile.bIsInitialPassword){
-                	// 	window.location.href = "#/InitialPasswordReset";
-                	// 	return;
-                	// }
-
-                	// if(cacheProvider.oUserProfile.aUserRoles.length === 1){
-                	// 	cacheProvider.oUserProfile.sCurrentRole = cacheProvider.oUserProfile.aUserRoles[0];
-                	// 	window.location.href = MENUS.oInitialViews[cacheProvider.oUserProfile.sCurrentRole];
-                	// 	//navigation to the initial view for the role
-                	// }else{
-                	// 	window.location.href = "#/RoleSelection";
-                	// 	return;					
-                	// }
-                }
-            });
-        };
-
-        $scope.passwordFldKeyDown = function(event) {
-            if (event.keyCode === 13) {
-                //$("#passwordFld").blur();
-                this.login();
-            }
-        };
-
-        $scope.onSignInClick = function() {
-            this.login();
-        };
-
-        $scope.onSwitchLanguage = function() {
-            utilsProvider.switchLanguage();
-        };
-    }
+		$scope.onForgotPassword = function() {
+			window.location.href = "#/forgotPassword";
+		};
+	}
 ]);
