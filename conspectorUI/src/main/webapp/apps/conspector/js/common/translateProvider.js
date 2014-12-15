@@ -3,6 +3,7 @@ app.config(['$translateProvider',
     $translateProvider.translations('en', {
       successOperation: "Operation finished successfully.",
       errorOperation: "Operation failed.",
+      noRoleAssignment: "Contact your system administrator (No role assignment to the user)",
       //backendMessages
       m100: 'Operation finished successfully.',
       m101: 'Email with instructions to recover your password was successfully sent.',
@@ -13,6 +14,8 @@ app.config(['$translateProvider',
       m204: 'Email not found.',
       m205: 'Provided Old Password is not correct',
       m206: 'Username not found',
+      //app
+      app_logOut: 'Log Out',
       //signIn
       signIn_userName: 'Username',
       signIn_password: 'Password',
@@ -33,6 +36,7 @@ app.config(['$translateProvider',
     $translateProvider.translations('fr', {
       successOperation: "Operation finished successfully.",
       errorOperation: "Operation failed.",
+      noRoleAssignment: "Contact your system administrator (No role assignment to the user)",      
       //backendMessages      
       m100: 'Operation finished successfully.',
       m101: 'Email with instructions to recover your password was successfully sent.',
@@ -43,6 +47,8 @@ app.config(['$translateProvider',
       m204: 'Email not found.',
       m205: 'Provided Old Password is not correct',
       m206: 'Username not found',
+      //app
+      app_logOut: 'Log Out',      
       //signIn
       signIn_userName: 'Utilisateur',
       signIn_password: 'Mot de pass',

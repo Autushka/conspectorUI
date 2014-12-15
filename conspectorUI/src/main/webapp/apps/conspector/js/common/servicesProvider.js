@@ -56,7 +56,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 				cacheProvider.oUserProfile.sCurrentPassword = sPassword;
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					ustilsProvider.displayMessage("Contact your system administrator (No role assignment to the user)", "error");
+					ustilsProvider.displayMessage($translate.instant("noRoleAssignment"), "error");
 					return;
 				}
 
@@ -82,7 +82,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					ustilsProvider.displayMessage("Contact your system administrator (No role assignment to the user)", "error");
+					ustilsProvider.displayMessage($translate.instant("noRoleAssignment"), "error");
 					return;
 				}
 

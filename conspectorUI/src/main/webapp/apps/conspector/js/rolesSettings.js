@@ -1,5 +1,5 @@
 app.factory('rolesSettings', [function() {
 	return {
-		oInitialViews : {systemAdministrator: "#/signIn"}
+		oInitialViews : {systemAdministrator: "#/app"}
 	}
 }]);

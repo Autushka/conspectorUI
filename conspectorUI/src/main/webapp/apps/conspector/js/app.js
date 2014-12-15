@@ -24,7 +24,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			url: '/roleSelection',
 			templateUrl: 'apps/conspector/components/userManagement/templates/roleSelectionView.html',
 			controller: 'roleSelectionView'
-		});		
+		});	
+		$stateProvider.state('app', {
+			url: '/app',
+			templateUrl: 'apps/conspector/components/generalLayout/templates/appView.html',
+			controller: 'appView'
+		});				
 		//	.state('resetPassword', {
 		//		url: '/resetPassword/:pr',
 		//		templateUrl: 'apps/conspector/views/userManagement/resetPasswordView.html',
