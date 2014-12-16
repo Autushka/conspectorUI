@@ -1,5 +1,6 @@
 <form name="roleSelectionForm">
-	<label ng-click="onChangeLanguage()">{{'roleSelection_heagerLabel' | translate}}</label>
+	<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
+	<label>{{'roleSelection_heagerLabel' | translate}}</label>
 	<md-radio-group ng-model="sSelectedRoleName">
 		<md-radio-button ng-repeat="role in aUserRoles" ng-value="role.RoleName" aria-label="role.Description">{{role.RoleName}} ({{role.Description}})</md-radio-button>
 	</md-radio-group>

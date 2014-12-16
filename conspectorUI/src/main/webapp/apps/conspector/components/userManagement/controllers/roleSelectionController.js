@@ -1,5 +1,5 @@
-viewControllers.controller('roleSelectionView', ['$scope', '$state', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings',
-	function($scope, $state, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings) {
+viewControllers.controller('roleSelectionView', ['$scope', '$state', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider',
+	function($scope, $state, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider) {
 		$scope.aUserRoles = $filter('orderBy')(cacheProvider.oUserProfile.aUserRoles, function(oItem) {
 			return oItem.GeneralAttributes.SortingSequence;
 		});
@@ -10,6 +10,10 @@ viewControllers.controller('roleSelectionView', ['$scope', '$state', 'utilsProvi
 			cacheProvider.oUserProfile.sCurrentRole = $scope.sSelectedRoleName;
 			window.location.href = rolesSettings.oInitialViews[cacheProvider.oUserProfile.sCurrentRole];
 
-		}
+		};
+
+		$scope.onChangeLanguage = function() {
+			servicesProvider.changeLanguage();
+		}		
 	}
 ]);

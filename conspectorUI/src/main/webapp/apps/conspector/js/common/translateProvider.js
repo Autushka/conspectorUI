@@ -32,6 +32,8 @@ app.config(['$translateProvider',
       //roleSelection
       roleSelection_heagerLabel: 'Please choose a role:',
       roleSelection_continue: 'Continue',
+      //forgotPassword
+      forgotPassword_heagerLabel: 'Please select what you remember:',
 
 
     });
@@ -67,7 +69,9 @@ app.config(['$translateProvider',
       initialPasswordReset_passwordsDontMatch: "Provided passwords don't match.",
       //roleSelection
       roleSelection_heagerLabel: 'Please choose a role:',
-      roleSelection_continue: 'Continue',           
+      roleSelection_continue: 'Continue',   
+      //forgotPassword
+      forgotPassword_heagerLabel: 'Please select what you remember:',              
 
     });
 
