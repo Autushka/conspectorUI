@@ -8,7 +8,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q',
 				var onSuccess = function(oData) {
 					bIsInitialPassword = oData.d.IsPasswordInitial;
 					for (var i = 0; i < oData.d.User_RoleDetails.results.length; i++) {
-						aUserRoles.push(oData.d.User_RoleDetails.results[i].RoleDetails.RoleName);
+						aUserRoles.push(oData.d.User_RoleDetails.results[i].RoleDetails);
 					}
 				}
 

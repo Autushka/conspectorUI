@@ -29,6 +29,9 @@ app.config(['$translateProvider',
       initialPasswordReset_newPasswordConfirmation: "New password confirmation",
       initialPasswordReset_reset: "Set new password",
       initialPasswordReset_passwordsDontMatch: "Provided passwords don't match.",
+      //roleSelection
+      roleSelection_heagerLabel: 'Please choose a role:',
+      roleSelection_continue: 'Continue',
 
 
     });
@@ -62,6 +65,9 @@ app.config(['$translateProvider',
       initialPasswordReset_newPasswordConfirmation: "New password confirmation",
       initialPasswordReset_reset: "Set new password",
       initialPasswordReset_passwordsDontMatch: "Provided passwords don't match.",
+      //roleSelection
+      roleSelection_heagerLabel: 'Please choose a role:',
+      roleSelection_continue: 'Continue',           
 
     });
 

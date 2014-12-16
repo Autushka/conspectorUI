@@ -1,3 +1,7 @@
 <form name="roleSelectionForm">
-	<div>roleSelectionForm</div>
+	<label ng-click="onChangeLanguage()">{{'roleSelection_heagerLabel' | translate}}</label>
+	<md-radio-group ng-model="sSelectedRoleName">
+		<md-radio-button ng-repeat="role in aUserRoles" ng-value="role.RoleName" aria-label="role.Description">{{role.RoleName}} ({{role.Description}})</md-radio-button>
+	</md-radio-group>
+	<md-button class="md-primary md-raised" ng-click="onContinue()" md-theme="orange">{{'roleSelection_continue' | translate}}</md-button>
 </form>

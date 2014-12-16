@@ -1,5 +1,10 @@
-app.factory('rolesSettings', [function() {
-	return {
-		oInitialViews : {systemAdministrator: "#/app"}
+app.factory('rolesSettings', [
+	function() {
+		return {
+			oInitialViews: {
+				systemAdministrator: "#/app",
+				user: "#/app"
+			}
+		}
 	}
-}]);
+]);

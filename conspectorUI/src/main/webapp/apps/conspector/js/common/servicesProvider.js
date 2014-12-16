@@ -95,6 +95,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 				if (!sCurrentRole) {
 					window.location.href = "#/roleSelection";
 				} else {
+					cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
 					// menu setup for the current role should happen here
 				}
 			},
