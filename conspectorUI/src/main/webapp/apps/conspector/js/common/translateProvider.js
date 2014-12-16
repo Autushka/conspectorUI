@@ -34,6 +34,10 @@ app.config(['$translateProvider',
       roleSelection_continue: 'Continue',
       //forgotPassword
       forgotPassword_heagerLabel: 'Please select what you remember:',
+      forgotPassword_userName: 'Username',
+      forgotPassword_email: 'Email',
+      forgotPassword_reset: 'Reset password',
+      forgotPassword_footerLabel: 'Still have questions? Send us an email at support@conspector.com',
 
 
     });
@@ -71,7 +75,11 @@ app.config(['$translateProvider',
       roleSelection_heagerLabel: 'Please choose a role:',
       roleSelection_continue: 'Continue',   
       //forgotPassword
-      forgotPassword_heagerLabel: 'Please select what you remember:',              
+      forgotPassword_heagerLabel: 'Please select what you remember:',
+      forgotPassword_userName: 'Username',
+      forgotPassword_email: 'Email',
+      forgotPassword_reset: 'Reset password',
+      forgotPassword_footerLabel: 'Still have questions? Send us an email at support@conspector.com',             
 
     });
 

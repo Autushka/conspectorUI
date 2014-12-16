@@ -97,6 +97,25 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q',
 				return deffered.promise;
 			},
 
+			resetPassword: function(oData){
+				var deffered = $q.defer();
+
+				var oSrv = dataProvider.httpRequest({
+					sPath: "jsp/account/passwordRecovery.jsp",
+					oUrlParameters: oData,
+					sRequestType: "POST",
+					bShowSpinner: true,
+					bShowSuccessMessage: false,
+					bShowErorrMessage: false
+				});
+
+				oSrv.then(function(oData) {
+					deffered.resolve(oData);
+				});
+
+				return deffered.promise;				
+			},
+
 			updateUser: function(oParameters) {
 				var deffered = $q.defer();
 
