@@ -163,7 +163,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider',
 				oData.Operation = oParameters.sOperation;
 				oData.OperationContent = JSON.stringify(oParameters.oContent);
 				oData.UserName = oParameters.sUserName;
-				oData.TimeStamp = "/Date(1414263469000)/";
+				oData.TimeStamp = utilsProvider.dateToDBDate(new Date()); //"/Date(1414263469000)/"; 
 
 				dataProvider.createEntity({
 					sPath: "OperationLogs",

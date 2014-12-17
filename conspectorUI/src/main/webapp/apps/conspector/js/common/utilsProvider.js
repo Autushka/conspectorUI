@@ -20,6 +20,10 @@ app.factory('utilsProvider', ['$mdToast',
 				return guid;
 			},
 
+			dateToDBDate: function(dDate){
+				return "/Date(" + dDate.getTime().toString() + ")/";
+			},
+
 			setCookieFromJson: function(sKey, oObj) {
 				$.removeCookie(sKey);
 				$.cookie(sKey, JSON.stringify(oObj));

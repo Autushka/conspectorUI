@@ -44,10 +44,11 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 					sPath: "jsp/initializeSessionVariables.jsp",
 					oUrlParameters: {}
 				});
-				oSignOutSrv.then(function(oData) {
+				oSignOutSrv.then($.proxy(function(oData) {
+					this.logLogOut(); // log logout operation
 					cacheProvider.cleanAllCache();
 					window.location.href = "#/signIn/";
-				});
+				}, this));
 			},
 
 			logSuccessLogIn: function() {
@@ -60,6 +61,17 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 					}
 				});
 			},
+
+			logLogOut: function() {
+				apiProvider.logEvent({ 
+					sOperation: "log_out",
+					sUserName: cacheProvider.oUserProfile.sUserName,
+					oContent: {
+						sUserName: cacheProvider.oUserProfile.sUserName,
+						sRole: cacheProvider.oUserProfile.sCurrentRole
+					}
+				});
+			},			
 
 			onLogInSuccessHandler: function(sUserName, sPassword) {
 				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
@@ -77,9 +89,9 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 				cacheProvider.oUserProfile.sPassword = ""; //current password needed onlyl for initialPassword scenario
 				if (cacheProvider.oUserProfile.aUserRoles.length === 1) {
 					cacheProvider.oUserProfile.sCurrentRole = cacheProvider.oUserProfile.aUserRoles[0].RoleName;
-					apiProvider.setCurrentRole(cacheProvider.oUserProfile.sCurrentRole); //current role should be saved here				
+					apiProvider.setCurrentRole(cacheProvider.oUserProfile.sCurrentRole); //current role is cached here				
 					// menu setup for the current role should happen here
-					this.logSuccessLogIn();//log login_success event 
+					this.logSuccessLogIn();//log login_success operation 
 
 
 					window.location.href = rolesSettings.oInitialViews[cacheProvider.oUserProfile.sCurrentRole]; //navigation to the initial view for the role

@@ -8,7 +8,7 @@ viewControllers.controller('roleSelectionView', ['$scope', '$state', 'utilsProvi
 
 		$scope.onContinue = function(){
 			cacheProvider.oUserProfile.sCurrentRole = $scope.sSelectedRoleName;
-			servicesProvider.logSuccessLogIn();
+			servicesProvider.logSuccessLogIn();//log login_success operation 
 			window.location.href = rolesSettings.oInitialViews[cacheProvider.oUserProfile.sCurrentRole];
 
 		};
