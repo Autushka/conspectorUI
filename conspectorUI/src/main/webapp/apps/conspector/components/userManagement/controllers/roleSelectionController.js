@@ -8,12 +8,13 @@ viewControllers.controller('roleSelectionView', ['$scope', '$state', 'utilsProvi
 
 		$scope.onContinue = function(){
 			cacheProvider.oUserProfile.sCurrentRole = $scope.sSelectedRoleName;
+			servicesProvider.logSuccessLogIn();
 			window.location.href = rolesSettings.oInitialViews[cacheProvider.oUserProfile.sCurrentRole];
 
 		};
 
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
-		}		
+		}			
 	}
 ]);

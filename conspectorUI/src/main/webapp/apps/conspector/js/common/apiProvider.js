@@ -1,5 +1,5 @@
-app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q',
-	function(dataProvider, CONSTANTS, $q) {
+app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider',
+	function(dataProvider, CONSTANTS, $q, utilsProvider) {
 		return {
 			getUserProfile: function(sUserName) {
 				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=User_RoleDetails/RoleDetails&$format=json";
@@ -97,7 +97,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q',
 				return deffered.promise;
 			},
 
-			resetPasswordWithPRCode: function(oData){
+			resetPasswordWithPRCode: function(oData) {
 				var deffered = $q.defer();
 
 				var oSrv = dataProvider.httpRequest({
@@ -116,7 +116,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q',
 				return deffered.promise;
 			},
 
-			resetPassword: function(oData){
+			resetPassword: function(oData) {
 				var deffered = $q.defer();
 
 				var oSrv = dataProvider.httpRequest({
@@ -132,7 +132,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q',
 					deffered.resolve(oData);
 				});
 
-				return deffered.promise;				
+				return deffered.promise;
 			},
 
 			updateUser: function(oParameters) {
@@ -149,6 +149,26 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q',
 					deffered.resolve(oData);
 				});
 				return deffered.promise;
+			},
+
+			logEvent: function(oParameters) {
+				var oData = {
+					GeneralAttributes: {
+						IsArchived: false,
+						IsDeleted: false,
+						SortingSequence: 0,
+					}
+				};
+				oData.Guid = utilsProvider.generateGUID();
+				oData.Operation = oParameters.sOperation;
+				oData.OperationContent = JSON.stringify(oParameters.oContent);
+				oData.UserName = oParameters.sUserName;
+				oData.TimeStamp = "/Date(1414263469000)/";
+
+				dataProvider.createEntity({
+					sPath: "OperationLogs",
+					oData: oData
+				});
 			}
 		}
 	}

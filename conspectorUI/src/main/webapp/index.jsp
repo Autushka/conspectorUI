@@ -15,6 +15,7 @@
 		<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
 		<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
 		<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+		<script src="bower_components/angular-ui-utils/ui-utils.min.js"></script>		
 		<script src="bower_components/hammerjs/hammer.min.js"></script>
 		<script src="bower_components/angular-aria/angular-aria.min.js"></script>
 		<script src="bower_components/angular-material/angular-material.min.js"></script>

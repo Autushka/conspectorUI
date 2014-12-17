@@ -180,7 +180,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 			}
 
 			oOdataSrv = (new genericODataFactory(oParameters.oData)).$post({
-				path: oParameters.path,
+				path: oParameters.sPath,
 			});
 
 			oOdataSrv.then($.proxy(function(oData) {
