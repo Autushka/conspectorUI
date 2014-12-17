@@ -97,6 +97,25 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q',
 				return deffered.promise;
 			},
 
+			resetPasswordWithPRCode: function(oData){
+				var deffered = $q.defer();
+
+				var oSrv = dataProvider.httpRequest({
+					sPath: "jsp/account/passwordRecoveryNewPassword.jsp",
+					oUrlParameters: oData,
+					sRequestType: "POST",
+					bShowSpinner: true,
+					bShowSuccessMessage: false,
+					bShowErorrMessage: false
+				});
+
+				oSrv.then(function(oData) {
+					deffered.resolve(oData);
+				});
+
+				return deffered.promise;
+			},
+
 			resetPassword: function(oData){
 				var deffered = $q.defer();
 

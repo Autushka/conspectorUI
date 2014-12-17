@@ -25,6 +25,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/userManagement/templates/roleSelectionView.html',
 			controller: 'roleSelectionView'
 		});	
+		$stateProvider.state('passwordReset', {
+			url: '/passwordReset/:pr',
+			templateUrl: 'apps/conspector/components/userManagement/templates/passwordResetView.html',
+			controller: 'passwordResetView'
+		});		
 		$stateProvider.state('app', {
 			url: '/app',
 			templateUrl: 'apps/conspector/components/generalLayout/templates/appView.html',
