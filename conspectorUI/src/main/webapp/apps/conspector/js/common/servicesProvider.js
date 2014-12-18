@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore',
-	function(ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore) {
+app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window',
+	function($rootScope, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -52,7 +52,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 			},
 
 			logSuccessLogIn: function() {
-				apiProvider.logEvent({ 
+				apiProvider.logEvent({
 					sOperation: "login_success",
 					sUserName: cacheProvider.oUserProfile.sUserName,
 					oContent: {
@@ -63,7 +63,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 			},
 
 			logLogOut: function() {
-				apiProvider.logEvent({ 
+				apiProvider.logEvent({
 					sOperation: "log_out",
 					sUserName: cacheProvider.oUserProfile.sUserName,
 					oContent: {
@@ -71,7 +71,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 						sRole: cacheProvider.oUserProfile.sCurrentRole
 					}
 				});
-			},			
+			},
 
 			onLogInSuccessHandler: function(sUserName, sPassword) {
 				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
@@ -91,7 +91,7 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 					cacheProvider.oUserProfile.sCurrentRole = cacheProvider.oUserProfile.aUserRoles[0].RoleName;
 					apiProvider.setCurrentRole(cacheProvider.oUserProfile.sCurrentRole); //current role is cached here				
 					// menu setup for the current role should happen here
-					this.logSuccessLogIn();//log login_success operation 
+					this.logSuccessLogIn(); //log login_success operation 
 
 
 					window.location.href = rolesSettings.oInitialViews[cacheProvider.oUserProfile.sCurrentRole]; //navigation to the initial view for the role
@@ -154,6 +154,18 @@ app.factory('servicesProvider', ['ngTableParams', '$translate', 'utilsProvider',
 					}
 				}
 				return bNoErrorMessages;
+			},
+
+			constructLogoUrl: function() {
+				var sUrl = "rest/file/list/settings/settings/_logo_";
+				var oSvc = dataProvider.httpRequest({sPath: sUrl});
+				oSvc.then(function(aData) {
+					if (aData[0]) {
+						$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].rowId;
+					} else {
+						$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "img/logo_conspector.png";
+					}
+				});
 			},
 
 			createNgTableParams: function(oParameters) {

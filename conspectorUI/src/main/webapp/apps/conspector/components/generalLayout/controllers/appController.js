@@ -1,5 +1,7 @@
-viewControllers.controller('appView', ['$scope', '$state', 'servicesProvider', '$window', '$translate',
-	function($scope, $state, servicesProvider, $window, $translate) {
+viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$window', '$translate',
+	function($scope, $rootScope, $state, servicesProvider, $window, $translate) {
+		servicesProvider.constructLogoUrl();//"http://localhost:8080/conspector/img/logo_conspector.png";//servicesProvider.constructLogoUrl();
+
 		$scope.aTabs = [];
 
 		$scope.aTabs.push({
