@@ -52,7 +52,10 @@
 		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
 		<script src="apps/conspector/components/clients/controllers/clientsListController.js"></script>		
 		<script src="apps/conspector/components/adminPanel/controllers/adminPanelController.js"></script>		
-		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>															
+		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>		
+
+		<script src="apps/conspector/components/adminPanel/controllers/usersListController.js"></script>		
+		<script src="apps/conspector/components/adminPanel/controllers/projectsListController.js"></script>																
 		<!--<script src="dist/conspector.min.js"></script> -->
 	</head>
 	<body id="body" ng-controller="mainController">

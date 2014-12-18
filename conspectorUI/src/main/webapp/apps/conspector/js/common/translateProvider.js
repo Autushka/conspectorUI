@@ -22,7 +22,10 @@ app.config(['$translateProvider',
       app_unitsTab: 'Units', 
       app_contractorsTab: 'Contractors',
       app_clientsTab: 'Clients',
-
+      //adminPanel
+      adminPanen_menuHeader: 'Admin Panel Menu',
+      adminPanen_userManagement: "User Management",
+      adminPanen_projects: "Projects",      
       //signIn
       signIn_userName: 'Username',
       signIn_password: 'Password',
@@ -77,7 +80,11 @@ app.config(['$translateProvider',
       app_deficienciesTab: 'Deficiencies',      
       app_unitsTab: 'Units', 
       app_contractorsTab: 'Contractors',
-      app_clientsTab: 'Clients',           
+      app_clientsTab: 'Clients', 
+      //adminPanel
+      adminPanen_menuHeader: 'Admin Panel Menu', 
+      adminPanen_userManagement: "User Management",
+      adminPanen_projects: "Projects",                       
       //signIn
       signIn_userName: 'Utilisateur',
       signIn_password: 'Mot de pass',

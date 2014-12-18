@@ -1,1 +1,23 @@
-<div>Admin Panel</div>
+<section layout="row" flex>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-md')">
+      <md-toolbar class="md-default-theme">
+        <h1 class="md-toolbar-tools">{{'adminPanen_menuHeader' | translate}}</h1>
+      </md-toolbar>
+      <md-content class="md-padding" >  <!-- ng-controller="LeftCtrl" -->
+     	 <md-button layout="column" ng-click="onUserManagement()">{{'adminPanen_userManagement' | translate}}</md-button>
+     	 <md-button layout="column" ng-click="onProject()">{{'adminPanen_projects' | translate}}</md-button>
+<!--         <md-button ng-click="close()" class="md-primary" hide-gt-md>
+          Close Sidenav Left
+        </md-button> -->
+<!--         <p hide-md show-gt-md>
+          This sidenav is locked open on your device. To go back to the default behavior,
+          narrow your display.
+        </p> -->
+      </md-content>
+    </md-sidenav>
+    <md-content flex class="md-padding">
+      <div layout="column" layout-fill layout-align="center center">
+ 		<div ui-view></div>
+      </div>
+    </md-content>
+</section>
