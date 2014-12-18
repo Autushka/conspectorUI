@@ -2,8 +2,8 @@ app.factory('rolesSettings', [
 	function() {
 		return {
 			oInitialViews: {
-				systemAdministrator: "#/app",
-				user: "#/app"
+				systemAdministrator: "#/app/deficienciesList",
+				user: "#/app/deficienciesList"
 			}
 		}
 	}

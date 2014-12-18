@@ -34,7 +34,40 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			url: '/app',
 			templateUrl: 'apps/conspector/components/generalLayout/templates/appView.html',
 			controller: 'appView'
-		});				
+		});	
+		$stateProvider.state('app.deficienciesList', {
+			url: '/deficienciesList',
+			templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListView.html',
+			controller: 'deficienciesListView'
+		});	
+		$stateProvider.state('app.unitsList', {
+			url: '/unitsList',
+			templateUrl: 'apps/conspector/components/units/templates/unitsListView.html',
+			controller: 'unitsListView'
+		});	
+		$stateProvider.state('app.constactorsList', {
+			url: '/contractorsList',
+			templateUrl: 'apps/conspector/components/contractors/templates/contractorsListView.html',
+			controller: 'contractorsListView'
+		});	
+		$stateProvider.state('app.clientsList', {
+			url: '/clientsList',
+			templateUrl: 'apps/conspector/components/clients/templates/clientsListView.html',
+			controller: 'clientsListView'
+		});	
+		$stateProvider.state('app.adminPanel', {
+			url: '/adminPanel',
+			templateUrl: 'apps/conspector/components/adminPanel/templates/adminPanelView.html',
+			controller: 'adminPanelView'
+		});	
+		$stateProvider.state('app.profileSettings', {
+			url: '/profileSettings',
+			templateUrl: 'apps/conspector/components/profileSettings/templates/profileSettingsView.html',
+			controller: 'profileSettingsView'
+		});					
+									
+
+
 		//	.state('resetPassword', {
 		//		url: '/resetPassword/:pr',
 		//		templateUrl: 'apps/conspector/views/userManagement/resetPasswordView.html',

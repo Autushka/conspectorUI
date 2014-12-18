@@ -15,6 +15,6 @@ viewControllers.controller('roleSelectionView', ['$scope', '$state', 'utilsProvi
 
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
-		}			
+		};
 	}
 ]);

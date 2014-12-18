@@ -45,7 +45,14 @@
 		<script src="apps/conspector/components/userManagement/controllers/initialPasswordResetController.js"></script>		
 		<script src="apps/conspector/components/userManagement/controllers/passwordResetController.js"></script>		
 
-		<script src="apps/conspector/components/generalLayout/controllers/appController.js"></script>							
+		<script src="apps/conspector/components/generalLayout/controllers/appController.js"></script>	
+
+		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListController.js"></script>	
+		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
+		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
+		<script src="apps/conspector/components/clients/controllers/clientsListController.js"></script>		
+		<script src="apps/conspector/components/adminPanel/controllers/adminPanelController.js"></script>		
+		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>															
 		<!--<script src="dist/conspector.min.js"></script> -->
 	</head>
 	<body id="body" ng-controller="mainController">

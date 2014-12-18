@@ -1,1 +1,10 @@
+<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
+<label ng-click="onAdminPanel()">{{'app_adminPanel' | translate}}</label>
+<label ng-click="onProfileSettings()">{{'app_profileSettings' | translate}}</label>
 <label ng-click="onLogOut()">{{'app_logOut' | translate}}</label>
+
+<md-tabs md-selected="selectedTabIndex" md-stretch-tabs='no'>
+ 	 <md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle}}">
+</md-tabs>
+
+<div ui-view></div>
