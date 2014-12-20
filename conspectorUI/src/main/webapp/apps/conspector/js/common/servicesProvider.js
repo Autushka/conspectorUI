@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window',
-	function($rootScope, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window) {
+app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter',
+	function($rootScope, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -78,7 +78,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				cacheProvider.oUserProfile.sCurrentPassword = sPassword;
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					ustilsProvider.displayMessage($translate.instant("noRoleAssignment"), "error");
+					utilsProvider.displayMessage({sText: $translate.instant('global_noRoleAssignment'), sType: "error"});
 					return;
 				}
 
@@ -107,7 +107,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					ustilsProvider.displayMessage($translate.instant("noRoleAssignment"), "error");
+					ustilsProvider.displayMessage({sText: $translate.instant('global_noRoleAssignment'), sType: "error"});
 					return;
 				}
 
@@ -158,7 +158,9 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 
 			constructLogoUrl: function() {
 				var sUrl = "rest/file/list/settings/settings/_logo_";
-				var oSvc = dataProvider.httpRequest({sPath: sUrl});
+				var oSvc = dataProvider.httpRequest({
+					sPath: sUrl
+				});
 				oSvc.then(function(aData) {
 					if (aData[0]) {
 						$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].rowId;
@@ -168,96 +170,28 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				});
 			},
 
-			createNgTableParams: function(oParameters) {
-				var oNgTableParams = new ngTableParams({
-					page: 1,
-					filterDelay: 100,
-					count: 1000
+			createNgTable: function(oParameters) {
+				var oTableParams = new ngTableParams({
+					page: 1, // show first page
+					count: 10000, // count per page
+					filterDelay: 250,
+					// sorting: {
+					// 	name: 'asc' // initial sorting
+					// }
 				}, {
-					groupBy: oParameters.groupTableBy,
-					total: oParameters.oTableDataArrays[oParameters.sSourceDataArrayAttribute].length, // length of data
+					total: oParameters.oInitialDataArrayWrapper.aData.length,
+					sDisplayedDataArrayName: oParameters.sDisplayedDataArrayName,
 					getData: function($defer, params) {
-						params.settings().filterDelay = 10;
-						params.settings().setGroupsInfo();
-						params.settings().counts = [50, 500, 1000];
-						var oFilteredCategoriesData = [];
-						if (params.sorting() === undefined || JSON.stringify(params.sorting()) === JSON.stringify({})) {
-							oFilteredCategoriesData = oParameters.oTableDataArrays[oParameters.sSourceDataArrayAttribute];
-						} else {
-							var aSortingBy = params.orderBy();
-							if (oParameters.groupTableBy) {
-								aSortingBy.unshift(oParameters.groupTableBy);
-							}
+						var aInitialData = oParameters.oInitialDataArrayWrapper.aData; // need a wrapper for the array here to be able to pass values by reference
+						var aSortedData = params.sorting() ?
+							$filter('orderBy')(aInitialData, params.orderBy()) :
+							aInitialData;
 
-							oFilteredCategoriesData = $filter('orderBy')(oParameters.oTableDataArrays[oParameters.sSourceDataArrayAttribute], aSortingBy);
-						}
-
-						var sSearchCriteria = "";
-						if (params.filter().$) {
-							sSearchCriteria = params.filter().$;
-							for (var property in params.filter()) {
-								if (property.indexOf("$") === 0) {
-									delete params.filter().property;
-								}
-							}
-						}
-
-						if (params.filter() !== undefined && JSON.stringify(params.filter()) !== JSON.stringify({})) {
-							oFilteredCategoriesData = $filter('filter')(oFilteredCategoriesData, params.filter(), function(actual, expected) {
-								actual = actual.toString().toLowerCase();
-								expected = expected.toString().toLowerCase();
-								if (expected.indexOf("=") === 0) {
-									expected = expected.slice(1, expected.length);
-									return angular.equals(expected, actual);
-								} else {
-									if (actual.indexOf(expected) >= 0) {
-										return true;
-									} else {
-										return false;
-									}
-								}
-							});
-						}
-
-						if (sSearchCriteria) {
-							var sSearchCriteriaLowerCase = sSearchCriteria.toLowerCase();
-							var aFilteredData = [];
-							var bShouldBeAdded = false;
-							var sValue = "";
-							for (var i = 0; i < oFilteredCategoriesData.length; i++) {
-								bShouldBeAdded = false;
-								for (var property in oFilteredCategoriesData[i]) {
-									if (typeof oFilteredCategoriesData[i][property] === "string") {
-										sValue = oFilteredCategoriesData[i][property].toLowerCase();
-										if (sValue.indexOf(sSearchCriteriaLowerCase) >= 0 && property.indexOf("_") !== 0 && property.indexOf("$") !== 0) {
-											bShouldBeAdded = true;
-										}
-									}
-									if (typeof oFilteredCategoriesData[i][property] === "number") {
-										sValue = oFilteredCategoriesData[i][property].toString();
-										if (sValue.indexOf(sSearchCriteriaLowerCase) >= 0 && property.indexOf("_") !== 0 && property.indexOf("$") !== 0) {
-											bShouldBeAdded = true;
-										}
-									}
-								}
-								if (bShouldBeAdded) {
-									aFilteredData.push(oFilteredCategoriesData[i]);
-								}
-							}
-							oFilteredCategoriesData = aFilteredData;
-							params.filter().$ = sSearchCriteria;
-						}
-
-						params.total(oFilteredCategoriesData.length); // set total for recalc pagination
-
-						if (params.total() < (params.page() - 1) * params.count()) { // fix filtering on the page number > 1
-							params.page(1);
-						}
-						$defer.resolve(oParameters.oTableData[oParameters.sTargerObjectAttribute] = oFilteredCategoriesData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+						$defer.resolve(aSortedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 					},
-					$scope: oParameters.scope
+					counts:[]
 				});
-				return oNgTableParams;
+				return oTableParams;
 			},
 		}
 	}

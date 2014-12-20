@@ -1,16 +1,16 @@
 app.factory('cacheProvider', ['TYPES', function(TYPES) {
 	return {
 		oEntitiesCache: {
-			oDeficiencyEntity: TYPES.oEntityCacheStructure,
-			oAccountEntity: TYPES.oEntityCacheStructure,
-			oUnitEntity: TYPES.oEntityCacheStructure,
-			oUserEntity: TYPES.oEntityCacheStructure,
-			oRoleEntity: TYPES.oEntityCacheStructure,
-			oProjectEntity: TYPES.oEntityCacheStructure,
-			oStatusEntity: TYPES.oEntityCacheStructure,
-			oPriorityEntity: TYPES.oEntityCacheStructure,
-			oVersion: TYPES.oEntityCacheStructure,
-			oAccountTypeEntity: TYPES.oEntityCacheStructure
+			oDeficiencyEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oAccountEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oUnitEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oUserEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oRoleEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oProjectEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oStatusEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oPriorityEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oVersion: angular.copy(TYPES.oEntityCacheStructure),
+			oAccountTypeEntity: angular.copy(TYPES.oEntityCacheStructure),
 		},
 
 		oUserProfile: {},
@@ -33,7 +33,7 @@ app.factory('cacheProvider', ['TYPES', function(TYPES) {
 
 		cleanEntitiesCache: function(sForEntity, sRequestSettings) {
 			if (sForEntity && !sRequestSettings) {
-				this.oEntitiesCache[sForEntity] = TYPES.oEntityCacheStructure;
+				this.oEntitiesCache[sForEntity] = angular.copy(TYPES.oEntityCacheStructure);
 				return;
 			}
 			if (sForEntity && sRequestSettings) {
@@ -46,7 +46,7 @@ app.factory('cacheProvider', ['TYPES', function(TYPES) {
 				return;
 			}
 			for (var sAttribute in this.oEntitiesCache) {
-				this.oEntitiesCache[sAttribute] = TYPES.oEntityCacheStructure;
+				this.oEntitiesCache[sAttribute] = angular.copy(TYPES.oEntityCacheStructure);
 			}
 		},
 

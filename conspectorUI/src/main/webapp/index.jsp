@@ -5,6 +5,8 @@
 		<link rel="icon" type="image/png" href="apps/conspector/img/favicon.ico">
 		<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
 		<link rel="stylesheet" href="bower_components/angular-material/themes/orange-theme.css">
+		<link rel="stylesheet" href="apps/conspector/js/thirdParty/ng-table.min.css">		
+			
 
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>		
 		<script src="bower_components/angular/angular.min.js"></script>
@@ -15,12 +17,13 @@
 		<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
 		<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
 		<script src="bower_components/angular-resource/angular-resource.min.js"></script>
-		<script src="bower_components/angular-ui-utils/ui-utils.min.js"></script>		
+		<script src="bower_components/angular-ui-utils/ui-utils.min.js"></script>			
 		<script src="bower_components/hammerjs/hammer.min.js"></script>
 		<script src="bower_components/angular-aria/angular-aria.min.js"></script>
 		<script src="bower_components/angular-material/angular-material.min.js"></script>
-		<script src="bower_components/ng-table/ng-table.min.js"></script>
 		<script src="bower_components/jshashes/hashes.min.js"></script>
+
+		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->		
 
 
 		<script src="apps/conspector/js/app.js"></script>

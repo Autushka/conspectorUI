@@ -1,15 +1,15 @@
-app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider',
-	function(dataProvider, CONSTANTS, $q, utilsProvider) {
+app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 'cacheProvider',
+	function(dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider) {
 		return {
 			getUserProfile: function(sUserName) {
-				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=User_RoleDetails/RoleDetails&$format=json";
+				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=RoleDetails&$format=json";
 				var aUserRoles = [];
 				var bIsInitialPassword = false;
 				var onSuccess = function(oData) {
 					bIsInitialPassword = oData.d.IsPasswordInitial;
-					for (var i = 0; i < oData.d.User_RoleDetails.results.length; i++) {
-						aUserRoles.push(oData.d.User_RoleDetails.results[i].RoleDetails);
-					}
+					for (var i = 0; i < oData.d.RoleDetails.results.length; i++) {
+						aUserRoles.push(oData.d.RoleDetails.results[i]);
+					}			
 				}
 
 				dataProvider.ajaxRequest({ //TODO: add busy indicator here as well if needed
@@ -169,6 +169,55 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider',
 					sPath: "OperationLogs",
 					oData: oData
 				});
+			},
+
+			getProjects: function(oParameters){
+				var svc = dataProvider.getEntitySet({
+					sPath: "Projects",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oProjectEntity"
+				});	
+
+				if(svc instanceof Array){
+					oParameters.onSuccess(svc)// data retrived from cache
+				}else{
+					svc.then(oParameters.onSuccess);
+				}		
+			},
+
+			createProject: function(oParameters){
+				var onSuccess = function(oData){
+					cacheProvider.cleanEntitiesCache("oProjectEntity");
+					oParameters.onSuccess(oData);
+				};
+				oParameters.oData.Guid = utilsProvider.generateGUID();
+				var oSvc = dataProvider.createEntity({
+					sPath: "Projects",
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});	
+
+				oSvc.then(onSuccess);
+			},
+
+			updateProject: function(oParameters){
+				var onSuccess = function(oData){
+					cacheProvider.cleanEntitiesCache("oProjectEntity");
+					oParameters.onSuccess(oData);
+				};				
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "Projects",
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});	
+				
+				oSvc.then(onSuccess);					
 			}
 		}
 	}

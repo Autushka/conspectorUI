@@ -16,7 +16,6 @@
   "angular-resource": "1.3.x",
   "angular-material": "0.6.x",
   "angular-ui-utils": "0.1.x",
-	"ng-table": "0.3.x",
   "jquery": "2.1.x", 
   "jshashes": "1.0.x"
 

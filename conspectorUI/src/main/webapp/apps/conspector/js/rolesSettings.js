@@ -3,7 +3,7 @@ app.factory('rolesSettings', [
 		return {
 			oInitialViews: {
 				systemAdministrator: "#/app/deficienciesList",
-				user: "#/app/deficienciesList"
+				deficiencyManagementUser: "#/app/deficienciesList"
 			}
 		}
 	}

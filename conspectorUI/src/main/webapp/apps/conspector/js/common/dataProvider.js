@@ -54,7 +54,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 			}
 			if (oParameters.bShowSuccessMessage) {
 				utilsProvider.displayMessage({
-					sText: $translate.instant("successOperation"),
+					sText: $translate.instant("global_successOperation"),
 					sType: 'success'
 				});
 			}
@@ -65,7 +65,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 			}
 			if (oParameters.bShowErrorMessage) {
 				utilsProvider.displayMessage({
-					sText: $translate.instant("errorOperation"),
+					sText: $translate.instant("global_errorOperation"),
 					sType: 'error'
 				});
 			}
@@ -75,14 +75,18 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 		getEntitySet: function(oParameters) { //bShowSpinner, sPath, sFilter, sExpand, oCacheProvider, sCacheProviderAttribute 
 			var oOdataSrv = {};
 			var deffered = $q.defer();
-			var aCacheedEntities = [];
+			var aCachedEntities = [];
 			var sRequestSettings = oParameters.sKey + oParameters.sFilter + oParameters.sExpand;
+			if(!sRequestSettings){
+				sRequestSettings = ""; //to evoid NaN value
+			}
 
 			//return cash for request with specific settings (key, filter and expand) if required
 			if (oParameters.oCacheProvider && oParameters.sCacheProviderAttribute) {
-				aCacheedEntities = oParameters.oCacheProvider.getFromCache(oParameters.sCacheProviderAttribute, sRequestSettings);
-				if(aCacheedEntities.length){
-					return aCacheedEntities;
+				aCachedEntities = oParameters.oCacheProvider.getFromCache(oParameters.sCacheProviderAttribute, sRequestSettings);
+				if(aCachedEntities.length){
+					console.log("Entities: " + oParameters.sCacheProviderAttribute + " retrieved from cache...");
+					return aCachedEntities;
 				}
 			}
 			if (oParameters.bShowSpinner) {

@@ -1,9 +1,11 @@
 app.config(['$translateProvider',
   function($translateProvider) {
     $translateProvider.translations('en', {
-      successOperation: "Operation finished successfully.",
-      errorOperation: "Operation failed.",
-      noRoleAssignment: "Contact your system administrator (No role assignment to the user)",
+      //global
+      global_addNew: "Add New",
+      global_successOperation: "Operation finished successfully.",
+      global_errorOperation: "Operation failed.",
+      global_noRoleAssignment: "Contact your system administrator (No role assignment to the user)",
       //backendMessages
       m100: 'Operation finished successfully.',
       m101: 'Email with instructions to recover your password was successfully sent.',
@@ -25,7 +27,13 @@ app.config(['$translateProvider',
       //adminPanel
       adminPanen_menuHeader: 'Admin Panel Menu',
       adminPanen_userManagement: "User Management",
-      adminPanen_projects: "Projects",      
+      adminPanen_projects: "Projects", 
+      //projectsList
+      projectsList_title: "Projects",
+      projectsList_actions: 'Actions',
+      projectsList_descriptionEN: 'Desciption EN',
+      projectsList_descriptionFR: 'Desciption FR',
+      projectsList_sortingSequence: 'Sorting sequence',  
       //signIn
       signIn_userName: 'Username',
       signIn_password: 'Password',
@@ -59,9 +67,11 @@ app.config(['$translateProvider',
     });
 
     $translateProvider.translations('fr', {
-      successOperation: "Operation finished successfully.",
-      errorOperation: "Operation failed.",
-      noRoleAssignment: "Contact your system administrator (No role assignment to the user)",      
+       //global
+      global_addNew: "Add New",     
+      global_successOperation: "Operation finished successfully.",
+      global_errorOperation: "Operation failed.",
+      global_noRoleAssignment: "Contact your system administrator (No role assignment to the user)",      
       //backendMessages      
       m100: 'Operation finished successfully.',
       m101: 'Email with instructions to recover your password was successfully sent.',
@@ -84,7 +94,13 @@ app.config(['$translateProvider',
       //adminPanel
       adminPanen_menuHeader: 'Admin Panel Menu', 
       adminPanen_userManagement: "User Management",
-      adminPanen_projects: "Projects",                       
+      adminPanen_projects: "Projects",   
+      //projectsList
+      projectsList_title: "Projects",      
+      projectsList_actions: 'Actions',
+      projectsList_descriptionEN: 'Desciption EN',
+      projectsList_descriptionFR: 'Desciption FR',
+      projectsList_sortingSequence: 'Sorting sequence',                           
       //signIn
       signIn_userName: 'Utilisateur',
       signIn_password: 'Mot de pass',
