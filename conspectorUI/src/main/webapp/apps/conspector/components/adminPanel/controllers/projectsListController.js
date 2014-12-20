@@ -26,6 +26,7 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 					});
 				}
 			}
+			oProjectsListData.aData = $filter('orderBy')(oProjectsListData.aData, ["sortingSequence"]);
 			$scope.tableParams.reload();
 		}
 
