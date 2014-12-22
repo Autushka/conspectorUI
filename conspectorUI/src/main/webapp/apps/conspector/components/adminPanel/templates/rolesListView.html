@@ -1,0 +1,27 @@
+<div>{{'rolesList_title' | translate}}</div>
+<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
+<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
+
+	<tr ng-repeat="role in aDisplayedRoles">
+		<td data-title="actionsTE" style="width: 10%;">
+			<span ng-if="!role._editMode" ng-click="onEdit(role)">Edit</span><span ng-if="role._editMode" ng-click="onSave(role)">Save</span><span ng-if="role._editMode" ng-click="onDelete(role, $index)">Delete</span>
+		</td>
+		<td data-title="roleNameTE" sortable="'roleName'" style="width: 15%;">
+        	<span ng-if="!role._editMode">{{role.roleName}}</span>
+         	<div ng-if="role._editMode"><input type="text" ng-model="role.roleName"/></div>
+		</td>		
+		<td data-title="descriptionENTE" sortable="'descriptionEN'" style="width: 30%;">
+        	<span ng-if="!role._editMode">{{role.descriptionEN}}</span>
+         	<div ng-if="role._editMode"><input type="text" ng-model="role.descriptionEN"/></div>
+		</td>
+		<td data-title="descriptionFRTE" sortable="'descriptionFR'" style="width: 30%;">
+        	<span ng-if="!role._editMode">{{role.descriptionFR}}</span>
+         	<div ng-if="role._editMode"><input type="text" ng-model="role.descriptionFR"/></div>
+		</td>
+		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 15%;">
+        	<span ng-if="!role._editMode">{{role.sortingSequence}}</span>
+         	<div ng-if="role._editMode"><input type="number" ng-model="role.sortingSequence"/></div>
+		</td>
+	</tr>
+	<tr ng-hide="aDisplayedRoles.length > 0"><td colspan="5" >{{'global_noTableData' | translate}}</td></tr>		
+</table>

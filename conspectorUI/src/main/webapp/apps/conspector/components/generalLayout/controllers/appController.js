@@ -1,35 +1,54 @@
-viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$window', '$translate', '$timeout',
-	function($scope, $rootScope, $state, servicesProvider, $window, $translate, $timeout) {
+viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$window', '$translate', '$timeout', 'cacheProvider', 'rolesSettings',
+	function($scope, $rootScope, $state, servicesProvider, $window, $translate, $timeout, cacheProvider, rolesSettings) {
 		servicesProvider.constructLogoUrl(); //"http://localhost:8080/conspector/img/logo_conspector.png";//servicesProvider.constructLogoUrl();
+
+		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].adminPanel) {
+			$scope.bDisplayAdminPanel = true;
+		}
+
+		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].profileSettings) {
+			$scope.bDisplayProfileSettings = true;
+		}		
 
 		$scope.aTabs = [];
 
-		$scope.aTabs.push({
-			sTitle: $translate.instant("app_deficienciesTab"),
-			sHash: "#/app/deficienciesList"
-		});
-		$scope.aTabs.push({
-			sTitle: $translate.instant("app_unitsTab"),
-			sHash: "#/app/unitsList"
-		});
-		$scope.aTabs.push({
-			sTitle: $translate.instant("app_contractorsTab"),
-			sHash: "#/app/contractorsList"
-		});
-		$scope.aTabs.push({
-			sTitle: $translate.instant("app_clientsTab"),
-			sHash: "#/app/clientsList"
-		});
+		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].deficiencies) {
+			$scope.aTabs.push({
+				sTitle: $translate.instant("app_deficienciesTab"),
+				sHash: "#/app/deficienciesList"
+			});
+		}
+
+		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].units) {
+			$scope.aTabs.push({
+				sTitle: $translate.instant("app_unitsTab"),
+				sHash: "#/app/unitsList"
+			});
+		}
+
+		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contractors) {
+			$scope.aTabs.push({
+				sTitle: $translate.instant("app_contractorsTab"),
+				sHash: "#/app/contractorsList"
+			});
+		}
+
+		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].clients) {
+			$scope.aTabs.push({
+				sTitle: $translate.instant("app_clientsTab"),
+				sHash: "#/app/clientsList"
+			});
+		}
 
 		$scope.onLogOut = function() {
 			servicesProvider.logOut();
 		};
 
-		$timeout(function(){
-			if($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1){
+		$timeout(function() {
+			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1) {
 				$scope.selectedTabIndex = -1;
 			}
-			switch($window.location.hash){
+			switch ($window.location.hash) {
 				case "#/app/unitsList":
 					$scope.selectedTabIndex = 1;
 					break;
@@ -38,7 +57,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 					break;
 				case "#/app/clientsList":
 					$scope.selectedTabIndex = 3;
-					break;										
+					break;
 			}
 		}, 100);
 
