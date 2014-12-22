@@ -165,6 +165,21 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 			},
 
+			getOperationLogs: function(oParameters){
+				var svc = dataProvider.getEntitySet({
+					sPath: "OperationLogs",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oOperationLogEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},			
+
 			getProjects: function(oParameters){
 				var svc = dataProvider.getEntitySet({
 					sPath: "Projects",

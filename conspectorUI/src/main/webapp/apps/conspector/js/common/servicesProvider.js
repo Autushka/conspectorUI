@@ -46,7 +46,9 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					oUrlParameters: {}
 				});
 				oSignOutSrv.then($.proxy(function(oData) {
-					this.logLogOut(); // log logout operation
+					if (cacheProvider.oUserProfile.sUserName) {
+						this.logLogOut(); // log logout operation
+					}
 					cacheProvider.cleanAllCache();
 					window.location.href = "#/signIn/";
 				}, this));

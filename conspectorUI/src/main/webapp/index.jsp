@@ -59,7 +59,8 @@
 
 		<script src="apps/conspector/components/adminPanel/controllers/usersListController.js"></script>		
 		<script src="apps/conspector/components/adminPanel/controllers/projectsListController.js"></script>		
-		<script src="apps/conspector/components/adminPanel/controllers/rolesListController.js"></script>																	
+		<script src="apps/conspector/components/adminPanel/controllers/rolesListController.js"></script>	
+		<script src="apps/conspector/components/adminPanel/controllers/operationLogsListController.js"></script>																		
 		<!--<script src="dist/conspector.min.js"></script> -->
 	</head>
 	<body id="body" ng-controller="mainController">

@@ -79,6 +79,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			url: '/rolesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/rolesListView.html',
 			controller: 'rolesListView'
+		});			
+		$stateProvider.state('app.adminPanel.operationLogsList', {
+			url: '/operationLogsList',
+			templateUrl: 'apps/conspector/components/adminPanel/templates/operationLogsListView.html',
+			controller: 'operationLogsListView'
 		});										
 									
 
