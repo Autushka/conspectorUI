@@ -21,7 +21,9 @@ app.factory('utilsProvider', ['$mdToast',
 			},
 
 			dateToDBDate: function(dDate){
-				return "/Date(" + dDate.getTime().toString() + ")/";
+
+				var iDate =  dDate.getTime() -  dDate.getTime()%1000; // db rounds the value till seconds
+				return "/Date(" + iDate.toString() + ")/";
 			},
 
 			setCookieFromJson: function(sKey, oObj) {

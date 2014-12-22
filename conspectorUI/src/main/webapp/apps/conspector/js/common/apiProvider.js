@@ -191,7 +191,6 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					cacheProvider.cleanEntitiesCache("oProjectEntity");
 					oParameters.onSuccess(oData);
 				};
-				oParameters.oData.Guid = utilsProvider.generateGUID();
 				var oSvc = dataProvider.createEntity({
 					sPath: "Projects",
 					oData: oParameters.oData,

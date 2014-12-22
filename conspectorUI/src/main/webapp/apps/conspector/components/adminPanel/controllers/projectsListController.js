@@ -20,6 +20,7 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 					oProjectsListData.aData.push({
 						_editMode: false, //symbol _ here meens that this attribute is not displayed in the table and is used for the logic only
 						_guid: aData[i].Guid,
+						_lastModifiedAt: aData[i].LastModifiedAt,
 						nameEN: aData[i].NameEN,
 						nameFR: aData[i].NameFR,
 						sortingSequence: aData[i].GeneralAttributes.SortingSequence
@@ -50,7 +51,7 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 			oProject._editMode = true;
 		};
 
-		$scope.onDelete = function(oProject) {
+		$scope.onDelete = function(oProject, iIndex) {
 			var oDataForSave = {
 				GeneralAttributes: {
 					IsDeleted: true
@@ -66,15 +67,23 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 				$scope.tableParams.reload();
 			}
 
-			oDataForSave.Guid = oProject._guid;
-			apiProvider.updateProject({
-				bShowSpinner: true,
-				sKey: oDataForSave.Guid,
-				oData: oDataForSave,
-				bShowSuccessMessage: true,
-				bShowErrorMessage: true,
-				onSuccess: onSuccessDelete
-			});
+			if(oProject._guid){
+				oDataForSave.Guid = oProject._guid;
+				oDataForSave.LastModifiedAt = oProject._lastModifiedAt;			
+				apiProvider.updateProject({
+					bShowSpinner: true,
+					sKey: oDataForSave.Guid,
+					oData: oDataForSave,
+					bShowSuccessMessage: true,
+					bShowErrorMessage: true,
+					onSuccess: onSuccessDelete
+				});				
+			}else{
+				if(!oProjectsListData.aData[iIndex]._guid){
+					oProjectsListData.aData.splice(iIndex, 1);
+					$scope.tableParams.reload();					
+				}
+			}
 		},
 
 		$scope.onSave = function(oProject) {
@@ -83,15 +92,19 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 			};
 			var onSuccessCreation = function(oData) {
 				oProject._guid = oData.Guid;
+				oProject._lastModifiedAt = oData.LastModifiedAt;
 				oProject._editMode = false;
+
 			};
-			var onSuccessUpdate = function() {
+			var onSuccessUpdate = function(oData) {
 				oProject._editMode = false;
+				oProject._lastModifiedAt = oData.LastModifiedAt;
 			};
 
 			oDataForSave.NameEN = oProject.nameEN;
 			oDataForSave.NameFR = oProject.nameFR;
 			oDataForSave.GeneralAttributes.SortingSequence = oProject.sortingSequence;
+			oDataForSave.LastModifiedAt = oProject._lastModifiedAt;
 
 			if (oProject._guid) {
 				oDataForSave.Guid = oProject._guid;
