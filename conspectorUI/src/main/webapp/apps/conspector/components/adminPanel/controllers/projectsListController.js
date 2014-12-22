@@ -1,9 +1,9 @@
 viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate',
 	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate) {
-		$scope.actionsTE = $translate.instant('projectsList_actions'); //need TE for ngTable columns headers
-		$scope.nameENTE = $translate.instant('projectsList_descriptionEN');
-		$scope.nameFRTE = $translate.instant('projectsList_descriptionFR');
-		$scope.sortingSequenceTE = $translate.instant('projectsList_sortingSequence');
+		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
+		$scope.nameENTE = $translate.instant('global_descriptionEN');
+		$scope.nameFRTE = $translate.instant('global_descriptionFR');
+		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
 
 		var oProjectsListData = {
 			aData: []

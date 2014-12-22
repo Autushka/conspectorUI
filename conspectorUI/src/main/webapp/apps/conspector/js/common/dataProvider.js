@@ -177,11 +177,14 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					sPath: oParameters.sPath
 				});
 				oGetODataSvc.then($.proxy(function(oData) {
-					if (oData.LastModifiedAt === oParameters.oData.LastModifiedAt) {
-						oParameters.oData.LastModifiedAt = utilsProvider.dateToDBDate(new Date());
-						oParameters.oData.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
+					var oDataForUpdate = {};
+					oDataForUpdate = oParameters.oData;
 
-						oPutOdataSrv = (new genericODataFactory(oParameters.oData)).$put({
+					if (oData.LastModifiedAt === oDataForUpdate.LastModifiedAt) {
+						oDataForUpdate.LastModifiedAt = utilsProvider.dateToDBDate(new Date());
+						oDataForUpdate.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
+
+						oPutOdataSrv = (new genericODataFactory(oDataForUpdate)).$put({
 							path: oParameters.sPath,
 							key: oParameters.sKey,
 						});
@@ -203,19 +206,30 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 
 			createEntity: function(oParameters) {
 				var oOdataSrv = {};
+				var oData = {};
 				var deffered = $q.defer();
 
 				if (oParameters.bShowSpinner) {
 					$rootScope.$emit('LOAD');
 				}
 
-				oParameters.oData.Guid = utilsProvider.generateGUID();
-				oParameters.oData.CreatedAt = utilsProvider.dateToDBDate(new Date());
-				oParameters.oData.LastModifiedAt = oParameters.oData.CreatedAt;
-				oParameters.oData.GeneralAttributes.CreatedBy = cacheProvider.oUserProfile.sUserName;
-				oParameters.oData.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
+				oData = oParameters.oData;
+				//oData.GeneralAttributes = {};
+				if (oParameters.bGuidNeeded) {
+					oData.Guid = utilsProvider.generateGUID();
+				}
 
-				oOdataSrv = (new genericODataFactory(oParameters.oData)).$post({
+				oData.CreatedAt = utilsProvider.dateToDBDate(new Date());
+				oData.LastModifiedAt = oParameters.oData.CreatedAt;
+				oData.GeneralAttributes.CreatedBy = cacheProvider.oUserProfile.sUserName;
+				oData.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
+
+				if (!oData.GeneralAttributes.SortingSequence) {
+					oData.GeneralAttributes.SortingSequence = 0;
+				}
+
+
+				oOdataSrv = (new genericODataFactory(oData)).$post({
 					path: oParameters.sPath,
 				});
 

@@ -1,6 +1,7 @@
 <div>{{'projectsList_title' | translate}}</div>
 <md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
 <table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
+
 	<tr ng-repeat="project in aDisplayedProjects">
 		<td data-title="actionsTE" style="width: 10%;">
 			<span ng-if="!project._editMode" ng-click="onEdit(project)">Edit</span><span ng-if="project._editMode" ng-click="onSave(project)">Save</span><span ng-if="project._editMode" ng-click="onDelete(project, $index)">Delete</span>
@@ -18,4 +19,5 @@
          	<div ng-if="project._editMode"><input type="number" ng-model="project.sortingSequence"/></div>
 		</td>
 	</tr>
+	<tr ng-hide="aDisplayedProjects.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>		
 </table>

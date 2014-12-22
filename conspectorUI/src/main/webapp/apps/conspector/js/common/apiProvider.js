@@ -4,12 +4,15 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getUserProfile: function(sUserName) {
 				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=RoleDetails&$format=json";
 				var aUserRoles = [];
+				var sCreatedAt = "";
+				var sLastModifiedAt = "";
 				var bIsInitialPassword = false;
 				var onSuccess = function(oData) {
 					bIsInitialPassword = oData.d.IsPasswordInitial;
+					sLastModifiedAt = oData.d.LastModifiedAt;
 					for (var i = 0; i < oData.d.RoleDetails.results.length; i++) {
 						aUserRoles.push(oData.d.RoleDetails.results[i]);
-					}			
+					}
 				}
 
 				dataProvider.ajaxRequest({ //TODO: add busy indicator here as well if needed
@@ -23,7 +26,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				return {
 					sUserName: sUserName,
 					aUserRoles: aUserRoles,
-					bIsInitialPassword: bIsInitialPassword
+					bIsInitialPassword: bIsInitialPassword,
+					sLastModifiedAt: sLastModifiedAt
 				};
 			},
 
@@ -152,18 +156,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			logEvent: function(oParameters) {
-				var oData = {
-					GeneralAttributes: {
-						IsArchived: false,
-						IsDeleted: false,
-						SortingSequence: 0,
-					}
-				};
-				oData.Guid = utilsProvider.generateGUID();
-				oData.Operation = oParameters.sOperation;
-				oData.OperationContent = JSON.stringify(oParameters.oContent);
-				oData.UserName = oParameters.sUserName;
-				oData.TimeStamp = utilsProvider.dateToDBDate(new Date()); //"/Date(1414263469000)/"; 
+				var oData = oParameters.oData;
+				oData.OperationContent = JSON.stringify(oParameters.oData.OperationContent);
 
 				dataProvider.createEntity({
 					sPath: "OperationLogs",
@@ -177,17 +171,17 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oProjectEntity"
-				});	
+				});
 
-				if(svc instanceof Array){
-					oParameters.onSuccess(svc)// data retrived from cache
-				}else{
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
 					svc.then(oParameters.onSuccess);
-				}		
+				}
 			},
 
-			createProject: function(oParameters){
-				var onSuccess = function(oData){
+			createProject: function(oParameters) {
+				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oProjectEntity");
 					oParameters.onSuccess(oData);
 				};
@@ -197,16 +191,17 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSpinner: oParameters.bShowSpinner,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-				});	
+					bGuidNeeded: true
+				});
 
 				oSvc.then(onSuccess);
 			},
 
-			updateProject: function(oParameters){
-				var onSuccess = function(oData){
+			updateProject: function(oParameters) {
+				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oProjectEntity");
 					oParameters.onSuccess(oData);
-				};				
+				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "Projects",
@@ -214,9 +209,58 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					oData: oParameters.oData,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-				});	
-				
-				oSvc.then(onSuccess);					
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			getRoles: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "Roles",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oRoleEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			createRole: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oRoleEntity");
+					oParameters.onSuccess(oData);
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Roles",
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: false
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			updateRole: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oRoleEntity");
+					oParameters.onSuccess(oData);
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "Roles",
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
 			}
 		}
 	}

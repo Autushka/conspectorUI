@@ -1,17 +1,29 @@
-viewControllers.controller('roleSelectionView', ['$scope', '$state', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider', 'apiProvider',
-	function($scope, $state, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider) {
-		$scope.aUserRoles = $filter('orderBy')(cacheProvider.oUserProfile.aUserRoles, function(oItem) {
-			return oItem.GeneralAttributes.SortingSequence;
+viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state', '$translate', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider', 'apiProvider',
+	function($scope, $rootScope, $state, $translate, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider) {
+		var aRoles = [];
+		$scope.sLanguage = $translate.use();
+
+		$rootScope.$on('languageChanged', function() {
+			$scope.sLanguage = $translate.use();
 		});
 
+		for (var i = 0; i < cacheProvider.oUserProfile.aUserRoles.length; i++) {
+			var oRole = {};
+			oRole.RoleName = cacheProvider.oUserProfile.aUserRoles[i].RoleName;
+			oRole.DescriptionEN = cacheProvider.oUserProfile.aUserRoles[i].DescriptionEN;
+			oRole.DescriptionFR = cacheProvider.oUserProfile.aUserRoles[i].DescriptionFR;
+			oRole._sortingSequence = cacheProvider.oUserProfile.aUserRoles[i].GeneralAttributes.SortingSequence;
+			aRoles.push(oRole);
+		}
+
+		$scope.aUserRoles = $filter('orderBy')(aRoles, ["_sortingSequence"]);
 		$scope.sSelectedRoleName = $scope.aUserRoles[0].RoleName;
 
-		$scope.onContinue = function(){
+		$scope.onContinue = function() {
 			cacheProvider.oUserProfile.sCurrentRole = $scope.sSelectedRoleName;
 			apiProvider.setCurrentRole(cacheProvider.oUserProfile.sCurrentRole); //current role is cached here	
-			servicesProvider.logSuccessLogIn();//log login_success operation 
+			servicesProvider.logSuccessLogIn(); //log login_success operation 
 			window.location.href = rolesSettings.oInitialViews[cacheProvider.oUserProfile.sCurrentRole];
-
 		};
 
 		$scope.onChangeLanguage = function() {

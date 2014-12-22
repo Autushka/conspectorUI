@@ -11,6 +11,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 						$translate.use('en');
 						break;
 				}
+				$rootScope.$emit('languageChanged');
 			},
 
 			logIn: function(oParameters, bRememberUserName) {
@@ -53,22 +54,26 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 
 			logSuccessLogIn: function() {
 				apiProvider.logEvent({
-					sOperation: "login_success",
-					sUserName: cacheProvider.oUserProfile.sUserName,
-					oContent: {
-						sUserName: cacheProvider.oUserProfile.sUserName,
-						sRole: cacheProvider.oUserProfile.sCurrentRole
+					oData: {
+						GeneralAttributes: {},
+						OperationName: "login_success",
+						OperationContent: {
+							sUserName: cacheProvider.oUserProfile.sUserName,
+							sRole: cacheProvider.oUserProfile.sCurrentRole
+						}
 					}
 				});
 			},
 
 			logLogOut: function() {
 				apiProvider.logEvent({
-					sOperation: "log_out",
-					sUserName: cacheProvider.oUserProfile.sUserName,
-					oContent: {
-						sUserName: cacheProvider.oUserProfile.sUserName,
-						sRole: cacheProvider.oUserProfile.sCurrentRole
+					oData: {
+						GeneralAttributes: {},
+						OperationName: "log_out",
+						OperationContent: {
+							sUserName: cacheProvider.oUserProfile.sUserName,
+							sRole: cacheProvider.oUserProfile.sCurrentRole
+						}
 					}
 				});
 			},
@@ -78,7 +83,10 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				cacheProvider.oUserProfile.sCurrentPassword = sPassword;
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					utilsProvider.displayMessage({sText: $translate.instant('global_noRoleAssignment'), sType: "error"});
+					utilsProvider.displayMessage({
+						sText: $translate.instant('global_noRoleAssignment'),
+						sType: "error"
+					});
 					return;
 				}
 
@@ -107,7 +115,10 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					ustilsProvider.displayMessage({sText: $translate.instant('global_noRoleAssignment'), sType: "error"});
+					ustilsProvider.displayMessage({
+						sText: $translate.instant('global_noRoleAssignment'),
+						sType: "error"
+					});
 					return;
 				}
 
@@ -189,7 +200,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 
 						$defer.resolve(aSortedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 					},
-					counts:[]
+					counts: []
 				});
 				return oTableParams;
 			},

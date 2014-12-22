@@ -2,7 +2,7 @@
 	<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
 	<label>{{'roleSelection_heagerLabel' | translate}}</label>
 	<md-radio-group ng-model="sSelectedRoleName">
-		<md-radio-button ng-repeat="role in aUserRoles" ng-value="role.RoleName">{{role.RoleName}} ({{role.Description}})</md-radio-button>
+		<md-radio-button ng-repeat="role in aUserRoles" ng-value="role.RoleName">{{role.RoleName}} ({{sLanguage === "en" ? role.DescriptionEN : role.DescriptionFR}})</md-radio-button>
 	</md-radio-group>
 	<md-button class="md-primary md-raised" ng-click="onContinue()" md-theme="orange">{{'roleSelection_continue' | translate}}</md-button>
 </form>

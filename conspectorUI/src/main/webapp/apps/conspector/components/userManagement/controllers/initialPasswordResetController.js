@@ -34,8 +34,10 @@ viewControllers.controller('initialPasswordResetView', ['$scope', '$state', 'dat
 						bShowSpinner: false,
 						sKey: cacheProvider.oUserProfile.sUserName,
 						oData: {
+							GeneralAttributes: {},
 							UserName: cacheProvider.oUserProfile.sUserName,
-							IsPasswordInitial: false
+							IsPasswordInitial: false,
+							LastModifiedAt: cacheProvider.oUserProfile.sLastModifiedAt
 						}
 					});
 					oSvc.then(function() {
