@@ -8,6 +8,10 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 
 		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].profileSettings) {
 			$scope.bDisplayProfileSettings = true;
+		}
+
+		if(cacheProvider.oUserProfile.aUserRoles.length > 1){
+			$scope.bDisplaySwitchRoles = true;
 		}		
 
 		$scope.aTabs = [];
@@ -39,6 +43,10 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 				sHash: "#/app/clientsList"
 			});
 		}
+
+		$scope.onSwitchRoles = function(){
+			$window.location.href = "#/roleSelection";
+		};
 
 		$scope.onLogOut = function() {
 			servicesProvider.logOut();
