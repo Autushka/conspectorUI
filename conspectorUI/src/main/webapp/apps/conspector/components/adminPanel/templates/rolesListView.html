@@ -4,11 +4,11 @@
 
 	<tr ng-repeat="role in aDisplayedRoles">
 		<td data-title="actionsTE" style="width: 10%;">
-			<span ng-if="!role._editMode" ng-click="onEdit(role)">Edit</span><span ng-if="role._editMode" ng-click="onSave(role)">Save</span><span ng-if="role._editMode" ng-click="onDelete(role, $index)">Delete</span>
+			<span ng-if="!role._editMode" ng-click="onEdit(role)">Edit</span><span ng-if="role._editMode" ng-click="onSave(role)">Save</span><span ng-if="role._editMode" ng-click="onDelete(role)">Delete</span>
 		</td>
 		<td data-title="roleNameTE" sortable="'roleName'" style="width: 15%;">
-        	<span ng-if="!role._editMode">{{role.roleName}}</span>
-         	<div ng-if="role._editMode"><input type="text" ng-model="role.roleName"/></div>
+        	<span ng-if="!role._createMode">{{role.roleName}}</span>
+         	<div ng-if="role._createMode"><input type="text" ng-model="role.roleName"/></div>
 		</td>		
 		<td data-title="descriptionENTE" sortable="'descriptionEN'" style="width: 30%;">
         	<span ng-if="!role._editMode">{{role.descriptionEN}}</span>

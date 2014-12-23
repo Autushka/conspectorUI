@@ -4,7 +4,7 @@
 
 	<tr ng-repeat="project in aDisplayedProjects">
 		<td data-title="actionsTE" style="width: 10%;">
-			<span ng-if="!project._editMode" ng-click="onEdit(project)">Edit</span><span ng-if="project._editMode" ng-click="onSave(project)">Save</span><span ng-if="project._editMode" ng-click="onDelete(project, $index)">Delete</span>
+			<span ng-if="!project._editMode" ng-click="onEdit(project)">Edit</span><span ng-if="project._editMode" ng-click="onSave(project)">Save</span><span ng-if="project._editMode" ng-click="onDelete(project)">Delete</span>
 		</td>
 		<td data-title="nameENTE" sortable="'nameEN'" style="width: 35%;">
         	<span ng-if="!project._editMode">{{project.nameEN}}</span>

@@ -20,10 +20,56 @@ app.factory('utilsProvider', ['$mdToast',
 				return guid;
 			},
 
-			dateToDBDate: function(dDate){
+			dateToDBDate: function(dDate) {
 
-				var iDate =  dDate.getTime() -  dDate.getTime()%1000; // db rounds the value till seconds
+				var iDate = dDate.getTime() - dDate.getTime() % 1000; // db rounds the value till seconds
 				return "/Date(" + iDate.toString() + ")/";
+			},
+
+			dateToString: function(date) { // always fixed ISO date format
+				var sFullDate = "";
+				var sDate = date.getDate().toString();
+				var sMonth = (date.getMonth() + 1).toString();
+				var sYear = date.getFullYear();
+				var sHours = date.getHours();
+				if (sHours.toString().length === 1) {
+					sHours = "0" + sHours;
+				}
+				var sMinutes = date.getMinutes();
+				if (sMinutes.toString().length === 1) {
+					sMinutes = "0" + sMinutes;
+				}
+				var sSeconds = date.getSeconds();
+				if (sSeconds.toString().length === 1) {
+					sSeconds = "0" + sSeconds;
+				}
+
+				if (sDate.length === 1) {
+					sDate = '0' + sDate;
+				}
+				if (sMonth.length === 1) {
+					sMonth = '0' + sMonth;
+				}
+				sFullDate = sMonth + "." + sDate + "." + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
+				return sFullDate;
+			},
+
+			dBDateToDate: function(sDBDate) {
+				if (sDBDate === null || sDBDate === undefined || sDBDate === "") {
+					return sDBDate;
+				}
+				var sDate = sDBDate.substring(6, sDBDate.length - 2);
+				var dDate = new Date(parseInt(sDate));
+				return dDate;//this.dateToString(dDate);
+			},
+
+			dBDateToSting: function(sDBDate){
+				return this.dateToString(this.dBDateToDate(sDBDate));			
+			},
+
+			stringToJson: function(sString){
+ 				var oObj = $.parseJSON(sString);
+ 				return oObj;
 			},
 
 			setCookieFromJson: function(sKey, oObj) {

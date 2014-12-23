@@ -10,26 +10,28 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 			aData: []
 		};
 
+		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
+
 		$scope.tableParams = servicesProvider.createNgTable({
 			oInitialDataArrayWrapper: oRolesListData,
-			sDisplayedDataArrayName: "aDisplayedRoles"
+			sDisplayedDataArrayName: "aDisplayedRoles",
+			oInitialSorting: {
+				sortingSequence: 'asc'
+			}
 		});
 
 		var onRolesLoaded = function(aData) {
 			for (var i = 0; i < aData.length; i++) {
-				if (!aData[i].GeneralAttributes.IsDeleted) {
-					oRolesListData.aData.push({
-						_editMode: false, //symbol _ here meens that this attribute is not displayed in the table and is used for the logic only
-						_roleName: aData[i].RoleName,
-						_lastModifiedAt: aData[i].LastModifiedAt,
-						roleName: aData[i].RoleName,
-						descriptionEN: aData[i].DescriptionEN,
-						descriptionFR: aData[i].DescriptionFR,
-						sortingSequence: aData[i].GeneralAttributes.SortingSequence
-					});
-				}
+				oRolesListData.aData.push({
+					_editMode: false, //symbol _ here meens that this attribute is not displayed in the table and is used for the logic only
+					_roleName: aData[i].RoleName,
+					_lastModifiedAt: aData[i].LastModifiedAt,
+					roleName: aData[i].RoleName,
+					descriptionEN: aData[i].DescriptionEN,
+					descriptionFR: aData[i].DescriptionFR,
+					sortingSequence: aData[i].GeneralAttributes.SortingSequence,
+				});
 			}
-			oRolesListData.aData = $filter('orderBy')(oRolesListData.aData, ["sortingSequence"]);
 			$scope.tableParams.reload();
 		}
 
@@ -41,11 +43,15 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 
 		$scope.onAddNew = function() {
 			oRolesListData.aData.push({
+				_createMode: true,
 				_editMode: true,
 				sortingSequence: 0,
 				descriptionEN: "",
-				descriptionFR: ""
+				descriptionFR: "",
+				_counter: iNewItemsCounter
+
 			});
+			iNewItemsCounter++;
 			$scope.tableParams.reload();
 		};
 
@@ -69,9 +75,9 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 				$scope.tableParams.reload();
 			}
 
-			if(oRole._roleName){
+			if (oRole._roleName) {
 				oDataForSave.RoleName = oRole._roleName;
-				oDataForSave.LastModifiedAt = oRole._lastModifiedAt;			
+				oDataForSave.LastModifiedAt = oRole._lastModifiedAt;
 				apiProvider.updateRole({
 					bShowSpinner: true,
 					sKey: oDataForSave.RoleName,
@@ -79,11 +85,14 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 					bShowSuccessMessage: true,
 					bShowErrorMessage: true,
 					onSuccess: onSuccessDelete
-				});				
-			}else{
-				if(!oRolesListData.aData[iIndex]._roleName){
-					oRolesListData.aData.splice(iIndex, 1);
-					$scope.tableParams.reload();					
+				});
+			} else {
+				for (var i = 0; i < oRolesListData.aData.length; i++) {
+					if(oRolesListData.aData[i]._counter === oRole._counter){
+						oRolesListData.aData.splice(i, 1);
+						$scope.tableParams.reload();	
+						break;					
+					}
 				}
 			}
 		},
@@ -96,7 +105,7 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 				oRole._roleName = oData.RoleName;
 				oRole._lastModifiedAt = oData.LastModifiedAt;
 				oRole._editMode = false;
-
+				oRole._createMode = false;
 			};
 			var onSuccessUpdate = function(oData) {
 				oRole._editMode = false;
@@ -119,6 +128,7 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 					onSuccess: onSuccessUpdate
 				});
 			} else {
+				oDataForSave.RoleName = oRole.roleName;
 				apiProvider.createRole({
 					bShowSpinner: true,
 					oData: oDataForSave,

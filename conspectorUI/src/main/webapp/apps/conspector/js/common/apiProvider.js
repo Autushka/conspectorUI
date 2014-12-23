@@ -161,13 +161,15 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 				dataProvider.createEntity({
 					sPath: "OperationLogs",
-					oData: oData
+					oData: oData,
+					bGuidNeeded: true
 				});
 			},
 
-			getOperationLogs: function(oParameters){
+			getOperationLogs: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "OperationLogs",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oOperationLogEntity"
@@ -178,11 +180,12 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
-			},			
+			},
 
-			getProjects: function(oParameters){
+			getProjects: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Projects",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oProjectEntity"
@@ -232,6 +235,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getRoles: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Roles",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oRoleEntity"

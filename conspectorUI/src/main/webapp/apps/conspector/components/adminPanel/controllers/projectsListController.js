@@ -5,29 +5,31 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 		$scope.nameFRTE = $translate.instant('global_descriptionFR');
 		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
 
+		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
+
 		var oProjectsListData = {
 			aData: []
 		};
 
 		$scope.tableParams = servicesProvider.createNgTable({
 			oInitialDataArrayWrapper: oProjectsListData,
-			sDisplayedDataArrayName: "aDisplayedProjects"
+			sDisplayedDataArrayName: "aDisplayedProjects",
+			oInitialSorting: {
+				sortingSequence: 'asc'
+			}
 		});
 
 		var onProjectsLoaded = function(aData) {
 			for (var i = 0; i < aData.length; i++) {
-				if (!aData[i].GeneralAttributes.IsDeleted) {
-					oProjectsListData.aData.push({
-						_editMode: false, //symbol _ here meens that this attribute is not displayed in the table and is used for the logic only
-						_guid: aData[i].Guid,
-						_lastModifiedAt: aData[i].LastModifiedAt,
-						nameEN: aData[i].NameEN,
-						nameFR: aData[i].NameFR,
-						sortingSequence: aData[i].GeneralAttributes.SortingSequence
-					});
-				}
+				oProjectsListData.aData.push({
+					_editMode: false, //symbol _ here meens that this attribute is not displayed in the table and is used for the logic only
+					_guid: aData[i].Guid,
+					_lastModifiedAt: aData[i].LastModifiedAt,
+					nameEN: aData[i].NameEN,
+					nameFR: aData[i].NameFR,
+					sortingSequence: aData[i].GeneralAttributes.SortingSequence
+				});
 			}
-			oProjectsListData.aData = $filter('orderBy')(oProjectsListData.aData, ["sortingSequence"]);
 			$scope.tableParams.reload();
 		}
 
@@ -42,8 +44,10 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 				_editMode: true,
 				sortingSequence: 0,
 				nameEN: "",
-				nameFR: ""
+				nameFR: "",
+				_counter: iNewItemsCounter
 			});
+			iNewItemsCounter++;
 			$scope.tableParams.reload();
 		};
 
@@ -51,7 +55,7 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 			oProject._editMode = true;
 		};
 
-		$scope.onDelete = function(oProject, iIndex) {
+		$scope.onDelete = function(oProject) {
 			var oDataForSave = {
 				GeneralAttributes: {
 					IsDeleted: true
@@ -67,9 +71,9 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 				$scope.tableParams.reload();
 			}
 
-			if(oProject._guid){
+			if (oProject._guid) {
 				oDataForSave.Guid = oProject._guid;
-				oDataForSave.LastModifiedAt = oProject._lastModifiedAt;			
+				oDataForSave.LastModifiedAt = oProject._lastModifiedAt;
 				apiProvider.updateProject({
 					bShowSpinner: true,
 					sKey: oDataForSave.Guid,
@@ -77,11 +81,14 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 					bShowSuccessMessage: true,
 					bShowErrorMessage: true,
 					onSuccess: onSuccessDelete
-				});				
-			}else{
-				if(!oProjectsListData.aData[iIndex]._guid){
-					oProjectsListData.aData.splice(iIndex, 1);
-					$scope.tableParams.reload();					
+				});
+			} else {
+				for (var i = 0; i < oProjectsListData.aData.length; i++) {
+					if(oProjectsListData.aData[i]._counter === oProject._counter){
+						oProjectsListData.aData.splice(i, 1);
+						$scope.tableParams.reload();	
+						break;					
+					}
 				}
 			}
 		},

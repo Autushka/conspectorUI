@@ -188,9 +188,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					page: 1, // show first page
 					count: 10000, // count per page
 					filterDelay: 250,
-					// sorting: {
-					// 	name: 'asc' // initial sorting
-					// }
+					sorting: oParameters.oInitialSorting
 				}, {
 					total: oParameters.oInitialDataArrayWrapper.aData.length,
 					sDisplayedDataArrayName: oParameters.sDisplayedDataArrayName,

@@ -4,6 +4,8 @@ app.controller('mainController', ['$scope', '$rootScope', 'apiProvider', 'servic
 
 		if (sUserName) {
 			servicesProvider.onF5WithCurrentUserHandler(sUserName);
+		}else{
+			window.location.href = "#/signIn";
 		}
 
 		$rootScope.$on('LOAD', function() {

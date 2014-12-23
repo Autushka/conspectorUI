@@ -184,12 +184,16 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						oDataForUpdate.LastModifiedAt = utilsProvider.dateToDBDate(new Date());
 						oDataForUpdate.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
 
+						if(!oDataForUpdate.GeneralAttributes.IsDeleted){
+							oDataForUpdate.GeneralAttributes.IsDeleted = false;
+						}
+
 						oPutOdataSrv = (new genericODataFactory(oDataForUpdate)).$put({
 							path: oParameters.sPath,
 							key: oParameters.sKey,
 						});
 
-						oPutOdataSrv.then($.proxy(function(oData) { // }
+						oPutOdataSrv.then($.proxy(function(oData) { 
 							this.commonOnSuccess(oParameters);
 							deffered.resolve(oData);
 						}, this), $.proxy(function() {
@@ -199,8 +203,6 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						this.commonOnError(oParameters, deffered);
 					}
 				}, this));
-
-
 				return deffered.promise;
 			},
 
@@ -214,7 +216,6 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				}
 
 				oData = oParameters.oData;
-				//oData.GeneralAttributes = {};
 				if (oParameters.bGuidNeeded) {
 					oData.Guid = utilsProvider.generateGUID();
 				}
@@ -223,11 +224,12 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				oData.LastModifiedAt = oParameters.oData.CreatedAt;
 				oData.GeneralAttributes.CreatedBy = cacheProvider.oUserProfile.sUserName;
 				oData.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
+				oData.GeneralAttributes.IsDeleted = false;			
+				oData.GeneralAttributes.IsArchived = false;			
 
 				if (!oData.GeneralAttributes.SortingSequence) {
 					oData.GeneralAttributes.SortingSequence = 0;
 				}
-
 
 				oOdataSrv = (new genericODataFactory(oData)).$post({
 					path: oParameters.sPath,
@@ -321,7 +323,6 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				if (!oParameters.sRequestType) {
 					oParameters.sRequestType = "POST";
 				}
-
 				$.ajax({
 					type: oParameters.sRequestType,
 					async: oParameters.bAsync,
