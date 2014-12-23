@@ -28,17 +28,6 @@ viewControllers.controller('operationLogsListView', ['$scope', '$state', 'servic
 				}	
 
 				oOperationLogsListData.aData.push(oOperation);		
-
-			//	if (!aData[i].GeneralAttributes.IsDeleted) {
-					// oOperationLogsListData.aData.push({
-					// 	operationName: aData[i].OperationName,
-					// 	operationContent: "",
-					// 	createdBy: aData[i].GeneralAttributes.CreatedBy,
-					// 	createdAt: utilsProvider.dBDateToSting(aData[i].CreatedAt) //aData[i].CreatedAt
-					// });
-			//	}
-
-
 			}
 			$scope.tableParams.reload();
 		}

@@ -12,6 +12,10 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 			oRole.RoleName = cacheProvider.oUserProfile.aUserRoles[i].RoleName;
 			oRole.DescriptionEN = cacheProvider.oUserProfile.aUserRoles[i].DescriptionEN;
 			oRole.DescriptionFR = cacheProvider.oUserProfile.aUserRoles[i].DescriptionFR;
+
+			if(!oRole.DescriptionFR){
+				oRole.DescriptionFR = oRole.DescriptionEN; //default value is engilsh one (in case when translation is missing)
+			}
 			oRole._sortingSequence = cacheProvider.oUserProfile.aUserRoles[i].GeneralAttributes.SortingSequence;
 			aRoles.push(oRole);
 		}

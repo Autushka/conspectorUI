@@ -232,6 +232,57 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
+			getPhases: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "Phases",
+					sExpand:"ProjectDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oPhaseEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			createPhase: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oPhaseEntity");
+					oParameters.onSuccess(oData);
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Phases",
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			updatePhase: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oPhaseEntity");
+					oParameters.onSuccess(oData);
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "Phases",
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},			
+
 			getRoles: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Roles",

@@ -9,6 +9,9 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 		$scope.onProjects = function(){
 			$window.location.href = "#/app/adminPanel/projectsList";
 		};	
+		$scope.onPhases = function(){
+			$window.location.href = "#/app/adminPanel/phasesList";
+		};			
 		$scope.onOperationLogs = function(){
 			$window.location.href = "#/app/adminPanel/operationLogsList";
 		};		

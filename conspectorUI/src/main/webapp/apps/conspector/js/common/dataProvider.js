@@ -187,6 +187,12 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						if(!oDataForUpdate.GeneralAttributes.IsDeleted){
 							oDataForUpdate.GeneralAttributes.IsDeleted = false;
 						}
+						if(!oDataForUpdate.GeneralAttributes.IsArchived){
+							oDataForUpdate.GeneralAttributes.IsArchived = false;
+						}	
+						if(!oDataForUpdate.GeneralAttributes.SortingSequence){
+							oDataForUpdate.GeneralAttributes.SortingSequence = 0;
+						}												
 
 						oPutOdataSrv = (new genericODataFactory(oDataForUpdate)).$put({
 							path: oParameters.sPath,

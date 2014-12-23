@@ -38,12 +38,15 @@ app.config(['$translateProvider',
                   adminPanen_userManagement: 'User Management',
                   adminPanen_roles: "User Roles",
                   adminPanen_projects: 'Projects',
+                  adminPanen_phases: 'Phases',
                   adminPanen_operationLogs: 'Operation Logs',
                   //rolesList
                   rolesList_title: "User Roles",
                   rolesList_roleName: "Role Name",
                   //projectsList
                   projectsList_title: 'Projects',
+                  //phasesList
+                  phasesList_title: 'Phases',
                   //operationLogsList
                   operationLogsList_title: 'Operation Logs',
                   operationLogsList_operationName: 'Operation Name',
@@ -117,12 +120,15 @@ app.config(['$translateProvider',
                   adminPanen_userManagement: 'User Management',
                   adminPanen_roles: "User Roles",
                   adminPanen_projects: 'Projects',
+                  adminPanen_phases: 'Phases',
                   adminPanen_operationLogs: 'Operation Logs',
                   //rolesList
                   rolesList_title: "User Roles",
                   rolesList_roleName: "Role Name",
                   //projectsList
                   projectsList_title: 'Projects',
+                  //phasesList
+                  phasesList_title: 'Phases',
                   //operationLogsList
                   operationLogsList_title: 'Operation Logs',
                   operationLogsList_operationName: 'Operation Name',
