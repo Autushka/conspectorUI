@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
 		<link rel="stylesheet" href="bower_components/angular-material/themes/orange-theme.css">
 		<link rel="stylesheet" href="apps/conspector/js/thirdParty/ng-table.min.css">		
+		<link rel="stylesheet" href="bower_components/isteven-angular-multiselect/angular-multi-select.css">		
 			
 
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>		
@@ -22,6 +23,8 @@
 		<script src="bower_components/angular-aria/angular-aria.min.js"></script>
 		<script src="bower_components/angular-material/angular-material.min.js"></script>
 		<script src="bower_components/jshashes/hashes.min.js"></script>
+		<script src="bower_components/isteven-angular-multiselect/angular-multi-select.js"></script>
+		
 
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->		
 

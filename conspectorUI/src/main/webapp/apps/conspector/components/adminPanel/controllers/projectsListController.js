@@ -34,7 +34,6 @@ viewControllers.controller('projectsListView', ['$scope', '$state', 'servicesPro
 		}
 
 		apiProvider.getProjects({
-			sPath: "Projects",
 			bShowSpinner: true,
 			onSuccess: onProjectsLoaded
 		});

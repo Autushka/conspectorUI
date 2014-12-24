@@ -1,28 +1,37 @@
 <div>{{'phasesList_title' | translate}}</div>
 <md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
 <table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
-
 	<tr ng-repeat="phase in aDisplayedPhases">
 		<td data-title="actionsTE" style="width: 10%;">
 			<span ng-if="!phase._editMode" ng-click="onEdit(phase)">Edit</span><span ng-if="phase._editMode" ng-click="onSave(phase)">Save</span><span ng-if="phase._editMode" ng-click="onDelete(phase)">Delete</span>
 		</td>
 		<td data-title="projectTE" style="width: 10%;">
-        	<span ng-if="!phase._editMode">{{phase.projectName}}</span>
-         	<!-- <div ng-if="phase._editMode"><input type="text" ng-model="phase.nameEN"/></div> -->
+			<span ng-if="!phase._editMode">{{phase.projectName}}</span>
+			<div ng-if="phase._editMode"
+				multi-select
+				input-model="phase.aProjects"
+				button-label="name"
+				item-label="name"
+				tick-property="ticked"
+				selection-mode="single"
+				helper-elements=""
+				>
+			</div>
+			
+			<!-- <div ng-if="phase._editMode"><input type="text" ng-model="phase.nameEN"/></div> -->
 		</td>
-
-		<td data-title="nameENTE" sortable="'nameEN'" style="width: 35%;">
-        	<span ng-if="!phase._editMode">{{phase.nameEN}}</span>
-         	<div ng-if="phase._editMode"><input type="text" ng-model="phase.nameEN"/></div>
+		<td data-title="nameENTE" sortable="'nameEN'" style="width: 30%;">
+			<span ng-if="!phase._editMode">{{phase.nameEN}}</span>
+			<div ng-if="phase._editMode"><input type="text" ng-model="phase.nameEN"/></div>
 		</td>
-		<td data-title="nameFRTE" sortable="'nameFR'" style="width: 35%;">
-        	<span ng-if="!phase._editMode">{{phase.nameFR}}</span>
-         	<div ng-if="phase._editMode"><input type="text" ng-model="phase.nameFR"/></div>
+		<td data-title="nameFRTE" sortable="'nameFR'" style="width: 30%;">
+			<span ng-if="!phase._editMode">{{phase.nameFR}}</span>
+			<div ng-if="phase._editMode"><input type="text" ng-model="phase.nameFR"/></div>
 		</td>
 		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 20%;">
-        	<span ng-if="!phase._editMode">{{phase.sortingSequence}}</span>
-         	<div ng-if="phase._editMode"><input type="number" ng-model="phase.sortingSequence"/></div>
+			<span ng-if="!phase._editMode">{{phase.sortingSequence}}</span>
+			<div ng-if="phase._editMode"><input type="number" ng-model="phase.sortingSequence"/></div>
 		</td>
 	</tr>
-	<tr ng-hide="aDisplayedPhases.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>		
+	<tr ng-hide="aDisplayedPhases.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>
 </table>

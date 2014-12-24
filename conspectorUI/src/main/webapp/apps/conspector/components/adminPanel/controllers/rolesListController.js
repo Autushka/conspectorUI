@@ -36,7 +36,6 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 		}
 
 		apiProvider.getRoles({
-			sPath: "Roles",
 			bShowSpinner: true,
 			onSuccess: onRolesLoaded
 		});
