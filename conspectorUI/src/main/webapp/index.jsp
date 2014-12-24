@@ -8,7 +8,6 @@
 		<link rel="stylesheet" href="apps/conspector/js/thirdParty/ng-table.min.css">		
 		<link rel="stylesheet" href="bower_components/isteven-angular-multiselect/angular-multi-select.css">		
 			
-
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>		
 		<script src="bower_components/angular/angular.min.js"></script>
 		<script src="bower_components/angular-route/angular-route.min.js"></script>
@@ -27,7 +26,8 @@
 		
 
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->		
-
+		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->	
+		<script src="apps/conspector/js/thirdParty/angular-file-upload.min.js"></script> <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
 
 		<script src="apps/conspector/js/app.js"></script>
 
@@ -41,10 +41,8 @@
 		<script src="apps/conspector/js/common/apiProvider.js"></script>
 		<script src="apps/conspector/js/common/servicesProvider.js"></script>		
 
-
 		<script src="apps/conspector/js/mainController.js"></script>
-	
-			
+				
 		<script src="apps/conspector/components/userManagement/controllers/signInController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/forgotPasswordController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/roleSelectionController.js"></script>
@@ -64,7 +62,9 @@
 		<script src="apps/conspector/components/adminPanel/controllers/projectsListController.js"></script>		
 		<script src="apps/conspector/components/adminPanel/controllers/phasesListController.js"></script>		
 		<script src="apps/conspector/components/adminPanel/controllers/rolesListController.js"></script>	
-		<script src="apps/conspector/components/adminPanel/controllers/operationLogsListController.js"></script>																		
+		<script src="apps/conspector/components/adminPanel/controllers/operationLogsListController.js"></script>	
+		<script src="apps/conspector/components/adminPanel/controllers/deficiencyStatusesListController.js"></script>	
+		<script src="apps/conspector/components/adminPanel/controllers/systemFilesController.js"></script>																			
 		<!--<script src="dist/conspector.min.js"></script> -->
 	</head>
 	<body id="body" ng-controller="mainController">

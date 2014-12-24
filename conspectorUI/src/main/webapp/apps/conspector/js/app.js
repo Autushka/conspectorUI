@@ -1,4 +1,4 @@
-var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select']);
+var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload']);
 var viewControllers = angular.module('viewControllers', []);
 
 app.config(['$stateProvider', '$urlRouterProvider',
@@ -70,6 +70,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/usersListView.html',
 			controller: 'usersListView'
 		});	
+		$stateProvider.state('app.adminPanel.rolesList', {
+			url: '/rolesList',
+			templateUrl: 'apps/conspector/components/adminPanel/templates/rolesListView.html',
+			controller: 'rolesListView'
+		});			
 		$stateProvider.state('app.adminPanel.projectsList', {
 			url: '/projectsList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/projectsListView.html',
@@ -80,11 +85,16 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/phasesListView.html',
 			controller: 'phasesListView'
 		});				
-		$stateProvider.state('app.adminPanel.rolesList', {
-			url: '/rolesList',
-			templateUrl: 'apps/conspector/components/adminPanel/templates/rolesListView.html',
-			controller: 'rolesListView'
-		});			
+		$stateProvider.state('app.adminPanel.deficiencyStatusesList', {
+			url: '/deficiencyStatusesList',
+			templateUrl: 'apps/conspector/components/adminPanel/templates/deficiencyStatusesListView.html',
+			controller: 'deficiencyStatusesListView'
+		});	
+		$stateProvider.state('app.adminPanel.systemFiles', {
+			url: '/systemFiles',
+			templateUrl: 'apps/conspector/components/adminPanel/templates/systemFilesView.html',
+			controller: 'systemFilesView'
+		});					
 		$stateProvider.state('app.adminPanel.operationLogsList', {
 			url: '/operationLogsList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/operationLogsListView.html',

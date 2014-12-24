@@ -139,6 +139,16 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				return deffered.promise;
 			},
 
+			getAttachments: function(oParameters){
+				var sUrl = oParameters.sPath;
+				var oSvc = dataProvider.httpRequest({
+					sPath: sUrl
+				});
+				oSvc.then(function(aData) {
+					oParameters.onSuccess(aData);
+				});
+			},
+
 			updateUser: function(oParameters) {
 				var deffered = $q.defer();
 
@@ -157,13 +167,18 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			logEvent: function(oParameters) {
 				var oData = oParameters.oData;
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oOperationLogEntity");
+				};
 				oData.OperationContent = JSON.stringify(oParameters.oData.OperationContent);
 
-				dataProvider.createEntity({
+				var oSvc = dataProvider.createEntity({
 					sPath: "OperationLogs",
 					oData: oData,
 					bGuidNeeded: true
 				});
+
+				oSvc.then(onSuccess);
 			},
 
 			getOperationLogs: function(oParameters) {
@@ -235,7 +250,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getPhases: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Phases",
-					sExpand:"ProjectDetails",
+					sExpand: "ProjectDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
@@ -281,7 +296,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},			
+			},
 
 			getRoles: function(oParameters) {
 				var svc = dataProvider.getEntitySet({

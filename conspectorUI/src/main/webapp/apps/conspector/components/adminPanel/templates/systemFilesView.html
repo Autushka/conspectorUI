@@ -1,0 +1,38 @@
+<div>{{'systemFiles_title' | translate}}</div>
+<div>{{'systemFiles_logos' | translate}}</div>
+<md-button type="submit" class="md-primary md-raised" ng-click="onAddNewLogo()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
+<table ng-table="logosTableParams" style="width: 100%; border:1px solid black;" >
+	<tr ng-repeat="logo in aDisplayedLogos">
+		<td data-title="actionsTE" style="width: 10%;">
+			<span ng-if="logo._editMode == false" ng-click="onEditImg(logo)">Edit</span>
+			<span ng-if="logo._editMode" ng-click="onCancelLogo(logo, $index)">Cancel</span>
+			<span ng-if="logo._editMode" ng-click="onDeleteLogo(logo, $index)">Delete</span>
+		</td>
+
+		<td>
+			<img ng-if="!logo._createMode" ng-src="{{logo.sUrl}}" style="width:200px; height:100px;"/>
+			<button ng-if="logo._createMode" ng-file-select accept="image/*" ng-file-change="onLogoSelected($files, $event, $index)">{{'global_upload' | translate}}</button>			
+		</td>
+	</tr>
+	<tr ng-hide="aDisplayedLogos.length > 0"><td colspan="1" >{{'global_noTableData' | translate}}</td></tr>		
+</table>
+
+<div>{{'systemFiles_deficiencyStatuses' | translate}}</div>
+<md-button type="submit" class="md-primary md-raised" ng-click="onAddNewDeficiencyStatus()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
+<table ng-table="deficiencyStatusesTableParams" style="width: 100%; border:1px solid black;" >
+
+	<tr ng-repeat="deficiencyStatus in aDisplayedDeficiencyStatuses">
+		<td data-title="actionsTE" style="width: 10%;">
+			<span ng-if="deficiencyStatus._editMode == false" ng-click="onEditImg(deficiencyStatus)">Edit</span>
+			<span ng-if="deficiencyStatus._editMode" ng-click="onCancelDeficiencyStatus(deficiencyStatus, $index)">Cancel</span>
+			<span ng-if="deficiencyStatus._editMode" ng-click="onDeleteDeficiencyStatus(deficiencyStatus, $index)">Delete</span>
+		</td>
+
+		<td>
+			<img ng-if="!deficiencyStatus._createMode" ng-src="{{deficiencyStatus.sUrl}}" style="width:24px; height:24px;"/>
+			<button ng-if="deficiencyStatus._createMode" ng-file-select accept="image/*" ng-file-change="onDeficiencyStatusSelected($files, $event, $index)">{{'global_upload' | translate}}</button>			
+		</td>
+
+	</tr>
+	<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0"><td colspan="1" >{{'global_noTableData' | translate}}</td></tr>		
+</table>

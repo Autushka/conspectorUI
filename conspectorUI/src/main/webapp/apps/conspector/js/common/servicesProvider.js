@@ -169,6 +169,45 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				return bNoErrorMessages;
 			},
 
+			costructUploadUrl: function(oParameters) {
+				var sReturnUrl = ""
+				var onSuccess = function(sUrl) {
+					sReturnUrl = sUrl;
+				};
+
+				dataProvider.ajaxRequest({
+					sPath: oParameters.sPath,
+					sRequestType: "GET",
+					bAsync: false,
+					oData: {},
+					oEventHandlers: {
+						onSuccess: function(sUrl) {
+							//return sUrl;
+							onSuccess(sUrl);
+						}
+					}
+				});
+				return sReturnUrl;
+			},
+
+			deleteFileAttachment: function(sGuid) {
+				var sUrl = "rest/file/delete/" + sGuid;
+				dataProvider.ajaxRequest({
+					sPath: sUrl,
+					sRequestType: "GET",
+					bAsync: false,
+					oData: {},
+					oEventHandlers: {
+						onSuccess: function(sUrl) {
+							utilsProvider.displayMessage({
+								sText: $translate.instant("global_successOperation"),
+								sType: 'success'
+							});
+						}
+					}
+				});
+			},
+
 			constructLogoUrl: function() {
 				var sUrl = "rest/file/list/settings/settings/_logo_";
 				var oSvc = dataProvider.httpRequest({
@@ -176,7 +215,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				});
 				oSvc.then(function(aData) {
 					if (aData[0]) {
-						$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].rowId;
+						$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].guid;
 					} else {
 						$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "img/logo_conspector.png";
 					}
@@ -198,7 +237,9 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 							$filter('orderBy')(aInitialData, params.orderBy()) :
 							aInitialData;
 
-						$defer.resolve(aSortedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+						var aFilteredData = params.filter() ? $filter('filter')(aSortedData, params.filter()) : aSortedData;
+
+						$defer.resolve(aFilteredData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 					},
 					counts: []
 				});
