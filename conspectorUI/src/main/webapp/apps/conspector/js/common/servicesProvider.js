@@ -222,6 +222,44 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				});
 			},
 
+			constructDependentMultiSelectArray: function(oParameters) { //oDependentArrayWrapper, oParentArrayWrapper, oNewParentItemArrayWrapper, sNameEN, sNameFR, sDependentKey, sParentKey, sTargetArrayNameInParent
+				var aMultiSelectArray = [];
+				var oMultiSelectItem = {}
+				for (var i = 0; i < oParameters.oDependentArrayWrapper.aData.length; i++) {
+					oMultiSelectItem = {};
+					oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR];
+					if (!oMultiSelectItem.name) {
+						oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
+					}
+					oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentKey];
+					aMultiSelectArray.push(oMultiSelectItem);
+				};
+
+				oParameters.oNewParentItemArrayWrapper.aData = angular.copy(aMultiSelectArray);
+				if(oParameters.oNewParentItemArrayWrapper.aData[0]){
+					oParameters.oNewParentItemArrayWrapper.aData[0].ticked = true;
+				}
+
+				for (var i = 0; i < oParameters.oParentArrayWrapper.aData.length; i++) {
+					var aArray = [];
+					var aArrayItem = {};
+					var bMatchFound = false;
+					for (var j = 0; j < aMultiSelectArray.length; j++) {
+						aArrayItem = {};
+						angular.copy(aMultiSelectArray[j], aArrayItem);
+						if (oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKey] === aMultiSelectArray[j][oParameters.sDependentKey]) {
+							aArrayItem.ticked = true;
+							bMatchFound = true;
+						}
+						aArray.push(aArrayItem);
+					}
+					if (!bMatchFound && aArray[0]) {
+						aArray[0].ticked = true;
+					}
+					oParameters.oParentArrayWrapper.aData[i][oParameters.sTargetArrayNameInParent] = aArray;
+				}
+			},
+
 			createNgTable: function(oParameters) {
 				var oTableParams = new ngTableParams({
 					page: 1, // show first page

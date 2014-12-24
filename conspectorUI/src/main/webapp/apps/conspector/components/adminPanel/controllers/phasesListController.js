@@ -6,7 +6,8 @@ viewControllers.controller('phasesListView', ['$scope', '$state', 'servicesProvi
 		$scope.nameFRTE = $translate.instant('global_descriptionFR');
 		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
 
-		$scope.aProjects = [];
+		var oProjectArrayWrapper = {aData: []};
+		//$scope.aProjects = [];
 
 		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
 
@@ -25,43 +26,18 @@ viewControllers.controller('phasesListView', ['$scope', '$state', 'servicesProvi
 		var aProjectArray = [];
 
 		var onProjectsLoaded = function(aData) {
-			aProjectArray = [];// array for Add New project selection drop down
-			var oProject = {}
-			for (var i = 0; i < aData.length; i++) {
-				oProject = {};
-				oProject.name = $translate.use() === "en" ? aData[i].NameEN : aData[i].NameFR;
-				if (!oProject.name) {
-					oProject.name = aData[i].NameEN;
-				}
-				oProject.Guid = aData[i].Guid;
-				aProjectArray.push(oProject);
-			};
-
-			if(aProjectArray.length){
-				aProjectArray[0].ticked = true;
-			}
-
-			for (var i = 0; i < oPhasesListData.aData.length; i++) {
-				var aProjects = [];
-				for (var j = 0; j < aData.length; j++) {
-					oProject = {};
-					var bMatchFound = false;
-					if (oPhasesListData.aData[i]._projectGuid === aData[j].Guid) {
-						oProject.ticked = true;
-						bMatchFound = true;
-					}
-					oProject.name = $translate.use() === "en" ? aData[j].NameEN : aData[j].NameFR;
-					if (!oProject.name) {
-						oProject.name = aData[j].NameEN;
-					}
-					oProject.Guid = aData[j].Guid;
-					aProjects.push(oProject);
-				}
-				if (!bMatchFound && aProjects[0]) {
-					aProjects[0].ticked = true;
-				}
-				oPhasesListData.aData[i].aProjects = aProjects;
-			}
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oPhasesListData,
+				oNewParentItemArrayWrapper: oProjectArrayWrapper,
+				sNameEN: "NameEN",
+				sNameFR: "NameFR",
+				sDependentKey: "Guid",
+				sParentKey: "_projectGuid",
+				sTargetArrayNameInParent: "aProjects"
+			});
 		};
 
 		var onPhasesLoaded = function(aData) {
@@ -102,7 +78,7 @@ viewControllers.controller('phasesListView', ['$scope', '$state', 'servicesProvi
 				nameEN: "",
 				nameFR: "",
 				_counter: iNewItemsCounter,
-				aProjects: aProjectArray
+				aProjects: oProjectArrayWrapper.aData
 
 			});
 			iNewItemsCounter++;
