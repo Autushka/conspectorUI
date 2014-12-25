@@ -1,10 +1,14 @@
-viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate) {
+viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$window',
+	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $window) {
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.iconTE = $translate.instant('global_icon');
 		$scope.nameENTE = $translate.instant('global_descriptionEN');
 		$scope.nameFRTE = $translate.instant('global_descriptionFR');
 		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
+
+		var oStatusIconArrayWrapper = {
+			aData: []
+		};
 
 		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
 
@@ -20,8 +24,18 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 			}
 		});
 
-		var onIconsLoaded = function(aData){
-			// see phases as example
+		var onIconsLoaded = function(aData) {
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oDeficiencyStatusesListData,
+				oNewParentItemArrayWrapper: oStatusIconArrayWrapper,
+				sDependentKey: "guid",
+				sParentKey: "_associatedIconFileGuid",
+				sDependentIconKey: "guid",
+				sTargetArrayNameInParent: "aStatusIcons"
+			});
 		};
 
 		var onDeficiencyStatusesLoaded = function(aData) {
@@ -30,6 +44,8 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 					_editMode: false, //symbol _ here meens that this attribute is not displayed in the table and is used for the logic only
 					_guid: aData[i].Guid,
 					_lastModifiedAt: aData[i].LastModifiedAt,
+					_associatedIconFileGuid: aData[i].AssociatedIconFileGuid,
+					sUrl: $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
 					nameEN: aData[i].NameEN,
 					nameFR: aData[i].NameFR,
 					sortingSequence: aData[i].GeneralAttributes.SortingSequence
@@ -40,7 +56,7 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 			apiProvider.getAttachments({
 				sPath: "rest/file/list/settings/settings/_deficiencyStatuses_",
 				onSuccess: onIconsLoaded
-			});			
+			});
 		}
 
 		apiProvider.getDeficiencyStatuses({
@@ -54,7 +70,8 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 				sortingSequence: 0,
 				nameEN: "",
 				nameFR: "",
-				_counter: iNewItemsCounter
+				_counter: iNewItemsCounter,
+				aStatusIcons: oStatusIconArrayWrapper.aData
 			});
 			iNewItemsCounter++;
 			$scope.tableParams.reload();
@@ -93,10 +110,10 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 				});
 			} else {
 				for (var i = 0; i < oDeficiencyStatusesListData.aData.length; i++) {
-					if(oDeficiencyStatusesListData.aData[i]._counter === oDeficiencyStatus._counter){
+					if (oDeficiencyStatusesListData.aData[i]._counter === oDeficiencyStatus._counter) {
 						oDeficiencyStatusesListData.aData.splice(i, 1);
-						$scope.tableParams.reload();	
-						break;					
+						$scope.tableParams.reload();
+						break;
 					}
 				}
 			}
@@ -110,17 +127,27 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 				oDeficiencyStatus._guid = oData.Guid;
 				oDeficiencyStatus._lastModifiedAt = oData.LastModifiedAt;
 				oDeficiencyStatus._editMode = false;
-
+				oDeficiencyStatus._associatedIconFileGuid = oData.AssociatedIconFileGuid;
+				oDeficiencyStatus.sUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oData.AssociatedIconFileGuid;
 			};
 			var onSuccessUpdate = function(oData) {
 				oDeficiencyStatus._editMode = false;
 				oDeficiencyStatus._lastModifiedAt = oData.LastModifiedAt;
+				oDeficiencyStatus._associatedIconFileGuid = oData.AssociatedIconFileGuid;
+				oDeficiencyStatus.sUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oData.AssociatedIconFileGuid;				
 			};
 
 			oDataForSave.NameEN = oDeficiencyStatus.nameEN;
 			oDataForSave.NameFR = oDeficiencyStatus.nameFR;
 			oDataForSave.GeneralAttributes.SortingSequence = oDeficiencyStatus.sortingSequence;
 			oDataForSave.LastModifiedAt = oDeficiencyStatus._lastModifiedAt;
+
+			for (var i = 0; i < oDeficiencyStatus.aStatusIcons.length; i++) {
+				if (oDeficiencyStatus.aStatusIcons[i].ticked) {
+					oDataForSave.AssociatedIconFileGuid = oDeficiencyStatus.aStatusIcons[i].guid;
+					break;
+				}
+			}			
 
 			if (oDeficiencyStatus._guid) {
 				oDataForSave.Guid = oDeficiencyStatus._guid;

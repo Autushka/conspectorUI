@@ -102,8 +102,6 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					apiProvider.setCurrentRole(cacheProvider.oUserProfile.sCurrentRole); //current role is cached here				
 					// menu setup for the current role should happen here
 					this.logSuccessLogIn(); //log login_success operation 
-
-
 					window.location.href = rolesSettings.oInitialViews[cacheProvider.oUserProfile.sCurrentRole]; //navigation to the initial view for the role
 				} else {
 					window.location.href = "#/roleSelection";
@@ -227,16 +225,23 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				var oMultiSelectItem = {}
 				for (var i = 0; i < oParameters.oDependentArrayWrapper.aData.length; i++) {
 					oMultiSelectItem = {};
-					oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR];
-					if (!oMultiSelectItem.name) {
-						oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
+					if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] || oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR]) {
+						oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR];
+						if (!oMultiSelectItem.name) {
+							oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
+						}
 					}
+					if(oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey]){
+						oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/get/";
+						oMultiSelectItem.icon =  oMultiSelectItem.icon + oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey] + "' style='width: 24px; height: 24px;'/>"
+					}
+
 					oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentKey];
 					aMultiSelectArray.push(oMultiSelectItem);
 				};
 
 				oParameters.oNewParentItemArrayWrapper.aData = angular.copy(aMultiSelectArray);
-				if(oParameters.oNewParentItemArrayWrapper.aData[0]){
+				if (oParameters.oNewParentItemArrayWrapper.aData[0]) {
 					oParameters.oNewParentItemArrayWrapper.aData[0].ticked = true;
 				}
 
