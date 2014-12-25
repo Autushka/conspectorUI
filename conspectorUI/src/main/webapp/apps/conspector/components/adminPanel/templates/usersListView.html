@@ -1,1 +1,21 @@
-<div>Users List</div>
+<div>{{'userList_title' | translate}}</div>
+<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
+<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
+
+	<tr ng-repeat="user in aDisplayedUsers">
+		<td data-title="actionsTE" style="width: 10%;">
+			<span ng-click="onDisplay(user)">Display</span>
+			<span ng-click="onEdit(user)">Edit</span>
+		</td>
+		<td data-title="userNameTE" sortable="'userName'" style="width: 20%;">
+        	<span>{{user.userName}}</span>
+        </td>
+		<td data-title="emailTE" sortable="'email'" style="width: 20%;">
+        	<span>{{user.email}}</span>
+		</td>
+		<td data-title="rolesTE" style="width: 50%;">
+        	<span>{{user.roles}}</span>         	
+		</td>
+	</tr>
+	<tr ng-hide="aDisplayedUsers.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>		
+</table>
