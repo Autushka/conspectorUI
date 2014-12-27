@@ -123,7 +123,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				}
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {
-					window.location.href = "#/initialPasswordReset";
+					window.location.href = "#/signIn/";//"#/initialPasswordReset"; here old password needed to reset initial password
 					return;
 				}
 

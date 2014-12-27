@@ -6,7 +6,13 @@
 <label ng-click="onLogOut()">{{'app_logOut' | translate}}</label>
 
 <md-tabs md-selected="selectedTabIndex" md-stretch-tabs='no'>
- 	 <md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle}}">
+ 	 <md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle}}"></md-tab>
+ 	 
+<!--  	 <md-tab>
+ 	   <md-tab-label>
+    	<img src="img/logo_conspector.png" style="width:25px; height:25px; float: left"/>
+  		</md-tab-label>
+  	</md-tab> -->
 </md-tabs>
 
 <div ui-view></div>
