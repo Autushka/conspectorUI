@@ -163,23 +163,51 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
-			},			
+			},	
+
+			getUser: function(oParameters) {
+				var svc = dataProvider.getEntity({
+					sPath: "Users",
+					sKey: oParameters.sKey,
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(oParameters.onSuccess);
+			},	
+
+			createUser: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oUserEntity");
+					oParameters.onSuccess(oData);
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Users",
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: false
+				});
+
+				oSvc.then(onSuccess);
+			},
 
 			updateUser: function(oParameters) {
-				var deffered = $q.defer();
-
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oUserEntity");
+					oParameters.onSuccess(oData);
+				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "Users",
 					sKey: oParameters.sKey,
 					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
 				});
 
-				oSvc.then(function(oData) {
-					deffered.resolve(oData);
-				});
-				return deffered.promise;
-			},
+				oSvc.then(onSuccess);
+			},							
 
 			logEvent: function(oParameters) {
 				var oData = oParameters.oData;

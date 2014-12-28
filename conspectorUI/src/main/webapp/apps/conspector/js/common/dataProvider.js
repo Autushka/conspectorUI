@@ -86,7 +86,17 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				var oOdataSrv = {};
 				var deffered = $q.defer();
 				var aCachedEntities = [];
-				var sRequestSettings = oParameters.sKey + oParameters.sFilter + oParameters.sExpand;
+				var sRequestSettings = "";
+				
+				if(oParameters.sKey){
+					sRequestSettings = oParameters.sKey;
+				}
+				if(oParameters.sFilter){
+					sRequestSettings = sRequestSettings + oParameters.sFilter;
+				}
+				if(oParameters.sExpand){
+					sRequestSettings = sRequestSettings + oParameters.sExpand;
+				}				
 				if (!sRequestSettings) {
 					sRequestSettings = ""; //to evoid NaN value
 				}

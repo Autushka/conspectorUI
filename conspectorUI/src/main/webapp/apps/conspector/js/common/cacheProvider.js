@@ -60,6 +60,23 @@ app.factory('cacheProvider', ['TYPES', function(TYPES) {
 		cleanAllCache: function(){
 			this.cleanEntitiesCache();
 			this.cleanProfileCache();
+		},
+
+		getEntityDetails: function(oParameters){
+			var oEntity = {};
+			for (var i = 0; i < this.oEntitiesCache[oParameters.sCacheProviderAttribute].aCachedRequests.length; i++) {
+				if(this.oEntitiesCache[oParameters.sCacheProviderAttribute].aCachedRequests[i].sRequestSettings === oParameters.sRequestSettings){
+					for (var j = 0; j < this.oEntitiesCache[oParameters.sCacheProviderAttribute].aCachedRequests[i].aEntitiesArray.length; j++) {
+						if(this.oEntitiesCache[oParameters.sCacheProviderAttribute].aCachedRequests[i].aEntitiesArray[j][oParameters.sKeyName] === oParameters.sKeyValue){
+							oEntity = angular.copy(this.oEntitiesCache[oParameters.sCacheProviderAttribute].aCachedRequests[i].aEntitiesArray[j]);
+							break;
+						}
+					}
+					break;
+				}
+			}
+
+			return oEntity;
 		}
 	}
 }]);

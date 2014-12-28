@@ -70,6 +70,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/usersListView.html',
 			controller: 'usersListView'
 		});	
+		$stateProvider.state('app.adminPanel.userDetails', {
+			url: '/userDetails/:sUserName/:sMode/:sFromState',
+			templateUrl: 'apps/conspector/components/adminPanel/templates/userDetailsView.html',
+			controller: 'userDetailsView'
+		});			
 		$stateProvider.state('app.adminPanel.rolesList', {
 			url: '/rolesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/rolesListView.html',

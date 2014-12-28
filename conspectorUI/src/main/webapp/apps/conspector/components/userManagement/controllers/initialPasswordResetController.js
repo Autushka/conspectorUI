@@ -7,7 +7,11 @@ viewControllers.controller('initialPasswordResetView', ['$scope', '$state', 'dat
 
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
-		}
+		};
+		
+		var onUserUpdated = function(){
+			servicesProvider.onLogInSuccessHandler(cacheProvider.oUserProfile.sUserName, "");
+		};
 
 		$scope.resetPassword = function() {
 			var SHA512 = new Hashes.SHA512;
@@ -38,11 +42,9 @@ viewControllers.controller('initialPasswordResetView', ['$scope', '$state', 'dat
 							UserName: cacheProvider.oUserProfile.sUserName,
 							IsPasswordInitial: false,
 							LastModifiedAt: cacheProvider.oUserProfile.sLastModifiedAt
-						}
+						},
+						onSuccess: onUserUpdated
 					});
-					oSvc.then(function() {
-						servicesProvider.onLogInSuccessHandler(cacheProvider.oUserProfile.sUserName, "");
-					})
 				}
 			});
 		};
