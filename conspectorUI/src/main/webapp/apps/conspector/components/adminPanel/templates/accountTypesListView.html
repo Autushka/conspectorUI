@@ -1,0 +1,23 @@
+<div>{{'accountTypesList_title' | translate}}</div>
+<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
+<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
+
+	<tr ng-repeat="accountType in aDisplayedAccountTypes">
+		<td data-title="actionsTE" style="width: 10%;">
+			<span ng-if="!accountType._editMode" ng-click="onEdit(accountType)">Edit</span><span ng-if="accountType._editMode" ng-click="onSave(accountType)">Save</span><span ng-if="accountType._editMode" ng-click="onDelete(accountType)">Delete</span>
+		</td>
+		<td data-title="nameENTE" sortable="'nameEN'" style="width: 35%;">
+        	<span ng-if="!accountType._editMode">{{accountType.nameEN}}</span>
+         	<div ng-if="accountType._editMode"><input type="text" ng-model="accountType.nameEN"/></div>
+		</td>
+		<td data-title="nameFRTE" sortable="'nameFR'" style="width: 35%;">
+        	<span ng-if="!accountType._editMode">{{accountType.nameFR}}</span>
+         	<div ng-if="accountType._editMode"><input type="text" ng-model="accountType.nameFR"/></div>
+		</td>
+		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 20%;">
+        	<span ng-if="!accountType._editMode">{{accountType.sortingSequence}}</span>
+         	<div ng-if="accountType._editMode"><input type="number" ng-model="accountType.sortingSequence"/></div>
+		</td>
+	</tr>
+	<tr ng-hide="aDisplayedaccountTypes.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>		
+</table>

@@ -21,5 +21,8 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 		$scope.onSystemFiles = function() {
 			$window.location.href = "#/app/adminPanel/systemFiles";
 		};
+		$scope.onAccountTypes = function() {
+			$window.location.href = "#/app/adminPanel/accountTypesList";
+		};
 	}
 ]);

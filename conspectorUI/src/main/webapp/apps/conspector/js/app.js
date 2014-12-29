@@ -104,7 +104,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			url: '/operationLogsList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/operationLogsListView.html',
 			controller: 'operationLogsListView'
-		});										
+		});	
+		$stateProvider.state('app.adminPanel.accountTypesList', {
+			url: '/accountTypesList',
+			templateUrl: 'apps/conspector/components/adminPanel/templates/accountTypesListView.html',
+			controller: 'accountTypesListView'
+		});									
 									
 
 
