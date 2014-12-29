@@ -123,7 +123,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				}
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {
-					window.location.href = "#/signIn/";//"#/initialPasswordReset"; here old password needed to reset initial password
+					window.location.href = "#/signIn/"; //"#/initialPasswordReset"; here old password needed to reset initial password
 					return;
 				}
 
@@ -220,29 +220,66 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				});
 			},
 
-			constructDependentMultiSelectArray: function(oParameters) { //oDependentArrayWrapper, oParentArrayWrapper, oNewParentItemArrayWrapper, sNameEN, sNameFR, sDependentKey, sParentKey, sTargetArrayNameInParent
+			constructDependentMultiSelectArray: function(oParameters) { //oDependentArrayWrapper, oParentArrayWrapper, sSecondLevelAttribute, oNewParentItemArrayWrapper, sNameEN, sNameFR, sSecondLevelNameEN, sSecondLevelNameFR, sDependentKey, sParentKey, aParentKeys, sTargetArrayNameInParent
 				var aMultiSelectArray = [];
 				var oMultiSelectItem = {}
 				for (var i = 0; i < oParameters.oDependentArrayWrapper.aData.length; i++) {
-					oMultiSelectItem = {};
-					if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] || oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR]) {
-						oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR];
-						if (!oMultiSelectItem.name) {
-							oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
+					if (!oParameters.sSecondLevelAttribute) {
+						oMultiSelectItem = {};
+						if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] || oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR]) {
+							oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR];
+							if (!oMultiSelectItem.name) {
+								oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
+							}
 						}
-					}
-					if(oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey]){
-						oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/get/";
-						oMultiSelectItem.icon =  oMultiSelectItem.icon + oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey] + "' style='width: 24px; height: 24px;'/>"
-					}
+						if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey]) {
+							oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/get/";
+							oMultiSelectItem.icon = oMultiSelectItem.icon + oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey] + "' style='width: 24px; height: 24px;'/>"
+						}
 
-					oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentKey];
-					aMultiSelectArray.push(oMultiSelectItem);
+						oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentKey];
+						aMultiSelectArray.push(oMultiSelectItem);
+					} else {
+						oMultiSelectItem = {};
+						oMultiSelectItem.multiSelectGroup = true;
+						var sName = "";
+						if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] || oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR]) {
+							sName = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR];
+							if (!sName) {
+								sName = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
+							}
+						}
+						oMultiSelectItem.multiSelectGroup.name = '<strong>' + sName + '</strong>';
+						aMultiSelectArray.push(oMultiSelectItem);
+						for (var j = 0; j < oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].length; j++) {
+							oMultiSelectItem = {};
+							if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameEN] || oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameFR]) {
+								oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameFR];
+								if (!oMultiSelectItem.name) {
+									oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameEN];
+								}
+							}
+							oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sDependentKey];
+							aMultiSelectArray.push(oMultiSelectItem);
+						}
+						oMultiSelectItem = {};
+						oMultiSelectItem.multiSelectGroup = false;
+						aMultiSelectArray.push(oMultiSelectItem);
+					}
 				};
 
 				oParameters.oNewParentItemArrayWrapper.aData = angular.copy(aMultiSelectArray);
-				if (oParameters.oNewParentItemArrayWrapper.aData[0]) {
-					oParameters.oNewParentItemArrayWrapper.aData[0].ticked = true;
+				if (!oParameters.sSecondLevelAttribute) {
+					if (oParameters.oNewParentItemArrayWrapper.aData[0]) {
+						oParameters.oNewParentItemArrayWrapper.aData[0].ticked = true;
+					}
+				} else {
+					for (var i = 0; i < oParameters.oNewParentItemArrayWrapper.aData.length; i++) {
+						if (oParameters.oNewParentItemArrayWrapper.aData[i].multiSelectGroup === undefined) {
+							oParameters.oNewParentItemArrayWrapper.aData[i].ticked = true;
+							break;
+						}
+					}
 				}
 
 				for (var i = 0; i < oParameters.oParentArrayWrapper.aData.length; i++) {
@@ -252,9 +289,19 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					for (var j = 0; j < aMultiSelectArray.length; j++) {
 						aArrayItem = {};
 						angular.copy(aMultiSelectArray[j], aArrayItem);
-						if (oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKey] === aMultiSelectArray[j][oParameters.sDependentKey]) {
-							aArrayItem.ticked = true;
-							bMatchFound = true;
+
+						if(!oParameters.aParentKeys){
+							if (oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKey] === aMultiSelectArray[j][oParameters.sDependentKey]) {
+								aArrayItem.ticked = true;
+								bMatchFound = true;
+							}							
+						}else{
+							for (var k = 0; k < oParameters.aParentKeys.length; k++) {
+								if(aMultiSelectArray[j][oParameters.sDependentKey] === oParameters.aParentKeys[k]){
+									aArrayItem.ticked = true;
+									bMatchFound = true;
+								}
+							};
 						}
 						aArray.push(aArrayItem);
 					}
@@ -264,6 +311,51 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					oParameters.oParentArrayWrapper.aData[i][oParameters.sTargetArrayNameInParent] = aArray;
 				}
 			},
+
+			// constructDependentMultiSelectArray: function(oParameters) { //oDependentArrayWrapper, oParentArrayWrapper, sSecondLevelAttribute, oNewParentItemArrayWrapper, sNameEN, sNameFR, sDependentKey, sParentKey, sTargetArrayNameInParent
+			// 	var aMultiSelectArray = [];
+			// 	var oMultiSelectItem = {}
+			// 	for (var i = 0; i < oParameters.oDependentArrayWrapper.aData.length; i++) {
+			// 		oMultiSelectItem = {};
+			// 		if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] || oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR]) {
+			// 			oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR];
+			// 			if (!oMultiSelectItem.name) {
+			// 				oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
+			// 			}
+			// 		}
+			// 		if(oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey]){
+			// 			oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/get/";
+			// 			oMultiSelectItem.icon =  oMultiSelectItem.icon + oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey] + "' style='width: 24px; height: 24px;'/>"
+			// 		}
+
+			// 		oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentKey];
+			// 		aMultiSelectArray.push(oMultiSelectItem);
+			// 	};
+
+			// 	oParameters.oNewParentItemArrayWrapper.aData = angular.copy(aMultiSelectArray);
+			// 	if (oParameters.oNewParentItemArrayWrapper.aData[0]) {
+			// 		oParameters.oNewParentItemArrayWrapper.aData[0].ticked = true;
+			// 	}
+
+			// 	for (var i = 0; i < oParameters.oParentArrayWrapper.aData.length; i++) {
+			// 		var aArray = [];
+			// 		var aArrayItem = {};
+			// 		var bMatchFound = false;
+			// 		for (var j = 0; j < aMultiSelectArray.length; j++) {
+			// 			aArrayItem = {};
+			// 			angular.copy(aMultiSelectArray[j], aArrayItem);
+			// 			if (oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKey] === aMultiSelectArray[j][oParameters.sDependentKey]) {
+			// 				aArrayItem.ticked = true;
+			// 				bMatchFound = true;
+			// 			}
+			// 			aArray.push(aArrayItem);
+			// 		}
+			// 		if (!bMatchFound && aArray[0]) {
+			// 			aArray[0].ticked = true;
+			// 		}
+			// 		oParameters.oParentArrayWrapper.aData[i][oParameters.sTargetArrayNameInParent] = aArray;
+			// 	}
+			// },
 
 			createNgTable: function(oParameters) {
 				var oTableParams = new ngTableParams({
@@ -288,6 +380,10 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				});
 				return oTableParams;
 			},
+
+			// prepareMultiselectData: function(oParameters){
+
+			// }
 		}
 	}
 ]);

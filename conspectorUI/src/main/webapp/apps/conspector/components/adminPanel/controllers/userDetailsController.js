@@ -4,6 +4,14 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 		var sUserName = $stateParams.sUserName;
 		$scope.sMode = $stateParams.sMode;
 
+		$scope.oPhasesListWrapper = {
+			aData: []
+		};
+
+		var oUserWrapper = {
+			aData: []
+		};
+
 		var setDisplayedUserDetails = function(oUser) {
 			$scope.oUser = {};
 			$scope.oUser.sUserName = oUser.UserName;
@@ -11,7 +19,9 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			$scope.oUser._lastModifiedAt = oUser.LastModifiedAt;
 			$scope.oUser.sCreatedAt = utilsProvider.dBDateToSting(oUser.CreatedAt);
 			$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oUser.LastModifiedAt);
+			$scope.oUser._aPhases = angular.copy(oUser.PhaseDetails)
 
+			oUserWrapper.aData.push($scope.oUser);
 		}
 
 		var oUser = cacheProvider.getEntityDetails({
@@ -21,12 +31,42 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			sKeyValue: $stateParams.sUserName
 		});
 
+		var onProjectsWithPhasesLoaded = function(aData) {
+			//TODO: Sort aData by project sorting sequence and then by phases sorting sequence...
+			var aUserPhasesGuids = [];
+
+			for (var i = 0; i < $scope.oUser._aPhases.length; i++) {
+				aUserPhasesGuids.push($scope.oUser._aPhases[i].Guid);
+			}
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				sSecondLevelAttribute: "PhaseDetails",
+				sSecondLevelNameEN: "NameEN",
+				sSecondLevelNameEN: "NameFR",
+				oParentArrayWrapper: oUserWrapper,
+				oNewParentItemArrayWrapper: oUserWrapper,
+				sNameEN: "NameEN",
+				sNameFR: "NameFR",
+				sDependentKey: "Guid",
+				aParentKeys: aUserPhasesGuids,
+				sTargetArrayNameInParent: "aPhases"
+			});
+		};
+
 		var onUserDetailsLoaded = function(oData) {
 			setDisplayedUserDetails(oData);
+
+			apiProvider.getProjectsWithPhases({
+				bShowSpinner: false,
+				onSuccess: onProjectsWithPhasesLoaded
+			});
 		};
 
 		var getUserDetails = function() {
-			apiProvider.getUser({
+			apiProvider.getUserWithPhases({
 				sKey: sUserName,
 				bShowSpinner: true,
 				onSuccess: onUserDetailsLoaded,
@@ -38,6 +78,10 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				getUserDetails();
 			} else {
 				setDisplayedUserDetails(oUser);
+				apiProvider.getProjectsWithPhases({
+					bShowSpinner: false,
+					onSuccess: onProjectsWithPhasesLoaded
+				});
 			}
 		}
 

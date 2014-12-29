@@ -71,7 +71,7 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 				nameEN: "",
 				nameFR: "",
 				_counter: iNewItemsCounter,
-				aStatusIcons: oStatusIconArrayWrapper.aData
+				aStatusIcons: angular.copy(oStatusIconArrayWrapper.aData)
 			});
 			iNewItemsCounter++;
 			$scope.tableParams.reload();

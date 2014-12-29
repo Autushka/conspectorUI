@@ -26,6 +26,11 @@ viewControllers.controller('phasesListView', ['$scope', '$state', 'servicesProvi
 		var aProjectArray = [];
 
 		var onProjectsLoaded = function(aData) {
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
@@ -78,7 +83,7 @@ viewControllers.controller('phasesListView', ['$scope', '$state', 'servicesProvi
 				nameEN: "",
 				nameFR: "",
 				_counter: iNewItemsCounter,
-				aProjects: oProjectArrayWrapper.aData
+				aProjects: angular.copy(oProjectArrayWrapper.aData)
 
 			});
 			iNewItemsCounter++;

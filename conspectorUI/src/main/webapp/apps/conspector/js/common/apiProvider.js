@@ -149,9 +149,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 			},
 
-			getUsers: function(oParameters) {
+			getUsersWithPhases: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Users",
+					sExpand: "PhaseDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
@@ -163,17 +164,18 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
-			},	
+			},
 
-			getUser: function(oParameters) {
+			getUserWithPhases: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "Users",
 					sKey: oParameters.sKey,
+					sExpand: "PhaseDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
 				svc.then(oParameters.onSuccess);
-			},	
+			},
 
 			createUser: function(oParameters) {
 				var onSuccess = function(oData) {
@@ -207,7 +209,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},							
+			},
 
 			logEvent: function(oParameters) {
 				var oData = oParameters.oData;
@@ -244,6 +246,23 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getProjects: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Projects",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oProjectEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			getProjectsWithPhases: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "Projects",
+					sExpand: "PhaseDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
@@ -490,7 +509,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},			
+			},
 		}
 	}
 ]);

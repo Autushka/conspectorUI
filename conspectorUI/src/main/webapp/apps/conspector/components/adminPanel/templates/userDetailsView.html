@@ -1,32 +1,24 @@
 <div>{{'userDetails_title' | translate}}</div>
 <md-button type="submit" class="md-primary md-raised" ng-click="onBack()" md-theme="orange">{{'global_back' | translate}}</md-button>
-
-<div ng-switch on="sMode">
-	<div ng-switch-when="display">
-   		<md-button type="submit" class="md-primary md-raised" ng-click="onEdit()" md-theme="orange">{{'global_edit' | translate}}</md-button>
-	</div>
-	<div ng-switch-when="edit">
-		<md-button type="submit" class="md-primary md-raised" ng-click="onSave()" md-theme="orange">{{'global_save' | translate}}</md-button> 
-		<md-button type="submit" class="md-primary md-raised" ng-click="onDelete()" md-theme="orange">{{'global_delete' | translate}}</md-button>		
-	</div>
-	<div ng-switch-when="create">
-		<md-button type="submit" class="md-primary md-raised" ng-click="onSave()" md-theme="orange">{{'global_save' | translate}}</md-button>
-		<md-button type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()" md-theme="orange">{{'global_saveAndNew' | translate}}</md-button>	
-	</div>	
-</div>
-
+<md-button ng-if="sMode == 'display'" type="submit" class="md-primary md-raised" ng-click="onEdit()" md-theme="orange">{{'global_edit' | translate}}</md-button>
+<md-button ng-if="sMode == 'edit' || sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSave()" md-theme="orange">{{'global_save' | translate}}</md-button>
+<md-button ng-if="sMode == 'edit'" type="submit" class="md-primary md-raised" ng-click="onDelete()" md-theme="orange">{{'global_delete' | translate}}</md-button>
+<md-button ng-if="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()" md-theme="orange">{{'global_saveAndNew' | translate}}</md-button>
 <form name="userDetailsForm">
 	<md-text-float label="{{'global_userName' | translate}}" ng-model="oUser.sUserName" ng-disabled="sMode == 'display' || sMode == 'edit'"> </md-text-float>
 	<md-text-float type="email" label="{{'global_email' | translate}}" ng-model="oUser.sEmail" ng-disabled="sMode == 'display'"> </md-text-float>
-
-	<div ng-switch on="sMode">
-		<div ng-switch-when="display">
-			<md-text-float label="{{'global_creationDate' | translate}}" ng-model="oUser.sCreatedAt" ng-disabled="true"> </md-text-float>
-			<md-text-float type="email" label="{{'global_lastModificationDate' | translate}}" ng-model="oUser.sLastModifiedAt" ng-disabled="true"> </md-text-float>	
-		</div>
-		<div ng-switch-when="edit">
-			<md-text-float label="{{'global_creationDate' | translate}}" ng-model="oUser.sCreatedAt" ng-disabled="true"> </md-text-float>
-			<md-text-float type="email" label="{{'global_lastModificationDate' | translate}}" ng-model="oUser.sLastModifiedAt" ng-disabled="true"> </md-text-float>	
-		</div>		
+	<md-text-float ng-if="sMode == 'display' || sMode == 'edit'" label="{{'global_creationDate' | translate}}" ng-model="oUser.sCreatedAt" ng-disabled="true"> </md-text-float>
+	<md-text-float ng-if="sMode == 'display' || sMode == 'edit'" label="{{'global_lastModificationDate' | translate}}" ng-model="oUser.sLastModifiedAt" ng-disabled="true"> </md-text-float>
+	<label>{{'userDetails_authorizedPhases' | translate}}</label>
+	<div
+		multi-select
+		input-model="oPhasesWrapper.aData"
+		button-label="name"
+		item-label="name"
+		tick-property="ticked"
+		group-property="multiSelectGroup"
+		helper-elements=""
+		is-disabled="sMode == 'display'"
+		>
 	</div>
 </form>
