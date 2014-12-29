@@ -1,0 +1,30 @@
+<div>{{'deficiencyPriorities_title' | translate}}</div>
+<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
+<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
+
+	<tr ng-repeat="deficiencyPriority in aDisplayedDeficiencyPriorities">
+		<td data-title="actionsTE" style="width: 10%;">
+			<span ng-if="!deficiencyPriority._editMode" ng-click="onEdit(deficiencyPriority)">Edit</span><span ng-if="deficiencyPriority._editMode" ng-click="onSave(deficiencyPriority)">Save</span><span ng-if="deficiencyPriority._editMode" ng-click="onDelete(deficiencyPriority)">Delete</span>
+		</td>
+		<td data-title="nameENTE" sortable="'nameEN'" style="width: 20%;">
+        	<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.nameEN}}</span>
+         	<div ng-if="deficiencyPriority._editMode"><input type="text" ng-model="deficiencyPriority.nameEN"/></div>
+		</td>
+		<td data-title="nameFRTE" sortable="'nameFR'" style="width: 20%;">
+        	<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.nameFR}}</span>
+         	<div ng-if="deficiencyPriority._editMode"><input type="text" ng-model="deficiencyPriority.nameFR"/></div>
+		</td>
+			<td data-title="associatedColorTE" sortable="'associatedColor'" style="width: 10%;">
+        	<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.associatedColor}}</span>
+         	<div ng-if="deficiencyPriority._editMode"><input type="text" ng-model="deficiencyPriority.associatedColor"/>
+         	</div>
+         	<!-- TO DO: Add color picker 
+         	<input colorpicker colorpicker-position="right" class="span2 form-control" type="text" ng-model="entity.associatedColor"/> -->
+		</td>
+		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 20%;">
+        	<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.sortingSequence}}</span>
+         	<div ng-if="deficiencyPriority._editMode"><input type="number" ng-model="deficiencyPriority.sortingSequence"/></div>
+		</td>
+	</tr>
+	<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0"><td colspan="5" >{{'global_noTableData' | translate}}</td></tr>		
+</table>

@@ -11,7 +11,10 @@ app.factory('cacheProvider', ['TYPES', function(TYPES) {
 			oRoleEntity: angular.copy(TYPES.oEntityCacheStructure),	
 			oOperationLogEntity: angular.copy(TYPES.oEntityCacheStructure),			
 			oTaskStatusEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oTaskPriorityEntity: angular.copy(TYPES.oEntityCacheStructure),
+			//Not sure if this one is still used.
 			oPriorityEntity: angular.copy(TYPES.oEntityCacheStructure),
+			//
 			oVersion: angular.copy(TYPES.oEntityCacheStructure),
 			oAccountTypeEntity: angular.copy(TYPES.oEntityCacheStructure),
 		},

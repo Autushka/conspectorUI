@@ -66,7 +66,10 @@
 		<script src="apps/conspector/components/adminPanel/controllers/operationLogsListController.js"></script>	
 		<script src="apps/conspector/components/adminPanel/controllers/deficiencyStatusesListController.js"></script>	
 		<script src="apps/conspector/components/adminPanel/controllers/systemFilesController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/accountTypesListController.js"></script>																			
+		<script src="apps/conspector/components/adminPanel/controllers/accountTypesListController.js"></script>
+		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script>	
+
+																				
 		<!--<script src="dist/conspector.min.js"></script> -->
 	</head>
 	<body id="body" ng-controller="mainController">

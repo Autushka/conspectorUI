@@ -18,6 +18,9 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 		$scope.onDeficiencyStatuses = function() {
 			$window.location.href = "#/app/adminPanel/deficiencyStatusesList";
 		};
+		$scope.onDeficiencyPriorities = function() {
+			$window.location.href = "#/app/adminPanel/deficiencyPrioritiesList";
+		};
 		$scope.onSystemFiles = function() {
 			$window.location.href = "#/app/adminPanel/systemFiles";
 		};

@@ -510,6 +510,55 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 				oSvc.then(onSuccess);
 			},
+
+			getDeficiencyPriorities: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "TaskPrioritys",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oTaskPriorityEntity"
+				});
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			createDeficiencyPriority: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oTaskPriorityEntity");
+					oParameters.onSuccess(oData);
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "TaskPrioritys",
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			updateDeficiencyPriority: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oTaskPriorityEntity");
+					oParameters.onSuccess(oData);
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "TaskPrioritys",
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},
 		}
 	}
 ]);
