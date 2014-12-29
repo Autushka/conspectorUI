@@ -149,10 +149,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 			},
 
-			getUsersWithPhases: function(oParameters) {
+			getUsersWithPhasesAndRoles: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Users",
-					sExpand: "PhaseDetails",
+					sExpand: "PhaseDetails,RoleDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
@@ -166,11 +166,11 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				}
 			},
 
-			getUserWithPhases: function(oParameters) {
+			getUserWithPhasesAndRoles: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "Users",
 					sKey: oParameters.sKey,
-					sExpand: "PhaseDetails",
+					sExpand: "PhaseDetails,RoleDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});

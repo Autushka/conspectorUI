@@ -4,7 +4,8 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 		var sUserName = $stateParams.sUserName;
 		$scope.sMode = $stateParams.sMode;
 		$scope.oUser = {
-			_aPhases: []
+			_aPhases: [],
+			_aRoles: []
 		};
 
 		var oUserWrapper = {
@@ -12,32 +13,66 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 		};
 
 		var setDisplayedUserDetails = function(oUser) {
-			//$scope.oUser = {};
 			$scope.oUser.sUserName = oUser.UserName;
 			$scope.oUser.sEmail = oUser.EMail;
 			$scope.oUser._lastModifiedAt = oUser.LastModifiedAt;
 			$scope.oUser.sCreatedAt = utilsProvider.dBDateToSting(oUser.CreatedAt);
 			$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oUser.LastModifiedAt);
-			$scope.oUser._aPhases = angular.copy(oUser.PhaseDetails)
+			$scope.oUser._aPhases = angular.copy(oUser.PhaseDetails.results);
+			$scope.oUser._aRoles = angular.copy(oUser.RoleDetails.results)
 
 			oUserWrapper.aData.push($scope.oUser);
 		}
 
 		var oUser = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oUserEntity",
-			sRequestSettings: "GeneralAttributes/IsDeleted eq false",
+			sRequestSettings: "GeneralAttributes/IsDeleted eq false" + "PhaseDetails,RoleDetails", //filter + expand
 			sKeyName: "UserName",
 			sKeyValue: $stateParams.sUserName
 		});
 
-		var onProjectsWithPhasesLoaded = function(aData) {
+		var onRolesLoaded = function(aData) {
+			//Sort aData by role sorting sequence 
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+			var aUserRolesKeys = [];
+
+			for (var i = 0; i < $scope.oUser._aRoles.length; i++) {
+				aUserRolesKeys.push($scope.oUser._aRoles[i].RoleName);
+			}
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oUserWrapper,
+				oNewParentItemArrayWrapper: oUserWrapper,
+				sNameEN: "RoleName",
+				sNameFR: "RoleName",
+				sDependentKey: "RoleName",
+				aParentKeys: aUserRolesKeys,
+				sTargetArrayNameInParent: "aRoles"
+			});
+
+			$scope.aRoles = angular.copy(oUserWrapper.aData[0].aRoles);
+
+		};
+
+		var onProjectsLoaded = function(aData) {
 			//Sort aData by project sorting sequence and then by phases sorting sequence...
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-				for (var j = 0; j < aData[i].PhaseDetails.length; i++) {
-					aData[i].PhaseDetails[j]._sortingSequence = aData[i].PhaseDetails[j].GeneralAttributes.SortingSequence;
+				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+					if (aData[i].PhaseDetails.results[j].GeneralAttributes.IsDeleted) { // Filtering on expanded entities doesn't work right now in olingo...
+						aData[i].PhaseDetails.results.splice(j, 1);
+						break;
+					}
+					aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
 				}
-				aData[i].PhaseDetails = $filter('orderBy')(aData[i].PhaseDetails, ["_sortingSequence"]);
+				aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
 
@@ -71,12 +106,17 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 
 			apiProvider.getProjectsWithPhases({
 				bShowSpinner: false,
-				onSuccess: onProjectsWithPhasesLoaded
+				onSuccess: onProjectsLoaded
+			});
+
+			apiProvider.getRoles({
+				bShowSpinner: false,
+				onSuccess: onRolesLoaded
 			});
 		};
 
 		var getUserDetails = function() {
-			apiProvider.getUserWithPhases({
+			apiProvider.getUserWithPhasesAndRoles({
 				sKey: sUserName,
 				bShowSpinner: true,
 				onSuccess: onUserDetailsLoaded,
@@ -90,13 +130,21 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				setDisplayedUserDetails(oUser);
 				apiProvider.getProjectsWithPhases({
 					bShowSpinner: false,
-					onSuccess: onProjectsWithPhasesLoaded
+					onSuccess: onProjectsLoaded
+				});
+				apiProvider.getRoles({
+					bShowSpinner: false,
+					onSuccess: onRolesLoaded
 				});
 			}
 		} else {
 			apiProvider.getProjectsWithPhases({
 				bShowSpinner: false,
-				onSuccess: onProjectsWithPhasesLoaded
+				onSuccess: onProjectsLoaded
+			});
+			apiProvider.getRoles({
+				bShowSpinner: false,
+				onSuccess: onRolesLoaded
 			});
 		}
 

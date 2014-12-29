@@ -258,6 +258,11 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 								if (!oMultiSelectItem.name) {
 									oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sSecondLevelNameEN];
 								}
+								if (j === 0) {
+									oMultiSelectItem.fullName = '<strong>' + sName + '</strong>' + ': ' + oMultiSelectItem.name;
+								} else {
+									oMultiSelectItem.fullName = oMultiSelectItem.name;
+								}
 							}
 							oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sDependentKey];
 							aMultiSelectArray.push(oMultiSelectItem);
