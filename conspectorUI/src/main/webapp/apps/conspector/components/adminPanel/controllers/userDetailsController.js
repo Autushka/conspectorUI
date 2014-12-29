@@ -1,11 +1,10 @@
-viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider',
-	function($scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider) {
+viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter',
+	function($scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter) {
 		var sFromState = $stateParams.sFromState;
 		var sUserName = $stateParams.sUserName;
 		$scope.sMode = $stateParams.sMode;
-
-		$scope.oPhasesListWrapper = {
-			aData: []
+		$scope.oUser = {
+			_aPhases: []
 		};
 
 		var oUserWrapper = {
@@ -13,7 +12,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 		};
 
 		var setDisplayedUserDetails = function(oUser) {
-			$scope.oUser = {};
+			//$scope.oUser = {};
 			$scope.oUser.sUserName = oUser.UserName;
 			$scope.oUser.sEmail = oUser.EMail;
 			$scope.oUser._lastModifiedAt = oUser.LastModifiedAt;
@@ -32,7 +31,16 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 		});
 
 		var onProjectsWithPhasesLoaded = function(aData) {
-			//TODO: Sort aData by project sorting sequence and then by phases sorting sequence...
+			//Sort aData by project sorting sequence and then by phases sorting sequence...
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+				for (var j = 0; j < aData[i].PhaseDetails.length; i++) {
+					aData[i].PhaseDetails[j]._sortingSequence = aData[i].PhaseDetails[j].GeneralAttributes.SortingSequence;
+				}
+				aData[i].PhaseDetails = $filter('orderBy')(aData[i].PhaseDetails, ["_sortingSequence"]);
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
 			var aUserPhasesGuids = [];
 
 			for (var i = 0; i < $scope.oUser._aPhases.length; i++) {
@@ -54,6 +62,8 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				aParentKeys: aUserPhasesGuids,
 				sTargetArrayNameInParent: "aPhases"
 			});
+
+			$scope.aPhases = angular.copy(oUserWrapper.aData[0].aPhases);
 		};
 
 		var onUserDetailsLoaded = function(oData) {
@@ -74,15 +84,20 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 		};
 
 		if ($scope.sMode !== "create") {
-			if (angular.equals(oUser, {})) {
+			if (angular.equals(oUser, {})) { //in case of F5
 				getUserDetails();
-			} else {
+			} else { //in case when data is retrieved from the cash
 				setDisplayedUserDetails(oUser);
 				apiProvider.getProjectsWithPhases({
 					bShowSpinner: false,
 					onSuccess: onProjectsWithPhasesLoaded
 				});
 			}
+		} else {
+			apiProvider.getProjectsWithPhases({
+				bShowSpinner: false,
+				onSuccess: onProjectsWithPhasesLoaded
+			});
 		}
 
 		$scope.onBack = function() {

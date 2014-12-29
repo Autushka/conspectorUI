@@ -249,17 +249,17 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 								sName = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
 							}
 						}
-						oMultiSelectItem.multiSelectGroup.name = '<strong>' + sName + '</strong>';
+						oMultiSelectItem.name = '<strong>' + sName + '</strong>';
 						aMultiSelectArray.push(oMultiSelectItem);
-						for (var j = 0; j < oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].length; j++) {
+						for (var j = 0; j < oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results.length; j++) {
 							oMultiSelectItem = {};
-							if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameEN] || oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameFR]) {
-								oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameFR];
+							if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sSecondLevelNameEN] || oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sSecondLevelNameFR]) {
+								oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sSecondLevelNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sSecondLevelNameFR];
 								if (!oMultiSelectItem.name) {
-									oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sSecondLevelNameEN];
+									oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sSecondLevelNameEN];
 								}
 							}
-							oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute][j][oParameters.sDependentKey];
+							oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sDependentKey];
 							aMultiSelectArray.push(oMultiSelectItem);
 						}
 						oMultiSelectItem = {};
@@ -290,14 +290,14 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 						aArrayItem = {};
 						angular.copy(aMultiSelectArray[j], aArrayItem);
 
-						if(!oParameters.aParentKeys){
+						if (!oParameters.aParentKeys) {
 							if (oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKey] === aMultiSelectArray[j][oParameters.sDependentKey]) {
 								aArrayItem.ticked = true;
 								bMatchFound = true;
-							}							
-						}else{
+							}
+						} else {
 							for (var k = 0; k < oParameters.aParentKeys.length; k++) {
-								if(aMultiSelectArray[j][oParameters.sDependentKey] === oParameters.aParentKeys[k]){
+								if (aMultiSelectArray[j][oParameters.sDependentKey] === oParameters.aParentKeys[k]) {
 									aArrayItem.ticked = true;
 									bMatchFound = true;
 								}
@@ -305,8 +305,18 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 						}
 						aArray.push(aArrayItem);
 					}
-					if (!bMatchFound && aArray[0]) {
-						aArray[0].ticked = true;
+
+					if (!bMatchFound) {
+						if (!oParameters.sSecondLevelAttribute && aArray[0]) {
+							aArray[0].ticked = true;
+						} else {
+							for (var j = 0; j < aArray.length; j++) {
+								if (aArray[j].multiSelectGroup === undefined) {
+									aArray[j].ticked = true;
+									break;
+								}
+							}
+						}
 					}
 					oParameters.oParentArrayWrapper.aData[i][oParameters.sTargetArrayNameInParent] = aArray;
 				}
