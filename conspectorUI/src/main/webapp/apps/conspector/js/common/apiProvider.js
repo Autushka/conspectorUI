@@ -184,7 +184,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "Users",
+					sKeyAttribute: "UserName", //needed for links creation
 					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
 					bShowSpinner: oParameters.bShowSpinner,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
@@ -202,8 +204,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "Users",
+					sKeyAttribute: "UserName",
 					sKey: oParameters.sKey,
 					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
 				});

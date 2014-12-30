@@ -1,5 +1,5 @@
-viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter',
-	function($scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter) {
+viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider',
+	function($scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider) {
 		var sFromState = $stateParams.sFromState;
 		var sUserName = $stateParams.sUserName;
 		$scope.sMode = $stateParams.sMode;
@@ -177,10 +177,39 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			});
 		};
 
+		var prepareLinksForSave = function() { // link user to roles and phases
+			var aLinks = [{
+				sRelationName: "RoleDetails",
+				aUri: []
+			}, {
+				sRelationName: "PhaseDetails",
+				aUri: []
+			}];
+			var sUri = "";
+
+			for (var i = 0; i < $scope.aRoles.length; i++) {
+				if ($scope.aRoles[i].ticked) {
+					sUri = "Roles('" + $scope.aRoles[i].RoleName + "')";
+					aLinks[0].aUri.push(sUri);
+				}
+			}
+
+			for (var i = 0; i < $scope.aPhases.length; i++) {
+				if ($scope.aPhases[i].ticked) {
+					sUri = "Phases('" + $scope.aPhases[i].Guid + "')";
+					aLinks[1].aUri.push(sUri);
+				}
+			}			
+
+			return aLinks;
+		};
+
 		$scope.onSave = function() {
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
+			var aLinks = [];
+
 			var onSuccessCreation = function(oData) {
 				$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
 				$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
@@ -197,12 +226,15 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			oDataForSave.UserName = $scope.oUser.sUserName;
 			oDataForSave.EMail = $scope.oUser.sEmail;
 			oDataForSave.LastModifiedAt = $scope.oUser._lastModifiedAt;
+
+			aLinks = prepareLinksForSave();
 			switch ($scope.sMode) {
 				case "edit":
 					apiProvider.updateUser({
 						bShowSpinner: true,
 						sKey: oDataForSave.UserName,
 						oData: oDataForSave,
+						aLinks: aLinks,
 						bShowSuccessMessage: true,
 						bShowErrorMessage: true,
 						onSuccess: onSuccessUpdate
@@ -212,6 +244,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 					apiProvider.createUser({
 						bShowSpinner: true,
 						oData: oDataForSave,
+						aLinks: aLinks, 
 						bShowSuccessMessage: true,
 						bShowErrorMessage: true,
 						onSuccess: onSuccessCreation

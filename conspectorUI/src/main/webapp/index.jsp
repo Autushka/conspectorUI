@@ -24,9 +24,9 @@
 		<script src="bower_components/angular-material/angular-material.min.js"></script>
 		<script src="bower_components/jshashes/hashes.min.js"></script>
 		<script src="bower_components/isteven-angular-multiselect/angular-multi-select.js"></script>
-		<script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>		
+		<script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>	
+		<script src="bower_components/datajs/datajs-1.1.2.min.js"></script>
 		
-
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->		
 		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->	
 		<script src="apps/conspector/js/thirdParty/angular-file-upload.min.js"></script> <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->

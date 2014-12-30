@@ -204,7 +204,7 @@ app.config(['$translateProvider',
                   signIn_userName: 'Username',
                   signIn_password: 'Password',
                   signIn_logIn: 'Log In',
-                  signIn_languageCode: 'EN',
+                  signIn_languageCode: 'FR',
                   signIn_forgotPassword: 'Forgot your password? Click here',
                   signIn_rememberUserName: 'Remember Username',
                   //initialPasswordReset

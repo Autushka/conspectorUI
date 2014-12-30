@@ -19,6 +19,18 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS',
 				method: "GET",
 				url: sServicePath + ":path" + '?$format=json'
 			},
+			'getLinks': {
+				method: "GET",
+				url: sServicePath + ":sParentEntityWithKey" + "/$links/" + ":sRelationName"
+			},
+			// 'createLink': {
+			// 	method: "POST",
+			// 	url: sServicePath + ":sParentEntity" + "/$links/" + ":sRelationName"
+			// },
+			// 'deleteLink': {
+			// 	method: "DELETE",
+			// 	url: sServicePath + ":sParentEntity" + "/$links/" + ":sDependentEntity"
+			// },
 			'post': {
 				method: "POST",
 				url: sServicePath + ":path"
@@ -37,12 +49,26 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS',
 				},
 				url: sServicePath + ":path" + "(':key')" + '?$format=json'
 			},
+			'getEntityWithFilter': {
+				method: 'GET',
+				params: {
+					key: "@key"
+				},
+				url: sServicePath + ":path" + "(':key')" + '?$filter=' + ":filter" + '&$format=json'
+			},
 			'getEntityWithExpand': {
 				method: 'GET',
 				params: {
 					key: "@key"
 				},
 				url: sServicePath + ":path" + "(':key')" + '?$expand=' + ":expand" + '&$format=json'
+			},
+			'getEntityWithFilterAndExpand': {
+				method: 'GET',
+				params: {
+					key: "@key"
+				},
+				url: sServicePath + ":path" + "(':key')" + '?$filter=' + ":filter" + '&$expand=' + ":expand" + '&$format=json'
 			},
 			'delete': {
 				method: 'DELETE',
@@ -55,8 +81,8 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS',
 	}
 ]);
 
-app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', '$translate', 'cacheProvider',
-	function(genericODataFactory, utilsProvider, $q, $rootScope, $http, $translate, cacheProvider) {
+app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', '$translate', 'cacheProvider', '$timeout',
+	function(genericODataFactory, utilsProvider, $q, $rootScope, $http, $translate, cacheProvider, $timeout) {
 		return {
 			commonOnSuccess: function(oParameters) {
 				if (oParameters.bShowSpinner) {
@@ -87,16 +113,16 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				var deffered = $q.defer();
 				var aCachedEntities = [];
 				var sRequestSettings = "";
-				
-				if(oParameters.sKey){
+
+				if (oParameters.sKey) {
 					sRequestSettings = oParameters.sKey;
 				}
-				if(oParameters.sFilter){
+				if (oParameters.sFilter) {
 					sRequestSettings = sRequestSettings + oParameters.sFilter;
 				}
-				if(oParameters.sExpand){
+				if (oParameters.sExpand) {
 					sRequestSettings = sRequestSettings + oParameters.sExpand;
-				}				
+				}
 				if (!sRequestSettings) {
 					sRequestSettings = ""; //to evoid NaN value
 				}
@@ -158,11 +184,37 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					$rootScope.$emit('LOAD');
 				}
 
-				oOdataSrv = (new genericODataFactory()).$getEntity({
-					path: oParameters.sPath,
-					expand: oParameters.sExpand,
-					key: oParameters.sKey, //TODO: check what should be a proper name for the attribute here and in other methods
-				});
+				if (oParameters.sFilter && !oParameters.sExpand) {
+					oOdataSrv = (new genericODataFactory()).$getEntityWithFilter({
+						path: oParameters.sPath,
+						key: oParameters.sKey,
+						expand: oParameters.sExpand,
+					});
+				}
+
+				if (!oParameters.sFilter && oParameters.sExpand) {
+					oOdataSrv = (new genericODataFactory()).$getEntityWithExpand({
+						path: oParameters.sPath,
+						key: oParameters.sKey,
+						expand: oParameters.sExpand,
+					});
+				}
+
+				if (oParameters.sFilter && oParameters.sExpand) {
+					oOdataSrv = (new genericODataFactory()).$getEntityWithFilterAndExpand({
+						path: oParameters.sPath,
+						filter: oParameters.sFilter,
+						key: oParameters.sKey,
+						expand: oParameters.sExpand,
+					});
+				}
+
+				if (!oParameters.sFilter && !oParameters.sExpand) {
+					oOdataSrv = (new genericODataFactory()).$getEntity({
+						path: oParameters.sPath,
+						key: oParameters.sKey,
+					});
+				}
 
 				oOdataSrv.then($.proxy(function(oData) {
 					this.commonOnSuccess(oParameters);
@@ -171,6 +223,107 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					this.commonOnError(oParameters, deffered);
 				}, this));
 				return deffered.promise;
+			},
+
+			getLinks: function(oParameters) {
+				var oGetLinksSrv = {};
+				var deffered = $q.defer();
+				var sParentEntity = "";
+
+				sParentEntity = oParameters.sParentEntity + "('" + oParameters.sParentKey + "')";
+
+				oGetLinksSrv = (new genericODataFactory()).$getLinks({
+					path: oParameters.sParentEntity,
+					sParentEntity: sParentEntity,
+					sRelationName: oParameters.sRelationName
+				});
+
+				oGetLinksSrv.then(function(oData) {
+					deffered.resolve(oData.d);
+				});
+				return deffered.promise;
+			},
+
+			// deleteLink: function(oParameters) {
+			// 	var oOdataSrv = {};
+			// 	var sDependentKeyValue = "";
+			// 	var sDependentEntity = "";
+			// 	sDependentKeyValue = oParameters.sUri.substring(oParameters.sUri.indexOf("'") + 1, oParameters.sUri.lastIndexOf("'"));
+			// 	sDependentEntity = oParameters.sRelationName + "('" + sDependentKeyValue + "')";
+
+			// 	oOdataSrv = (new genericODataFactory(oParameters.oData)).$deleteLink({
+			// 		sParentEntity: oParameters.sParentEntity + "('" + oParameters.sParentKey + "')",
+			// 		sDependentEntity: sDependentEntity
+			// 	});
+			// },
+
+			// deleteLinks: function(oParameters) {
+			// 	var oGetLinksSrv = this.getLinks(oParameters);
+			// 	var oData = {};
+
+			// 	oData.sParentEntity = oParameters.sParentEntity;
+			// 	oData.sParentKey = oParameters.sParentKey;
+			// 	oData.sRelationName = oParameters.sRelationName;
+
+			// 	oGetLinksSrv.then($.proxy(function(aData) {
+			// 		for (var i = 0; i < aData.length; i++) {
+			// 			oData.sUri = aData[i].uri;
+			// 			this.deleteLink(oData);
+			// 		}
+			// 	}, this));
+			// },
+
+			updateLinks: function(oParameters) {
+				var oRequestData = {
+					__batchRequests: []
+				};
+				var oData = {};
+				var oSrv = {};
+				var aBatchData = [];
+				var sRelationNameWithKey = "";
+				var sDependentEntityKey = "";
+
+				for (var i = 0; i < oParameters.aLinks.length; i++) {
+					oData = {};
+					oData.requestUri = oParameters.sParentEntityWithKey + "/$links/" + oParameters.aLinks[i].sRelationName,
+					oData.method = "GET",
+					oRequestData.__batchRequests.push(oData);
+				}
+
+				oSrv = this.batchRequest({
+					oRequestData: oRequestData
+				});
+
+				oSrv.then($.proxy(function(aData) {  //onGetLinks
+					oRequestData = {
+						__batchRequests: []
+					};
+
+					for (var i = 0; i < aData.length; i++) {
+						aBatchData = [];
+						for (var j = 0; j < aData[i].data.results.length; j++) {
+							oData = {};
+							sDependentEntityKey = aData[i].data.results[j].uri.substring(aData[i].data.results[j].uri.indexOf("'") + 1, aData[i].data.results[j].uri.lastIndexOf("'"));
+							sRelationNameWithKey = oParameters.aLinks[i].sRelationName + "('" + sDependentEntityKey + "')";
+							oData.requestUri = oParameters.sParentEntityWithKey + "/$links/" + sRelationNameWithKey;
+							oData.method = "DELETE";
+							aBatchData.push(oData);
+						}
+
+						this.constructChangeBlockForBatch({
+							oRequestData: oRequestData,
+							aData: aBatchData
+						});
+					}
+
+					oSrv = this.batchRequest({
+						oRequestData: oRequestData
+					});
+
+					oSrv.then($.proxy(function(){// onDeleteLinks
+						this.createLinks(oParameters);
+					},this)); 
+				}, this));
 			},
 
 			updateEntity: function(oParameters) {
@@ -194,23 +347,30 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						oDataForUpdate.LastModifiedAt = utilsProvider.dateToDBDate(new Date());
 						oDataForUpdate.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
 
-						if(!oDataForUpdate.GeneralAttributes.IsDeleted){
+						if (!oDataForUpdate.GeneralAttributes.IsDeleted) {
 							oDataForUpdate.GeneralAttributes.IsDeleted = false;
 						}
-						if(!oDataForUpdate.GeneralAttributes.IsArchived){
+						if (!oDataForUpdate.GeneralAttributes.IsArchived) {
 							oDataForUpdate.GeneralAttributes.IsArchived = false;
-						}	
-						if(!oDataForUpdate.GeneralAttributes.SortingSequence){
+						}
+						if (!oDataForUpdate.GeneralAttributes.SortingSequence) {
 							oDataForUpdate.GeneralAttributes.SortingSequence = 0;
-						}												
+						}
 
 						oPutOdataSrv = (new genericODataFactory(oDataForUpdate)).$put({
 							path: oParameters.sPath,
 							key: oParameters.sKey,
 						});
 
-						oPutOdataSrv.then($.proxy(function(oData) { 
-							this.commonOnSuccess(oParameters);
+						oPutOdataSrv.then($.proxy(function(oData) {
+							if (oParameters.aLinks) {
+								var sParentEntityWithKey = oParameters.sPath + "('" + oData[oParameters.sKeyAttribute] + "')";
+								this.updateLinks({
+									aLinks: oParameters.aLinks,
+									sParentEntityWithKey: sParentEntityWithKey
+								});
+							}
+							this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
 							deffered.resolve(oData);
 						}, this), $.proxy(function() {
 							this.commonOnError(oParameters, deffered);
@@ -222,10 +382,46 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				return deffered.promise;
 			},
 
-			createEntity: function(oParameters) {
+			createLinks: function(oParameters) { //aLinks, sParentEntityWithKey
+				var oRequestData = {
+					__batchRequests: []
+				};
+				var aData = [];
+				var oData = {};
+				var oSrv = {};
+
+				for (var i = 0; i < oParameters.aLinks.length; i++) {
+					aData = [];
+					for (var j = 0; j < oParameters.aLinks[i].aUri.length; j++) {
+						oData = {};
+						oData.requestUri = oParameters.sParentEntityWithKey + "/$links/" + oParameters.aLinks[i].sRelationName,
+						oData.method = "POST";
+						oData.data = {
+							uri: oParameters.aLinks[i].aUri[j]
+						};
+
+						aData.push(oData);
+					}
+
+					this.constructChangeBlockForBatch({
+						oRequestData: oRequestData,
+						aData: aData
+					});
+				}
+
+				oSrv = this.batchRequest({
+					oRequestData: oRequestData
+				});
+
+				oSrv.then(function(aData) {});
+			},
+
+			createEntity: function(oParameters) { //aLinks, sKey
 				var oOdataSrv = {};
 				var oData = {};
 				var deffered = $q.defer();
+				//var aLinksData = [];
+				var oLinksData = {}
 
 				if (oParameters.bShowSpinner) {
 					$rootScope.$emit('LOAD');
@@ -240,8 +436,8 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				oData.LastModifiedAt = oParameters.oData.CreatedAt;
 				oData.GeneralAttributes.CreatedBy = cacheProvider.oUserProfile.sUserName;
 				oData.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
-				oData.GeneralAttributes.IsDeleted = false;			
-				oData.GeneralAttributes.IsArchived = false;			
+				oData.GeneralAttributes.IsDeleted = false;
+				oData.GeneralAttributes.IsArchived = false;
 
 				if (!oData.GeneralAttributes.SortingSequence) {
 					oData.GeneralAttributes.SortingSequence = 0;
@@ -252,7 +448,14 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				});
 
 				oOdataSrv.then($.proxy(function(oData) {
-					this.commonOnSuccess(oParameters);
+					if (oParameters.aLinks) {
+						var sParentEntityWithKey = oParameters.sPath + "('" + oData.d[oParameters.sKeyAttribute] + "')";
+						this.createLinks({
+							aLinks: oParameters.aLinks,
+							sParentEntityWithKey: sParentEntityWithKey
+						});
+					}
+					this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
 					deffered.resolve(oData.d);
 				}, this), $.proxy(function() {
 					this.commonOnError(oParameters, deffered);
@@ -331,6 +534,31 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					// 	$scope.globalData.userName = jQuery.i18n.prop('mainView.guestTE');
 					// }
 				}, this));
+
+				return deffered.promise;
+			},
+
+			constructChangeBlockForBatch: function(oParameters) {
+				var oChangeBlock = {
+					__changeRequests: []
+				};
+
+				for (var i = 0; i < oParameters.aData.length; i++) {
+					oChangeBlock.__changeRequests.push(oParameters.aData[i]); // aData[i] = {requestUri, method, data}
+				}
+
+				oParameters.oRequestData.__batchRequests.push(oChangeBlock);
+			},
+
+			batchRequest: function(oParameters) {
+				var deffered = $q.defer();
+				OData.request({
+					requestUri: "/conspector/odata.svc/$batch",
+					method: "POST",
+					data: oParameters.oRequestData
+				}, function(data) {
+					deffered.resolve(data.__batchResponses);
+				}, function(err) {}, OData.batchHandler);
 
 				return deffered.promise;
 			},
