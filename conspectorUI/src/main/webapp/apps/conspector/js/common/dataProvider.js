@@ -244,35 +244,6 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				return deffered.promise;
 			},
 
-			// deleteLink: function(oParameters) {
-			// 	var oOdataSrv = {};
-			// 	var sDependentKeyValue = "";
-			// 	var sDependentEntity = "";
-			// 	sDependentKeyValue = oParameters.sUri.substring(oParameters.sUri.indexOf("'") + 1, oParameters.sUri.lastIndexOf("'"));
-			// 	sDependentEntity = oParameters.sRelationName + "('" + sDependentKeyValue + "')";
-
-			// 	oOdataSrv = (new genericODataFactory(oParameters.oData)).$deleteLink({
-			// 		sParentEntity: oParameters.sParentEntity + "('" + oParameters.sParentKey + "')",
-			// 		sDependentEntity: sDependentEntity
-			// 	});
-			// },
-
-			// deleteLinks: function(oParameters) {
-			// 	var oGetLinksSrv = this.getLinks(oParameters);
-			// 	var oData = {};
-
-			// 	oData.sParentEntity = oParameters.sParentEntity;
-			// 	oData.sParentKey = oParameters.sParentKey;
-			// 	oData.sRelationName = oParameters.sRelationName;
-
-			// 	oGetLinksSrv.then($.proxy(function(aData) {
-			// 		for (var i = 0; i < aData.length; i++) {
-			// 			oData.sUri = aData[i].uri;
-			// 			this.deleteLink(oData);
-			// 		}
-			// 	}, this));
-			// },
-
 			updateLinks: function(oParameters) {
 				var oRequestData = {
 					__batchRequests: []
@@ -294,7 +265,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					oRequestData: oRequestData
 				});
 
-				oSrv.then($.proxy(function(aData) {  //onGetLinks
+				oSrv.then($.proxy(function(aData) { //onGetLinks
 					oRequestData = {
 						__batchRequests: []
 					};
@@ -310,19 +281,21 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 							aBatchData.push(oData);
 						}
 
-						this.constructChangeBlockForBatch({
-							oRequestData: oRequestData,
-							aData: aBatchData
-						});
+						if (aBatchData.length) {
+							this.constructChangeBlockForBatch({
+								oRequestData: oRequestData,
+								aData: aBatchData
+							});
+						}
 					}
 
 					oSrv = this.batchRequest({
 						oRequestData: oRequestData
 					});
 
-					oSrv.then($.proxy(function(){// onDeleteLinks
+					oSrv.then($.proxy(function() { // onDeleteLinks
 						this.createLinks(oParameters);
-					},this)); 
+					}, this));
 				}, this));
 			},
 
@@ -403,10 +376,12 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						aData.push(oData);
 					}
 
-					this.constructChangeBlockForBatch({
-						oRequestData: oRequestData,
-						aData: aData
-					});
+					if (aData.length) {
+						this.constructChangeBlockForBatch({
+							oRequestData: oRequestData,
+							aData: aData
+						});
+					}
 				}
 
 				oSrv = this.batchRequest({
@@ -552,15 +527,18 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 
 			batchRequest: function(oParameters) {
 				var deffered = $q.defer();
-				OData.request({
-					requestUri: "/conspector/odata.svc/$batch",
-					method: "POST",
-					data: oParameters.oRequestData
-				}, function(data) {
-					deffered.resolve(data.__batchResponses);
-				}, function(err) {}, OData.batchHandler);
 
-				return deffered.promise;
+				if(oParameters.oRequestData.__batchRequests.length){
+					OData.request({
+						requestUri: "/conspector/odata.svc/$batch",
+						method: "POST",
+						data: oParameters.oRequestData
+					}, function(data) {
+						deffered.resolve(data.__batchResponses);
+					}, function(err) {}, OData.batchHandler);
+
+					return deffered.promise;
+				}
 			},
 
 			ajaxRequest: function(oParameters) { // sPath, oData, bAsync, oEventHandlers, sRequestType
