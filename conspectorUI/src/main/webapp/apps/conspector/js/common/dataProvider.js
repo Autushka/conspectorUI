@@ -81,8 +81,8 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS',
 	}
 ]);
 
-app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', '$translate', 'cacheProvider', '$timeout',
-	function(genericODataFactory, utilsProvider, $q, $rootScope, $http, $translate, cacheProvider, $timeout) {
+app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', '$translate', 'cacheProvider', '$window',
+	function(genericODataFactory, utilsProvider, $q, $rootScope, $http, $translate, cacheProvider, $window) {
 		return {
 			commonOnSuccess: function(oParameters) {
 				if (oParameters.bShowSpinner) {
@@ -528,17 +528,16 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 			batchRequest: function(oParameters) {
 				var deffered = $q.defer();
 
-				if(oParameters.oRequestData.__batchRequests.length){
+				if (oParameters.oRequestData.__batchRequests.length) {
 					OData.request({
-						requestUri: "/conspector/odata.svc/$batch",
+						requestUri: $window.location.origin + $window.location.pathname + "odata.svc/$batch",
 						method: "POST",
 						data: oParameters.oRequestData
 					}, function(data) {
 						deffered.resolve(data.__batchResponses);
 					}, function(err) {}, OData.batchHandler);
-
-					return deffered.promise;
 				}
+				return deffered.promise;
 			},
 
 			ajaxRequest: function(oParameters) { // sPath, oData, bAsync, oEventHandlers, sRequestType

@@ -12,17 +12,4 @@ app.factory('CONSTANTS', [function() {
 
 
 
-// var CONSTANTS = (function ($) {
-// 	var constants = {};
-// 	constants.messageDisplayTime = 5000;
-// 	constants.messageDisplayLayout = 'topCenter';
-// 	constants.currentProject = 'conspector';
-// 	constants.appPathname = "";
-// 	constants.sServicePath = "odata.svc/";	
-// 	return constants;
-// }(jQuery));
-
-
-
-
 
