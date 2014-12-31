@@ -12,6 +12,9 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			aData: []
 		};
 
+		$scope.aRoles = [];
+		$scope.aPhases = [];
+
 		//$scope.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
 
 		var setDisplayedUserDetails = function(oUser) {
@@ -63,8 +66,9 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				sTargetArrayNameInParent: "aRoles"
 			});
 
-			$scope.aRoles = angular.copy(oUserWrapper.aData[0].aRoles);
-
+			if(oUserWrapper.aData[0]){
+				$scope.aRoles = angular.copy(oUserWrapper.aData[0].aRoles);
+			}
 		};
 
 		var onProjectsLoaded = function(aData) {
@@ -102,9 +106,11 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				sDependentKey: "Guid",
 				aParentKeys: aUserPhasesGuids,
 				sTargetArrayNameInParent: "aPhases"
-			});
+			});	
 
-			$scope.aPhases = angular.copy(oUserWrapper.aData[0].aPhases);
+			if(oUserWrapper.aData[0]){
+				$scope.aPhases = angular.copy(oUserWrapper.aData[0].aPhases);
+			}
 		};
 
 		var onUserDetailsLoaded = function(oData) {
@@ -144,6 +150,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				});
 			}
 		} else {
+			$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
 			apiProvider.getProjectsWithPhases({
 				bShowSpinner: false,
 				onSuccess: onProjectsLoaded
@@ -211,6 +218,8 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 		};
 
 		$scope.onSave = function() {
+			var SHA512 = new Hashes.SHA512;
+
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
@@ -233,6 +242,10 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			oDataForSave.EMail = $scope.oUser.sEmail;
 			oDataForSave.LastModifiedAt = $scope.oUser._lastModifiedAt;
 			oDataForSave.AvatarFileGuid = $scope.oUser._avatarFileGuid;
+
+			if($scope.oUser.sPassword !== "" && $scope.oUser.sPassword === $scope.oUser.sPasswordConfirmation){
+				oDataForSave.Password = SHA512.hex($scope.oUser.sPassword);
+			}
 
 			aLinks = prepareLinksForSave();
 			switch ($scope.sMode) {

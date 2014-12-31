@@ -1,14 +1,16 @@
 <div>{{'userDetails_title' | translate}}</div>
 <md-button type="submit" class="md-primary md-raised" ng-click="onBack()" md-theme="orange">{{'global_back' | translate}}</md-button>
-<md-button ng-if="sMode == 'display'" type="submit" class="md-primary md-raised" ng-click="onEdit()" md-theme="orange">{{'global_edit' | translate}}</md-button>
-<md-button ng-if="sMode == 'edit' || sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSave()" md-theme="orange">{{'global_save' | translate}}</md-button>
-<md-button ng-if="sMode == 'edit'" type="submit" class="md-primary md-raised" ng-click="onDelete()" md-theme="orange">{{'global_delete' | translate}}</md-button>
-<md-button ng-if="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()" md-theme="orange">{{'global_saveAndNew' | translate}}</md-button>
+<md-button ng-show="sMode == 'display'" type="submit" class="md-primary md-raised" ng-click="onEdit()" md-theme="orange">{{'global_edit' | translate}}</md-button>
+<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSave()" md-theme="orange">{{'global_save' | translate}}</md-button>
+<md-button ng-show="sMode == 'edit'" type="submit" class="md-primary md-raised" ng-click="onDelete()" md-theme="orange">{{'global_delete' | translate}}</md-button>
+<md-button ng-show="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()" md-theme="orange">{{'global_saveAndNew' | translate}}</md-button>
 <form name="userDetailsForm">
 	<md-text-float label="{{'global_userName' | translate}}" ng-model="oUser.sUserName" ng-disabled="sMode == 'display' || sMode == 'edit'"> </md-text-float>
 	<md-text-float type="email" label="{{'global_email' | translate}}" ng-model="oUser.sEmail" ng-disabled="sMode == 'display'"> </md-text-float>
-	<md-text-float ng-if="sMode == 'display' || sMode == 'edit'" label="{{'global_creationDate' | translate}}" ng-model="oUser.sCreatedAt" ng-disabled="true"> </md-text-float>
-	<md-text-float ng-if="sMode == 'display' || sMode == 'edit'" label="{{'global_lastModificationDate' | translate}}" ng-model="oUser.sLastModifiedAt" ng-disabled="true"> </md-text-float>
+
+	<md-text-float type="password" label="{{'global_password' | translate}}" ng-model="oUser.sPassword" ng-if="sMode == 'edit' || sMode == 'create'"> </md-text-float>
+	<md-text-float type="password" label="{{'global_passwordConfirmation' | translate}}" ng-model="oUser.sPasswordConfirmation" ng-if="sMode == 'edit' || sMode == 'create'"> </md-text-float>
+
 	<label>{{'userDetails_authorizedPhases' | translate}}</label>
 	<div
 		multi-select
@@ -34,4 +36,7 @@
 	<label>{{'userDetails_avatar' | translate}}</label>
 	<img style="width: 200px; height: 200px;" ng-src="{{oUser.sAvatarUrl}}"></img>
 	<button ng-if="sMode == 'edit' || sMode == 'create'" ng-file-select accept="image/*" ng-file-change="onAvatarSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
+
+	<md-text-float ng-if="sMode == 'display' || sMode == 'edit'" label="{{'global_creationDate' | translate}}" ng-model="oUser.sCreatedAt" ng-disabled="true"> </md-text-float>
+	<md-text-float ng-if="sMode == 'display' || sMode == 'edit'" label="{{'global_lastModificationDate' | translate}}" ng-model="oUser.sLastModifiedAt" ng-disabled="true"> </md-text-float>	
 </form>
