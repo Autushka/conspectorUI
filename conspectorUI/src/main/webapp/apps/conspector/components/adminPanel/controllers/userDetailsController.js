@@ -1,5 +1,5 @@
-viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider',
-	function($scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider) {
+viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload',
+	function($scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload) {
 		var sFromState = $stateParams.sFromState;
 		var sUserName = $stateParams.sUserName;
 		$scope.sMode = $stateParams.sMode;
@@ -12,6 +12,8 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			aData: []
 		};
 
+		//$scope.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
+
 		var setDisplayedUserDetails = function(oUser) {
 			$scope.oUser.sUserName = oUser.UserName;
 			$scope.oUser.sEmail = oUser.EMail;
@@ -20,7 +22,11 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oUser.LastModifiedAt);
 			$scope.oUser._aPhases = angular.copy(oUser.PhaseDetails.results);
 			$scope.oUser._aRoles = angular.copy(oUser.RoleDetails.results)
-
+			if (oUser.AvatarFileGuid) {
+				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oUser.AvatarFileGuid;
+			}else{
+				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
+			}
 			oUserWrapper.aData.push($scope.oUser);
 		}
 
@@ -199,7 +205,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 					sUri = "Phases('" + $scope.aPhases[i].Guid + "')";
 					aLinks[1].aUri.push(sUri);
 				}
-			}			
+			}
 
 			return aLinks;
 		};
@@ -226,6 +232,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			oDataForSave.UserName = $scope.oUser.sUserName;
 			oDataForSave.EMail = $scope.oUser.sEmail;
 			oDataForSave.LastModifiedAt = $scope.oUser._lastModifiedAt;
+			oDataForSave.AvatarFileGuid = $scope.oUser._avatarFileGuid;
 
 			aLinks = prepareLinksForSave();
 			switch ($scope.sMode) {
@@ -244,7 +251,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 					apiProvider.createUser({
 						bShowSpinner: true,
 						oData: oDataForSave,
-						aLinks: aLinks, 
+						aLinks: aLinks,
 						bShowSuccessMessage: true,
 						bShowErrorMessage: true,
 						onSuccess: onSuccessCreation
@@ -253,5 +260,26 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			}
 
 		};
+
+		var onImgSelected = function(aImgFiles, sPath, $event) {
+			for (var i = 0; i < aImgFiles.length; i++) {
+				var file = aImgFiles[i];
+				var sPath = servicesProvider.costructUploadUrl({
+					sPath: sPath
+				});
+				$scope.upload = $upload.upload({
+					url: sPath,
+					file: file,
+				});
+				$scope.upload.success(function(sData) {
+					$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + sData;
+					$scope.oUser._avatarFileGuid = sData;
+				});
+			}
+		};	
+
+		$scope.onAvatarSelected = function(aFiles, $event){
+			onImgSelected(aFiles, "rest/file/createUploadUrl/users/users/_avatar_", $event);
+		};	
 	}
 ]);

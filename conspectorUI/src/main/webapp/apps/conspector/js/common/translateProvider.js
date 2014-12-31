@@ -64,6 +64,7 @@ app.config(['$translateProvider',
                   //userDetails
                   userDetails_title: 'User Details',
                   userDetails_authorizedPhases: 'Authorized projects and phases:',
+                  userDetails_avatar: 'Avatar:',
                   //rolesList
                   rolesList_title: "User Roles",
                   rolesList_roleName: "Role Name",
@@ -179,6 +180,7 @@ app.config(['$translateProvider',
                   //userDetails
                   userDetails_title: 'User Details',
                   userDetails_authorizedPhases: 'Authorized projects and phases:',
+                  userDetails_avatar: 'Avatar:',
                   //rolesList
                   rolesList_title: "User Roles",
                   rolesList_roleName: "Role Name",
