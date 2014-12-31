@@ -27,7 +27,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			$scope.oUser._aRoles = angular.copy(oUser.RoleDetails.results)
 			if (oUser.AvatarFileGuid) {
 				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oUser.AvatarFileGuid;
-			}else{
+			} else {
 				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
 			}
 			oUserWrapper.aData.push($scope.oUser);
@@ -66,7 +66,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				sTargetArrayNameInParent: "aRoles"
 			});
 
-			if(oUserWrapper.aData[0]){
+			if (oUserWrapper.aData[0]) {
 				$scope.aRoles = angular.copy(oUserWrapper.aData[0].aRoles);
 			}
 		};
@@ -106,9 +106,9 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				sDependentKey: "Guid",
 				aParentKeys: aUserPhasesGuids,
 				sTargetArrayNameInParent: "aPhases"
-			});	
+			});
 
-			if(oUserWrapper.aData[0]){
+			if (oUserWrapper.aData[0]) {
 				$scope.aPhases = angular.copy(oUserWrapper.aData[0].aPhases);
 			}
 		};
@@ -217,7 +217,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			return aLinks;
 		};
 
-		$scope.onSave = function() {
+		$scope.onSave = function(bSaveAndNew) {
 			var SHA512 = new Hashes.SHA512;
 
 			var oDataForSave = {
@@ -226,11 +226,20 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			var aLinks = [];
 
 			var onSuccessCreation = function(oData) {
-				$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
-				$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
-				$scope.oUser.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
-				$scope.sMode = "display";
-
+				if (!bSaveAndNew) {
+					$scope.sMode = "display";
+					$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
+					$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
+					$scope.oUser.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
+				} else {
+					$scope.oUser.sUserName = "";
+					$scope.oUser.sEmail = "";
+					$scope.oUser._aPhases = [];
+					$scope.oUser._aRoles = [];
+					$scope.oUser.sPassword = "";
+					$scope.oUser.sPasswordConfirmation = "";
+					$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
+				}
 			};
 			var onSuccessUpdate = function(oData) {
 				$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
@@ -243,7 +252,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			oDataForSave.LastModifiedAt = $scope.oUser._lastModifiedAt;
 			oDataForSave.AvatarFileGuid = $scope.oUser._avatarFileGuid;
 
-			if($scope.oUser.sPassword !== "" && $scope.oUser.sPassword === $scope.oUser.sPasswordConfirmation){
+			if ($scope.oUser.sPassword !== "" && $scope.oUser.sPassword === $scope.oUser.sPasswordConfirmation) {
 				oDataForSave.Password = SHA512.hex($scope.oUser.sPassword);
 			}
 
@@ -274,6 +283,11 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 
 		};
 
+		$scope.onSaveAndNew = function() {
+			this.onSave(true);
+
+		};
+
 		var onImgSelected = function(aImgFiles, sPath, $event) {
 			for (var i = 0; i < aImgFiles.length; i++) {
 				var file = aImgFiles[i];
@@ -289,10 +303,10 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 					$scope.oUser._avatarFileGuid = sData;
 				});
 			}
-		};	
+		};
 
-		$scope.onAvatarSelected = function(aFiles, $event){
+		$scope.onAvatarSelected = function(aFiles, $event) {
 			onImgSelected(aFiles, "rest/file/createUploadUrl/users/users/_avatar_", $event);
-		};	
+		};
 	}
 ]);
