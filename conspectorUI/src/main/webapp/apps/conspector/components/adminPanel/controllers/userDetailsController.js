@@ -253,7 +253,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			oDataForSave.AvatarFileGuid = $scope.oUser._avatarFileGuid;
 
 			if ($scope.oUser.sPassword !== "" && $scope.oUser.sPassword === $scope.oUser.sPasswordConfirmation) {
-				oDataForSave.Password = SHA512.hex($scope.oUser.sPassword);
+				oDataForSave.Password = apiProvider.hashPassword(SHA512.hex($scope.oUser.sPassword));
 			}
 
 			aLinks = prepareLinksForSave();

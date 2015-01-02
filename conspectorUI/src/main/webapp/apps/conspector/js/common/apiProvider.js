@@ -139,6 +139,24 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				return deffered.promise;
 			},
 
+			hashPassword: function(sPassword){
+				var sHashedPassword = "";
+				var sPath = "rest/account/hashPassword/" + sPassword;
+				var onSuccess = function(sData) {
+					sHashedPassword = sData;
+				}
+
+				dataProvider.ajaxRequest({
+					sPath: sPath,
+					bAsync: false,
+					sRequestType: "GET",
+					oEventHandlers: {
+						onSuccess: onSuccess
+					}
+				});
+				return sHashedPassword;
+			},
+
 			getAttachments: function(oParameters){
 				var sUrl = oParameters.sPath;
 				var oSvc = dataProvider.httpRequest({
