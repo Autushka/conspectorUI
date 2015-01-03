@@ -4,6 +4,7 @@ app.factory('cacheProvider', ['TYPES', function(TYPES) {
 			oDeficiencyEntity: angular.copy(TYPES.oEntityCacheStructure),
 			oAccountEntity: angular.copy(TYPES.oEntityCacheStructure),
 			oUnitEntity: angular.copy(TYPES.oEntityCacheStructure),
+			oCompanyEntity: angular.copy(TYPES.oEntityCacheStructure),
 			oUserEntity: angular.copy(TYPES.oEntityCacheStructure),
 			oRoleEntity: angular.copy(TYPES.oEntityCacheStructure),
 			oProjectEntity: angular.copy(TYPES.oEntityCacheStructure),

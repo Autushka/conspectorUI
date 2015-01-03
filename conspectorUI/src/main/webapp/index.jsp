@@ -47,6 +47,7 @@
 				
 		<script src="apps/conspector/components/userManagement/controllers/signInController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/forgotPasswordController.js"></script>
+		<script src="apps/conspector/components/userManagement/controllers/companySelectionController.js"></script>		
 		<script src="apps/conspector/components/userManagement/controllers/roleSelectionController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/initialPasswordResetController.js"></script>		
 		<script src="apps/conspector/components/userManagement/controllers/passwordResetController.js"></script>		
@@ -60,6 +61,7 @@
 		<script src="apps/conspector/components/adminPanel/controllers/adminPanelController.js"></script>		
 		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>		
 
+		<script src="apps/conspector/components/adminPanel/controllers/companiesListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/usersListController.js"></script>	
 		<script src="apps/conspector/components/adminPanel/controllers/userDetailsController.js"></script>			
 		<script src="apps/conspector/components/adminPanel/controllers/projectsListController.js"></script>		

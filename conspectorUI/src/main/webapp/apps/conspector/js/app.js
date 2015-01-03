@@ -20,6 +20,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/userManagement/templates/initialPasswordResetView.html',
 			controller: 'initialPasswordResetView'
 		});
+		$stateProvider.state('companySelection', {
+			url: '/companySelection',
+			templateUrl: 'apps/conspector/components/userManagement/templates/companySelectionView.html',
+			controller: 'companySelectionView'
+		});			
 		$stateProvider.state('roleSelection', {
 			url: '/roleSelection',
 			templateUrl: 'apps/conspector/components/userManagement/templates/roleSelectionView.html',
@@ -65,6 +70,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/profileSettings/templates/profileSettingsView.html',
 			controller: 'profileSettingsView'
 		});	
+		$stateProvider.state('app.adminPanel.companiesList', {
+			url: '/companiesList',
+			templateUrl: 'apps/conspector/components/adminPanel/templates/companiesListView.html',
+			controller: 'companiesListView'
+		});			
 		$stateProvider.state('app.adminPanel.usersList', {
 			url: '/usersList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/usersListView.html',

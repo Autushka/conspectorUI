@@ -1,5 +1,5 @@
-viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$window',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $window) {
+viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$window', 'cacheProvider',
+	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $window, cacheProvider) {
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.iconTE = $translate.instant('global_icon');
 		$scope.nameENTE = $translate.instant('global_descriptionEN');
@@ -54,7 +54,7 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 			$scope.tableParams.reload();
 
 			apiProvider.getAttachments({
-				sPath: "rest/file/list/settings/settings/_deficiencyStatuses_",
+				sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_",
 				onSuccess: onIconsLoaded
 			});
 		}

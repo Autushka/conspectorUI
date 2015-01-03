@@ -1,9 +1,12 @@
-viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload',
-	function($scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload) {
+viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS, $rootScope) {
 		var sFromState = $stateParams.sFromState;
 		var sUserName = $stateParams.sUserName;
+		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;	
+		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;	
 		$scope.sMode = $stateParams.sMode;
 		$scope.oUser = {
+			_aCompanies: [],
 			_aPhases: [],
 			_aRoles: []
 		};
@@ -12,10 +15,9 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			aData: []
 		};
 
+		$scope.aCompanies = [];
 		$scope.aRoles = [];
 		$scope.aPhases = [];
-
-		//$scope.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
 
 		var setDisplayedUserDetails = function(oUser) {
 			$scope.oUser.sUserName = oUser.UserName;
@@ -23,6 +25,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			$scope.oUser._lastModifiedAt = oUser.LastModifiedAt;
 			$scope.oUser.sCreatedAt = utilsProvider.dBDateToSting(oUser.CreatedAt);
 			$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oUser.LastModifiedAt);
+			$scope.oUser._aCompanies = angular.copy(oUser.CompanyDetails.results)
 			$scope.oUser._aPhases = angular.copy(oUser.PhaseDetails.results);
 			$scope.oUser._aRoles = angular.copy(oUser.RoleDetails.results)
 			if (oUser.AvatarFileGuid) {
@@ -35,10 +38,41 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 
 		var oUser = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oUserEntity",
-			sRequestSettings: "GeneralAttributes/IsDeleted eq false" + "PhaseDetails,RoleDetails", //filter + expand
+			sRequestSettings: "GeneralAttributes/IsDeleted eq false" + "CompanyDetails,PhaseDetails,RoleDetails", //filter + expand
 			sKeyName: "UserName",
 			sKeyValue: $stateParams.sUserName
 		});
+
+		var onCompaniesLoaded = function(aData) {
+			//Sort aData by company sorting sequence 
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+			var aUserCompaniesKeys = [];
+
+			for (var i = 0; i < $scope.oUser._aCompanies.length; i++) {
+				aUserCompaniesKeys.push($scope.oUser._aCompanies[i].CompanyName);
+			}
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oUserWrapper,
+				oNewParentItemArrayWrapper: oUserWrapper,
+				sNameEN: "CompanyName",
+				sNameFR: "CompanyName",
+				sDependentKey: "CompanyName",
+				aParentKeys: aUserCompaniesKeys,
+				sTargetArrayNameInParent: "aCompanies"
+			});
+
+			if (oUserWrapper.aData[0]) {
+				$scope.aCompanies = angular.copy(oUserWrapper.aData[0].aCompanies);
+			}
+		};
 
 		var onRolesLoaded = function(aData) {
 			//Sort aData by role sorting sequence 
@@ -50,7 +84,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			var aUserRolesKeys = [];
 
 			for (var i = 0; i < $scope.oUser._aRoles.length; i++) {
-				aUserRolesKeys.push($scope.oUser._aRoles[i].RoleName);
+				aUserRolesKeys.push($scope.oUser._aRoles[i].Guid);
 			}
 
 			servicesProvider.constructDependentMultiSelectArray({
@@ -61,7 +95,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				oNewParentItemArrayWrapper: oUserWrapper,
 				sNameEN: "RoleName",
 				sNameFR: "RoleName",
-				sDependentKey: "RoleName",
+				sDependentKey: "Guid",
 				aParentKeys: aUserRolesKeys,
 				sTargetArrayNameInParent: "aRoles"
 			});
@@ -116,6 +150,11 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 		var onUserDetailsLoaded = function(oData) {
 			setDisplayedUserDetails(oData);
 
+			apiProvider.getCompanies({
+				bShowSpinner: false,
+				onSuccess: onCompaniesLoaded
+			});
+
 			apiProvider.getProjectsWithPhases({
 				bShowSpinner: false,
 				onSuccess: onProjectsLoaded
@@ -128,7 +167,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 		};
 
 		var getUserDetails = function() {
-			apiProvider.getUserWithPhasesAndRoles({
+			apiProvider.getUserWithCompaniesPhasesAndRoles({
 				sKey: sUserName,
 				bShowSpinner: true,
 				onSuccess: onUserDetailsLoaded,
@@ -140,6 +179,10 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				getUserDetails();
 			} else { //in case when data is retrieved from the cash
 				setDisplayedUserDetails(oUser);
+				apiProvider.getCompanies({
+					bShowSpinner: false,
+					onSuccess: onCompaniesLoaded
+				});
 				apiProvider.getProjectsWithPhases({
 					bShowSpinner: false,
 					onSuccess: onProjectsLoaded
@@ -151,6 +194,10 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			}
 		} else {
 			$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
+			apiProvider.getCompanies({
+				bShowSpinner: false,
+				onSuccess: onCompaniesLoaded
+			});
 			apiProvider.getProjectsWithPhases({
 				bShowSpinner: false,
 				onSuccess: onProjectsLoaded
@@ -192,25 +239,36 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 
 		var prepareLinksForSave = function() { // link user to roles and phases
 			var aLinks = [{
-				sRelationName: "RoleDetails",
+				sRelationName: "CompanyDetails",
 				aUri: []
 			}, {
+				sRelationName: "RoleDetails",
+				bKeepCompanyDependentLinks: true,
+				aUri: []
+			},{
 				sRelationName: "PhaseDetails",
+				bKeepCompanyDependentLinks: true,				
 				aUri: []
 			}];
 			var sUri = "";
+			for (var i = 0; i < $scope.aCompanies.length; i++) {
+				if ($scope.aCompanies[i].ticked) {
+					sUri = "Companys('" + $scope.aCompanies[i].CompanyName + "')";
+					aLinks[0].aUri.push(sUri);
+				}
+			}			
 
 			for (var i = 0; i < $scope.aRoles.length; i++) {
 				if ($scope.aRoles[i].ticked) {
-					sUri = "Roles('" + $scope.aRoles[i].RoleName + "')";
-					aLinks[0].aUri.push(sUri);
+					sUri = "Roles('" + $scope.aRoles[i].Guid + "')";
+					aLinks[1].aUri.push(sUri);
 				}
 			}
 
 			for (var i = 0; i < $scope.aPhases.length; i++) {
 				if ($scope.aPhases[i].ticked) {
 					sUri = "Phases('" + $scope.aPhases[i].Guid + "')";
-					aLinks[1].aUri.push(sUri);
+					aLinks[2].aUri.push(sUri);
 				}
 			}
 
@@ -234,6 +292,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 				} else {
 					$scope.oUser.sUserName = "";
 					$scope.oUser.sEmail = "";
+					$scope.oUser._aCompanies = [];					
 					$scope.oUser._aPhases = [];
 					$scope.oUser._aRoles = [];
 					$scope.oUser.sPassword = "";
@@ -252,7 +311,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$state', 'servicesProv
 			oDataForSave.LastModifiedAt = $scope.oUser._lastModifiedAt;
 			oDataForSave.AvatarFileGuid = $scope.oUser._avatarFileGuid;
 
-			if ($scope.oUser.sPassword !== "" && $scope.oUser.sPassword === $scope.oUser.sPasswordConfirmation) {
+			if ($scope.oUser.sPassword && $scope.oUser.sPassword === $scope.oUser.sPasswordConfirmation) {
 				oDataForSave.Password = apiProvider.hashPassword(SHA512.hex($scope.oUser.sPassword));
 			}
 

@@ -13,7 +13,7 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 			oRole.DescriptionEN = cacheProvider.oUserProfile.aUserRoles[i].DescriptionEN;
 			oRole.DescriptionFR = cacheProvider.oUserProfile.aUserRoles[i].DescriptionFR;
 
-			if(!oRole.DescriptionFR){
+			if (!oRole.DescriptionFR) {
 				oRole.DescriptionFR = oRole.DescriptionEN; //default value is engilsh one (in case when translation is missing)
 			}
 			oRole._sortingSequence = cacheProvider.oUserProfile.aUserRoles[i].GeneralAttributes.SortingSequence;
@@ -24,10 +24,18 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 		$scope.sSelectedRoleName = $scope.aUserRoles[0].RoleName;
 
 		$scope.onContinue = function() {
-			cacheProvider.oUserProfile.sCurrentRole = $scope.sSelectedRoleName;
-			apiProvider.setCurrentRole(cacheProvider.oUserProfile.sCurrentRole); //current role is cached here	
+			var sCurrentRole = $scope.sSelectedRoleName;
+
+			if (!rolesSettings.oInitialViews[sCurrentRole]) {
+				servicesProvider.onNoDefaultViewForTheRole();
+				return;
+			}
+
+			cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+			$rootScope.sCurrentRole = sCurrentRole;
+			apiProvider.setCurrentRole(sCurrentRole); //current role is cached here	
 			servicesProvider.logSuccessLogIn(); //log login_success operation 
-			window.location.href = rolesSettings.oInitialViews[cacheProvider.oUserProfile.sCurrentRole];
+			window.location.href = rolesSettings.oInitialViews[sCurrentRole];
 		};
 
 		$scope.onChangeLanguage = function() {

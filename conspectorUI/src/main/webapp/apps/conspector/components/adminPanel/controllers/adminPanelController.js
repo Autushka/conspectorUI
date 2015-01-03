@@ -1,5 +1,8 @@
-viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window',
-	function($scope, $state, servicesProvider, $window) {
+viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider',
+	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider) {
+		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
+		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+
 		$scope.onUserManagement = function() {
 			$window.location.href = "#/app/adminPanel/usersList";
 		};
@@ -27,5 +30,8 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 		$scope.onAccountTypes = function() {
 			$window.location.href = "#/app/adminPanel/accountTypesList";
 		};
+		$scope.onCompanies = function() {
+			$window.location.href = "#/app/adminPanel/companiesList";
+		};		
 	}
 ]);

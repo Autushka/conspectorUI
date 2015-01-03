@@ -18,16 +18,21 @@ viewControllers.controller('operationLogsListView', ['$scope', '$state', 'servic
 		});
 
 		var onOperationLogsLoaded = function(aData) {
+			var oOperation = {};
+			var oOperationContent = {};
 			for (var i = 0; i < aData.length; i++) {
-				var oOperation = {};
+				oOperation = {};
+				oOperationContent = {};
 				oOperation.operationName = aData[i].OperationName;
 				oOperation.createdBy = aData[i].GeneralAttributes.CreatedBy;
 				oOperation.createdAt = utilsProvider.dBDateToSting(aData[i].CreatedAt);
-				if(aData[i].OperationName === "login_success" || "log_out"){
-					oOperation.operationContent = $translate.instant('global_role') + ": " + utilsProvider.stringToJson(aData[i].OperationContent).sRole;
-				}	
+				if (aData[i].OperationName === "login_success" || "log_out") {
+					oOperationContent = utilsProvider.stringToJson(aData[i].OperationContent);
+					oOperation.operationContent = $translate.instant('global_role') + ": " + oOperationContent.sRole + ", ";
+					oOperation.operationContent = oOperation.operationContent + $translate.instant('global_company') + ": " + oOperationContent.sCompany;
+				}
 
-				oOperationLogsListData.aData.push(oOperation);		
+				oOperationLogsListData.aData.push(oOperation);
 			}
 			$scope.tableParams.reload();
 		}

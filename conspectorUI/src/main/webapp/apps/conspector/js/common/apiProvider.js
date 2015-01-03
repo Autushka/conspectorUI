@@ -2,7 +2,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 	function(dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider) {
 		return {
 			getUserProfile: function(sUserName) {
-				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=RoleDetails&$format=json";
+				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=CompanyDetails,RoleDetails&$format=json";
+				var aUserCompanies = [];
 				var aUserRoles = [];
 				var sCreatedAt = "";
 				var sLastModifiedAt = "";
@@ -10,6 +11,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var onSuccess = function(oData) {
 					bIsInitialPassword = oData.d.IsPasswordInitial;
 					sLastModifiedAt = oData.d.LastModifiedAt;
+					for (var i = 0; i < oData.d.CompanyDetails.results.length; i++) {
+						aUserCompanies.push(oData.d.CompanyDetails.results[i]);
+					}
 					for (var i = 0; i < oData.d.RoleDetails.results.length; i++) {
 						aUserRoles.push(oData.d.RoleDetails.results[i]);
 					}
@@ -26,6 +30,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				return {
 					sUserName: sUserName,
 					aUserRoles: aUserRoles,
+					aUserCompanies: aUserCompanies,
 					bIsInitialPassword: bIsInitialPassword,
 					sLastModifiedAt: sLastModifiedAt
 				};
@@ -49,6 +54,37 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				return sCurrentUserName;
+			},
+
+			getCurrentCompany: function() {
+				var sPath = "jsp/account/getCurrentCompany.jsp";
+				var sCurrentCompany;
+
+				var onSuccess = function(sData) {
+					sCurrentCompany = sData;
+				}
+
+				dataProvider.ajaxRequest({
+					sPath: sPath,
+					bAsync: false,
+					sRequestType: "GET",
+					oEventHandlers: {
+						onSuccess: onSuccess
+					}
+				});
+
+				return sCurrentCompany;
+			},
+
+			setCurrentCompany: function(sCompany) {
+				var oSrv = dataProvider.httpRequest({
+					sPath: "jsp/account/setCurrentCompany.jsp",
+					sRequestType: "POST",
+					oUrlParameters: {
+						company: sCompany
+					},
+					bShowSpinner: false
+				});
 			},
 
 			getCurrentRole: function() {
@@ -139,7 +175,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				return deffered.promise;
 			},
 
-			hashPassword: function(sPassword){
+			hashPassword: function(sPassword) {
 				var sHashedPassword = "";
 				var sPath = "rest/account/hashPassword/" + sPassword;
 				var onSuccess = function(sData) {
@@ -157,7 +193,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				return sHashedPassword;
 			},
 
-			getAttachments: function(oParameters){
+			getAttachments: function(oParameters) {
 				var sUrl = oParameters.sPath;
 				var oSvc = dataProvider.httpRequest({
 					sPath: sUrl
@@ -167,10 +203,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 			},
 
-			getUsersWithPhasesAndRoles: function(oParameters) {
+			getUsersWithCompaniesPhasesAndRoles: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Users",
-					sExpand: "PhaseDetails,RoleDetails",
+					sExpand: "CompanyDetails,PhaseDetails,RoleDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
@@ -184,11 +220,11 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				}
 			},
 
-			getUserWithPhasesAndRoles: function(oParameters) {
+			getUserWithCompaniesPhasesAndRoles: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "Users",
 					sKey: oParameters.sKey,
-					sExpand: "PhaseDetails,RoleDetails",
+					sExpand: "CompanyDetails,PhaseDetails,RoleDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
@@ -198,7 +234,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			createUser: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oUserEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "Users",
@@ -217,7 +255,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateUser: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oUserEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -243,7 +283,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var oSvc = dataProvider.createEntity({
 					sPath: "OperationLogs",
 					oData: oData,
-					bGuidNeeded: true
+					bGuidNeeded: true,
+					bCompanyNeeded: true
 				});
 
 				oSvc.then(onSuccess);
@@ -252,7 +293,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getOperationLogs: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "OperationLogs",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oOperationLogEntity"
@@ -268,7 +309,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getProjects: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Projects",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oProjectEntity"
@@ -285,7 +326,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "Projects",
 					sExpand: "PhaseDetails",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oProjectEntity"
@@ -301,7 +342,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			createProject: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oProjectEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "Projects",
@@ -309,7 +352,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSpinner: oParameters.bShowSpinner,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: true
+					bGuidNeeded: true,
+					bCompanyNeeded: true
 				});
 
 				oSvc.then(onSuccess);
@@ -318,7 +362,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateProject: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oProjectEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -336,7 +382,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "Phases",
 					sExpand: "ProjectDetails",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oPhaseEntity"
@@ -352,7 +398,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			createPhase: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oPhaseEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "Phases",
@@ -360,7 +408,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSpinner: oParameters.bShowSpinner,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: true
+					bGuidNeeded: true,
+					bCompanyNeeded: true
 				});
 
 				oSvc.then(onSuccess);
@@ -369,7 +418,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updatePhase: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oPhaseEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -383,10 +434,64 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
+			getCompanies: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "Companys",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oCompanyEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			createCompany: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oCompanyEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Companys",
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: false
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			updateCompany: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oCompanyEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "Companys",
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},
+
 			getRoles: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Roles",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oRoleEntity"
@@ -410,7 +515,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSpinner: oParameters.bShowSpinner,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: false
+					bGuidNeeded: true,
+					bCompanyNeeded: true
 				});
 
 				oSvc.then(onSuccess);
@@ -419,7 +525,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateRole: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oRoleEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -436,7 +544,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getDeficiencyStatuses: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "TaskStatuss",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oTaskStatusEntity"
@@ -452,7 +560,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			createDeficiencyStatus: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oTaskStatusEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "TaskStatuss",
@@ -460,7 +570,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSpinner: oParameters.bShowSpinner,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: true
+					bGuidNeeded: true,
+					bCompanyNeeded: true
 				});
 
 				oSvc.then(onSuccess);
@@ -469,7 +580,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateDeficiencyStatus: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oTaskStatusEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -486,7 +599,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getAccountTypes: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "AccountTypes",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oAccountTypeEntity"
@@ -502,7 +615,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			createAccountType: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oAccountTypeEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "AccountTypes",
@@ -510,7 +625,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSpinner: oParameters.bShowSpinner,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: true
+					bGuidNeeded: true,
+					bCompanyNeeded: true
 				});
 
 				oSvc.then(onSuccess);
@@ -519,7 +635,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateAccountType: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oAccountTypeEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -536,7 +654,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getDeficiencyPriorities: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "TaskPrioritys",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oTaskPriorityEntity"
@@ -551,7 +669,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			createDeficiencyPriority: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oTaskPriorityEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "TaskPrioritys",
@@ -559,7 +679,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSpinner: oParameters.bShowSpinner,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: true
+					bGuidNeeded: true,
+					bCompanyNeeded: true
 				});
 
 				oSvc.then(onSuccess);
@@ -568,7 +689,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateDeficiencyPriority: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oTaskPriorityEntity");
-					oParameters.onSuccess(oData);
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,

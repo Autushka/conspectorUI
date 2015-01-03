@@ -23,14 +23,6 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS',
 				method: "GET",
 				url: sServicePath + ":sParentEntityWithKey" + "/$links/" + ":sRelationName"
 			},
-			// 'createLink': {
-			// 	method: "POST",
-			// 	url: sServicePath + ":sParentEntity" + "/$links/" + ":sRelationName"
-			// },
-			// 'deleteLink': {
-			// 	method: "DELETE",
-			// 	url: sServicePath + ":sParentEntity" + "/$links/" + ":sDependentEntity"
-			// },
 			'post': {
 				method: "POST",
 				url: sServicePath + ":path"
@@ -81,8 +73,8 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS',
 	}
 ]);
 
-app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', '$translate', 'cacheProvider', '$window',
-	function(genericODataFactory, utilsProvider, $q, $rootScope, $http, $translate, cacheProvider, $window) {
+app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', '$translate', 'cacheProvider', '$window', 'CONSTANTS',
+	function(genericODataFactory, utilsProvider, $q, $rootScope, $http, $translate, cacheProvider, $window, CONSTANTS) {
 		return {
 			commonOnSuccess: function(oParameters) {
 				if (oParameters.bShowSpinner) {
@@ -253,6 +245,12 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				var aBatchData = [];
 				var sRelationNameWithKey = "";
 				var sDependentEntityKey = "";
+				var bLinkBelongToDifferentCompany = false;
+				var onGetLinkSuccess = function(oData) {
+					if (oData.d.CompanyName !== cacheProvider.oUserProfile.sCurrentCompany) {
+						bLinkBelongToDifferentCompany = true;
+					}
+				};
 
 				for (var i = 0; i < oParameters.aLinks.length; i++) {
 					oData = {};
@@ -273,8 +271,25 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					for (var i = 0; i < aData.length; i++) {
 						aBatchData = [];
 						for (var j = 0; j < aData[i].data.results.length; j++) {
+							bLinkBelongToDifferentCompany = false;
 							oData = {};
 							sDependentEntityKey = aData[i].data.results[j].uri.substring(aData[i].data.results[j].uri.indexOf("'") + 1, aData[i].data.results[j].uri.lastIndexOf("'"));
+							if (oParameters.aLinks[i].bKeepCompanyDependentLinks) { // in case i.e. of User assignment to Roles/Phases etc. we should check if the link is related to the current company before removing it
+								this.ajaxRequest({
+									bAsync: false,
+									oData: {},
+									sRequestType: "GET",
+									sDataType: "json",
+									sPath: CONSTANTS.sServicePath + oParameters.aLinks[i].sRelationName.substring(0, oParameters.aLinks[i].sRelationName.length - 7) + "s" + "('" + sDependentEntityKey + "')", //getting entity name out of relation name
+									oEventHandlers: {
+										onSuccess: onGetLinkSuccess
+									}
+								});
+							}
+
+							if (bLinkBelongToDifferentCompany) {
+								continue;
+							}
 							sRelationNameWithKey = oParameters.aLinks[i].sRelationName + "('" + sDependentEntityKey + "')";
 							oData.requestUri = oParameters.sParentEntityWithKey + "/$links/" + sRelationNameWithKey;
 							oData.method = "DELETE";
@@ -314,10 +329,15 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				});
 				oGetODataSvc.then($.proxy(function(oData) {
 					var oDataForUpdate = {};
-					oDataForUpdate = oParameters.oData;
+					oDataForUpdate = angular.copy(oParameters.oData);
 
 					if (oData.LastModifiedAt === oDataForUpdate.LastModifiedAt) {
 						oDataForUpdate.LastModifiedAt = utilsProvider.dateToDBDate(new Date());
+
+						if (!oDataForUpdate.GeneralAttributes) {
+							oDataForUpdate.GeneralAttributes = {};
+						}
+
 						oDataForUpdate.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
 
 						if (!oDataForUpdate.GeneralAttributes.IsDeleted) {
@@ -340,7 +360,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 								var sParentEntityWithKey = oParameters.sPath + "('" + oData[oParameters.sKeyAttribute] + "')";
 								this.updateLinks({
 									aLinks: oParameters.aLinks,
-									sParentEntityWithKey: sParentEntityWithKey
+									sParentEntityWithKey: sParentEntityWithKey,
 								});
 							}
 							this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
@@ -402,13 +422,21 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					$rootScope.$emit('LOAD');
 				}
 
-				oData = oParameters.oData;
+				oData = angular.copy(oParameters.oData);
 				if (oParameters.bGuidNeeded) {
 					oData.Guid = utilsProvider.generateGUID();
+				}
+				if (oParameters.bCompanyNeeded && !oData.CompanyName) {
+					oData.CompanyName = cacheProvider.oUserProfile.sCurrentCompany;
 				}
 
 				oData.CreatedAt = utilsProvider.dateToDBDate(new Date());
 				oData.LastModifiedAt = oParameters.oData.CreatedAt;
+
+				if (!oData.GeneralAttributes) {
+					oData.GeneralAttributes = {};
+				}
+
 				oData.GeneralAttributes.CreatedBy = cacheProvider.oUserProfile.sUserName;
 				oData.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
 				oData.GeneralAttributes.IsDeleted = false;
@@ -549,6 +577,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					async: oParameters.bAsync,
 					url: oParameters.sPath,
 					data: oParameters.oData,
+					dataType: oParameters.sDataType,
 					beforeSend: function() {},
 					success: function(data) {
 						if (oParameters.oEventHandlers && oParameters.oEventHandlers.onSuccess) {

@@ -1,5 +1,5 @@
-viewControllers.controller('systemFilesView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$upload', '$window',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $upload, $window) {
+viewControllers.controller('systemFilesView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$upload', '$window', 'cacheProvider',
+	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $upload, $window, cacheProvider) {
 		var oLogosListData = {
 			aData: []
 		};
@@ -86,12 +86,12 @@ viewControllers.controller('systemFilesView', ['$scope', '$state', 'servicesProv
 		};		
 
 		apiProvider.getAttachments({
-			sPath: "rest/file/list/settings/settings/_logo_",
+			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_",
 			onSuccess: onLogoImgsLoaded
 		});
 
 		apiProvider.getAttachments({
-			sPath: "rest/file/list/settings/settings/_deficiencyStatuses_",
+			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_", 
 			onSuccess: onDeficienciesStatusesImgsLoaded
 		});		
 
@@ -108,7 +108,7 @@ viewControllers.controller('systemFilesView', ['$scope', '$state', 'servicesProv
 		};
 
 		$scope.onLogoSelected = function(aFiles, $event, iIndex) {
-			onImgSelected(aFiles, "rest/file/createUploadUrl/settings/settings/_logo_", oLogosListData.aData,  $event, iIndex);
+			onImgSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_", oLogosListData.aData,  $event, iIndex);
 		};
 
 		$scope.onAddNewDeficiencyStatus = function() {
@@ -124,7 +124,7 @@ viewControllers.controller('systemFilesView', ['$scope', '$state', 'servicesProv
 		};
 
 		$scope.onDeficiencyStatusSelected = function(aFiles, $event, iIndex) {
-			onImgSelected(aFiles, "rest/file/createUploadUrl/settings/settings/_deficiencyStatuses_", oDeficiencyStatusesListData.aData,  $event, iIndex);
+			onImgSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_", oDeficiencyStatusesListData.aData,  $event, iIndex);
 		};		
 	}
 ]);

@@ -61,7 +61,8 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 						OperationName: "login_success",
 						OperationContent: {
 							sUserName: cacheProvider.oUserProfile.sUserName,
-							sRole: cacheProvider.oUserProfile.sCurrentRole
+							sCompany: cacheProvider.oUserProfile.sCurrentCompany,
+							sRole: cacheProvider.oUserProfile.sCurrentRole,
 						}
 					}
 				});
@@ -74,15 +75,30 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 						OperationName: "log_out",
 						OperationContent: {
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sCompany: cacheProvider.oUserProfile.sCurrentCompany,
 							sRole: cacheProvider.oUserProfile.sCurrentRole
 						}
 					}
 				});
 			},
 
-			onLogInSuccessHandler: function(sUserName, sPassword) {
-				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
-				cacheProvider.oUserProfile.sCurrentPassword = sPassword;
+			onNoDefaultViewForTheRole: function() {
+				this.logOut(); //cancel login in case of 0 roles assigned to the user
+				utilsProvider.displayMessage({
+					sText: $translate.instant('global_noDefaultViewForTheRole'),
+					sType: "error"
+				});
+			},
+
+			checkUserRolesAssignment: function(sCurrentCompany) {
+				var aUserRolesForCurrentCompany = [];
+				for (var i = 0; i < cacheProvider.oUserProfile.aUserRoles.length; i++) {
+					if (cacheProvider.oUserProfile.aUserRoles[i].CompanyName === sCurrentCompany) {
+						aUserRolesForCurrentCompany.push(cacheProvider.oUserProfile.aUserRoles[i]);
+					}
+				}
+				cacheProvider.oUserProfile.aUserRoles = angular.copy(aUserRolesForCurrentCompany);
+
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
 					utilsProvider.displayMessage({
@@ -92,47 +108,109 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					return;
 				}
 
-				if (cacheProvider.oUserProfile.bIsInitialPassword) {
-					window.location.href = "#/initialPasswordReset";
-					return;
-				}
-				cacheProvider.oUserProfile.sPassword = ""; //current password needed onlyl for initialPassword scenario
 				if (cacheProvider.oUserProfile.aUserRoles.length === 1) {
-					cacheProvider.oUserProfile.sCurrentRole = cacheProvider.oUserProfile.aUserRoles[0].RoleName;
-					apiProvider.setCurrentRole(cacheProvider.oUserProfile.sCurrentRole); //current role is cached here				
+					sCurrentRole = cacheProvider.oUserProfile.aUserRoles[0].RoleName;
+					if (!rolesSettings.oInitialViews[sCurrentRole]) {
+						this.onNoDefaultViewForTheRole();
+						return;
+					}
+					cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+					$rootScope.sCurrentRole = sCurrentRole;
+					apiProvider.setCurrentRole(sCurrentRole); //current role is cached here				
 					// menu setup for the current role should happen here
 					this.logSuccessLogIn(); //log login_success operation 
-					window.location.href = rolesSettings.oInitialViews[cacheProvider.oUserProfile.sCurrentRole]; //navigation to the initial view for the role
+					window.location.href = rolesSettings.oInitialViews[sCurrentRole]; //navigation to the initial view for the role
+					return;
 				} else {
 					window.location.href = "#/roleSelection";
 					return;
 				}
 			},
 
-			onF5WithCurrentUserHandler: function(sUserName) {
+			onLogInSuccessHandler: function(sUserName, sPassword) {
+				var sCurrentCompany = "";
 				var sCurrentRole = "";
 				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
+				cacheProvider.oUserProfile.sCurrentPassword = sPassword;
 
-				if (!cacheProvider.oUserProfile.aUserRoles.length) {
+				if (cacheProvider.oUserProfile.bIsInitialPassword) {
+					window.location.href = "#/initialPasswordReset";
+					return;
+				}
+				cacheProvider.oUserProfile.sPassword = ""; //current password needed only for initialPassword scenario
+
+				if (!cacheProvider.oUserProfile.aUserCompanies.length) {
 					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					ustilsProvider.displayMessage({
-						sText: $translate.instant('global_noRoleAssignment'),
+					utilsProvider.displayMessage({
+						sText: $translate.instant('global_noCompanyAssignment'),
 						sType: "error"
 					});
 					return;
 				}
+				if (cacheProvider.oUserProfile.aUserCompanies.length === 1) {
+					sCurrentCompany = cacheProvider.oUserProfile.aUserCompanies[0].CompanyName;
+					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
+					apiProvider.setCurrentCompany(sCurrentCompany);
+
+					this.checkUserRolesAssignment(sCurrentCompany);
+				} else {
+					window.location.href = "#/companySelection";
+					return;
+				}
+			},
+
+			onF5WithCurrentUserHandler: function(sUserName) {
+				var sCurrentCompany = "";
+				var sCurrentRole = "";
+				var aUserRolesForCurrentCompany = [];
+				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {
 					window.location.href = "#/signIn/"; //"#/initialPasswordReset"; here old password needed to reset initial password
 					return;
 				}
 
+				if (!cacheProvider.oUserProfile.aUserCompanies.length) {
+					this.logOut(); //cancel login in case of 0 roles assigned to the user
+					utilsProvider.displayMessage({
+						sText: $translate.instant('global_noCompanyAssignment'),
+						sType: "error"
+					});
+					return;
+				}
+
+				sCurrentCompany = apiProvider.getCurrentCompany();
+				if (!sCurrentCompany) {
+					window.location.href = "#/companySelection";
+					return;
+				} else {
+					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
+				}
+
+				for (var i = 0; i < cacheProvider.oUserProfile.aUserRoles.length; i++) {
+					if (cacheProvider.oUserProfile.aUserRoles[i].CompanyName === sCurrentCompany) {
+						aUserRolesForCurrentCompany.push(cacheProvider.oUserProfile.aUserRoles[i]);
+					}
+				}
+				cacheProvider.oUserProfile.aUserRoles = angular.copy(aUserRolesForCurrentCompany);
+
+				if (!cacheProvider.oUserProfile.aUserRoles.length) {
+					this.logOut(); //cancel login in case of 0 roles assigned to the user
+					utilsProvider.displayMessage({
+						sText: $translate.instant('global_noRoleAssignment'),
+						sType: "error"
+					});
+					return;
+				}
+
 				sCurrentRole = apiProvider.getCurrentRole();
 				if (!sCurrentRole) {
 					window.location.href = "#/roleSelection";
+					return;
+
 				} else {
 					cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
-					// menu setup for the current role should happen here
+					$rootScope.sCurrentRole = sCurrentRole;
 				}
 			},
 
@@ -207,7 +285,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 			},
 
 			constructLogoUrl: function() {
-				var sUrl = "rest/file/list/settings/settings/_logo_";
+				var sUrl = "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_";
 				var oSvc = dataProvider.httpRequest({
 					sPath: sUrl
 				});
@@ -323,51 +401,6 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				}
 			},
 
-			// constructDependentMultiSelectArray: function(oParameters) { //oDependentArrayWrapper, oParentArrayWrapper, sSecondLevelAttribute, oNewParentItemArrayWrapper, sNameEN, sNameFR, sDependentKey, sParentKey, sTargetArrayNameInParent
-			// 	var aMultiSelectArray = [];
-			// 	var oMultiSelectItem = {}
-			// 	for (var i = 0; i < oParameters.oDependentArrayWrapper.aData.length; i++) {
-			// 		oMultiSelectItem = {};
-			// 		if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] || oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR]) {
-			// 			oMultiSelectItem.name = $translate.use() === "en" ? oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN] : oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameFR];
-			// 			if (!oMultiSelectItem.name) {
-			// 				oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
-			// 			}
-			// 		}
-			// 		if(oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey]){
-			// 			oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/get/";
-			// 			oMultiSelectItem.icon =  oMultiSelectItem.icon + oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey] + "' style='width: 24px; height: 24px;'/>"
-			// 		}
-
-			// 		oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentKey];
-			// 		aMultiSelectArray.push(oMultiSelectItem);
-			// 	};
-
-			// 	oParameters.oNewParentItemArrayWrapper.aData = angular.copy(aMultiSelectArray);
-			// 	if (oParameters.oNewParentItemArrayWrapper.aData[0]) {
-			// 		oParameters.oNewParentItemArrayWrapper.aData[0].ticked = true;
-			// 	}
-
-			// 	for (var i = 0; i < oParameters.oParentArrayWrapper.aData.length; i++) {
-			// 		var aArray = [];
-			// 		var aArrayItem = {};
-			// 		var bMatchFound = false;
-			// 		for (var j = 0; j < aMultiSelectArray.length; j++) {
-			// 			aArrayItem = {};
-			// 			angular.copy(aMultiSelectArray[j], aArrayItem);
-			// 			if (oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKey] === aMultiSelectArray[j][oParameters.sDependentKey]) {
-			// 				aArrayItem.ticked = true;
-			// 				bMatchFound = true;
-			// 			}
-			// 			aArray.push(aArrayItem);
-			// 		}
-			// 		if (!bMatchFound && aArray[0]) {
-			// 			aArray[0].ticked = true;
-			// 		}
-			// 		oParameters.oParentArrayWrapper.aData[i][oParameters.sTargetArrayNameInParent] = aArray;
-			// 	}
-			// },
-
 			createNgTable: function(oParameters) {
 				var oTableParams = new ngTableParams({
 					page: 1, // show first page
@@ -391,10 +424,6 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				});
 				return oTableParams;
 			},
-
-			// prepareMultiselectData: function(oParameters){
-
-			// }
 		}
 	}
 ]);

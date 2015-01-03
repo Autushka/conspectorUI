@@ -31,7 +31,7 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 			$scope.tableParams.reload();
 		}
 
-		apiProvider.getUsersWithPhasesAndRoles({
+		apiProvider.getUsersWithCompaniesPhasesAndRoles({
 			bShowSpinner: true,
 			onSuccess: onUsersLoaded
 		});

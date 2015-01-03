@@ -24,6 +24,7 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 			for (var i = 0; i < aData.length; i++) {
 				oRolesListData.aData.push({
 					_editMode: false, //symbol _ here meens that this attribute is not displayed in the table and is used for the logic only
+					_guid: aData[i].Guid,
 					_roleName: aData[i].RoleName,
 					_lastModifiedAt: aData[i].LastModifiedAt,
 					roleName: aData[i].RoleName,
@@ -66,7 +67,7 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 			};
 			var onSuccessDelete = function() {
 				for (var i = 0; i < oRolesListData.aData.length; i++) {
-					if (oRolesListData.aData[i]._roleName === oRole._roleName) {
+					if (oRolesListData.aData[i]._guid === oRole._guid) {
 						oRolesListData.aData.splice(i, 1);
 						break;
 					}
@@ -74,12 +75,12 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 				$scope.tableParams.reload();
 			}
 
-			if (oRole._roleName) {
-				oDataForSave.RoleName = oRole._roleName;
+			if (oRole._guid) {
+				oDataForSave.Guid = oRole._guid;
 				oDataForSave.LastModifiedAt = oRole._lastModifiedAt;
 				apiProvider.updateRole({
 					bShowSpinner: true,
-					sKey: oDataForSave.RoleName,
+					sKey: oDataForSave.Guid,
 					oData: oDataForSave,
 					bShowSuccessMessage: true,
 					bShowErrorMessage: true,
@@ -101,7 +102,7 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 				GeneralAttributes: {}
 			};
 			var onSuccessCreation = function(oData) {
-				oRole._roleName = oData.RoleName;
+				oRole._guid = oData.Guid;
 				oRole._lastModifiedAt = oData.LastModifiedAt;
 				oRole._editMode = false;
 				oRole._createMode = false;
@@ -115,19 +116,19 @@ viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvid
 			oDataForSave.DescriptionFR = oRole.descriptionFR;
 			oDataForSave.GeneralAttributes.SortingSequence = oRole.sortingSequence;
 			oDataForSave.LastModifiedAt = oRole._lastModifiedAt;
+			oDataForSave.RoleName = oRole.roleName;
 
-			if (oRole._roleName) {
-				oDataForSave.RoleName = oRole._roleName;
+			if (oRole._guid) {
+				oDataForSave.Guid = oRole._guid;
 				apiProvider.updateRole({
 					bShowSpinner: true,
-					sKey: oDataForSave.RoleName,
+					sKey: oDataForSave.Guid,
 					oData: oDataForSave,
 					bShowSuccessMessage: true,
 					bShowErrorMessage: true,
 					onSuccess: onSuccessUpdate
 				});
 			} else {
-				oDataForSave.RoleName = oRole.roleName;
 				apiProvider.createRole({
 					bShowSpinner: true,
 					oData: oDataForSave,

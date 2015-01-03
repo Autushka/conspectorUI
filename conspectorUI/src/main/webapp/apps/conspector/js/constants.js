@@ -4,7 +4,9 @@ app.factory('CONSTANTS', [function() {
 		messageDisplayLayout: 'topCenter',
 		currentProject: 'conspector',
 		appPathname: "",
-		sServicePath: "odata.svc/"
+		sServicePath: "odata.svc/",
+		sDefaultRoleNameForNewCompany: "systemAdministrator",
+		sGlobalAdministatorRole: "globalAdministrator"
 	}
 }]);
 
