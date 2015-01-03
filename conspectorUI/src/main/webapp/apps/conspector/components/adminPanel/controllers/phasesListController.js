@@ -1,12 +1,14 @@
-viewControllers.controller('phasesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate) {
+viewControllers.controller('phasesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'cacheProvider',
+	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, cacheProvider) {
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.projectTE = $translate.instant('global_project');
 		$scope.nameENTE = $translate.instant('global_descriptionEN');
 		$scope.nameFRTE = $translate.instant('global_descriptionFR');
 		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
 
-		var oProjectArrayWrapper = {aData: []};
+		var oProjectArrayWrapper = {
+			aData: []
+		};
 		//$scope.aProjects = [];
 
 		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
@@ -144,12 +146,16 @@ viewControllers.controller('phasesListView', ['$scope', '$state', 'servicesProvi
 				oPhase._editMode = false;
 				oPhase.projectName = sProjectName;
 				sProjectName = "";
+
+				cacheProvider.cleanEntitiesCache("oProjectEntity");
 			};
 			var onSuccessUpdate = function(oData) {
 				oPhase._editMode = false;
 				oPhase._lastModifiedAt = oData.LastModifiedAt;
 				oPhase.projectName = sProjectName;
 				sProjectName = "";
+
+				cacheProvider.cleanEntitiesCache("oProjectEntity");
 			};
 
 			oDataForSave.NameEN = oPhase.nameEN;

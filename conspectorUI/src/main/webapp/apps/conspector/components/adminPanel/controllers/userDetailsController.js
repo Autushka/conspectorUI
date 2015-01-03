@@ -2,8 +2,8 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS, $rootScope) {
 		var sFromState = $stateParams.sFromState;
 		var sUserName = $stateParams.sUserName;
-		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;	
-		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;	
+		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
+		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.sMode = $stateParams.sMode;
 		$scope.oUser = {
 			_aCompanies: [],
@@ -132,7 +132,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				},
 				sSecondLevelAttribute: "PhaseDetails",
 				sSecondLevelNameEN: "NameEN",
-				sSecondLevelNameEN: "NameFR",
+				sSecondLevelNameFR: "NameFR",
 				oParentArrayWrapper: oUserWrapper,
 				oNewParentItemArrayWrapper: oUserWrapper,
 				sNameEN: "NameEN",
@@ -245,9 +245,9 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				sRelationName: "RoleDetails",
 				bKeepCompanyDependentLinks: true,
 				aUri: []
-			},{
+			}, {
 				sRelationName: "PhaseDetails",
-				bKeepCompanyDependentLinks: true,				
+				bKeepCompanyDependentLinks: true,
 				aUri: []
 			}];
 			var sUri = "";
@@ -256,7 +256,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 					sUri = "Companys('" + $scope.aCompanies[i].CompanyName + "')";
 					aLinks[0].aUri.push(sUri);
 				}
-			}			
+			}
 
 			for (var i = 0; i < $scope.aRoles.length; i++) {
 				if ($scope.aRoles[i].ticked) {
@@ -289,10 +289,12 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 					$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
 					$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oUser.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
+					$scope.oUser.sPassword = "";
+					$scope.oUser.sPasswordConfirmation = "";
 				} else {
 					$scope.oUser.sUserName = "";
 					$scope.oUser.sEmail = "";
-					$scope.oUser._aCompanies = [];					
+					$scope.oUser._aCompanies = [];
 					$scope.oUser._aPhases = [];
 					$scope.oUser._aRoles = [];
 					$scope.oUser.sPassword = "";
@@ -303,6 +305,8 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			var onSuccessUpdate = function(oData) {
 				$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
 				$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
+				$scope.oUser.sPassword = "";
+				$scope.oUser.sPasswordConfirmation = "";
 				$scope.sMode = "display";
 			};
 
@@ -339,7 +343,6 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 					});
 					break;
 			}
-
 		};
 
 		$scope.onSaveAndNew = function() {

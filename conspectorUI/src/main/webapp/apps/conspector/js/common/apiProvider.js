@@ -12,10 +12,14 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bIsInitialPassword = oData.d.IsPasswordInitial;
 					sLastModifiedAt = oData.d.LastModifiedAt;
 					for (var i = 0; i < oData.d.CompanyDetails.results.length; i++) {
-						aUserCompanies.push(oData.d.CompanyDetails.results[i]);
+						if (!oData.d.CompanyDetails.results[i].GeneralAttributes.IsDeleted) {
+							aUserCompanies.push(oData.d.CompanyDetails.results[i]);
+						}
 					}
 					for (var i = 0; i < oData.d.RoleDetails.results.length; i++) {
-						aUserRoles.push(oData.d.RoleDetails.results[i]);
+						if (!oData.d.RoleDetails.results[i].GeneralAttributes.IsDeleted) {
+							aUserRoles.push(oData.d.RoleDetails.results[i]);
+						}
 					}
 				}
 
@@ -77,13 +81,13 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			setCurrentCompany: function(sCompany) {
-				var oSrv = dataProvider.httpRequest({
-					sPath: "jsp/account/setCurrentCompany.jsp",
+				dataProvider.ajaxRequest({
+					sPath: "jsp/account/setCurrentCompany.jsp?company=" + sCompany,
+					bAsync: false,
 					sRequestType: "POST",
-					oUrlParameters: {
-						company: sCompany
-					},
-					bShowSpinner: false
+					// data: {
+					// 	company: sCompany
+					// }
 				});
 			},
 
@@ -108,13 +112,13 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			setCurrentRole: function(sRole) {
-				var oSrv = dataProvider.httpRequest({
-					sPath: "jsp/account/setCurrentRole.jsp",
+				dataProvider.ajaxRequest({
+					sPath: "jsp/account/setCurrentRole.jsp?role=" + sRole,
+					bAsync: false,
 					sRequestType: "POST",
-					oUrlParameters: {
-						role: sRole
-					},
-					bShowSpinner: false
+					// data: {
+					// 	role: sRole
+					// }
 				});
 			},
 

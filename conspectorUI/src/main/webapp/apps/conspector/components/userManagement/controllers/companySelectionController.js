@@ -25,8 +25,8 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 
 		$scope.onContinue = function() {
 			var sCurrentCompany = $scope.sSelectedCompanyName;;
-			cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
-			apiProvider.setCurrentCompany(sCurrentCompany); //current role is cached here	
+			cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;//current company is cached here	
+			apiProvider.setCurrentCompany(sCurrentCompany); 
 
 			servicesProvider.checkUserRolesAssignment(sCurrentCompany);
 		};

@@ -247,7 +247,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				var sDependentEntityKey = "";
 				var bLinkBelongToDifferentCompany = false;
 				var onGetLinkSuccess = function(oData) {
-					if (oData.d.CompanyName !== cacheProvider.oUserProfile.sCurrentCompany) {
+					if (oData.d.CompanyName !== cacheProvider.oUserProfile.sCurrentCompany || !cacheProvider.oUserProfile.sCurrentCompany || !oData.d.CompanyName) {
 						bLinkBelongToDifferentCompany = true;
 					}
 				};
