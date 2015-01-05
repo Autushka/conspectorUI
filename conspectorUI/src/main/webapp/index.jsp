@@ -58,9 +58,9 @@
 		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
 		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
 		<script src="apps/conspector/components/clients/controllers/clientsListController.js"></script>		
-		<script src="apps/conspector/components/adminPanel/controllers/adminPanelController.js"></script>		
 		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>		
 
+		<script src="apps/conspector/components/adminPanel/controllers/adminPanelController.js"></script>	
 		<script src="apps/conspector/components/adminPanel/controllers/companiesListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/usersListController.js"></script>	
 		<script src="apps/conspector/components/adminPanel/controllers/userDetailsController.js"></script>			
@@ -73,8 +73,9 @@
 		<script src="apps/conspector/components/adminPanel/controllers/accountTypesListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script>	
 
-																				
-		<!--<script src="dist/conspector.min.js"></script> -->
+<!--																				
+		<script src="dist/conspector.min.js"></script> 
+		<script src="dist/conspector.min.js.map"></script>  -->
 	</head>
 	<body id="body" ng-controller="mainController">
 		<div ng-show="$root.showSpinner" layout="row" layout-sm="column" layout-align="space-around" style="position: absolute; height: 100%; width: 100%;">

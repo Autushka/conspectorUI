@@ -45,10 +45,24 @@ module.exports = function(grunt) {
         }
       }
     },
+    less: {
+      development: {
+        options: {
+          compress: true,
+          yuicompress: true,
+          optimization: 2
+        },
+        files: {
+          "apps/conspector/css/style.css": "apps/conspector/css/style.less" // destination file and source file
+        }
+      }
+    },
   });
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
-  grunt.registerTask('default', ['concat', 'uglify']);
+
+  grunt.registerTask('default', ['concat', 'uglify', 'less']);
 
 };

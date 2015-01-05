@@ -317,6 +317,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 
 			if ($scope.oUser.sPassword && $scope.oUser.sPassword === $scope.oUser.sPasswordConfirmation) {
 				oDataForSave.Password = apiProvider.hashPassword(SHA512.hex($scope.oUser.sPassword));
+				oDataForSave.IsPasswordInitial = true;
 			}
 
 			aLinks = prepareLinksForSave();
@@ -333,6 +334,13 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 					});
 					break;
 				case "create":
+					if (!oDataForSave.Password) {
+						utilsProvider.displayMessage({
+							sText: $translate.instant('global_noInitialPasswordProvided'),
+							sType: "error"
+						});
+						return;
+					}
 					apiProvider.createUser({
 						bShowSpinner: true,
 						oData: oDataForSave,
