@@ -1,36 +1,33 @@
-<div style="height: 100%;">
-	<div style="height: 15%;"></div>
-	<div style="height: 70%;">
-		<div layout="row">
-			<div flex="30" flex-md="20" flex-sm="10"></div>
-			<div flex="40" flex-md="60" flex-sm="80">
-				<md-content class="test">
-					<form name="signInForm" class="cnpUserManagementForm">
-						<div layout="row">
-							<div flex="95"></div>
-							<label flex="5" ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
-						</div>
-						<div layout="row">
-							<div flex="30"></div>
-							<div flex="40"><img src="img/logo_conspector.png"></div>
-							<div flex="30"></div>
-						</div>
-						<input style="width:100%;" layout="column" type="text" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" required>
-						<input style="width:100%;" layout="column" type="password" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" required>
-						<md-button style="width:100%;" layout="column" type="submit" class="md-primary md-raised" ng-click="login()" md-theme="orange" ng-disabled='!signInForm.$valid'>{{'signIn_logIn' | translate}}</md-button>
-						<md-checkbox ng-model="logInData.bRememberUserName">
-						{{'signIn_rememberUserName' | translate}}
-						</md-checkbox>
-						<label ng-click="onForgotPassword()">{{'signIn_forgotPassword' | translate}}</label>
-					</form>
-				</md-content>
-			</div>
-			<div flex="30" flex-md="20" flex-sm="10"></div>
+<div layout="column" layout-align="center center" style="height: 100%; width: 100%;">
+	<div layout="row" style="width: 100%;">
+		<div flex-gt-lg="35" flex-lg="34" flex-md="20" flex-sm="15"></div>
+		<div flex-gt-lg="30" flex-lg="32" flex-md="60" flex-sm="70">
+			<md-content class="test">
+			<form name="signInForm" class="cnpUserManagementForm">
+				<div layout="column" layout-align="end end">
+					<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
+				</div>
+				
+				<div layout="column" layout-align="center center">
+					<img layout="column" layout-align="end end" src="img/logo_conspector.png" class="cnpVerticalAfterSpacing1x">
+				</div>
+				
+				<input style="width:100%;" layout="column" type="text" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" class="cnpInputField cnpVerticalAfterSpacing1x" required>
+				<input style="width:100%;" layout="column" type="password" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" class="cnpInputField cnpVerticalAfterSpacing1x" required>
+				<md-button style="width:100%;" layout="column" type="submit" ng-click="login()" md-theme="orange" ng-disabled='!signInForm.$valid' class="md-primary md-raised cnpButton">{{'signIn_logIn' | translate}}</md-button>
+				<md-checkbox ng-model="logInData.bRememberUserName">
+				{{'signIn_rememberUserName' | translate}}
+				</md-checkbox>
+				<label ng-click="onForgotPassword()">{{'signIn_forgotPassword' | translate}}</label>
+			</form>
+			</md-content>
 		</div>
+		<div flex-gt-lg="35" flex-lg="34" flex-md="20" flex-sm="15"></div>
 	</div>
-	<div style="height: 15%;"></div>
 </div>
-<!-- 		<form name="signInForm" class="cnpUserManagementForm">
+
+<!--
+<form name="signInForm" class="cnpUserManagementForm">
 	<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
 	<input type="text" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" required>
 	<input type="password" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" required>
@@ -39,4 +36,5 @@
 	{{'signIn_rememberUserName' | translate}}
 	</md-checkbox>
 	<label ng-click="onForgotPassword()">{{'signIn_forgotPassword' | translate}}</label>
-</form> -->
+</form> 
+-->

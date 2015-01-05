@@ -7,7 +7,9 @@
 		<link rel="stylesheet" href="bower_components/angular-material/themes/orange-theme.css">
 		<link rel="stylesheet" href="apps/conspector/js/thirdParty/ng-table.min.css">		
 		<link rel="stylesheet" href="bower_components/isteven-angular-multiselect/angular-multi-select.css">	
-		<link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.min.css">			
+		<link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.min.css">	
+		
+		<link rel="stylesheet" href="apps/conspector/css/style.css">				
 			
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>		
 		<script src="bower_components/angular/angular.min.js"></script>
