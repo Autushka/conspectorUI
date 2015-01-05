@@ -4,6 +4,10 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 		$scope.userNameTE = $translate.instant('global_userName');
 		$scope.emailTE = $translate.instant('global_email');
 		$scope.rolesTE = $translate.instant('usersList_roles');
+		$scope.companiesTE = $translate.instant('usersList_companies');
+
+		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
+		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;		
 
 		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
 
@@ -18,6 +22,20 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 				userName: 'asc'
 			}
 		});
+
+		var onCompaniesLoaded = function(aData){
+			for (var i = 0; i < oUsersListData.aData.length; i++) {
+				oUsersListData.aData[i].sCompanies = "";
+				for (var j = 0; j < oUsersListData.aData[i]._companyDetails.results.length; j++) {
+					for (var k = 0; k < aData.length; k++) {
+						if (oUsersListData.aData[i]._companyDetails.results[j].CompanyName === aData[k].CompanyName) {
+							oUsersListData.aData[i].sCompanies = oUsersListData.aData[i].sCompanies + aData[k].CompanyName + "; ";
+							break;
+						}
+					}
+				}
+			}
+		};
 
 		var onRolesLoaded = function(aData) {
 			for (var i = 0; i < oUsersListData.aData.length; i++) {
@@ -69,11 +87,17 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 					userName: aData[i].UserName,
 					email: aData[i].EMail,
 					_roleDetails: aData[i].RoleDetails,
+					_companyDetails: aData[i].CompanyDetails,
 					_lastModifiedAt: aData[i].LastModifiedAt,
 					roles: ""
 				});
 			}
 			$scope.tableParams.reload();
+
+			apiProvider.getCompanies({
+				bShowSpinner: false,
+				onSuccess: onCompaniesLoaded
+			});
 
 			apiProvider.getRoles({
 				bShowSpinner: false,

@@ -10,7 +10,7 @@
 
 	<md-text-float type="password" label="{{'global_password' | translate}}" ng-model="oUser.sPassword" ng-if="(sMode == 'edit' || sMode == 'create') && sCurrentRole == sGlobalAdministratorRole"> </md-text-float>
 	<md-text-float type="password" label="{{'global_passwordConfirmation' | translate}}" ng-model="oUser.sPasswordConfirmation" ng-if="(sMode == 'edit' || sMode == 'create') && sCurrentRole == sGlobalAdministratorRole"> </md-text-float>
-	<label ng-if="sCurrentRole == sGlobalAdministratorRole">{{'usersList_companies' | translate}}</label>
+	<label ng-if="sCurrentRole == sGlobalAdministratorRole">{{'userDetails_companies' | translate}}</label>
 	<div ng-if="sCurrentRole == sGlobalAdministratorRole"
 		multi-select
 		input-model="aCompanies"

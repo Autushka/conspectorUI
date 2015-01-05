@@ -72,9 +72,10 @@ app.config(['$translateProvider',
                   //usersList
                   usersList_title: 'Users',
                   usersList_roles: 'Role(s)',
+                  usersList_companies: 'Company(s)',
                   //userDetails
                   userDetails_title: 'User Details',
-                  usersList_companies: 'Assigned Companies:',
+                  userDetails_companies: 'Assigned Companies:',
                   userDetails_authorizedPhases: 'Authorized projects and phases:',
                   userDetails_avatar: 'Avatar:',
                   //rolesList
@@ -200,10 +201,12 @@ app.config(['$translateProvider',
                   companiesList_companyName: "Company Name",
                   //usersList
                   usersList_title: 'Users',
+                  usersList_companies: 'Company(s)',
                   usersList_roles: 'Role(s)',
+                  usersList_companies: 'Assigned Companies:',
                   //userDetails
                   userDetails_title: 'User Details',
-                  usersList_companies: 'Assigned Companies:',
+                  userDetails_companies: 'Assigned Companies:',
                   userDetails_authorizedPhases: 'Authorized projects and phases:',
                   userDetails_avatar: 'Avatar:',
                   //rolesList
