@@ -28,6 +28,7 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 			cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;//current company is cached here	
 			apiProvider.setCurrentCompany(sCurrentCompany); 
 
+			cacheProvider.oUserProfile.aUserRoles = angular.copy(cacheProvider.oUserProfile.aAllUserRoles); 
 			servicesProvider.checkUserRolesAssignment(sCurrentCompany);
 		};
 

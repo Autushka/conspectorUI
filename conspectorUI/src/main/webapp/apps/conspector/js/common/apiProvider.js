@@ -34,6 +34,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				return {
 					sUserName: sUserName,
 					aUserRoles: aUserRoles,
+					aAllUserRoles: aUserRoles,
 					aUserCompanies: aUserCompanies,
 					bIsInitialPassword: bIsInitialPassword,
 					sLastModifiedAt: sLastModifiedAt
@@ -61,7 +62,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			getCurrentCompany: function() {
-				var sPath = "jsp/account/getCurrentCompany.jsp";
+				var sPath = "rest/account/getCurrentCompany"; 
 				var sCurrentCompany;
 
 				var onSuccess = function(sData) {
@@ -82,12 +83,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			setCurrentCompany: function(sCompany) {
 				dataProvider.ajaxRequest({
-					sPath: "jsp/account/setCurrentCompany.jsp?company=" + sCompany,
+					sPath: "rest/account/setCurrentCompany/" + sCompany,
 					bAsync: false,
-					sRequestType: "POST",
-					// data: {
-					// 	company: sCompany
-					// }
+					sRequestType: "GET",
 				});
 			},
 
@@ -116,9 +114,6 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sPath: "jsp/account/setCurrentRole.jsp?role=" + sRole,
 					bAsync: false,
 					sRequestType: "POST",
-					// data: {
-					// 	role: sRole
-					// }
 				});
 			},
 

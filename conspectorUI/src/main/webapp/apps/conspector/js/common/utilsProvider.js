@@ -64,6 +64,9 @@ app.factory('utilsProvider', ['$mdToast',
 			},
 
 			dBDateToSting: function(sDBDate){
+				if(sDBDate === null || sDBDate === undefined || sDBDate === ""){
+					return sDBDate;
+				}
 				return this.dateToString(this.dBDateToDate(sDBDate));			
 			},
 

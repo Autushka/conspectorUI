@@ -10,6 +10,10 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 			$scope.bDisplayProfileSettings = true;
 		}
 
+		if(cacheProvider.oUserProfile.aUserCompanies.length > 1){
+			$scope.bDisplaySwitchCompanies = true;
+		}		
+
 		if(cacheProvider.oUserProfile.aUserRoles.length > 1){
 			$scope.bDisplaySwitchRoles = true;
 		}		
@@ -43,6 +47,10 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 				sHash: "#/app/clientsList"
 			});
 		}
+
+		$scope.onSwitchCompanies = function(){
+			$window.location.href = "#/companySelection";
+		};		
 
 		$scope.onSwitchRoles = function(){
 			$window.location.href = "#/roleSelection";

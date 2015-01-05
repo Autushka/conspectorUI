@@ -97,6 +97,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 						aUserRolesForCurrentCompany.push(cacheProvider.oUserProfile.aUserRoles[i]);
 					}
 				}
+				cacheProvider.oUserProfile.aAllUserRoles = angular.copy(cacheProvider.oUserProfile.aUserRoles); //aAllUserRoles will always contain all user role ignoring current company; needed for switch compmany option
 				cacheProvider.oUserProfile.aUserRoles = angular.copy(aUserRolesForCurrentCompany);
 
 				if (!cacheProvider.oUserProfile.aUserRoles.length) {
@@ -348,18 +349,19 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				};
 
 				oParameters.oNewParentItemArrayWrapper.aData = angular.copy(aMultiSelectArray);
-				if (!oParameters.sSecondLevelAttribute) {
-					if (oParameters.oNewParentItemArrayWrapper.aData[0]) {
-						oParameters.oNewParentItemArrayWrapper.aData[0].ticked = true;
-					}
-				} else {
-					for (var i = 0; i < oParameters.oNewParentItemArrayWrapper.aData.length; i++) {
-						if (oParameters.oNewParentItemArrayWrapper.aData[i].multiSelectGroup === undefined) {
-							oParameters.oNewParentItemArrayWrapper.aData[i].ticked = true;
-							break;
-						}
-					}
-				}
+				//Initial value ticking (first one in the list)
+				// if (!oParameters.sSecondLevelAttribute) {
+				// 	if (oParameters.oNewParentItemArrayWrapper.aData[0]) {
+				// 		oParameters.oNewParentItemArrayWrapper.aData[0].ticked = true;
+				// 	}
+				// } else {
+				// 	for (var i = 0; i < oParameters.oNewParentItemArrayWrapper.aData.length; i++) {
+				// 		if (oParameters.oNewParentItemArrayWrapper.aData[i].multiSelectGroup === undefined) {
+				// 			oParameters.oNewParentItemArrayWrapper.aData[i].ticked = true;
+				// 			break;
+				// 		}
+				// 	}
+				// }
 
 				for (var i = 0; i < oParameters.oParentArrayWrapper.aData.length; i++) {
 					var aArray = [];
@@ -384,19 +386,19 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 						}
 						aArray.push(aArrayItem);
 					}
-
-					if (!bMatchFound) {
-						if (!oParameters.sSecondLevelAttribute && aArray[0]) {
-							aArray[0].ticked = true;
-						} else {
-							for (var j = 0; j < aArray.length; j++) {
-								if (aArray[j].multiSelectGroup === undefined) {
-									aArray[j].ticked = true;
-									break;
-								}
-							}
-						}
-					}
+					//Initial value ticking (first one in the list)
+					// if (!bMatchFound) {
+					// 	if (!oParameters.sSecondLevelAttribute && aArray[0]) {
+					// 		aArray[0].ticked = true;
+					// 	} else {
+					// 		for (var j = 0; j < aArray.length; j++) {
+					// 			if (aArray[j].multiSelectGroup === undefined) {
+					// 				aArray[j].ticked = true;
+					// 				break;
+					// 			}
+					// 		}
+					// 	}
+					// }
 					oParameters.oParentArrayWrapper.aData[i][oParameters.sTargetArrayNameInParent] = aArray;
 				}
 			},

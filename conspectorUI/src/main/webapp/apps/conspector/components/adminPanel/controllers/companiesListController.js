@@ -121,6 +121,19 @@ viewControllers.controller('companiesListView', ['$scope', '$state', 'servicesPr
 			});
 		};
 
+		var assignNewCompanyToAdmin = function(sCompanyName) {
+			var sCurrentUserName = cacheProvider.oUserProfile.sUserName;
+			var aLinks = [{
+				sRelationName: "CompanyDetails",
+				aUri: ["Companys('" + sCompanyName + "')"]
+			}];
+
+			dataProvider.createLinks({
+				aLinks: aLinks,
+				sParentEntityWithKey: "Users('" + sCurrentUserName + "')"
+			});
+		};
+
 		$scope.onSave = function(oCompany) {
 			var oDataForSave = {
 				GeneralAttributes: {}
@@ -132,6 +145,8 @@ viewControllers.controller('companiesListView', ['$scope', '$state', 'servicesPr
 				oCompany._createMode = false;
 
 				createDefaultRoleForNewCompany(oData.CompanyName);
+				assignNewCompanyToAdmin(oData.CompanyName);
+
 			};
 			var onSuccessUpdate = function(oData) {
 				oCompany._editMode = false;
