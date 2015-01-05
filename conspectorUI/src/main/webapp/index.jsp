@@ -5,6 +5,8 @@
 		<link rel="icon" type="image/png" href="apps/conspector/img/favicon.ico">
 		<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
 		<link rel="stylesheet" href="bower_components/angular-material/themes/orange-theme.css">
+		<link rel="stylesheet" href="bower_components/angular-material/themes/blue-theme.css">	
+		<link rel="stylesheet" href="bower_components/angular-material/themes/light-blue-dark-theme.css">				
 		<link rel="stylesheet" href="apps/conspector/js/thirdParty/ng-table.min.css">		
 		<link rel="stylesheet" href="bower_components/isteven-angular-multiselect/angular-multi-select.css">	
 		<link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.min.css">	

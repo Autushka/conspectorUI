@@ -1,5 +1,6 @@
 @spacingUnit: 0.5rem;
 @fieldHeight: 3rem;
+@clickableLabelColor: #1c8ebe;
 
 .cnpUserManagementForm{
 	border: 1px solid black;
@@ -20,4 +21,11 @@
 
 .cnpVerticalAfterSpacing2x{
 	margin-bottom: @spacingUnit * 2;
+}
+
+.cnpClickableLabel{
+	color: @clickableLabelColor;
+	&:hover{
+		cursor: pointer;
+	}
 }

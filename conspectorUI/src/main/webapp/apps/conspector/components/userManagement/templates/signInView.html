@@ -4,21 +4,27 @@
 		<div flex-gt-lg="30" flex-lg="32" flex-md="60" flex-sm="70">
 			<md-content class="test">
 			<form name="signInForm" class="cnpUserManagementForm">
-				<div layout="column" layout-align="end end">
-					<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
+				<div layout="row" layout-align="end end">
+					<label ng-click="onChangeLanguage()" class="cnpClickableLabel">{{'signIn_languageCode' | translate}}</label>
 				</div>
 				
-				<div layout="column" layout-align="center center">
-					<img layout="column" layout-align="end end" src="img/logo_conspector.png" class="cnpVerticalAfterSpacing1x">
+				<div layout="row" layout-align="center center">
+					<img src="img/logo_conspector.png" class="cnpVerticalAfterSpacing1x">
 				</div>
 				
-				<input style="width:100%;" layout="column" type="text" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" class="cnpInputField cnpVerticalAfterSpacing1x" required>
-				<input style="width:100%;" layout="column" type="password" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" class="cnpInputField cnpVerticalAfterSpacing1x" required>
-				<md-button style="width:100%;" layout="column" type="submit" ng-click="login()" md-theme="orange" ng-disabled='!signInForm.$valid' class="md-primary md-raised cnpButton">{{'signIn_logIn' | translate}}</md-button>
+				<input style="width:100%;" layout="row" type="text" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" class="cnpInputField cnpVerticalAfterSpacing1x" required>
+				<input style="width:100%;" layout="row" type="password" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" class="cnpInputField cnpVerticalAfterSpacing1x" required>
+
+    			<section layout="row" layout-align="center center">
+
+					<md-button style="width:100%;" type="submit" ng-click="login()" md-theme="blue" ng-disabled='!signInForm.$valid' class="md-primary md-raised md-hue-2 cnpButton">{{'signIn_logIn' | translate}}</md-button>
+
+				`</section>
+
 				<md-checkbox ng-model="logInData.bRememberUserName">
 				{{'signIn_rememberUserName' | translate}}
 				</md-checkbox>
-				<label ng-click="onForgotPassword()">{{'signIn_forgotPassword' | translate}}</label>
+				<label ng-click="onForgotPassword()" class="cnpClickableLabel">{{'signIn_forgotPassword' | translate}}</label>
 			</form>
 			</md-content>
 		</div>
