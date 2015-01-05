@@ -7,12 +7,36 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['apps/conspector/js/*.js', 'apps/conspector/js/common/*.js', 'apps/conspector/components/userManagement/controllers/*.js'],
+        src: [
+        'apps/conspector/js/app.js',
+        'apps/conspector/js/constants.js',
+        'apps/conspector/js/types.js',
+        'apps/conspector/js/rolesSettings.js',
+
+        'apps/conspector/js/common/cacheProvider.js', 
+        'apps/conspector/js/common/utilsProvider.js', 
+        'apps/conspector/js/common/translateProvider.js', 
+        'apps/conspector/js/common/dataProvider.js', 
+        'apps/conspector/js/common/apiProvider.js', 
+        'apps/conspector/js/common/servicesProvider.js',         
+
+        'apps/conspector/js/mainController.js',
+
+        'apps/conspector/components/userManagement/controllers/*.js', 
+        'apps/conspector/components/units/controllers/*.js', 
+        'apps/conspector/components/profileSettings/controllers/*.js',
+        'apps/conspector/components/generalLayout/controllers/*.js',
+        'apps/conspector/components/deficiencies/controllers/*.js',
+        'apps/conspector/components/contractors/controllers/*.js',     
+        'apps/conspector/components/clients/controllers/*.js',    
+        'apps/conspector/components/adminPanel/controllers/*.js'                  
+        ],
         dest: 'dist/conspector.js'
       }
     },
     uglify: {
       options: {
+        sourceMap: 'conspector.map',
         banner: '/*! conspector <%= grunt.template.today("dd-mm-yyyy") %> */\n'
       },
       dist: {
@@ -22,8 +46,8 @@ module.exports = function(grunt) {
       }
     },
   });
-
-  grunt.loadNpmTasks('load-grunt-tasks');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('default', ['concat', 'uglify']);
 
