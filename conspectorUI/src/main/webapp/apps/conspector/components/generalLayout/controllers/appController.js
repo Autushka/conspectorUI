@@ -1,5 +1,18 @@
-viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$window', '$translate', '$timeout', 'cacheProvider', 'rolesSettings',
-	function($scope, $rootScope, $state, servicesProvider, $window, $translate, $timeout, cacheProvider, rolesSettings) {
+viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$window', '$translate', '$timeout', 'cacheProvider', 'rolesSettings', '$cookieStore',
+	function($scope, $rootScope, $state, servicesProvider, $window, $translate, $timeout, cacheProvider, rolesSettings, $cookieStore) {
+		if ($cookieStore.get("userPhases") && $cookieStore.get("userPhases").aPhases && $cookieStore.get("userPhases").sUserName === cacheProvider.oUserProfile.sUserName){
+			$scope.globalProjectsWithPhases = angular.copy($cookieStore.get("userPhases").aPhases);
+		}else{
+			$scope.globalProjectsWithPhases = servicesProvider.constructGlobalProjectPhaseData();
+		}
+
+		$scope.onGlobalUserPhasesChanged = function() {
+			$cookieStore.put("userPhases", {
+				aPhases: $scope.globalProjectsWithPhases,
+				sUserName: cacheProvider.oUserProfile.sUserName
+			});
+		};
+
 		servicesProvider.constructLogoUrl(); //"http://localhost:8080/conspector/img/logo_conspector.png";//servicesProvider.constructLogoUrl();
 
 		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].adminPanel) {
@@ -10,13 +23,13 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 			$scope.bDisplayProfileSettings = true;
 		}
 
-		if(cacheProvider.oUserProfile.aUserCompanies.length > 1){
+		if (cacheProvider.oUserProfile.aUserCompanies.length > 1) {
 			$scope.bDisplaySwitchCompanies = true;
-		}		
+		}
 
-		if(cacheProvider.oUserProfile.aUserRoles.length > 1){
+		if (cacheProvider.oUserProfile.aUserRoles.length > 1) {
 			$scope.bDisplaySwitchRoles = true;
-		}		
+		}
 
 		$scope.aTabs = [];
 
@@ -48,11 +61,11 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 			});
 		}
 
-		$scope.onSwitchCompanies = function(){
+		$scope.onSwitchCompanies = function() {
 			$window.location.href = "#/companySelection";
-		};		
+		};
 
-		$scope.onSwitchRoles = function(){
+		$scope.onSwitchRoles = function() {
 			$window.location.href = "#/roleSelection";
 		};
 

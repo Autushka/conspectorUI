@@ -5,15 +5,16 @@
 <label ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()">{{'app_switchCompanies' | translate}}</label>
 <label ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()">{{'app_switchRoles' | translate}}</label>
 <label ng-click="onLogOut()">{{'app_logOut' | translate}}</label>
-
+<div
+	multi-select
+	input-model="globalProjectsWithPhases"
+	button-label="fullName"
+	item-label="name"
+	tick-property="ticked"
+	group-property="multiSelectGroup"
+	on-close="onGlobalUserPhasesChanged()">
+</div>
 <md-tabs md-selected="selectedTabIndex" md-stretch-tabs='no'>
- 	 <md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle}}"></md-tab>
- 	 
-<!--  	 <md-tab>
- 	   <md-tab-label>
-    	<img src="img/logo_conspector.png" style="width:25px; height:25px; float: left"/>
-  		</md-tab-label>
-  	</md-tab> -->
+<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle}}"></md-tab>
 </md-tabs>
-
 <div ui-view></div>

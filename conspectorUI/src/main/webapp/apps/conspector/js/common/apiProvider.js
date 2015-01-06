@@ -2,9 +2,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 	function(dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider) {
 		return {
 			getUserProfile: function(sUserName) {
-				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=CompanyDetails,RoleDetails&$format=json";
+				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=CompanyDetails,RoleDetails,PhaseDetails/ProjectDetails&$format=json";
 				var aUserCompanies = [];
 				var aUserRoles = [];
+				var aUserPhases = [];
 				var sCreatedAt = "";
 				var sLastModifiedAt = "";
 				var bIsInitialPassword = false;
@@ -21,6 +22,13 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							aUserRoles.push(oData.d.RoleDetails.results[i]);
 						}
 					}
+					for (var i = 0; i < oData.d.PhaseDetails.results.length; i++) {
+						if (!oData.d.PhaseDetails.results[i].GeneralAttributes.IsDeleted) {
+							oData.d.PhaseDetails.results[i]._sortingSequence = oData.d.PhaseDetails.results[i].GeneralAttributes.SortingSequence;
+							oData.d.PhaseDetails.results[i].ProjectDetails._sortingSequence = oData.d.PhaseDetails.results[i].ProjectDetails.GeneralAttributes.SortingSequence;
+							aUserPhases.push(oData.d.PhaseDetails.results[i]);
+						}
+					}					
 				}
 
 				dataProvider.ajaxRequest({ //TODO: add busy indicator here as well if needed
@@ -33,8 +41,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 				return {
 					sUserName: sUserName,
-					aUserRoles: aUserRoles,
-					aAllUserRoles: aUserRoles,
+					aUserRoles: aUserRoles, //will contain list of user roles for the current company
+					aAllUserRoles: aUserRoles,//will contain list of user roles for all users compnanies
+					aUserPhases: aUserPhases,//will contain list of user phases for the current company
+					aAllUserPhases: aUserPhases,//will contain list of user phases for all users compnanies
 					aUserCompanies: aUserCompanies,
 					bIsInitialPassword: bIsInitialPassword,
 					sLastModifiedAt: sLastModifiedAt

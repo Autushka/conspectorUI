@@ -90,6 +90,18 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				});
 			},
 
+			setUserPhasesForCurrentCompany: function(sCurrentCompany) {
+				var aUserPhasesForCurrentCompany = [];
+				for (var i = 0; i < cacheProvider.oUserProfile.aUserPhases.length; i++) {
+					if (cacheProvider.oUserProfile.aUserPhases[i].ProjectDetails.CompanyName === sCurrentCompany) {
+						aUserPhasesForCurrentCompany.push(cacheProvider.oUserProfile.aUserPhases[i]);
+					}
+				}
+
+				cacheProvider.oUserProfile.aAllUserPhases = angular.copy(cacheProvider.oUserProfile.aUserPhases); //aAllUserRoles will always contain all user role ignoring current company; needed for switch compmany option
+				cacheProvider.oUserProfile.aUserPhases = angular.copy(aUserPhasesForCurrentCompany);
+			},
+
 			checkUserRolesAssignment: function(sCurrentCompany) {
 				var aUserRolesForCurrentCompany = [];
 				for (var i = 0; i < cacheProvider.oUserProfile.aUserRoles.length; i++) {
@@ -152,7 +164,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					sCurrentCompany = cacheProvider.oUserProfile.aUserCompanies[0].CompanyName;
 					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
 					apiProvider.setCurrentCompany(sCurrentCompany);
-
+					this.setUserPhasesForCurrentCompany(sCurrentCompany);
 					this.checkUserRolesAssignment(sCurrentCompany);
 				} else {
 					window.location.href = "#/companySelection";
@@ -186,23 +198,24 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					return;
 				} else {
 					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
+					this.setUserPhasesForCurrentCompany(sCurrentCompany);
 				}
 
-				for (var i = 0; i < cacheProvider.oUserProfile.aUserRoles.length; i++) {
-					if (cacheProvider.oUserProfile.aUserRoles[i].CompanyName === sCurrentCompany) {
-						aUserRolesForCurrentCompany.push(cacheProvider.oUserProfile.aUserRoles[i]);
-					}
-				}
-				cacheProvider.oUserProfile.aUserRoles = angular.copy(aUserRolesForCurrentCompany);
+				// for (var i = 0; i < cacheProvider.oUserProfile.aUserRoles.length; i++) {
+				// 	if (cacheProvider.oUserProfile.aUserRoles[i].CompanyName === sCurrentCompany) {
+				// 		aUserRolesForCurrentCompany.push(cacheProvider.oUserProfile.aUserRoles[i]);
+				// 	}
+				// }
+				// cacheProvider.oUserProfile.aUserRoles = angular.copy(aUserRolesForCurrentCompany);
 
-				if (!cacheProvider.oUserProfile.aUserRoles.length) {
-					this.logOut(); //cancel login in case of 0 roles assigned to the user
-					utilsProvider.displayMessage({
-						sText: $translate.instant('global_noRoleAssignment'),
-						sType: "error"
-					});
-					return;
-				}
+				// if (!cacheProvider.oUserProfile.aUserRoles.length) {
+				// 	this.logOut(); //cancel login in case of 0 roles assigned to the user
+				// 	utilsProvider.displayMessage({
+				// 		sText: $translate.instant('global_noRoleAssignment'),
+				// 		sType: "error"
+				// 	});
+				// 	return;
+				// }
 
 				sCurrentRole = apiProvider.getCurrentRole();
 				if (!sCurrentRole) {
@@ -211,7 +224,6 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 
 				} else {
 					cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
-					$rootScope.sCurrentRole = sCurrentRole;
 				}
 			},
 
@@ -283,6 +295,86 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 						}
 					}
 				});
+			},
+
+			getUserPhasesGuids: function() {
+				var aUserPhasesGuids = [];
+				for (var i = 0; i < cacheProvider.oUserProfile.aUserPhases.length; i++) {
+					aUserPhasesGuids.push(cacheProvider.oUserProfile.aUserPhases[i].Guid);
+				}
+				return aUserPhasesGuids;
+			},
+
+			constructGlobalProjectPhaseSelection: function() {//based on users phases construct array of projects with phases
+				var aUserProjectsWithPhases = [];
+				var bMatchFound = false;
+				var iMatchFoundAt = 0;
+				var aUserPhases = angular.copy(cacheProvider.oUserProfile.aUserPhases);
+
+				for (var i = 0; i < aUserPhases.length; i++) {
+					bMatchFound = false;
+					iMatchFoundAt = 0;
+					for (var j = 0; j < aUserProjectsWithPhases.length; j++) {
+						if (aUserProjectsWithPhases[j].Guid === aUserPhases[i].ProjectDetails.Guid) {
+							bMatchFound = true;
+							iMatchFoundAt = j;
+							break;
+						}
+					}
+					if (!bMatchFound) {
+						aUserPhases[i].ProjectDetails.PhaseDetails = {
+							results: []
+						};
+						aUserPhases[i].ProjectDetails.PhaseDetails.results.push(aUserPhases[i]);
+						aUserProjectsWithPhases.push(aUserPhases[i].ProjectDetails);
+					} else {
+						aUserProjectsWithPhases[iMatchFoundAt].PhaseDetails.results.push(aUserPhases[i]);
+					}
+				}
+
+				aUserProjectsWithPhases = $filter('orderBy')(aUserProjectsWithPhases, ["_sortingSequence"]);
+
+				for (var i = 0; i < aUserProjectsWithPhases.length; i++) {
+					aUserProjectsWithPhases[i].PhaseDetails.results = $filter('orderBy')(aUserProjectsWithPhases[i].PhaseDetails.results, ["_sortingSequence"]);
+				}
+				return aUserProjectsWithPhases;
+			},
+
+			constructGlobalProjectPhaseData: function() {
+				var aSelectedPhases = [];
+				aSelectedPhases = angular.copy(cacheProvider.oUserProfile.aUserPhases);
+
+				var oGlobalProjectPhaseWrapper = {
+					aData: aSelectedPhases, // phases that will be ticked 
+					aPhases: []
+				};
+
+				var aUserProjectsWithPhases = [];
+
+
+				aUserProjectsWithPhases = this.constructGlobalProjectPhaseSelection();//based on users phases construct array of projects with phases
+
+				var aUserPhasesGuids = this.getUserPhasesGuids(); //users phases guids
+
+				this.constructDependentMultiSelectArray({
+					oDependentArrayWrapper: {
+						aData: aUserProjectsWithPhases
+					},
+					sSecondLevelAttribute: "PhaseDetails",
+					sSecondLevelNameEN: "NameEN",
+					sSecondLevelNameFR: "NameFR",
+					oParentArrayWrapper: oGlobalProjectPhaseWrapper,
+					oNewParentItemArrayWrapper: {
+						aData: []
+					},
+					sNameEN: "NameEN",
+					sNameFR: "NameFR",
+					sDependentKey: "Guid",
+					aParentKeys: aUserPhasesGuids,
+					sTargetArrayNameInParent: "aPhases"
+				});
+
+				return oGlobalProjectPhaseWrapper.aData[0].aPhases;
 			},
 
 			constructLogoUrl: function() {
