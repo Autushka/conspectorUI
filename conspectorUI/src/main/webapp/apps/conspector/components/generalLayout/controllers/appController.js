@@ -1,6 +1,6 @@
 viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$window', '$translate', '$timeout', 'cacheProvider', 'rolesSettings', '$cookieStore',
 	function($scope, $rootScope, $state, servicesProvider, $window, $translate, $timeout, cacheProvider, rolesSettings, $cookieStore) {
-		if ($cookieStore.get("userPhases") && $cookieStore.get("userPhases").aPhases && $cookieStore.get("userPhases").sUserName === cacheProvider.oUserProfile.sUserName){
+		if ($cookieStore.get("userPhases") && $cookieStore.get("userPhases").aPhases && $cookieStore.get("userPhases").sUserName === cacheProvider.oUserProfile.sUserName && $cookieStore.get("userPhases").sCompanyName === cacheProvider.oUserProfile.sCurrentCompany){
 			$scope.globalProjectsWithPhases = angular.copy($cookieStore.get("userPhases").aPhases);
 		}else{
 			$scope.globalProjectsWithPhases = servicesProvider.constructGlobalProjectPhaseData();
@@ -9,7 +9,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 		$scope.onGlobalUserPhasesChanged = function() {
 			$cookieStore.put("userPhases", {
 				aPhases: $scope.globalProjectsWithPhases,
-				sUserName: cacheProvider.oUserProfile.sUserName
+				sUserName: cacheProvider.oUserProfile.sUserName,
+				sCompanyName: cacheProvider.oUserProfile.sCurrentCompany,
 			});
 		};
 

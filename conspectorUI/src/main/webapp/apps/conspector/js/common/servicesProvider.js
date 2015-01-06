@@ -305,7 +305,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				return aUserPhasesGuids;
 			},
 
-			constructGlobalProjectPhaseSelection: function() {//based on users phases construct array of projects with phases
+			constructGlobalProjectPhaseSelection: function() { //based on users phases construct array of projects with phases
 				var aUserProjectsWithPhases = [];
 				var bMatchFound = false;
 				var iMatchFoundAt = 0;
@@ -352,7 +352,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				var aUserProjectsWithPhases = [];
 
 
-				aUserProjectsWithPhases = this.constructGlobalProjectPhaseSelection();//based on users phases construct array of projects with phases
+				aUserProjectsWithPhases = this.constructGlobalProjectPhaseSelection(); //based on users phases construct array of projects with phases
 
 				var aUserPhasesGuids = this.getUserPhasesGuids(); //users phases guids
 
@@ -374,7 +374,11 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					sTargetArrayNameInParent: "aPhases"
 				});
 
-				return oGlobalProjectPhaseWrapper.aData[0].aPhases;
+				if (oGlobalProjectPhaseWrapper.aData[0]) {
+					return oGlobalProjectPhaseWrapper.aData[0].aPhases;
+				} else {
+					return [];
+				}
 			},
 
 			constructLogoUrl: function() {
