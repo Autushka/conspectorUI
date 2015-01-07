@@ -17,21 +17,24 @@
 				<md-button type="submit" class="md-button cnpLargeButton md-primary md-raised" ng-click="login()" >{{'signIn_logIn' | translate}}</md-button>
 				<!-- ng-disabled='!signInForm.$valid' -->
 			</div>
+			<!-- Not using checkbox for now -->
 			<!-- <div class="checkboxWrapper">
-								<md-checkbox class="md-checkbox" ng-model="logInData.bRememberUserName">
-								{{'signIn_rememberUserName' | translate}}
-								</md-checkbox>
+						<md-checkbox class="md-checkbox" ng-model="logInData.bRememberUserName">
+						{{'signIn_rememberUserName' | translate}}
+						</md-checkbox>
 			</div> -->
 			<div class="cnpInputWrapper">
 				<md-switch class="md-checkbox" ng-model="logInData.bRememberUserName">
-				<div class="notSelectable">{{'signIn_rememberUserName' | translate}}</div>
+				<div class="notSelectable cnpCursorDefault">{{'signIn_rememberUserName' | translate}}</div>
 				</md-switch>
 			</div>
 			<div class="cnpInputWrapper cnpInputWrapperNoMargin">
-				<label class="forgotPasswordLabel cnpLink" ng-click="onForgotPassword()">
+				<label class="cnpForgotPasswordLabel cnpLink" ng-click="onForgotPassword()">
 					<div class="notSelectable">
-					{{'signIn_forgotPassword' | translate}}</label></div>
+						{{'signIn_forgotPassword' | translate}}
+					</label>
 				</div>
 			</div>
-		</form>
-	</div>
+		</div>
+	</form>
+</div>

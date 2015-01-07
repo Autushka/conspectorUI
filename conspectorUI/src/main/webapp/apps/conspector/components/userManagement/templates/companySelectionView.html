@@ -1,8 +1,20 @@
-<form name="companySelectionForm">
-	<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
-	<label>{{'companySelection_heagerLabel' | translate}}</label>
-	<md-radio-group ng-model="sSelectedCompanyName">
+<div class="cnpUserManagementWrapper" layout="column" layout-align="center center">
+	<form name="companySelectionForm" class="cnpUserManagementForm md-whiteframe-z1">
+
+		<div layout="row" layout-align="space-between start">
+			<label  class="cnpLink">
+				<div ng-click="history.back(-1)">{{'global_back' | translate}}
+				</div>
+			</label>
+			<label ng-click="onChangeLanguage()" class="cnpLink">
+				<div class="notSelectable">{{'signIn_languageCode' | translate}}
+				</div>
+			</label>
+		</div>
+		<label>{{'companySelection_heagerLabel' | translate}}</label>
+		<md-radio-group ng-model="sSelectedCompanyName">
 		<md-radio-button ng-repeat="company in aUserCompanies" ng-value="company.CompanyName">{{company.CompanyName}} ({{sLanguage === "en" ? company.DescriptionEN : company.DescriptionFR}})</md-radio-button>
-	</md-radio-group>
-	<md-button class="md-primary md-raised" ng-click="onContinue()" md-theme="orange">{{'global_continue' | translate}}</md-button>
-</form>
+		</md-radio-group>
+		<md-button class="md-primary md-raised" ng-click="onContinue()" md-theme="orange">{{'global_continue' | translate}}</md-button>
+	</form>
+</div>

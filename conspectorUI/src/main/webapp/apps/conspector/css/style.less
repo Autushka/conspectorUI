@@ -44,6 +44,10 @@ VARIABLE AND SETTINGS
     -ms-user-select: none;
     user-select: none;
 }
+//Class for making text unselectable
+.cnpCursorDefault{
+	cursor: default;
+}
 
 //For pixel ratio
 @pixelRatio2: 2;
@@ -232,6 +236,7 @@ width: 100%;
 .md-button{
 	height: @fieldHeight;
 	padding: 8px;
+	text-transform: none;
 
 	&.cnpLargeButton{
 		min-width: 100%;
@@ -259,7 +264,7 @@ md-switch .md-label{
 	font-weight: 500;
 }
 
-.forgotPasswordLabel{
+.cnpForgotPasswordLabel{
 	float: left;
 	min-width: 100%;
 	outline: 0;
