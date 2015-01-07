@@ -367,8 +367,8 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 									}, this)
 								});
 							} else {
-								this.commonOnSuccess(oParameters); 
-								deffered.resolve(oData);		
+								this.commonOnSuccess(oParameters);
+								deffered.resolve(oData);
 							}
 
 						}, this), $.proxy(function() {
@@ -415,7 +415,9 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				});
 
 				oSrv.then(function(aData) {
-					oParameters.onSuccess();
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess();
+					}
 				});
 			},
 
