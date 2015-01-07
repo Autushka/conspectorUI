@@ -1,39 +1,37 @@
-<div layout="column" layout-align="center center" style="height: 100%; width: 100%;">
-	<md-content layout="row">
-	<form name="signInForm" class="cnpUserManagementForm">
-		<div layout="row" layout-align="end end">
-			<label ng-click="onChangeLanguage()" class="cnpClickableLabel cnpVerticalAfterSpacing4x">{{'signIn_languageCode' | translate}}</label>
+<div class="cnpUserManagementWrapper" layout="column" layout-align="center center">
+	<form name="signInForm" class="cnpUserManagementForm md-whiteframe-z1">
+		<div layout="row" layout-align="end start">
+			<label ng-click="onChangeLanguage()" class="cnpLink">{{'signIn_languageCode' | translate}}</label>
 		</div>
-		
-		<div layout="row" layout-align="center center">
-			<img src="img/logo_conspector.png" class="cnpVerticalAfterSpacing4x">
+		<div layout="row" layout-align="center center" >
+			<img src="apps/conspector/img/conspectorLogo.svg" class="conspectorLogo">
 		</div>
-		
-		<section layout="row" layout-align="center center">
-			<input style="width:100%;" type="text" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" class="cnpInputField cnpVerticalAfterSpacing1x" required>
-		</section>
-		<section layout="row" layout-align="center center">
-			<input style="width:100%;" type="password" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" class="cnpInputField cnpVerticalAfterSpacing1x" required>
-		</section>
-		<section layout="row" layout-align="center center">
-			<md-button style="width:100%;" type="submit" ng-click="login()" md-theme="blue" ng-disabled='!signInForm.$valid' class="md-primary md-raised md-hue-2 cnpButton">{{'signIn_logIn' | translate}}</md-button>
-		</section>
-		<md-checkbox ng-model="logInData.bRememberUserName">
-		{{'signIn_rememberUserName' | translate}}
-		</md-checkbox>
-		<label ng-click="onForgotPassword()" class="cnpClickableLabel cnpVerticalAfterSpacing4x">{{'signIn_forgotPassword' | translate}}</label>
-	</form>
-	</md-content>
-</div>
-<!--
-<form name="signInForm" class="cnpUserManagementForm">
-			<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
-			<input type="text" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" required>
-			<input type="password" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" required>
-			<md-button type="submit" class="md-primary md-raised" ng-click="login()" md-theme="orange" ng-disabled='!signInForm.$valid'>{{'signIn_logIn' | translate}}</md-button>
-			<md-checkbox ng-model="logInData.bRememberUserName">
-			{{'signIn_rememberUserName' | translate}}
-			</md-checkbox>
-			<label ng-click="onForgotPassword()">{{'signIn_forgotPassword' | translate}}</label>
-</form>
--->
+		<div layout="column" layout-align="center center" >
+			<div>
+				<input type="text" class="md-whiteframe-z1 cnpTextInputField cnpInputIcon cnpUsernameTextInputIcon" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" required>
+			</div>
+			<div>
+				<input type="password" class="md-whiteframe-z1 cnpTextInputField cnpInputIcon cnpPasswordTextInputIcon" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" required>
+			</div>
+			<div class="buttonWrapper">
+				<md-button type="submit" class="md-button largeButton md-primary md-raised" ng-click="login()" >{{'signIn_logIn' | translate}}</md-button>
+				<!-- ng-disabled='!signInForm.$valid' -->
+			</div>
+			<!-- <div class="checkboxWrapper">
+							<md-checkbox class="md-checkbox" ng-model="logInData.bRememberUserName">
+							{{'signIn_rememberUserName' | translate}}
+							</md-checkbox>
+			</div> -->
+			<div class="checkboxWrapper">
+				<md-switch class="md-checkbox" ng-model="logInData.bRememberUserName">
+				<div class="notSelectable">{{'signIn_rememberUserName' | translate}}</div>
+				</md-switch>
+			</div>
+			<div class="forgotPasswordWrapper">
+				<label class="forgotPasswordLabel cnpLink" ng-click="onForgotPassword()">
+					<div class="notSelectable">
+					{{'signIn_forgotPassword' | translate}}</label></div>
+				</div>
+			</div>
+		</form>
+	</div>

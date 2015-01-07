@@ -1,6 +1,33 @@
 var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module']);
 var viewControllers = angular.module('viewControllers', []);
 
+app.config(function($mdThemingProvider) {
+	$mdThemingProvider.definePalette('amazingPaletteName', {
+    '50': '0088b8',
+    '100': '0088b8',
+    '200': '0088b8',
+    '300': '0088b8',
+    '400': '0088b8',
+    '500': '0088b8',
+    '600': '0088b8',
+    '700': '0088b8',
+    '800': '0088b8',
+    '900': '0088b8',
+    'A100': '0088b8',
+    'A200': '0088b8',
+    'A400': '0088b8',
+    'A700': '0088b8',
+    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+                                        // on this palette should be dark or light
+    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+     '200', '300', '400', 'A100'],
+    'contrastLightColors': undefined    // could also specify this if default was 'dark'
+ 	});
+  	$mdThemingProvider.theme('default')
+    .primaryColor('amazingPaletteName')
+    .accentColor('amazingPaletteName');
+});
+
 app.config(['$stateProvider', '$urlRouterProvider',
 	function($stateProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise("/signIn");
