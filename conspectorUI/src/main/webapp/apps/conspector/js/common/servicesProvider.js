@@ -92,6 +92,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 
 			setUserPhasesForCurrentCompany: function(sCurrentCompany) {
 				var aUserPhasesForCurrentCompany = [];
+				cacheProvider.oUserProfile.aUserPhases = angular.copy(cacheProvider.oUserProfile.aAllUserPhases);
 				for (var i = 0; i < cacheProvider.oUserProfile.aUserPhases.length; i++) {
 					if (cacheProvider.oUserProfile.aUserPhases[i].ProjectDetails.CompanyName === sCurrentCompany) {
 						aUserPhasesForCurrentCompany.push(cacheProvider.oUserProfile.aUserPhases[i]);
@@ -104,6 +105,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 
 			checkUserRolesAssignment: function(sCurrentCompany) {
 				var aUserRolesForCurrentCompany = [];
+				cacheProvider.oUserProfile.aUserRoles = angular.copy(cacheProvider.oUserProfile.aAllUserRoles);
 				for (var i = 0; i < cacheProvider.oUserProfile.aUserRoles.length; i++) {
 					if (cacheProvider.oUserProfile.aUserRoles[i].CompanyName === sCurrentCompany) {
 						aUserRolesForCurrentCompany.push(cacheProvider.oUserProfile.aUserRoles[i]);

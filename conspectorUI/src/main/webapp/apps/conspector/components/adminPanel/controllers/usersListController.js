@@ -49,8 +49,6 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 					}
 				}
 			}
-
-			//$scope.tableParams.reload();
 		};
 
 		var onUsersLoaded = function(aData) {
@@ -71,7 +69,7 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 					} else {
 						bMatchFound = false;
 						for (var j = 0; j < aData[i].RoleDetails.results.length; j++) {
-							if (aData[i].RoleDetails.results[j].RoleName === CONSTANTS.sGlobalAdministatorRole) {
+							if (aData[i].RoleDetails.results[j].RoleName === CONSTANTS.sGlobalAdministatorRole && aData[i].UserName !== cacheProvider.oUserProfile.sUserName) {
 								bMatchFound = true;
 								break;
 							}

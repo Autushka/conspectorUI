@@ -1,16 +1,17 @@
 viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$window', '$translate', '$timeout', 'cacheProvider', 'rolesSettings', '$cookieStore',
 	function($scope, $rootScope, $state, servicesProvider, $window, $translate, $timeout, cacheProvider, rolesSettings, $cookieStore) {
-		if ($cookieStore.get("userPhases") && $cookieStore.get("userPhases").aPhases && $cookieStore.get("userPhases").sUserName === cacheProvider.oUserProfile.sUserName && $cookieStore.get("userPhases").sCompanyName === cacheProvider.oUserProfile.sCurrentCompany){
-			$scope.globalProjectsWithPhases = angular.copy($cookieStore.get("userPhases").aPhases);
+		var sCurrentUser = cacheProvider.oUserProfile.sUserName;
+		var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
+
+		if ($cookieStore.get("userPhases" + sCurrentUser + sCompany) && $cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases){
+			$scope.globalProjectsWithPhases = angular.copy($cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases);
 		}else{
 			$scope.globalProjectsWithPhases = servicesProvider.constructGlobalProjectPhaseData();
 		}
 
 		$scope.onGlobalUserPhasesChanged = function() {
-			$cookieStore.put("userPhases", {
+			$cookieStore.put("userPhases" + sCurrentUser + sCompany, {
 				aPhases: $scope.globalProjectsWithPhases,
-				sUserName: cacheProvider.oUserProfile.sUserName,
-				sCompanyName: cacheProvider.oUserProfile.sCurrentCompany,
 			});
 		};
 
