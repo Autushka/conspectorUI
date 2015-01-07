@@ -1,33 +1,33 @@
 <div class="cnpUserManagementWrapper" layout="column" layout-align="center center">
 	<form name="signInForm" class="cnpUserManagementForm md-whiteframe-z1">
 		<div layout="row" layout-align="end start">
-			<label ng-click="onChangeLanguage()" class="cnpLink">{{'signIn_languageCode' | translate}}</label>
+			<label ng-click="onChangeLanguage()" class="cnpLink"><div class="notSelectable">{{'signIn_languageCode' | translate}}</div></label>
 		</div>
 		<div layout="row" layout-align="center center" >
-			<img src="apps/conspector/img/conspectorLogo.svg" class="conspectorLogo">
+			<img src="apps/conspector/img/conspectorLogo.svg" class="cnpConspectorLogo">
 		</div>
 		<div layout="column" layout-align="center center" >
-			<div>
+			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
 				<input type="text" class="md-whiteframe-z1 cnpTextInputField cnpInputIcon cnpUsernameTextInputIcon" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" required>
 			</div>
-			<div>
+			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
 				<input type="password" class="md-whiteframe-z1 cnpTextInputField cnpInputIcon cnpPasswordTextInputIcon" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" required>
 			</div>
-			<div class="buttonWrapper">
-				<md-button type="submit" class="md-button largeButton md-primary md-raised" ng-click="login()" >{{'signIn_logIn' | translate}}</md-button>
+			<div class="cnpInputWrapper">
+				<md-button type="submit" class="md-button cnpLargeButton md-primary md-raised" ng-click="login()" >{{'signIn_logIn' | translate}}</md-button>
 				<!-- ng-disabled='!signInForm.$valid' -->
 			</div>
 			<!-- <div class="checkboxWrapper">
-							<md-checkbox class="md-checkbox" ng-model="logInData.bRememberUserName">
-							{{'signIn_rememberUserName' | translate}}
-							</md-checkbox>
+								<md-checkbox class="md-checkbox" ng-model="logInData.bRememberUserName">
+								{{'signIn_rememberUserName' | translate}}
+								</md-checkbox>
 			</div> -->
-			<div class="checkboxWrapper">
+			<div class="cnpInputWrapper">
 				<md-switch class="md-checkbox" ng-model="logInData.bRememberUserName">
 				<div class="notSelectable">{{'signIn_rememberUserName' | translate}}</div>
 				</md-switch>
 			</div>
-			<div class="forgotPasswordWrapper">
+			<div class="cnpInputWrapper cnpInputWrapperNoMargin">
 				<label class="forgotPasswordLabel cnpLink" ng-click="onForgotPassword()">
 					<div class="notSelectable">
 					{{'signIn_forgotPassword' | translate}}</label></div>

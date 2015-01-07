@@ -1,6 +1,9 @@
+/*
+VARIABLE AND SETTINGS
+*/
+
 @spacingUnit: 0.5rem;
 @fieldHeight: 48px;
-
 
 //Colors
 @lightGreyBackgroundColor: #F8F8F8;
@@ -17,6 +20,7 @@
 @placeholderTextColor: rgba(66, 67, 71, 0.5);
 @fontSize: 14pt;
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+
 //Placeholder styling
 ::-webkit-input-placeholder {
    color: @placeholderTextColor;
@@ -30,7 +34,9 @@
 :-ms-input-placeholder {  
    color: @placeholderTextColor;  
 }
-.notSelectable {
+
+//Class for making text unselectable
+.notSelectable{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -45,23 +51,25 @@
 //Borders and radius
 @borderRadius: 3px;
 
-//Sizes
-@sd:320px;
-@md:350px;
+//Sizes sd (small device), md (medium device)
+@sd-width:320px;
+@md-width:375px;
+@sd-height:480px;
+@md-height:568px;
 
 //Padding
 @userManagementFormPadding: 43px*0.7;
 
 //Font smoothing trick
-// @media
-// only screen and (-webkit-min-device-pixel-ratio: 1.25),
-// only screen and ( min-device-pixel-ratio: 1.25),
-// only screen and ( min-resolution: 200dpi),
-// only screen and ( min-resolution: 1.25dppx)
-// {
-//     -webkit-font-smoothing: subpixel-antialiased;
-// }
+//already applied by Material
 
+/*
+END OF VARIABLE AND SETTINGS
+*/
+
+/*
+GLOBAL
+*/
 
 body{
 
@@ -70,23 +78,21 @@ font-size: @fontSize;
 font-style: normal;
 font-weight: 400;
 color: @textColor;
-
 }
 
-md-switch .md-label{
-	border-width: 0px;
-}
+/*
+END OF GLOBAL
+*/
 
-//userManagement
-
+/*
+USER MANAGEMENT
+*/
 .cnpUserManagementWrapper{
 width: 100%;
 	.cnpUserManagementForm{
 		//For iPhone 3GS
-
-		
-		min-width: @sd;
-		max-width: @sd;
+		min-width: @sd-width;
+		max-width: @sd-width;
 		background-color: @lightGreyBackgroundColor;
 		border-radius: @borderRadius;
 		padding: 20px;
@@ -94,42 +100,37 @@ width: 100%;
 		padding-right: @userManagementFormPadding;
 
 		@media
-		only screen and (min-height: 480px) and (max-width: 320px) and (-webkit-min-device-pixel-ratio: 1){
-		min-height: 480px;
-		max-height: 480px;
+		only screen and (min-height: @sd-height) and (max-width: @sd-width) and (-webkit-min-device-pixel-ratio: 1){
+		min-height: @sd-height;
+		max-height: @sd-height;
 			//For iPhone 4 (Retina Display)
 			@media
 			only screen and (-webkit-min-device-pixel-ratio: 2){
 			}
 		}
-		
-		//For iPhone 5 (Retina Display)
+				//For iPhone 5 (Retina Display)
 		@media
-		only screen and (min-height: 568px) and (max-width: 320px){
-		min-height: 568px;
-		max-height: 568px;
+		only screen and (min-height: @md-height) and (max-width: @sd-width){
+		min-height: @md-height;
+		max-height: @md-height;
 		}
 		//For iPhone 6 (Retina Display)
 		@media
-			(min-width: 375px){
-			min-height: 568px;
-			max-height: 568px;;
-			min-width: @md;
-			max-width: @md;
-			margin-top: 25px;
+		only screen and (min-width: 375px){
+		min-height: @md-height;
+		max-height: @md-height;
+		min-width: @md-width;
+		max-width: @md-width;
+		margin-top: 25px;
 			//For iPhone 6 Plus (1.5 Retina Display)
-				@media
-				only screen and (-webkit-min-device-pixel-ratio: 3){
-				}
+			@media
+			only screen and (-webkit-min-device-pixel-ratio: 3){
 			}
+		}
 		//For iPad 1/2
 		@media
 		only screen and (min-width: 600px) and (max-width: 1024px){
-		min-height: 568px;
-		max-height: 568px;
-		min-width: 350px;
-		max-width: 350px;
-		margin-top: 100px;
+		margin-top: 75px;
 		//For iPad 3/4 (Retina Display)
 			@media
 			only screen and (-webkit-min-device-pixel-ratio: 2){
@@ -137,61 +138,73 @@ width: 100%;
 		}
 		//For Desktop PC
 		@media
-		only screen and (min-width: 1024px){
-		min-height: 568px;
-		max-height: 568px;
-		min-width: 350px;
-		max-width: 350px;
+		only screen and (min-width: 1025px){
 		margin-top: 125px;
 		}
 	}
 }
 
-
-.md-whiteframe-z1{
-}
-
-.conspectorLogo{
+.cnpConspectorLogo{
 	width: 72%;
 	margin-top: 20px;
 	margin-bottom: 40px;
-
 	//For iPhone 3 and 4
 	@media
-		only screen and (max-width: 320px){
+		only screen and (max-width: @sd-width){
 		margin-top: 15px;
 		margin-bottom: 15px;
 		//For iPhone 5
 		@media
-		only screen and (min-height: 568px){
-		
+		only screen and (min-height: @md-height){
 		}
 	}
+}
 
+.cnpInputWrapper{
+	float: left;
+	min-width: 100%;
+	margin-top: 12px;
+	margin-bottom: 12px;
+
+	&.cnpInputWrapperLessMargin{
+	margin-top: 6px;
+	margin-bottom: 6px;
+	}
+
+	&.cnpInputWrapperNoMargin{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	}
 }
 
 .cnpTextInputField{
 	height: @fieldHeight;
 	width: 100%;
 	padding-left: 45px;
-	padding-top: 16px;
-	padding-bottom: 16px;
+	padding-top: 18px;
+	padding-bottom: 14px;
 	border-width: 0 0 0 0px;
-	margin-top: 6px;
-	margin-bottom: 6px;
+	// margin-top: 6px;
+	// margin-bottom: 6px;
 	box-shadow: 0 2px 4px 0 rgba(91,91,91,.20);
 	border-radius: @borderRadius;
 	color: @textColor;
-
+    -webkit-transition: all 0.15s ease-in-out;
+    -moz-transition: all 0.15s ease-in-out;
+    -ms-transition: all 0.15s ease-in-out;
+    -o-transition: all 0.15s ease-in-out;
 	//For iPhone 3 and 4 and 5
 	@media
-		only screen and (max-width: 320px){
+		only screen and (max-width: @sd-width){
 		height: @fieldHeight*0.8;
 	}
 	&:focus{
-		
-	}
+  	box-shadow: 0 0 5px rgba(50, 159, 198, 1);
+  	}
+}
 
+.md-whiteframe-z1{
+	min-width: 100%;
 }
 
 .cnpInputIcon{
@@ -216,17 +229,11 @@ width: 100%;
 	}
 }
 
-.buttonWrapper{
-	min-width: 100%;
-	margin-top: 12px;
-	margin-bottom: 12px;
-}
-
 .md-button{
 	height: @fieldHeight;
 	padding: 8px;
 
-	&.largeButton{
+	&.cnpLargeButton{
 		min-width: 100%;
 		height: @fieldHeight*1.2;
 
@@ -239,11 +246,8 @@ width: 100%;
 	}
 }
 
-.checkboxWrapper{
-	float: left;
-	min-width: 100%;
-	margin-top: 12px;
-	margin-bottom: 12px;
+md-switch .md-label{
+	border-width: 0px;
 }
 
 .md-checkbox{
@@ -255,19 +259,21 @@ width: 100%;
 	font-weight: 500;
 }
 
-.forgotPasswordWrapper{
-	float: left;
-	min-width: 100%;
-	margin-top: 12px;
-	margin-bottom: 12px;
-}
 .forgotPasswordLabel{
 	float: left;
 	min-width: 100%;
 	outline: 0;
 	font-size: 13pt;
 	font-weight: 500;
+	margin-top: 16px;
 }
+
+/*
+END OF USER MANAGEMENT
+*/
+
+
+
 
 .cnpVerticalAfterSpacing1x{
 	margin-bottom: @spacingUnit;
