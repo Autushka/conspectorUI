@@ -366,9 +366,11 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 										deffered.resolve(oData);
 									}, this)
 								});
+							} else {
+								this.commonOnSuccess(oParameters); 
+								deffered.resolve(oData);		
 							}
-							// this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
-							// deffered.resolve(oData);
+
 						}, this), $.proxy(function() {
 							this.commonOnError(oParameters, deffered);
 						}, this));
