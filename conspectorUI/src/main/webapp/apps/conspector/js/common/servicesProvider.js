@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter',
-	function($rootScope, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter) {
+app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog',
+	function($rootScope, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -202,23 +202,6 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
 					this.setUserPhasesForCurrentCompany(sCurrentCompany);
 				}
-
-				// for (var i = 0; i < cacheProvider.oUserProfile.aUserRoles.length; i++) {
-				// 	if (cacheProvider.oUserProfile.aUserRoles[i].CompanyName === sCurrentCompany) {
-				// 		aUserRolesForCurrentCompany.push(cacheProvider.oUserProfile.aUserRoles[i]);
-				// 	}
-				// }
-				// cacheProvider.oUserProfile.aUserRoles = angular.copy(aUserRolesForCurrentCompany);
-
-				// if (!cacheProvider.oUserProfile.aUserRoles.length) {
-				// 	this.logOut(); //cancel login in case of 0 roles assigned to the user
-				// 	utilsProvider.displayMessage({
-				// 		sText: $translate.instant('global_noRoleAssignment'),
-				// 		sType: "error"
-				// 	});
-				// 	return;
-				// }
-
 				sCurrentRole = apiProvider.getCurrentRole();
 				if (!sCurrentRole) {
 					window.location.href = "#/roleSelection";
@@ -524,6 +507,22 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				});
 				return oTableParams;
 			},
+
+			showConfirmationPopup: function(oParameters) {
+				var confirm = $mdDialog.confirm()
+					.title(oParameters.sHeader)
+					.content(oParameters.sContent)
+					.ok(oParameters.sOk)
+					.cancel(oParameters.sCancel)
+					.targetEvent(oParameters.event);
+				$mdDialog.show(confirm).then(function() {
+					oParameters.onOk();
+				}, function() {
+					if (oParameters.onCancel) {
+						oParameters.onCancel();
+					}
+				});
+			}
 		}
 	}
 ]);

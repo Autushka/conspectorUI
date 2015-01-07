@@ -1,7 +1,12 @@
 viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS, $rootScope) {
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS) {
 		var sFromState = $stateParams.sFromState;
 		var sUserName = $stateParams.sUserName;
+
+		var bDataHasBeenModified = false;
+
+		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
+
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.sMode = $stateParams.sMode;
@@ -216,13 +221,15 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			$scope.sMode = "edit";
 		};
 
-		$scope.onDelete = function() {
+
+		var deleteUser = function() {
 			var oDataForSave = {
 				GeneralAttributes: {
 					IsDeleted: true
 				}
 			};
 			var onSuccessDelete = function() {
+				cacheProvider.cleanEntitiesCache("oUserEntity");
 				$state.go('app.adminPanel.usersList');
 			}
 			oDataForSave.UserName = $scope.oUser.sUserName;
@@ -234,6 +241,17 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				bShowSuccessMessage: true,
 				bShowErrorMessage: true,
 				onSuccess: onSuccessDelete
+			});
+		};
+
+		$scope.onDelete = function($event) {
+			servicesProvider.showConfirmationPopup({
+				sHeader: $translate.instant('userDetails_deletionConfirmationHeader'),
+				sContent: $translate.instant('userDetails_deletionConfirmationContent'),
+				sOk: $translate.instant('global_ok'),
+				sCancel: $translate.instant('global_cancel'),
+				onOk: deleteUser,
+				event: $event
 			});
 		};
 
@@ -275,7 +293,11 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			return aLinks;
 		};
 
-		$scope.onSave = function(bSaveAndNew) {
+		$scope.onDataModified = function() {
+			bDataHasBeenModified = true;
+		};
+
+		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
 			var SHA512 = new Hashes.SHA512;
 
 			var oDataForSave = {
@@ -284,6 +306,12 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			var aLinks = [];
 
 			var onSuccessCreation = function(oData) {
+				cacheProvider.cleanEntitiesCache("oUserEntity");
+				bDataHasBeenModified = false;
+				if (oNavigateTo) {
+					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+				}
+
 				if (!bSaveAndNew) {
 					$scope.sMode = "display";
 					$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
@@ -303,6 +331,12 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				}
 			};
 			var onSuccessUpdate = function(oData) {
+				cacheProvider.cleanEntitiesCache("oUserEntity");
+				bDataHasBeenModified = false;
+				if (oNavigateTo) {
+					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+				}
+
 				$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
 				$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 				$scope.oUser.sPassword = "";
@@ -354,7 +388,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		};
 
 		$scope.onSaveAndNew = function() {
-			this.onSave(true);
+			$scope.onSave(true);
 
 		};
 
@@ -376,7 +410,37 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		};
 
 		$scope.onAvatarSelected = function(aFiles, $event) {
+			onDataModified();
 			onImgSelected(aFiles, "rest/file/createUploadUrl/users/users/_avatar_", $event);
 		};
+
+		var saveAndLeaveView = function() {
+			$scope.onSave(false, oNavigateToInfo);
+		};
+
+		var leaveView = function() {
+			bDataHasBeenModified = false;
+			$state.go(oNavigateToInfo.toState, oNavigateToInfo.toParams);
+		};
+
+		$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+			if (bDataHasBeenModified) {
+				event.preventDefault();
+
+				oNavigateToInfo = {
+					toState: toState,
+					toParams: toParams
+				};
+				servicesProvider.showConfirmationPopup({
+					sHeader: $translate.instant('global_changesSaveConfirmationHeader'), //"Do you want to save changes before leaving the view?", //$translate.instant('userDetails_deletionConfirmationHeader'),
+					sContent: $translate.instant('global_changesSaveConfirmationContent'), //"Not saved changes will be lost...", //$translate.instant('userDetails_deletionConfirmationContent'),
+					sOk: $translate.instant('global_yes'),
+					sCancel: $translate.instant('global_no'),
+					onOk: saveAndLeaveView,
+					onCancel: leaveView,
+					event: event
+				});
+			}
+		});
 	}
 ]);

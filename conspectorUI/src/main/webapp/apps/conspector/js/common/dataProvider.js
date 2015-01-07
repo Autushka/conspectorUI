@@ -361,10 +361,14 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 								this.updateLinks({
 									aLinks: oParameters.aLinks,
 									sParentEntityWithKey: sParentEntityWithKey,
+									onSuccess: $.proxy(function() {
+										this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
+										deffered.resolve(oData);
+									}, this)
 								});
 							}
-							this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
-							deffered.resolve(oData);
+							// this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
+							// deffered.resolve(oData);
 						}, this), $.proxy(function() {
 							this.commonOnError(oParameters, deffered);
 						}, this));
@@ -408,7 +412,9 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					oRequestData: oRequestData
 				});
 
-				oSrv.then(function(aData) {});
+				oSrv.then(function(aData) {
+					oParameters.onSuccess();
+				});
 			},
 
 			createEntity: function(oParameters) { //aLinks, sKey
