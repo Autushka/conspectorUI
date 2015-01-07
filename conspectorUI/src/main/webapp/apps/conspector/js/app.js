@@ -38,7 +38,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			controller: 'signInView'
 		});
 		$stateProvider.state('forgotPassword', {
-			url: '/forgotPassword',
+			url: '/forgotPassword/:sFromState',
 			templateUrl: 'apps/conspector/components/userManagement/templates/forgotPasswordView.html',
 			controller: 'forgotPasswordView'
 		})
@@ -91,11 +91,6 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			url: '/adminPanel',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/adminPanelView.html',
 			controller: 'adminPanelView'
-		});	
-		$stateProvider.state('app.profileSettings', {
-			url: '/profileSettings',
-			templateUrl: 'apps/conspector/components/profileSettings/templates/profileSettingsView.html',
-			controller: 'profileSettingsView'
 		});	
 		$stateProvider.state('app.adminPanel.companiesList', {
 			url: '/companiesList',
@@ -151,7 +146,22 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			url: '/deficiencyPrioritiesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/deficiencyPrioritiesListView.html',
 			controller: 'deficiencyPrioritiesListView'
-		});								
+		});	
+		$stateProvider.state('app.profileSettings', {
+			url: '/profileSettings',
+			templateUrl: 'apps/conspector/components/profileSettings/templates/profileSettingsView.html',
+			controller: 'profileSettingsView'
+		});	
+		$stateProvider.state('app.profileSettings.profileDetails', {
+			url: '/profileDetails',
+			templateUrl: 'apps/conspector/components/profileSettings/templates/profileDetailsView.html',
+			controller: 'profileDetailsView'
+		});		
+		$stateProvider.state('app.profileSettings.changePassword', {
+			url: '/changePassword',
+			templateUrl: 'apps/conspector/components/profileSettings/templates/changePasswordView.html',
+			controller: 'changePasswordView'
+		});												
 									
 
 

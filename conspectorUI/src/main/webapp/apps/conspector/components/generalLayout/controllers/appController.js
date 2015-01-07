@@ -1,5 +1,5 @@
-viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$window', '$translate', '$timeout', 'cacheProvider', 'rolesSettings', '$cookieStore',
-	function($scope, $rootScope, $state, servicesProvider, $window, $translate, $timeout, cacheProvider, rolesSettings, $cookieStore) {
+viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$window', 'servicesProvider', '$translate', '$timeout', 'cacheProvider', 'rolesSettings', '$cookieStore',
+	function($scope, $rootScope, $state, $window, servicesProvider, $translate, $timeout, cacheProvider, rolesSettings, $cookieStore) {
 		var sCurrentUser = cacheProvider.oUserProfile.sUserName;
 		var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
 
@@ -38,37 +38,39 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].deficiencies) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_deficienciesTab"),
-				sHash: "#/app/deficienciesList"
+				sState: "app.deficienciesList"//"#/app/deficienciesList"
 			});
 		}
 
 		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].units) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_unitsTab"),
-				sHash: "#/app/unitsList"
+				sState: "app.unitsList"//"#/app/unitsList"
 			});
 		}
 
 		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contractors) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_contractorsTab"),
-				sHash: "#/app/contractorsList"
+				sState: "app.constractorsList"//"#/app/contractorsList"
 			});
 		}
 
 		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].clients) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_clientsTab"),
-				sHash: "#/app/clientsList"
+				sState: "app.clientsList"//"#/app/clientsList"
 			});
 		}
 
 		$scope.onSwitchCompanies = function() {
-			$window.location.href = "#/companySelection";
+			//$window.location.href = "#/companySelection";
+			$state.go('companySelection');
 		};
 
 		$scope.onSwitchRoles = function() {
-			$window.location.href = "#/roleSelection";
+			//$window.location.href = "#/roleSelection";
+			$state.go('roleSelection');
 		};
 
 		$scope.onLogOut = function() {
@@ -94,18 +96,21 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', 'servic
 
 		$scope.onTabSelect = function(oTab) {
 			if ($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
-				$window.location.href = oTab.sHash;
+				//$window.location.href = oTab.sHash;
+				$state.go(oTab.sState);
 			}
 		};
 
 		$scope.onAdminPanel = function() {
 			$scope.selectedTabIndex = -1;
-			$window.location.href = "#/app/adminPanel/usersList";
+			//$window.location.href = "#/app/adminPanel/usersList";
+			$state.go('app.adminPanel.usersList');
 		};
 
 		$scope.onProfileSettings = function() {
 			$scope.selectedTabIndex = -1;
-			$window.location.href = "#/app/profileSettings";
+			//$window.location.href = "#/app/profileSettings";
+			$state.go('app.profileSettings.profileDetails');
 		};
 
 		$scope.onChangeLanguage = function() {

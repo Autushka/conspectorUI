@@ -1,4 +1,4 @@
-viewControllers.controller('forgotPasswordView', ['$scope', '$stateParams', '$state', 'utilsProvider', 'dataProvider', 'servicesProvider', 'apiProvider',
+viewControllers.controller('forgotPasswordView', ['$scope', '$state', '$stateParams', 'utilsProvider', 'dataProvider', 'servicesProvider', 'apiProvider',
 	function($scope, $state, $stateParams, utilsProvider, dataProvider, servicesProvider, apiProvider) {
 		$scope.sSelectedResetType = "userName";
 		var sFromState = $stateParams.sFromState;

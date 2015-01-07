@@ -52,7 +52,7 @@ app.config(['$translateProvider',
                   m205: 'Provided Old Password is not correct',
                   m206: 'Username not found',
                   //app
-                  app_switchCompanies: "Switch companies",
+                  app_switchCompanies: "Switch company",
                   app_switchRoles: "Switch Role",
                   app_logOut: 'Log Out',
                   app_adminPanel: 'Admin Panel',
@@ -61,6 +61,14 @@ app.config(['$translateProvider',
                   app_unitsTab: 'Units',
                   app_contractorsTab: 'Contractors',
                   app_clientsTab: 'Clients',
+                  //profileSettings
+                  profileSettings_menuHeader: 'Profile Settings Menu',
+                  profileSettings_profileDetails: 'Profile Details',
+                  profileSettings_changePassword: 'Change Password',
+                  //profileDetails
+                  profileDetails_title: 'Profile Details',
+                  //changePassword
+                  changePassword_title: 'Change Password',
                   //adminPanel
                   adminPanel_menuHeader: 'Admin Panel Menu',
                   adminPanel_companies: "Companies",
@@ -191,7 +199,7 @@ app.config(['$translateProvider',
                   m205: 'Provided Old Password is not correct',
                   m206: 'Username not found',
                   //app
-                  app_switchCompanies: "Switch companies",
+                  app_switchCompanies: "Switch company",
                   app_switchRoles: "Switch Role",
                   app_logOut: 'Log Out',
                   app_adminPanel: 'Admin Panel',
@@ -200,6 +208,14 @@ app.config(['$translateProvider',
                   app_unitsTab: 'Units',
                   app_contractorsTab: 'Contractors',
                   app_clientsTab: 'Clients',
+                  //profileSettings
+                  profileSettings_menuHeader: 'Profile Settings Menu',
+                  profileSettings_profileDetails: 'Profile Details',
+                  profileSettings_changePassword: 'Change Password',
+                  //profileDetails
+                  profileDetails_title: 'Profile Details',
+                  //changePassword
+                  changePassword_title: 'Change Password',
                   //adminPanel
                   adminPanel_menuHeader: 'Admin Panel Menu',
                   adminPanel_companies: "Companies",
