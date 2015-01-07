@@ -1,6 +1,7 @@
-viewControllers.controller('forgotPasswordView', ['$scope', '$state', 'utilsProvider', 'dataProvider', 'servicesProvider', 'apiProvider',
-	function($scope, $state, utilsProvider, dataProvider, servicesProvider, apiProvider) {
+viewControllers.controller('forgotPasswordView', ['$scope', '$stateParams', '$state', 'utilsProvider', 'dataProvider', 'servicesProvider', 'apiProvider',
+	function($scope, $state, $stateParams, utilsProvider, dataProvider, servicesProvider, apiProvider) {
 		$scope.sSelectedResetType = "userName";
+		var sFromState = $stateParams.sFromState;
 
 		$scope.resetData = {
 			sUserName: "",
@@ -37,5 +38,9 @@ viewControllers.controller('forgotPasswordView', ['$scope', '$state', 'utilsProv
 				$scope.resetData.sUserName = "";
 			}
 		};
+		
+		$scope.onBack = function(){
+			$state.go(sFromState);
+		}
 	}
 ]);
