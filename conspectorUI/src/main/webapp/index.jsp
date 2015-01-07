@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="conspector">
+<html ng-app="conspector" style="height: 100%;">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,9 +75,9 @@
 		<script src="dist/conspector.min.js"></script>
 		<script src="dist/conspector.min.js.map"></script>  -->
 	</head>
-	<body id="body" ng-controller="mainController">
-		<div ng-show="$root.showSpinner" layout="row" layout-sm="column" layout-align="space-around">
-			<md-progress-circular md-mode="indeterminate" style="top: 45%;"> </md-progress-circular>
+	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;">
+		<div ng-show="$root.showSpinner" layout="row" layout-align="center center" style="position: absolute; z-index: 2; height: 100%; width: 100%;">
+			<md-progress-circular md-mode="indeterminate"> </md-progress-circular>
 		</div>
 		<div ui-view></div>
 	</body>
