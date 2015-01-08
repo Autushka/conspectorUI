@@ -120,7 +120,7 @@ app.config(['$translateProvider',
                   signIn_userName: 'Username',
                   signIn_password: 'Password',
                   signIn_logIn: 'Log In to Conspector',
-                  signIn_languageCode: 'EN',
+                  signIn_languageCode: 'FR',
                   signIn_forgotPassword: 'Forgot your password?',
                   signIn_rememberUserName: 'Remember Username',
                   //initialPasswordReset
@@ -144,7 +144,7 @@ app.config(['$translateProvider',
                   forgotPassword_userName: 'Username',
                   forgotPassword_email: 'Email',
                   forgotPassword_reset: 'Reset password',
-                  forgotPassword_footerLabel: 'Still have questions? Send us an email at support@conspector.com',
+                  forgotPassword_footerLabel: 'Having issues logging in?\nEmail us at ',
             });
 
             $translateProvider.translations('fr', {
@@ -267,8 +267,8 @@ app.config(['$translateProvider',
                   //signIn
                   signIn_userName: 'Username',
                   signIn_password: 'Password',
-                  signIn_logIn: 'Log In to Conspector',
-                  signIn_languageCode: 'FR',
+                  signIn_logIn: 'Connexion \u00E0 Conspector',
+                  signIn_languageCode: 'EN',
                   signIn_forgotPassword: 'Forgot your password?',
                   signIn_rememberUserName: 'Remember Username',
                   //initialPasswordReset
@@ -292,7 +292,7 @@ app.config(['$translateProvider',
                   forgotPassword_userName: 'Username',
                   forgotPassword_email: 'Email',
                   forgotPassword_reset: 'Reset password',
-                  forgotPassword_footerLabel: 'Still have questions? Send us an email at support@conspector.com',
+                  forgotPassword_footerLabel: 'Un probl\u00E8me de connexion?\n\u00C9crivez \u00E0 ',
             });
 
             $translateProvider.preferredLanguage('en');

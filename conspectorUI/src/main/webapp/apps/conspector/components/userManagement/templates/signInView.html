@@ -8,10 +8,10 @@
 		</div>
 		<div layout="column" layout-align="center center" >
 			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
-				<input type="text" class="md-whiteframe-z1 cnpTextInputField cnpInputIcon cnpUsernameTextInputIcon" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" required>
+				<input type="text" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpUsernameTextInputIcon" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" required>
 			</div>
 			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
-				<input type="password" class="md-whiteframe-z1 cnpTextInputField cnpInputIcon cnpPasswordTextInputIcon" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" required>
+				<input type="password" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpPasswordTextInputIcon" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" required>
 			</div>
 			<div class="cnpInputWrapper">
 				<md-button type="submit" class="md-button cnpLargeButton md-primary md-raised" ng-click="login()" >{{'signIn_logIn' | translate}}</md-button>
@@ -19,21 +19,23 @@
 			</div>
 			<!-- Not using checkbox for now -->
 			<!-- <div class="checkboxWrapper">
-						<md-checkbox class="md-checkbox" ng-model="logInData.bRememberUserName">
-						{{'signIn_rememberUserName' | translate}}
-						</md-checkbox>
+							<md-checkbox class="md-checkbox" ng-model="logInData.bRememberUserName">
+							{{'signIn_rememberUserName' | translate}}
+							</md-checkbox>
 			</div> -->
 			<div class="cnpInputWrapper">
 				<md-switch class="md-checkbox" ng-model="logInData.bRememberUserName">
-				<div class="notSelectable cnpCursorDefault">{{'signIn_rememberUserName' | translate}}</div>
+					<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
+						{{'signIn_rememberUserName' | translate}}
+					</div>
 				</md-switch>
 			</div>
 			<div class="cnpInputWrapper cnpInputWrapperNoMargin">
-				<label class="cnpForgotPasswordLabel cnpLink" ng-click="onForgotPassword()">
+				<label class="cnpUserManagementBottomLabel cnpLink" ng-click="onForgotPassword()">
 					<div class="notSelectable">
 						{{'signIn_forgotPassword' | translate}}
-					</label>
-				</div>
+					</div>
+				</label>
 			</div>
 		</div>
 	</form>
