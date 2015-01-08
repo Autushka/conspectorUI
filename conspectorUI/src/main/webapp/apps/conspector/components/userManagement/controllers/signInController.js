@@ -1,5 +1,5 @@
-viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider', 'dataProvider', '$cookieStore',
-	function($scope, $state, servicesProvider, dataProvider, $cookieStore) {
+viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider', 'dataProvider', '$cookieStore', 'utilsProvider', '$translate',
+	function($scope, $state, servicesProvider, dataProvider, $cookieStore, utilsProvider, $translate) {
 		var sUserName = "";
 		if ($cookieStore.get("userName")) {
 			sUserName = $cookieStore.get("userName").sUserName;
@@ -16,7 +16,14 @@ viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider'
 		}
 
 		$scope.login = function() {
-			var SHA512 = new Hashes.SHA512;
+			if (!$scope.logInData.sUserName || !$scope.logInData.sPassword) {
+				utilsProvider.displayMessage({
+					sText: $translate.instant("global_emptyFields"),
+					sType: 'error'
+				});
+				return;
+			}
+
 			var oData = {
 				userName: $scope.logInData.sUserName,
 				password: $scope.logInData.sPassword
@@ -27,7 +34,6 @@ viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider'
 
 		$scope.passwordFldKeyDown = function(event) {
 			if (event.keyCode === 13) {
-				//$("#passwordFld").blur();
 				this.login();
 			}
 		};
@@ -41,7 +47,7 @@ viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider'
 		};
 
 		$scope.onForgotPassword = function() {
-			$state.go('forgotPassword');			
+			$state.go('forgotPassword');
 		};
 	}
 ]);

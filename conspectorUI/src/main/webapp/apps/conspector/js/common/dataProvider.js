@@ -304,13 +304,18 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						}
 					}
 
-					oSrv = this.batchRequest({
-						oRequestData: oRequestData
-					});
+					if (oRequestData.__batchRequests.length) {//should initiate links deletion only if user has some links
+						oSrv = this.batchRequest({
+							oRequestData: oRequestData
+						});
 
-					oSrv.then($.proxy(function() { // onDeleteLinks
+						oSrv.then($.proxy(function() { // onDeleteLinks
+							this.createLinks(oParameters);
+						}, this));
+					}else{
 						this.createLinks(oParameters);
-					}, this));
+					}
+
 				}, this));
 			},
 

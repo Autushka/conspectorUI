@@ -233,7 +233,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntity({
 					sPath: "Users",
 					sKey: oParameters.sKey,
-					sExpand: "CompanyDetails,PhaseDetails,RoleDetails",
+					sExpand: "CompanyDetails,PhaseDetails/ProjectDetails,RoleDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});

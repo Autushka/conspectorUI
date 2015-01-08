@@ -1,5 +1,27 @@
 <div>{{'profileDetails_title' | translate}}</div>
 
 <form name="profileDetailsForm">
-	<md-button style="width:100%;" type="submit" ng-click="onRefreshCookedSettings()" class="md-primary md-raised md-hue-2 cnpButton">Clean cooked settings</md-button> 
+	<md-button ng-show="sMode == 'display'" class="md-primary md-raised" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
+	<md-button ng-show="sMode == 'edit'" type="submit" class="md-primary md-raised" ng-click="onSave()">{{'global_save' | translate}}</md-button>
+
+	<md-button type="submit" ng-click="onRefreshCookedSettings()" class="md-primary md-raised">Clean cooked settings</md-button> 
+
+	<input type="text" class="cnpTextInputField" ng-model="oUser.sUserName" ng-disabled="true" placeholder="{{'global_userName' | translate}}" ng-change="onDataModified()" required>
+	<input type="email" class="cnpTextInputField" ng-model="oUser.sEmail" ng-disabled="sMode == 'display'" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()" required>	
+
+	<label layout="row" ng-if="oUser._aCompanies.length > 1">{{'global_companies' | translate}}</label>
+	<label layout="row" ng-if="oUser._aCompanies.length > 1">{{oUser.sCompanies}}</label>
+
+	<label layout="row">{{'global_roles' | translate}}</label>
+	<label layout="row">{{oUser.sRoles}}</label>	
+
+	<label layout="row">{{'global_authorizedPhases' | translate}}</label>
+	<label layout="row"> {{oUser.sPhases}}</label>
+
+	<label layout="row">{{'global_avatar' | translate}}</label>
+	<img style="width: 200px; height: 200px;" ng-src="{{oUser.sAvatarUrl}}"></img>
+	<button ng-if="(sMode == 'edit' || sMode == 'create') && sCurrentRole == sGlobalAdministratorRole" ng-file-select accept="image/*" ng-file-change="onAvatarSelected($files, $event, $index)">{{'global_upload' | translate}}</button>		
+
+	<md-text-float label="{{'global_creationDate' | translate}}" ng-model="oUser.sCreatedAt" ng-disabled="true"> </md-text-float>
+	<md-text-float label="{{'global_lastModificationDate' | translate}}" ng-model="oUser.sLastModifiedAt" ng-disabled="true"> </md-text-float>		
 </form>

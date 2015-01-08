@@ -3,8 +3,8 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.userNameTE = $translate.instant('global_userName');
 		$scope.emailTE = $translate.instant('global_email');
-		$scope.rolesTE = $translate.instant('usersList_roles');
-		$scope.companiesTE = $translate.instant('usersList_companies');
+		$scope.rolesTE = $translate.instant('global_roles');
+		$scope.companiesTE = $translate.instant('global_companies');
 
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;		

@@ -1,5 +1,5 @@
-viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$state', '$stateParams', 'utilsProvider', 'dataProvider', 'servicesProvider', 'apiProvider',
-	function($scope, $rootScope, $state, $stateParams, utilsProvider, dataProvider, servicesProvider, apiProvider) {
+viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$state', '$stateParams', 'utilsProvider', 'dataProvider', 'servicesProvider', 'apiProvider', '$translate',
+	function($scope, $rootScope, $state, $stateParams, utilsProvider, dataProvider, servicesProvider, apiProvider, $translate) {
 		$scope.sSelectedResetType = "userName";
 
 		$scope.resetData = {
@@ -23,6 +23,14 @@ viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$stat
 			} else {
 				oData.email = $scope.resetData.sEmail;
 			}
+
+			if (!oData.userName && !oData.email) {
+				utilsProvider.displayMessage({
+					sText: $translate.instant("global_emptyFields"),
+					sType: 'error'
+				});
+				return;
+			}			
 
 			oSrv = apiProvider.resetPassword(oData);
 			oSrv.then(function(oData) {

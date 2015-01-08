@@ -9,7 +9,7 @@
 	<input type="email" class="cnpTextInputField" ng-model="oUser.sEmail" ng-disabled="sMode == 'display' || sCurrentRole != sGlobalAdministratorRole" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()" required>
 	<input type="password" class="cnpTextInputField" ng-model="oUser.sPassword" ng-if="(sMode == 'edit' || sMode == 'create') && sCurrentRole == sGlobalAdministratorRole" placeholder="{{'global_password' | translate}}" ng-change="onDataModified()" required>
 	<input type="password" class="cnpTextInputField" ng-model="oUser.sPasswordConfirmation" ng-if="(sMode == 'edit' || sMode == 'create') && sCurrentRole == sGlobalAdministratorRole" placeholder="{{'global_passwordConfirmation' | translate}}" ng-change="onDataModified()" required>
-	<label ng-if="sCurrentRole == sGlobalAdministratorRole">{{'userDetails_companies' | translate}}</label>
+	<label ng-if="sCurrentRole == sGlobalAdministratorRole">{{'global_companies' | translate}}</label>
 	<div ng-if="sCurrentRole == sGlobalAdministratorRole"
 		multi-select
 		input-model="aCompanies"
@@ -21,7 +21,7 @@
 		on-item-click="onDataModified()"
 		>
 	</div>
-	<label>{{'userDetails_authorizedPhases' | translate}}</label>
+	<label>{{'global_authorizedPhases' | translate}}</label>
 	<div
 		multi-select
 		input-model="aPhases"
@@ -45,7 +45,7 @@
 		on-item-click="onDataModified()"
 		>
 	</div>
-	<label>{{'userDetails_avatar' | translate}}</label>
+	<label>{{'global_avatar' | translate}}</label>
 	<img style="width: 200px; height: 200px;" ng-src="{{oUser.sAvatarUrl}}"></img>
 	<button ng-if="(sMode == 'edit' || sMode == 'create') && sCurrentRole == sGlobalAdministratorRole" ng-file-select accept="image/*" ng-file-change="onAvatarSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
 	<md-text-float ng-if="sMode == 'display' || sMode == 'edit'" label="{{'global_creationDate' | translate}}" ng-model="oUser.sCreatedAt" ng-disabled="true"> </md-text-float>
