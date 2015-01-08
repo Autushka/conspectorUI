@@ -17,9 +17,7 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 				oCompany.DescriptionFR = oCompany.DescriptionEN; //default value is engilsh one (in case when translation is missing)
 			}
 			oCompany._sortingSequence = cacheProvider.oUserProfile.aUserCompanies[i].GeneralAttributes.SortingSequence;
-			if (oCompany.CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
-				aCompanies.push(oCompany);
-			}
+			aCompanies.push(oCompany);
 		}
 
 		$scope.aUserCompanies = $filter('orderBy')(aCompanies, ["_sortingSequence"]);
