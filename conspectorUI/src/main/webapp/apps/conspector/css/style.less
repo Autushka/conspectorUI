@@ -18,6 +18,7 @@ VARIABLE AND SETTINGS
 @greyTitleTextColor: #576D77;
 @textColor: #424347;
 @placeholderTextColor: rgba(66, 67, 71, 0.5);
+@textColorLight: rgba(66, 67, 71, 0.5);
 @fontSize: 14pt;
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
 
@@ -303,22 +304,24 @@ width: 100%;
 }
 
 
-
+//For labels in radio buttons and switches
 md-switch .md-label{
 	border-width: 0px;
 }
-
 .md-label{
 	margin-top: 2px;
+	color: @textColorLight;
 }
-
 .minus2pxMarginTop{
 	margin-top: -2px;
 }
-
 md-radio-group{
 	border-width: 0px;
 }
+md-radio-button.md-default-theme .md-off{
+	border-color: @textColorLight;
+}
+
 
 
 /*
