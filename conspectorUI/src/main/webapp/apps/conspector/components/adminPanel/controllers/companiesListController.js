@@ -110,7 +110,7 @@ viewControllers.controller('companiesListView', ['$scope', '$state', 'servicesPr
 
 				dataProvider.createLinks({
 					aLinks: aLinks,
-					sParentEntityWithKey: "Users('" + sCurrentUserName + "')"
+					sParentEntityWithKey: "Users('" + sCurrentUserName + "')",
 				});
 
 			};
@@ -128,9 +128,19 @@ viewControllers.controller('companiesListView', ['$scope', '$state', 'servicesPr
 				aUri: ["Companys('" + sCompanyName + "')"]
 			}];
 
+			var onSuccess = function() {
+				var sCurrentCompany = cacheProvider.oUserProfile.sCurrentCompany;
+				var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+				cacheProvider.cleanEntitiesCache("oUserEntity");
+				cacheProvider.oUserProfile = apiProvider.getUserProfile(sCurrentUserName);	//refresh user Profile after new company creation
+				cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
+				cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+			};
+
 			dataProvider.createLinks({
 				aLinks: aLinks,
-				sParentEntityWithKey: "Users('" + sCurrentUserName + "')"
+				sParentEntityWithKey: "Users('" + sCurrentUserName + "')",
+				onSuccess: onSuccess
 			});
 		};
 
