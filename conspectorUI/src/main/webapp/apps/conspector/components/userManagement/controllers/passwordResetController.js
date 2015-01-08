@@ -12,6 +12,15 @@ viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state
 		$scope.resetPassword = function() {
 			var SHA512 = new Hashes.SHA512;
 			var oData = {};
+			
+			if (!$scope.resetPasswordData.sNewPassword || !$scope.resetPasswordData.sNewPasswordConfirmation) {
+				utilsProvider.displayMessage({
+					sText: $translate.instant("global_emptyFields"),
+					sType: 'error'
+				});
+				return;
+			}	
+
 			if ($scope.resetPasswordData.sNewPassword !== $scope.resetPasswordData.sNewPasswordConfirmation) {
 				servicesProvider.displayMessage({
 					sText: $translate.instant('passwordReset_passwordsDontMatch'),
@@ -34,6 +43,10 @@ viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state
 		};
 
 		$scope.onBack = function(){
+			if(!$rootScope.sFromState){
+				$state.go('signIn');
+				return;
+			}				
 			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
 		};			
 	}

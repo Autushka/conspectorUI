@@ -38,6 +38,10 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 		};
 
 		$scope.onBack = function() {
+			if(!$rootScope.sFromState){
+				$state.go('signIn');
+				return;
+			}				
 			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
 		};
 	}

@@ -47,6 +47,10 @@ viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$stat
 		};
 		
 		$scope.onBack = function(){
+			if(!$rootScope.sFromState){
+				$state.go('signIn');
+				return;
+			}			
 			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
 		}
 	}
