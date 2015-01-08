@@ -12,12 +12,16 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 			oRole.RoleName = cacheProvider.oUserProfile.aUserRoles[i].RoleName;
 			oRole.DescriptionEN = cacheProvider.oUserProfile.aUserRoles[i].DescriptionEN;
 			oRole.DescriptionFR = cacheProvider.oUserProfile.aUserRoles[i].DescriptionFR;
+			oRole.CompanyName = cacheProvider.oUserProfile.aUserRoles[i].CompanyName;
 
 			if (!oRole.DescriptionFR) {
 				oRole.DescriptionFR = oRole.DescriptionEN; //default value is engilsh one (in case when translation is missing)
 			}
 			oRole._sortingSequence = cacheProvider.oUserProfile.aUserRoles[i].GeneralAttributes.SortingSequence;
-			aRoles.push(oRole);
+
+			if(oRole.CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
+				aRoles.push(oRole);
+			}
 		}
 
 		$scope.aUserRoles = $filter('orderBy')(aRoles, ["_sortingSequence"]);
@@ -42,8 +46,8 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 			servicesProvider.changeLanguage();
 		};
 
-		$scope.onBack = function(){
+		$scope.onBack = function() {
 			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
-		};		
+		};
 	}
 ]);

@@ -13,11 +13,13 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 			oCompany.DescriptionEN = cacheProvider.oUserProfile.aUserCompanies[i].DescriptionEN;
 			oCompany.DescriptionFR = cacheProvider.oUserProfile.aUserCompanies[i].DescriptionFR;
 
-			if(!oCompany.DescriptionFR){
+			if (!oCompany.DescriptionFR) {
 				oCompany.DescriptionFR = oCompany.DescriptionEN; //default value is engilsh one (in case when translation is missing)
 			}
 			oCompany._sortingSequence = cacheProvider.oUserProfile.aUserCompanies[i].GeneralAttributes.SortingSequence;
-			aCompanies.push(oCompany);
+			if (oCompany.CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
+				aCompanies.push(oCompany);
+			}
 		}
 
 		$scope.aUserCompanies = $filter('orderBy')(aCompanies, ["_sortingSequence"]);
@@ -25,10 +27,10 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 
 		$scope.onContinue = function() {
 			var sCurrentCompany = $scope.sSelectedCompanyName;;
-			cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;//current company is cached here	
-			apiProvider.setCurrentCompany(sCurrentCompany); 
+			cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany; //current company is cached here	
+			apiProvider.setCurrentCompany(sCurrentCompany);
 
-			cacheProvider.oUserProfile.aUserRoles = angular.copy(cacheProvider.oUserProfile.aAllUserRoles); 
+			cacheProvider.oUserProfile.aUserRoles = angular.copy(cacheProvider.oUserProfile.aAllUserRoles);
 			servicesProvider.checkUserRolesAssignment(sCurrentCompany);
 			servicesProvider.setUserPhasesForCurrentCompany(sCurrentCompany);
 		};
@@ -37,8 +39,8 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 			servicesProvider.changeLanguage();
 		};
 
-		$scope.onBack = function(){
+		$scope.onBack = function() {
 			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
-		};		
+		};
 	}
 ]);

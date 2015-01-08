@@ -407,7 +407,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		};
 
 		$scope.onAvatarSelected = function(aFiles, $event) {
-			onDataModified();
+			$scope.onDataModified();
 			onImgSelected(aFiles, "rest/file/createUploadUrl/users/users/_avatar_", $event);
 		};
 
