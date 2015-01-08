@@ -1,5 +1,5 @@
 <div>{{'usersList_title' | translate}}</div>
-<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
+<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-primary md-raised" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
 <table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
 
 	<tr ng-repeat="user in aDisplayedUsers">

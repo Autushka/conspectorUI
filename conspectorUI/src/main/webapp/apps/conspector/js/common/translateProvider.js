@@ -48,6 +48,9 @@ app.config(['$translateProvider',
                   global_no: 'No',
                   global_cancel: 'Cancel',
                   global_passwordsDontMatch: "Provided passwords don't match.",
+                  global_contractorName: 'Contractor',
+                  global_phone: 'Phone',
+                  global_tags: 'Tags',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -146,6 +149,8 @@ app.config(['$translateProvider',
                   forgotPassword_email: 'Email',
                   forgotPassword_reset: 'Reset password',
                   forgotPassword_footerLabel: 'Having issues logging in?\nEmail us at ',
+                  //contractorsList
+                  contractorsList_title: 'Contractors',
             });
 
             $translateProvider.translations('fr', {
@@ -196,6 +201,9 @@ app.config(['$translateProvider',
                   global_no: 'No',
                   global_cancel: 'Cancel',
                   global_passwordsDontMatch: "Provided passwords don't match.",
+                  global_contractorName: 'Contractor',
+                  global_phone: 'Phone',
+                  global_tags: 'Tags',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -294,6 +302,8 @@ app.config(['$translateProvider',
                   forgotPassword_email: 'Email',
                   forgotPassword_reset: 'Reset password',
                   forgotPassword_footerLabel: 'Un probl\u00E8me de connexion?\n\u00C9crivez \u00E0 ',
+                  //contractorsList
+                  contractorsList_title: 'Contractors',
             });
 
             $translateProvider.preferredLanguage('en');

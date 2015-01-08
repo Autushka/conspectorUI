@@ -82,6 +82,7 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 
 			var onSuccessUpdate = function(oData) {
 				cacheProvider.cleanEntitiesCache("oUserEntity");
+				cacheProvider.oUserProfile.sLastModifiedAt = oData.LastModifiedAt;
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);

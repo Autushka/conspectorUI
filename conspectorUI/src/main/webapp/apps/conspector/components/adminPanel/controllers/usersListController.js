@@ -9,8 +9,6 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;		
 
-		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
-
 		var oUsersListData = {
 			aData: []
 		};

@@ -713,6 +713,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 				oSvc.then(onSuccess);
 			},
+
+			getContractorsWithPhases: function(){
+
+			},
 		}
 	}
 ]);
