@@ -211,6 +211,10 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		}
 
 		$scope.onBack = function() {
+			if(!$rootScope.sFromState){
+				$state.go('app.adminPanel.usersList');
+				return;
+			}
 			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
 		};
 
@@ -308,7 +312,6 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 				}
-
 				if (!bSaveAndNew) {
 					$scope.sMode = "display";
 					$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
@@ -328,6 +331,13 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				}
 			};
 			var onSuccessUpdate = function(oData) {
+				var sCurrentCompany = cacheProvider.oUserProfile.sCurrentCompany;
+				var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+				if (oData.UserName === cacheProvider.oUserProfile.sUserName) {
+					cacheProvider.oUserProfile = apiProvider.getUserProfile(oData.UserName); //refresh user Profile if current user has been modified;
+					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
+					cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+				}
 				cacheProvider.cleanEntitiesCache("oUserEntity");
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
