@@ -168,7 +168,7 @@ width: 100%;
 	//For iPhone 3 and 4
 	@media
 	only screen and (max-width: @sd-width){
-	margin-top: 15px;
+	margin-top: 5px;
 	margin-bottom: 15px;
 	//For iPhone 5
 	@media
@@ -267,6 +267,12 @@ width: 100%;
     	background-size: 18px;
 	    background-image:url('../../../apps/conspector/img/passwordIcon.svg');
 	}
+	&.cnpBackIcon{
+    	background-position: 0px;
+    	background-size: 14px;
+	    background-image:url('../../../apps/conspector/img/backIcon.svg');
+	    height: 26px;
+	}
   
 }
 
@@ -274,6 +280,9 @@ width: 100%;
 	color: @clickableTextColor;
 	&:hover{
 		cursor: pointer;
+	}
+	&.cnpLinkBackButton{
+		padding-left: 25px;
 	}
 }
 

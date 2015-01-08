@@ -1,16 +1,16 @@
 <div class="cnpUserManagementWrapper" layout="column" layout-align="center center">
 	<form name="companySelectionForm" class="cnpUserManagementForm md-whiteframe-z1">
-		<div layout="row" layout-align="space-between start">
-			<label  class="cnpLink ">
-				<div ng-click="onBack()" class="notSelectable">
+		<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
+			<div layout="row" layout-align="space-between end" style="width: 100%">
+				<div ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
 					{{'global_back' | translate}}
 				</div>
-			</label>
-			<label ng-click="onChangeLanguage()" class="cnpLink">
-				<div class="notSelectable">
-					{{'signIn_languageCode' | translate}}
-				</div>
-			</label>
+				<label ng-click="onChangeLanguage()" class="cnpLink">
+					<div class="notSelectable">
+						{{'signIn_languageCode' | translate}}
+					</div>
+				</label>
+			</div>
 		</div>
 		<div layout="column" layout-align="center center" >
 			<div class="cnpInstructionsWrapper notSelectable">
