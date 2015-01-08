@@ -41,10 +41,7 @@ viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider'
 		};
 
 		$scope.onForgotPassword = function() {
-			//window.location.href = "#/forgotPassword";
-			$state.go('forgotPassword', {
-				sFromState: "signIn"
-			});			
+			$state.go('forgotPassword');			
 		};
 	}
 ]);

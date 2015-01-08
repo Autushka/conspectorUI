@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog',
-	function($rootScope, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog) {
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog',
+	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -50,7 +50,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 						this.logLogOut(); // log logout operation
 					}
 					cacheProvider.cleanAllCache();
-					window.location.href = "#/signIn/";
+					$state.go("signIn");
 				}, this));
 			},
 
@@ -134,10 +134,10 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					apiProvider.setCurrentRole(sCurrentRole); //current role is cached here				
 					// menu setup for the current role should happen here
 					this.logSuccessLogIn(); //log login_success operation 
-					window.location.href = rolesSettings.oInitialViews[sCurrentRole]; //navigation to the initial view for the role
+					$state.go(rolesSettings.oInitialViews[sCurrentRole]);//navigation to the initial view for the role
 					return;
 				} else {
-					window.location.href = "#/roleSelection";
+					$state.go("roleSelection");
 					return;
 				}
 			},
@@ -149,7 +149,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				cacheProvider.oUserProfile.sCurrentPassword = sPassword;
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {
-					window.location.href = "#/initialPasswordReset";
+					$state.go("initialPasswordReset");
 					return;
 				}
 				cacheProvider.oUserProfile.sPassword = ""; //current password needed only for initialPassword scenario
@@ -169,7 +169,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 					this.setUserPhasesForCurrentCompany(sCurrentCompany);
 					this.checkUserRolesAssignment(sCurrentCompany);
 				} else {
-					window.location.href = "#/companySelection";
+					$state.go("companySelection");
 					return;
 				}
 			},
@@ -181,7 +181,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {
-					window.location.href = "#/signIn/"; //"#/initialPasswordReset"; here old password needed to reset initial password
+					$state.go("signIn");//here old password needed to reset initial password
 					return;
 				}
 
@@ -196,7 +196,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 
 				sCurrentCompany = apiProvider.getCurrentCompany();
 				if (!sCurrentCompany) {
-					window.location.href = "#/companySelection";
+					$state.go("companySelection");
 					return;
 				} else {
 					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
@@ -204,7 +204,7 @@ app.factory('servicesProvider', ['$rootScope', 'ngTableParams', '$translate', 'u
 				}
 				sCurrentRole = apiProvider.getCurrentRole();
 				if (!sCurrentRole) {
-					window.location.href = "#/roleSelection";
+					$state.go("roleSelection");
 					return;
 
 				} else {

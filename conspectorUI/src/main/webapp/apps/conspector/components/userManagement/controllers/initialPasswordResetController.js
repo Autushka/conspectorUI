@@ -1,5 +1,5 @@
-viewControllers.controller('initialPasswordResetView', ['$scope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider',
-	function($scope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider) {
+viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider',
+	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider) {
 		$scope.resetPasswordData = {
 			sNewPassword: "",
 			sNewPasswordConfirmation: ""
@@ -48,5 +48,9 @@ viewControllers.controller('initialPasswordResetView', ['$scope', '$state', 'dat
 				}
 			});
 		};
+
+		$scope.onBack = function(){
+			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
+		};		
 	}
 ]);

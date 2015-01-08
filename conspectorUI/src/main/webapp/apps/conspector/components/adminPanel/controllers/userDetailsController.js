@@ -1,10 +1,7 @@
 viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS',
 	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS) {
-		var sFromState = $stateParams.sFromState;
 		var sUserName = $stateParams.sUserName;
-
 		var bDataHasBeenModified = false;
-
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
@@ -214,7 +211,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		}
 
 		$scope.onBack = function() {
-			$state.go(sFromState);
+			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
 		};
 
 		$scope.onEdit = function() {

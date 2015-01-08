@@ -52,7 +52,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contractors) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_contractorsTab"),
-				sState: "app.constractorsList"//"#/app/contractorsList"
+				sState: "app.contractorsList"//"#/app/contractorsList"
 			});
 		}
 
@@ -64,12 +64,10 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		}
 
 		$scope.onSwitchCompanies = function() {
-			//$window.location.href = "#/companySelection";
 			$state.go('companySelection');
 		};
 
 		$scope.onSwitchRoles = function() {
-			//$window.location.href = "#/roleSelection";
 			$state.go('roleSelection');
 		};
 
@@ -95,21 +93,18 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		}, 100);
 
 		$scope.onTabSelect = function(oTab) {
-			if ($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
-				//$window.location.href = oTab.sHash;
+			//if ($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
 				$state.go(oTab.sState);
-			}
+			//}
 		};
 
 		$scope.onAdminPanel = function() {
 			$scope.selectedTabIndex = -1;
-			//$window.location.href = "#/app/adminPanel/usersList";
 			$state.go('app.adminPanel.usersList');
 		};
 
 		$scope.onProfileSettings = function() {
 			$scope.selectedTabIndex = -1;
-			//$window.location.href = "#/app/profileSettings";
 			$state.go('app.profileSettings.profileDetails');
 		};
 

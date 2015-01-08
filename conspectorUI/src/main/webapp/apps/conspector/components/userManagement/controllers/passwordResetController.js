@@ -1,5 +1,5 @@
-viewControllers.controller('passwordResetView', ['$scope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider', '$stateParams',
-	function($scope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider, $stateParams) {
+viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider', '$stateParams',
+	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider, $stateParams) {
 		$scope.resetPasswordData = {
 			sNewPassword: "",
 			sNewPasswordConfirmation: ""
@@ -28,9 +28,13 @@ viewControllers.controller('passwordResetView', ['$scope', '$state', 'dataProvid
 			oResetPasswordSvc.then(function(oData) {
 				var bNoErrorMessages = servicesProvider.messagesHandler(oData.messages);
 				if (bNoErrorMessages) {
-					window.location.href = "#/signIn/";
+					$state.go("signIn");
 				}
 			});
 		};
+
+		$scope.onBack = function(){
+			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
+		};			
 	}
 ]);

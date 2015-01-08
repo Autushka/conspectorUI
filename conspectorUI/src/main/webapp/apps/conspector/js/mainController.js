@@ -1,11 +1,11 @@
-app.controller('mainController', ['$scope', '$rootScope', 'apiProvider', 'servicesProvider',
-	function($scope, $rootScope, apiProvider, servicesProvider) {
+app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider', 'servicesProvider',
+	function($scope, $rootScope, $state, apiProvider, servicesProvider) {
 		var sUserName = apiProvider.getCurrentUserName();
 
 		if (sUserName) {
 			servicesProvider.onF5WithCurrentUserHandler(sUserName);
 		}else{
-			window.location.href = "#/signIn";
+			$state.go("signIn");
 		}
 
 		$rootScope.$on('LOAD', function() {
@@ -14,5 +14,10 @@ app.controller('mainController', ['$scope', '$rootScope', 'apiProvider', 'servic
 		$rootScope.$on('UNLOAD', function() {
 			$rootScope.showSpinner = false;
 		});
+
+		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+			$rootScope.sFromState = from.name;
+			$rootScope.oFromStateParams = fromParams;
+		});		
 	}
 ]);

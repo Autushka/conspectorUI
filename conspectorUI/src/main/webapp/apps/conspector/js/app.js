@@ -38,7 +38,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			controller: 'signInView'
 		});
 		$stateProvider.state('forgotPassword', {
-			url: '/forgotPassword/:sFromState',
+			url: '/forgotPassword',
 			templateUrl: 'apps/conspector/components/userManagement/templates/forgotPasswordView.html',
 			controller: 'forgotPasswordView'
 		})
@@ -77,7 +77,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/units/templates/unitsListView.html',
 			controller: 'unitsListView'
 		});	
-		$stateProvider.state('app.constactorsList', {
+		$stateProvider.state('app.contractorsList', {
 			url: '/contractorsList',
 			templateUrl: 'apps/conspector/components/contractors/templates/contractorsListView.html',
 			controller: 'contractorsListView'
@@ -103,7 +103,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			controller: 'usersListView'
 		});	
 		$stateProvider.state('app.adminPanel.userDetails', {
-			url: '/userDetails/:sUserName/:sMode/:sFromState',
+			url: '/userDetails/:sUserName/:sMode',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/userDetailsView.html',
 			controller: 'userDetailsView'
 		});			

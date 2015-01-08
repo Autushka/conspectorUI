@@ -2,9 +2,9 @@ app.factory('rolesSettings', [
 	function() {
 		return {
 			oInitialViews: {
-				globalAdministrator: "#/app/deficienciesList",
-				systemAdministrator: "#/app/deficienciesList",
-				deficiencyManagementUser: "#/app/deficienciesList"
+				globalAdministrator: "app.deficienciesList",
+				systemAdministrator: "app.deficienciesList",
+				deficiencyManagementUser: "app.deficienciesList"
 			},
 			oDisplayedSections: {
 				globalAdministrator:{

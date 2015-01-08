@@ -36,5 +36,9 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
 		};
+
+		$scope.onBack = function(){
+			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
+		};		
 	}
 ]);

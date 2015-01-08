@@ -4,34 +4,34 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 
 		$scope.onUserManagement = function() {
-			$window.location.href = "#/app/adminPanel/usersList";
+			$state.go("app.adminPanel.usersList");
 		};
 		$scope.onRoles = function() {
-			$window.location.href = "#/app/adminPanel/rolesList";
+			$state.go("app.adminPanel.rolesList");
 		};
 		$scope.onProjects = function() {
-			$window.location.href = "#/app/adminPanel/projectsList";
+			$state.go("app.adminPanel.projectsList");
 		};
 		$scope.onPhases = function() {
-			$window.location.href = "#/app/adminPanel/phasesList";
+			$state.go("app.adminPanel.phasesList");
 		};
 		$scope.onOperationLogs = function() {
-			$window.location.href = "#/app/adminPanel/operationLogsList";
+			$state.go("app.adminPanel.operationLogsList");
 		};
 		$scope.onDeficiencyStatuses = function() {
-			$window.location.href = "#/app/adminPanel/deficiencyStatusesList";
+			$state.go("app.adminPanel.deficiencyStatusesList");
 		};
 		$scope.onDeficiencyPriorities = function() {
-			$window.location.href = "#/app/adminPanel/deficiencyPrioritiesList";
+			$state.go("app.adminPanel.deficiencyPrioritiesList");
 		};
 		$scope.onSystemFiles = function() {
-			$window.location.href = "#/app/adminPanel/systemFiles";
+			$state.go("app.adminPanel.systemFiles");
 		};
 		$scope.onAccountTypes = function() {
-			$window.location.href = "#/app/adminPanel/accountTypesList";
+			$state.go("app.adminPanel.accountTypesList");			
 		};
 		$scope.onCompanies = function() {
-			$window.location.href = "#/app/adminPanel/companiesList";
+			$state.go("app.adminPanel.companiesList");			
 		};		
 	}
 ]);

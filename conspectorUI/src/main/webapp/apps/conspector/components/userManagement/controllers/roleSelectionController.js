@@ -35,11 +35,15 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 			$rootScope.sCurrentRole = sCurrentRole;
 			apiProvider.setCurrentRole(sCurrentRole); //current role is cached here	
 			servicesProvider.logSuccessLogIn(); //log login_success operation 
-			window.location.href = rolesSettings.oInitialViews[sCurrentRole];
+			$state.go(rolesSettings.oInitialViews[sCurrentRole]);
 		};
 
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
 		};
+
+		$scope.onBack = function(){
+			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
+		};		
 	}
 ]);
