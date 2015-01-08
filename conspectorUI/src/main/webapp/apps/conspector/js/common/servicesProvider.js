@@ -41,17 +41,23 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			logOut: function() {
-				var oSignOutSrv = dataProvider.httpRequest({
-					sPath: "jsp/initializeSessionVariables.jsp",
-					oUrlParameters: {}
-				});
-				oSignOutSrv.then($.proxy(function(oData) {
+				var sPath = "rest/system/initializeSessionVariables"; 
+				var onSuccess = $.proxy(function() {
 					if (cacheProvider.oUserProfile.sUserName) {
 						this.logLogOut(); // log logout operation
 					}
 					cacheProvider.cleanAllCache();
 					$state.go("signIn");
-				}, this));
+				}, this);
+
+				dataProvider.ajaxRequest({
+					sPath: sPath,
+					bAsync: false,
+					sRequestType: "GET",
+					oEventHandlers: {
+						onSuccess: onSuccess
+					}
+				});
 			},
 
 			logSuccessLogIn: function() {
@@ -179,6 +185,11 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var sCurrentRole = "";
 				var aUserRolesForCurrentCompany = [];
 				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
+
+				// if (!cacheProvider.oUserProfile.sUserName) {
+				// 	$state.go("signIn");//after time out navigate to signIn
+				// 	return;
+				// }				
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {
 					$state.go("signIn");//here old password needed to reset initial password

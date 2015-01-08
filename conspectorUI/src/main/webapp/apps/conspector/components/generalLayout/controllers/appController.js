@@ -3,10 +3,18 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		var sCurrentUser = cacheProvider.oUserProfile.sUserName;
 		var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
 
-		if ($cookieStore.get("userPhases" + sCurrentUser + sCompany) && $cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases){
+		if (!sCurrentUser) {
+			servicesProvider.logOut();
+		} else {
+			servicesProvider.constructLogoUrl(); //because $state.go(signIn) happen async call this function to avoid in error in case of time out
+		}
+
+		if ($cookieStore.get("userPhases" + sCurrentUser + sCompany) && $cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases) {
 			$scope.globalProjectsWithPhases = angular.copy($cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases);
-		}else{
-			$scope.globalProjectsWithPhases = servicesProvider.constructGlobalProjectPhaseData();
+		} else {
+			if (cacheProvider.oUserProfile.sUserName) {
+				$scope.globalProjectsWithPhases = servicesProvider.constructGlobalProjectPhaseData();
+			}
 		}
 
 		$scope.onGlobalUserPhasesChanged = function() {
@@ -15,51 +23,49 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			});
 		};
 
-		servicesProvider.constructLogoUrl(); //"http://localhost:8080/conspector/img/logo_conspector.png";//servicesProvider.constructLogoUrl();
-
-		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].adminPanel) {
+		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].adminPanel) {
 			$scope.bDisplayAdminPanel = true;
 		}
 
-		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].profileSettings) {
+		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].profileSettings) {
 			$scope.bDisplayProfileSettings = true;
 		}
 
-		if (cacheProvider.oUserProfile.aUserCompanies.length > 1) {
+		if (cacheProvider.oUserProfile.aUserCompanies && cacheProvider.oUserProfile.aUserCompanies.length > 1) {
 			$scope.bDisplaySwitchCompanies = true;
 		}
 
-		if (cacheProvider.oUserProfile.aUserRoles.length > 1) {
+		if (cacheProvider.oUserProfile.aUserRoles && cacheProvider.oUserProfile.aUserRoles.length > 1) {
 			$scope.bDisplaySwitchRoles = true;
 		}
 
 		$scope.aTabs = [];
 
-		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].deficiencies) {
+		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].deficiencies) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_deficienciesTab"),
-				sState: "app.deficienciesList"//"#/app/deficienciesList"
+				sState: "app.deficienciesList" //"#/app/deficienciesList"
 			});
 		}
 
-		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].units) {
+		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].units) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_unitsTab"),
-				sState: "app.unitsList"//"#/app/unitsList"
+				sState: "app.unitsList" //"#/app/unitsList"
 			});
 		}
 
-		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contractors) {
+		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contractors) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_contractorsTab"),
-				sState: "app.contractorsList"//"#/app/contractorsList"
+				sState: "app.contractorsList" //"#/app/contractorsList"
 			});
 		}
 
-		if (rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].clients) {
+		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].clients) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_clientsTab"),
-				sState: "app.clientsList"//"#/app/clientsList"
+				sState: "app.clientsList" //"#/app/clientsList"
 			});
 		}
 
@@ -94,7 +100,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		$scope.onTabSelect = function(oTab) {
 			//if ($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
-				$state.go(oTab.sState);
+			$state.go(oTab.sState);
 			//}
 		};
 

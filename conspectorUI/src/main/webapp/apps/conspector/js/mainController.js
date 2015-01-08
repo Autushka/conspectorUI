@@ -5,7 +5,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 		if (sUserName) {
 			servicesProvider.onF5WithCurrentUserHandler(sUserName);
 		}else{
-			$state.go("signIn");
+			//servicesProvider.logOut(); // had to move this call to appController.js to make it work...
 		}
 
 		$rootScope.$on('LOAD', function() {
