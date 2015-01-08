@@ -184,12 +184,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var sCurrentCompany = "";
 				var sCurrentRole = "";
 				var aUserRolesForCurrentCompany = [];
-				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
-
-				// if (!cacheProvider.oUserProfile.sUserName) {
-				// 	$state.go("signIn");//after time out navigate to signIn
-				// 	return;
-				// }				
+				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);				
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {
 					$state.go("signIn");//here old password needed to reset initial password

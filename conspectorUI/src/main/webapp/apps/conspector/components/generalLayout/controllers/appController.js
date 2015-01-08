@@ -99,9 +99,9 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		}, 100);
 
 		$scope.onTabSelect = function(oTab) {
-			//if ($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
-			$state.go(oTab.sState);
-			//}
+			if ($scope.selectedTabIndex !== undefined){//($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
+				$state.go(oTab.sState);
+			}
 		};
 
 		$scope.onAdminPanel = function() {
