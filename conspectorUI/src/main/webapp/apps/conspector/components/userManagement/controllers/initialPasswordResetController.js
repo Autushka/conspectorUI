@@ -26,8 +26,8 @@ viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', 
 			}	
 
 			if ($scope.resetPasswordData.sNewPassword !== $scope.resetPasswordData.sNewPasswordConfirmation) {
-				servicesProvider.displayMessage({
-					sText: $translate.instant('initialPasswordReset_passwordsDontMatch'),
+				utilsProvider.displayMessage({
+					sText: $translate.instant('global_passwordsDontMatch'),
 					sType: "error"
 				});
 				return;
