@@ -2,17 +2,17 @@ var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalp
 var viewControllers = angular.module('viewControllers', []);
 
 app.config(function($mdThemingProvider) {
-	$mdThemingProvider.definePalette('amazingPaletteName', {
-    '50': '0088b8',
-    '100': '0088b8',
-    '200': '0088b8',
-    '300': '0088b8',
-    '400': '0088b8',
+	$mdThemingProvider.definePalette('conspectorColorPalette', {
+    '50': '55b0d0',
+    '100': '44a8cb',
+    '200': '33a0c6',
+    '300': '2298c1',
+    '400': '1190bd',
     '500': '0088b8',
-    '600': '0088b8',
-    '700': '0088b8',
-    '800': '0088b8',
-    '900': '0088b8',
+    '600': '007da9',
+    '700': '00729b',
+    '800': '00678c',
+    '900': '005c7d',
     'A100': '0088b8',
     'A200': '0088b8',
     'A400': '0088b8',
@@ -24,8 +24,8 @@ app.config(function($mdThemingProvider) {
     'contrastLightColors': undefined    // could also specify this if default was 'dark'
  	});
   	$mdThemingProvider.theme('default')
-    .primaryColor('amazingPaletteName')
-    .accentColor('amazingPaletteName');
+    .primaryColor('conspectorColorPalette')
+    .accentColor('conspectorColorPalette');
 });
 
 app.config(['$stateProvider', '$urlRouterProvider',

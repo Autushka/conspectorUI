@@ -22,31 +22,17 @@ VARIABLE AND SETTINGS
 @fontSize: 14pt;
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
 
-//Placeholder styling
-::-webkit-input-placeholder {
-   color: @placeholderTextColor;
-}
-:-moz-placeholder { /* Firefox 18- */
-   color: @placeholderTextColor;  
-}
-::-moz-placeholder {  /* Firefox 19+ */
-   color: @placeholderTextColor;  
-}
-:-ms-input-placeholder {  
-   color: @placeholderTextColor;  
-}
-
 //Class for making text unselectable
-.notSelectable{
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.notSelectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 //Class for making text unselectable
-.cnpCursorDefault{
+.cnpCursorDefault {
 	cursor: default;
 }
 //To accept breaklines in angular text
@@ -54,14 +40,6 @@ VARIABLE AND SETTINGS
   white-space: pre-line;
   line-height: 160%;
 }
-
-//Animation
-.cnpWithAnimation{
-	  	-webkit-transition: all 0.15s ease-in-out;
-	    -moz-transition: all 0.15s ease-in-out;
-	    -ms-transition: all 0.15s ease-in-out;
-	    -o-transition: all 0.15s ease-in-out;
-  	}
 
 //For pixel ratio
 @pixelRatio2: 2;
@@ -89,15 +67,59 @@ END OF VARIABLE AND SETTINGS
 GLOBAL
 */
 
-body{
-
-font-family: 'Ubuntu', sans-serif;
-font-size: @fontSize;
-font-style: normal;
-font-weight: 400;
-color: @textColor;
+body {
+	font-family: 'Ubuntu', sans-serif;
+	font-size: @fontSize;
+	font-style: normal;
+	font-weight: 400;
+	color: @textColor;
 }
+.cnpLink{
+	color: @clickableTextColor;
+	&:hover{
+		cursor: pointer;
+	}
+	&.cnpLinkBackButton{
+		padding-left: 25px;
+	}
+}
+//Default Button styling
+.md-button{
+	height: @fieldHeight;
+	padding: 8px;
+	text-transform: none;
 
+	&.cnpLargeButton{
+		min-width: 100%;
+		height: @fieldHeight*1.2;
+
+		//For iPhone 3 and 4 and 5
+		@media
+		only screen and (max-width: 320px){
+		height: @fieldHeight*1;
+		}
+	}
+}
+//Animation
+.cnpWithAnimation {
+	-webkit-transition: all 0.15s ease-in-out;
+	-moz-transition: all 0.15s ease-in-out;
+	-ms-transition: all 0.15s ease-in-out;
+	-o-transition: all 0.15s ease-in-out;
+}
+//Placeholder styling
+::-webkit-input-placeholder {
+   color: @placeholderTextColor;
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: @placeholderTextColor;  
+}
+::-moz-placeholder {  /* Firefox 19+ */
+   color: @placeholderTextColor;  
+}
+:-ms-input-placeholder {  
+   color: @placeholderTextColor;  
+}
 /*
 END OF GLOBAL
 */
@@ -106,7 +128,7 @@ END OF GLOBAL
 USER MANAGEMENT
 */
 .cnpUserManagementWrapper{
-width: 100%;
+	width: 100%;
 	.cnpUserManagementForm{
 		//For iPhone 3GS
 		min-width: @sd-width;
@@ -116,7 +138,6 @@ width: 100%;
 		padding: 20px;
 		padding-left: @userManagementFormPadding;
 		padding-right: @userManagementFormPadding;
-
 		@media
 		only screen and (min-height: @sd-height) and (max-width: @sd-width) and (-webkit-min-device-pixel-ratio: 1){
 		min-height: @sd-height;
@@ -160,7 +181,7 @@ width: 100%;
 		}
 	}
 }
-
+//Conspector Logo
 .cnpConspectorLogo{
 	width: 72%;
 	margin-top: 20px;
@@ -184,6 +205,7 @@ width: 100%;
 	}
 }
 
+//
 .cnpInputWrapper{
 	float: left;
 	min-width: 100%;
@@ -229,14 +251,15 @@ width: 100%;
 	height: @fieldHeight;
 	width: 100%;
 	padding-left: 45px;
-	padding-top: 18px;
-	padding-bottom: 14px;
+	padding-top: 16px;
+	padding-bottom: 16px;
 	border-width: 0 0 0 0px;
 	// margin-top: 6px;
 	// margin-bottom: 6px;
 	box-shadow: 0 2px 4px 0 rgba(91,91,91,.20);
 	border-radius: @borderRadius;
 	color: @textColor;
+
    
 	//For iPhone 3 and 4 and 5
 	@media
@@ -254,7 +277,6 @@ width: 100%;
 .md-whiteframe-z1{
 	min-width: 100%;
 }
-
 .cnpInputIcon{
     background-size: 19px;
     background-repeat:no-repeat;
@@ -276,33 +298,7 @@ width: 100%;
   
 }
 
-.cnpLink{
-	color: @clickableTextColor;
-	&:hover{
-		cursor: pointer;
-	}
-	&.cnpLinkBackButton{
-		padding-left: 25px;
-	}
-}
-
-.md-button{
-	height: @fieldHeight;
-	padding: 8px;
-	text-transform: none;
-
-	&.cnpLargeButton{
-		min-width: 100%;
-		height: @fieldHeight*1.2;
-
-		//For iPhone 3 and 4 and 5
-		@media
-		only screen and (max-width: 320px){
-		height: @fieldHeight*1;
-		}
-	}
-}
-
+//For labels in radio buttons and switches
 .md-checkbox{
 	float: left;
 	min-width: 100%;
@@ -311,9 +307,6 @@ width: 100%;
 	font-size: 13pt;
 	font-weight: 500;
 }
-
-
-//For labels in radio buttons and switches
 md-switch .md-label{
 	border-width: 0px;
 }
@@ -330,13 +323,32 @@ md-radio-group{
 md-radio-button.md-default-theme .md-off{
 	border-color: @textColorLight;
 }
-
-
-
 /*
 END OF USER MANAGEMENT
 */
 
+/*
+APP VIEW
+*/
+	
+.cnpAppview{
+
+
+
+}
+.cnpHeader{
+
+}
+.cnpSubHeader{
+
+}
+.cnpNavBar{
+
+}
+
+/*
+END OF APP VIEW
+*/
 
 
 
