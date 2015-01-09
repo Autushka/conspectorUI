@@ -28,7 +28,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							oData.d.PhaseDetails.results[i].ProjectDetails._sortingSequence = oData.d.PhaseDetails.results[i].ProjectDetails.GeneralAttributes.SortingSequence;
 							aUserPhases.push(oData.d.PhaseDetails.results[i]);
 						}
-					}					
+					}
 				}
 
 				dataProvider.ajaxRequest({ //TODO: add busy indicator here as well if needed
@@ -42,9 +42,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				return {
 					sUserName: sUserName,
 					aUserRoles: aUserRoles, //will contain list of user roles for the current company
-					aAllUserRoles: aUserRoles,//will contain list of user roles for all users compnanies
-					aUserPhases: aUserPhases,//will contain list of user phases for the current company
-					aAllUserPhases: aUserPhases,//will contain list of user phases for all users compnanies
+					aAllUserRoles: aUserRoles, //will contain list of user roles for all users compnanies
+					aUserPhases: aUserPhases, //will contain list of user phases for the current company
+					aAllUserPhases: aUserPhases, //will contain list of user phases for all users compnanies
 					aUserCompanies: aUserCompanies,
 					bIsInitialPassword: bIsInitialPassword,
 					sLastModifiedAt: sLastModifiedAt
@@ -72,7 +72,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			getCurrentCompany: function() {
-				var sPath = "rest/account/getCurrentCompany"; 
+				var sPath = "rest/account/getCurrentCompany";
 				var sCurrentCompany;
 
 				var onSuccess = function(sData) {
@@ -681,9 +681,75 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
-			getContractorsWithPhases: function(){
-
+			getContractorsWithPhases: function(oParameters){
+				var svc = dataProvider.getEntitySet({
+					sPath: "Accounts",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					sExpand: "PhaseDetails",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oAccountEntity"
+				});
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
 			},
+
+			getContractorWithPhases: function(oParameters) {
+				var svc = dataProvider.getEntity({
+					sPath: "Accounts",
+					sKey: oParameters.sKey,
+					sExpand: "PhaseDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(oParameters.onSuccess);
+			},
+
+			createAccount: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oAccountEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Accounts",
+					sKeyAttribute: "Guid", //needed for links creation
+					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true,
+					bCompanyNeeded: true
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			updateAccount: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oAccountEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "Accounts",
+					sKeyAttribute: "Guid", //
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			}
 		}
 	}
 ]);

@@ -27,7 +27,10 @@ viewControllers.controller('changePasswordView', ['$scope', '$rootScope', '$stat
 			}
 			var onSuccessUpdate = function(oData){
 				bDataHasBeenModified = false;
+				$scope.oUser.sPassword = "";
+				$scope.oUser.sPasswordConfirmation = "";
 				cacheProvider.oUserProfile.sLastModifiedAt = oData.LastModifiedAt;
+
 			};
 
 			oDataForSave.UserName = cacheProvider.oUserProfile.sUserName;

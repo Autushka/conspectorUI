@@ -82,6 +82,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/contractors/templates/contractorsListView.html',
 			controller: 'contractorsListView'
 		});	
+		$stateProvider.state('app.contractorDetails', {
+			url: '/contractorDetails/:sContractorGuid/:sMode',
+			templateUrl: 'apps/conspector/components/contractors/templates/contractorDetailsView.html',
+			controller: 'contractorDetailsView'
+		});			
 		$stateProvider.state('app.clientsList', {
 			url: '/clientsList',
 			templateUrl: 'apps/conspector/components/clients/templates/clientsListView.html',

@@ -1,0 +1,14 @@
+<div>{{'contractorDetails_title' | translate}}</div>
+<md-button class="md-primary md-raised" ng-click="onBack()">{{'global_back' | translate}}</md-button>
+<md-button ng-show="sMode == 'display'" class="md-primary md-raised" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
+<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSave()">{{'global_save' | translate}}</md-button>
+<md-button ng-show="sMode == 'edit'" class="md-primary md-raised" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
+<md-button ng-show="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
+<form name="contractorDetailsForm">
+	<input type="text" class="cnpTextInputField" ng-model="oContractor.sName" ng-disabled="sMode == 'display'" placeholder="{{'global_name' | translate}}" ng-change="onDataModified()">	
+	<input type="text" class="cnpTextInputField" ng-model="oContractor.sPhone" ng-disabled="sMode == 'display'" placeholder="{{'global_phone' | translate}}" ng-change="onDataModified()">	
+	<input type="text" class="cnpTextInputField" ng-model="oContractor.sSecondaryPhone" ng-disabled="sMode == 'display'" placeholder="{{'global_secondaryPhone' | translate}}" ng-change="onDataModified()">	
+	<input type="text" class="cnpTextInputField" ng-model="oContractor.sWebsite" ng-disabled="sMode == 'display'" placeholder="{{'global_website' | translate}}" ng-change="onDataModified()">	
+	<input type="email" class="cnpTextInputField" ng-model="oContractor.sEmail" ng-disabled="sMode == 'display'" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()">	
+	<input type="text" class="cnpTextInputField" ng-model="oContractor.sFax" ng-disabled="sMode == 'display'" placeholder="{{'global_fax' | translate}}" ng-change="onDataModified()">						
+</form>

@@ -4,7 +4,7 @@ app.factory('rolesSettings', [
 			oInitialViews: {
 				globalAdministrator: "app.deficienciesList",
 				systemAdministrator: "app.deficienciesList",
-				deficiencyManagementUser: "app.deficienciesList"
+				managementUser: "app.deficienciesList"
 			},
 			oDisplayedSections: {
 				globalAdministrator:{
@@ -23,7 +23,7 @@ app.factory('rolesSettings', [
 					adminPanel: true,
 					profileSettings: true
 				},
-				deficiencyManagementUser:{
+				managementUser:{
 					deficiencies: true,
 					units: true,
 					contractors: true,

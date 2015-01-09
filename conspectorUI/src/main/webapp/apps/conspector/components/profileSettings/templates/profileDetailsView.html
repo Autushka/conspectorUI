@@ -20,7 +20,7 @@
 
 	<label layout="row">{{'global_avatar' | translate}}</label>
 	<img style="width: 200px; height: 200px;" ng-src="{{oUser.sAvatarUrl}}"></img>
-	<button ng-if="(sMode == 'edit' || sMode == 'create') && sCurrentRole == sGlobalAdministratorRole" ng-file-select accept="image/*" ng-file-change="onAvatarSelected($files, $event, $index)">{{'global_upload' | translate}}</button>		
+	<button ng-if="sMode == 'edit'" ng-file-select accept="image/*" ng-file-change="onAvatarSelected($files, $event, $index)">{{'global_upload' | translate}}</button>		
 
 	<md-text-float label="{{'global_creationDate' | translate}}" ng-model="oUser.sCreatedAt" ng-disabled="true"> </md-text-float>
 	<md-text-float label="{{'global_lastModificationDate' | translate}}" ng-model="oUser.sLastModifiedAt" ng-disabled="true"> </md-text-float>		

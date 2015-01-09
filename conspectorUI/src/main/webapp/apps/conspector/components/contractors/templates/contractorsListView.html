@@ -4,8 +4,8 @@
 
 	<tr ng-repeat="contractor in aDisplayedContractors">
 		<td data-title="actionsTE" style="width: 10%;">
-			<span ng-click="onDisplay(user)">Display</span>
-			<span ng-click="onEdit(user)">Edit</span>
+			<span ng-click="onDisplay(contractor)">Display</span>
+			<span ng-click="onEdit(contractor)">Edit</span>
 		</td>
 		<td data-title="contractorNameTE" sortable="'sContractorName'" style="width: 20%;">
         	<span>{{contractor.sContractorName}}</span>

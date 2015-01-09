@@ -230,7 +230,6 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				}
 			};
 			var onSuccessDelete = function() {
-				cacheProvider.cleanEntitiesCache("oUserEntity");
 				$state.go('app.adminPanel.usersList');
 			}
 			oDataForSave.UserName = $scope.oUser.sUserName;
@@ -307,7 +306,6 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			var aLinks = [];
 
 			var onSuccessCreation = function(oData) {
-				cacheProvider.cleanEntitiesCache("oUserEntity");
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
@@ -338,7 +336,6 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
 					cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
 				}
-				cacheProvider.cleanEntitiesCache("oUserEntity");
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
@@ -396,7 +393,6 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 
 		$scope.onSaveAndNew = function() {
 			$scope.onSave(true);
-
 		};
 
 		var onImgSelected = function(aImgFiles, sPath, $event) {

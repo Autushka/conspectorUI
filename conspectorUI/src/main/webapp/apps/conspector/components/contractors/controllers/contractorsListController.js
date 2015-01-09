@@ -14,7 +14,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 			oInitialDataArrayWrapper: oContractorsListData,
 			sDisplayedDataArrayName: "aDisplayedContractors",
 			oInitialSorting: {
-				contractorName: 'asc'
+				sContractorName: 'asc'
 			}
 		});
 
@@ -47,6 +47,17 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 		// };
 
 		var onContractorsLoaded = function(aData) {
+			for (var i = 0; i < aData.length; i++) {
+				oContractorsListData.aData.push({
+					sContractorName: aData[i].Name,
+					sPhone: aData[i].MainPhone,
+					sEmail: aData[i].Email,
+					_guid: aData[i].Guid
+				});
+			}
+
+			$scope.tableParams.reload();
+
 			// var bMatchFound = false;
 
 			// for (var i = 0; i < aData.length; i++) {
@@ -106,7 +117,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 		$scope.onDisplay = function(oContractor) {
 			$state.go('app.contractorDetails', {
 				sMode: "display",
-				sGuid: oContractor._guid,
+				sContractorGuid: oContractor._guid,
 				sFromState: "app.contractorsList"
 			});
 		};
@@ -114,7 +125,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 		$scope.onEdit = function(oContractor) {
 			$state.go('app.contractorDetails', {
 				sMode: "edit",
-				sGuid: oContractor._guid,
+				sContractorGuid: oContractor._guid,
 				sFromState: "app.contractorsList"
 			});
 		};
@@ -122,7 +133,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 		$scope.onAddNew = function() {
 			$state.go('app.contractorDetails', {
 				sMode: "create",
-				sGuid: "",
+				sContractorGuid: "",
 				sFromState: "app.contractorsList"
 			});
 		};

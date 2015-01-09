@@ -56,7 +56,10 @@
 		<script src="apps/conspector/components/generalLayout/controllers/appController.js"></script>
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListController.js"></script>
 		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
+
 		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
+		<script src="apps/conspector/components/contractors/controllers/contractorDetailsController.js"></script>
+
 		<script src="apps/conspector/components/clients/controllers/clientsListController.js"></script>
 
 		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>

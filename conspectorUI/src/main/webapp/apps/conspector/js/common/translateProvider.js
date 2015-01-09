@@ -151,6 +151,8 @@ app.config(['$translateProvider',
                   forgotPassword_footerLabel: 'Having issues logging in?\nEmail us at ',
                   //contractorsList
                   contractorsList_title: 'Contractors',
+                  //contractorDetails
+                  contractorDetails_title: 'Contractor Deatails',
             });
 
             $translateProvider.translations('fr', {
@@ -304,6 +306,8 @@ app.config(['$translateProvider',
                   forgotPassword_footerLabel: 'Un probl\u00E8me de connexion?\n\u00C9crivez \u00E0 ',
                   //contractorsList
                   contractorsList_title: 'Contractors',
+                  //contractorDetails
+                  contractorDetails_title: 'Contractor Deatails',
             });
 
             $translateProvider.preferredLanguage('en');
