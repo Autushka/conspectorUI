@@ -30,12 +30,17 @@ viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$stat
 					sType: 'error'
 				});
 				return;
-			}			
+			}	
 
-			oSrv = apiProvider.resetPassword(oData);
-			oSrv.then(function(oData) {
+			if(!oData.email){
+				oData.email = "_";//needed because of the rest service URL structure (requuires two parameters)
+			}			
+			
+			var onSuccess = function(oData){
 				var bNoErrorMessages = servicesProvider.messagesHandler(oData.messages);
-			});
+			};
+
+			apiProvider.resetPassword({oData: oData, onSuccess: onSuccess});
 		};
 
 		$scope.onResetTypeChange = function() {

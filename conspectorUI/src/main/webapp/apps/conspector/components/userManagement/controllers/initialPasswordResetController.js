@@ -9,13 +9,14 @@ viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', 
 			servicesProvider.changeLanguage();
 		};
 		
-		var onUserUpdated = function(){
+		var onUserUpdated = function(oData){
+			cacheProvider.oUserProfile.sLastModifiedAt = oData.LastModifiedAt;
 			servicesProvider.onLogInSuccessHandler(cacheProvider.oUserProfile.sUserName, "");
 		};
 
 		$scope.resetPassword = function() {
 			var SHA512 = new Hashes.SHA512;
-			var oData = {};
+			var oDataForSave = {};
 
 			if (!$scope.resetPasswordData.sNewPassword || !$scope.resetPasswordData.sNewPasswordConfirmation) {
 				utilsProvider.displayMessage({
@@ -33,29 +34,19 @@ viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', 
 				return;
 			}
 
-			oData.newPassword = SHA512.hex($scope.resetPasswordData.sNewPassword);
-			oData.oldPassword = SHA512.hex(cacheProvider.oUserProfile.sCurrentPassword);
-
-			var oChangePasswordSvc = apiProvider.changeUserPassword(oData);
-
-			oChangePasswordSvc.then(function(oData) {
-				var bNoErrorMessages = servicesProvider.messagesHandler(oData.messages);
-				if (bNoErrorMessages) {
-					cacheProvider.oUserProfile.sCurrentPassword = "";
-					//service to clean Initial flag for the password...
-					var oSvc = apiProvider.updateUser({
-						bShowSpinner: false,
-						sKey: cacheProvider.oUserProfile.sUserName,
-						oData: {
-							GeneralAttributes: {},
-							UserName: cacheProvider.oUserProfile.sUserName,
-							IsPasswordInitial: false,
-							LastModifiedAt: cacheProvider.oUserProfile.sLastModifiedAt
-						},
-						onSuccess: onUserUpdated
-					});
-				}
-			});
+			oDataForSave.UserName = cacheProvider.oUserProfile.sUserName;
+			oDataForSave.Password = apiProvider.hashPassword(SHA512.hex($scope.resetPasswordData.sNewPassword));
+			oDataForSave.IsPasswordInitial = false;
+			oDataForSave.LastModifiedAt = cacheProvider.oUserProfile.sLastModifiedAt;
+			
+			apiProvider.updateUser({
+				bShowSpinner: true,
+				sKey: oDataForSave.UserName,
+				oData: oDataForSave,
+				bShowSuccessMessage: true,
+				bShowErrorMessage: true,
+				onSuccess: onUserUpdated
+			});			
 		};
 
 		$scope.onBack = function(){

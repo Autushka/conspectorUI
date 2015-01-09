@@ -15,17 +15,12 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			logIn: function(oParameters, bRememberUserName) {
+				var oSrv = {};
 				var SHA512 = new Hashes.SHA512;
-				var sCurrentPassword = oParameters.password;
 				oParameters.password = SHA512.hex(oParameters.password);
-				var oSignInSrv = dataProvider.httpRequest({
-					sPath: "jsp/account/login.jsp",
-					sRequestType: "POST",
-					oUrlParameters: oParameters,
-					bShowSpinner: true
-				});
 
-				oSignInSrv.then($.proxy(function(oData) {
+				var sPath = "rest/account/login/" + oParameters.userName + "/" + oParameters.password;
+				var onSuccess = $.proxy(function(oData) {
 					var bNoErrorMessages = this.messagesHandler(oData.messages);
 					if (bNoErrorMessages) {
 						if (bRememberUserName) {
@@ -35,13 +30,23 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						} else {
 							$cookieStore.remove("userName");
 						}
-						this.onLogInSuccessHandler(oParameters.userName, sCurrentPassword);
+						this.onLogInSuccessHandler(oParameters.userName);
 					}
-				}, this));
+				}, this);
+
+				oSrv = dataProvider.httpRequest({
+					sPath: sPath,
+					bShowSpinner: true,
+					sRequestType: "GET",
+				});
+
+				oSrv.then(function(oData) {
+					onSuccess(oData);
+				});
 			},
 
 			logOut: function() {
-				var sPath = "rest/system/initializeSessionVariables"; 
+				var sPath = "rest/system/initializeSessionVariables";
 				var onSuccess = $.proxy(function() {
 					if (cacheProvider.oUserProfile.sUserName) {
 						this.logLogOut(); // log logout operation
@@ -140,7 +145,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					apiProvider.setCurrentRole(sCurrentRole); //current role is cached here				
 					// menu setup for the current role should happen here
 					this.logSuccessLogIn(); //log login_success operation 
-					$state.go(rolesSettings.oInitialViews[sCurrentRole]);//navigation to the initial view for the role
+					$state.go(rolesSettings.oInitialViews[sCurrentRole]); //navigation to the initial view for the role
 					return;
 				} else {
 					$state.go("roleSelection");
@@ -148,11 +153,10 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				}
 			},
 
-			onLogInSuccessHandler: function(sUserName, sPassword) {
+			onLogInSuccessHandler: function(sUserName) {
 				var sCurrentCompany = "";
 				var sCurrentRole = "";
 				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
-				cacheProvider.oUserProfile.sCurrentPassword = sPassword;
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {
 					$state.go("initialPasswordReset");
@@ -184,10 +188,10 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var sCurrentCompany = "";
 				var sCurrentRole = "";
 				var aUserRolesForCurrentCompany = [];
-				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);				
+				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {
-					$state.go("signIn");//here old password needed to reset initial password
+					$state.go("signIn"); //here old password needed to reset initial password
 					return;
 				}
 

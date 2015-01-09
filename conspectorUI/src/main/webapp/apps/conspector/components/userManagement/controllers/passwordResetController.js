@@ -31,15 +31,22 @@ viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state
 
 			oData.newPassword = SHA512.hex($scope.resetPasswordData.sNewPassword);
 			oData.passwordRecoveryCode = $stateParams.pr;
-
-			var oResetPasswordSvc = apiProvider.resetPasswordWithPRCode(oData);
-
-			oResetPasswordSvc.then(function(oData) {
+			
+			var onSuccess = function(oData){
 				var bNoErrorMessages = servicesProvider.messagesHandler(oData.messages);
 				if (bNoErrorMessages) {
 					$state.go("signIn");
-				}
-			});
+				}				
+			}
+
+			var oResetPasswordSvc = apiProvider.resetPasswordWithPRCode({oData: oData, onSuccess: onSuccess});
+
+//			oResetPasswordSvc.then(function(oData) {
+//				var bNoErrorMessages = servicesProvider.messagesHandler(oData.messages);
+//				if (bNoErrorMessages) {
+//					$state.go("signIn");
+//				}
+//			});
 		};
 
 		$scope.onBack = function(){

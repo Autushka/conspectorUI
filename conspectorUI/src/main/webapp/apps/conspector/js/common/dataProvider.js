@@ -97,7 +97,9 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						sType: 'error'
 					});
 				}
-				deffered.reject();
+				if (deffered) {
+					deffered.reject();
+				}
 			},
 
 			getEntitySet: function(oParameters) { //bShowSpinner, sPath, sFilter, sExpand, oCacheProvider, sCacheProviderAttribute 
@@ -304,7 +306,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						}
 					}
 
-					if (oRequestData.__batchRequests.length) {//should initiate links deletion only if user has some links
+					if (oRequestData.__batchRequests.length) { //should initiate links deletion only if user has some links
 						oSrv = this.batchRequest({
 							oRequestData: oRequestData
 						});
@@ -312,7 +314,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						oSrv.then($.proxy(function() { // onDeleteLinks
 							this.createLinks(oParameters);
 						}, this));
-					}else{
+					} else {
 						this.createLinks(oParameters);
 					}
 
@@ -587,6 +589,10 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				if (!oParameters.sRequestType) {
 					oParameters.sRequestType = "POST";
 				}
+				if (oParameters.bShowSpinner) {
+					$rootScope.$emit('LOAD');
+				}
+
 				$.ajax({
 					type: oParameters.sRequestType,
 					async: oParameters.bAsync,
@@ -594,16 +600,18 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					data: oParameters.oData,
 					dataType: oParameters.sDataType,
 					beforeSend: function() {},
-					success: function(data) {
+					success: $.proxy(function(data) {
+						this.commonOnSuccess(oParameters);
 						if (oParameters.oEventHandlers && oParameters.oEventHandlers.onSuccess) {
 							oParameters.oEventHandlers.onSuccess(data);
 						}
-					},
-					error: function(data) {
+					}, this),
+					error: $.proxy(function(data) {
+						this.commonOnError(oParameters);
 						if (oParameters.oEventHandlers && oParameters.oEventHandlers.onError) {
 							oParameters.oEventHandlers.onError(data);
 						}
-					}
+					}, this)
 				});
 			},
 		}

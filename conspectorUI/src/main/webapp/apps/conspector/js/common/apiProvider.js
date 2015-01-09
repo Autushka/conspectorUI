@@ -52,7 +52,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			getCurrentUserName: function() {
-				var sPath = "jsp/account/getCurrentUserName.jsp";
+				var sPath = "rest/account/getCurrentUserName";
 				var sCurrentUserName;
 
 				var onSuccess = function(sData) {
@@ -100,7 +100,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			getCurrentRole: function() {
-				var sPath = "jsp/account/getCurrentRole.jsp";
+				var sPath = "rest/account/getCurrentRole";
 				var sCurrentRole;
 
 				var onSuccess = function(sData) {
@@ -121,67 +121,34 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			setCurrentRole: function(sRole) {
 				dataProvider.ajaxRequest({
-					sPath: "jsp/account/setCurrentRole.jsp?role=" + sRole,
+					sPath: "rest/account/setCurrentRole/" + sRole,
 					bAsync: false,
-					sRequestType: "POST",
+					sRequestType: "GET",
 				});
 			},
 
-			changeUserPassword: function(oData) {
-				var deffered = $q.defer();
-
+			resetPasswordWithPRCode: function(oParameters) {
 				var oSrv = dataProvider.httpRequest({
-					sPath: "jsp/account/changeProfileData.jsp",
-					oUrlParameters: oData,
-					sRequestType: "POST",
+					sPath: "rest/account/passwordRecoveryWithPRCode/" + oParameters.oData.passwordRecoveryCode + "/" + oParameters.oData.newPassword,
+					sRequestType: "GET",
 					bShowSpinner: true,
-					bShowSuccessMessage: false,
-					bShowErorrMessage: false
 				});
 
 				oSrv.then(function(oData) {
-					deffered.resolve(oData);
+					oParameters.onSuccess(oData);
 				});
-
-				return deffered.promise;
 			},
 
-			resetPasswordWithPRCode: function(oData) {
-				var deffered = $q.defer();
-
+			resetPassword: function(oParameters) {
 				var oSrv = dataProvider.httpRequest({
-					sPath: "jsp/account/passwordRecoveryNewPassword.jsp",
-					oUrlParameters: oData,
-					sRequestType: "POST",
+					sPath: "rest/account/passwordRecovery/" + oParameters.oData.userName + "/" + oParameters.oData.email,
+					sRequestType: "GET",
 					bShowSpinner: true,
-					bShowSuccessMessage: false,
-					bShowErorrMessage: false
 				});
 
 				oSrv.then(function(oData) {
-					deffered.resolve(oData);
+					oParameters.onSuccess(oData);
 				});
-
-				return deffered.promise;
-			},
-
-			resetPassword: function(oData) {
-				var deffered = $q.defer();
-
-				var oSrv = dataProvider.httpRequest({
-					sPath: "jsp/account/passwordRecovery.jsp",
-					oUrlParameters: oData,
-					sRequestType: "POST",
-					bShowSpinner: true,
-					bShowSuccessMessage: false,
-					bShowErorrMessage: false
-				});
-
-				oSrv.then(function(oData) {
-					deffered.resolve(oData);
-				});
-
-				return deffered.promise;
 			},
 
 			hashPassword: function(sPassword) {

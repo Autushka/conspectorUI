@@ -1,4 +1,4 @@
-viewControllers.controller('contractorsListView', ['$scope', '$state', 'servicesProvider',
+viewControllers.controller('deficienciesListView', ['$scope', '$state', 'servicesProvider',
 	function($scope, $state, servicesProvider) {
 
 	}
