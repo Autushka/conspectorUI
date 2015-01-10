@@ -47,7 +47,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					aAllUserPhases: aUserPhases, //will contain list of user phases for all users compnanies
 					aUserCompanies: aUserCompanies,
 					bIsInitialPassword: bIsInitialPassword,
-					sLastModifiedAt: sLastModifiedAt
+					sLastModifiedAt: sLastModifiedAt,
+					aGlobalSelectedPhasesGuids: [] //will be bopupated in appController
 				};
 			},
 
@@ -694,7 +695,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "Accounts",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
-					sExpand: "PhaseDetails",
+					sExpand: "PhaseDetails/ProjectDetails",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oAccountEntity"
@@ -710,7 +711,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntity({
 					sPath: "Accounts",
 					sKey: oParameters.sKey,
-					sExpand: "PhaseDetails",
+					sExpand: "PhaseDetails/ProjectDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});

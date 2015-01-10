@@ -389,6 +389,16 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				});
 			},
 
+			getSeletedItemsKeysInMultiSelect: function(oParameters){
+				var aData = [];
+				for (var i = 0; i < oParameters.aData.length; i++) {
+					if(oParameters.aData[i].ticked === true){
+						aData.push(oParameters.aData[i][oParameters.sKey]);
+					}
+				}
+				return aData;
+			},
+
 			constructDependentMultiSelectArray: function(oParameters) { //oDependentArrayWrapper, oParentArrayWrapper, sSecondLevelAttribute, oNewParentItemArrayWrapper, sNameEN, sNameFR, sSecondLevelNameEN, sSecondLevelNameFR, sDependentKey, sParentKey, aParentKeys, sTargetArrayNameInParent
 				var aMultiSelectArray = [];
 				var oMultiSelectItem = {}
@@ -500,6 +510,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					filterDelay: 250,
 					sorting: oParameters.oInitialSorting
 				}, {
+					groupBy: oParameters.sGroupBy,
 					total: oParameters.oInitialDataArrayWrapper.aData.length,
 					sDisplayedDataArrayName: oParameters.sDisplayedDataArrayName,
 					getData: function($defer, params) {

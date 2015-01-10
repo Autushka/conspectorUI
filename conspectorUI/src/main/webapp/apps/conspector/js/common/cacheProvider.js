@@ -16,7 +16,7 @@ app.factory('cacheProvider', ['TYPES', function(TYPES) {
 			//Not sure if this one is still used.
 			oPriorityEntity: angular.copy(TYPES.oEntityCacheStructure),
 			//
-			oVersion: angular.copy(TYPES.oEntityCacheStructure),
+			//oVersion: angular.copy(TYPES.oEntityCacheStructure),
 			oAccountTypeEntity: angular.copy(TYPES.oEntityCacheStructure),
 		},
 

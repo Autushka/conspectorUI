@@ -11,10 +11,18 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if ($cookieStore.get("userPhases" + sCurrentUser + sCompany) && $cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases) {
 			$scope.globalProjectsWithPhases = angular.copy($cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases);
+			cacheProvider.oUserProfile.aGlobalSelectedPhasesGuids = servicesProvider.getSeletedItemsKeysInMultiSelect({
+				sKey: "Guid",
+				aData: $scope.globalProjectsWithPhases
+			});
 		} else {
 			if (cacheProvider.oUserProfile.sUserName) {
 				$scope.globalProjectsWithPhases = servicesProvider.constructUserProjectsPhasesForMultiSelect({
-					aSelectedPhases: servicesProvider.getUserPhasesGuids()//angular.copy(cacheProvider.oUserProfile.aUserPhases)
+					aSelectedPhases: servicesProvider.getUserPhasesGuids() //angular.copy(cacheProvider.oUserProfile.aUserPhases)
+				});
+				cacheProvider.oUserProfile.aGlobalSelectedPhasesGuids = servicesProvider.getSeletedItemsKeysInMultiSelect({
+					sKey: "Guid",
+					aData: $scope.globalProjectsWithPhases
 				});
 			}
 		}
@@ -23,6 +31,12 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			$cookieStore.put("userPhases" + sCurrentUser + sCompany, {
 				aPhases: $scope.globalProjectsWithPhases,
 			});
+			cacheProvider.oUserProfile.aGlobalSelectedPhasesGuids = servicesProvider.getSeletedItemsKeysInMultiSelect({
+				sKey: "Guid",
+				aData: $scope.globalProjectsWithPhases
+			});
+
+			$scope.$broadcast('dataShouldBeRefreshed');
 		};
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].adminPanel) {
