@@ -363,7 +363,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						});
 
 						oPutOdataSrv.then($.proxy(function(oData) {
-							if (oParameters.aLinks) {
+							if (oParameters.aLinks.length) {
 								var sParentEntityWithKey = oParameters.sPath + "('" + oData[oParameters.sKeyAttribute] + "')";
 								this.updateLinks({
 									aLinks: oParameters.aLinks,
@@ -468,15 +468,20 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				});
 
 				oOdataSrv.then($.proxy(function(oData) {
-					if (oParameters.aLinks) {
+					if (oParameters.aLinks.length) {
 						var sParentEntityWithKey = oParameters.sPath + "('" + oData.d[oParameters.sKeyAttribute] + "')";
 						this.createLinks({
 							aLinks: oParameters.aLinks,
-							sParentEntityWithKey: sParentEntityWithKey
+							sParentEntityWithKey: sParentEntityWithKey,
+							onSuccess: $.proxy(function() {
+								this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
+								deffered.resolve(oData);
+							}, this)
 						});
+					} else {
+						this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
+						deffered.resolve(oData.d);
 					}
-					this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
-					deffered.resolve(oData.d);
 				}, this), $.proxy(function() {
 					this.commonOnError(oParameters, deffered);
 				}, this));

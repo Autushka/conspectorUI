@@ -211,7 +211,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		}
 
 		$scope.onBack = function() {
-			if(!$rootScope.sFromState){
+			if (!$rootScope.sFromState) {
 				$state.go('app.adminPanel.usersList');
 				return;
 			}
@@ -256,38 +256,54 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		};
 
 		var prepareLinksForSave = function() { // link user to roles and phases
-			var aLinks = [{
-				sRelationName: "CompanyDetails",
-				aUri: []
-			}, {
-				sRelationName: "RoleDetails",
-				bKeepCompanyDependentLinks: true,
-				aUri: []
-			}, {
-				sRelationName: "PhaseDetails",
-				bKeepCompanyDependentLinks: true,
-				aUri: []
-			}];
+			var aLinks = [];
+			var aUri = [];
 			var sUri = "";
+
 			for (var i = 0; i < $scope.aCompanies.length; i++) {
 				if ($scope.aCompanies[i].ticked) {
 					sUri = "Companys('" + $scope.aCompanies[i].CompanyName + "')";
-					aLinks[0].aUri.push(sUri);
+					aUri.push(sUri);
 				}
 			}
+
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "CompanyDetails",
+					aUri: aUri
+				});
+			}
+			aUri = [];
 
 			for (var i = 0; i < $scope.aRoles.length; i++) {
 				if ($scope.aRoles[i].ticked) {
 					sUri = "Roles('" + $scope.aRoles[i].Guid + "')";
-					aLinks[1].aUri.push(sUri);
+					aUri.push(sUri);
 				}
 			}
+
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "RoleDetails",
+					bKeepCompanyDependentLinks: true,
+					aUri: aUri
+				});
+			}
+			aUri = [];
 
 			for (var i = 0; i < $scope.aPhases.length; i++) {
 				if ($scope.aPhases[i].ticked) {
 					sUri = "Phases('" + $scope.aPhases[i].Guid + "')";
-					aLinks[2].aUri.push(sUri);
+					aUri.push(sUri);
 				}
+			}
+
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "PhaseDetails",
+					bKeepCompanyDependentLinks: true,
+					aUri: aUri
+				});
 			}
 
 			return aLinks;

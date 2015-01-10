@@ -122,16 +122,17 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		};
 
 		var prepareLinksForSave = function() { // link contractor to phases
-			var aLinks = [{
-				sRelationName: "PhaseDetails",
-				bKeepCompanyDependentLinks: true,
-				aUri: []
-			}];
+			var aLinks = [];
+			var aUri = [];
+			var sUri = "";
 			for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
 				if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
 					sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
-					aLinks[0].aUri.push(sUri);
+					aUri.push(sUri);
 				}
+			}
+			if(aUri.length){
+				aLinks.push({sRelationName: "PhaseDetails", bKeepCompanyDependentLinks: true, aUri: aUri});
 			}
 			return aLinks;
 		};
