@@ -300,7 +300,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				return aUserPhasesGuids;
 			},
 
-			constructGlobalProjectPhaseSelection: function() { //based on users phases construct array of projects with phases
+			constructUserProjectsPhases: function() { //based on users phases construct array of projects with phases
 				var aUserProjectsWithPhases = [];
 				var bMatchFound = false;
 				var iMatchFoundAt = 0;
@@ -335,21 +335,20 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				return aUserProjectsWithPhases;
 			},
 
-			constructGlobalProjectPhaseData: function() {
-				var aSelectedPhases = [];
-				aSelectedPhases = angular.copy(cacheProvider.oUserProfile.aUserPhases);
+			constructUserProjectsPhasesForMultiSelect: function(oParameters) {
+				var aUserPhases = [];
+				aUserPhases = angular.copy(cacheProvider.oUserProfile.aUserPhases);
 
-				var oGlobalProjectPhaseWrapper = {
-					aData: aSelectedPhases, // phases that will be ticked 
+				var oUserProjectsPhasesWrapper = {
+					aData: aUserPhases, 
 					aPhases: []
 				};
 
 				var aUserProjectsWithPhases = [];
 
+				aUserProjectsWithPhases = this.constructUserProjectsPhases(); //based on users phases construct array of projects with phases
 
-				aUserProjectsWithPhases = this.constructGlobalProjectPhaseSelection(); //based on users phases construct array of projects with phases
-
-				var aUserPhasesGuids = this.getUserPhasesGuids(); //users phases guids
+				var aUserPhasesGuids = oParameters.aSelectedPhases;// phases that will be ticked 
 
 				this.constructDependentMultiSelectArray({
 					oDependentArrayWrapper: {
@@ -358,7 +357,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					sSecondLevelAttribute: "PhaseDetails",
 					sSecondLevelNameEN: "NameEN",
 					sSecondLevelNameFR: "NameFR",
-					oParentArrayWrapper: oGlobalProjectPhaseWrapper,
+					oParentArrayWrapper: oUserProjectsPhasesWrapper,
 					oNewParentItemArrayWrapper: {
 						aData: []
 					},
@@ -369,8 +368,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					sTargetArrayNameInParent: "aPhases"
 				});
 
-				if (oGlobalProjectPhaseWrapper.aData[0]) {
-					return oGlobalProjectPhaseWrapper.aData[0].aPhases;
+				if (oUserProjectsPhasesWrapper.aData[0]) {
+					return oUserProjectsPhasesWrapper.aData[0].aPhases;
 				} else {
 					return [];
 				}

@@ -140,8 +140,17 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			resetPassword: function(oParameters) {
-				var oSrv = dataProvider.httpRequest({
-					sPath: "rest/account/passwordRecovery/" + oParameters.oData.userName + "/" + oParameters.oData.email,
+				var oSrv = {};
+				var sPath = "";
+
+				if (oParameters.oData.userName) {
+					sPath = "rest/account/passwordRecovery/userName/" + oParameters.oData.userName;
+				} else {
+					sPath = "rest/account/passwordRecovery/email/" + oParameters.oData.email;
+				}
+
+				oSrv = dataProvider.httpRequest({
+					sPath: sPath,
 					sRequestType: "GET",
 					bShowSpinner: true,
 				});
@@ -681,7 +690,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
-			getContractorsWithPhases: function(oParameters){
+			getContractorsWithPhases: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Accounts",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",

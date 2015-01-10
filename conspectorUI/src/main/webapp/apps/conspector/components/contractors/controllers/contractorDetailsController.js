@@ -15,9 +15,14 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			aData: []
 		};
 
-		$scope.aPhases = [];
+		var constructPhasesMultiSelect = function(aSelectedPhases) {
+			$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
+				aSelectedPhases: aSelectedPhases
+			});
+		};
 
 		var setDisplayedContractorDetails = function(oContractor) {
+			var aContractorPhasesGuids = [];
 			$scope.oContractor._guid = oContractor.Guid;
 			$scope.oContractor._lastModifiedAt = oContractor.LastModifiedAt;
 			$scope.oContractor.sName = oContractor.Name;
@@ -31,6 +36,10 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			$scope.oContractor.sLastModifiedAt = utilsProvider.dBDateToSting(oContractor.LastModifiedAt);
 
 			$scope.oContractor._aPhases = angular.copy(oContractor.PhaseDetails.results);
+			for (var i = 0; i < $scope.oContractor._aPhases.length; i++) {
+				aContractorPhasesGuids.push($scope.oContractor._aPhases[i].Guid);
+			}
+			constructPhasesMultiSelect(aContractorPhasesGuids);
 
 			oContractorWrapper.aData.push($scope.oContractor);
 		};
@@ -42,127 +51,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			sKeyValue: $stateParams.sContractorGuid
 		});
 
-		// var onCompaniesLoaded = function(aData) {
-		// 	//Sort aData by company sorting sequence 
-		// 	for (var i = 0; i < aData.length; i++) {
-		// 		aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-		// 	}
-		// 	aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-
-		// 	var aUserCompaniesKeys = [];
-
-		// 	for (var i = 0; i < $scope.oUser._aCompanies.length; i++) {
-		// 		aUserCompaniesKeys.push($scope.oUser._aCompanies[i].CompanyName);
-		// 	}
-
-		// 	servicesProvider.constructDependentMultiSelectArray({
-		// 		oDependentArrayWrapper: {
-		// 			aData: aData
-		// 		},
-		// 		oParentArrayWrapper: oUserWrapper,
-		// 		oNewParentItemArrayWrapper: oUserWrapper,
-		// 		sNameEN: "CompanyName",
-		// 		sNameFR: "CompanyName",
-		// 		sDependentKey: "CompanyName",
-		// 		aParentKeys: aUserCompaniesKeys,
-		// 		sTargetArrayNameInParent: "aCompanies"
-		// 	});
-
-		// 	if (oUserWrapper.aData[0]) {
-		// 		$scope.aCompanies = angular.copy(oUserWrapper.aData[0].aCompanies);
-		// 	}
-		// };
-
-		// var onRolesLoaded = function(aData) {
-		// 	//Sort aData by role sorting sequence 
-		// 	for (var i = 0; i < aData.length; i++) {
-		// 		aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-		// 	}
-		// 	aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-
-		// 	var aUserRolesKeys = [];
-
-		// 	for (var i = 0; i < $scope.oUser._aRoles.length; i++) {
-		// 		aUserRolesKeys.push($scope.oUser._aRoles[i].Guid);
-		// 	}
-
-		// 	servicesProvider.constructDependentMultiSelectArray({
-		// 		oDependentArrayWrapper: {
-		// 			aData: aData
-		// 		},
-		// 		oParentArrayWrapper: oUserWrapper,
-		// 		oNewParentItemArrayWrapper: oUserWrapper,
-		// 		sNameEN: "RoleName",
-		// 		sNameFR: "RoleName",
-		// 		sDependentKey: "Guid",
-		// 		aParentKeys: aUserRolesKeys,
-		// 		sTargetArrayNameInParent: "aRoles"
-		// 	});
-
-		// 	if (oUserWrapper.aData[0]) {
-		// 		$scope.aRoles = angular.copy(oUserWrapper.aData[0].aRoles);
-		// 	}
-		// };
-
-		// var onProjectsLoaded = function(aData) {
-		// 	//Sort aData by project sorting sequence and then by phases sorting sequence...
-		// 	for (var i = 0; i < aData.length; i++) {
-		// 		aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-		// 		for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-		// 			if (aData[i].PhaseDetails.results[j].GeneralAttributes.IsDeleted) { // Filtering on expanded entities doesn't work right now in olingo...
-		// 				aData[i].PhaseDetails.results.splice(j, 1);
-		// 				break;
-		// 			}
-		// 			aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
-		// 		}
-		// 		aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
-		// 	}
-		// 	aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-
-		// 	var aUserPhasesGuids = [];
-
-		// 	for (var i = 0; i < $scope.oUser._aPhases.length; i++) {
-		// 		aUserPhasesGuids.push($scope.oUser._aPhases[i].Guid);
-		// 	}
-
-		// 	servicesProvider.constructDependentMultiSelectArray({
-		// 		oDependentArrayWrapper: {
-		// 			aData: aData
-		// 		},
-		// 		sSecondLevelAttribute: "PhaseDetails",
-		// 		sSecondLevelNameEN: "NameEN",
-		// 		sSecondLevelNameFR: "NameFR",
-		// 		oParentArrayWrapper: oUserWrapper,
-		// 		oNewParentItemArrayWrapper: oUserWrapper,
-		// 		sNameEN: "NameEN",
-		// 		sNameFR: "NameFR",
-		// 		sDependentKey: "Guid",
-		// 		aParentKeys: aUserPhasesGuids,
-		// 		sTargetArrayNameInParent: "aPhases"
-		// 	});
-
-		// 	if (oUserWrapper.aData[0]) {
-		// 		$scope.aPhases = angular.copy(oUserWrapper.aData[0].aPhases);
-		// 	}
-		// };
-
 		var onContractorDetailsLoaded = function(oData) {
 			setDisplayedContractorDetails(oData);
-
-			// apiProvider.getCompanies({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onCompaniesLoaded
-			// });
-
-			// apiProvider.getProjectsWithPhases({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onProjectsLoaded
-			// });
-
-			// apiProvider.getRoles({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onRolesLoaded
-			// });
 		};
 
 		var getContractorDetails = function() {
@@ -178,33 +68,11 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				getContractorDetails();
 			} else { //in case when data is retrieved from the cash
 				setDisplayedContractorDetails(oContractor);
-				// apiProvider.getCompanies({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onCompaniesLoaded
-				// });
-				// apiProvider.getProjectsWithPhases({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onProjectsLoaded
-				// });
-				// apiProvider.getRoles({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onRolesLoaded
-				// });
 			}
 		} else {
-			// $scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
-			// apiProvider.getCompanies({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onCompaniesLoaded
-			// });
-			// apiProvider.getProjectsWithPhases({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onProjectsLoaded
-			// });
-			// apiProvider.getRoles({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onRolesLoaded
-			// });
+			constructPhasesMultiSelect({
+				aSelectedPhases: []
+			});
 		}
 
 		$scope.onBack = function() {
@@ -253,43 +121,20 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			});
 		};
 
-		// var prepareLinksForSave = function() { // link user to roles and phases
-		// 	var aLinks = [{
-		// 		sRelationName: "CompanyDetails",
-		// 		aUri: []
-		// 	}, {
-		// 		sRelationName: "RoleDetails",
-		// 		bKeepCompanyDependentLinks: true,
-		// 		aUri: []
-		// 	}, {
-		// 		sRelationName: "PhaseDetails",
-		// 		bKeepCompanyDependentLinks: true,
-		// 		aUri: []
-		// 	}];
-		// 	var sUri = "";
-		// 	for (var i = 0; i < $scope.aCompanies.length; i++) {
-		// 		if ($scope.aCompanies[i].ticked) {
-		// 			sUri = "Companys('" + $scope.aCompanies[i].CompanyName + "')";
-		// 			aLinks[0].aUri.push(sUri);
-		// 		}
-		// 	}
-
-		// 	for (var i = 0; i < $scope.aRoles.length; i++) {
-		// 		if ($scope.aRoles[i].ticked) {
-		// 			sUri = "Roles('" + $scope.aRoles[i].Guid + "')";
-		// 			aLinks[1].aUri.push(sUri);
-		// 		}
-		// 	}
-
-		// 	for (var i = 0; i < $scope.aPhases.length; i++) {
-		// 		if ($scope.aPhases[i].ticked) {
-		// 			sUri = "Phases('" + $scope.aPhases[i].Guid + "')";
-		// 			aLinks[2].aUri.push(sUri);
-		// 		}
-		// 	}
-
-		// 	return aLinks;
-		// };
+		var prepareLinksForSave = function() { // link contractor to phases
+			var aLinks = [{
+				sRelationName: "PhaseDetails",
+				bKeepCompanyDependentLinks: true,
+				aUri: []
+			}];
+			for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
+				if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
+					sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
+					aLinks[0].aUri.push(sUri);
+				}
+			}
+			return aLinks;
+		};
 
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
@@ -340,14 +185,14 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			oDataForSave.Fax = $scope.oContractor.sFax;
 			oDataForSave.LastModifiedAt = $scope.oContractor._lastModifiedAt;
 
-			//aLinks = prepareLinksForSave();
+			aLinks = prepareLinksForSave();
 			switch ($scope.sMode) {
 				case "edit":
 					apiProvider.updateAccount({
 						bShowSpinner: true,
 						sKey: oDataForSave.Guid,
 						oData: oDataForSave,
-					//	aLinks: aLinks,
+						aLinks: aLinks,
 						bShowSuccessMessage: true,
 						bShowErrorMessage: true,
 						onSuccess: onSuccessUpdate
@@ -357,7 +202,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					apiProvider.createAccount({
 						bShowSpinner: true,
 						oData: oDataForSave,
-						//aLinks: aLinks,
+						aLinks: aLinks,
 						bShowSuccessMessage: true,
 						bShowErrorMessage: true,
 						onSuccess: onSuccessCreation,

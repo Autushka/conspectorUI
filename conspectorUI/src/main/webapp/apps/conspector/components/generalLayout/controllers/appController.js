@@ -13,7 +13,9 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			$scope.globalProjectsWithPhases = angular.copy($cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases);
 		} else {
 			if (cacheProvider.oUserProfile.sUserName) {
-				$scope.globalProjectsWithPhases = servicesProvider.constructGlobalProjectPhaseData();
+				$scope.globalProjectsWithPhases = servicesProvider.constructUserProjectsPhasesForMultiSelect({
+					aSelectedPhases: servicesProvider.getUserPhasesGuids()//angular.copy(cacheProvider.oUserProfile.aUserPhases)
+				});
 			}
 		}
 
@@ -99,7 +101,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		}, 100);
 
 		$scope.onTabSelect = function(oTab) {
-			if ($scope.selectedTabIndex !== undefined){//($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
+			if ($scope.selectedTabIndex !== undefined) { //($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
 				$state.go(oTab.sState);
 			}
 		};

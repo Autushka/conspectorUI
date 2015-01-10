@@ -32,10 +32,6 @@ viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$stat
 				return;
 			}	
 
-			if(!oData.email){
-				oData.email = "_";//needed because of the rest service URL structure (requuires two parameters)
-			}			
-			
 			var onSuccess = function(oData){
 				var bNoErrorMessages = servicesProvider.messagesHandler(oData.messages);
 			};

@@ -10,5 +10,17 @@
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sSecondaryPhone" ng-disabled="sMode == 'display'" placeholder="{{'global_secondaryPhone' | translate}}" ng-change="onDataModified()">	
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sWebsite" ng-disabled="sMode == 'display'" placeholder="{{'global_website' | translate}}" ng-change="onDataModified()">	
 	<input type="email" class="cnpTextInputField" ng-model="oContractor.sEmail" ng-disabled="sMode == 'display'" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()">	
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sFax" ng-disabled="sMode == 'display'" placeholder="{{'global_fax' | translate}}" ng-change="onDataModified()">						
+	<input type="text" class="cnpTextInputField" ng-model="oContractor.sFax" ng-disabled="sMode == 'display'" placeholder="{{'global_fax' | translate}}" ng-change="onDataModified()">	
+	<label>{{'global_associatedPhases' | translate}}</label>	
+	<div
+		multi-select
+		input-model="aUserProjectsPhasesForMultiselect"
+		button-label="fullName"
+		item-label="name"
+		tick-property="ticked"
+		group-property="multiSelectGroup"
+		is-disabled="sMode == 'display'"
+		on-item-click="onDataModified()"
+		>
+	</div>						
 </form>
