@@ -20,7 +20,7 @@
   "isteven-angular-multiselect": "2.0.x",
   "jquery": "2.1.x", 
   "datajs": "1.1.x",
-  "jshashes": "1.0.x"
-
+  "jshashes": "1.0.x",
+  "pubnub": "3.6.x"
   }
 }

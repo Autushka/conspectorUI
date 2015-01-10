@@ -1,5 +1,5 @@
-app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 'cacheProvider',
-	function(dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider) {
+app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 'cacheProvider', 'PubNub',
+	function(dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider, PubNub) {
 		return {
 			getUserProfile: function(sUserName) {
 				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=CompanyDetails,RoleDetails,PhaseDetails/ProjectDetails&$format=json";
@@ -720,6 +720,12 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			createAccount: function(oParameters) {
 				var onSuccess = function(oData) {
+					PubNub.ngPublish({
+						channel: "conspectorPubNub",
+						message: {
+							sText: "Account has been created..."
+						}
+					});
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
@@ -742,6 +748,12 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			updateAccount: function(oParameters) {
 				var onSuccess = function(oData) {
+					PubNub.ngPublish({
+						channel: "conspectorPubNub",
+						message: {
+							sText: "Account has been updated..."
+						}
+					});
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
