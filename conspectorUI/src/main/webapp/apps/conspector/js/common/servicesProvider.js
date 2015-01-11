@@ -413,7 +413,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						}
 						if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey]) {
 							oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/get/";
-							oMultiSelectItem.icon = oMultiSelectItem.icon + oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey] + "' style='width: 24px; height: 24px;'/>"
+							oMultiSelectItem.icon = oMultiSelectItem.icon + oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey] + "' class='cnpMultiSelectIcon;'/>"
 						}
 
 						oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentKey];
@@ -428,7 +428,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 								sName = oParameters.oDependentArrayWrapper.aData[i][oParameters.sNameEN];
 							}
 						}
-						oMultiSelectItem.name = '<strong>' + sName + '</strong>';
+						// oMultiSelectItem.name = '<div class="cnpButtonLabelChild">' + sName + '</div>';
+						oMultiSelectItem.name = '<div class="cnpButtonLabelChild">' + sName + '</div>';
 						aMultiSelectArray.push(oMultiSelectItem);
 						for (var j = 0; j < oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results.length; j++) {
 							oMultiSelectItem = {};
@@ -437,7 +438,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 								if (!oMultiSelectItem.name) {
 									oMultiSelectItem.name = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sSecondLevelNameEN];
 								}
-								oMultiSelectItem.fullName = '<strong>' + sName + '</strong>' + ': ' + oMultiSelectItem.name;
+								oMultiSelectItem.fullName = '<div class="cnpButtonLabelParent">' + sName + '</div>' + '<div class="cnpButtonLabelSeparator">' + '&nbsp;-&nbsp;' + '</div>' + '<div class="cnpButtonLabelChild">' + oMultiSelectItem.name + '</div>';
 							}
 							oMultiSelectItem[oParameters.sDependentKey] = oParameters.oDependentArrayWrapper.aData[i][oParameters.sSecondLevelAttribute].results[j][oParameters.sDependentKey];
 							aMultiSelectArray.push(oMultiSelectItem);

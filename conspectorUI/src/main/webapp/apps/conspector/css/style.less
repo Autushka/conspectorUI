@@ -18,8 +18,10 @@ VARIABLE AND SETTINGS
 @greyTitleTextColor: #576D77;
 @textColor: #424347;
 @placeholderTextColor: rgba(66, 67, 71, 0.5);
+@buttonLabelTextColor: rgba(66, 67, 71, 0.5);
 @textColorLight: rgba(66, 67, 71, 0.5);
-@fontSize: 14pt;
+@navbarTextColor: rgba(255, 255, 255, 0.65);
+@fontSize: 18px;
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
 
 //Class for making text unselectable
@@ -76,12 +78,31 @@ body {
 }
 .cnpLink{
 	color: @clickableTextColor;
+	font-size: 16px;
+	font-weight: 500;
 	&:hover{
 		cursor: pointer;
 	}
 	&.cnpLinkBackButton{
 		padding-left: 25px;
 	}
+	&.cnpLinkHeader{
+		padding-left: 10px;
+	}
+	&.cnpLinkHeaderCompany{
+		padding-left: 30px;
+	}
+}
+.cnpLinkProjectsAndPhases{
+		color: @clickableTextColor;
+		font-size: 16px;
+		font-weight: 500;
+		position: relative;
+
+		z-index: 1;
+		&:hover{
+			cursor: default;
+		}
 }
 //Default Button styling
 .md-button{
@@ -136,12 +157,14 @@ USER MANAGEMENT
 		background-color: @lightGreyBackgroundColor;
 		border-radius: @borderRadius;
 		padding: 20px;
-		padding-left: @userManagementFormPadding;
-		padding-right: @userManagementFormPadding;
+		padding-left: @userManagementFormPadding*0.8;
+		padding-right: @userManagementFormPadding*0.8;
 		@media
-		only screen and (min-height: @sd-height) and (max-width: @sd-width) and (-webkit-min-device-pixel-ratio: 1){
+		only screen and (min-height: @sd-height) and (max-width: @sd-width){
 		min-height: @sd-height;
 		max-height: @sd-height;
+		padding-left: @userManagementFormPadding*0.6;
+		padding-right: @userManagementFormPadding*0.6;
 			//For iPhone 4 (Retina Display)
 			@media
 			only screen and (-webkit-min-device-pixel-ratio: 2){
@@ -188,9 +211,10 @@ USER MANAGEMENT
 	margin-bottom: 40px;
 	//For iPhone 3 and 4
 	@media
-	only screen and (max-width: @sd-width){
-	margin-top: 5px;
+	only screen and (max-height: @sd-height) and (max-width: @sd-width) {
+	margin-top: 0px;
 	margin-bottom: 15px;
+	width: 65%;
 	//For iPhone 5
 	@media
 	only screen and (min-height: @md-height){
@@ -239,12 +263,16 @@ USER MANAGEMENT
 	float: left;
 	min-width: 100%;
 	outline: 0;
-	font-size: 13pt;
+	font-size: 16px;
 	font-weight: 500;
-	margin-top: 16px;
+	margin-top: 11px;
 	&.cnpUserManagementBottomLabelNoMargin{
 		margin: 0px;
 	}
+	@media
+	only screen and (min-height: @sd-height) and (max-width: @sd-width){
+		margin-top: 7px;
+  	}
 }
 
 .cnpTextInputField{
@@ -264,7 +292,7 @@ USER MANAGEMENT
 	//For iPhone 3 and 4 and 5
 	@media
 		only screen and (max-width: @sd-width){
-		height: @fieldHeight*0.8;
+		height: @fieldHeight*1;
 	}
 	&:focus{
   		box-shadow: 0 0 5px rgba(50, 159, 198, 1);
@@ -304,14 +332,14 @@ USER MANAGEMENT
 	min-width: 100%;
 	color: @placeholderTextColor;
 	outline: 0;
-	font-size: 13pt;
+	font-size: 16px;
 	font-weight: 500;
 }
 md-switch .md-label{
 	border-width: 0px;
 }
 .md-label{
-	margin-top: 2px;
+	// margin-top: 2px;
 	color: @textColorLight;
 }
 .minus2pxMarginTop{
@@ -330,26 +358,409 @@ END OF USER MANAGEMENT
 /*
 APP VIEW
 */
-	
-.cnpAppview{
-
-
-
+.cnpAppView{
+	width: 100%;
+	min-height: 1024px;
+	min-width: 768px;
 }
 .cnpHeader{
-
+	width: 100%;
+	max-width: 1280px;
+	height: 65px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 .cnpSubHeader{
-
+	width: 100%;
+	max-width: 1280px;
+	min-height: 55px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.cnpSubHeaderBackground{
+	width: 100%;
+	background-color: @lightGreyBackgroundColor;
 }
 .cnpNavBar{
+	width: 100%;
+	max-width: 1280px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.cnpNavBarBackground{
+	width: 100%;
+	background-color: @darkerGreyBackgroundColor;
+}
+.cnpCompanyLogo{
+	height: 50px;
+	width: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
 
 }
+
+.md-header-items-container{
+	font-weight: 500;
+	font-size: 16px;
+}
+md-tabs.md-conspectorColorPaletteNavbar-theme md-tab:focus {
+	// color: @navbarTextColor;
+	// font-size: 14pt;
+	background-color: @darkerGreyBackgroundColor;
+}
+md-tabs.md-conspectorColorPaletteNavbar-theme md-tab:active {
+	// color: @navbarTextColor;
+	// font-size: 14pt;
+	background-color: @darkerGreyBackgroundColor;
+}
+md-tabs.md-conspectorColorPaletteNavbar-theme md-tab{
+	color: @navbarTextColor;
+}
+md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
+	color: @lightGreyBackgroundColor;
+	background-color: @lightGreyBackgroundColor;
+	height: 7px;
+}
+
+//MultiSelect Styling
+
+/* 
+ * Don't modify things marked with ! - unless you know what you're doing
+ */
+
+/* ! vertical layout */
+.multiSelect .vertical {
+    float: none;
+}
+
+/* ! horizontal layout */
+.multiSelect .horizontal:not(.multiSelectGroup) {
+    float: left;
+}
+
+/* ! create a "row" */
+.multiSelect .line {
+    max-height: 34px;   
+    overflow: hidden;
+}
+
+/* ! create a "column" */
+.multiSelect .acol {
+    display: inline-block;    
+    min-width: 12px;
+}
+
+/* ! */
+.multiSelect .inlineBlock {
+    display: inline-block;
+}
+
+/* the multiselect button */
+.multiSelect .button {
+    display: block;
+    position: relative;
+    text-align: left;    
+    line-height: 1;
+    cursor: pointer;
+    border: 0px solid #c6c6c6;    
+    padding: 1px 8px 1px 8px;
+   	min-width: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    min-height : @fieldHeight !important;
+    border-radius: @borderRadius;
+    color: @buttonLabelTextColor;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none; 
+    white-space:normal;
+    background-color: transparent;
+    background-image: none;     
+}
+
+.multiSelectButton{
+	// min-width: 100%;
+}
+
+.buttonLabel {
+	// margin-left: 125px;
+	color: @buttonLabelTextColor;
+}
+
+.cnpMultiSelectProjectsAndPhases{
+	position: relative;
+	z-index: 999;
+	// min-width: 300px;
+   	// margin-left: -125px;
+    color: @buttonLabelTextColor;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+cnpMultiSelectProjectsAndPhasesDefaultLabel {
+	color: @blueColor;
+}
+
+.cnpButtonLabelParent{
+	color: @buttonLabelTextColor;
+	float: left;
+}
+
+.cnpButtonLabelChild{
+	color: @buttonLabelTextColor;
+	float: left;
+}
+
+.cnpMultiSelectIcon{
+	height: 22px;
+	width: 22px;
+}
+.cnpButtonLabelSeparator{
+	float: left;
+}
+
+/* button: hover */
+.multiSelect .button:hover {    
+    background-image: none;
+}
+
+/* button: clicked */
+.multiSelect .buttonClicked {
+ 	box-shadow: none;
+ 	// box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* labels on the button */
+.multiSelect .buttonLabel {
+    display: inline-block;
+    padding: 5px 0px 5px 0px; 
+}
+
+/* downward pointing arrow */
+.multiSelect .caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin: 0px 0px 1px 12px  !important;    
+    vertical-align: middle;
+    border-top: 6px solid @blueColor;
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+    border-bottom: 0 dotted; 
+}
+
+/* the main checkboxes and helper layer */
+.multiSelect .checkboxLayer {
+    background-color: #fff;
+    position: absolute;
+    z-index: 999;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);    
+    min-width:278px;
+    display: none !important;
+    margin-right: 30px;
+}
+
+/* container of helper elements */
+.multiSelect .helperContainer {
+    border-bottom: 1px solid #ddd;
+    padding: 8px 8px 0px 8px;
+}
+
+/* helper buttons (select all, none, reset); */
+.multiSelect .helperButton {
+    display: inline;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    height: 26px;
+    font-size: 13px;
+    border-radius: 2px;
+    color: #666;    
+    background-color: #f1f1f1;
+    line-height: 1.6;
+    margin: 0px 0px 8px 0px;
+}
+
+/* clear button */
+.multiSelect .clearButton {
+    position: absolute;
+    display: inline;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    height: 22px;
+    width: 22px;
+    font-size: 13px;
+    border-radius: 2px;
+    color: #666;    
+    background-color: #f1f1f1;
+    line-height: 1.4;
+    right : 2px;
+    top: 2px;
+}
+
+/* filter */
+.multiSelect .inputFilter {
+    border-radius: 2px; 
+    border: 1px solid #ccc;
+    height: 26px;
+    font-size: 14px;
+    width:100%;    
+    padding-left:7px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */    
+    color: #888;
+    margin: 0px 0px 8px 0px;
+}
+
+/* helper elements on hover & focus */
+.multiSelect .clearButton:hover,
+.multiSelect .helperButton:hover {
+    border: 1px solid #ccc;
+    color: #999;    
+    background-color: #f4f4f4;    
+}
+
+.multiSelect .clearButton:focus,
+.multiSelect .helperButton:focus,
+.multiSelect .inputFilter:focus {
+    border: 1px solid #66AFE9 !important;
+    box-shadow: inset 0 0px 1px rgba(0,0,0,.035), 0 0 5px rgba(82,168,236,.7) !important;
+}
+
+/* container of multi select items */
+.multiSelect .checkBoxContainer {
+    display: inline-block;
+    padding: 8px;   
+}
+
+/* ! to show / hide the checkbox layer above */
+.multiSelect .show {
+    display: block !important;
+}
+
+/* item labels */
+.multiSelect .multiSelectItem {
+    display: block;
+    padding: 3px;
+    color: #444;       
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;      
+    border: 1px solid transparent;
+    position: relative;
+    min-width:278px;
+}
+
+/* Item labels: selected - Enable this if you want to apply styling on selected items */
+.multiSelect .multiSelectItem:not(.multiSelectGroup).selected
+{
+    background-image: linear-gradient( #e9e9e9, #f1f1f1 );    
+    color: #555;        
+    cursor: pointer;        
+    border-top: 1px solid #e4e4e4;
+    border-left: 1px solid #e4e4e4;    
+    border-right: 1px solid #d9d9d9;            
+}
+
+/* item labels focus on mouse hover */
+.multiSelect .multiSelectItem:hover, 
+.multiSelect .multiSelectGroup:hover {
+    background-image: linear-gradient( #c1c1c1, #999 ) !important;    
+    color: #fff !important;    
+    cursor: pointer;        
+    border: 1px solid #ccc !important;
+}
+
+/* item labels focus using keyboard */
+.multiSelect .multiSelectFocus { 
+    background-image: linear-gradient( #c1c1c1, #999 ) !important;    
+    color: #fff !important;    
+    cursor: pointer;        
+    border: 1px solid #ccc !important;
+}
+
+/* change mouse pointer into the pointing finger */
+.multiSelect .multiSelectItem span:hover, 
+.multiSelect .multiSelectGroup span:hover
+{    
+    cursor: pointer;  
+}
+
+/* ! group labels */
+.multiSelect .multiSelectGroup {    
+    display: block;
+    clear: both;
+}
+
+/* right-align the tick mark (&#10004;) */
+.multiSelect .tickMark {
+    display:inline-block; 
+    position: absolute; 
+    right: 10px; 
+    top: 7px;
+    font-size: 10px;          
+}
+
+/* hide the original HTML checkbox away */
+.multiSelect .checkbox {    
+    color: #ddd !important;    
+    position: absolute;
+    left: -9999px;
+    cursor: pointer;    
+}
+
+/* checkboxes currently disabled */
+.multiSelect .disabled, 
+.multiSelect .disabled:hover,
+.multiSelect .disabled label input:hover ~ span {
+    color: #c4c4c4 !important;
+    cursor: not-allowed !important;
+}
+
+/* If you use images in button / checkbox label, you might want to change the image style here. */
+.multiSelect img {
+    vertical-align: middle;
+    margin-bottom:0px;
+    height: 22px;
+    width:22px;
+}
+
+
 
 /*
 END OF APP VIEW
 */
 
+/*
+APP VIEW CONTENT
+*/
+.cnpAppViewContent{
+	width: 100%;
+	max-width: 1280px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 30px;
+}
+.cnpAppViewContentBackground {
+	width: 100%;
+	background-color: @lightGreyBackgroundColor;
+}
+
+/*
+END OF APP VIEW CONTENT
+*/
 
 
 .cnpVerticalAfterSpacing1x{
@@ -363,4 +774,6 @@ END OF APP VIEW
 .cnpVerticalAfterSpacing4x{
 	margin-bottom: @spacingUnit * 4;
 }
+
+
 

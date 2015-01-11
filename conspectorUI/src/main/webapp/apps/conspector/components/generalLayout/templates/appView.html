@@ -1,29 +1,59 @@
-<div class="cnpAppView">
-	<div class="cnpHeader">
-		<img ng-src="{{$root.sLogoUrl}}" style="width:200px; height:100px;"/>
-		<label ng-click="onChangeLanguage()">{{'signIn_languageCode' | translate}}</label>
-		<label ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()">{{'app_adminPanel' | translate}}</label>
-		<label ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()">{{'app_profileSettings' | translate}}</label>
-		<label ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()">{{'app_switchCompanies' | translate}}</label>
-		<label ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()">{{'app_switchRoles' | translate}}</label>
-		<label ng-click="onLogOut()">{{'app_logOut' | translate}}</label>
-	</div>
-	<div class="cnpSubHeader">
-		<div
-			multi-select
-			input-model="globalProjectsWithPhases"
-			button-label="fullName"
-			item-label="name"
-			tick-property="ticked"
-			group-property="multiSelectGroup"
-			on-close="onGlobalUserPhasesChanged()">
+<div class="cnpAppView" layout="column" layout-align="start center">
+	<div class="cnpHeader" layout="row"  layout-align="space-between center">
+		<div layout="row" layout-align="start center">
+			<img class="cnpCompanyLogo" ng-src="{{$root.sLogoUrl}}"/>
+			<label ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="cnpLink cnpLinkHeaderCompany">
+				{{'app_switchCompanies' | translate}}
+			</label>
+		</div>
+		<div>
+			<label ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeader">
+				{{'app_adminPanel' | translate}}
+			</label>
+			<label ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="cnpLink cnpLinkHeader">
+				{{'app_profileSettings' | translate}}
+			</label>
+			
+			<label ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeader">
+				{{'app_switchRoles' | translate}}
+			</label>
+			<label ng-click="onLogOut()" class="cnpLink cnpLinkHeader">
+				{{'app_logOut' | translate}}
+			</label>
+			<label ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeader">
+				{{'signIn_languageCode' | translate}}
+			</label>
 		</div>
 	</div>
-	<div class="cnpNavBar">
-		<md-tabs md-selected="selectedTabIndex" md-stretch-tabs='no'>
-		<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle}}">
-		</md-tab>
-		</md-tabs>
+	<div class="cnpSubHeaderBackground" layout="column" layout-align="start center">
+		<div class="cnpSubHeader" layout="row" layout-align="start center">
+			<!-- <label class="cnpLinkProjectsAndPhases">
+						{{'global_selectedProjectsAndPhases' | translate }}
+			</label> -->
+			<div
+				class="cnpMultiSelectProjectsAndPhases"
+				multi-select
+				input-model="globalProjectsWithPhases"
+				default-label="<cnpMultiSelectProjectsAndPhasesDefaultLabel>{{'global_selectedProjectsAndPhases' | translate }}</cnpMultiSelectProjectsAndPhasesDefaultLabel>"
+				button-label="fullName"
+				item-label="name"
+				tick-property="ticked"
+				group-property="multiSelectGroup"
+				on-close="onGlobalUserPhasesChanged()"
+				max-labels="5"
+				directive-id="multiSelectFull" >
+			</div>
+		</div>
 	</div>
-	<div ui-view></div>
+	<div class="cnpNavBarBackground" layout="column" layout-align="start center">
+		<div class="cnpNavBar">
+			<md-tabs md-selected="selectedTabIndex" md-stretch-tabs='no' md-theme="conspectorColorPaletteNavbar">
+			<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle}}">
+			</md-tab>
+			</md-tabs>
+		</div>
+	</div>
+	<div class="cnpAppViewContentBackground" layout="column" layout-align="start center">
+		<div ui-view class="cnpAppViewContent"></div>
+	</div>
 </div>
