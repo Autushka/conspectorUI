@@ -92,13 +92,8 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 			});
 		};
 
-		$scope.$on('dataShouldBeRefreshed', function(oParameters) {
+		$scope.$on('accountsShouldBeRefreshed', function(oParameters) {
 			loadContractors();
 		});
-
-		$scope.$on('dataWithCacheShouldBeRefreshed', function(oParameters) {
-			cacheProvider.cleanEntitiesCache("oAccountEntity");
-			loadContractors();
-		});					
 	}
 ]);

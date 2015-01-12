@@ -721,8 +721,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			createAccount: function(oParameters) {
 				var onSuccess = function(oData) {
 					PubNub.ngPublish({
-						channel: "conspectorPubNub",
+						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
 						message: {
+							sEntityName: "oAccountEntity",
 							sText: "Account has been created..."
 						}
 					});
@@ -749,8 +750,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateAccount: function(oParameters) {
 				var onSuccess = function(oData) {
 					PubNub.ngPublish({
-						channel: "conspectorPubNub",
+						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
 						message: {
+							sEntityName: "oAccountEntity",
 							sText: "Account has been updated..."
 						}
 					});

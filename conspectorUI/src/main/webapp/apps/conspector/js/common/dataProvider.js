@@ -363,7 +363,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						});
 
 						oPutOdataSrv.then($.proxy(function(oData) {
-							if (oParameters.aLinks.length) {
+							if (oParameters.aLinks && oParameters.aLinks.length) {
 								var sParentEntityWithKey = oParameters.sPath + "('" + oData[oParameters.sKeyAttribute] + "')";
 								this.updateLinks({
 									aLinks: oParameters.aLinks,
@@ -468,7 +468,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				});
 
 				oOdataSrv.then($.proxy(function(oData) {
-					if (oParameters.aLinks.length) {
+					if (oParameters.aLinks && oParameters.aLinks.length) {
 						var sParentEntityWithKey = oParameters.sPath + "('" + oData.d[oParameters.sKeyAttribute] + "')";
 						this.createLinks({
 							aLinks: oParameters.aLinks,
