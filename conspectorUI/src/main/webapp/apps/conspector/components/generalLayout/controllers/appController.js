@@ -1,42 +1,41 @@
-viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$window', 'servicesProvider', '$translate', '$timeout', 'cacheProvider', 'rolesSettings', '$cookieStore', 
+viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$window', 'servicesProvider', '$translate', '$timeout', 'cacheProvider', 'rolesSettings', '$cookieStore',
 	function($scope, $rootScope, $state, $window, servicesProvider, $translate, $timeout, cacheProvider, rolesSettings, $cookieStore) {
 		var sCurrentUser = cacheProvider.oUserProfile.sUserName;
 		var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
+		var aSelectedPhases = [];
 
-		if (!sCurrentUser) {
+		if(!sCurrentUser) {
 			servicesProvider.logOut();
-		} else {
-			servicesProvider.constructLogoUrl(); //because $state.go(signIn) happen async call this function to avoid in error in case of time out
 		}
 
-		if ($cookieStore.get("userPhases" + sCurrentUser + sCompany) && $cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases) {
-			$scope.globalProjectsWithPhases = angular.copy($cookieStore.get("userPhases" + sCurrentUser + sCompany).aPhases);
-			cacheProvider.oUserProfile.aGlobalSelectedPhasesGuids = servicesProvider.getSeletedItemsKeysInMultiSelect({
-				sKey: "Guid",
-				aData: $scope.globalProjectsWithPhases
-			});
+		servicesProvider.constructLogoUrl();
+
+		if ($cookieStore.get("globallySelectedPhasesGuids" + sCurrentUser + sCompany) && $cookieStore.get("globallySelectedPhasesGuids" + sCurrentUser + sCompany).aPhasesGuids) {
+			aSelectedPhases = angular.copy($cookieStore.get("globallySelectedPhasesGuids" + sCurrentUser + sCompany).aPhasesGuids);
+
 		} else {
-			if (cacheProvider.oUserProfile.sUserName) {
-				$scope.globalProjectsWithPhases = servicesProvider.constructUserProjectsPhasesForMultiSelect({
-					aSelectedPhases: servicesProvider.getUserPhasesGuids() //angular.copy(cacheProvider.oUserProfile.aUserPhases)
-				});
-				cacheProvider.oUserProfile.aGlobalSelectedPhasesGuids = servicesProvider.getSeletedItemsKeysInMultiSelect({
-					sKey: "Guid",
-					aData: $scope.globalProjectsWithPhases
-				});
-			}
+			aSelectedPhases = servicesProvider.getUserPhasesGuids();
 		}
+		
+		cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aSelectedPhases;
+
+		$scope.globalProjectsWithPhases = servicesProvider.constructUserProjectsPhasesForMultiSelect({
+			aSelectedPhases: aSelectedPhases
+		});
 
 		$scope.onGlobalUserPhasesChanged = function() {
-			$cookieStore.put("userPhases" + sCurrentUser + sCompany, {
-				aPhases: $scope.globalProjectsWithPhases,
-			});
-			cacheProvider.oUserProfile.aGlobalSelectedPhasesGuids = servicesProvider.getSeletedItemsKeysInMultiSelect({
+			var aSelectedPhases = [];
+			aSelectedPhases = servicesProvider.getSeletedItemsKeysInMultiSelect({
 				sKey: "Guid",
 				aData: $scope.globalProjectsWithPhases
 			});
 
-			$scope.$broadcast('dataShouldBeRefreshed');
+			$cookieStore.put("globallySelectedPhasesGuids" + sCurrentUser + sCompany, {
+				aPhasesGuids: aSelectedPhases,
+			});
+			cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aSelectedPhases;
+
+			$scope.$broadcast('globalUserPhasesHaveBeenChanged');
 		};
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].adminPanel) {

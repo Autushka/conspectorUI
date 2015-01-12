@@ -48,7 +48,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					aUserCompanies: aUserCompanies,
 					bIsInitialPassword: bIsInitialPassword,
 					sLastModifiedAt: sLastModifiedAt,
-					aGlobalSelectedPhasesGuids: [] //will be bopupated in appController
+					aGloballySelectedPhasesGuids: [] //will be bopupated in appController
 				};
 			},
 

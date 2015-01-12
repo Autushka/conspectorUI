@@ -7,11 +7,6 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 		$scope.oUser = {};
 		$scope.sMode = "display";
 
-
-		$scope.onRefreshCookedSettings = function() {
-			$cookieStore.remove("userPhases" + sCurrentUser + sCompany);
-		};
-
 		var onUserDetailsLoaded = function(oData) {
 			var sProjectName = "";
 			var sPhaseName = "";

@@ -4,8 +4,6 @@
 	<md-button ng-show="sMode == 'display'" class="md-primary md-raised" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
 	<md-button ng-show="sMode == 'edit'" type="submit" class="md-primary md-raised" ng-click="onSave()">{{'global_save' | translate}}</md-button>
 
-	<md-button type="submit" ng-click="onRefreshCookedSettings()" class="md-primary md-raised">Clean cooked settings</md-button> 
-
 	<input type="text" class="cnpTextInputField" ng-model="oUser.sUserName" ng-disabled="true" placeholder="{{'global_userName' | translate}}" ng-change="onDataModified()" required>
 	<input type="email" class="cnpTextInputField" ng-model="oUser.sEmail" ng-disabled="sMode == 'display'" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()" required>	
 

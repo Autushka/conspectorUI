@@ -26,8 +26,8 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 			for (var i = 0; i < aData.length; i++) {
 				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 					bMatchFound = false;
-					for (var k = 0; k < cacheProvider.oUserProfile.aGlobalSelectedPhasesGuids.length; k++) {
-						if(aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGlobalSelectedPhasesGuids[k]){
+					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+						if(aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]){
 							bMatchFound = true;
 							break;
 						}
@@ -91,6 +91,9 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 				sFromState: "app.contractorsList"
 			});
 		};
+		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
+			loadContractors();
+		});
 
 		$scope.$on('accountsShouldBeRefreshed', function(oParameters) {
 			loadContractors();
