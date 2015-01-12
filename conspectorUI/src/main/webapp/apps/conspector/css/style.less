@@ -7,11 +7,12 @@ VARIABLE AND SETTINGS
 
 //Colors
 @lightGreyBackgroundColor: #F8F8F8;
-@mediumGreyBackgroundColor: #EDEFED;
+@mediumGreyBackgroundColor: #e1e2e3;
 @darkerGreyBackgroundColor: #565A5C;
 @blueColor: #0088B8;
 @whiteColor: #FFFFFF;
-@greyBorderColor: #96A196;
+@greyBorderColor: rgba(228, 228, 228, 1);
+@greyButtonColor: rgba(230, 230, 230, 1);
 
 //Fonts
 @clickableTextColor: #0088B8;
@@ -374,8 +375,8 @@ APP VIEW
 	width: 100%;
 	max-width: 1280px;
 	min-height: 55px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	// padding-top: 5px;
+	// padding-bottom: 5px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
@@ -442,8 +443,10 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
 
 /* ! create a "row" */
 .multiSelect .line {
-    max-height: 34px;   
+    max-height: none;
     overflow: hidden;
+    padding-bottom: 0px;
+    padding-right: 0px;
 }
 
 /* ! create a "column" */
@@ -464,13 +467,15 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
     text-align: left;    
     line-height: 1;
     cursor: pointer;
-    border: 0px solid #c6c6c6;    
-    padding: 1px 8px 1px 8px;
+    border: 0px solid #c6c6c6;
+    padding: 1px 10px 1px 10px;
    	min-width: 30px;
     font-size: 16px;
     font-weight: 500;
-    min-height : @fieldHeight !important;
-    border-radius: @borderRadius;
+    min-height : 48px !important;
+    height: 100%;
+    max-height: 55px;
+    border-radius: @borderRadius @borderRadius 0px 0px;
     color: @buttonLabelTextColor;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -480,6 +485,7 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
     white-space:normal;
     background-color: transparent;
     background-image: none;     
+    box-shadow: none;
 }
 
 .multiSelectButton{
@@ -488,7 +494,7 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
 
 .buttonLabel {
 	// margin-left: 125px;
-	color: @buttonLabelTextColor;
+	// color: @buttonLabelTextColor;
 }
 
 .cnpMultiSelectProjectsAndPhases{
@@ -499,6 +505,7 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
     color: @buttonLabelTextColor;
     font-size: 16px;
     font-weight: 500;
+    height: 55px;
 }
 
 cnpMultiSelectProjectsAndPhasesDefaultLabel {
@@ -506,12 +513,12 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 }
 
 .cnpButtonLabelParent{
-	color: @buttonLabelTextColor;
+	// color: @buttonLabelTextColor;
 	float: left;
 }
 
 .cnpButtonLabelChild{
-	color: @buttonLabelTextColor;
+	// color: @buttonLabelTextColor;
 	float: left;
 }
 
@@ -530,8 +537,15 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 
 /* button: clicked */
 .multiSelect .buttonClicked {
- 	box-shadow: none;
- 	// box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+ 	// box-shadow: none;
+ 	background-color: @mediumGreyBackgroundColor;
+ 	border-color: @greyBorderColor;
+ 	// border-width: 1px;
+ 	// border-bottom-color: @whiteColor;
+ 	// box-shadow: 0px 25px 30px 5px rgba(0, 0, 0, 0.19);
+ 	// margin-left: -1px;
+ 	color: @textColor;
+ 	z-index: 998;
 }
 
 /* labels on the button */
@@ -555,37 +569,52 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 
 /* the main checkboxes and helper layer */
 .multiSelect .checkboxLayer {
-    background-color: #fff;
+    background-color: @whiteColor;
+    color: @textColor;
     position: absolute;
     z-index: 999;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);    
-    min-width:278px;
+    border-color: @greyBorderColor;
+ 	border-width: 0px;
+    border-radius: @borderRadius;
+    -webkit-box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
+    box-shadow: 0px 3px 17px 3px rgba(0, 0, 0, 0.2);
+    max-width: 380px;
+    min-width: 350px;
     display: none !important;
     margin-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    margin-left: -1px
 }
 
 /* container of helper elements */
 .multiSelect .helperContainer {
-    border-bottom: 1px solid #ddd;
-    padding: 8px 8px 0px 8px;
+    border-bottom: 1px solid @greyBorderColor;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 0px;
+    // padding: 8px 8px 0px 8px;
 }
 
 /* helper buttons (select all, none, reset); */
 .multiSelect .helperButton {
     display: inline;
+    float: left;
     text-align: center;
     cursor: pointer;
-    border: 1px solid #ccc;
-    height: 26px;
-    font-size: 13px;
-    border-radius: 2px;
-    color: #666;    
-    background-color: #f1f1f1;
+    border: 0px solid @greyBorderColor;
+    height: 48px;
+    min-width: 64px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: @borderRadius;
+    color: @blueColor;    
+    background-color: @whiteColor;
     line-height: 1.6;
-    margin: 0px 0px 8px 0px;
+    margin-right: 0px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 /* clear button */
@@ -594,52 +623,105 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
     display: inline;
     text-align: center;
     cursor: pointer;
-    border: 1px solid #ccc;
-    height: 22px;
-    width: 22px;
-    font-size: 13px;
-    border-radius: 2px;
-    color: #666;    
-    background-color: #f1f1f1;
+    border: 0px solid @greyBorderColor;
+    height: 36px;
+    width: 36px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: @borderRadius;
+    color: @blueColor;    
+    background-color: @whiteColor;
     line-height: 1.4;
-    right : 2px;
-    top: 2px;
+    right : 6px;
+    top: 6px;
 }
 
 /* filter */
 .multiSelect .inputFilter {
-    border-radius: 2px; 
-    border: 1px solid #ccc;
-    height: 26px;
-    font-size: 14px;
-    width:100%;    
-    padding-left:7px;
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */    
-    color: #888;
-    margin: 0px 0px 8px 0px;
+    // border-radius: @borderRadius;
+    // border: 1px solid #ccc;
+    // height: 37px;
+    // font-size: 18px;
+    // font-weight: 400;
+    // width:100%;    
+    // padding-left:7px;
+    // -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    // -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    // box-sizing: border-box;         /* Opera/IE 8+ */    
+    // color: #888;
+    // margin: 0px 0px 8px 0px;
+
+    height: @fieldHeight;
+	width: 100%;
+	padding-left: 16px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	margin-right: 0px;
+	border-width: 1px;
+	font-size: 18px;
+	border-color: @greyBorderColor;
+	// margin-top: 6px;
+	// margin-bottom: 6px;
+	box-shadow: 0 2px 4px 0 rgba(91,91,91,.20);
+	border-radius: @borderRadius;
+	color: @textColor;
+
+   
+	//For iPhone 3 and 4 and 5
+	@media
+		only screen and (max-width: @sd-width){
+		height: @fieldHeight*1;
+	}
+	&:focus{
+  		box-shadow: 0 0 5px rgba(50, 159, 198, 1);
+  	}
+  	&.cnpLessLeftPadding{
+  		padding-left: 16px;
+  	}
 }
 
 /* helper elements on hover & focus */
 .multiSelect .clearButton:hover,
 .multiSelect .helperButton:hover {
-    border: 1px solid #ccc;
-    color: #999;    
-    background-color: #f4f4f4;    
+    border: 0px solid #ccc;
+    color: @blueColor;    
+    background-color: @greyButtonColor;    
+}
+
+// .multiSelect .clearButton:focus,
+// .multiSelect .helperButton:focus {
+//     border: 0px solid @greyBorderColor !important;
+//    	box-shadow: 0 0 5px rgba(50, 159, 198, 1);
+// }
+// .inputFilter:focus {
+//     border: 1px solid @greyBorderColor !important;
+//     box-shadow: 0 0 5px rgba(50, 159, 198, 1);
+// }
+
+.multiSelect .inputFilter:focus {
+    border: 1px solid @greyBorderColor !important;
+    box-shadow: 0 0 5px rgba(50, 159, 198, 1) !important;
+    
 }
 
 .multiSelect .clearButton:focus,
-.multiSelect .helperButton:focus,
-.multiSelect .inputFilter:focus {
-    border: 1px solid #66AFE9 !important;
-    box-shadow: inset 0 0px 1px rgba(0,0,0,.035), 0 0 5px rgba(82,168,236,.7) !important;
+.multiSelect .helperButton:focus {
+	border: 0px solid #66AFE9 !important;
+    box-shadow: inset 0 0px 1px rgba(0,0,0,0), 0 0 5px rgba(82,168,236,0) !important;
+
 }
+
+
+
 
 /* container of multi select items */
 .multiSelect .checkBoxContainer {
     display: inline-block;
-    padding: 8px;   
+    padding-top: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 10px;   
+    width: 100%;
 }
 
 /* ! to show / hide the checkbox layer above */
@@ -650,8 +732,11 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 /* item labels */
 .multiSelect .multiSelectItem {
     display: block;
-    padding: 3px;
-    color: #444;       
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: @textColor;       
     white-space: nowrap;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -660,35 +745,37 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
     user-select: none;      
     border: 1px solid transparent;
     position: relative;
-    min-width:278px;
+    width: 100%;
 }
 
 /* Item labels: selected - Enable this if you want to apply styling on selected items */
 .multiSelect .multiSelectItem:not(.multiSelectGroup).selected
 {
-    background-image: linear-gradient( #e9e9e9, #f1f1f1 );    
-    color: #555;        
+    background-image: none;
+    background-color: @greyButtonColor;
+    color: @textColor;        
     cursor: pointer;        
-    border-top: 1px solid #e4e4e4;
-    border-left: 1px solid #e4e4e4;    
-    border-right: 1px solid #d9d9d9;            
+    border-top: 1px solid @whiteColor;
+    border: 1px solid transparent;    
+    border: 1px solid transparent;
+    border: 1px solid transparent;         
 }
 
 /* item labels focus on mouse hover */
 .multiSelect .multiSelectItem:hover, 
 .multiSelect .multiSelectGroup:hover {
-    background-image: linear-gradient( #c1c1c1, #999 ) !important;    
-    color: #fff !important;    
+    background-image: none !important;
+    color: @textColor !important;   
     cursor: pointer;        
-    border: 1px solid #ccc !important;
+    border: 1px solid transparent !important;
 }
 
 /* item labels focus using keyboard */
 .multiSelect .multiSelectFocus { 
-    background-image: linear-gradient( #c1c1c1, #999 ) !important;    
-    color: #fff !important;    
+    background-image: none !important;
+    color: @textColor !important; 
     cursor: pointer;        
-    border: 1px solid #ccc !important;
+    border: 1px solid transparent !important;
 }
 
 /* change mouse pointer into the pointing finger */
@@ -708,9 +795,9 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 .multiSelect .tickMark {
     display:inline-block; 
     position: absolute; 
-    right: 10px; 
+    right: 29px; 
     top: 7px;
-    font-size: 10px;          
+    font-size: 18px;          
 }
 
 /* hide the original HTML checkbox away */
