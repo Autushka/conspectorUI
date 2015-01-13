@@ -88,7 +88,7 @@ body {
 		padding-left: 25px;
 	}
 	&.cnpLinkHeader{
-		padding-left: 10px;
+		padding-left: 8px;
 	}
 	&.cnpLinkHeaderCompany{
 		padding-left: 30px;
@@ -361,7 +361,6 @@ APP VIEW
 */
 .cnpAppView{
 	width: 100%;
-	min-height: 1024px;
 	min-width: 768px;
 }
 .cnpHeader{
@@ -421,9 +420,20 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tab{
 }
 md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
 	color: @lightGreyBackgroundColor;
-	background-color: @lightGreyBackgroundColor;
-	height: 6px;
+	background-color: #BFBFBF;
+	height: 7px;
 }
+// md-tabs:not(md-tabs-ink-bar){
+// 	// color: @lightGreyBackgroundColor;
+// 	background-color: red;
+// 	// height: 7px;
+// }
+
+// [class="md-header-items"]:first-child {
+//     background-color: red;
+// }
+
+
 
 //MultiSelect Styling
 
@@ -579,7 +589,7 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
     -webkit-box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
     box-shadow: 0px 3px 17px 3px rgba(0, 0, 0, 0.2);
     max-width: 380px;
-    min-width: 355px;
+    min-width: 375px;
     display: none !important;
     margin-right: 30px;
     padding-top: 10px;
@@ -591,7 +601,7 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 .multiSelect .helperContainer {
     border-bottom: 1px solid @greyBorderColor;
     padding-left: 20px;
-    padding-right: 20px;
+    padding-right: 15px;
     padding-bottom: 10px;
     padding-top: 0px;
     // padding: 8px 8px 0px 8px;
@@ -612,9 +622,10 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
     color: @blueColor;    
     background-color: @whiteColor;
     line-height: 1.6;
-    margin-right: 0px;
+    margin-right: 10px;
     padding-left: 8px;
     padding-right: 8px;
+	    transition: box-shadow .5s cubic-bezier(0.35,0,.25,1),background-color .5s cubic-bezier(0.35,0,.25,1),transform .5s cubic-bezier(0.35,0,.25,1);
 }
 
 /* clear button */
@@ -632,8 +643,10 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
     color: @blueColor;    
     background-color: @whiteColor;
     line-height: 1.4;
-    right : 6px;
+    right : 16px;
     top: 6px;
+    transition: box-shadow .5s cubic-bezier(0.35,0,.25,1),background-color .5s cubic-bezier(0.35,0,.25,1),transform .5s cubic-bezier(0.35,0,.25,1);
+
 }
 
 /* filter */
@@ -652,7 +665,7 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
     // margin: 0px 0px 8px 0px;
 
     height: @fieldHeight;
-	width: 100%;
+	width: 330px;
 	padding-left: 16px;
 	padding-top: 16px;
 	padding-bottom: 16px;
@@ -665,6 +678,7 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 	box-shadow: 0 2px 4px 0 rgba(91,91,91,.20);
 	border-radius: @borderRadius;
 	color: @textColor;
+	transition: box-shadow .5s cubic-bezier(0.35,0,.25,1),background-color .5s cubic-bezier(0.35,0,.25,1),transform .5s cubic-bezier(0.35,0,.25,1);
 
    
 	//For iPhone 3 and 4 and 5
@@ -685,7 +699,7 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 .multiSelect .helperButton:hover {
     border: 0px solid #ccc;
     color: @blueColor;    
-    background-color: @greyButtonColor;    
+    background-color: @mediumGreyBackgroundColor;    
 }
 
 // .multiSelect .clearButton:focus,
@@ -746,6 +760,8 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
     border: 1px solid transparent;
     position: relative;
     width: 100%;
+    transition: box-shadow .5s cubic-bezier(0.35,0,.25,1),background-color .5s cubic-bezier(0.35,0,.25,1),transform .5s cubic-bezier(0.35,0,.25,1);
+
 }
 
 /* Item labels: selected - Enable this if you want to apply styling on selected items */
