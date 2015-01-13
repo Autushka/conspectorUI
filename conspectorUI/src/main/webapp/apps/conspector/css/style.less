@@ -16,10 +16,11 @@ VARIABLE AND SETTINGS
 
 //Fonts
 @clickableTextColor: #0088B8;
-@greyTitleTextColor: #576D77;
+@greyTitleTextColor: rgba(87, 109, 119, 0.2);
 @textColor: #424347;
 @placeholderTextColor: rgba(66, 67, 71, 0.5);
 @buttonLabelTextColor: rgba(66, 67, 71, 0.5);
+@headerTextColor: rgba(66, 67, 71, 0.65);
 @textColorLight: rgba(66, 67, 71, 0.5);
 @navbarTextColor: rgba(255, 255, 255, 0.65);
 @fontSize: 18px;
@@ -120,6 +121,12 @@ body {
 		only screen and (max-width: 320px){
 		height: @fieldHeight*1;
 		}
+	}
+	&.cnpSidebarButton{
+		min-width: 100%;
+		height: @fieldHeight*1;
+		border-radius: 0px;
+		padding-left: 20px;
 	}
 }
 //Animation
@@ -364,7 +371,7 @@ APP VIEW
 	min-width: 768px;
 }
 .cnpHeader{
-	width: 100%;
+	width: 100%;	
 	max-width: 1280px;
 	height: 65px;
 	padding-left: 20px;
@@ -736,7 +743,19 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
     padding-right: 0px;
     padding-bottom: 10px;   
     width: 100%;
+    // max-height: 400px;
+    // overflow-y: scroll;
 }
+
+// ::-webkit-scrollbar {
+//     -webkit-appearance: none;
+//     width: 7px;
+// }
+// ::-webkit-scrollbar-thumb {
+//     border-radius: 4px;
+//     background-color: rgba(0,0,0,.5);
+//     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+// }
 
 /* ! to show / hide the checkbox layer above */
 .multiSelect .show {
@@ -855,6 +874,7 @@ APP VIEW CONTENT
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-top: 30px;
+	background-color: @lightGreyBackgroundColor;
 }
 .cnpAppViewContentBackground {
 	width: 100%;
@@ -865,6 +885,47 @@ APP VIEW CONTENT
 END OF APP VIEW CONTENT
 */
 
+/*
+ADMIN PANEL
+*/
+.cnpSidebarTitle{
+
+	font-size: 18px;
+	font-weight: 500;
+	padding-left: 20px;
+	color: @headerTextColor;
+}
+.cnpSidebarHeader{
+	height: 56px;
+	min-height: 56px;
+}
+
+.cnpContent{
+	padding-left: 20px;
+	background-color: @lightGreyBackgroundColor;
+}
+.cnpContentHeader{
+
+	height: 48px;
+
+}
+.cnpContentTitle{
+	font-size: 35px;
+	font-weight: 500;
+	color: @greyTitleTextColor;
+	text-transform: uppercase;
+
+}
+
+.md-toolbar-tools{
+	height: 56px;
+	min-height: 56px;
+	background-color: @mediumGreyBackgroundColor;
+	color: @textColor;
+}
+/*
+END OF ADMIN PANEL
+*/
 
 .cnpVerticalAfterSpacing1x{
 	margin-bottom: @spacingUnit;

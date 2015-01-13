@@ -1,5 +1,11 @@
-<div>{{'usersList_title' | translate}}</div>
-<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-primary md-raised" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
+<div class="cnpContent">
+            <div layout="row" layout-align="end start" class="md-default-theme cnpContentHeader">
+            <label class="cnpContentTitle">
+                {{'usersList_title' | translate}}
+            </label>
+        </div> 
+          
+          <md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-primary md-raised" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
 <table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
 
 	<tr ng-repeat="user in aDisplayedUsers">
@@ -22,3 +28,7 @@
 	</tr>
 	<tr ng-hide="aDisplayedUsers.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>		
 </table>
+
+          
+</div>
+

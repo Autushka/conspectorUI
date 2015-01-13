@@ -1,24 +1,45 @@
-<section layout="row" flex>
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="true">
-  <md-toolbar class="md-default-theme">
-  <h1 class="md-toolbar-tools">{{'adminPanel_menuHeader' | translate}}</h1>
-  </md-toolbar>
-  <md-content class="md-padding" >  <!-- ng-controller="LeftCtrl" -->
-    <md-button ng-if="sCurrentRole == sGlobalAdministratorRole" layout="column" ng-click="onCompanies()">{{'adminPanel_companies' | translate}}</md-button>
-    <md-button layout="column" ng-click="onUserManagement()">{{'adminPanel_userManagement' | translate}}</md-button>
-    <md-button layout="column" ng-click="onRoles()">{{'adminPanel_roles' | translate}}</md-button>
-    <md-button layout="column" ng-click="onProjects()">{{'adminPanel_projects' | translate}}</md-button>
-    <md-button layout="column" ng-click="onPhases()">{{'adminPanel_phases' | translate}}</md-button>
-    <md-button layout="column" ng-click="onDeficiencyStatuses()">{{'adminPanel_deficiencyStatuses' | translate}}</md-button>
-    <md-button layout="column" ng-click="onDeficiencyPriorities()">{{'adminPanel_deficiencyPriorities' | translate}}</md-button>
-    <md-button layout="column" ng-click="onSystemFiles()">{{'adminPanel_systemFiles' | translate}}</md-button>
-    <md-button layout="column" ng-click="onOperationLogs()">{{'adminPanel_operationLogs' | translate}}</md-button>
-    <md-button layout="column" ng-click="onAccountTypes()">{{'adminPanel_accountTypes' | translate}}</md-button>
-  </md-content>
-  </md-sidenav>
-  <md-content flex class="md-padding">
-  <div layout="column" layout-fill layout-align="center center">
-    <div ui-view style="width: 100%; height: 100%;"></div>
-  </div>
-  </md-content>
-</section>
+<div layout="row" flex>
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="true">
+        <md-toolbar class="md-default-theme cnpSidebarHeader">
+            <label class="md-toolbar-tools cnpSidebarTitle">
+                {{'adminPanel_menuHeader' | translate}}
+            </label>
+        </md-toolbar>       
+        <md-content class="" >  <!-- ng-controller="LeftCtrl" -->    
+            <md-button ng-if="sCurrentRole == sGlobalAdministratorRole" layout="row" layout-align="start center" ng-click="onCompanies()" class="md-button cnpSidebarButton">
+                {{'adminPanel_companies' | translate}}
+            </md-button>
+            <md-button layout="row" layout-align="start center" ng-click="onUserManagement()" class="md-button cnpSidebarButton">
+                {{'adminPanel_userManagement' | translate}}
+            </md-button>
+            <md-button layout="row" layout-align="start center" ng-click="onRoles()" class="md-button cnpSidebarButton">
+                {{'adminPanel_roles' | translate}}</md-button>
+            <md-button layout="row" layout-align="start center" ng-click="onProjects()" class="md-button cnpSidebarButton">
+                {{'adminPanel_projects' | translate}}</md-button>
+            <md-button layout="row" layout-align="start center" ng-click="onPhases()" class="md-button cnpSidebarButton">
+                {{'adminPanel_phases' | translate}}</md-button>
+            <md-button layout="row" layout-align="start center" ng-click="onDeficiencyStatuses()" class="md-button cnpSidebarButton">
+                {{'adminPanel_deficiencyStatuses' | translate}}
+            </md-button>
+            <md-button layout="row" layout-align="start center" ng-click="onDeficiencyPriorities()"  class="md-button cnpSidebarButton">
+                {{'adminPanel_deficiencyPriorities' | translate}}
+            </md-button>
+            <md-button layout="row" layout-align="start center" ng-click="onSystemFiles()"  class="md-button cnpSidebarButton">
+                {{'adminPanel_systemFiles' | translate}}
+            </md-button>
+            <md-button layout="row" layout-align="start center" ng-click="onOperationLogs()" class="md-button cnpSidebarButton">
+                {{'adminPanel_operationLogs' | translate}}
+            </md-button>
+            <md-button layout="row" layout-align="start center" ng-click="onAccountTypes()" class="md-button cnpSidebarButton">
+                {{'adminPanel_accountTypes' | translate}}
+            </md-button>
+        </md-content>
+    </md-sidenav>
+
+
+    <div layout="row" layout-fill layout-align="center start">
+        <div ui-view style="width: 100%; height: 100%;">
+        </div>
+    </div>
+    
+</div>
