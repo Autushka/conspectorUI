@@ -340,7 +340,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				aUserPhases = angular.copy(cacheProvider.oUserProfile.aUserPhases);
 
 				var oUserProjectsPhasesWrapper = {
-					aData: aUserPhases, 
+					aData: aUserPhases,
 					aPhases: []
 				};
 
@@ -348,7 +348,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 				aUserProjectsWithPhases = this.constructUserProjectsPhases(); //based on users phases construct array of projects with phases
 
-				var aUserPhasesGuids = oParameters.aSelectedPhases;// phases that will be ticked 
+				var aUserPhasesGuids = oParameters.aSelectedPhases; // phases that will be ticked 
 
 				this.constructDependentMultiSelectArray({
 					oDependentArrayWrapper: {
@@ -389,10 +389,10 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				});
 			},
 
-			getSeletedItemsKeysInMultiSelect: function(oParameters){
+			getSeletedItemsKeysInMultiSelect: function(oParameters) {
 				var aData = [];
 				for (var i = 0; i < oParameters.aData.length; i++) {
-					if(oParameters.aData[i].ticked === true){
+					if (oParameters.aData[i].ticked === true) {
 						aData.push(oParameters.aData[i][oParameters.sKey]);
 					}
 				}
@@ -449,7 +449,10 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					}
 				};
 
-				oParameters.oNewParentItemArrayWrapper.aData = angular.copy(aMultiSelectArray);
+				if (oParameters.oNewParentItemArrayWrapper) { //needed when multiselect is used in the list with possibility to create a new item within the list....
+					oParameters.oNewParentItemArrayWrapper.aData = angular.copy(aMultiSelectArray);
+				}
+
 				//Initial value ticking (first one in the list)
 				// if (!oParameters.sSecondLevelAttribute) {
 				// 	if (oParameters.oNewParentItemArrayWrapper.aData[0]) {
@@ -472,12 +475,13 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						aArrayItem = {};
 						angular.copy(aMultiSelectArray[j], aArrayItem);
 
-						if (!oParameters.aParentKeys) {
+						if (oParameters.sParentKey) {
 							if (oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKey] === aMultiSelectArray[j][oParameters.sDependentKey]) {
 								aArrayItem.ticked = true;
 								bMatchFound = true;
 							}
-						} else {
+						} 
+						if(oParameters.aParentKeys) {
 							for (var k = 0; k < oParameters.aParentKeys.length; k++) {
 								if (aMultiSelectArray[j][oParameters.sDependentKey] === oParameters.aParentKeys[k]) {
 									aArrayItem.ticked = true;

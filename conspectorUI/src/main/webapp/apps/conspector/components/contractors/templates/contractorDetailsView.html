@@ -29,20 +29,20 @@
 	<label>{{'global_billingCountry' | translate}}</label>
 	<div
 		multi-select
-		input-model="oContractor.aBillingCountries"
+		input-model="aBillingCountries"
 		button-label="name"
 		item-label="name"
 		tick-property="ticked"
 		selection-mode="single"
 		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
+		on-item-click="onBilingCountryChanged()"
 		helper-elements=""
 		>
 	</div>
 	<label>{{'global_billingProvince' | translate}}</label>
 	<div
 		multi-select
-		input-model="oContractor.aBillingRegions"
+		input-model="aBillingProvinces"
 		button-label="name"
 		item-label="name"
 		tick-property="ticked"

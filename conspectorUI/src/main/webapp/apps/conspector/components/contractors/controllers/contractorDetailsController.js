@@ -4,8 +4,6 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
-		// $scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
-		// $scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.sMode = $stateParams.sMode;
 		$scope.oContractor = {
 			_aPhases: [],
@@ -15,8 +13,10 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			aData: []
 		};
 
+		var aCountriesWithProvinces = [];
+
 		$scope.aBillingCountries = [];
-		$scope.aBillingPhases = [];		
+		$scope.aBillingProvinces = [];
 
 		var constructPhasesMultiSelect = function(aSelectedPhases) {
 			$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
@@ -39,6 +39,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				$scope.oContractor.sBillingStreet = oContractor.BillingAddress.BillingStreet;
 				$scope.oContractor.sBillingCity = oContractor.BillingAddress.BillingCity;
 				$scope.oContractor.sBillingPostalCode = oContractor.BillingAddress.BillingPostalCode;
+				$scope.oContractor._billingCountryCode = oContractor.BillingAddress.BillingCountry;
 			}
 
 			if (oContractor.ShippingAddress) {
@@ -66,13 +67,32 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			sKeyValue: $stateParams.sContractorGuid
 		});
 
+		var onCountriesLoaded = function(aData) {
+			aCountriesWithProvinces = angular.copy(aData);
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oContractorWrapper,
+				sNameEN: "Name",
+				sNameFR: "Name",
+				sDependentKey: "CountryCode",
+				sParentKey: "_billingCountryCode",
+				sTargetArrayNameInParent: "aBillingCountries"
+			});
+
+			if (oContractorWrapper.aData[0]) {
+				$scope.aBillingCountries = angular.copy(oContractorWrapper.aData[0].aBillingCountries);
+			}
+		};
+
 		var onContractorDetailsLoaded = function(oData) {
 			setDisplayedContractorDetails(oData);
 
-			apiProvider.getCountriesWithRegions({
+			apiProvider.getCountriesWithProvinces({
 				bShowSpinner: false,
 				onSuccess: onCountriesLoaded
-			});			
+			});
 		};
 
 		var getContractorDetails = function() {
@@ -88,10 +108,20 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				getContractorDetails();
 			} else { //in case when data is retrieved from the cash
 				setDisplayedContractorDetails(oContractor);
+
+				apiProvider.getCountriesWithProvinces({
+					bShowSpinner: false,
+					onSuccess: onCountriesLoaded
+				});
 			}
 		} else {
 			constructPhasesMultiSelect({
 				aSelectedPhases: []
+			});
+
+			apiProvider.getCountriesWithProvinces({
+				bShowSpinner: false,
+				onSuccess: onCountriesLoaded
 			});
 		}
 
@@ -164,6 +194,33 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
 		};
+
+		$scope.onBilingCountryChanged = function() {
+			$scope.onDataModified();
+			for (var i = 0; i < $scope.aBillingCountries.length; i++) {
+				if ($scope.aBillingCountries[i].ticked) {
+					for (var j = 0; j < aCountriesWithProvinces.length; j++) {
+						if ($scope.aBillingCountries[i].CountryCode === aCountriesWithProvinces[j].CountryCode) {
+							servicesProvider.constructDependentMultiSelectArray({
+								oDependentArrayWrapper: {
+									aData: aCountriesWithProvinces[j].ProvinceDetails.results
+								},
+								oParentArrayWrapper: oContractorWrapper,
+								sNameEN: "Name",
+								sNameFR: "Name",
+								sDependentKey: "ProvinceCode",
+								sTargetArrayNameInParent: "aBillingProvinces"
+							});
+							if (oContractorWrapper.aData[0]) {
+								$scope.aBillingProvinces = angular.copy(oContractorWrapper.aData[0].aBillingProvinces);
+							}
+							break;
+						}
+					}
+					break;
+				}
+			}
+		}
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
 			var oDataForSave = {

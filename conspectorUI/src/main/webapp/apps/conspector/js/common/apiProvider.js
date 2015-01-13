@@ -773,7 +773,23 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			}
+			},
+
+			getCountriesWithProvinces: function(oParameters){
+				var svc = dataProvider.getEntitySet({
+					sPath: "Countrys",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sExpand: "ProvinceDetails",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oCountryEntity"
+				});
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}				
+			}			
 		}
 	}
 ]);
