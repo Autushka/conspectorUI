@@ -15,6 +15,9 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			aData: []
 		};
 
+		$scope.aBillingCountries = [];
+		$scope.aBillingPhases = [];		
+
 		var constructPhasesMultiSelect = function(aSelectedPhases) {
 			$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
 				aSelectedPhases: aSelectedPhases
@@ -39,7 +42,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			}
 
 			if (oContractor.ShippingAddress) {
-				$scope.oContractor.sShippingStreet = oContractor.ShippingAddress.ShippingCity;
+				$scope.oContractor.sShippingStreet = oContractor.ShippingAddress.ShippingStreet;
 				$scope.oContractor.sShippingCity = oContractor.ShippingAddress.ShippingCity;
 				$scope.oContractor.sShippingPostalCode = oContractor.ShippingAddress.ShippingPostalCode;
 			}
@@ -65,6 +68,11 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 
 		var onContractorDetailsLoaded = function(oData) {
 			setDisplayedContractorDetails(oData);
+
+			apiProvider.getCountriesWithRegions({
+				bShowSpinner: false,
+				onSuccess: onCountriesLoaded
+			});			
 		};
 
 		var getContractorDetails = function() {

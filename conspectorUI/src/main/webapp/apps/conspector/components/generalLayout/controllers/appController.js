@@ -121,11 +121,13 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		$scope.onAdminPanel = function() {
 			$scope.selectedTabIndex = -1;
+			$scope.$broadcast("$mdTabsPaginationChanged");
 			$state.go('app.adminPanel.usersList');
 		};
 
 		$scope.onProfileSettings = function() {
 			$scope.selectedTabIndex = -1;
+			$scope.$broadcast("$mdTabsPaginationChanged");
 			$state.go('app.profileSettings.profileDetails');
 		};
 
