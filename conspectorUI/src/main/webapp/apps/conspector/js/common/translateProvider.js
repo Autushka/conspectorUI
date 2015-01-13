@@ -170,6 +170,8 @@ app.config(['$translateProvider',
                   contractorsList_title: 'Contractors',
                   //contractorDetails
                   contractorDetails_title: 'Contractor Deatails',
+                  contractorDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current contructor?',
+                  contractorDetails_deletionConfirmationContent: 'Current contructor will be deleted...',
             });
 
             $translateProvider.translations('fr', {
@@ -341,6 +343,8 @@ app.config(['$translateProvider',
                   contractorsList_title: 'Contractors',
                   //contractorDetails
                   contractorDetails_title: 'Contractor Deatails',
+                  contractorDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current contructor?',
+                  contractorDetails_deletionConfirmationContent: 'Current contructor will be deleted...',
             });
 
             $translateProvider.preferredLanguage('en');

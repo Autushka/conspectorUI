@@ -35,7 +35,7 @@
 		tick-property="ticked"
 		selection-mode="single"
 		is-disabled="sMode == 'display'"
-		on-item-click="onBilingCountryChanged()"
+		on-item-click="onBillingCountryChanged()"
 		helper-elements=""
 		>
 	</div>
@@ -49,7 +49,7 @@
 		selection-mode="single"
 		is-disabled="sMode == 'display'"
 		on-item-click="onDataModified()"
-		helper-elements=""
+		helper-elements="filter"
 		>
 	</div>
 	
@@ -60,20 +60,20 @@
 	<label>{{'global_shippingCountry' | translate}}</label>
 	<div
 		multi-select
-		input-model="oContractor.aShippingCountries"
+		input-model="aShippingCountries"
 		button-label="name"
 		item-label="name"
 		tick-property="ticked"
 		selection-mode="single"
 		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
+		on-item-click="onShippingCountryChanged()"
 		helper-elements=""
 		>
 	</div>
 	<label>{{'global_shippingProvince' | translate}}</label>
 	<div
 		multi-select
-		input-model="oContractor.aShippingRegions"
+		input-model="aShippingProvinces"
 		button-label="name"
 		item-label="name"
 		tick-property="ticked"

@@ -8,13 +8,13 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.sMode = $stateParams.sMode;
 		$scope.oUser = {
-			_aCompanies: [],
+			_aCompanies: [], //needed for manyToMany links...
 			_aPhases: [],
 			_aRoles: []
 		};
 
 		var oUserWrapper = {
-			aData: []
+			aData: [{}]
 		};
 
 		$scope.aCompanies = [];
@@ -35,7 +35,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			} else {
 				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
 			}
-			oUserWrapper.aData.push($scope.oUser);
+			oUserWrapper.aData[0] = angular.copy($scope.oUser);
 		}
 
 		var oUser = cacheProvider.getEntityDetails({

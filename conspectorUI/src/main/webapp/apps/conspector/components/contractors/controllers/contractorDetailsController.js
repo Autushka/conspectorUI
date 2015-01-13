@@ -10,13 +10,15 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		};
 
 		var oContractorWrapper = {
-			aData: []
+			aData: [{}]
 		};
 
 		var aCountriesWithProvinces = [];
 
 		$scope.aBillingCountries = [];
 		$scope.aBillingProvinces = [];
+		$scope.aShippingCountries = [];
+		$scope.aShippingProvinces = [];		
 
 		var constructPhasesMultiSelect = function(aSelectedPhases) {
 			$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
@@ -40,12 +42,15 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				$scope.oContractor.sBillingCity = oContractor.BillingAddress.BillingCity;
 				$scope.oContractor.sBillingPostalCode = oContractor.BillingAddress.BillingPostalCode;
 				$scope.oContractor._billingCountryCode = oContractor.BillingAddress.BillingCountry;
+				$scope.oContractor._billingProvinceCode = oContractor.BillingAddress.BillingProvince;
 			}
 
 			if (oContractor.ShippingAddress) {
 				$scope.oContractor.sShippingStreet = oContractor.ShippingAddress.ShippingStreet;
 				$scope.oContractor.sShippingCity = oContractor.ShippingAddress.ShippingCity;
 				$scope.oContractor.sShippingPostalCode = oContractor.ShippingAddress.ShippingPostalCode;
+				$scope.oContractor._shippingCountryCode = oContractor.ShippingAddress.ShippingCountry;
+				$scope.oContractor._shippingProvinceCode = oContractor.ShippingAddress.ShippingProvince;
 			}
 
 			$scope.oContractor.sCreatedAt = utilsProvider.dBDateToSting(oContractor.CreatedAt);
@@ -57,7 +62,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			}
 			constructPhasesMultiSelect(aContractorPhasesGuids);
 
-			oContractorWrapper.aData.push($scope.oContractor);
+			oContractorWrapper.aData[0] = angular.copy($scope.oContractor);
 		};
 
 		var oContractor = cacheProvider.getEntityDetails({
@@ -66,6 +71,45 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			sKeyName: "Guid",
 			sKeyValue: $stateParams.sContractorGuid
 		});
+
+		var constructProvinceSelect = function(oParameters) {
+			var sParentKey = oParameters.sParentKey;
+			var sTargetArrayName = "";
+			var sCountriesArrayName = "";
+
+			if(oParameters.sProvincesFor === "billingAddress"){
+				sTargetArrayName = "aBillingProvinces";
+				sCountriesArrayName = "aBillingCountries";
+			}else{
+				sTargetArrayName = "aShippingProvinces";
+				sCountriesArrayName = "aShippingCountries";
+			}
+
+			for (var i = 0; i < $scope[sCountriesArrayName].length; i++) {
+				if ($scope[sCountriesArrayName][i].ticked) {
+					for (var j = 0; j < aCountriesWithProvinces.length; j++) {
+						if ($scope[sCountriesArrayName][i].CountryCode === aCountriesWithProvinces[j].CountryCode) {
+							servicesProvider.constructDependentMultiSelectArray({
+								oDependentArrayWrapper: {
+									aData: aCountriesWithProvinces[j].ProvinceDetails.results
+								},
+								oParentArrayWrapper: oContractorWrapper,
+								sNameEN: "Name",
+								sNameFR: "Name",
+								sDependentKey: "ProvinceCode",
+								sParentKey: sParentKey,
+								sTargetArrayNameInParent: sTargetArrayName
+							});
+							if (oContractorWrapper.aData[0]) {
+								$scope[sTargetArrayName] = angular.copy(oContractorWrapper.aData[0][sTargetArrayName]);
+							}
+							break;
+						}
+					}
+					break;
+				}
+			}
+		};
 
 		var onCountriesLoaded = function(aData) {
 			aCountriesWithProvinces = angular.copy(aData);
@@ -81,8 +125,33 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				sTargetArrayNameInParent: "aBillingCountries"
 			});
 
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oContractorWrapper,
+				sNameEN: "Name",
+				sNameFR: "Name",
+				sDependentKey: "CountryCode",
+				sParentKey: "_shippingCountryCode",
+				sTargetArrayNameInParent: "aShippingCountries"
+			});
 			if (oContractorWrapper.aData[0]) {
 				$scope.aBillingCountries = angular.copy(oContractorWrapper.aData[0].aBillingCountries);
+				$scope.aShippingCountries = angular.copy(oContractorWrapper.aData[0].aShippingCountries);
+			}
+
+			if ($scope.oContractor._billingCountryCode) {
+				constructProvinceSelect({
+					sParentKey: "_billingProvinceCode",
+					sProvincesFor: "billingAddress"
+				});
+			}
+			if ($scope.oContractor._shippingCountryCode) {
+				constructProvinceSelect({
+					sParentKey: "_shippingProvinceCode",
+					sProvincesFor: "shippingAddress"
+				});
 			}
 		};
 
@@ -163,7 +232,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		$scope.onDelete = function($event) {
 			servicesProvider.showConfirmationPopup({
 				sHeader: $translate.instant('contractorDetails_deletionConfirmationHeader'),
-				sContent: $translate.instant('ontractorDetails_deletionConfirmationContent'),
+				sContent: $translate.instant('contractorDetails_deletionConfirmationContent'),
 				sOk: $translate.instant('global_ok'),
 				sCancel: $translate.instant('global_cancel'),
 				onOk: deleteContractor,
@@ -195,32 +264,23 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			bDataHasBeenModified = true;
 		};
 
-		$scope.onBilingCountryChanged = function() {
+		$scope.onBillingCountryChanged = function() {
 			$scope.onDataModified();
-			for (var i = 0; i < $scope.aBillingCountries.length; i++) {
-				if ($scope.aBillingCountries[i].ticked) {
-					for (var j = 0; j < aCountriesWithProvinces.length; j++) {
-						if ($scope.aBillingCountries[i].CountryCode === aCountriesWithProvinces[j].CountryCode) {
-							servicesProvider.constructDependentMultiSelectArray({
-								oDependentArrayWrapper: {
-									aData: aCountriesWithProvinces[j].ProvinceDetails.results
-								},
-								oParentArrayWrapper: oContractorWrapper,
-								sNameEN: "Name",
-								sNameFR: "Name",
-								sDependentKey: "ProvinceCode",
-								sTargetArrayNameInParent: "aBillingProvinces"
-							});
-							if (oContractorWrapper.aData[0]) {
-								$scope.aBillingProvinces = angular.copy(oContractorWrapper.aData[0].aBillingProvinces);
-							}
-							break;
-						}
-					}
-					break;
-				}
-			}
-		}
+			constructProvinceSelect({
+				sParentKey: "",
+				sProvincesFor: "billingAddress"
+			});
+
+		};
+
+		$scope.onShippingCountryChanged = function() {
+			$scope.onDataModified();
+			constructProvinceSelect({
+				sParentKey: "",
+				sProvincesFor: "shippingAddress"
+			});
+
+		};		
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
 			var oDataForSave = {
@@ -238,6 +298,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					$scope.oContractor._lastModifiedAt = oData.LastModifiedAt;
 					$scope.oContractor.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oContractor.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
+					$scope.oContractor._guid = oData.Guid;
 				} else {
 					$scope.oContractor.sName = "";
 					$scope.oContractor.sPhone = "";
@@ -278,6 +339,31 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			oDataForSave.ShippingAddress.ShippingStreet = $scope.oContractor.sShippingStreet;
 			oDataForSave.ShippingAddress.ShippingCity = $scope.oContractor.sShippingCity;
 			oDataForSave.ShippingAddress.ShippingPostalCode = $scope.oContractor.sShippingPostalCode;
+
+			for (var i = 0; i < $scope.aBillingCountries.length; i++) {
+				if ($scope.aBillingCountries[i].ticked) {
+					oDataForSave.BillingAddress.BillingCountry = $scope.aBillingCountries[i].CountryCode;
+					break;
+				}
+			}
+			for (var i = 0; i < $scope.aBillingProvinces.length; i++) {
+				if ($scope.aBillingProvinces[i].ticked) {
+					oDataForSave.BillingAddress.BillingProvince = $scope.aBillingProvinces[i].ProvinceCode;
+					break;
+				}
+			}
+			for (var i = 0; i < $scope.aShippingCountries.length; i++) {
+				if ($scope.aShippingCountries[i].ticked) {
+					oDataForSave.ShippingAddress.ShippingCountry = $scope.aShippingCountries[i].CountryCode;
+					break;
+				}
+			}
+			for (var i = 0; i < $scope.aShippingProvinces.length; i++) {
+				if ($scope.aShippingProvinces[i].ticked) {
+					oDataForSave.ShippingAddress.ShippingProvince = $scope.aShippingProvinces[i].ProvinceCode;
+					break;
+				}
+			}
 
 			oDataForSave.LastModifiedAt = $scope.oContractor._lastModifiedAt;
 
