@@ -32,6 +32,18 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			$scope.oContractor.sEmail = oContractor.Email;
 			$scope.oContractor.sFax = oContractor.Fax;
 
+			if (oContractor.BillingAddress) {
+				$scope.oContractor.sBillingStreet = oContractor.BillingAddress.BillingStreet;
+				$scope.oContractor.sBillingCity = oContractor.BillingAddress.BillingCity;
+				$scope.oContractor.sBillingPostalCode = oContractor.BillingAddress.BillingPostalCode;
+			}
+
+			if (oContractor.ShippingAddress) {
+				$scope.oContractor.sShippingStreet = oContractor.ShippingAddress.ShippingCity;
+				$scope.oContractor.sShippingCity = oContractor.ShippingAddress.ShippingCity;
+				$scope.oContractor.sShippingPostalCode = oContractor.ShippingAddress.ShippingPostalCode;
+			}
+
 			$scope.oContractor.sCreatedAt = utilsProvider.dBDateToSting(oContractor.CreatedAt);
 			$scope.oContractor.sLastModifiedAt = utilsProvider.dBDateToSting(oContractor.LastModifiedAt);
 
@@ -131,8 +143,12 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					aUri.push(sUri);
 				}
 			}
-			if(aUri.length){
-				aLinks.push({sRelationName: "PhaseDetails", bKeepCompanyDependentLinks: true, aUri: aUri});
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "PhaseDetails",
+					bKeepCompanyDependentLinks: true,
+					aUri: aUri
+				});
 			}
 			return aLinks;
 		};
@@ -164,6 +180,9 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					$scope.oContractor.sWebsite = "";
 					$scope.oContractor.sEmail = "";
 					$scope.oContractor.sFax = "";
+
+					oDataForSave.BillingAddress = {};
+					oDataForSave.ShippingAddress = {};
 					$scope.oContractor._aPhases = [];
 				}
 			};
@@ -184,6 +203,17 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			oDataForSave.Website = $scope.oContractor.sWebsite;
 			oDataForSave.Email = $scope.oContractor.sEmail;
 			oDataForSave.Fax = $scope.oContractor.sFax;
+
+			oDataForSave.BillingAddress = {};
+			oDataForSave.BillingAddress.BillingStreet = $scope.oContractor.sBillingStreet;
+			oDataForSave.BillingAddress.BillingCity = $scope.oContractor.sBillingCity;
+			oDataForSave.BillingAddress.BillingPostalCode = $scope.oContractor.sBillingPostalCode;
+
+			oDataForSave.ShippingAddress = {};
+			oDataForSave.ShippingAddress.ShippingStreet = $scope.oContractor.sShippingStreet;
+			oDataForSave.ShippingAddress.ShippingCity = $scope.oContractor.sShippingCity;
+			oDataForSave.ShippingAddress.ShippingPostalCode = $scope.oContractor.sShippingPostalCode;
+
 			oDataForSave.LastModifiedAt = $scope.oContractor._lastModifiedAt;
 
 			aLinks = prepareLinksForSave();

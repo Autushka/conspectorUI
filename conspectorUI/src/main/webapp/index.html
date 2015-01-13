@@ -5,9 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="icon" type="image/png" href="apps/conspector/img/favicon.ico">
 		<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
-<!-- 		<link rel="stylesheet" href="bower_components/angular-material/themes/orange-theme.css">
+		<link rel="stylesheet" href="bower_components/angular-material/themes/orange-theme.css">
 		<link rel="stylesheet" href="bower_components/angular-material/themes/blue-theme.css">
-		<link rel="stylesheet" href="bower_components/angular-material/themes/light-blue-dark-theme.css"> -->
+		<link rel="stylesheet" href="bower_components/angular-material/themes/light-blue-dark-theme.css">
 		<link rel="stylesheet" href="apps/conspector/js/thirdParty/ng-table.min.css">
 		<link rel="stylesheet" href="bower_components/isteven-angular-multiselect/angular-multi-select.css">
 		<link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.min.css">
@@ -37,9 +37,13 @@
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->
 		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
 		<script src="apps/conspector/js/thirdParty/angular-file-upload.min.js"></script> <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
-		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> <!-- was not able to find it as a bower component-->	
+		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> <!-- was not able to find it as a bower component-->
 
-			
+	    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+	    <script type="text/javascript" src="cordova.js"></script>
+	    <script type="text/javascript" src="js/index.js"></script>			
+
+		<!--	
 		<script src="apps/conspector/js/app.js"></script>
 		<script src="apps/conspector/js/constants.js"></script>
 		<script src="apps/conspector/js/types.js"></script>
@@ -82,10 +86,10 @@
 		<script src="apps/conspector/components/adminPanel/controllers/deficiencyStatusesListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/systemFilesController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/accountTypesListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script> 
+		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script> -->
 		
-		<!--<script src="dist/conspector.js"></script>
-		<script src="dist/conspector.min.js.map"></script>  -->
+		<script src="dist/conspector.js"></script>
+		<!--<script src="dist/conspector.min.js.map"></script>  -->
 	</head>
 	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;">
 		<div ng-show="$root.showSpinner" layout="row" layout-align="center center" style="position: absolute; z-index: 2; height: 100%; width: 100%;">

@@ -21,6 +21,7 @@
   "jquery": "2.1.x", 
   "datajs": "1.1.x",
   "jshashes": "1.0.x",
-  "pubnub": "3.6.x"
+  "pubnub": "3.6.x",
+  "ngCordova": "0.1.x"
   }
 }
