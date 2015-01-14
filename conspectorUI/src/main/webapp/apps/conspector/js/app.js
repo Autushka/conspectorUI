@@ -3,76 +3,78 @@ var viewControllers = angular.module('viewControllers', []);
 
 app.config(function($mdThemingProvider) {
 	$mdThemingProvider.definePalette('conspectorColorPalette', {
-    '50': '55b0d0',
-    '100': '44a8cb',
-    '200': '33a0c6',
-    '300': '2298c1',
-    '400': '1190bd',
-    '500': '0088b8',
-    '600': '007da9',
-    '700': '00729b',
-    '800': '00678c',
-    '900': '005c7d',
-    'A100': '0088b8',
-    'A200': '0088b8',
-    'A400': '0088b8',
-    'A700': '0088b8',
-    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
-                                        // on this palette should be dark or light
-    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
-     '200', '300', '400', 'A100'],
-    'contrastLightColors': undefined    // could also specify this if default was 'dark'
- 	});
- 	$mdThemingProvider.theme('default')
-    .primaryColor('conspectorColorPalette')
-    .accentColor('conspectorColorPalette');
- 	$mdThemingProvider.definePalette('conspectorColorPaletteNavbar', {
-    '50': '8e9192',
-    '100': '838687',
-    '200': '787b7d',
-    '300': '6d7072',
-    '400': '616567',
-    '500': '565a5c',
-    '600': '4f5355',
-    '700': '484c4d',
-    '800': '414446',
-    '900': '3a3d3f',
-    'A100': '565a5c',
-    'A200': '565a5c',
-    'A400': '565a5c',
-    'A700': '565a5c',
-    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
-                                        // on this palette should be dark or light
-    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
-     '200', '300', '400', 'A100'],
-    'contrastLightColors': undefined    // could also specify this if default was 'dark'
- 	});
- 	$mdThemingProvider.theme('conspectorColorPaletteNavbar')
-    .primaryColor('conspectorColorPaletteNavbar')
-    .accentColor('conspectorColorPaletteNavbar');
+		'50': '55b0d0',
+		'100': '44a8cb',
+		'200': '33a0c6',
+		'300': '2298c1',
+		'400': '1190bd',
+		'500': '0088b8',
+		'600': '007da9',
+		'700': '00729b',
+		'800': '00678c',
+		'900': '005c7d',
+		'A100': '0088b8',
+		'A200': '0088b8',
+		'A400': '0088b8',
+		'A700': '0088b8',
+		'contrastDefaultColor': 'light', // whether, by default, text (contrast)
+		// on this palette should be dark or light
+		'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+			'200', '300', '400', 'A100'
+		],
+		'contrastLightColors': undefined // could also specify this if default was 'dark'
+	});
+	$mdThemingProvider.theme('default')
+		.primaryColor('conspectorColorPalette')
+		.accentColor('conspectorColorPalette');
+	$mdThemingProvider.definePalette('conspectorColorPaletteNavbar', {
+		'50': '8e9192',
+		'100': '838687',
+		'200': '787b7d',
+		'300': '6d7072',
+		'400': '616567',
+		'500': '565a5c',
+		'600': '4f5355',
+		'700': '484c4d',
+		'800': '414446',
+		'900': '3a3d3f',
+		'A100': '565a5c',
+		'A200': '565a5c',
+		'A400': '565a5c',
+		'A700': '565a5c',
+		'contrastDefaultColor': 'light', // whether, by default, text (contrast)
+		// on this palette should be dark or light
+		'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+			'200', '300', '400', 'A100'
+		],
+		'contrastLightColors': undefined // could also specify this if default was 'dark'
+	});
+	$mdThemingProvider.theme('conspectorColorPaletteNavbar')
+		.primaryColor('conspectorColorPaletteNavbar')
+		.accentColor('conspectorColorPaletteNavbar');
 
-  //   $mdThemingProvider.definePalette('conspectorColorPaletteNavbar', {
-  //   '50': '565a5c',
-  //   '100': '565a5c',
-  //   '200': '565a5c',
-  //   '300': '565a5c',
-  //   '400': '565a5c',
-  //   '500': '565a5c',
-  //   '600': '565a5c',
-  //   '700': '565a5c',
-  //   '800': '565a5c',
-  //   '900': '565a5c',
-  //   'A100': '565a5c',
-  //   'A200': '565a5c',
-  //   'A400': '565a5c',
-  //   'A700': '565a5c',
-  //   'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
-  //                                       // on this palette should be dark or light
-  //   'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
-  //    '200', '300', '400', 'A100'],
-  //   'contrastLightColors': undefined    // could also specify this if default was 'dark'
- 	// });
-  	
+	//   $mdThemingProvider.definePalette('conspectorColorPaletteNavbar', {
+	//   '50': '565a5c',
+	//   '100': '565a5c',
+	//   '200': '565a5c',
+	//   '300': '565a5c',
+	//   '400': '565a5c',
+	//   '500': '565a5c',
+	//   '600': '565a5c',
+	//   '700': '565a5c',
+	//   '800': '565a5c',
+	//   '900': '565a5c',
+	//   'A100': '565a5c',
+	//   'A200': '565a5c',
+	//   'A400': '565a5c',
+	//   'A700': '565a5c',
+	//   'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+	//                                       // on this palette should be dark or light
+	//   'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+	//    '200', '300', '400', 'A100'],
+	//   'contrastLightColors': undefined    // could also specify this if default was 'dark'
+	// });
+
 });
 
 app.config(['$stateProvider', '$urlRouterProvider',
@@ -98,97 +100,112 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			url: '/companySelection',
 			templateUrl: 'apps/conspector/components/userManagement/templates/companySelectionView.html',
 			controller: 'companySelectionView'
-		});			
+		});
 		$stateProvider.state('roleSelection', {
 			url: '/roleSelection',
 			templateUrl: 'apps/conspector/components/userManagement/templates/roleSelectionView.html',
 			controller: 'roleSelectionView'
-		});	
+		});
 		$stateProvider.state('resetPassword', {
 			url: '/resetPassword/:pr',
 			templateUrl: 'apps/conspector/components/userManagement/templates/passwordResetView.html',
 			controller: 'passwordResetView'
-		});		
+		});
 		$stateProvider.state('app', {
 			url: '/app',
 			templateUrl: 'apps/conspector/components/generalLayout/templates/appView.html',
 			controller: 'appView'
-		});	
+		});
 		$stateProvider.state('app.deficienciesList', {
 			url: '/deficienciesList',
 			templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListView.html',
 			controller: 'deficienciesListView'
-		});	
+		});
 		$stateProvider.state('app.unitsList', {
 			url: '/unitsList',
 			templateUrl: 'apps/conspector/components/units/templates/unitsListView.html',
 			controller: 'unitsListView'
-		});	
+		});
 		$stateProvider.state('app.contractorsList', {
 			url: '/contractorsList',
 			templateUrl: 'apps/conspector/components/contractors/templates/contractorsListView.html',
 			controller: 'contractorsListView'
-		});	
-		$stateProvider.state('app.contractorDetails', {
+		});
+
+		$stateProvider.state('app.contractorDetailsWrapper', {//abstract view without controller that contains only ngView holders
 			url: '/contractorDetails/:sContractorGuid/:sMode',
-			templateUrl: 'apps/conspector/components/contractors/templates/contractorDetailsView.html',
-			controller: 'contractorDetailsView'
-		});			
+			templateUrl: 'apps/conspector/components/contractors/templates/contractorDetailsWrapperView.html',
+		});
+
+		$stateProvider.state('app.contractorDetailsWrapper.contractorDetails', {//state that contains subviews
+			url: '/contractorDetails/:sContractorGuid/:sMode',
+			views: {
+				'contractorDetails': {
+					templateUrl: 'apps/conspector/components/contractors/templates/contractorDetailsView.html',
+					controller: 'contractorDetailsView'
+				},
+				'contractorContacts': {
+					templateUrl: 'apps/conspector/components/contacts/templates/contactsListView.html',
+					controller: 'contactsListView'
+				}
+			}
+		});
+
 		$stateProvider.state('app.clientsList', {
 			url: '/clientsList',
 			templateUrl: 'apps/conspector/components/clients/templates/clientsListView.html',
 			controller: 'clientsListView'
-		});	
+		});
 		$stateProvider.state('app.adminPanel', {
 			url: '/adminPanel',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/adminPanelView.html',
 			controller: 'adminPanelView'
-		});	
+		});
 		$stateProvider.state('app.adminPanel.companiesList', {
 			url: '/companiesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/companiesListView.html',
 			controller: 'companiesListView'
-		});			
+		});
 		$stateProvider.state('app.adminPanel.usersList', {
 			url: '/usersList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/usersListView.html',
 			controller: 'usersListView'
-		});	
+		});
 		$stateProvider.state('app.adminPanel.userDetails', {
 			url: '/userDetails/:sUserName/:sMode',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/userDetailsView.html',
 			controller: 'userDetailsView'
-		});			
+		});
 		$stateProvider.state('app.adminPanel.rolesList', {
 			url: '/rolesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/rolesListView.html',
 			controller: 'rolesListView'
-		});			
+		});
 		$stateProvider.state('app.adminPanel.projectsList', {
 			url: '/projectsList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/projectsListView.html',
 			controller: 'projectsListView'
-		});	
+		});
 		$stateProvider.state('app.adminPanel.phasesList', {
 			url: '/phasesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/phasesListView.html',
 			controller: 'phasesListView'
-		});				
+		});
 		$stateProvider.state('app.adminPanel.deficiencyStatusesList', {
 			url: '/deficiencyStatusesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/deficiencyStatusesListView.html',
 			controller: 'deficiencyStatusesListView'
-		});	
+		});
 		$stateProvider.state('app.adminPanel.systemFiles', {
 			url: '/systemFiles',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/systemFilesView.html',
 			controller: 'systemFilesView'
-		});					
+		});
 		$stateProvider.state('app.adminPanel.operationLogsList', {
 			url: '/operationLogsList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/operationLogsListView.html',
 			controller: 'operationLogsListView'
-		});	
+		});
 		$stateProvider.state('app.adminPanel.accountTypesList', {
 			url: '/accountTypesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/accountTypesListView.html',
@@ -198,23 +215,23 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			url: '/deficiencyPrioritiesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/deficiencyPrioritiesListView.html',
 			controller: 'deficiencyPrioritiesListView'
-		});	
+		});
 		$stateProvider.state('app.profileSettings', {
 			url: '/profileSettings',
 			templateUrl: 'apps/conspector/components/profileSettings/templates/profileSettingsView.html',
 			controller: 'profileSettingsView'
-		});	
+		});
 		$stateProvider.state('app.profileSettings.profileDetails', {
 			url: '/profileDetails',
 			templateUrl: 'apps/conspector/components/profileSettings/templates/profileDetailsView.html',
 			controller: 'profileDetailsView'
-		});		
+		});
 		$stateProvider.state('app.profileSettings.changePassword', {
 			url: '/changePassword',
 			templateUrl: 'apps/conspector/components/profileSettings/templates/changePasswordView.html',
 			controller: 'changePasswordView'
-		});												
-									
+		});
+
 
 
 		//	.state('resetPassword', {

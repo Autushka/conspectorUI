@@ -69,7 +69,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 		loadContractors();//load Contractors
 
 		$scope.onDisplay = function(oContractor) {
-			$state.go('app.contractorDetails', {
+			$state.go('app.contractorDetailsWrapper.contractorDetails', {
 				sMode: "display",
 				sContractorGuid: oContractor._guid,
 				sFromState: "app.contractorsList"
@@ -77,7 +77,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 		};
 
 		$scope.onEdit = function(oContractor) {
-			$state.go('app.contractorDetails', {
+			$state.go('app.contractorDetailsWrapper.contractorDetails', {
 				sMode: "edit",
 				sContractorGuid: oContractor._guid,
 				sFromState: "app.contractorsList"
@@ -85,7 +85,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 		};
 
 		$scope.onAddNew = function() {
-			$state.go('app.contractorDetails', {
+			$state.go('app.contractorDetailsWrapper.contractorDetails', {
 				sMode: "create",
 				sContractorGuid: "",
 				sFromState: "app.contractorsList"

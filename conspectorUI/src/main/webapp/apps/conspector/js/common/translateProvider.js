@@ -52,6 +52,7 @@ app.config(['$translateProvider',
                   global_phone: 'Phone',
                   global_tags: 'Tags',
                   global_name: 'Name',
+                  global_title: 'Title',
                   global_secondaryPhone: 'Secondary Phone',
                   global_website: "Website",
                   global_fax: 'Fax',
@@ -174,6 +175,8 @@ app.config(['$translateProvider',
                   contractorDetails_title: 'Contractor Deatails',
                   contractorDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current contructor?',
                   contractorDetails_deletionConfirmationContent: 'Current contructor will be deleted...',
+                  //contactsList
+                  contactsList_title: 'Contacts',
             });
 
             $translateProvider.translations('fr', {
@@ -228,6 +231,7 @@ app.config(['$translateProvider',
                   global_phone: 'Phone',
                   global_tags: 'Tags',
                   global_name: 'Name',
+                  global_title: 'Title',
                   global_secondaryPhone: 'Secondary Phone',
                   global_website: "Website",
                   global_fax: 'Fax',
@@ -349,6 +353,8 @@ app.config(['$translateProvider',
                   contractorDetails_title: 'Contractor Deatails',
                   contractorDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current contructor?',
                   contractorDetails_deletionConfirmationContent: 'Current contructor will be deleted...',
+                  //contactsList
+                  contactsList_title: 'Contacts',
             });
 
             $translateProvider.preferredLanguage('en');
