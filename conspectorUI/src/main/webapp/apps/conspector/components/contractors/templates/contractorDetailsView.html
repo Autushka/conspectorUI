@@ -24,10 +24,22 @@
 		>
 	</div>
 
-
 	<label>{{'global_tags' | translate}}</label>
-    <tags-input ng-model="oContractor.aTags" replace-spaces-with-dashes="false" placeholder="{{'global_addTag' | translate}}"></tags-input>
-
+	<tags-input
+		ng-model="oContractor.aTags"
+		ng-hide="sMode == 'display'"
+		replace-spaces-with-dashes="false"
+		placeholder="{{'global_addTag' | translate}}"
+		on-tag-added="onDataModified()"
+		on-tag-removed="onDataModified()">
+	</tags-input>
+	<div ng-show="sMode == 'display'">
+		<ul>
+			<li ng-repeat="tag in oContractor.aTags">
+				<span>{{tag.text}}</span>
+			</li>
+		</ul>
+	</div>
 
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_billingStreet' | translate}}" ng-change="onDataModified()">
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_billingCity' | translate}}" ng-change="onDataModified()">
@@ -62,7 +74,6 @@
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sShippingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingStreet' | translate}}" ng-change="onDataModified()">
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sShippingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingCity' | translate}}" ng-change="onDataModified()">
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sShippingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingPostalCode' | translate}}" ng-change="onDataModified()">
-
 	<label>{{'global_shippingCountry' | translate}}</label>
 	<div
 		multi-select
@@ -88,6 +99,6 @@
 		on-item-click="onDataModified()"
 		helper-elements="filter"
 		>
-	</div>	
+	</div>
 	
 </form>
