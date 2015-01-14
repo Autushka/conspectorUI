@@ -58,6 +58,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].deficiencies) {
 			$scope.aTabs.push({
+				iIndex: 0,
 				sTitle: $translate.instant("app_deficienciesTab"),
 				sState: "app.deficienciesList" //"#/app/deficienciesList"
 			});
@@ -65,6 +66,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].units) {
 			$scope.aTabs.push({
+				iIndex: 1,
 				sTitle: $translate.instant("app_unitsTab"),
 				sState: "app.unitsList" //"#/app/unitsList"
 			});
@@ -72,6 +74,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contractors) {
 			$scope.aTabs.push({
+				iIndex: 2,
 				sTitle: $translate.instant("app_contractorsTab"),
 				sState: "app.contractorsList" //"#/app/contractorsList"
 			});
@@ -79,6 +82,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].clients) {
 			$scope.aTabs.push({
+				iIndex: 3,
 				sTitle: $translate.instant("app_clientsTab"),
 				sState: "app.clientsList" //"#/app/clientsList"
 			});
@@ -120,30 +124,30 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			}
 			if ($window.location.hash.indexOf("client") > -1) {
 				$scope.selectedTabIndex = 3;
-			}						
+			}
 		}, 100);
 
 		$scope.onTabSelect = function(oTab) {
 			var sCurrentSelectedTab = "";
 			if ($window.location.hash.indexOf("unit") > -1) {
 				sCurrentSelectedTab = "Units";
-			}	
+			}
 			if ($window.location.hash.indexOf("contractor") > -1) {
 				sCurrentSelectedTab = "Contractors";
-			}	
+			}
 			if ($window.location.hash.indexOf("client") > -1) {
 				sCurrentSelectedTab = "Clients";
-			}									
+			}
 
-			if($scope.selectedTabIndex === 1 && sCurrentSelectedTab === "Units"){
+			if (oTab.iIndex === 1 && sCurrentSelectedTab === "Units") {
 				return;
 			}
-			if($scope.selectedTabIndex === 2 && sCurrentSelectedTab === "Contractors"){
+			if (oTab.iIndex === 2 && sCurrentSelectedTab === "Contractors") {
 				return;
 			}
-			if($scope.selectedTabIndex === 3 && sCurrentSelectedTab === "Clients"){
+			if (oTab.iIndex === 3 && sCurrentSelectedTab === "Clients") {
 				return;
-			}						
+			}
 
 			if ($scope.selectedTabIndex !== undefined) { //($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
 				$state.go(oTab.sState);
