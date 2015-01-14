@@ -4,7 +4,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
 		var aSelectedPhases = [];
 
-		if(!sCurrentUser) {
+		if (!sCurrentUser) {
 			servicesProvider.logOut();
 		}
 
@@ -16,7 +16,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		} else {
 			aSelectedPhases = servicesProvider.getUserPhasesGuids();
 		}
-		
+
 		cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aSelectedPhases;
 
 		$scope.globalProjectsWithPhases = servicesProvider.constructUserProjectsPhasesForMultiSelect({
@@ -100,20 +100,51 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1) {
 				$scope.selectedTabIndex = -1;
 			}
-			switch ($window.location.hash) {
-				case "#/app/unitsList":
-					$scope.selectedTabIndex = 1;
-					break;
-				case "#/app/contractorsList":
-					$scope.selectedTabIndex = 2;
-					break;
-				case "#/app/clientsList":
-					$scope.selectedTabIndex = 3;
-					break;
+			// switch ($window.location.hash) {
+			// 	case "#/app/unitsList":
+			// 		$scope.selectedTabIndex = 1;
+			// 		break;
+			// 	case "#/app/contractorsList":
+			// 		$scope.selectedTabIndex = 2;
+			// 		break;
+			// 	case "#/app/clientsList":
+			// 		$scope.selectedTabIndex = 3;
+			// 		break;
+			// }
+
+			if ($window.location.hash.indexOf("unit") > -1) {
+				$scope.selectedTabIndex = 1;
 			}
+			if ($window.location.hash.indexOf("contractor") > -1) {
+				$scope.selectedTabIndex = 2;
+			}
+			if ($window.location.hash.indexOf("client") > -1) {
+				$scope.selectedTabIndex = 3;
+			}						
 		}, 100);
 
 		$scope.onTabSelect = function(oTab) {
+			var sCurrentSelectedTab = "";
+			if ($window.location.hash.indexOf("unit") > -1) {
+				sCurrentSelectedTab = "Units";
+			}	
+			if ($window.location.hash.indexOf("contractor") > -1) {
+				sCurrentSelectedTab = "Contractors";
+			}	
+			if ($window.location.hash.indexOf("client") > -1) {
+				sCurrentSelectedTab = "Clients";
+			}									
+
+			if($scope.selectedTabIndex === 1 && sCurrentSelectedTab === "Units"){
+				return;
+			}
+			if($scope.selectedTabIndex === 2 && sCurrentSelectedTab === "Contractors"){
+				return;
+			}
+			if($scope.selectedTabIndex === 3 && sCurrentSelectedTab === "Clients"){
+				return;
+			}						
+
 			if ($scope.selectedTabIndex !== undefined) { //($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
 				$state.go(oTab.sState);
 			}
