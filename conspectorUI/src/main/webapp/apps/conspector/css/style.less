@@ -347,6 +347,12 @@ USER MANAGEMENT
 	    background-image:url('../../../apps/conspector/img/openRightSidenavIcon.svg');
 
 	}
+	&.cnpPlusIcon{
+		background-position:14px;
+    	background-size: 16px;
+	    background-image:url('../../../apps/conspector/img/plusIcon.svg');
+
+	}
   
 }
 
@@ -913,10 +919,13 @@ APP VIEW CONTENT
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-top: 30px;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
 	background-color: @lightGreyBackgroundColor;
 }
 .cnpContentWrapper{
-	min-height: 600px;
+	min-height: 550px;
+	background-color: @lightGreyBackgroundColor;
 
 }
 .cnpAppViewContentBackground {
@@ -924,6 +933,12 @@ APP VIEW CONTENT
 	min-width: 665px;
 	height: 100%;
 	background-color: @lightGreyBackgroundColor;
+}
+
+md-content.md-default-theme {
+	background-color: @lightGreyBackgroundColor;
+	max-width: 100%;
+    overflow-x: hidden;
 }
 
 /*
@@ -942,17 +957,14 @@ ADMIN PANEL
 	color: @headerTextColor;
 }
 .cnpSidebarHeader{
-	height: 56px;
-	min-height: 56px;
-	border-width: 1px;
-	border-color: @greyBorderColorHeader;
-	border-style: solid;
-	color: @headerTextColor;
+
 }
 
 .cnpContent{
 	padding-left: 20px;
 	background-color: @lightGreyBackgroundColor;
+	max-width: 100%;
+    overflow-x: hidden;
 }
 .cnpContentHeader{
 
@@ -972,6 +984,17 @@ ADMIN PANEL
 	min-height: 56px;
 	background-color: @mediumGreyBackgroundColor;
 }
+md-toolbar.md-default-theme{
+	height: 56px;
+	min-height: 56px;
+	background-color: @mediumGreyBackgroundColor;
+	min-height: 56px;
+	border-width: 0px;
+	border-bottom-width: 1px;
+	border-color: @greyBorderColorHeader;
+	border-style: solid;
+	color: @headerTextColor;
+}
 
 .md-sidenav-left{
 	&.cnpSidenavLeft{
@@ -981,10 +1004,48 @@ ADMIN PANEL
 	color: @textColor;
 	}
 }
+.cnpSidenavElements{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 /*
 END OF ADMIN PANEL
 */
+/*
+NG TABLE 
+*/
+.cnpActionBar{
+	// height: 56px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+.cnpNgTableWrapper{
 
+	padding-top: 10px;
+}
+.cnpNgTable{
+	width: 100%;
+	height: 100%;
+	border-width: 1px;
+	border-color: @greyBorderColorHeader;
+	border-style: solid;
+	color: @textColor;
+	padding: 10px;
+
+}
+.cnpNgTableRow{
+
+}
+.cnpNgTableColumn{
+
+}
+th{
+	font-weight: 400;
+}
+
+/*
+END OF NG TABLE 
+*/
 .cnpVerticalAfterSpacing1x{
 	margin-bottom: @spacingUnit;
 }

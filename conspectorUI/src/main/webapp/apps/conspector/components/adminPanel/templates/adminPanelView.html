@@ -1,12 +1,12 @@
 
 <md-content layout="row" layout="center start" class="cnpContentWrapper">
     <md-sidenav class="md-sidenav-left cnpSidenavLeft" md-component-id="left" md-is-locked-open="$media('gt-md')">
-        <md-toolbar class="md-default-theme cnpSidebarHeader">
-            <label class="md-toolbar-tools cnpSidebarTitle">
+        <md-toolbar class="md-default-theme" layout="column" layout-align="center start">
+            <label class="cnpSidebarTitle">
                 {{'adminPanel_menuHeader' | translate}}
             </label>
         </md-toolbar>       
-        <div>  <!-- ng-controller="LeftCtrl" -->    
+        <div class="cnpSidenavElements">  <!-- ng-controller="LeftCtrl" -->    
             <md-button ng-if="sCurrentRole == sGlobalAdministratorRole" layout="row" layout-align="start center" ng-click="onCompanies()" class="md-button cnpSidebarButton">
                 {{'adminPanel_companies' | translate}}
             </md-button>

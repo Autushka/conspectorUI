@@ -4,22 +4,31 @@
 			<div>
 				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
 				<!-- <img src="apps/conspector/img/openRightSidenavIcon.svg" style="width: 24px; height: 24px;"> -->
-				Open Admin Panel Menu
+				{{'adminPanel_hideSidenav' | translate}}
 				</md-button>
 			</div>
 		</div>
 		<div layout="row" layout-align="end start">
-			<label class="cnpContentTitle">
+			<label class="cnpContentTitle notSelectable">
 				{{'usersList_title' | translate}}
 			</label>
 		</div>
 	</div>
 	
-	<div>
-		<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-primary md-raised" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
-		<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
-			<tr ng-repeat="user in aDisplayedUsers">
-				<td data-title="actionsTE" style="width: 10%;">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpActionBar">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">{{'global_addNew' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+		</div>
+	</div>
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="tableParams" class="cnpNgTable">
+			<tr ng-repeat="user in aDisplayedUsers" class="cnpNgTableRow" flex="50">
+				<td data-title="actionsTE" class="cnpNgTableColumn">
 					<span ng-click="onDisplay(user)">Display</span>
 					<span ng-click="onEdit(user)">Edit</span>
 				</td>
@@ -39,5 +48,4 @@
 			<tr ng-hide="aDisplayedUsers.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>
 		</table>
 	</div>
-	
 </div>

@@ -111,11 +111,12 @@ app.config(['$translateProvider',
                   adminPanel_systemFiles: 'System Files',
                   adminPanel_operationLogs: 'Operation Logs',
                   adminPanel_accountTypes: 'Account Types',
+                  adminPanel_hideSidenav: 'Open Admin Panel Menu',
                   //companiesList
                   companiesList_title: "Companies",
                   companiesList_companyName: "Company Name",
                   //usersList
-                  usersList_title: 'Users',
+                  usersList_title: 'Users List',
                   //userDetails
                   userDetails_title: 'User Details',
                   userDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current user?',
@@ -289,11 +290,12 @@ app.config(['$translateProvider',
                   adminPanel_systemFiles: 'System Files',
                   adminPanel_operationLogs: 'Operation Logs',
                   adminPanel_accountTypes: 'Account Types',
+                  adminPanel_hideSidenav: 'Open Admin Panel Menu',
                   //companiesList
                   companiesList_title: "Companies",
                   companiesList_companyName: "Company Name",
                   //usersList
-                  usersList_title: 'Users',
+                  usersList_title: 'Users List',
                   //userDetails
                   userDetails_title: 'User Details',
                   userDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current user?',
