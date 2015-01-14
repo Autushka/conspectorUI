@@ -4,6 +4,7 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 		$scope.iconTE = $translate.instant('global_icon');
 		$scope.nameENTE = $translate.instant('global_descriptionEN');
 		$scope.nameFRTE = $translate.instant('global_descriptionFR');
+		$scope.associatedColorTE = $translate.instant('global_associatedColor');
 		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
 
 		var oStatusIconArrayWrapper = {
@@ -48,6 +49,7 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 					sUrl: $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
 					nameEN: aData[i].NameEN,
 					nameFR: aData[i].NameFR,
+					associatedColor: aData[i].AssociatedColor,
 					sortingSequence: aData[i].GeneralAttributes.SortingSequence
 				});
 			}
@@ -134,11 +136,12 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 				oDeficiencyStatus._editMode = false;
 				oDeficiencyStatus._lastModifiedAt = oData.LastModifiedAt;
 				oDeficiencyStatus._associatedIconFileGuid = oData.AssociatedIconFileGuid;
-				oDeficiencyStatus.sUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oData.AssociatedIconFileGuid;				
+				oDeficiencyStatus.sUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oData.AssociatedIconFileGuid;
 			};
 
 			oDataForSave.NameEN = oDeficiencyStatus.nameEN;
 			oDataForSave.NameFR = oDeficiencyStatus.nameFR;
+			oDataForSave.AssociatedColor = oDeficiencyStatus.associatedColor;
 			oDataForSave.GeneralAttributes.SortingSequence = oDeficiencyStatus.sortingSequence;
 			oDataForSave.LastModifiedAt = oDeficiencyStatus._lastModifiedAt;
 
@@ -147,7 +150,7 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 's
 					oDataForSave.AssociatedIconFileGuid = oDeficiencyStatus.aStatusIcons[i].guid;
 					break;
 				}
-			}			
+			}
 
 			if (oDeficiencyStatus._guid) {
 				oDataForSave.Guid = oDeficiencyStatus._guid;

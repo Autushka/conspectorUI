@@ -29,10 +29,16 @@
         	<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.nameFR}}</span>
          	<div ng-if="deficiencyStatus._editMode"><input type="text" ng-model="deficiencyStatus.nameFR"/></div>
 		</td>
-		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 20%;">
+		<td data-title="associatedColorTE" sortable="'associatedColor'" style="width: 15%;">
+        	<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.associatedColor}}</span>
+         	<div ng-if="deficiencyStatus._editMode">
+         		<input colorpicker type="text" ng-model="deficiencyStatus.associatedColor" />
+         	</div>
+		</td>		
+		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 15%;">
         	<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.sortingSequence}}</span>
          	<div ng-if="deficiencyStatus._editMode"><input type="number" ng-model="deficiencyStatus.sortingSequence"/></div>
 		</td>
 	</tr>
-	<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0"><td colspan="5" >{{'global_noTableData' | translate}}</td></tr>		
+	<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0"><td colspan="6" >{{'global_noTableData' | translate}}</td></tr>		
 </table>

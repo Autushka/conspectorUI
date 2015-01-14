@@ -14,12 +14,11 @@
         	<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.nameFR}}</span>
          	<div ng-if="deficiencyPriority._editMode"><input type="text" ng-model="deficiencyPriority.nameFR"/></div>
 		</td>
-			<td data-title="associatedColorTE" sortable="'associatedColor'" style="width: 10%;">
+		<td data-title="associatedColorTE" sortable="'associatedColor'" style="width: 10%;">
         	<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.associatedColor}}</span>
-         	<div ng-if="deficiencyPriority._editMode"><input type="text" ng-model="deficiencyPriority.associatedColor"/>
+         	<div ng-if="deficiencyPriority._editMode">
+         		<input colorpicker type="text" ng-model="deficiencyPriority.associatedColor" />
          	</div>
-         	<!-- TO DO: Add color picker 
-         	<input colorpicker colorpicker-position="right" class="span2 form-control" type="text" ng-model="entity.associatedColor"/> -->
 		</td>
 		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 20%;">
         	<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.sortingSequence}}</span>
