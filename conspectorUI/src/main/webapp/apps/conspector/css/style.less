@@ -12,6 +12,7 @@ VARIABLE AND SETTINGS
 @blueColor: #0088B8;
 @whiteColor: #FFFFFF;
 @greyBorderColor: rgba(228, 228, 228, 1);
+@greyBorderColorHeader: #c3c9c3;
 @greyButtonColor: rgba(230, 230, 230, 1);
 
 //Fonts
@@ -20,7 +21,7 @@ VARIABLE AND SETTINGS
 @textColor: #424347;
 @placeholderTextColor: rgba(66, 67, 71, 0.5);
 @buttonLabelTextColor: rgba(66, 67, 71, 0.5);
-@headerTextColor: rgba(66, 67, 71, 0.65);
+@headerTextColor: #88888B;
 @textColorLight: rgba(66, 67, 71, 0.5);
 @navbarTextColor: rgba(255, 255, 255, 0.65);
 @fontSize: 18px;
@@ -109,7 +110,10 @@ body {
 //Default Button styling
 .md-button{
 	height: @fieldHeight;
-	padding: 8px;
+	padding-top:  8px;
+	padding-bottom: 8px;
+	padding-left: 14px;
+	padding-right: 14px;
 	text-transform: none;
 
 	&.cnpLargeButton{
@@ -127,6 +131,12 @@ body {
 		height: @fieldHeight*1;
 		border-radius: 0px;
 		padding-left: 20px;
+	}
+	&.cnpButtonWithIcon{
+		padding-left: 40px;
+		&.cnpDefaultColor{
+			color: @textColor;
+		}
 	}
 }
 //Animation
@@ -331,6 +341,12 @@ USER MANAGEMENT
 	    background-image:url('../../../apps/conspector/img/backIcon.svg');
 	    height: 26px;
 	}
+	&.cnpOpenSidenavIcon{
+		background-position:14px;
+    	background-size: 16px;
+	    background-image:url('../../../apps/conspector/img/openRightSidenavIcon.svg');
+
+	}
   
 }
 
@@ -368,26 +384,41 @@ APP VIEW
 */
 .cnpAppView{
 	width: 100%;
-	min-width: 768px;
+	min-width: 665px;
+	height: 100%;
+	background-color: @lightGreyBackgroundColor;
 }
 .cnpHeader{
 	width: 100%;	
 	max-width: 1280px;
-	height: 65px;
+	min-height: 65px;
+	max-height: 65px;
 	padding-left: 20px;
 	padding-right: 20px;
+	background-color: @whiteColor;
+	
+}
+.cnpHeaderBackground{
+	width: 100%;
+	min-height: 65px;
+	min-width: 665px;
+	background-color: @whiteColor;
 }
 .cnpSubHeader{
-	width: 100%;
+	width: 100%;	
 	max-width: 1280px;
 	min-height: 55px;
+	max-height: 55px;
 	// padding-top: 5px;
 	// padding-bottom: 5px;
 	padding-left: 20px;
 	padding-right: 20px;
+	
 }
 .cnpSubHeaderBackground{
 	width: 100%;
+	min-height: 55px;
+	min-width: 665px;
 	background-color: @lightGreyBackgroundColor;
 }
 .cnpNavBar{
@@ -395,10 +426,16 @@ APP VIEW
 	max-width: 1280px;
 	padding-left: 20px;
 	padding-right: 20px;
+	min-height: 48px;
+	max-height: 48px;
+	
 }
 .cnpNavBarBackground{
 	width: 100%;
+	min-width: 665px;
 	background-color: @darkerGreyBackgroundColor;
+	min-height: 48px;
+	
 }
 .cnpCompanyLogo{
 	height: 50px;
@@ -868,16 +905,24 @@ END OF APP VIEW
 /*
 APP VIEW CONTENT
 */
+
 .cnpAppViewContent{
 	width: 100%;
+	height: 100%;
 	max-width: 1280px;
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-top: 30px;
 	background-color: @lightGreyBackgroundColor;
 }
+.cnpContentWrapper{
+	min-height: 600px;
+
+}
 .cnpAppViewContentBackground {
 	width: 100%;
+	min-width: 665px;
+	height: 100%;
 	background-color: @lightGreyBackgroundColor;
 }
 
@@ -888,6 +933,7 @@ END OF APP VIEW CONTENT
 /*
 ADMIN PANEL
 */
+
 .cnpSidebarTitle{
 
 	font-size: 18px;
@@ -898,6 +944,10 @@ ADMIN PANEL
 .cnpSidebarHeader{
 	height: 56px;
 	min-height: 56px;
+	border-width: 1px;
+	border-color: @greyBorderColorHeader;
+	border-style: solid;
+	color: @headerTextColor;
 }
 
 .cnpContent{
@@ -906,7 +956,7 @@ ADMIN PANEL
 }
 .cnpContentHeader{
 
-	height: 48px;
+	height: 56px;
 
 }
 .cnpContentTitle{
@@ -921,7 +971,15 @@ ADMIN PANEL
 	height: 56px;
 	min-height: 56px;
 	background-color: @mediumGreyBackgroundColor;
+}
+
+.md-sidenav-left{
+	&.cnpSidenavLeft{
+	border-width: 1px;
+	border-color: @greyBorderColorHeader;
+	border-style: solid;
 	color: @textColor;
+	}
 }
 /*
 END OF ADMIN PANEL

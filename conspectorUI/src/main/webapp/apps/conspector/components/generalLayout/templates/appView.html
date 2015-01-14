@@ -1,34 +1,36 @@
 <div class="cnpAppView" layout="column" layout-align="start center">
-	<div class="cnpHeader" layout="row"  layout-align="space-between center">
-		<div layout="row" layout-align="start center">
-			<img class="cnpCompanyLogo" ng-src="{{$root.sLogoUrl}}"/>
-			<label ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="cnpLink cnpLinkHeaderCompany">
-				{{'app_switchCompanies' | translate}}
-			</label>
-		</div>
-		<div>
-			<label ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeader">
-				{{'app_adminPanel' | translate}}
-			</label>
-			<label ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="cnpLink cnpLinkHeader">
-				{{'app_profileSettings' | translate}}
-			</label>
-			
-			<label ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeader">
-				{{'app_switchRoles' | translate}}
-			</label>
-			<label ng-click="onLogOut()" class="cnpLink cnpLinkHeader">
-				{{'app_logOut' | translate}}
-			</label>
-			<label ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeader">
-				{{'signIn_languageCode' | translate}}
-			</label>
+	<div class="cnpHeaderBackground" layout="column" layout-align="start center">
+		<div class="cnpHeader" layout="row"  layout-align="space-between center">
+			<div layout="row" layout-align="start center">
+				<img class="cnpCompanyLogo" ng-src="{{$root.sLogoUrl}}"/>
+				<label ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="cnpLink cnpLinkHeaderCompany notSelectable">
+					{{'app_switchCompanies' | translate}}
+				</label>
+			</div>
+			<div>
+				<label ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeader notSelectable">
+					{{'app_adminPanel' | translate}}
+				</label>
+				<label ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="cnpLink cnpLinkHeader notSelectable">
+					{{'app_profileSettings' | translate}}
+				</label>
+				
+				<label ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeader notSelectable">
+					{{'app_switchRoles' | translate}}
+				</label>
+				<label ng-click="onLogOut()" class="cnpLink cnpLinkHeader notSelectable">
+					{{'app_logOut' | translate}}
+				</label>
+				<label ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeader">
+					{{'signIn_languageCode' | translate}}
+				</label>
+			</div>
 		</div>
 	</div>
 	<div class="cnpSubHeaderBackground" layout="column" layout-align="start center">
 		<div class="cnpSubHeader" layout="row" layout-align="start center">
 			<!-- <label class="cnpLinkProjectsAndPhases">
-						{{'global_selectedProjectsAndPhases' | translate }}
+											{{'global_selectedProjectsAndPhases' | translate }}
 			</label> -->
 			<div
 				class="cnpMultiSelectProjectsAndPhases"
@@ -53,7 +55,8 @@
 			</md-tabs>
 		</div>
 	</div>
-	<div class="cnpAppViewContentBackground" layout="column" layout-align="start center">
-		<div ui-view class="cnpAppViewContent"></div>
+	
+	<div ui-view class="cnpAppViewContent">
 	</div>
+	
 </div>

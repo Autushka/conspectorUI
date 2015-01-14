@@ -1,34 +1,43 @@
-<div class="cnpContent">
-            <div layout="row" layout-align="end start" class="md-default-theme cnpContentHeader">
-            <label class="cnpContentTitle">
-                {{'usersList_title' | translate}}
-            </label>
-        </div> 
-          
-          <md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-primary md-raised" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
-<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
-
-	<tr ng-repeat="user in aDisplayedUsers">
-		<td data-title="actionsTE" style="width: 10%;">
-			<span ng-click="onDisplay(user)">Display</span>
-			<span ng-click="onEdit(user)">Edit</span>
-		</td>
-		<td data-title="userNameTE" sortable="'userName'" style="width: 20%;">
-        	<span>{{user.userName}}</span>
-        </td>
-		<td data-title="emailTE" sortable="'email'" style="width: 20%;">
-        	<span>{{user.email}}</span>
-		</td>
-		<td ng-show="sCurrentRole == sGlobalAdministratorRole" data-title="companiesTE" style="width: 25%;">
-        	<span>{{user.sCompanies}}</span>         	
-		</td>		
-		<td data-title="rolesTE" style="width: 25%;">
-        	<span>{{user.sRoles}}</span>         	
-		</td>
-	</tr>
-	<tr ng-hide="aDisplayedUsers.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>		
-</table>
-
-          
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				<!-- <img src="apps/conspector/img/openRightSidenavIcon.svg" style="width: 24px; height: 24px;"> -->
+				Open Admin Panel Menu
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle">
+				{{'usersList_title' | translate}}
+			</label>
+		</div>
+	</div>
+	
+	<div>
+		<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-primary md-raised" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
+		<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
+			<tr ng-repeat="user in aDisplayedUsers">
+				<td data-title="actionsTE" style="width: 10%;">
+					<span ng-click="onDisplay(user)">Display</span>
+					<span ng-click="onEdit(user)">Edit</span>
+				</td>
+				<td data-title="userNameTE" sortable="'userName'" style="width: 20%;">
+					<span>{{user.userName}}</span>
+				</td>
+				<td data-title="emailTE" sortable="'email'" style="width: 20%;">
+					<span>{{user.email}}</span>
+				</td>
+				<td ng-show="sCurrentRole == sGlobalAdministratorRole" data-title="companiesTE" style="width: 25%;">
+					<span>{{user.sCompanies}}</span>
+				</td>
+				<td data-title="rolesTE" style="width: 25%;">
+					<span>{{user.sRoles}}</span>
+				</td>
+			</tr>
+			<tr ng-hide="aDisplayedUsers.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>
+		</table>
+	</div>
+	
 </div>
-

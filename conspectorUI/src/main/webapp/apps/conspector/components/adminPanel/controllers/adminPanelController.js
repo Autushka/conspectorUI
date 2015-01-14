@@ -1,7 +1,11 @@
-viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider',
-	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider) {
+viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider', '$mdSidenav',
+	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider, $mdSidenav) {
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+		
+		$scope.toggleLeftSidenav = function() {
+    		$mdSidenav('left').toggle();
+  		};
 
 		$scope.onUserManagement = function() {
 			$state.go("app.adminPanel.usersList");
