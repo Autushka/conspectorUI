@@ -67,6 +67,8 @@ app.config(['$translateProvider',
                   global_shippingPostalCode: 'Shipping postal code',
                   global_shippingCountry: 'Shipping country:',
                   global_shippingProvince: 'Shipping state/province:',
+                  global_tags: "Tags",
+                  global_addTag: "Add a tag",
 
                   //backendMessages
                   m100: 'Operation finished successfully.',
@@ -241,6 +243,8 @@ app.config(['$translateProvider',
                   global_shippingPostalCode: 'Shipping postal code',
                   global_shippingCountry: 'Shipping country:',
                   global_shippingProvince: 'Shipping state/province:',
+                  global_tags: "Tags",
+                  global_addTag: "Add a tag",
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',

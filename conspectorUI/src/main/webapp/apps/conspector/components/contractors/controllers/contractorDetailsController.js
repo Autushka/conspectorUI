@@ -37,6 +37,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			$scope.oContractor.sEmail = oContractor.Email;
 			$scope.oContractor.sFax = oContractor.Fax;
 
+			$scope.oContractor.aTags = utilsProvider.tagsStringToTagsArray(oContractor.DescriptionTags);
+
 			if (oContractor.BillingAddress) {
 				$scope.oContractor.sBillingStreet = oContractor.BillingAddress.BillingStreet;
 				$scope.oContractor.sBillingCity = oContractor.BillingAddress.BillingCity;
@@ -329,6 +331,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			oDataForSave.Website = $scope.oContractor.sWebsite;
 			oDataForSave.Email = $scope.oContractor.sEmail;
 			oDataForSave.Fax = $scope.oContractor.sFax;
+
+			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oContractor.aTags);
 
 			oDataForSave.BillingAddress = {};
 			oDataForSave.BillingAddress.BillingStreet = $scope.oContractor.sBillingStreet;

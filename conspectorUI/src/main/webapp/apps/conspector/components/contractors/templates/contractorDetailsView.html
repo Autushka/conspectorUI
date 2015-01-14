@@ -23,6 +23,12 @@
 		on-item-click="onDataModified()"
 		>
 	</div>
+
+
+	<label>{{'global_tags' | translate}}</label>
+    <tags-input ng-model="oContractor.aTags" replace-spaces-with-dashes="false" placeholder="{{'global_addTag' | translate}}"></tags-input>
+
+
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_billingStreet' | translate}}" ng-change="onDataModified()">
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_billingCity' | translate}}" ng-change="onDataModified()">
 	<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_billingPostalCode' | translate}}" ng-change="onDataModified()">

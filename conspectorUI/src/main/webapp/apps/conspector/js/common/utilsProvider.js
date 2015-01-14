@@ -60,19 +60,19 @@ app.factory('utilsProvider', ['$mdToast',
 				}
 				var sDate = sDBDate.substring(6, sDBDate.length - 2);
 				var dDate = new Date(parseInt(sDate));
-				return dDate;//this.dateToString(dDate);
+				return dDate; //this.dateToString(dDate);
 			},
 
-			dBDateToSting: function(sDBDate){
-				if(sDBDate === null || sDBDate === undefined || sDBDate === ""){
+			dBDateToSting: function(sDBDate) {
+				if (sDBDate === null || sDBDate === undefined || sDBDate === "") {
 					return sDBDate;
 				}
-				return this.dateToString(this.dBDateToDate(sDBDate));			
+				return this.dateToString(this.dBDateToDate(sDBDate));
 			},
 
-			stringToJson: function(sString){
- 				var oObj = $.parseJSON(sString);
- 				return oObj;
+			stringToJson: function(sString) {
+				var oObj = $.parseJSON(sString);
+				return oObj;
 			},
 
 			setCookieFromJson: function(sKey, oObj) {
@@ -121,11 +121,41 @@ app.factory('utilsProvider', ['$mdToast',
 				var regexS = "[\\?&]" + sName + "=([^&#]*)";
 				var regex = new RegExp(regexS);
 				var results = regex.exec(sURL);
-				if (results == null)
+				if (results == null) {
 					return "";
-				else
+				} else {
 					return decodeURIComponent(results[1].replace(/\+/g, " "));
-			}
+				}
+			},
+
+
+			tagsStringToTagsArray: function(sTags) {
+				var aTags = [];
+				var aTexts = [];
+				if (sTags === null || sTags === undefined || sTags === "") {
+					return aTags;
+				}
+				sTags = sTags.substring(0, sTags.length - 1); // remove last ';'
+				aTexts = sTags.split(";");
+				for (var i = 0; i < aTexts.length; i++) {
+					aTags.push({
+						text: aTexts[i]
+					});
+				}
+				return aTags;
+			},
+
+			tagsArrayToTagsString: function(aTags) {
+				var sTags = "";
+				for (var i = 0; i < aTags.length; i++) {
+					if (i !== 0) {
+						sTags = sTags + " " + aTags[i].text + ';';
+					} else {
+						sTags = sTags + aTags[i].text + ';';
+					}
+				}
+				return sTags;
+			},
 		}
 	}
 ]);
