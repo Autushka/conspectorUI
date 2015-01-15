@@ -1,0 +1,35 @@
+<div>{{'contactsList_title' | translate}}</div>
+<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
+<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
+	<tbody ng-repeat="group in $groups">
+		<tr class="ng-table-group">
+			<td colspan="{{$columns.length}}">
+				<a href="" ng-click="group.$hideRows = !group.$hideRows">
+					<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+					<strong>{{ group.value }}</strong>
+				</a>
+			</td>
+		</tr>
+		<tr ng-hide="group.$hideRows" ng-repeat="contact in group.data">
+			<td data-title="actionsTE" style="width: 10%;">
+				<span ng-click="onDisplay(contact)">Display</span>
+				<span ng-click="onEdit(contact)">Edit</span>
+			</td>
+			<td data-title="nameTE" sortable="'sContractorName'" style="width: 20%;">
+				<span>{{contact.sContactName}}</span>
+			</td>
+			<td data-title="titleTE" sortable="'sTags'" style="width: 30%;">
+				<span>{{contact.sTitle}}</span>
+			</td>			
+			<td data-title="phoneTE" sortable="'sPhone'" style="width: 20%;">
+				<span>{{contact.sPhone}}</span>
+			</td>
+			<td data-title="emailTE" sortable="'sEmail'" style="width: 20%;">
+				<span>{{contact.sEmail}}</span>
+			</td>
+		</tr>
+	</tbody>
+	<tr ng-hide="$groups.length > 0">
+		<td colspan="5" >{{'global_noTableData' | translate}}</td>
+	</tr>
+</table>
