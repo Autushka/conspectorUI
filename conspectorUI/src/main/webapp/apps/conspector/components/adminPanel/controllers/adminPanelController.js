@@ -46,7 +46,6 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 		var oWindow = angular.element($window);
 
 		oWindow.bind('resize', function() {
-			console.log('resize');
 			$mdSidenav('left').close();
 		});
 	}

@@ -119,7 +119,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("unit") > -1) {
 				$scope.selectedTabIndex = 1;
 			}
-			if ($window.location.hash.indexOf("contractor") > -1) {
+			if ($window.location.hash.indexOf("contractor") > -1 || $window.location.hash.indexOf("contact") > -1) { //should be simplified when contacts tabs is added
 				$scope.selectedTabIndex = 2;
 			}
 			if ($window.location.hash.indexOf("client") > -1) {
@@ -132,7 +132,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("unit") > -1) {
 				sCurrentSelectedTab = "Units";
 			}
-			if ($window.location.hash.indexOf("contractor") > -1) {
+			if ($window.location.hash.indexOf("contractor") > -1 || $window.location.hash.indexOf("contact") > -1) {//should be simplified when contacts tabs is added
 				sCurrentSelectedTab = "Contractors";
 			}
 			if ($window.location.hash.indexOf("client") > -1) {

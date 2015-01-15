@@ -72,7 +72,6 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 			$state.go('app.contractorDetailsWrapper.contractorDetails', {
 				sMode: "display",
 				sContractorGuid: oContractor._guid,
-				sFromState: "app.contractorsList"
 			});
 		};
 
@@ -80,7 +79,6 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 			$state.go('app.contractorDetailsWrapper.contractorDetails', {
 				sMode: "edit",
 				sContractorGuid: oContractor._guid,
-				sFromState: "app.contractorsList"
 			});
 		};
 
@@ -88,7 +86,6 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 			$state.go('app.contractorDetailsWrapper.contractorDetails', {
 				sMode: "create",
 				sContractorGuid: "",
-				sFromState: "app.contractorsList"
 			});
 		};
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {

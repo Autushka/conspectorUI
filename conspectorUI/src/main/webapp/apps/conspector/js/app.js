@@ -133,7 +133,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 		});
 
 		$stateProvider.state('app.contractorDetailsWrapper', {//abstract view without controller that contains only ngView holders
-			url: '/contractorDetails/:sContractorGuid/:sMode',
+			//url: '/contractorDetails/:sContractorGuid/:sMode',
 			templateUrl: 'apps/conspector/components/contractors/templates/contractorDetailsWrapperView.html',
 		});
 
@@ -150,6 +150,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
 				}
 			}
 		});
+
+		$stateProvider.state('app.contactDetails', {
+			url: '/contactDetails/:sAccountGuid/:sContactGuid/:sMode',
+			templateUrl: 'apps/conspector/components/contacts/templates/contactDetailsView.html',
+			controller: 'contactDetailsView'
+		});		
 
 		$stateProvider.state('app.clientsList', {
 			url: '/clientsList',

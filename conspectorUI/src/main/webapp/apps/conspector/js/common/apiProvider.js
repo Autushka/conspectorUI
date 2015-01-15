@@ -789,7 +789,78 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}				
-			}			
+			},
+
+			getContact: function(oParameters){
+				var svc = dataProvider.getEntity({
+					sPath: "Contacts",
+					sKey: oParameters.sKey,
+					sExpand: "UserDetails,ContactTypeDetails,AccountDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(oParameters.onSuccess);
+			},
+
+			updateContact: function(oParameters){
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oContactEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "Contacts",
+					sKeyAttribute: "Guid", //
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			createContact: function(oParameters){
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oContactEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Contacts",
+					sKeyAttribute: "Guid", //needed for links creation
+					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true,
+					bCompanyNeeded: true
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			getContactsForAccount: function(oParameters){
+				var svc = dataProvider.getEntitySet({
+					sPath: "Contacts",
+					sFilter: "GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + oParameters.sAccountGuid + "'",
+					sExpand: "UserDetails,ContactTypeDetails,AccountDetails",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oContactEntity"
+				});
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}					
+			},			
+
 		}
 	}
 ]);

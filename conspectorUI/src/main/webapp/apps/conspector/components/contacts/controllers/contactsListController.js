@@ -2,7 +2,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider) {
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.nameTE = $translate.instant('global_name');
-		$scope.titleTE = $translate.instant('global_title');		
+		$scope.titleTE = $translate.instant('global_title');
 		$scope.phoneTE = $translate.instant('global_phone');
 		$scope.emailTE = $translate.instant('global_email');
 
@@ -15,89 +15,59 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			sDisplayedDataArrayName: "aDisplayedContacts",
 			oInitialSorting: {
 				sContactName: 'asc'
-			}
+			},
+			sGroupBy: "sContactType",
 		});
 
-		//alert($stateParams.sContractorGuid);
-
 		var onContactsLoaded = function(aData) {
-			// var sProjectName = "";
-			// var sPhaseName = "";
-			// var bMatchFound = false;
-			// for (var i = 0; i < aData.length; i++) {
-			// 	for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-			// 		bMatchFound = false;
-			// 		for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-			// 			if(aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]){
-			// 				bMatchFound = true;
-			// 				break;
-			// 			}
-			// 		}
-			// 		if(!bMatchFound){
-			// 			continue;
-			// 		}
+			for (var i = 0; i < aData.length; i++) {
+				oContactsListData.aData.push({
+					sName: aData[i].FirstName + " " + aData[i].LastName,
+					sTitle: aData[i].Title,
+					sPhone: aData[i].MobilePhone,
+					sEmail: aData[i].Email,
+					_guid: aData[i].Guid,
+					sContactType: "TemporaryOne",
 
-			// 		sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-			// 		if(!sProjectName){
-			// 			sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
-			// 		}
-			// 		sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-			// 		if(!sPhaseName){
-			// 			sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-			// 		}					
-
-			// 		oContactsListData.aData.push({
-			// 			sContractorName: aData[i].Name,
-			// 			sPhone: aData[i].MainPhone,
-			// 			sEmail: aData[i].Email,
-			// 			_guid: aData[i].Guid,
-			// 			sProjectPhase: sProjectName + " - " + sPhaseName
-			// 		});
-			// 	}
-			// }
+				});
+			}
 
 			$scope.tableParams.reload();
 		};
 
-		var loadContacts = function(){
+		var loadContacts = function() {
 			oContactsListData.aData = [];
-			apiProvider.getAccountContacts({
+			apiProvider.getContactsForAccount({
 				bShowSpinner: true,
-				onSuccess: onContactsLoaded
+				onSuccess: onContactsLoaded,
+				sAccountGuid: $stateParams.sContractorGuid
 			});
 		};
 
-		//loadContacts();//load Contacts
+		loadContacts();
 
-		$scope.onDisplay = function(oContractor) {
-			// $state.go('app.contractorDetails', {
-			// 	sMode: "display",
-			// 	sContractorGuid: oContractor._guid,
-			// 	sFromState: "app.contractorsList"
-			// });
+		$scope.onDisplay = function(oContact) {
+			$state.go('app.contactDetails', {
+				sMode: "display",
+				sAccountGuid: $stateParams.sContractorGuid,
+				sContactGuid: oContact._guid,
+			});
 		};
 
-		$scope.onEdit = function(oContractor) {
-			// $state.go('app.contractorDetails', {
-			// 	sMode: "edit",
-			// 	sContractorGuid: oContractor._guid,
-			// 	sFromState: "app.contractorsList"
-			// });
+		$scope.onEdit = function(oContact) {
+			$state.go('app.contactDetails', {
+				sMode: "edit",
+				sAccountGuid: $stateParams.sContractorGuid,
+				sContactGuid: oContact._guid,
+			});
 		};
 
 		$scope.onAddNew = function() {
-			// $state.go('app.contractorDetails', {
-			// 	sMode: "create",
-			// 	sContractorGuid: "",
-			// 	sFromState: "app.contractorsList"
-			// });
+			$state.go('app.contactDetails', {
+				sMode: "create",
+				sAccountGuid: $stateParams.sContractorGuid,
+				sContactGuid: "",
+			});
 		};
-		// $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-		// 	loadContacts();
-		// });
-
-		// $scope.$on('accountsShouldBeRefreshed', function(oParameters) {
-		// 	loadContacts();
-		// });
 	}
 ]);

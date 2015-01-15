@@ -67,7 +67,8 @@
 		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
 		<script src="apps/conspector/components/contractors/controllers/contractorDetailsController.js"></script>
 
-		<script src="apps/conspector/components/contacts/controllers/contactsListController.js"></script>		
+		<script src="apps/conspector/components/contacts/controllers/contactsListController.js"></script>	
+		<script src="apps/conspector/components/contacts/controllers/contactDetailsController.js"></script>	
 
 		<script src="apps/conspector/components/clients/controllers/clientsListController.js"></script>
 

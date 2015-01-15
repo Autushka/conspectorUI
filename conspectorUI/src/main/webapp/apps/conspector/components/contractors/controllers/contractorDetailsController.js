@@ -196,13 +196,13 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			});
 		}
 
-		$scope.onBack = function() {
-			if (!$rootScope.sFromState) {
-				$state.go('app.contractorsList');
-				return;
-			}
-			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
-		};
+//		$scope.onBack = function() {
+//			if (!$rootScope.sFromState) {
+//				$state.go('app.contractorsList');
+//				return;
+//			}
+//			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
+//		};
 
 		$scope.onEdit = function() {
 			$scope.sMode = "edit";
