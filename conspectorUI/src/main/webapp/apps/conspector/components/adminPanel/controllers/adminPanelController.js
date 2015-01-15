@@ -1,41 +1,53 @@
-viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider', '$mdSidenav',
-	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider, $mdSidenav) {
+viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider', '$mdSidenav', '$window',
+	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider, $mdSidenav, $window) {
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
-		
+
 		$scope.toggleLeftSidenav = function() {
-    		$mdSidenav('left').toggle();
-  		};
+			$mdSidenav('left').toggle();
+		};
+
+		var navigateToCustomizing = function(sStateName) {
+			$mdSidenav('left').close();
+			$state.go(sStateName);
+		}
 
 		$scope.onUserManagement = function() {
-			$state.go("app.adminPanel.usersList");
+			navigateToCustomizing("app.adminPanel.usersList");
 		};
 		$scope.onRoles = function() {
-			$state.go("app.adminPanel.rolesList");
+			navigateToCustomizing("app.adminPanel.rolesList");
 		};
 		$scope.onProjects = function() {
-			$state.go("app.adminPanel.projectsList");
+			navigateToCustomizing("app.adminPanel.projectsList");
 		};
 		$scope.onPhases = function() {
-			$state.go("app.adminPanel.phasesList");
+			navigateToCustomizing("app.adminPanel.phasesList");
 		};
 		$scope.onOperationLogs = function() {
-			$state.go("app.adminPanel.operationLogsList");
+			navigateToCustomizing("app.adminPanel.operationLogsList");
 		};
 		$scope.onDeficiencyStatuses = function() {
-			$state.go("app.adminPanel.deficiencyStatusesList");
+			navigateToCustomizing("app.adminPanel.deficiencyStatusesList");
 		};
 		$scope.onDeficiencyPriorities = function() {
-			$state.go("app.adminPanel.deficiencyPrioritiesList");
+			navigateToCustomizing("app.adminPanel.deficiencyPrioritiesList");
 		};
 		$scope.onSystemFiles = function() {
-			$state.go("app.adminPanel.systemFiles");
+			navigateToCustomizing("app.adminPanel.systemFiles");
 		};
 		$scope.onAccountTypes = function() {
-			$state.go("app.adminPanel.accountTypesList");			
+			navigateToCustomizing("app.adminPanel.accountTypesList");
 		};
 		$scope.onCompanies = function() {
-			$state.go("app.adminPanel.companiesList");			
-		};		
+			navigateToCustomizing("app.adminPanel.companiesList");
+		};
+
+		var oWindow = angular.element($window);
+
+		oWindow.bind('resize', function() {
+			console.log('resize');
+			$mdSidenav('left').close();
+		});
 	}
 ]);
