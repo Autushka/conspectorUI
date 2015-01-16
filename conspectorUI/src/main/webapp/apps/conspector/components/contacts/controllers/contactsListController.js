@@ -81,9 +81,9 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		};
 
 		$scope.onAddNew = function() {
-			if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // needed here for new conractor creation flow...
-				sAccountGuid = $scope.$parent.sContractorGuid;
-			}
+			// if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // needed here for new conractor creation flow...
+			// 	sAccountGuid = $scope.$parent.sContractorGuid;
+			// }
 			$state.go('app.contactDetails', {
 				sMode: "create",
 				sAccountGuid: sAccountGuid,
