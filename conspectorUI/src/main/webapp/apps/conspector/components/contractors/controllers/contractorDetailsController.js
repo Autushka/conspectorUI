@@ -1,6 +1,11 @@
-viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS) {
+viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider) {
 		var sContractorGuid = $stateParams.sContractorGuid;
+		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
+		if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") {
+			$scope.$parent.oStateParams = angular.copy($stateParams);
+		}
+
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
@@ -18,7 +23,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		$scope.aBillingCountries = [];
 		$scope.aBillingProvinces = [];
 		$scope.aShippingCountries = [];
-		$scope.aShippingProvinces = [];		
+		$scope.aShippingProvinces = [];
 
 		var constructPhasesMultiSelect = function(aSelectedPhases) {
 			$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
@@ -79,10 +84,10 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			var sTargetArrayName = "";
 			var sCountriesArrayName = "";
 
-			if(oParameters.sProvincesFor === "billingAddress"){
+			if (oParameters.sProvincesFor === "billingAddress") {
 				sTargetArrayName = "aBillingProvinces";
 				sCountriesArrayName = "aBillingCountries";
-			}else{
+			} else {
 				sTargetArrayName = "aShippingProvinces";
 				sCountriesArrayName = "aShippingCountries";
 			}
@@ -196,16 +201,11 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			});
 		}
 
-//		$scope.onBack = function() {
-//			if (!$rootScope.sFromState) {
-//				$state.go('app.contractorsList');
-//				return;
-//			}
-//			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
-//		};
-
 		$scope.onEdit = function() {
-			$scope.sMode = "edit";
+			$state.go('app.contractorDetailsWrapper.contractorDetails', {
+				sMode: "edit",
+				sContractorGuid: $scope.oContractor._guid,
+			});
 		};
 
 
@@ -216,7 +216,6 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				}
 			};
 			var onSuccessDelete = function() {
-				//cacheProvider.cleanEntitiesCache("oAccountEntity");
 				$state.go('app.contractorsList');
 			}
 			oDataForSave.Guid = $scope.oContractor._guid;
@@ -282,7 +281,13 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				sProvincesFor: "shippingAddress"
 			});
 
-		};		
+		};
+
+		$scope.onBack = function() {
+			historyProvider.navigateBack({
+				oState: $state
+			});
+		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
 			var oDataForSave = {
@@ -294,13 +299,20 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
 				}
 				if (!bSaveAndNew) {
-					$scope.sMode = "display";
 					$scope.oContractor._lastModifiedAt = oData.LastModifiedAt;
 					$scope.oContractor.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oContractor.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
 					$scope.oContractor._guid = oData.Guid;
+					if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
+						$scope.$parent.oStateParams.sMode = "display";
+					}
+					$state.go('app.contractorDetailsWrapper.contractorDetails', {
+						sMode: "display",
+						sContractorGuid: oData.Guid,
+					});
 				} else {
 					$scope.oContractor.sName = "";
 					$scope.oContractor.sPhone = "";
@@ -316,13 +328,19 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			};
 			var onSuccessUpdate = function(oData) {
 				bDataHasBeenModified = false;
-				if (oNavigateTo) {
-					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
-				}
-
 				$scope.oContractor._lastModifiedAt = oData.LastModifiedAt;
 				$scope.oContractor.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
-				$scope.sMode = "display";
+				if (oNavigateTo) {
+					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
+				}
+				if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
+					$scope.$parent.oStateParams.sMode = "display";
+				}
+				$state.go('app.contractorDetailsWrapper.contractorDetails', {
+					sMode: "display",
+					sContractorGuid: oData.Guid,
+				});
 			};
 			oDataForSave.Guid = $scope.oContractor._guid;
 			oDataForSave.Name = $scope.oContractor.sName;

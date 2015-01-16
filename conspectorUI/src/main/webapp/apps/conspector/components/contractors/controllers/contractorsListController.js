@@ -1,10 +1,14 @@
-viewControllers.controller('contractorsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider',
-	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider) {
+viewControllers.controller('contractorsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
+	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider) {
+		historyProvider.removeHistory();// because current view doesn't have a back button
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.contractorNameTE = $translate.instant('global_contractorName');
 		$scope.phoneTE = $translate.instant('global_phone');
 		$scope.emailTE = $translate.instant('global_email');
 		$scope.tagsTE = $translate.instant('global_tags');
+
+		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
+		$scope.oStateParams = {};// for backNavigation
 
 		var oContractorsListData = {
 			aData: []
@@ -95,5 +99,12 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 		$scope.$on('accountsShouldBeRefreshed', function(oParameters) {
 			loadContractors();
 		});
+
+		$scope.$on("$destroy", function() {
+			historyProvider.addStateToHistory({
+				sStateName: $scope.sCurrentStateName,
+				oStateParams: $scope.oStateParams
+			});
+		});		
 	}
 ]);

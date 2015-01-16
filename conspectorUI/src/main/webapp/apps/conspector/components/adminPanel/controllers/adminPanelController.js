@@ -1,5 +1,6 @@
-viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider', '$mdSidenav', '$window',
-	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider, $mdSidenav, $window) {
+viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider', '$mdSidenav', '$window', 'historyProvider',
+	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider, $mdSidenav, $window, historyProvider) {
+		historyProvider.removeHistory();// because current view doesn't have a back button		
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 

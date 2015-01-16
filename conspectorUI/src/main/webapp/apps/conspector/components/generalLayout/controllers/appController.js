@@ -104,6 +104,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1) {
 				$scope.selectedTabIndex = -1;
 				$scope.$broadcast("$mdTabsPaginationChanged");
+				return;
 			}
 
 			if ($window.location.hash.indexOf("deficienc") > -1) {

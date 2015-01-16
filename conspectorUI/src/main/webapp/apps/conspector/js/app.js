@@ -134,6 +134,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 
 		$stateProvider.state('app.contractorDetailsWrapper', {//abstract view without controller that contains only ngView holders
 			templateUrl: 'apps/conspector/components/contractors/templates/contractorDetailsWrapperView.html',
+			controller: 'contractorDetailsWrapperView'
 		});
 
 		$stateProvider.state('app.contractorDetailsWrapper.contractorDetails', {//state that contains subviews

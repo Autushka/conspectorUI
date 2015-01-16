@@ -475,7 +475,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 							sParentEntityWithKey: sParentEntityWithKey,
 							onSuccess: $.proxy(function() {
 								this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
-								deffered.resolve(oData);
+								deffered.resolve(oData.d);
 							}, this)
 						});
 					} else {

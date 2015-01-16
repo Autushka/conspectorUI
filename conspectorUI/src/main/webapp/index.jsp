@@ -52,6 +52,7 @@
 		<script src="apps/conspector/js/common/dataProvider.js"></script>
 		<script src="apps/conspector/js/common/apiProvider.js"></script>
 		<script src="apps/conspector/js/common/servicesProvider.js"></script>
+		<script src="apps/conspector/js/common/historyProvider.js"></script>		
 		<script src="apps/conspector/js/mainController.js"></script>
 		
 		<script src="apps/conspector/components/userManagement/controllers/signInController.js"></script>
@@ -65,6 +66,7 @@
 		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
 
 		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
+		<script src="apps/conspector/components/contractors/controllers/contractorDetailsWrapperController.js"></script>			
 		<script src="apps/conspector/components/contractors/controllers/contractorDetailsController.js"></script>
 
 		<script src="apps/conspector/components/contacts/controllers/contactsListController.js"></script>	

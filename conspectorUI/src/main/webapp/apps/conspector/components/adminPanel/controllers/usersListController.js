@@ -1,10 +1,13 @@
-viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$window', 'cacheProvider', 'CONSTANTS',
-	function($scope, $state, servicesProvider, apiProvider, $translate, $window, cacheProvider, CONSTANTS) {
+viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$window', 'cacheProvider', 'CONSTANTS', 'historyProvider',
+	function($scope, $state, servicesProvider, apiProvider, $translate, $window, cacheProvider, CONSTANTS, historyProvider) {
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.userNameTE = $translate.instant('global_userName');
 		$scope.emailTE = $translate.instant('global_email');
 		$scope.rolesTE = $translate.instant('global_roles');
 		$scope.companiesTE = $translate.instant('global_companies');
+
+		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
+		$scope.oStateParams = {};// for backNavigation
 
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;		
@@ -110,7 +113,6 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 			$state.go('app.adminPanel.userDetails', {
 				sMode: "display",
 				sUserName: oUser.userName,
-				sFromState: "app.adminPanel.usersList"
 			});
 		};
 
@@ -118,7 +120,6 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 			$state.go('app.adminPanel.userDetails', {
 				sMode: "edit",
 				sUserName: oUser.userName,
-				sFromState: "app.adminPanel.usersList"
 			});
 		};
 
@@ -126,8 +127,14 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 			$state.go('app.adminPanel.userDetails', {
 				sMode: "create",
 				sUserName: "",
-				sFromState: "app.adminPanel.usersList"
 			});
 		};
+
+		$scope.$on("$destroy", function() {
+			historyProvider.addStateToHistory({
+				sStateName: $scope.sCurrentStateName,
+				oStateParams: $scope.oStateParams
+			});
+		});			
 	}
 ]);

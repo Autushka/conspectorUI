@@ -6,6 +6,15 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		$scope.phoneTE = $translate.instant('global_phone');
 		$scope.emailTE = $translate.instant('global_email');
 
+		var sAccountGuid = "";
+
+		if($stateParams.sContractorGuid){
+			sAccountGuid = $stateParams.sContractorGuid;
+		}
+		if($stateParams.sClientGuid){
+			sAccountGuid = $stateParams.sClientGuid;
+		}		
+
 		var oContactsListData = {
 			aData: []
 		};
@@ -23,10 +32,10 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			var sName = "";
 			for (var i = 0; i < aData.length; i++) {
 				sName = "";
-				if(aData[i].FirstName){
+				if (aData[i].FirstName) {
 					sName = aData[i].FirstName + " ";
 				}
-				if(aData[i].LastName){
+				if (aData[i].LastName) {
 					sName = sName + aData[i].LastName;
 				}
 
@@ -49,7 +58,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			apiProvider.getContactsForAccount({
 				bShowSpinner: true,
 				onSuccess: onContactsLoaded,
-				sAccountGuid: $stateParams.sContractorGuid
+				sAccountGuid: sAccountGuid
 			});
 		};
 
@@ -58,7 +67,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		$scope.onDisplay = function(oContact) {
 			$state.go('app.contactDetails', {
 				sMode: "display",
-				sAccountGuid: $stateParams.sContractorGuid,
+				sAccountGuid: sAccountGuid,
 				sContactGuid: oContact._guid,
 			});
 		};
@@ -66,15 +75,18 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		$scope.onEdit = function(oContact) {
 			$state.go('app.contactDetails', {
 				sMode: "edit",
-				sAccountGuid: $stateParams.sContractorGuid,
+				sAccountGuid: sAccountGuid,
 				sContactGuid: oContact._guid,
 			});
 		};
 
 		$scope.onAddNew = function() {
+			if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // needed here for new conractor creation flow...
+				sAccountGuid = $scope.$parent.sContractorGuid;
+			}
 			$state.go('app.contactDetails', {
 				sMode: "create",
-				sAccountGuid: $stateParams.sContractorGuid,
+				sAccountGuid: sAccountGuid,
 				sContactGuid: "",
 			});
 		};

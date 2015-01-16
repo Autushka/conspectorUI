@@ -1,0 +1,97 @@
+<div>{{'contactDetails_title' | translate}}</div>
+<md-button class="md-primary md-raised" ng-if="bShowBackButton" ng-click="onBack()">{{'global_back' | translate}}</md-button>
+<md-button ng-show="sMode == 'display'" class="md-primary md-raised" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
+<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSave()">{{'global_save' | translate}}</md-button>
+<md-button ng-show="sMode == 'edit'" class="md-primary md-raised" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
+<md-button ng-show="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
+<form name="contactDetailsForm">
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sFirstName" ng-disabled="sMode == 'display'" placeholder="{{'global_firstName' | translate}}" ng-change="onDataModified()">
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sLastName" ng-disabled="sMode == 'display'" placeholder="{{'global_lastName' | translate}}" ng-change="onDataModified()">
+
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sTitle" ng-disabled="sMode == 'display'" placeholder="{{'global_title' | translate}}" ng-change="onDataModified()">	
+
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sHomePhone" ng-disabled="sMode == 'display'" placeholder="{{'global_homePhone' | translate}}" ng-change="onDataModified()">
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sWorkPhone" ng-disabled="sMode == 'display'" placeholder="{{'global_workPhone' | translate}}" ng-change="onDataModified()">
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sMobilePhone" ng-disabled="sMode == 'display'" placeholder="{{'global_mobilePhone' | translate}}" ng-change="onDataModified()">	
+
+	<input type="email" class="cnpTextInputField" ng-model="oContact.sEmail" ng-disabled="sMode == 'display'" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()">
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sFax" ng-disabled="sMode == 'display'" placeholder="{{'global_fax' | translate}}" ng-change="onDataModified()">
+
+	<label>{{'global_tags' | translate}}</label>
+	<tags-input
+		ng-model="oContact.aTags"
+		ng-hide="sMode == 'display'"
+		replace-spaces-with-dashes="false"
+		placeholder="{{'global_addTag' | translate}}"
+		on-tag-added="onDataModified()"
+		on-tag-removed="onDataModified()">
+	</tags-input>
+	<div ng-show="sMode == 'display'">
+		<ul>
+			<li ng-repeat="tag in oContact.aTags">
+				<span>{{tag.text}}</span>
+			</li>
+		</ul>
+	</div>
+
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sBillingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_billingStreet' | translate}}" ng-change="onDataModified()">
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sBillingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_billingCity' | translate}}" ng-change="onDataModified()">
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sBillingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_billingPostalCode' | translate}}" ng-change="onDataModified()">
+	<label>{{'global_billingCountry' | translate}}</label>
+	<div
+		multi-select
+		input-model="aBillingCountries"
+		button-label="name"
+		item-label="name"
+		tick-property="ticked"
+		selection-mode="single"
+		is-disabled="sMode == 'display'"
+		on-item-click="onBillingCountryChanged()"
+		helper-elements="filter"
+		>
+	</div>
+	<label>{{'global_billingProvince' | translate}}</label>
+	<div
+		multi-select
+		input-model="aBillingProvinces"
+		button-label="name"
+		item-label="name"
+		tick-property="ticked"
+		selection-mode="single"
+		is-disabled="sMode == 'display'"
+		on-item-click="onDataModified()"
+		helper-elements="filter"
+		>
+	</div>
+	
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sShippingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingStreet' | translate}}" ng-change="onDataModified()">
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sShippingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingCity' | translate}}" ng-change="onDataModified()">
+	<input type="text" class="cnpTextInputField" ng-model="oContact.sShippingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingPostalCode' | translate}}" ng-change="onDataModified()">
+	<label>{{'global_shippingCountry' | translate}}</label>
+	<div
+		multi-select
+		input-model="aShippingCountries"
+		button-label="name"
+		item-label="name"
+		tick-property="ticked"
+		selection-mode="single"
+		is-disabled="sMode == 'display'"
+		on-item-click="onShippingCountryChanged()"
+		helper-elements="filter"
+		>
+	</div>
+	<label>{{'global_shippingProvince' | translate}}</label>
+	<div
+		multi-select
+		input-model="aShippingProvinces"
+		button-label="name"
+		item-label="name"
+		tick-property="ticked"
+		selection-mode="single"
+		is-disabled="sMode == 'display'"
+		on-item-click="onDataModified()"
+		helper-elements="filter"
+		>
+	</div>
+	
+</form>

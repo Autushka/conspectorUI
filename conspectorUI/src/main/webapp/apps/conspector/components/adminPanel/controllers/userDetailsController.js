@@ -1,5 +1,5 @@
-viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS) {
+viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS', 'historyProvider',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS, historyProvider) {
 		var sUserName = $stateParams.sUserName;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
@@ -208,15 +208,16 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		}
 
 		$scope.onBack = function() {
-			if (!$rootScope.sFromState) {
-				$state.go('app.adminPanel.usersList');
-				return;
-			}
-			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
+			historyProvider.navigateBack({
+				oState: $state
+			});
 		};
 
 		$scope.onEdit = function() {
-			$scope.sMode = "edit";
+			$state.go('app.adminPanel.userDetails', {
+				sMode: "edit",
+				sUserName: $scope.oUser.sUserName
+			});
 		};
 
 
@@ -322,9 +323,13 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+					return;
 				}
 				if (!bSaveAndNew) {
-					$scope.sMode = "display";
+					$state.go('app.adminPanel.userDetails', {
+						sMode: "display",
+						sUserName: oData.UserName,
+					});
 					$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
 					$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oUser.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
@@ -352,13 +357,17 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+					return;
 				}
 
 				$scope.oUser._lastModifiedAt = oData.LastModifiedAt;
 				$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 				$scope.oUser.sPassword = "";
 				$scope.oUser.sPasswordConfirmation = "";
-				$scope.sMode = "display";
+				$state.go('app.adminPanel.userDetails', {
+					sMode: "display",
+					sUserName: oData.UserName,
+				});
 			};
 
 			oDataForSave.UserName = $scope.oUser.sUserName;
