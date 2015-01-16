@@ -103,6 +103,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		var tabSelectionBasedOnHash = function() {
 			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1) {
 				$scope.selectedTabIndex = -1;
+				$scope.$broadcast("$mdTabsPaginationChanged");
 			}
 
 			if ($window.location.hash.indexOf("deficienc") > -1) {
@@ -118,11 +119,9 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("client") > -1) {
 				$scope.selectedTabIndex = 3;
 			}
-
-			//$scope.$broadcast("$mdTabsPaginationChanged");
 		};
 
-		$timeout(tabSelectionBasedOnHash, 50);
+		$timeout(tabSelectionBasedOnHash, 100);
 
 		$scope.onTabSelect = function(oTab) {
 			var sCurrentSelectedTab = "";
@@ -168,9 +167,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		};
 
 		$scope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
-			//alert($window.location.hash);
-				//tabSelectionBasedOnHash();
-			//$scope.$broadcast("$mdTabsPaginationChanged");
+			$timeout(tabSelectionBasedOnHash, 100);
 		});
 	}
 ]);
