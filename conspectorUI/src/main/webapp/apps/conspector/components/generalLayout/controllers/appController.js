@@ -100,21 +100,14 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			servicesProvider.logOut();
 		};
 
-		$timeout(function() {
+		var tabSelectionBasedOnHash = function() {
 			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1) {
 				$scope.selectedTabIndex = -1;
 			}
-			// switch ($window.location.hash) {
-			// 	case "#/app/unitsList":
-			// 		$scope.selectedTabIndex = 1;
-			// 		break;
-			// 	case "#/app/contractorsList":
-			// 		$scope.selectedTabIndex = 2;
-			// 		break;
-			// 	case "#/app/clientsList":
-			// 		$scope.selectedTabIndex = 3;
-			// 		break;
-			// }
+
+			if ($window.location.hash.indexOf("deficienc") > -1) {
+				$scope.selectedTabIndex = 0;
+			}
 
 			if ($window.location.hash.indexOf("unit") > -1) {
 				$scope.selectedTabIndex = 1;
@@ -125,14 +118,18 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("client") > -1) {
 				$scope.selectedTabIndex = 3;
 			}
-		}, 100);
+
+			//$scope.$broadcast("$mdTabsPaginationChanged");
+		};
+
+		$timeout(tabSelectionBasedOnHash, 50);
 
 		$scope.onTabSelect = function(oTab) {
 			var sCurrentSelectedTab = "";
 			if ($window.location.hash.indexOf("unit") > -1) {
 				sCurrentSelectedTab = "Units";
 			}
-			if ($window.location.hash.indexOf("contractor") > -1 || $window.location.hash.indexOf("contact") > -1) {//should be simplified when contacts tabs is added
+			if ($window.location.hash.indexOf("contractor") > -1 || $window.location.hash.indexOf("contact") > -1) { //should be simplified when contacts tabs is added
 				sCurrentSelectedTab = "Contractors";
 			}
 			if ($window.location.hash.indexOf("client") > -1) {
@@ -169,5 +166,11 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
 		};
+
+		$scope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+			//alert($window.location.hash);
+				//tabSelectionBasedOnHash();
+			//$scope.$broadcast("$mdTabsPaginationChanged");
+		});
 	}
 ]);

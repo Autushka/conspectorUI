@@ -20,9 +20,18 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		});
 
 		var onContactsLoaded = function(aData) {
+			var sName = "";
 			for (var i = 0; i < aData.length; i++) {
+				sName = "";
+				if(aData[i].FirstName){
+					sName = aData[i].FirstName + " ";
+				}
+				if(aData[i].LastName){
+					sName = sName + aData[i].LastName;
+				}
+
 				oContactsListData.aData.push({
-					sName: aData[i].FirstName + " " + aData[i].LastName,
+					sName: sName,
 					sTitle: aData[i].Title,
 					sPhone: aData[i].MobilePhone,
 					sEmail: aData[i].Email,
