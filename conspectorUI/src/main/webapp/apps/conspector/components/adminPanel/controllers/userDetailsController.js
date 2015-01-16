@@ -3,6 +3,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		var sUserName = $stateParams.sUserName;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
+		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;

@@ -1,5 +1,5 @@
 <div>{{'userDetails_title' | translate}}</div>
-<md-button class="md-primary md-raised" ng-click="onBack()" md-theme="orange">{{'global_back' | translate}}</md-button>
+<md-button class="md-primary md-raised" ng-click="onBack()" ng-if="bShowBackButton">{{'global_back' | translate}}</md-button>
 <md-button ng-show="sMode == 'display'" class="md-primary md-raised" ng-click="onEdit()" md-theme="orange">{{'global_edit' | translate}}</md-button>
 <md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSave()" md-theme="orange">{{'global_save' | translate}}</md-button>
 <md-button ng-show="sMode == 'edit' && sCurrentRole == sGlobalAdministratorRole" class="md-primary md-raised" ng-click="onDelete()" md-theme="orange">{{'global_delete' | translate}}</md-button>
