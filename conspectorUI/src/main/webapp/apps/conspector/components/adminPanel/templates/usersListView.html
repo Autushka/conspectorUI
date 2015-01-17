@@ -3,7 +3,6 @@
 		<div layout="row" layout-align="start start">
 			<div>
 				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-				<!-- <img src="apps/conspector/img/openRightSidenavIcon.svg" style="width: 24px; height: 24px;"> -->
 				{{'adminPanel_hideSidenav' | translate}}
 				</md-button>
 			</div>
@@ -15,10 +14,12 @@
 		</div>
 	</div>
 	
-	<div layout="row" layout-align="space-between start" class="md-default-theme cnpActionBar">
+	<div layout="row" layout-
+		align="space-between start" class="md-default-theme cnpActionBar">
 		<div layout="row" layout-align="start start">
 			<div>
-				<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">{{'global_addNew' | translate}}
+				<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
+				{{'global_addNew' | translate}}
 				</md-button>
 			</div>
 		</div>
@@ -26,9 +27,9 @@
 		</div>
 	</div>
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
-		<table ng-table="tableParams" class="cnpNgTable">
-			<tr ng-repeat="user in aDisplayedUsers" class="cnpNgTableRow">
-				<td data-title="actionsTE" class="cnpNgTableColumn">
+		<table ng-table="tableParams" class="cnpNgTable" id="usersList">
+			<tr ng-repeat="user in aDisplayedUsers">
+				<td data-title="actionsTE">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(user)">
 						</div>
@@ -36,20 +37,47 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="userNameTE" sortable="'userName'" style="width: 20%;">
-					<span>{{user.userName}}</span>
+				<td data-title="userNameTE" sortable="'userName'">
+					<div layout="row" layout-align="start center">
+						<div>
+							<span>{{user.userName}}</span>
+						</div>
+					</div>
 				</td>
-				<td data-title="emailTE" sortable="'email'" style="width: 20%;">
-					<span>{{user.email}}</span>
+				<td data-title="emailTE" sortable="'email'">
+					<div layout="row" layout-align="start center">
+						<div>
+							<span>{{user.email}}</span>
+						</div>
+					</div>
+					
 				</td>
-				<td ng-show="sCurrentRole == sGlobalAdministratorRole" data-title="companiesTE" style="width: 25%;">
-					<span>{{user.sCompanies}}</span>
+				<td ng-show="sCurrentRole == sGlobalAdministratorRole" data-title="companiesTE">
+					<div layout="row" layout-align="start center">
+						<div>
+							<span>{{user.sCompanies}}</span>
+						</div>
+					</div>
+					
 				</td>
-				<td data-title="rolesTE" style="width: 25%;">
-					<span>{{user.sRoles}}</span>
+				<td data-title="rolesTE" >
+					<div layout="row" layout-align="start center">
+						<div>
+							<span>{{user.sRoles}}</span>
+						</div>
+					</div>
+					
 				</td>
 			</tr>
-			<tr ng-hide="aDisplayedUsers.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>
+			<tr ng-hide="aDisplayedUsers.length > 0">
+				<td data-title="rolesTE" >
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
 		</table>
 	</div>
 </div>

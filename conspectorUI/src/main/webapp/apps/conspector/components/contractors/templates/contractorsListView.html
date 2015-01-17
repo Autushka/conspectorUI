@@ -1,35 +1,118 @@
-<div>{{'contractorsList_title' | translate}}</div>
-<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
-<table ng-table="tableParams" style="width: 100%; border:1px solid black;" show-filter="true">
-	<tbody ng-repeat="group in $groups">
-		<tr class="ng-table-group">
-			<td colspan="{{$columns.length}}">
-				<a href="" ng-click="group.$hideRows = !group.$hideRows">
-					<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
-					<strong>{{ group.value }}</strong>
-				</a>
-			</td>
-		</tr>
-		<tr ng-hide="group.$hideRows" ng-repeat="contractor in group.data">
-			<td data-title="actionsTE" style="width: 10%;">
-				<span ng-click="onDisplay(contractor)">Display</span>
-				<span ng-click="onEdit(contractor)">Edit</span>
-			</td>
-			<td data-title="contractorNameTE" sortable="'sContractorName'" filter="{'sContractorName': 'text'}" style="width: 20%;">
-				<span>{{contractor.sContractorName}}</span>
-			</td>
-			<td data-title="phoneTE" sortable="'sPhone'" filter="{'sPhone': 'text'}" style="width: 20%;">
-				<span>{{contractor.sPhone}}</span>
-			</td>
-			<td data-title="emailTE" sortable="'sEmail'" filter="{'sEmail': 'text'}" style="width: 20%;">
-				<span>{{contractor.sEmail}}</span>
-			</td>
-			<td data-title="tagsTE" sortable="'sTags'" filter="{'sTags': 'text'}" style="width: 30%;">
-				<span>{{contractor.sTags}}</span>
-			</td>
-		</tr>
-	</tbody>
-	<tr ng-hide="$groups.length > 0">
-		<td colspan="5" >{{'global_noTableData' | translate}}</td>
-	</tr>
-</table>
+<md-content layout="row" layout="center start" class="cnpContentWrapper">
+<!-- SIDENAV -->
+<!-- 	<md-sidenav class="md-sidenav-left cnpSidenavLeft" md-component-id="left">
+	<md-toolbar class="md-default-theme" layout="column" layout-align="center start">
+	<label class="cnpSidebarTitle">
+		Just a sidenav
+	</label>
+	</md-toolbar>
+	<div class="cnpSidenavElements">  
+	Content of the sidenav
+	</div>
+	</md-sidenav> -->
+<div ui-view style="width: 100%; height: 100%;">
+<!-- CONTENT SECTION WITH TITLE AND BUTTON FOR SIDE BAR -->
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				Open Sidenav
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				{{'contractorsList_title' | translate}}
+			</label>
+		</div>
+	</div>
+<!-- END OF SIDENAV -->
+<!-- CONTENT VIEW -->
+	
+	<!-- ACTION BAR -->
+	<div layout="row" layout-
+		align="space-between start" class="md-default-theme cnpActionBar">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+		</div>
+	</div>
+	<!-- END OF ACTION BAR -->
+	<!-- NG TABLE -->
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="tableParams" class="cnpNgTable" id="contractorsList" show-filter="true">
+			<tbody ng-repeat="group in $groups">
+				<tr class="ng-table-group">
+					<td colspan="{{$columns.length}}">
+						<a href="" ng-click="group.$hideRows = !group.$hideRows">
+							<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+							<strong>
+							{{ group.value }}
+							</strong>
+						</a>
+					</td>
+				</tr>
+				<tr ng-hide="group.$hideRows" ng-repeat="contractor in group.data">
+					<td data-title="actionsTE">
+						<div layout="row" layout-align="center center">
+							<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(contractor)">
+							</div>
+							<div class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(contractor)">
+							</div>
+						</div>
+					</td>
+					<td data-title="contractorNameTE" sortable="'sContractorName'" filter="{'sContractorName': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>
+								{{contractor.sContractorName}}
+								</span>
+							</div>
+						</div>
+					</td>
+					<td data-title="phoneTE" sortable="'sPhone'" filter="{'sPhone': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>{{contractor.sPhone}}</span>
+							</div>
+						</div>
+					</td>
+					
+					<td data-title="emailTE" sortable="'sEmail'" filter="{'sEmail': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>{{contractor.sEmail}}</span>
+							</div>
+						</div>
+					</td>
+					<td data-title="tagsTE" sortable="'sTags'" filter="{'sTags': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>{{contractor.sTags}}</span>
+							</div>
+						</div>
+					</td>
+					
+				</tr>
+				<tr ng-hide="$groups.length > 0">
+					<td data-title="rolesTE" >
+						<div layout="row" layout-align="start center">
+							<div>
+								{{'global_noTableData' | translate}}
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!--  -->
+
+
+</div>
+</md-content>

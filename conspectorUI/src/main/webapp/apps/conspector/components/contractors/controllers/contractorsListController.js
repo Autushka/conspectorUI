@@ -1,5 +1,5 @@
-viewControllers.controller('contractorsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
-	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider) {
+viewControllers.controller('contractorsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window',
+	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window) {
 		historyProvider.removeHistory();// because current view doesn't have a back button
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.contractorNameTE = $translate.instant('global_contractorName');
@@ -106,5 +106,19 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 				oStateParams: $scope.oStateParams
 			});
 		});		
+
+		$scope.toggleLeftSidenav = function() {
+			$mdSidenav('left').toggle();
+		};
+
+		var navigateToCustomizing = function(sStateName) {
+			$mdSidenav('left').close();
+			$state.go(sStateName);
+		}
+		var oWindow = angular.element($window);
+
+		oWindow.bind('resize', function() {
+			$mdSidenav('left').close();
+		});
 	}
 ]);

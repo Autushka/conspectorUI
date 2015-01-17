@@ -171,7 +171,7 @@ app.config(['$translateProvider',
                   forgotPassword_reset: 'Reset password',
                   forgotPassword_footerLabel: 'Having issues logging in?\nEmail us at ',
                   //contractorsList
-                  contractorsList_title: 'Contractors',
+                  contractorsList_title: 'Contractors List',
                   //contractorDetails
                   contractorDetails_title: 'Contractor Deatails',
                   contractorDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current contructor?',
@@ -351,7 +351,7 @@ app.config(['$translateProvider',
                   forgotPassword_reset: 'Reset password',
                   forgotPassword_footerLabel: 'Un probl\u00E8me de connexion?\n\u00C9crivez \u00E0 ',
                   //contractorsList
-                  contractorsList_title: 'Contractors',
+                  contractorsList_title: 'Contractors List',
                   //contractorDetails
                   contractorDetails_title: 'Contractor Deatails',
                   contractorDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current contructor?',
