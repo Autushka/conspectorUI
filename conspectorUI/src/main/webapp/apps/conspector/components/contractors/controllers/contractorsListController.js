@@ -54,7 +54,8 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 						sPhone: aData[i].MainPhone,
 						sEmail: aData[i].Email,
 						_guid: aData[i].Guid,
-						sProjectPhase: sProjectName + " - " + sPhaseName
+						sTags: aData[i].DescriptionTags,
+						sProjectPhase: sProjectName + " - " + sPhaseName,
 					});
 				}
 			}
@@ -106,19 +107,5 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 				oStateParams: $scope.oStateParams
 			});
 		});		
-
-		// $scope.toggleLeftSidenav = function() {
-		// 	$mdSidenav('left').toggle();
-		// };
-
-		// var navigateToCustomizing = function(sStateName) {
-		// 	$mdSidenav('left').close();
-		// 	$state.go(sStateName);
-		// }
-		// var oWindow = angular.element($window);
-
-		// oWindow.bind('resize', function() {
-		// 	$mdSidenav('left').close();
-		// });
 	}
 ]);

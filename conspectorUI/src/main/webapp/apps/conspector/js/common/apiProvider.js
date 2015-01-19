@@ -852,7 +852,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntity({
 					sPath: "Contacts",
 					sKey: oParameters.sKey,
-					sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails",
+					sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
@@ -906,7 +906,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "Contacts",
 					sFilter: "GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + oParameters.sAccountGuid + "'",
-					sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails",
+					sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oContactEntity"

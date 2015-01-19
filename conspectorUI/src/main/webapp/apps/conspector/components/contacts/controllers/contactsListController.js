@@ -8,12 +8,12 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 
 		var sAccountGuid = "";
 
-		if($stateParams.sContractorGuid){
+		if ($stateParams.sContractorGuid) {
 			sAccountGuid = $stateParams.sContractorGuid;
 		}
-		if($stateParams.sClientGuid){
+		if ($stateParams.sClientGuid) {
 			sAccountGuid = $stateParams.sClientGuid;
-		}		
+		}
 
 		var oContactsListData = {
 			aData: []
@@ -30,23 +30,31 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 
 		var onContactsLoaded = function(aData) {
 			var sName = "";
+			var sProjectAndPhase = "";
 			for (var i = 0; i < aData.length; i++) {
-				sName = "";
-				if (aData[i].FirstName) {
-					sName = aData[i].FirstName + " ";
-				}
-				if (aData[i].LastName) {
-					sName = sName + aData[i].LastName;
-				}
+				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+					sName = "";
+					sProjectAndPhase = "";
+					if (aData[i].FirstName) {
+						sName = aData[i].FirstName + " ";
+					}
+					if (aData[i].LastName) {
+						sName = sName + aData[i].LastName;
+					}
 
-				oContactsListData.aData.push({
-					sName: sName,
-					sTitle: aData[i].Title,
-					sPhone: aData[i].MobilePhone,
-					sEmail: aData[i].Email,
-					_guid: aData[i].Guid,
-					sContactType: "TemporaryOne",
-				});
+					sProjectAndPhase = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN + ' - ' + aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR + ' - ' + aData[i].PhaseDetails.results[j].NameFR;
+					if (!sProjectAndPhase) {
+						sProjectAndPhase = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN + ' - ' + aData[i].PhaseDetails.results[j].NameEN;
+					}
+					oContactsListData.aData.push({
+						sName: sName,
+						sTitle: aData[i].Title,
+						sPhone: aData[i].MobilePhone,
+						sEmail: aData[i].Email,
+						_guid: aData[i].Guid,
+						sContactType: sProjectAndPhase,
+					});
+				}
 			}
 
 			$scope.tableParams.reload();
@@ -80,9 +88,6 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		};
 
 		$scope.onAddNew = function() {
-			// if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // needed here for new conractor creation flow...
-			// 	sAccountGuid = $scope.$parent.sContractorGuid;
-			// }
 			$state.go('app.contactDetails', {
 				sMode: "create",
 				sAccountGuid: sAccountGuid,
