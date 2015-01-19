@@ -5,6 +5,20 @@
 <md-button ng-show="sMode == 'edit'" class="md-primary md-raised" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
 <md-button ng-show="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
 <form name="contactDetailsForm">
+	<label>{{'global_contactType' | translate}}</label>
+	<div
+		multi-select
+		input-model="aContactTypes"
+		button-label="name"
+		item-label="name"
+		tick-property="ticked"
+		selection-mode="single"		
+		is-disabled="sMode == 'display'"
+		on-item-click="onDataModified()"
+		helper-elements=""
+		>
+	</div>	
+
 	<input type="text" class="cnpTextInputField" ng-model="oContact.sFirstName" ng-disabled="sMode == 'display'" placeholder="{{'global_firstName' | translate}}" ng-change="onDataModified()">
 	<input type="text" class="cnpTextInputField" ng-model="oContact.sLastName" ng-disabled="sMode == 'display'" placeholder="{{'global_lastName' | translate}}" ng-change="onDataModified()">
 
@@ -16,7 +30,18 @@
 
 	<input type="email" class="cnpTextInputField" ng-model="oContact.sEmail" ng-disabled="sMode == 'display'" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()">
 	<input type="text" class="cnpTextInputField" ng-model="oContact.sFax" ng-disabled="sMode == 'display'" placeholder="{{'global_fax' | translate}}" ng-change="onDataModified()">
-
+	<label>{{'global_associatedPhases' | translate}}</label>
+	<div
+		multi-select
+		input-model="aUserProjectsPhasesForMultiselect"
+		button-label="fullName"
+		item-label="name"
+		tick-property="ticked"
+		group-property="multiSelectGroup"
+		is-disabled="sMode == 'display'"
+		on-item-click="onDataModified()"
+		>
+	</div>
 	<label>{{'global_tags' | translate}}</label>
 	<tags-input
 		ng-model="oContact.aTags"

@@ -46,7 +46,6 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 					sEmail: aData[i].Email,
 					_guid: aData[i].Guid,
 					sContactType: "TemporaryOne",
-
 				});
 			}
 

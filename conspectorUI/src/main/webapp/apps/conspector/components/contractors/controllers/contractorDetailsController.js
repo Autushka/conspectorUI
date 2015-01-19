@@ -216,7 +216,9 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				}
 			};
 			var onSuccessDelete = function() {
-				$state.go('app.contractorsList');
+				historyProvider.navigateBack({
+					oState: $state
+				});
 			}
 			oDataForSave.Guid = $scope.oContractor._guid;
 			oDataForSave.LastModifiedAt = $scope.oContractor._lastModifiedAt;

@@ -40,6 +40,9 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 		$scope.onAccountTypes = function() {
 			navigateToCustomizing("app.adminPanel.accountTypesList");
 		};
+		$scope.onContactTypes = function() {
+			navigateToCustomizing("app.adminPanel.contactTypesList");
+		};		
 		$scope.onCompanies = function() {
 			navigateToCustomizing("app.adminPanel.companiesList");
 		};

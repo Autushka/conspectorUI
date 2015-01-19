@@ -217,6 +217,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/accountTypesListView.html',
 			controller: 'accountTypesListView'
 		});
+		$stateProvider.state('app.adminPanel.contactTypesList', {
+			url: '/contactTypesList',
+			templateUrl: 'apps/conspector/components/adminPanel/templates/contactTypesListView.html',
+			controller: 'contactTypesListView'
+		});		
 		$stateProvider.state('app.adminPanel.deficiencyPrioritiesList', {
 			url: '/deficiencyPrioritiesList',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/deficiencyPrioritiesListView.html',

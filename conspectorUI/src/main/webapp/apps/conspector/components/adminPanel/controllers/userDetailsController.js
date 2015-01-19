@@ -229,7 +229,9 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				}
 			};
 			var onSuccessDelete = function() {
-				$state.go('app.adminPanel.usersList');
+				historyProvider.navigateBack({
+					oState: $state
+				});
 			}
 			oDataForSave.UserName = $scope.oUser.sUserName;
 			oDataForSave.LastModifiedAt = $scope.oUser._lastModifiedAt;

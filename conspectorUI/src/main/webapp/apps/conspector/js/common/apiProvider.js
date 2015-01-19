@@ -637,6 +637,61 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
+			getContactTypes: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "ContactTypes",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oContactTypeEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			createContactType: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oContactTypeEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "ContactTypes",
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true,
+					bCompanyNeeded: true
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			updateContactType: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oContactTypeEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "ContactTypes",
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},
+
 			getDeficiencyPriorities: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "TaskPrioritys",
@@ -724,7 +779,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
 						message: {
 							sEntityName: "oAccountEntity",
-							sText: "Account has been created..."
+							sText: "Account has been created...",
+							sUserName: cacheProvider.oUserProfile.sUserName,
 						}
 					});
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
@@ -753,7 +809,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
 						message: {
 							sEntityName: "oAccountEntity",
-							sText: "Account has been updated..."
+							sText: "Account has been updated...",
+							sUserName: cacheProvider.oUserProfile.sUserName,
 						}
 					});
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
@@ -775,7 +832,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
-			getCountriesWithProvinces: function(oParameters){
+			getCountriesWithProvinces: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Countrys",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
@@ -788,21 +845,21 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					oParameters.onSuccess(svc) // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
-				}				
+				}
 			},
 
-			getContact: function(oParameters){
+			getContact: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "Contacts",
 					sKey: oParameters.sKey,
-					sExpand: "UserDetails,ContactTypeDetails,AccountDetails",
+					sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
 				svc.then(oParameters.onSuccess);
 			},
 
-			updateContact: function(oParameters){
+			updateContact: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oContactEntity");
 					if (oParameters.onSuccess) {
@@ -823,7 +880,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
-			createContact: function(oParameters){
+			createContact: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oContactEntity");
 					if (oParameters.onSuccess) {
@@ -845,11 +902,11 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
-			getContactsForAccount: function(oParameters){
+			getContactsForAccount: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Contacts",
 					sFilter: "GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + oParameters.sAccountGuid + "'",
-					sExpand: "UserDetails,ContactTypeDetails,AccountDetails",
+					sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oContactEntity"
@@ -858,8 +915,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					oParameters.onSuccess(svc) // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
-				}					
-			},			
+				}
+			},
 
 		}
 	}

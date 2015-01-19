@@ -22,7 +22,9 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 				cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
 				switch (payload.message.sEntityName) {
 					case "oAccountEntity":
-						$rootScope.$broadcast('accountsShouldBeRefreshed');
+						if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
+							$rootScope.$broadcast('accountsShouldBeRefreshed');
+						}
 						break;
 				}
 			});

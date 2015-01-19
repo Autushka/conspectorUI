@@ -70,6 +70,7 @@ app.config(['$translateProvider',
                   global_shippingProvince: 'Shipping state/province:',
                   global_tags: "Tags",
                   global_addTag: "Add a tag",
+                  global_contactType: "Contact Type:",
 
                   //backendMessages
                   m100: 'Operation finished successfully.',
@@ -111,6 +112,7 @@ app.config(['$translateProvider',
                   adminPanel_systemFiles: 'System Files',
                   adminPanel_operationLogs: 'Operation Logs',
                   adminPanel_accountTypes: 'Account Types',
+                  adminPanel_contactTypes: 'Contact Types',
                   adminPanel_hideSidenav: 'Open Admin Panel Menu',
                   //companiesList
                   companiesList_title: "Companies",
@@ -138,6 +140,8 @@ app.config(['$translateProvider',
                   operationLogsList_operationContent: 'Operation Content',
                   //accountTypesList
                   accountTypesList_title: 'Account Types',
+                  //contactTypesList
+                  contactTypesList_title: 'Contact Types',
                   //systemFiles
                   systemFiles_title: 'System Files',
                   systemFiles_logos: 'Logos:',
@@ -251,6 +255,7 @@ app.config(['$translateProvider',
                   global_shippingProvince: 'Shipping state/province:',
                   global_tags: "Tags",
                   global_addTag: "Add a tag",
+                  global_contactType: "Contact Type:",
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -291,6 +296,7 @@ app.config(['$translateProvider',
                   adminPanel_systemFiles: 'System Files',
                   adminPanel_operationLogs: 'Operation Logs',
                   adminPanel_accountTypes: 'Account Types',
+                  adminPanel_contactTypes: 'Contact Types',
                   adminPanel_hideSidenav: 'Open Admin Panel Menu',
                   //companiesList
                   companiesList_title: "Companies",
@@ -318,6 +324,8 @@ app.config(['$translateProvider',
                   operationLogsList_operationContent: 'Operation Content',
                   //accountTypesList
                   accountTypesList_title: 'Account Types',
+                  //contactTypesList
+                  contactTypesList_title: 'Contact Types',
                   //systemFiles
                   systemFiles_title: 'System Files',
                   systemFiles_logos: 'Logos:',

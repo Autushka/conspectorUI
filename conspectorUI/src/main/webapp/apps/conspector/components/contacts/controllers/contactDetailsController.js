@@ -7,11 +7,15 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
 		$scope.sMode = $stateParams.sMode;
-		$scope.oContact = {};
+		$scope.oContact = {
+			_aPhases: [],
+		};
 
 		var oContactWrapper = {
 			aData: [{}]
 		};
+
+		$scope.aContactTypes = [];
 
 		var aCountriesWithProvinces = [];
 
@@ -20,7 +24,14 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		$scope.aShippingCountries = [];
 		$scope.aShippingProvinces = [];
 
+		var constructPhasesMultiSelect = function(aSelectedPhases) {
+			$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
+				aSelectedPhases: aSelectedPhases
+			});
+		};
+
 		var setDisplayedContactDetails = function(oContact) {
+			var oContactPhasesGuids = [];
 			$scope.oContact._guid = oContact.Guid;
 			$scope.oContact._lastModifiedAt = oContact.LastModifiedAt;
 			$scope.oContact.sFirstName = oContact.FirstName;
@@ -33,6 +44,8 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			$scope.oContact.sFax = oContact.Fax;
 			$scope.oContact.sTitle = oContact.Title;
 			$scope.oContact.aTags = utilsProvider.tagsStringToTagsArray(oContact.DescriptionTags);
+
+			$scope.oContact._contactTypeGuid = oContact.ContactTypeGuid;
 
 			if (oContact.BillingAddress) {
 				$scope.oContact.sBillingStreet = oContact.BillingAddress.BillingStreet;
@@ -53,11 +66,17 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			$scope.oContact.sCreatedAt = utilsProvider.dBDateToSting(oContact.CreatedAt);
 			$scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oContact.LastModifiedAt);
 
+			$scope.oContact._aPhases = angular.copy(oContact.PhaseDetails.results);
+			for (var i = 0; i < $scope.oContact._aPhases.length; i++) {
+				oContactPhasesGuids.push($scope.oContact._aPhases[i].Guid);
+			}
+			constructPhasesMultiSelect(oContactPhasesGuids);
+
 			oContactWrapper.aData[0] = angular.copy($scope.oContact);
 		};
 
 		var sRequestSettings = "GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + sAccountGuid + "'";
-		sRequestSettings = sRequestSettings + "UserDetails,ContactTypeDetails,AccountDetails";
+		sRequestSettings = sRequestSettings + "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails";
 		var oContact = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oContactEntity",
 			sRequestSettings: sRequestSettings, //filter + expand
@@ -148,12 +167,40 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			}
 		};
 
+		var onContactTypesLoaded = function(aData) {
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oContactWrapper,
+				//oNewParentItemArrayWrapper: oContactWrapper,
+				sNameEN: "NameEN",
+				sNameFR: "NameFR",
+				sDependentKey: "Guid",
+				sParentKey: "_contactTypeGuid",
+				sTargetArrayNameInParent: "aContactTypes"
+			});
+			if (oContactWrapper.aData[0]) {
+				$scope.aContactTypes = angular.copy(oContactWrapper.aData[0].aContactTypes);
+			}
+		};
+
 		var onContactDetailsLoaded = function(oData) {
 			setDisplayedContactDetails(oData);
 
 			apiProvider.getCountriesWithProvinces({
 				bShowSpinner: false,
 				onSuccess: onCountriesLoaded
+			});
+
+			apiProvider.getContactTypes({
+				bShowSpinner: false,
+				onSuccess: onContactTypesLoaded
 			});
 		};
 
@@ -175,12 +222,25 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 					bShowSpinner: false,
 					onSuccess: onCountriesLoaded
 				});
+				apiProvider.getContactTypes({
+					bShowSpinner: false,
+					onSuccess: onContactTypesLoaded
+				});
 			}
 		} else {
+			constructPhasesMultiSelect({
+				aSelectedPhases: []
+			});
+			
 			apiProvider.getCountriesWithProvinces({
 				bShowSpinner: false,
 				onSuccess: onCountriesLoaded
 			});
+
+			apiProvider.getContactTypes({
+				bShowSpinner: false,
+				onSuccess: onContactTypesLoaded
+			});				
 		}
 
 		$scope.onEdit = function() {
@@ -199,11 +259,9 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				}
 			};
 			var onSuccessDelete = function() {
-				if ($rootScope.sFromState) {
-					$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
-				} else {
-					$state.go("app.contactsList");
-				}
+				historyProvider.navigateBack({
+					oState: $state
+				});
 			};
 			oDataForSave.Guid = $scope.oContact._guid;
 			oDataForSave.LastModifiedAt = $scope.oContact._lastModifiedAt;
@@ -228,6 +286,25 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			});
 		};
 
+		var prepareLinksForSave = function() { // link contact to phases
+			var aLinks = [];
+			var aUri = [];
+			var sUri = "";
+			for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
+				if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
+					sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
+					aUri.push(sUri);
+				}
+			}
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "PhaseDetails",
+					bKeepCompanyDependentLinks: true,
+					aUri: aUri
+				});
+			}
+			return aLinks;
+		};
 
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
@@ -255,6 +332,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
+			var aLinks = [];
 
 			var onSuccessCreation = function(oData) {
 				bDataHasBeenModified = false;
@@ -304,6 +382,13 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			oDataForSave.Guid = $scope.oContact._guid;
 			oDataForSave.AccountGuid = sAccountGuid;
 
+			for (var i = 0; i < $scope.aContactTypes.length; i++) {
+				if ($scope.aContactTypes[i].ticked) {
+					oDataForSave.ContactTypeGuid = $scope.aContactTypes[i].Guid;
+					break;
+				}
+			}
+
 			oDataForSave.FirstName = $scope.oContact.sFirstName;
 			oDataForSave.LastName = $scope.oContact.sLastName;
 			oDataForSave.HomePhone = $scope.oContact.sHomePhone;
@@ -351,12 +436,13 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			}
 
 			oDataForSave.LastModifiedAt = $scope.oContact._lastModifiedAt;
-
+			aLinks = prepareLinksForSave();
 			switch ($scope.sMode) {
 				case "edit":
 					apiProvider.updateContact({
 						bShowSpinner: true,
 						sKey: oDataForSave.Guid,
+						aLinks: aLinks,
 						oData: oDataForSave,
 						bShowSuccessMessage: true,
 						bShowErrorMessage: true,
@@ -366,6 +452,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				case "create":
 					apiProvider.createContact({
 						bShowSpinner: true,
+						aLinks: aLinks,
 						oData: oDataForSave,
 						bShowSuccessMessage: true,
 						bShowErrorMessage: true,
@@ -376,8 +463,10 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		};
 
 		$scope.onBack = function() {
-			historyProvider.navigateBack({oState: $state});
-		};			
+			historyProvider.navigateBack({
+				oState: $state
+			});
+		};
 
 		$scope.onSaveAndNew = function() {
 			$scope.onSave(true);
