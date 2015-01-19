@@ -1,0 +1,23 @@
+<div>{{'contactTypesList_title' | translate}}</div>
+<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
+<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
+
+	<tr ng-repeat="contactType in aDisplayedContactTypes">
+		<td data-title="actionsTE" style="width: 10%;">
+			<span ng-if="!contactType._editMode" ng-click="onEdit(contactType)">Edit</span><span ng-if="contactType._editMode" ng-click="onSave(contactType)">Save</span><span ng-if="contactType._editMode" ng-click="onDelete(contactType)">Delete</span>
+		</td>
+		<td data-title="nameENTE" sortable="'nameEN'" style="width: 35%;">
+        	<span ng-if="!contactType._editMode">{{contactType.nameEN}}</span>
+         	<div ng-if="contactType._editMode"><input type="text" ng-model="contactType.nameEN"/></div>
+		</td>
+		<td data-title="nameFRTE" sortable="'nameFR'" style="width: 35%;">
+        	<span ng-if="!contactType._editMode">{{contactType.nameFR}}</span>
+         	<div ng-if="contactType._editMode"><input type="text" ng-model="contactType.nameFR"/></div>
+		</td>
+		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 20%;">
+        	<span ng-if="!contactType._editMode">{{contactType.sortingSequence}}</span>
+         	<div ng-if="contactType._editMode"><input type="number" ng-model="contactType.sortingSequence"/></div>
+		</td>
+	</tr>
+	<tr ng-hide="aDisplayedContactTypes.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>		
+</table>

@@ -101,7 +101,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		};
 
 		var tabSelectionBasedOnHash = function() {
-			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1) {
+			if ($window.location.hash.indexOf("#/app/profileSettings") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1  || $window.location.hash.indexOf("#/app/contractorDetails") > -1  || $window.location.hash.indexOf("#/app/contactDetails") > -1) {
 				$scope.selectedTabIndex = -1;
 				$scope.$broadcast("$mdTabsPaginationChanged");
 				return;
@@ -114,7 +114,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("unit") > -1) {
 				$scope.selectedTabIndex = 1;
 			}
-			if ($window.location.hash.indexOf("contractor") > -1 || $window.location.hash.indexOf("contact") > -1) { //should be simplified when contacts tabs is added
+			if ($window.location.hash.indexOf("contractor") > -1 || ($window.location.hash.indexOf("contact") > -1 && $window.location.hash.indexOf("#/app/adminPanel") < 0)) { //should be simplified when contacts tabs is added
 				$scope.selectedTabIndex = 2;
 			}
 			if ($window.location.hash.indexOf("client") > -1) {
@@ -129,22 +129,22 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("unit") > -1) {
 				sCurrentSelectedTab = "Units";
 			}
-			if ($window.location.hash.indexOf("contractor") > -1 || $window.location.hash.indexOf("contact") > -1) { //should be simplified when contacts tabs is added
+			if ($window.location.hash.indexOf("contractor") > -1 || ($window.location.hash.indexOf("contact") > -1 && $window.location.hash.indexOf("#/app/adminPanel") < 0)) { //should be simplified when contacts tabs is added
 				sCurrentSelectedTab = "Contractors";
 			}
 			if ($window.location.hash.indexOf("client") > -1) {
 				sCurrentSelectedTab = "Clients";
 			}
 
-			if (oTab.iIndex === 1 && sCurrentSelectedTab === "Units") {
-				return;
-			}
-			if (oTab.iIndex === 2 && sCurrentSelectedTab === "Contractors") {
-				return;
-			}
-			if (oTab.iIndex === 3 && sCurrentSelectedTab === "Clients") {
-				return;
-			}
+			// if (oTab.iIndex === 1 && sCurrentSelectedTab === "Units") {
+			// 	return;
+			// }
+			// if (oTab.iIndex === 2 && sCurrentSelectedTab === "Contractors") {
+			// 	return;
+			// }
+			// if (oTab.iIndex === 3 && sCurrentSelectedTab === "Clients") {
+			// 	return;
+			// }
 
 			if ($scope.selectedTabIndex !== undefined) { //($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
 				$state.go(oTab.sState);
