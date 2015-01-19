@@ -107,18 +107,18 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 			});
 		});		
 
-		$scope.toggleLeftSidenav = function() {
-			$mdSidenav('left').toggle();
-		};
+		// $scope.toggleLeftSidenav = function() {
+		// 	$mdSidenav('left').toggle();
+		// };
 
-		var navigateToCustomizing = function(sStateName) {
-			$mdSidenav('left').close();
-			$state.go(sStateName);
-		}
-		var oWindow = angular.element($window);
+		// var navigateToCustomizing = function(sStateName) {
+		// 	$mdSidenav('left').close();
+		// 	$state.go(sStateName);
+		// }
+		// var oWindow = angular.element($window);
 
-		oWindow.bind('resize', function() {
-			$mdSidenav('left').close();
-		});
+		// oWindow.bind('resize', function() {
+		// 	$mdSidenav('left').close();
+		// });
 	}
 ]);

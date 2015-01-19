@@ -10,6 +10,7 @@
 	Content of the sidenav
 	</div>
 	</md-sidenav> -->
+<!-- END OF SIDENAV -->
 <div ui-view style="width: 100%; height: 100%;">
 <!-- CONTENT SECTION WITH TITLE AND BUTTON FOR SIDE BAR -->
 <div class="cnpContent" layout="column">
@@ -27,9 +28,8 @@
 			</label>
 		</div>
 	</div>
-<!-- END OF SIDENAV -->
+
 <!-- CONTENT VIEW -->
-	
 	<!-- ACTION BAR -->
 	<div layout="row" layout-
 		align="space-between start" class="md-default-theme cnpActionBar">
@@ -46,13 +46,11 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="contractorsList" show-filter="true">
 			<tbody ng-repeat="group in $groups">
-				<tr class="ng-table-group">
-					<td colspan="{{$columns.length}}">
-						<a href="" ng-click="group.$hideRows = !group.$hideRows">
-							<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
-							<strong>
-							{{ group.value }}
-							</strong>
+				<tr class="ng-table-group notSelectable" >
+					<td colspan="{{$columns.length}}" >
+						<div layout="row" layout-align="start center" class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">{{ group.value }}
+							<!-- <div class="glyphicon notSelectable" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }">{{ group.value }}</div> -->
+						</div>
 						</a>
 					</td>
 				</tr>
