@@ -10,8 +10,8 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		$scope.bDisplayAccountColumn = $state.current.name === "app.contactsList" ? true : false;
 
 
-		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
-		$scope.oStateParams = {};// for backNavigation		
+		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$scope.oStateParams = {}; // for backNavigation		
 
 		var sAccountGuid = "";
 
@@ -77,11 +77,11 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 					onSuccess: onContactsLoaded,
 					sAccountGuid: sAccountGuid
 				});
-			}else{
+			} else {
 				apiProvider.getContacts({
 					bShowSpinner: true,
 					onSuccess: onContactsLoaded,
-				});				
+				});
 			}
 
 		};
@@ -89,7 +89,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		loadContacts();
 
 		$scope.onDisplay = function(oContact) {
-			if(!sAccountGuid){
+			if (!sAccountGuid) {
 				sAccountGuid = oContact._accountGuid;
 			}
 			$state.go('app.contactDetails', {
@@ -100,9 +100,9 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		};
 
 		$scope.onEdit = function(oContact) {
-			if(!sAccountGuid){
+			if (!sAccountGuid) {
 				sAccountGuid = oContact._accountGuid;
-			}			
+			}
 			$state.go('app.contactDetails', {
 				sMode: "edit",
 				sAccountGuid: sAccountGuid,
@@ -122,10 +122,12 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		};
 
 		$scope.$on("$destroy", function() {
-			historyProvider.addStateToHistory({
-				sStateName: $scope.sCurrentStateName,
-				oStateParams: $scope.oStateParams
-			});
-		});			
+			if ($scope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") {//don't save in history if contact list is weathin the contractor details view...  
+				historyProvider.addStateToHistory({
+					sStateName: $scope.sCurrentStateName,
+					oStateParams: $scope.oStateParams
+				});
+			}
+		});
 	}
 ]);

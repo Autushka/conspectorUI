@@ -3,7 +3,7 @@ viewControllers.controller('contractorDetailsWrapperView', ['$scope', '$state', 
 		//$scope.sMode = "";
 		$scope.sViewName = "contractorDetailsWrapperView";
 		$scope.sCurrentStateName = $state.current.name;
-		$scope.oStateParams = {};
+		$scope.oStateParams = angular.copy($stateParams);
 
 		$scope.$on("$destroy", function() {
 			historyProvider.addStateToHistory({

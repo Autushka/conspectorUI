@@ -109,7 +109,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		};
 
 		var tabSelectionBasedOnHash = function() {
-			if ($window.location.hash.indexOf("#/app/profileSettings") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1  || $window.location.hash.indexOf("#/app/contractorDetails") > -1  || $window.location.hash.indexOf("#/app/contactDetails") > -1) {
+			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1  || $window.location.hash.indexOf("#/app/contractorDetails") > -1  || $window.location.hash.indexOf("#/app/contactDetails") > -1) {
 				$scope.selectedTabIndex = -1;
 				$scope.$broadcast("$mdTabsPaginationChanged");
 				return;
@@ -128,7 +128,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("client") > -1) {
 				$scope.selectedTabIndex = 3;
 			}
-			if ($window.location.hash.indexOf("contact") > -1 && $window.location.hash.indexOf("#/app/adminPanel") < 0) {
+			if ($window.location.hash.indexOf("contact") > -1) {
 				$scope.selectedTabIndex = 4;
 			}			
 		};
@@ -146,7 +146,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("client") > -1) {
 				sCurrentSelectedTab = "Clients";
 			}
-			if ($window.location.hash.indexOf("contact") > -1 && $window.location.hash.indexOf("#/app/adminPanel") < 0) {
+			if ($window.location.hash.indexOf("contact") > -1) {
 				sCurrentSelectedTab = "Contacts";
 			}			
 
