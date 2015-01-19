@@ -1,10 +1,17 @@
-viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider',
-	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider) {
+viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
+	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider) {
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.nameTE = $translate.instant('global_name');
 		$scope.titleTE = $translate.instant('global_title');
 		$scope.phoneTE = $translate.instant('global_phone');
 		$scope.emailTE = $translate.instant('global_email');
+		$scope.accountTE = $translate.instant('global_account');
+
+		$scope.bDisplayAccountColumn = $state.current.name === "app.contactsList" ? true : false;
+
+
+		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
+		$scope.oStateParams = {};// for backNavigation		
 
 		var sAccountGuid = "";
 
@@ -53,6 +60,8 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 						sEmail: aData[i].Email,
 						_guid: aData[i].Guid,
 						sContactType: sProjectAndPhase,
+						_accountGuid: aData[i].AccountGuid,
+						sAccountName: aData[i].AccountDetails.Name,
 					});
 				}
 			}
@@ -62,16 +71,27 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 
 		var loadContacts = function() {
 			oContactsListData.aData = [];
-			apiProvider.getContactsForAccount({
-				bShowSpinner: true,
-				onSuccess: onContactsLoaded,
-				sAccountGuid: sAccountGuid
-			});
+			if (sAccountGuid) {
+				apiProvider.getContactsForAccount({
+					bShowSpinner: true,
+					onSuccess: onContactsLoaded,
+					sAccountGuid: sAccountGuid
+				});
+			}else{
+				apiProvider.getContacts({
+					bShowSpinner: true,
+					onSuccess: onContactsLoaded,
+				});				
+			}
+
 		};
 
 		loadContacts();
 
 		$scope.onDisplay = function(oContact) {
+			if(!sAccountGuid){
+				sAccountGuid = oContact._accountGuid;
+			}
 			$state.go('app.contactDetails', {
 				sMode: "display",
 				sAccountGuid: sAccountGuid,
@@ -80,6 +100,9 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		};
 
 		$scope.onEdit = function(oContact) {
+			if(!sAccountGuid){
+				sAccountGuid = oContact._accountGuid;
+			}			
 			$state.go('app.contactDetails', {
 				sMode: "edit",
 				sAccountGuid: sAccountGuid,
@@ -88,11 +111,21 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		};
 
 		$scope.onAddNew = function() {
+			// if(!sAccountGuid){
+			// 	sAccountGuid = oContact._accountGuid;
+			// }			
 			$state.go('app.contactDetails', {
 				sMode: "create",
 				sAccountGuid: sAccountGuid,
 				sContactGuid: "",
 			});
 		};
+
+		$scope.$on("$destroy", function() {
+			historyProvider.addStateToHistory({
+				sStateName: $scope.sCurrentStateName,
+				oStateParams: $scope.oStateParams
+			});
+		});			
 	}
 ]);

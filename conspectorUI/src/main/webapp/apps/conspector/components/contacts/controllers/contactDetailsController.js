@@ -33,6 +33,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		var setDisplayedContactDetails = function(oContact) {
 			var oContactPhasesGuids = [];
 			$scope.oContact._guid = oContact.Guid;
+
 			$scope.oContact._lastModifiedAt = oContact.LastModifiedAt;
 			$scope.oContact.sFirstName = oContact.FirstName;
 			$scope.oContact.sLastName = oContact.LastName;
@@ -44,6 +45,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			$scope.oContact.sFax = oContact.Fax;
 			$scope.oContact.sTitle = oContact.Title;
 			$scope.oContact.aTags = utilsProvider.tagsStringToTagsArray(oContact.DescriptionTags);
+
 
 			$scope.oContact._contactTypeGuid = oContact.ContactTypeGuid;
 
@@ -75,7 +77,14 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			oContactWrapper.aData[0] = angular.copy($scope.oContact);
 		};
 
-		var sRequestSettings = "GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + sAccountGuid + "'";
+		var sRequestSettings = "";
+		if(historyProvider.getPreviousStateName() === "app.contactsList"){ // if navigated from contactsList
+			sRequestSettings = "GeneralAttributes/IsDeleted eq false";
+			
+		}else{// if navigated from contract details
+			sRequestSettings = "GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + sAccountGuid + "'";
+		}
+		
 		sRequestSettings = sRequestSettings + "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails";
 		var oContact = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oContactEntity",

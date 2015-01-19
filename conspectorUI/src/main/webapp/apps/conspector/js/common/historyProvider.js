@@ -13,6 +13,13 @@ app.factory('historyProvider', [
 			},
 			removeHistory: function(){
 				this.aHistoryStates = [];
+			},
+			getPreviousStateName: function(){
+				var sStatusName = ""
+				if(this.aHistoryStates.length && this.aHistoryStates[this.aHistoryStates.length - 1]){
+					sStatusName = this.aHistoryStates[this.aHistoryStates.length - 1].sStateName;
+				}
+				return sStatusName;
 			}			
 		}
 	}

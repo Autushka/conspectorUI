@@ -88,6 +88,14 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			});
 		}
 
+		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contacts) {
+			$scope.aTabs.push({
+				iIndex: 4,
+				sTitle: $translate.instant("app_contactsTab"),
+				sState: "app.contactsList" //"#/app/clientsList"
+			});
+		}		
+
 		$scope.onSwitchCompanies = function() {
 			$state.go('companySelection');
 		};
@@ -114,12 +122,15 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("unit") > -1) {
 				$scope.selectedTabIndex = 1;
 			}
-			if ($window.location.hash.indexOf("contractor") > -1 || ($window.location.hash.indexOf("contact") > -1 && $window.location.hash.indexOf("#/app/adminPanel") < 0)) { //should be simplified when contacts tabs is added
+			if ($window.location.hash.indexOf("contractor") > -1) { 
 				$scope.selectedTabIndex = 2;
 			}
 			if ($window.location.hash.indexOf("client") > -1) {
 				$scope.selectedTabIndex = 3;
 			}
+			if ($window.location.hash.indexOf("contact") > -1 && $window.location.hash.indexOf("#/app/adminPanel") < 0) {
+				$scope.selectedTabIndex = 4;
+			}			
 		};
 
 		$timeout(tabSelectionBasedOnHash, 100);
@@ -129,12 +140,15 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("unit") > -1) {
 				sCurrentSelectedTab = "Units";
 			}
-			if ($window.location.hash.indexOf("contractor") > -1 || ($window.location.hash.indexOf("contact") > -1 && $window.location.hash.indexOf("#/app/adminPanel") < 0)) { //should be simplified when contacts tabs is added
+			if ($window.location.hash.indexOf("contractor") > -1) { 
 				sCurrentSelectedTab = "Contractors";
 			}
 			if ($window.location.hash.indexOf("client") > -1) {
 				sCurrentSelectedTab = "Clients";
 			}
+			if ($window.location.hash.indexOf("contact") > -1 && $window.location.hash.indexOf("#/app/adminPanel") < 0) {
+				sCurrentSelectedTab = "Contacts";
+			}			
 
 			// if (oTab.iIndex === 1 && sCurrentSelectedTab === "Units") {
 			// 	return;

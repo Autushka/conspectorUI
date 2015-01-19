@@ -1,4 +1,5 @@
 app.factory('rolesSettings', [
+
 	function() {
 		return {
 			oInitialViews: {
@@ -7,29 +8,32 @@ app.factory('rolesSettings', [
 				managementUser: "app.deficienciesList"
 			},
 			oDisplayedSections: {
-				globalAdministrator:{
+				globalAdministrator: {
 					deficiencies: true,
 					units: true,
 					contractors: true,
 					clients: true,
-					adminPanel: true,
-					profileSettings: true					
-				},					
-				systemAdministrator:{
-					deficiencies: true,
-					units: true,
-					contractors: true,
-					clients: true,
+					contacts: true,
 					adminPanel: true,
 					profileSettings: true
 				},
-				managementUser:{
+				systemAdministrator: {
 					deficiencies: true,
 					units: true,
 					contractors: true,
 					clients: true,
+					contacts: true,
+					adminPanel: true,
+					profileSettings: true
+				},
+				managementUser: {
+					deficiencies: true,
+					units: true,
+					contractors: true,
+					clients: true,
+					contacts: true,
 					adminPanel: false,
-					profileSettings: true					
+					profileSettings: true
 				},
 			}
 		}

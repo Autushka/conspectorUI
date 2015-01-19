@@ -848,6 +848,22 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				}
 			},
 
+			getContacts: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "Contacts",
+					sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oContactEntity"
+				});
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},			
+
 			getContact: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "Contacts",
