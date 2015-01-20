@@ -1,11 +1,31 @@
-<section layout="row" flex>
+<md-content layout="row" layout="center start" class="cnpContentWrapper">
+    <md-sidenav class="md-sidenav-left cnpSidenavLeft" md-component-id="left" md-is-locked-open="$media('gt-md')">
+        <md-toolbar class="md-default-theme" layout="column" layout-align="center center">
+            <label class="cnpSidebarTitle">
+                {{'profileSettings_menuHeader' | translate}}
+            </label>
+        </md-toolbar>       
+        <div class="cnpSidenavElements">  <!-- ng-controller="LeftCtrl" -->    
+             <md-button layout="row" layout-align="start center" ng-click="onProfileDetails()" class="md-button cnpSidebarButton">
+                      {{'profileSettings_profileDetails' | translate}}
+             </md-button>
+             <md-button layout="row" layout-align="start center" ng-click="onChangePassword()" class="md-button cnpSidebarButton">
+                       {{'profileSettings_changePassword' | translate}}
+             </md-button>
+        </div>
+    </md-sidenav>
+       <div ui-view style="width: 100%; height: 100%;">
+    </div>
+</md-content>
+
+<!-- <section layout="row" flex>
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-is-locked-open="true">
   <md-toolbar>
   <h1 class="md-toolbar-tools">{{'profileSettings_menuHeader' | translate}}</h1>
   </md-toolbar>
-  <md-content class="md-padding" >  <!-- ng-controller="LeftCtrl" -->
-    <md-button layout="column" ng-click="onProfileDetails()">{{'profileSettings_profileDetails' | translate}}</md-button>
-    <md-button layout="column" ng-click="onChangePassword()">{{'profileSettings_changePassword' | translate}}</md-button>
+  <md-content class="md-padding" >  
+  <md-button layout="column" ng-click="onProfileDetails()">{{'profileSettings_profileDetails' | translate}}</md-button>
+  <md-button layout="column" ng-click="onChangePassword()">{{'profileSettings_changePassword' | translate}}</md-button>
   </md-content>
   </md-sidenav>
   <md-content flex class="md-padding">
@@ -13,7 +33,7 @@
     <div ui-view style="width: 100%; height: 100%;"></div>
   </div>
   </md-content>
-</section>
+</section> -->
 
 
 

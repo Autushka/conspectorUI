@@ -17,9 +17,9 @@
 		align="space-between start" class="md-default-theme cnpActionBar">
 		<div layout="row" layout-align="start start">
 			<!-- <div>
-					<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
-					{{'global_addNew' | translate}}
-					</md-button>
+						<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
+						{{'global_addNew' | translate}}
+						</md-button>
 			</div> -->
 		</div>
 		<div layout="row" layout-align="end start">
@@ -27,18 +27,8 @@
 	</div>
 	<!-- NG TABLE -->
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
-		<table ng-table="tableParams" show-filter="true" class="cnpNgTable" id="operationLog">
+		<table ng-table="tableParams" nogroups show-filter="true" class="cnpNgTable" id="operationLog">
 			<tr ng-repeat="operationLog in aDisplayedOperationLogs">
-				<!-- <td data-title="actionsTE">
-											<div layout="row" layout-align="center center">
-																		<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!deficiencyPriority._editMode" ng-click="onEdit(deficiencyPriority)">
-																		</div>
-																		<div class="cnpInputIcon cnpSaveIcon" ng-if="deficiencyPriority._editMode" ng-click="onSave(deficiencyPriority)">
-																		</div>
-																		<div class="cnpInputIcon cnpDeleteIcon" ng-if="deficiencyPriority._editMode" ng-click="onDelete(deficiencyPriority)">
-																		</div>
-											</div>
-				</td> -->
 				<td data-title="operationNameTE" sortable="'operationName'" filter="{'operationName': 'text'}">
 					<div layout="row" layout-align="start center">
 						<div>

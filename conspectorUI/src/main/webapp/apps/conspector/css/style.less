@@ -1133,6 +1133,12 @@ NG TABLE
 .cnpNgTable[show-filter="true"] tbody tr:nth-child(2n) {
 	background-color: @whiteColor;
 }
+.cnpNgTable[show-filter="true"][nogroups] tbody tr:nth-child(2n + 1) {
+	background-color: @whiteColor;
+}
+.cnpNgTable[show-filter="true"][nogroups] tbody tr:nth-child(2n) {
+	background-color: @mediumGreyBackgroundColor;
+}
 .cnpNgTable tbody tr:nth-child(2n) {
 	background-color: @mediumGreyBackgroundColor;
 }
