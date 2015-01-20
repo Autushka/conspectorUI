@@ -1,38 +1,165 @@
-<div>{{'systemFiles_title' | translate}}</div>
-<div>{{'systemFiles_logos' | translate}}</div>
-<md-button type="submit" class="md-primary md-raised" ng-click="onAddNewLogo()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
-<table ng-table="logosTableParams" style="width: 100%; border:1px solid black;" >
-	<tr ng-repeat="logo in aDisplayedLogos">
-		<td data-title="actionsTE" style="width: 10%;">
-			<span ng-if="logo._editMode == false" ng-click="onEditImg(logo)">Edit</span>
-			<span ng-if="logo._editMode" ng-click="onCancelLogo(logo, $index)">Cancel</span>
-			<span ng-if="logo._editMode" ng-click="onDeleteLogo(logo, $index)">Delete</span>
-		</td>
-
-		<td>
-			<img ng-if="!logo._createMode" ng-src="{{logo.sUrl}}" style="width:200px; height:100px;"/>
-			<button ng-if="logo._createMode" ng-file-select accept="image/*" ng-file-change="onLogoSelected($files, $event, $index)">{{'global_upload' | translate}}</button>			
-		</td>
-	</tr>
-	<tr ng-hide="aDisplayedLogos.length > 0"><td colspan="1" >{{'global_noTableData' | translate}}</td></tr>		
-</table>
-
-<div>{{'systemFiles_deficiencyStatuses' | translate}}</div>
-<md-button type="submit" class="md-primary md-raised" ng-click="onAddNewDeficiencyStatus()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
-<table ng-table="deficiencyStatusesTableParams" style="width: 100%; border:1px solid black;" >
-
-	<tr ng-repeat="deficiencyStatus in aDisplayedDeficiencyStatuses">
-		<td data-title="actionsTE" style="width: 10%;">
-			<span ng-if="deficiencyStatus._editMode == false" ng-click="onEditImg(deficiencyStatus)">Edit</span>
-			<span ng-if="deficiencyStatus._editMode" ng-click="onCancelDeficiencyStatus(deficiencyStatus, $index)">Cancel</span>
-			<span ng-if="deficiencyStatus._editMode" ng-click="onDeleteDeficiencyStatus(deficiencyStatus, $index)">Delete</span>
-		</td>
-
-		<td>
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				{{'adminPanel_hideSidenav' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				<div>{{'systemFiles_title' | translate}}</div>
+			</label>
+		</div>
+	</div>
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
+		<div layout="row" layout-align="start start">
+			<div>
+				<!-- <md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				{{'adminPanel_hideSidenav' | translate}}
+				</md-button> -->
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				<div>{{'systemFiles_logos' | translate}}</div>
+			</label>
+		</div>
+	</div>
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpActionBar">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNewLogo()">
+				{{'global_addNew' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+		</div>
+	</div>
+	<!-- NG TABLE -->
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="logosTableParams" class="cnpNgTable" id="logosList">
+			<tr ng-repeat="logo in aDisplayedLogos">
+				<td data-title="actionsTE">
+					<div layout="row" layout-align="center center">
+						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="logo._editMode == false"  ng-click="onEditImg(logo)">
+						</div>
+						<div class="cnpInputIcon cnpSaveIcon" ng-if="logo._editMode" ng-click="onCancelLogo(logo, $index)">
+						</div>
+						<div class="cnpInputIcon cnpDeleteIcon" ng-if="logo._editMode" ng-click="onDeleteLogo(logo, $index)">
+						</div>
+					</div>
+				</td>
+				<td data-title="logoTE">
+					<img ng-if="!logo._createMode" ng-src="{{logo.sUrl}}" style="width:200px;"/>
+					<button ng-if="logo._createMode" ng-file-select accept="image/*" ng-file-change="onLogoSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
+				</td>
+			</tr>
+			<tr ng-hide="aDisplayedLogos.length > 0">
+				<td td colspan="2">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- END OF NG TABLE -->
+</div>
+<!-- END OF CONTENT VIEW -->
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
+		<div layout="row" layout-align="start start">
+			<div>
+				<!-- 	<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				{{'adminPanel_hideSidenav' | translate}}
+				</md-button> -->
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				<div>{{'systemFiles_deficiencyStatusIcon' | translate}}</div>
+			</label>
+		</div>
+	</div>
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpActionBar">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNewDeficiencyStatus()">
+				{{'global_addNew' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+		</div>
+	</div>
+	<!-- NG TABLE -->
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="deficiencyStatusesTableParams" class="cnpNgTable" id="deficiencyStatusIconsList">
+			<tr ng-repeat="deficiencyStatus in aDisplayedDeficiencyStatuses">
+				<td data-title="actionsTE">
+					<div layout="row" layout-align="center center">
+						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="deficiencyStatus._editMode == false"  ng-click="onEditImg(deficiencyStatus)">
+						</div>
+						<div class="cnpInputIcon cnpSaveIcon" ng-if="deficiencyStatus._editMode" ng-click="onCancelDeficiencyStatus(deficiencyStatus, $index)">
+						</div>
+						<div class="cnpInputIcon cnpDeleteIcon" ng-if="deficiencyStatus._editMode" ng-click="onDeleteDeficiencyStatus(deficiencyStatus, $index)">
+						</div>
+					</div>
+				</td>
+				<td data-title="iconTE">
+					<img ng-if="!deficiencyStatus._createMode" ng-src="{{deficiencyStatus.sUrl}}" style="width:24px; height:24px;"/>
+					<button ng-if="deficiencyStatus._createMode" ng-file-select accept="image/*" ng-file-change="onDeficiencyStatusSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
+				</td>
+			</tr>
+			<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0">
+				<td td colspan="2">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- END OF NG TABLE -->
+</div>
+<!-- END OF CONTENT VIEW -->
+<!-- <div>{{'systemFiles_title' | translate}}</div>
+<div>{{'systemFiles_logos' | translate}}</div> -->
+<!-- <md-button type="submit" class="md-primary md-raised" ng-click="onAddNewLogo()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
+<table ng-table="logosTableParams" style="width: 100%; border:1px solid black;" > -->
+	<!-- 	<tr ng-repeat="logo in aDisplayedLogos">
+			<td data-title="actionsTE" style="width: 10%;">
+					<span ng-if="logo._editMode == false" ng-click="onEditImg(logo)">Edit</span>
+					<span ng-if="logo._editMode" ng-click="onCancelLogo(logo, $index)">Cancel</span>
+					<span ng-if="logo._editMode" ng-click="onDeleteLogo(logo, $index)">Delete</span>
+		</td> -->
+		<!-- 		<td>
+				<img ng-if="!logo._createMode" ng-src="{{logo.sUrl}}" style="width:200px; height:100px;"/>
+				<button ng-if="logo._createMode" ng-file-select accept="image/*" ng-file-change="onLogoSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
+		</td> -->
+	<!-- 	</tr>
+	<tr ng-hide="aDisplayedLogos.length > 0"><td colspan="1" >{{'global_noTableData' | translate}}</td></tr>
+</table> -->
+<!-- <div>{{'systemFiles_deficiencyStatusIcon' | translate}}</div>
+<md-button type="submit" class="md-primary md-raised" ng-click="onAddNewDeficiencyStatus()" md-theme="orange">{{'global_addNew' | translate}}</md-button> -->
+<!-- <table ng-table="deficiencyStatusesTableParams" style="width: 100%; border:1px solid black;" >
+	<tr ng-repeat="deficiencyStatus in aDisplayedDeficiencyStatuses"> -->
+		<!-- 		<td data-title="actionsTE" style="width: 10%;">
+				<span ng-if="deficiencyStatus._editMode == false" ng-click="onEditImg(deficiencyStatus)">Edit</span>
+				<span ng-if="deficiencyStatus._editMode" ng-click="onCancelDeficiencyStatus(deficiencyStatus, $index)">Cancel</span>
+				<span ng-if="deficiencyStatus._editMode" ng-click="onDeleteDeficiencyStatus(deficiencyStatus, $index)">Delete</span>
+		</td> -->
+<!-- 		<td data-title="iconTE">
 			<img ng-if="!deficiencyStatus._createMode" ng-src="{{deficiencyStatus.sUrl}}" style="width:24px; height:24px;"/>
-			<button ng-if="deficiencyStatus._createMode" ng-file-select accept="image/*" ng-file-change="onDeficiencyStatusSelected($files, $event, $index)">{{'global_upload' | translate}}</button>			
+			<button ng-if="deficiencyStatus._createMode" ng-file-select accept="image/*" ng-file-change="onDeficiencyStatusSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
 		</td>
-
 	</tr>
-	<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0"><td colspan="1" >{{'global_noTableData' | translate}}</td></tr>		
-</table>
+	<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0"><td colspan="1" >{{'global_noTableData' | translate}}</td></tr>
+</table> -->

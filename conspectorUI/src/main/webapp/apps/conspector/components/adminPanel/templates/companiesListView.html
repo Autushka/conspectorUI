@@ -1,27 +1,80 @@
-<div>{{'companiesList_title' | translate}}</div>
-<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
-<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
-
-	<tr ng-repeat="company in aDisplayedCompanies">
-		<td data-title="actionsTE" style="width: 10%;">
-			<span ng-if="!company._editMode" ng-click="onEdit(company)">Edit</span><span ng-if="company._editMode" ng-click="onSave(company)">Save</span><span ng-if="company._editMode" ng-click="onDelete(company)">Delete</span>
-		</td>
-		<td data-title="companyNameTE" sortable="'companyName'" style="width: 15%;">
-        	<span ng-if="!company._createMode">{{company.companyName}}</span>
-         	<div ng-if="company._createMode"><input type="text" ng-model="company.companyName"/></div>
-		</td>		
-		<td data-title="descriptionENTE" sortable="'descriptionEN'" style="width: 30%;">
-        	<span ng-if="!company._editMode">{{company.descriptionEN}}</span>
-         	<div ng-if="company._editMode"><input type="text" ng-model="company.descriptionEN"/></div>
-		</td>
-		<td data-title="descriptionFRTE" sortable="'descriptionFR'" style="width: 30%;">
-        	<span ng-if="!company._editMode">{{company.descriptionFR}}</span>
-         	<div ng-if="company._editMode"><input type="text" ng-model="company.descriptionFR"/></div>
-		</td>
-		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 15%;">
-        	<span ng-if="!company._editMode">{{company.sortingSequence}}</span>
-         	<div ng-if="company._editMode"><input type="number" ng-model="company.sortingSequence"/></div>
-		</td>
-	</tr>
-	<tr ng-hide="aDisplayedCompanies.length > 0"><td colspan="5" >{{'global_noTableData' | translate}}</td></tr>		
-</table>
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				{{'adminPanel_hideSidenav' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				{{'companiesList_title' | translate}}
+			</label>
+		</div>
+	</div>
+	<div layout="row" layout-
+		align="space-between start" class="md-default-theme cnpActionBar">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
+				{{'global_addNew' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+		</div>
+	</div>
+	<!-- NG TABLE -->
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="tableParams" class="cnpNgTable" id="companiesList">
+			<tr ng-repeat="company in aDisplayedCompanies">
+				<td data-title="actionsTE">
+					<div layout="row" layout-align="center center">
+						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!company._editMode" ng-click="onEdit(company)">
+						</div>
+						<div class="cnpInputIcon cnpSaveIcon" ng-if="company._editMode" ng-click="onSave(company)">
+						</div>
+						<div class="cnpInputIcon cnpDeleteIcon" ng-if="company._editMode" ng-click="onDelete(company)">
+						</div>
+					</div>
+				</td>
+				<td data-title="companyNameTE" sortable="'companyName'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!company._createMode">{{company.companyName}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="company._createMode" type="text" ng-model="company.companyName"/>
+					</div>
+				</td>
+				<td data-title="descriptionENTE" sortable="'descriptionEN'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!company._editMode">{{company.descriptionEN}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="company._editMode" type="text" ng-model="company.descriptionEN"/>
+					</div>
+				</td>
+				<td data-title="descriptionFRTE" sortable="'descriptionFR'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!company._editMode">{{company.descriptionFR}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="company._editMode" type="text" ng-model="company.descriptionFR"/>
+					</div>
+				</td>
+				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!company._editMode">{{company.sortingSequence}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="company._editMode" type="number" ng-model="company.sortingSequence"/>
+					</div>
+				</td>
+			</tr>
+			<tr ng-hide="aDisplayedCompanies.length > 0">
+				<td td colspan="5">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- END OF NG TABLE -->
+</div>
+<!-- END OF CONTENT VIEW -->

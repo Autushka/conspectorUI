@@ -1,35 +1,88 @@
-<div>{{'phasesList_title' | translate}}</div>
-<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
-<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
-	<tr ng-repeat="phase in aDisplayedPhases">
-		<td data-title="actionsTE" style="width: 10%;">
-			<span ng-if="!phase._editMode" ng-click="onEdit(phase)">Edit</span><span ng-if="phase._editMode" ng-click="onSave(phase)">Save</span><span ng-if="phase._editMode" ng-click="onDelete(phase)">Delete</span>
-		</td>
-		<td data-title="projectTE" style="width: 10%;">
-			<span ng-if="!phase._editMode">{{phase.projectName}}</span>
-			<div ng-if="phase._editMode"
-				multi-select
-				input-model="phase.aProjects"
-				button-label="name"
-				item-label="name"
-				tick-property="ticked"
-				selection-mode="single"
-				helper-elements=""
-				>
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				{{'adminPanel_hideSidenav' | translate}}
+				</md-button>
 			</div>
-		</td>
-		<td data-title="nameENTE" sortable="'nameEN'" style="width: 30%;">
-			<span ng-if="!phase._editMode">{{phase.nameEN}}</span>
-			<div ng-if="phase._editMode"><input type="text" ng-model="phase.nameEN"/></div>
-		</td>
-		<td data-title="nameFRTE" sortable="'nameFR'" style="width: 30%;">
-			<span ng-if="!phase._editMode">{{phase.nameFR}}</span>
-			<div ng-if="phase._editMode"><input type="text" ng-model="phase.nameFR"/></div>
-		</td>
-		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 20%;">
-			<span ng-if="!phase._editMode">{{phase.sortingSequence}}</span>
-			<div ng-if="phase._editMode"><input type="number" ng-model="phase.sortingSequence"/></div>
-		</td>
-	</tr>
-	<tr ng-hide="aDisplayedPhases.length > 0"><td colspan="4" >{{'global_noTableData' | translate}}</td></tr>
-</table>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				{{'phasesList_title' | translate}}
+			</label>
+		</div>
+	</div>
+	<div layout="row" layout-
+		align="space-between start" class="md-default-theme cnpActionBar">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
+				{{'global_addNew' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+		</div>
+	</div>
+	<!-- NG TABLE -->
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="tableParams" class="cnpNgTable" id="phasesList">
+			<tr ng-repeat="phase in aDisplayedPhases">
+				<td data-title="actionsTE">
+					<div layout="row" layout-align="center center">
+						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!phase._editMode" ng-click="onEdit(phase)">
+						</div>
+						<div class="cnpInputIcon cnpSaveIcon" ng-if="phase._editMode" ng-click="onSave(phase)">
+						</div>
+						<div class="cnpInputIcon cnpDeleteIcon" ng-if="phase._editMode" ng-click="onDelete(phase)">
+						</div>
+					</div>
+				</td>
+				<td data-title="projectTE" style="width: 60px;">
+					<span ng-if="!phase._editMode">{{phase.projectName}}</span>
+					<div ng-if="phase._editMode"
+						multi-select
+						input-model="phase.aProjects"
+						default-label="{{'adminPanel_projectDefaultLabel' | translate }}"
+						button-label="name"
+						item-label="name"
+						tick-property="ticked"
+						selection-mode="single"
+						helper-elements=""
+						>
+					</div>
+				</td>
+				<td data-title="nameENTE" sortable="'nameEN'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!phase._editMode">{{phase.nameEN}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="phase._editMode" type="text" ng-model="phase.nameEN"/>
+					</div>
+				</td>
+				<td data-title="nameFRTE" sortable="'nameFR'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!phase._editMode">{{phase.nameFR}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="phase._editMode" type="text" ng-model="phase.nameFR"/>
+					</div>
+				</td>
+				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!phase._editMode">{{phase.sortingSequence}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="phase._editMode" type="number" ng-model="phase.sortingSequence"/>
+					</div>
+				</td>
+			</tr>
+			<tr ng-hide="aDisplayedPhases.length > 0">
+				<td td colspan="5">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- END OF NG TABLE -->
+</div>
+<!-- END OF CONTENT VIEW -->

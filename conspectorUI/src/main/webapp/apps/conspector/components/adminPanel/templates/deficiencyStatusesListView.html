@@ -1,44 +1,95 @@
-<div>{{'deficiencyStatuses_title' | translate}}</div>
-<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
-<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
-
-	<tr ng-repeat="deficiencyStatus in aDisplayedDeficiencyStatuses">
-		<td data-title="actionsTE" style="width: 10%;">
-			<span ng-if="!deficiencyStatus._editMode" ng-click="onEdit(deficiencyStatus)">Edit</span><span ng-if="deficiencyStatus._editMode" ng-click="onSave(deficiencyStatus)">Save</span><span ng-if="deficiencyStatus._editMode" ng-click="onDelete(deficiencyStatus)">Delete</span>
-		</td>
-
-		<td data-title="iconTE" style="width: 10%;">
-			<img ng-if="!deficiencyStatus._editMode" ng-src="{{deficiencyStatus.sUrl}}" style="width:24px; height:24px;"/>
-			<div ng-if="deficiencyStatus._editMode"
-				multi-select
-				input-model="deficiencyStatus.aStatusIcons"
-				button-label="icon"
-				item-label="icon"
-				tick-property="ticked"
-				selection-mode="single"
-				helper-elements=""
-				>
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				{{'adminPanel_hideSidenav' | translate}}
+				</md-button>
 			</div>
-		</td>		
-
-		<td data-title="nameENTE" sortable="'nameEN'" style="width: 25%;">
-        	<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.nameEN}}</span>
-         	<div ng-if="deficiencyStatus._editMode"><input type="text" ng-model="deficiencyStatus.nameEN"/></div>
-		</td>
-		<td data-title="nameFRTE" sortable="'nameFR'" style="width: 25%;">
-        	<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.nameFR}}</span>
-         	<div ng-if="deficiencyStatus._editMode"><input type="text" ng-model="deficiencyStatus.nameFR"/></div>
-		</td>
-		<td data-title="associatedColorTE" sortable="'associatedColor'" style="width: 15%;">
-        	<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.associatedColor}}</span>
-         	<div ng-if="deficiencyStatus._editMode">
-         		<input colorpicker type="text" ng-model="deficiencyStatus.associatedColor" />
-         	</div>
-		</td>		
-		<td data-title="sortingSequenceTE" sortable="'sortingSequence'" style="width: 15%;">
-        	<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.sortingSequence}}</span>
-         	<div ng-if="deficiencyStatus._editMode"><input type="number" ng-model="deficiencyStatus.sortingSequence"/></div>
-		</td>
-	</tr>
-	<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0"><td colspan="6" >{{'global_noTableData' | translate}}</td></tr>		
-</table>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				{{'deficiencyStatuses_title' | translate}}
+			</label>
+		</div>
+	</div>
+	<div layout="row" layout-
+		align="space-between start" class="md-default-theme cnpActionBar">
+		<div layout="row" layout-align="start start">
+			<div>
+				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
+				{{'global_addNew' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+		</div>
+	</div>
+	<!-- NG TABLE -->
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="tableParams" class="cnpNgTable" id="deficiencyStatusesList">
+			<tr ng-repeat="deficiencyStatus in aDisplayedDeficiencyStatuses">
+				<td data-title="actionsTE">
+					<div layout="row" layout-align="center center">
+						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!deficiencyStatus._editMode" ng-click="onEdit(deficiencyStatus)">
+						</div>
+						<div class="cnpInputIcon cnpSaveIcon" ng-if="deficiencyStatus._editMode" ng-click="onSave(deficiencyStatus)">
+						</div>
+						<div class="cnpInputIcon cnpDeleteIcon" ng-if="deficiencyStatus._editMode" ng-click="onDelete(deficiencyStatus)">
+						</div>
+					</div>
+				</td>
+				<!-- TO DO STYLE PROPERLY -->
+				<td data-title="iconTE" style="width: 60px;">
+					<img ng-if="!deficiencyStatus._editMode" ng-src="{{deficiencyStatus.sUrl}}" style="width:24px; height:24px;"/>
+					<div ng-if="deficiencyStatus._editMode"
+						multi-select
+						input-model="deficiencyStatus.aStatusIcons"
+						default-label="{{'adminPanel_deficiencyStatusIconDefaultLabel' | translate }}"
+						button-label="icon"
+						item-label="icon"
+						tick-property="ticked"
+						selection-mode="single"
+						helper-elements=""
+						>
+					</div>
+				</td>
+				<td data-title="nameENTE" sortable="'nameEN'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.nameEN}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyStatus._editMode" type="text" ng-model="deficiencyStatus.nameEN"/>
+					</div>
+				</td>
+				<td data-title="nameFRTE" sortable="'nameFR'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.nameFR}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyStatus._editMode" type="text" ng-model="deficiencyStatus.nameFR"/>
+					</div>
+				</td>
+				<td data-title="associatedColorTE" sortable="'associatedColor'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.associatedColor}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyStatus._editMode" type="text" ng-model="deficiencyStatus.associatedColor"/>
+					</div>
+				</td>
+				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.sortingSequence}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyStatus._editMode" type="number" ng-model="deficiencyStatus.sortingSequence"/>
+					</div>
+				</td>
+			</tr>
+			<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0">
+				<td td colspan="6">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- END OF NG TABLE -->
+</div>
+<!-- END OF CONTENT VIEW -->

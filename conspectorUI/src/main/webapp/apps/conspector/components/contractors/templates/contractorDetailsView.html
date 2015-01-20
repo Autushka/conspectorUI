@@ -1,104 +1,157 @@
-<div>{{'contractorDetails_title' | translate}}</div>
-<md-button class="md-primary md-raised" ng-if="bShowBackButton" ng-click="onBack()">{{'global_back' | translate}}</md-button>
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
+		<div layout="row" layout-align="start start">
+			<!-- <div>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				Open Sidenav
+				</md-button>
+			</div> -->
+			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
+				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
+					{{'contractorDetails_backToList' | translate}}
+				</div>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				{{'contractorDetails_title' | translate}}
+			</label>
+		</div>
+	</div>
+	<!-- END OF CONTENT VIEW -->
+	<!-- ACTION BAR -->
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpActionBar">
+		<div layout="row" layout-align="start start">
+			<div>
+				<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
+			</div>
+			<div>
+				Title
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+			<md-button ng-show="sMode == 'display'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
+			<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
+			<md-button ng-show="sMode == 'edit'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
+			<md-button ng-show="sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
+		</div>
+	</div>
+	<!-- END OF ACTION BAR -->
+
+	<div>
+		
+		<form name="contractorDetailsForm">
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sName" ng-disabled="sMode == 'display'" placeholder="{{'global_name' | translate}}" ng-change="onDataModified()">
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sPhone" ng-disabled="sMode == 'display'" placeholder="{{'global_phone' | translate}}" ng-change="onDataModified()">
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sSecondaryPhone" ng-disabled="sMode == 'display'" placeholder="{{'global_secondaryPhone' | translate}}" ng-change="onDataModified()">
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sWebsite" ng-disabled="sMode == 'display'" placeholder="{{'global_website' | translate}}" ng-change="onDataModified()">
+<input type="email" class="cnpTextInputField" ng-model="oContractor.sEmail" ng-disabled="sMode == 'display'" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()">
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sFax" ng-disabled="sMode == 'display'" placeholder="{{'global_fax' | translate}}" ng-change="onDataModified()">
+<label>{{'global_associatedPhases' | translate}}</label>
+<div
+	multi-select
+	input-model="aUserProjectsPhasesForMultiselect"
+	button-label="fullName"
+	item-label="name"
+	tick-property="ticked"
+	group-property="multiSelectGroup"
+	is-disabled="sMode == 'display'"
+	on-item-click="onDataModified()"
+	>
+</div>
+<label>{{'global_tags' | translate}}</label>
+<tags-input
+ng-model="oContractor.aTags"
+ng-hide="sMode == 'display'"
+replace-spaces-with-dashes="false"
+placeholder="{{'global_addTag' | translate}}"
+on-tag-added="onDataModified()"
+on-tag-removed="onDataModified()">
+</tags-input>
+<div ng-show="sMode == 'display'">
+	<ul>
+		<li ng-repeat="tag in oContractor.aTags">
+			<span>{{tag.text}}</span>
+		</li>
+	</ul>
+</div>
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_billingStreet' | translate}}" ng-change="onDataModified()">
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_billingCity' | translate}}" ng-change="onDataModified()">
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_billingPostalCode' | translate}}" ng-change="onDataModified()">
+<label>{{'global_billingCountry' | translate}}</label>
+<div
+	multi-select
+	input-model="aBillingCountries"
+	button-label="name"
+	item-label="name"
+	tick-property="ticked"
+	selection-mode="single"
+	is-disabled="sMode == 'display'"
+	on-item-click="onBillingCountryChanged()"
+	helper-elements="filter"
+	>
+</div>
+<label>{{'global_billingProvince' | translate}}</label>
+<div
+	multi-select
+	input-model="aBillingProvinces"
+	button-label="name"
+	item-label="name"
+	tick-property="ticked"
+	selection-mode="single"
+	is-disabled="sMode == 'display'"
+	on-item-click="onDataModified()"
+	helper-elements="filter"
+	>
+</div>
+
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sShippingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingStreet' | translate}}" ng-change="onDataModified()">
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sShippingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingCity' | translate}}" ng-change="onDataModified()">
+<input type="text" class="cnpTextInputField" ng-model="oContractor.sShippingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingPostalCode' | translate}}" ng-change="onDataModified()">
+<label>{{'global_shippingCountry' | translate}}</label>
+<div
+	multi-select
+	input-model="aShippingCountries"
+	button-label="name"
+	item-label="name"
+	tick-property="ticked"
+	selection-mode="single"
+	is-disabled="sMode == 'display'"
+	on-item-click="onShippingCountryChanged()"
+	helper-elements="filter"
+	>
+</div>
+<label>{{'global_shippingProvince' | translate}}</label>
+<div
+	multi-select
+	input-model="aShippingProvinces"
+	button-label="name"
+	item-label="name"
+	tick-property="ticked"
+	selection-mode="single"
+	is-disabled="sMode == 'display'"
+	on-item-click="onDataModified()"
+	helper-elements="filter"
+	>
+</div>
+
+</form>
+	</div>
+	
+</div>
+
+<!-- DONE -->
+
+<!-- <md-button class="md-primary md-raised" ng-if="bShowBackButton" ng-click="onBack()">{{'global_back' | translate}}</md-button>
 <md-button ng-show="sMode == 'display'" class="md-primary md-raised" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
 <md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSave()">{{'global_save' | translate}}</md-button>
 <md-button ng-show="sMode == 'edit'" class="md-primary md-raised" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
-<md-button ng-show="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
-<form name="contractorDetailsForm">
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sName" ng-disabled="sMode == 'display'" placeholder="{{'global_name' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sPhone" ng-disabled="sMode == 'display'" placeholder="{{'global_phone' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sSecondaryPhone" ng-disabled="sMode == 'display'" placeholder="{{'global_secondaryPhone' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sWebsite" ng-disabled="sMode == 'display'" placeholder="{{'global_website' | translate}}" ng-change="onDataModified()">
-	<input type="email" class="cnpTextInputField" ng-model="oContractor.sEmail" ng-disabled="sMode == 'display'" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sFax" ng-disabled="sMode == 'display'" placeholder="{{'global_fax' | translate}}" ng-change="onDataModified()">
-	<label>{{'global_associatedPhases' | translate}}</label>
-	<div
-		multi-select
-		input-model="aUserProjectsPhasesForMultiselect"
-		button-label="fullName"
-		item-label="name"
-		tick-property="ticked"
-		group-property="multiSelectGroup"
-		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
-		>
-	</div>
+<md-button ng-show="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button> -->
 
-	<label>{{'global_tags' | translate}}</label>
-	<tags-input
-		ng-model="oContractor.aTags"
-		ng-hide="sMode == 'display'"
-		replace-spaces-with-dashes="false"
-		placeholder="{{'global_addTag' | translate}}"
-		on-tag-added="onDataModified()"
-		on-tag-removed="onDataModified()">
-	</tags-input>
-	<div ng-show="sMode == 'display'">
-		<ul>
-			<li ng-repeat="tag in oContractor.aTags">
-				<span>{{tag.text}}</span>
-			</li>
-		</ul>
-	</div>
+<!-- DONE -->
 
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_billingStreet' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_billingCity' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sBillingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_billingPostalCode' | translate}}" ng-change="onDataModified()">
-	<label>{{'global_billingCountry' | translate}}</label>
-	<div
-		multi-select
-		input-model="aBillingCountries"
-		button-label="name"
-		item-label="name"
-		tick-property="ticked"
-		selection-mode="single"
-		is-disabled="sMode == 'display'"
-		on-item-click="onBillingCountryChanged()"
-		helper-elements="filter"
-		>
-	</div>
-	<label>{{'global_billingProvince' | translate}}</label>
-	<div
-		multi-select
-		input-model="aBillingProvinces"
-		button-label="name"
-		item-label="name"
-		tick-property="ticked"
-		selection-mode="single"
-		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
-		helper-elements="filter"
-		>
-	</div>
-	
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sShippingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingStreet' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sShippingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingCity' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContractor.sShippingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingPostalCode' | translate}}" ng-change="onDataModified()">
-	<label>{{'global_shippingCountry' | translate}}</label>
-	<div
-		multi-select
-		input-model="aShippingCountries"
-		button-label="name"
-		item-label="name"
-		tick-property="ticked"
-		selection-mode="single"
-		is-disabled="sMode == 'display'"
-		on-item-click="onShippingCountryChanged()"
-		helper-elements="filter"
-		>
-	</div>
-	<label>{{'global_shippingProvince' | translate}}</label>
-	<div
-		multi-select
-		input-model="aShippingProvinces"
-		button-label="name"
-		item-label="name"
-		tick-property="ticked"
-		selection-mode="single"
-		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
-		helper-elements="filter"
-		>
-	</div>
-	
-</form>
+
+
+
+
+

@@ -1,3 +1,4 @@
+<!-- CONTENT SECTION WITH TITLE AND BUTTON FOR SIDE BAR -->
 <div class="cnpContent" layout="column">
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
 		<div layout="row" layout-align="start start">
@@ -26,6 +27,7 @@
 		<div layout="row" layout-align="end start">
 		</div>
 	</div>
+	<!-- NG TABLE -->
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="usersList">
 			<tr ng-repeat="user in aDisplayedUsers">
@@ -70,7 +72,7 @@
 				</td>
 			</tr>
 			<tr ng-hide="aDisplayedUsers.length > 0">
-				<td data-title="rolesTE" >
+				<td td colspan="4">
 					<div layout="row" layout-align="start center">
 						<div>
 							{{'global_noTableData' | translate}}
@@ -80,4 +82,6 @@
 			</tr>
 		</table>
 	</div>
+	<!-- END OF NG TABLE -->
 </div>
+<!-- END OF CONTENT VIEW -->
