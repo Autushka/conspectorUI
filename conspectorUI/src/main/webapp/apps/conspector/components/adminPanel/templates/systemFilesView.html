@@ -54,7 +54,7 @@
 				</td>
 				<td data-title="logoTE">
 					<img ng-if="!logo._createMode" ng-src="{{logo.sUrl}}" style="width:200px;"/>
-					<button ng-if="logo._createMode" ng-file-select accept="image/*" ng-file-change="onLogoSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
+					<button ng-if="logo._createMode" ng-file-select accept="image/*,*.svg" ng-file-change="onLogoSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
 				</td>
 			</tr>
 			<tr ng-hide="aDisplayedLogos.length > 0">
@@ -113,7 +113,7 @@
 				</td>
 				<td data-title="iconTE">
 					<img ng-if="!deficiencyStatus._createMode" ng-src="{{deficiencyStatus.sUrl}}" style="width:24px; height:24px;"/>
-					<button ng-if="deficiencyStatus._createMode" ng-file-select accept="image/*" ng-file-change="onDeficiencyStatusSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
+					<button ng-if="deficiencyStatus._createMode" ng-file-select accept="image/*,*.svg" ng-file-change="onDeficiencyStatusSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
 				</td>
 			</tr>
 			<tr ng-hide="aDisplayedDeficiencyStatuses.length > 0">
@@ -130,6 +130,7 @@
 	<!-- END OF NG TABLE -->
 </div>
 <!-- END OF CONTENT VIEW -->
+
 <!-- <div>{{'systemFiles_title' | translate}}</div>
 <div>{{'systemFiles_logos' | translate}}</div> -->
 <!-- <md-button type="submit" class="md-primary md-raised" ng-click="onAddNewLogo()" md-theme="orange">{{'global_addNew' | translate}}</md-button>
