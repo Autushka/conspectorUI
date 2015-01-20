@@ -54,7 +54,7 @@
 				<td data-title="associatedColorTE" sortable="'associatedColor'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.associatedColor}}</span>
-						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyPriority._editMode" type="text" ng-model="deficiencyPriority.associatedColor"/>
+						<input class="cnpTextInputField cnpTextInputFieldInline" colorpicker type="text" ng-if="deficiencyPriority._editMode" ng-model="deficiencyPriority.associatedColor" />
 					</div>
 				</td>
 				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
