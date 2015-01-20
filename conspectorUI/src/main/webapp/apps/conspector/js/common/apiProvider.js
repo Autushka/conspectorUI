@@ -582,6 +582,22 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
+			getContractorAccountType: function(oParameters){
+				var svc = dataProvider.getEntitySet({
+					sPath: "AccountTypes",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and NameEN eq 'Contractor'",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oAccountTypeEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
 			getAccountTypes: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "AccountTypes",
@@ -852,7 +868,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "Contacts",
 					sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oContactEntity"

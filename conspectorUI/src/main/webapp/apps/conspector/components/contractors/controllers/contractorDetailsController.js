@@ -6,6 +6,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			$scope.$parent.oStateParams = angular.copy($stateParams);
 		}
 
+		var sContractorAccountTypeGuid = ""; //for new contractor creation flow
+
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
@@ -179,6 +181,10 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			});
 		};
 
+		var onContractorAccountTypeLoaded = function(oData){
+			sContractorAccountTypeGuid = oData[0].Guid;
+		};
+
 		if ($scope.sMode !== "create") {
 			if (angular.equals(oContractor, {})) { //in case of F5
 				getContractorDetails();
@@ -199,6 +205,11 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				bShowSpinner: false,
 				onSuccess: onCountriesLoaded
 			});
+
+			apiProvider.getContractorAccountType({
+				bShowSpinner: false,
+				onSuccess: onContractorAccountTypeLoaded
+			});			
 		}
 
 		$scope.onEdit = function() {
@@ -405,6 +416,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					});
 					break;
 				case "create":
+					oDataForSave.AccountTypeGuid = sContractorAccountTypeGuid;
 					apiProvider.createAccount({
 						bShowSpinner: true,
 						oData: oDataForSave,
