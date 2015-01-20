@@ -1,17 +1,16 @@
 <md-content layout="row" layout="center start" class="cnpContentWrapper">
 <!-- SIDENAV -->
 <!-- 	<md-sidenav class="md-sidenav-left cnpSidenavLeft" md-component-id="left">
-	<md-toolbar class="md-default-theme" layout="column" layout-align="center start">
-	<label class="cnpSidebarTitle">
+<md-toolbar class="md-default-theme" layout="column" layout-align="center start">
+<label class="cnpSidebarTitle">
 		Just a sidenav
-	</label>
-	</md-toolbar>
-	<div class="cnpSidenavElements">  
+</label>
+</md-toolbar>
+<div class="cnpSidenavElements">
 	Content of the sidenav
-	</div>
-	</md-sidenav> -->
+</div>
+</md-sidenav> -->
 <!-- END OF SIDENAV -->
-<div ui-view style="width: 100%; height: 100%;">
 <!-- CONTENT SECTION WITH TITLE AND BUTTON FOR SIDE BAR -->
 <div class="cnpContent" layout="column">
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
@@ -28,14 +27,12 @@
 			</label>
 		</div>
 	</div>
-
-<!-- CONTENT VIEW -->
 	<!-- ACTION BAR -->
 	<div layout="row" layout-
 		align="space-between start" class="md-default-theme cnpActionBar">
 		<div layout="row" layout-align="start start">
 			<div>
-				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
+				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
 			</div>
 		</div>
 		<div layout="row" layout-align="end start">
@@ -51,66 +48,63 @@
 						<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">{{ group.value }}
 							<!-- <div class="glyphicon notSelectable" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }">{{ group.value }}</div> -->
 						</div>
-						</a>
-					</td>
-				</tr>
-				<tr ng-hide="group.$hideRows" ng-repeat="contractor in group.data">
-					<td data-title="actionsTE">
-						<div layout="row" layout-align="center center">
-							<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(contractor)">
-							</div>
-							<div class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(contractor)">
-							</div>
+					</a>
+				</td>
+			</tr>
+			<tr ng-hide="group.$hideRows" ng-repeat="contractor in group.data">
+				<td data-title="actionsTE">
+					<div layout="row" layout-align="center center">
+						<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(contractor)">
 						</div>
-					</td>
-					<td data-title="contractorNameTE" sortable="'sContractorName'" filter="{'sContractorName': 'text'}">
-						<div layout="row" layout-align="start center">
-							<div>
-								<span>
-								{{contractor.sContractorName}}
-								</span>
-							</div>
+						<div class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(contractor)">
 						</div>
-					</td>
-					<td data-title="phoneTE" sortable="'sPhone'" filter="{'sPhone': 'text'}">
-						<div layout="row" layout-align="start center">
-							<div>
-								<span>{{contractor.sPhone}}</span>
-							</div>
+					</div>
+				</td>
+				<td data-title="contractorNameTE" sortable="'sContractorName'" filter="{'sContractorName': 'text'}">
+					<div layout="row" layout-align="start center">
+						<div>
+							<span>
+							{{contractor.sContractorName}}
+							</span>
 						</div>
-					</td>
-					
-					<td data-title="emailTE" sortable="'sEmail'" filter="{'sEmail': 'text'}">
-						<div layout="row" layout-align="start center">
-							<div>
-								<span>{{contractor.sEmail}}</span>
-							</div>
+					</div>
+				</td>
+				<td data-title="phoneTE" sortable="'sPhone'" filter="{'sPhone': 'text'}">
+					<div layout="row" layout-align="start center">
+						<div>
+							<span>{{contractor.sPhone}}</span>
 						</div>
-					</td>
-					<td data-title="tagsTE" sortable="'sTags'" filter="{'sTags': 'text'}">
-						<div layout="row" layout-align="start center">
-							<div>
-								<span>{{contractor.sTags}}</span>
-							</div>
+					</div>
+				</td>
+				
+				<td data-title="emailTE" sortable="'sEmail'" filter="{'sEmail': 'text'}">
+					<div layout="row" layout-align="start center">
+						<div>
+							<span>{{contractor.sEmail}}</span>
 						</div>
-					</td>
-					
-				</tr>
-				<tr ng-hide="$groups.length > 0">
-					<td data-title="rolesTE" >
-						<div layout="row" layout-align="start center">
-							<div>
-								{{'global_noTableData' | translate}}
-							</div>
+					</div>
+				</td>
+				<td data-title="tagsTE" sortable="'sTags'" filter="{'sTags': 'text'}">
+					<div layout="row" layout-align="start center">
+						<div>
+							<span>{{contractor.sTags}}</span>
 						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+					</div>
+				</td>
+			</tr>
+			<tr ng-hide="$groups.length > 0">
+				<td td colspan="5">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
-<!--  -->
-
-
+<!-- END OF NG TABLE -->
 </div>
+<!-- END OF CONTENT VIEW -->
 </md-content>
