@@ -1,12 +1,14 @@
 viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider',
 	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider) {
 		var sContractorGuid = $stateParams.sContractorGuid;
+		$scope.sAccountType = "";
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-		if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") {
+		if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { //for logic hide/show contacts table
 			$scope.$parent.oStateParams = angular.copy($stateParams);
+			$scope.sAccountType = "Contractor";
 		}
 
-		var sContractorAccountTypeGuid = ""; //for new contractor creation flow
+		$scope.sAccountTypeGuid = ""; //for new contractor/client creation flow
 
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
@@ -181,8 +183,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			});
 		};
 
-		var onContractorAccountTypeLoaded = function(oData){
-			sContractorAccountTypeGuid = oData[0].Guid;
+		var onAccountTypeLoaded = function(oData){
+			$scope.sAccountTypeGuid = oData[0].Guid;
 		};
 
 		if ($scope.sMode !== "create") {
@@ -206,10 +208,18 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				onSuccess: onCountriesLoaded
 			});
 
-			apiProvider.getContractorAccountType({
-				bShowSpinner: false,
-				onSuccess: onContractorAccountTypeLoaded
-			});			
+			if($scope.sAccountType === "Contractor"){
+				apiProvider.getContractorAccountType({
+					bShowSpinner: false,
+					onSuccess: onAccountTypeLoaded
+				});		
+			}
+			if($scope.sAccountType === "Client"){
+				apiProvider.getClientAccountType({
+					bShowSpinner: false,
+					onSuccess: onAccountTypeLoaded
+				});					
+			}			
 		}
 
 		$scope.onEdit = function() {
@@ -416,7 +426,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					});
 					break;
 				case "create":
-					oDataForSave.AccountTypeGuid = sContractorAccountTypeGuid;
+					oDataForSave.AccountTypeGuid = $scope.sAccountTypeGuid;
 					apiProvider.createAccount({
 						bShowSpinner: true,
 						oData: oDataForSave,

@@ -598,6 +598,22 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				}
 			},
 
+			getClientAccountType: function(oParameters){
+				var svc = dataProvider.getEntitySet({
+					sPath: "AccountTypes",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and NameEN eq 'Client'",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oAccountTypeEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},			
+
 			getAccountTypes: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "AccountTypes",
@@ -613,6 +629,36 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					svc.then(oParameters.onSuccess);
 				}
 			},
+
+			getAccountTypesWithAccounts: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "AccountTypes",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					sExpand: "AccountDetails",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oAccountTypeEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(function(aData){
+						var aAccounts = [];
+						for (var i = 0; i < aData.length; i++) { // filtering here needed only untill bug 414 in Olingo will be resolved (UI filtering will be replaced by oData filtering)
+							aAccounts = [];
+							for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
+								if(!aData[i].AccountDetails.results[j].GeneralAttributes.IsDeleted){
+									aAccounts.push(aData[i].AccountDetails.results[j]);
+								}
+							}
+							aData[i].AccountDetails.results = angular.copy(aAccounts);
+						}
+						oParameters.onSuccess(aData);
+					});
+				}
+			},
+
 
 			createAccountType: function(oParameters) {
 				var onSuccess = function(oData) {

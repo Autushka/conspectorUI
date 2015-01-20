@@ -5,7 +5,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
-
+		$scope.bShowAccountSelector = sAccountGuid ? false : true;
 		$scope.sMode = $stateParams.sMode;
 		$scope.oContact = {
 			_aPhases: [],
@@ -16,7 +16,6 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		};
 
 		$scope.aContactTypes = [];
-
 		var aCountriesWithProvinces = [];
 
 		$scope.aBillingCountries = [];
@@ -33,6 +32,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		var setDisplayedContactDetails = function(oContact) {
 			var oContactPhasesGuids = [];
 			$scope.oContact._guid = oContact.Guid;
+			$scope.oContact._accountGuid = oContact.AccountGuid;
 
 			$scope.oContact._lastModifiedAt = oContact.LastModifiedAt;
 			$scope.oContact.sFirstName = oContact.FirstName;
@@ -45,7 +45,6 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			$scope.oContact.sFax = oContact.Fax;
 			$scope.oContact.sTitle = oContact.Title;
 			$scope.oContact.aTags = utilsProvider.tagsStringToTagsArray(oContact.DescriptionTags);
-
 
 			$scope.oContact._contactTypeGuid = oContact.ContactTypeGuid;
 
@@ -221,6 +220,34 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			});
 		};
 
+		var onAccountTypesWithAccountsLoaded = function(aData){
+			//Sort aData by accountType sorting sequence and then by AccountName
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+				aData[i].AccountDetails.results = $filter('orderBy')(aData[i].AccountDetails.results, ["Name"]);
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				sSecondLevelAttribute: "AccountDetails",
+				sSecondLevelNameEN: "Name",
+				sSecondLevelNameFR: "Name",
+				oParentArrayWrapper: oContactWrapper,
+				sNameEN: "NameEN",
+				sNameFR: "NameFR",
+				sDependentKey: "Guid",
+				sParentKey: "",
+				sTargetArrayNameInParent: "aAccounts"
+			});
+
+			if (oContactWrapper.aData[0]) {
+				$scope.aAccounts = angular.copy(oContactWrapper.aData[0].aAccounts);
+			}
+		};
+
 		if ($scope.sMode !== "create") {
 			if (angular.equals(oContact, {})) { //in case of F5
 				getContactDetails();
@@ -249,7 +276,14 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			apiProvider.getContactTypes({
 				bShowSpinner: false,
 				onSuccess: onContactTypesLoaded
-			});				
+			});	
+
+			if(!sAccountGuid){ 
+				apiProvider.getAccountTypesWithAccounts({
+					bShowSpinner: false,
+					onSuccess: onAccountTypesWithAccountsLoaded
+				});					
+			}						
 		}
 
 		$scope.onEdit = function() {
@@ -391,12 +425,23 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			oDataForSave.Guid = $scope.oContact._guid;
 			oDataForSave.AccountGuid = sAccountGuid;
 
+			if(!oDataForSave.AccountGuid){ //in case of new contact creation from contact list...
+				for (var i = 0; i < $scope.aAccounts.length; i++) {
+					if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
+						oDataForSave.AccountGuid = $scope.aAccounts[i].Guid;
+						break;
+					}
+				}				
+			}
+
 			for (var i = 0; i < $scope.aContactTypes.length; i++) {
 				if ($scope.aContactTypes[i].ticked) {
 					oDataForSave.ContactTypeGuid = $scope.aContactTypes[i].Guid;
 					break;
 				}
 			}
+
+			
 
 			oDataForSave.FirstName = $scope.oContact.sFirstName;
 			oDataForSave.LastName = $scope.oContact.sLastName;

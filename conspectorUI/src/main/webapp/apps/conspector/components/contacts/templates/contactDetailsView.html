@@ -5,6 +5,20 @@
 <md-button ng-show="sMode == 'edit'" class="md-primary md-raised" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
 <md-button ng-show="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
 <form name="contactDetailsForm">
+	<label ng-if="bShowAccountSelector">{{'global_account' | translate}}</label>
+	<div ng-if="bShowAccountSelector" 
+		multi-select
+		input-model="aAccounts"
+		button-label="name"
+		item-label="name"
+		selection-mode="single"		
+		tick-property="ticked"
+		group-property="multiSelectGroup"
+		is-disabled="sMode == 'display'"
+		on-item-click="onDataModified()"
+		helper-elements="filter">
+	</div>	
+
 	<label>{{'global_contactType' | translate}}</label>
 	<div
 		multi-select
