@@ -1,24 +1,24 @@
-viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider',
+viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider',
 	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider) {
-		var sContractorGuid = $stateParams.sContractorGuid;
+		var sClientGuid = $stateParams.sClientGuid;
 		$scope.sAccountType = "";
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-		if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { //for logic hide/show contacts table
+		if ($scope.$parent && $scope.$parent.sViewName === "clientDetailsWrapperView") { //for logic hide/show contacts table
 			$scope.$parent.oStateParams = angular.copy($stateParams);
-			$scope.sAccountType = "Contractor";
+			$scope.sAccountType = "Client";
 		}
 
-		$scope.sAccountTypeGuid = ""; //for new contractor creation flow
+		$scope.sAccountTypeGuid = ""; //for new client creation flow
 
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
 		$scope.sMode = $stateParams.sMode;
-		$scope.oContractor = {
+		$scope.oClient = {
 			_aPhases: [],
 		};
 
-		var oContractorWrapper = {
+		var oClientWrapper = {
 			aData: [{}]
 		};
 
@@ -35,52 +35,52 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			});
 		};
 
-		var setDisplayedContractorDetails = function(oContractor) {
-			var aContractorPhasesGuids = [];
-			$scope.oContractor._guid = oContractor.Guid;
-			$scope.oContractor._lastModifiedAt = oContractor.LastModifiedAt;
-			$scope.oContractor.sName = oContractor.Name;
-			$scope.oContractor.sPhone = oContractor.MainPhone;
-			$scope.oContractor.sSecondaryPhone = oContractor.SecondaryPhone;
-			$scope.oContractor.sWebsite = oContractor.Website;
-			$scope.oContractor.sEmail = oContractor.Email;
-			$scope.oContractor.sFax = oContractor.Fax;
+		var setDisplayedClientDetails = function(oClient) {
+			var aClientPhasesGuids = [];
+			$scope.oClient._guid = oClient.Guid;
+			$scope.oClient._lastModifiedAt = oClient.LastModifiedAt;
+			$scope.oClient.sName = oClient.Name;
+			$scope.oClient.sPhone = oClient.MainPhone;
+			$scope.oClient.sSecondaryPhone = oClient.SecondaryPhone;
+			$scope.oClient.sWebsite = oClient.Website;
+			$scope.oClient.sEmail = oClient.Email;
+			$scope.oClient.sFax = oClient.Fax;
 
-			$scope.oContractor.aTags = utilsProvider.tagsStringToTagsArray(oContractor.DescriptionTags);
+			$scope.oClient.aTags = utilsProvider.tagsStringToTagsArray(oClient.DescriptionTags);
 
-			if (oContractor.BillingAddress) {
-				$scope.oContractor.sBillingStreet = oContractor.BillingAddress.BillingStreet;
-				$scope.oContractor.sBillingCity = oContractor.BillingAddress.BillingCity;
-				$scope.oContractor.sBillingPostalCode = oContractor.BillingAddress.BillingPostalCode;
-				$scope.oContractor._billingCountryCode = oContractor.BillingAddress.BillingCountry;
-				$scope.oContractor._billingProvinceCode = oContractor.BillingAddress.BillingProvince;
+			if (oClient.BillingAddress) {
+				$scope.oClient.sBillingStreet = oClient.BillingAddress.BillingStreet;
+				$scope.oClient.sBillingCity = oClient.BillingAddress.BillingCity;
+				$scope.oClient.sBillingPostalCode = oClient.BillingAddress.BillingPostalCode;
+				$scope.oClient._billingCountryCode = oClient.BillingAddress.BillingCountry;
+				$scope.oClient._billingProvinceCode = oClient.BillingAddress.BillingProvince;
 			}
 
-			if (oContractor.ShippingAddress) {
-				$scope.oContractor.sShippingStreet = oContractor.ShippingAddress.ShippingStreet;
-				$scope.oContractor.sShippingCity = oContractor.ShippingAddress.ShippingCity;
-				$scope.oContractor.sShippingPostalCode = oContractor.ShippingAddress.ShippingPostalCode;
-				$scope.oContractor._shippingCountryCode = oContractor.ShippingAddress.ShippingCountry;
-				$scope.oContractor._shippingProvinceCode = oContractor.ShippingAddress.ShippingProvince;
+			if (oClient.ShippingAddress) {
+				$scope.oClient.sShippingStreet = oClient.ShippingAddress.ShippingStreet;
+				$scope.oClient.sShippingCity = oClient.ShippingAddress.ShippingCity;
+				$scope.oClient.sShippingPostalCode = oClient.ShippingAddress.ShippingPostalCode;
+				$scope.oClient._shippingCountryCode = oClient.ShippingAddress.ShippingCountry;
+				$scope.oClient._shippingProvinceCode = oClient.ShippingAddress.ShippingProvince;
 			}
 
-			$scope.oContractor.sCreatedAt = utilsProvider.dBDateToSting(oContractor.CreatedAt);
-			$scope.oContractor.sLastModifiedAt = utilsProvider.dBDateToSting(oContractor.LastModifiedAt);
+			$scope.oClient.sCreatedAt = utilsProvider.dBDateToSting(oClient.CreatedAt);
+			$scope.oClient.sLastModifiedAt = utilsProvider.dBDateToSting(oClient.LastModifiedAt);
 
-			$scope.oContractor._aPhases = angular.copy(oContractor.PhaseDetails.results);
-			for (var i = 0; i < $scope.oContractor._aPhases.length; i++) {
-				aContractorPhasesGuids.push($scope.oContractor._aPhases[i].Guid);
+			$scope.oClient._aPhases = angular.copy(oClient.PhaseDetails.results);
+			for (var i = 0; i < $scope.oClient._aPhases.length; i++) {
+				aClientPhasesGuids.push($scope.oClient._aPhases[i].Guid);
 			}
-			constructPhasesMultiSelect(aContractorPhasesGuids);
+			constructPhasesMultiSelect(aClientPhasesGuids);
 
-			oContractorWrapper.aData[0] = angular.copy($scope.oContractor);
+			oClientWrapper.aData[0] = angular.copy($scope.oClient);
 		};
 
-		var oContractor = cacheProvider.getEntityDetails({
+		var oClient = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oAccountEntity",
 			sRequestSettings: "GeneralAttributes/IsDeleted eq false" + "PhaseDetails", //filter + expand
 			sKeyName: "Guid",
-			sKeyValue: $stateParams.sContractorGuid
+			sKeyValue: $stateParams.sClientGuid
 		});
 
 		var constructProvinceSelect = function(oParameters) {
@@ -104,15 +104,15 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 								oDependentArrayWrapper: {
 									aData: aCountriesWithProvinces[j].ProvinceDetails.results
 								},
-								oParentArrayWrapper: oContractorWrapper,
+								oParentArrayWrapper: oClientWrapper,
 								sNameEN: "Name",
 								sNameFR: "Name",
 								sDependentKey: "ProvinceCode",
 								sParentKey: sParentKey,
 								sTargetArrayNameInParent: sTargetArrayName
 							});
-							if (oContractorWrapper.aData[0]) {
-								$scope[sTargetArrayName] = angular.copy(oContractorWrapper.aData[0][sTargetArrayName]);
+							if (oClientWrapper.aData[0]) {
+								$scope[sTargetArrayName] = angular.copy(oClientWrapper.aData[0][sTargetArrayName]);
 							}
 							break;
 						}
@@ -128,7 +128,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				oDependentArrayWrapper: {
 					aData: aData
 				},
-				oParentArrayWrapper: oContractorWrapper,
+				oParentArrayWrapper: oClientWrapper,
 				sNameEN: "Name",
 				sNameFR: "Name",
 				sDependentKey: "CountryCode",
@@ -140,25 +140,25 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				oDependentArrayWrapper: {
 					aData: aData
 				},
-				oParentArrayWrapper: oContractorWrapper,
+				oParentArrayWrapper: oClientWrapper,
 				sNameEN: "Name",
 				sNameFR: "Name",
 				sDependentKey: "CountryCode",
 				sParentKey: "_shippingCountryCode",
 				sTargetArrayNameInParent: "aShippingCountries"
 			});
-			if (oContractorWrapper.aData[0]) {
-				$scope.aBillingCountries = angular.copy(oContractorWrapper.aData[0].aBillingCountries);
-				$scope.aShippingCountries = angular.copy(oContractorWrapper.aData[0].aShippingCountries);
+			if (oClientWrapper.aData[0]) {
+				$scope.aBillingCountries = angular.copy(oClientWrapper.aData[0].aBillingCountries);
+				$scope.aShippingCountries = angular.copy(oClientWrapper.aData[0].aShippingCountries);
 			}
 
-			if ($scope.oContractor._billingCountryCode) {
+			if ($scope.oClient._billingCountryCode) {
 				constructProvinceSelect({
 					sParentKey: "_billingProvinceCode",
 					sProvincesFor: "billingAddress"
 				});
 			}
-			if ($scope.oContractor._shippingCountryCode) {
+			if ($scope.oClient._shippingCountryCode) {
 				constructProvinceSelect({
 					sParentKey: "_shippingProvinceCode",
 					sProvincesFor: "shippingAddress"
@@ -166,8 +166,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			}
 		};
 
-		var onContractorDetailsLoaded = function(oData) {
-			setDisplayedContractorDetails(oData);
+		var onClientDetailsLoaded = function(oData) {
+			setDisplayedClientDetails(oData);
 
 			apiProvider.getCountriesWithProvinces({
 				bShowSpinner: false,
@@ -175,11 +175,11 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			});
 		};
 
-		var getContractorDetails = function() {
+		var getClientDetails = function() {
 			apiProvider.getAccountWithPhases({
-				sKey: sContractorGuid,
+				sKey: sClientGuid,
 				bShowSpinner: true,
-				onSuccess: onContractorDetailsLoaded,
+				onSuccess: onClientDetailsLoaded,
 			});
 		};
 
@@ -188,10 +188,10 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		};
 
 		if ($scope.sMode !== "create") {
-			if (angular.equals(oContractor, {})) { //in case of F5
-				getContractorDetails();
+			if (angular.equals(oClient, {})) { //in case of F5
+				getClientDetails();
 			} else { //in case when data is retrieved from the cash
-				setDisplayedContractorDetails(oContractor);
+				setDisplayedClientDetails(oClient);
 
 				apiProvider.getCountriesWithProvinces({
 					bShowSpinner: false,
@@ -208,8 +208,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				onSuccess: onCountriesLoaded
 			});
 
-			if($scope.sAccountType === "Contractor"){
-				apiProvider.getContractorAccountType({
+			if($scope.sAccountType === "Client"){
+				apiProvider.getClientAccountType({
 					bShowSpinner: false,
 					onSuccess: onAccountTypeLoaded
 				});		
@@ -223,14 +223,14 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		}
 
 		$scope.onEdit = function() {
-			$state.go('app.contractorDetailsWrapper.contractorDetails', {
+			$state.go('app.clientDetailsWrapper.clientDetails', {
 				sMode: "edit",
-				sContractorGuid: $scope.oContractor._guid,
+				sClientGuid: $scope.oClient._guid,
 			});
 		};
 
 
-		var deleteContractor = function() {
+		var deleteClient = function() {
 			var oDataForSave = {
 				GeneralAttributes: {
 					IsDeleted: true
@@ -241,8 +241,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					oState: $state
 				});
 			}
-			oDataForSave.Guid = $scope.oContractor._guid;
-			oDataForSave.LastModifiedAt = $scope.oContractor._lastModifiedAt;
+			oDataForSave.Guid = $scope.oClient._guid;
+			oDataForSave.LastModifiedAt = $scope.oClient._lastModifiedAt;
 			apiProvider.updateAccount({
 				bShowSpinner: true,
 				sKey: oDataForSave.Guid,
@@ -255,16 +255,16 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 
 		$scope.onDelete = function($event) {
 			servicesProvider.showConfirmationPopup({
-				sHeader: $translate.instant('contractorDetails_deletionConfirmationHeader'),
-				sContent: $translate.instant('contractorDetails_deletionConfirmationContent'),
+				sHeader: $translate.instant('clientDetails_deletionConfirmationHeader'),
+				sContent: $translate.instant('clientDetails_deletionConfirmationContent'),
 				sOk: $translate.instant('global_ok'),
 				sCancel: $translate.instant('global_cancel'),
-				onOk: deleteContractor,
+				onOk: deleteClient,
 				event: $event
 			});
 		};
 
-		var prepareLinksForSave = function() { // link contractor to phases
+		var prepareLinksForSave = function() { // link client to phases
 			var aLinks = [];
 			var aUri = [];
 			var sUri = "";
@@ -325,65 +325,65 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
 				}
 				if (!bSaveAndNew) {
-					$scope.oContractor._lastModifiedAt = oData.LastModifiedAt;
-					$scope.oContractor.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
-					$scope.oContractor.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
-					$scope.oContractor._guid = oData.Guid;
-					if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
+					$scope.oClient._lastModifiedAt = oData.LastModifiedAt;
+					$scope.oClient.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
+					$scope.oClient.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
+					$scope.oClient._guid = oData.Guid;
+					if ($scope.$parent && $scope.$parent.sViewName === "clientDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
 						$scope.$parent.oStateParams.sMode = "display";
 					}
-					$state.go('app.contractorDetailsWrapper.contractorDetails', {
+					$state.go('app.clientDetailsWrapper.clientDetails', {
 						sMode: "display",
-						sContractorGuid: oData.Guid,
+						sClientGuid: oData.Guid,
 					});
 				} else {
-					$scope.oContractor.sName = "";
-					$scope.oContractor.sPhone = "";
-					$scope.oContractor.sSecondaryPhone = "";
-					$scope.oContractor.sWebsite = "";
-					$scope.oContractor.sEmail = "";
-					$scope.oContractor.sFax = "";
+					$scope.oClient.sName = "";
+					$scope.oClient.sPhone = "";
+					$scope.oClient.sSecondaryPhone = "";
+					$scope.oClient.sWebsite = "";
+					$scope.oClient.sEmail = "";
+					$scope.oClient.sFax = "";
 
 					oDataForSave.BillingAddress = {};
 					oDataForSave.ShippingAddress = {};
-					$scope.oContractor._aPhases = [];
+					$scope.oClient._aPhases = [];
 				}
 			};
 			var onSuccessUpdate = function(oData) {
 				bDataHasBeenModified = false;
-				$scope.oContractor._lastModifiedAt = oData.LastModifiedAt;
-				$scope.oContractor.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
+				$scope.oClient._lastModifiedAt = oData.LastModifiedAt;
+				$scope.oClient.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
 				}
-				if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
+				if ($scope.$parent && $scope.$parent.sViewName === "clientDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
 					$scope.$parent.oStateParams.sMode = "display";
 				}
-				$state.go('app.contractorDetailsWrapper.contractorDetails', {
+				$state.go('app.clientDetailsWrapper.clientDetails', {
 					sMode: "display",
-					sContractorGuid: oData.Guid,
+					sClientGuid: oData.Guid,
 				});
 			};
-			oDataForSave.Guid = $scope.oContractor._guid;
-			oDataForSave.Name = $scope.oContractor.sName;
-			oDataForSave.MainPhone = $scope.oContractor.sPhone;
-			oDataForSave.SecondaryPhone = $scope.oContractor.sSecondaryPhone;
-			oDataForSave.Website = $scope.oContractor.sWebsite;
-			oDataForSave.Email = $scope.oContractor.sEmail;
-			oDataForSave.Fax = $scope.oContractor.sFax;
+			oDataForSave.Guid = $scope.oClient._guid;
+			oDataForSave.Name = $scope.oClient.sName;
+			oDataForSave.MainPhone = $scope.oClient.sPhone;
+			oDataForSave.SecondaryPhone = $scope.oClient.sSecondaryPhone;
+			oDataForSave.Website = $scope.oClient.sWebsite;
+			oDataForSave.Email = $scope.oClient.sEmail;
+			oDataForSave.Fax = $scope.oClient.sFax;
 
-			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oContractor.aTags);
+			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oClient.aTags);
 
 			oDataForSave.BillingAddress = {};
-			oDataForSave.BillingAddress.BillingStreet = $scope.oContractor.sBillingStreet;
-			oDataForSave.BillingAddress.BillingCity = $scope.oContractor.sBillingCity;
-			oDataForSave.BillingAddress.BillingPostalCode = $scope.oContractor.sBillingPostalCode;
+			oDataForSave.BillingAddress.BillingStreet = $scope.oClient.sBillingStreet;
+			oDataForSave.BillingAddress.BillingCity = $scope.oClient.sBillingCity;
+			oDataForSave.BillingAddress.BillingPostalCode = $scope.oClient.sBillingPostalCode;
 
 			oDataForSave.ShippingAddress = {};
-			oDataForSave.ShippingAddress.ShippingStreet = $scope.oContractor.sShippingStreet;
-			oDataForSave.ShippingAddress.ShippingCity = $scope.oContractor.sShippingCity;
-			oDataForSave.ShippingAddress.ShippingPostalCode = $scope.oContractor.sShippingPostalCode;
+			oDataForSave.ShippingAddress.ShippingStreet = $scope.oClient.sShippingStreet;
+			oDataForSave.ShippingAddress.ShippingCity = $scope.oClient.sShippingCity;
+			oDataForSave.ShippingAddress.ShippingPostalCode = $scope.oClient.sShippingPostalCode;
 
 			for (var i = 0; i < $scope.aBillingCountries.length; i++) {
 				if ($scope.aBillingCountries[i].ticked) {
@@ -410,7 +410,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				}
 			}
 
-			oDataForSave.LastModifiedAt = $scope.oContractor._lastModifiedAt;
+			oDataForSave.LastModifiedAt = $scope.oClient._lastModifiedAt;
 
 			aLinks = prepareLinksForSave();
 			switch ($scope.sMode) {

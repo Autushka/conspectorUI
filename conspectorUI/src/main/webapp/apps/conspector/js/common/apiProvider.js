@@ -582,7 +582,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
-			getContractorAccountType: function(oParameters){
+			getContractorAccountType: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "AccountTypes",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and NameEN eq 'Contractor'",
@@ -598,7 +598,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				}
 			},
 
-			getClientAccountType: function(oParameters){
+			getClientAccountType: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "AccountTypes",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and NameEN eq 'Client'",
@@ -612,7 +612,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
-			},			
+			},
 
 			getAccountTypes: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
@@ -643,12 +643,12 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				if (svc instanceof Array) {
 					oParameters.onSuccess(svc) // data retrived from cache
 				} else {
-					svc.then(function(aData){
+					svc.then(function(aData) {
 						var aAccounts = [];
 						for (var i = 0; i < aData.length; i++) { // filtering here needed only untill bug 414 in Olingo will be resolved (UI filtering will be replaced by oData filtering)
 							aAccounts = [];
 							for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
-								if(!aData[i].AccountDetails.results[j].GeneralAttributes.IsDeleted){
+								if (!aData[i].AccountDetails.results[j].GeneralAttributes.IsDeleted) {
 									aAccounts.push(aData[i].AccountDetails.results[j]);
 								}
 							}
@@ -812,23 +812,67 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "Accounts",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
-					sExpand: "PhaseDetails/ProjectDetails",
+					sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oAccountEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					var aContractors = [];
+					for (var i = 0; i < svc.length; i++) { // filtering here needed only untill bug 414 in Olingo will be resolved (UI filtering will be replaced by oData filtering)
+						if (svc[i].AccountTypeDetails.NameEN === "Contractor") {
+							aContractors.push(svc[i])
+						}
+					}
+					oParameters.onSuccess(aContractors) // data retrived from cache
 				} else {
-					svc.then(oParameters.onSuccess);
+					svc.then(function(aData) {
+						var aContractors = [];
+						for (var i = 0; i < aData.length; i++) { // filtering here needed only untill bug 414 in Olingo will be resolved (UI filtering will be replaced by oData filtering)
+							if (aData[i].AccountTypeDetails.NameEN === "Contractor") {
+								aContractors.push(aData[i])
+							}
+						}
+						oParameters.onSuccess(aContractors);
+					});
 				}
 			},
 
-			getContractorWithPhases: function(oParameters) {
+			getClientsWithPhases: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "Accounts",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oAccountEntity"
+				});
+				if (svc instanceof Array) {
+					var aClients = [];
+					for (var i = 0; i < svc.length; i++) { // filtering here needed only untill bug 414 in Olingo will be resolved (UI filtering will be replaced by oData filtering)
+						if (svc[i].AccountTypeDetails.NameEN === "Client") {
+							aClients.push(svc[i])
+						}
+					}
+					oParameters.onSuccess(aClients) // data retrived from cache
+				} else {
+					svc.then(function(aData) {
+						var aClients = [];
+						for (var i = 0; i < aData.length; i++) { // filtering here needed only untill bug 414 in Olingo will be resolved (UI filtering will be replaced by oData filtering)
+							if (aData[i].AccountTypeDetails.NameEN === "Client") {
+								aClients.push(aData[i])
+							}
+						}
+						oParameters.onSuccess(aClients);
+					});
+				}
+			},
+
+			getAccountWithPhases: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "Accounts",
 					sKey: oParameters.sKey,
-					sExpand: "PhaseDetails/ProjectDetails",
+					sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
@@ -924,7 +968,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
-			},			
+			},
 
 			getContact: function(oParameters) {
 				var svc = dataProvider.getEntity({

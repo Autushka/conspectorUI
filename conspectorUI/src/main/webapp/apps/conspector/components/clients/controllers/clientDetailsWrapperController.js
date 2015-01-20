@@ -1,7 +1,7 @@
-viewControllers.controller('contractorDetailsWrapperView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
+viewControllers.controller('clientDetailsWrapperView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
 	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider) {
 		//$scope.sMode = "";
-		$scope.sViewName = "contractorDetailsWrapperView";
+		$scope.sViewName = "clientDetailsWrapperView";
 		$scope.sCurrentStateName = $state.current.name;
 		$scope.oStateParams = angular.copy($stateParams);
 

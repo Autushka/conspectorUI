@@ -74,6 +74,8 @@
 		<script src="apps/conspector/components/contacts/controllers/contactDetailsController.js"></script>	
 
 		<script src="apps/conspector/components/clients/controllers/clientsListController.js"></script>
+		<script src="apps/conspector/components/clients/controllers/clientDetailsWrapperController.js"></script>			
+		<script src="apps/conspector/components/clients/controllers/clientDetailsController.js"></script>		
 
 		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>
 		<script src="apps/conspector/components/profileSettings/controllers/profileDetailsController.js"></script>

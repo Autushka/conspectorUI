@@ -122,7 +122,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		};
 
 		$scope.$on("$destroy", function() {
-			if ($scope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") {//don't save in history if contact list is weathin the contractor details view...  
+			if ($scope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $scope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") {//don't save in history if contact list is weathin the contractor/client details view...  
 				historyProvider.addStateToHistory({
 					sStateName: $scope.sCurrentStateName,
 					oStateParams: $scope.oStateParams
