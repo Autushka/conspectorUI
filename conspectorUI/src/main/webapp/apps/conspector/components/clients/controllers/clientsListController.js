@@ -77,7 +77,7 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 			$state.go('app.clientDetailsWrapper.clientDetails', {
 				sMode: "display",
 				sClientGuid: oClient._guid,
-			});
+			});		
 		};
 
 		$scope.onEdit = function(oClient) {

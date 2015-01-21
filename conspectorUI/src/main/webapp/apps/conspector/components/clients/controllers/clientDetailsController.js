@@ -78,7 +78,7 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 
 		var oClient = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oAccountEntity",
-			sRequestSettings: "GeneralAttributes/IsDeleted eq false" + "PhaseDetails", //filter + expand
+			sRequestSettings: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + "PhaseDetails/ProjectDetails,AccountTypeDetails", //filter + expand
 			sKeyName: "Guid",
 			sKeyValue: $stateParams.sClientGuid
 		});

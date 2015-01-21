@@ -126,6 +126,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/units/templates/unitsListView.html',
 			controller: 'unitsListView'
 		});
+
 		$stateProvider.state('app.contractorsList', {
 			url: '/contractorsList',
 			templateUrl: 'apps/conspector/components/contractors/templates/contractorsListView.html',
@@ -151,12 +152,6 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			}
 		});
 
-		$stateProvider.state('app.contactDetails', {
-			url: '/contactDetails/:sAccountGuid/:sContactGuid/:sMode',
-			templateUrl: 'apps/conspector/components/contacts/templates/contactDetailsView.html',
-			controller: 'contactDetailsView'
-		});		
-
 		$stateProvider.state('app.clientsList', {
 			url: '/clientsList',
 			templateUrl: 'apps/conspector/components/clients/templates/clientsListView.html',
@@ -180,13 +175,19 @@ app.config(['$stateProvider', '$urlRouterProvider',
 					controller: 'contactsListView'
 				}
 			}
-		});		
+		});			
 
 		$stateProvider.state('app.contactsList', {
 			url: '/contactsList',
 			templateUrl: 'apps/conspector/components/contacts/templates/contactsListView.html',
 			controller: 'contactsListView'
-		});
+		});				
+
+		$stateProvider.state('app.contactDetails', {
+			url: '/contactDetails/:sAccountGuid/:sContactGuid/:sMode',
+			templateUrl: 'apps/conspector/components/contacts/templates/contactDetailsView.html',
+			controller: 'contactDetailsView'
+		});	
 
 		$stateProvider.state('app.adminPanel', {
 			url: '/adminPanel',

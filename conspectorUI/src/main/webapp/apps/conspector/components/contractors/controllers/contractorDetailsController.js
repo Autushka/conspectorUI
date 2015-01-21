@@ -78,10 +78,10 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 
 		var oContractor = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oAccountEntity",
-			sRequestSettings: "GeneralAttributes/IsDeleted eq false" + "PhaseDetails", //filter + expand
+			sRequestSettings: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + "PhaseDetails/ProjectDetails,AccountTypeDetails", //filter + expand
 			sKeyName: "Guid",
 			sKeyValue: $stateParams.sContractorGuid
-		});
+		});		
 
 		var constructProvinceSelect = function(oParameters) {
 			var sParentKey = oParameters.sParentKey;
