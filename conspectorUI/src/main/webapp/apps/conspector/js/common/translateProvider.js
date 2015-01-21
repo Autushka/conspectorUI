@@ -183,13 +183,18 @@ app.config(['$translateProvider',
                   forgotPassword_footerLabel: 'Having issues logging in?\nEmail us at ',
                   //contractorsList
                   contractorsList_title: 'Contractors List',
+                  contractorsList_addNew: 'Add Contractor',
                   //contractorDetails
-                  contractorDetails_title: 'Contractor Deatails',
+                  contractorDetails_title: 'Contractor Details',
                   contractorDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current contructor?',
                   contractorDetails_deletionConfirmationContent: 'Current contructor will be deleted...',
                   //contactsList
-                  contactsList_title: 'Contacts',
-                  contactDetails_title: 'Contact Details'
+                  contactsList_title: 'Contacts List',
+                  contactDetails_title: 'Contact Details',
+                  contactsList_addNew: 'Add Contact',
+                  //clientsList
+                  clientsList_title: 'Clients List',
+                  clientsList_addNew: 'Add Client Account'
             });
 
             $translateProvider.translations('fr', {
@@ -373,14 +378,19 @@ app.config(['$translateProvider',
                   forgotPassword_reset: 'Reset password',
                   forgotPassword_footerLabel: 'Un probl\u00E8me de connexion?\n\u00C9crivez \u00E0 ',
                   //contractorsList
-                  contractorsList_title: 'Contractors L1ist',
+                  contractorsList_title: 'Contractors List',
+                  contractorsList_addNew: 'Add Contractor',
                   //contractorDetails
-                  contractorDetails_title: 'Contractor Deatails',
+                  contractorDetails_title: 'Contractor Details',
                   contractorDetails_deletionConfirmationHeader: 'Are you sure that you want to delete current contructor?',
                   contractorDetails_deletionConfirmationContent: 'Current contructor will be deleted...',
                   //contactsList
-                  contactsList_title: 'Contacts',
-                  contactDetails_title: 'Contact Details'
+                  contactsList_title: 'Contacts List',
+                  contactDetails_title: 'Contact Details',
+                  contactsList_addNew: 'Add Contact',
+                  //clientsList
+                  clientsList_title: 'Clients List',
+                  clientsList_addNew: 'Add Client Account'
             });
 
             $translateProvider.preferredLanguage('en');

@@ -32,7 +32,7 @@
 		align="space-between start" class="md-default-theme cnpActionBar">
 		<div layout="row" layout-align="start start">
 			<div>
-				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
+				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'contactsList_addNew' | translate}}</md-button>
 			</div>
 		</div>
 		<div layout="row" layout-align="end start">
@@ -41,11 +41,12 @@
 	<!-- END OF ACTION BAR -->
 	<!-- NG TABLE -->
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
-		<table ng-table="tableParams" class="cnpNgTable" id="contactsList" show-filter="true">
+		<table ng-table="tableParams" class="cnpNgTable" id="contactsList" show-filter="true" ng-class="{ 'hideAccountContactsList': !bDisplayAccountColumn, 'showAccountContactsList': bDisplayAccountColumn }" >
 			<tbody ng-repeat="group in $groups">
 				<tr class="ng-table-group notSelectable" >
 					<td colspan="{{$columns.length}}" style="overflow: visible; padding-left: 0; padding-right: 0" >
-						<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">{{ group.value }}
+						<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">
+							{{ group.value }}
 							<!-- <div class="glyphicon notSelectable" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }">{{ group.value }}</div> -->
 						</div>
 					</a>
@@ -69,7 +70,7 @@
 						</div>
 					</div>
 				</td>
-				<td ng-show="bDisplayAccountColumn" data-title="accountTE" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">
+				<td data-title="accountTE" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">
 					<div layout="row" layout-align="start center">
 						<div>
 							<span>
@@ -103,7 +104,7 @@
 			</tr>
 		</tbody>
 		<tr ng-hide="$groups.length > 0">
-			<td colspan="5">
+			<td colspan="{{$columns.length}}">
 				<div layout="row" layout-align="start center">
 					<div>
 						{{'global_noTableData' | translate}}
@@ -116,43 +117,3 @@
 <!-- END OF NG TABLE -->
 <!-- END OF CONTENT VIEW -->
 </md-content>
-
-
-<!-- <div>{{'contactsList_title' | translate}}</div>
-<md-button type="submit" class="md-primary md-raised" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button>
-<table ng-table="tableParams" style="width: 100%; border:1px solid black;" >
-	<tbody ng-repeat="group in $groups">
-		<tr class="ng-table-group">
-			<td colspan="{{$columns.length}}">
-				<a href="" ng-click="group.$hideRows = !group.$hideRows">
-					<span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
-					<strong>{{ group.value }}</strong>
-				</a>
-			</td>
-		</tr>
-		<tr ng-hide="group.$hideRows" ng-repeat="contact in group.data">
-			<td data-title="actionsTE" style="width: 10%;">
-				<span ng-click="onDisplay(contact)">Display</span>
-				<span ng-click="onEdit(contact)">Edit</span>
-			</td>
-			<td data-title="nameTE" sortable="'sName'" style="width: 20%;">
-				<span>{{contact.sName}}</span>
-			</td>
-			<td ng-show="bDisplayAccountColumn"  data-title="accountTE" sortable="'sAccountName'" style="width: 20%;">
-				<span>{{contact.sAccountName}}</span>
-			</td>
-			<td data-title="titleTE" sortable="'sTitle'" style="width: 15%;">
-				<span>{{contact.sTitle}}</span>
-			</td>
-			<td data-title="phoneTE" sortable="'sPhone'" style="width: 15%;">
-				<span>{{contact.sPhone}}</span>
-			</td>
-			<td data-title="emailTE" sortable="'sEmail'" style="width: 20%;">
-				<span>{{contact.sEmail}}</span>
-			</td>
-		</tr>
-	</tbody>
-	<tr ng-hide="$groups.length > 0">
-		<td colspan="5" >{{'global_noTableData' | translate}}</td>
-	</tr>
-</table>	 -->

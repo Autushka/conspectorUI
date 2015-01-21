@@ -2,9 +2,9 @@
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
 		<div layout="row" layout-align="start start">
 			<!-- <div>
-																		<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-																		Open Sidenav
-																		</md-button>
+			<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+			Open Sidenav
+			</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -40,8 +40,10 @@
 	<div class="cnpSection" layout="column" layout-align="start center" flex>
 		<div layout="row" style="width: 100%" flex>
 			<div class="cnpSubSection" flex>
-				<label>{{'global_billingCountry' | translate}}</label>
-				<input type="text" class="cnpTextInputField" ng-model="oContractor.sName" ng-disabled="sMode == 'display'" placeholder="{{'global_name' | translate}}" ng-change="onDataModified()">
+				<label class="cnpSubSectionLabel">
+					{{'global_billingCountry' | translate}}
+				</label>
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection" ng-model="oContractor.sName" ng-disabled="sMode == 'display'" placeholder="{{'global_name' | translate}}" ng-change="onDataModified()">
 			</div>
 			<div class="cnpSubSection" flex>
 				<label>{{'global_associatedPhases' | translate}}</label>
