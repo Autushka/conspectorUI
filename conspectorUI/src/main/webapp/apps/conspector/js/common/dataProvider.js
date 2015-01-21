@@ -448,7 +448,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				}
 
 				oData.CreatedAt = utilsProvider.dateToDBDate(new Date());
-				oData.LastModifiedAt = oParameters.oData.CreatedAt;
+				oData.LastModifiedAt = oData.CreatedAt;
 
 				if (!oData.GeneralAttributes) {
 					oData.GeneralAttributes = {};

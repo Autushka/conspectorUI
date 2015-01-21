@@ -1,5 +1,5 @@
-viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window',
-	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window) {
+viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter',
+	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter) {
 		historyProvider.removeHistory();// because current view doesn't have a back button
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.clientNameTE = $translate.instant('global_clientName');
@@ -28,6 +28,11 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 			var sPhaseName = "";
 			var bMatchFound = false;
 			for (var i = 0; i < aData.length; i++) {
+				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+					aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
+				}
+				aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
+
 				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 					bMatchFound = false;
 					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {

@@ -1,5 +1,5 @@
-viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
-	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider) {
+viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter',
+	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter) {
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.nameTE = $translate.instant('global_name');
 		$scope.titleTE = $translate.instant('global_title');
@@ -39,6 +39,11 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			var sName = "";
 			var sProjectAndPhase = "";
 			for (var i = 0; i < aData.length; i++) {
+				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+					aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
+				}
+				aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
+
 				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 					sName = "";
 					sProjectAndPhase = "";
