@@ -77,6 +77,7 @@ app.factory('cacheProvider', ['TYPES',
 						for (var j = 0; j < this.oEntitiesCache[oParameters.sCacheProviderAttribute].aCachedRequests[i].aEntitiesArray.length; j++) {
 							if (this.oEntitiesCache[oParameters.sCacheProviderAttribute].aCachedRequests[i].aEntitiesArray[j][oParameters.sKeyName] === oParameters.sKeyValue) {
 								oEntity = angular.copy(this.oEntitiesCache[oParameters.sCacheProviderAttribute].aCachedRequests[i].aEntitiesArray[j]);
+								console.log("Entitiy: " + oParameters.sCacheProviderAttribute + " retrieved from cache...");
 								break;
 							}
 						}

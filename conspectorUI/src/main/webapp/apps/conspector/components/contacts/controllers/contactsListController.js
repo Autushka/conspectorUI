@@ -30,7 +30,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			oInitialDataArrayWrapper: oContactsListData,
 			sDisplayedDataArrayName: "aDisplayedContacts",
 			oInitialSorting: {
-				sContactName: 'asc'
+				sName: 'asc'
 			},
 			sGroupBy: "sContactType",
 		});

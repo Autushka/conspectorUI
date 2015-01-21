@@ -78,13 +78,13 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 
 		var sRequestSettings = "";
 		if(historyProvider.getPreviousStateName() === "app.contactsList"){ // if navigated from contactsList
-			sRequestSettings = "GeneralAttributes/IsDeleted eq false";
+			sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false";
 			
 		}else{// if navigated from contract details
-			sRequestSettings = "GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + sAccountGuid + "'";
+			sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + sAccountGuid + "'";
 		}
 		
-		sRequestSettings = sRequestSettings + "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails";
+		sRequestSettings = sRequestSettings + "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails";
 		var oContact = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oContactEntity",
 			sRequestSettings: sRequestSettings, //filter + expand
