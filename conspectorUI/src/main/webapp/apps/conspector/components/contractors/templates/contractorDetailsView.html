@@ -30,9 +30,9 @@
 			</div>
 		</div>
 		<div layout="row" layout-align="end start">
-			<md-button ng-show="sMode == 'display'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
-			<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
-			<md-button ng-show="sMode == 'edit'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
+			<md-button ng-show="sMode == 'display'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpEditDetailsIconWhite notSelectable" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
+			<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
+			<md-button ng-show="sMode == 'edit'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpDeleteIconWhite notSelectable" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
 			<md-button ng-show="sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
 		</div>
 	</div>
@@ -43,7 +43,9 @@
 				<label class="cnpSubSectionLabel">
 					{{'global_billingCountry' | translate}}
 				</label>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection" ng-model="oContractor.sName" ng-disabled="sMode == 'display'" placeholder="{{'global_name' | translate}}" ng-change="onDataModified()">
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sName" ng-disabled="sMode == 'display'" placeholder="{{'global_name' | translate}}" ng-change="onDataModified()">
+				<span ng-if="sMode == 'display">Yo</span>
+				<!-- <input class="cnpTextInputField cnpTextInputFieldInline" ng-if="contactType._editMode" type="text" ng-model="contactType.nameEN"/> -->
 			</div>
 			<div class="cnpSubSection" flex>
 				<label>{{'global_associatedPhases' | translate}}</label>

@@ -142,6 +142,9 @@ body {
 		height: @fieldHeight*1;
 		border-radius: 0px;
 		padding-left: 20px;
+		font-size: 16px;
+		font-weight: 500;
+		color: @textColor;
 	}
 	&.cnpButtonWithIcon{
 		padding-left: 37px;
@@ -351,24 +354,49 @@ USER MANAGEMENT
   	&.cnpTextInputFieldSubSection{
 
   	height: 40px;
-	width: 80%;
+	width: 100%;
 	padding-left: 8px;
 	margin-left: 0px;
 	margin-right: 8px;
-	margin-top: 8px;
+	margin-top: 12px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-right: 8px;
 	border-width: 1px 1px 1px 1px;
 	border-color: rgba(91,91,91,.20);
 	border-style: solid;
+	font-size: 14px;
+	font-weight: 500;
 	background-color: @whiteColor;
 	box-shadow: none;
 	&:focus{
   		box-shadow: 0 0 5px rgba(50, 159, 198, 1);
   	}
   	}
+  	&.cnpTextInputFieldSubSection[disabled="disabled"]{
+
+  	height: 40px;
+	width: 100%;
+	padding-left: 8px;
+	margin-left: 0px;
+	margin-right: 8px;
+	margin-top: 12px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 8px;
+	border-width: 1px 1px 1px 1px;
+	border-color: rgba(91,91,91,.20);
+	border-style: none;
+	font-size: 14px;
+	font-weight: 500;
+	background-color: transparent;
+	box-shadow: none;
+	&:focus{
+  		box-shadow: 0 0 5px rgba(50, 159, 198, 1);
+  	}
+  	}
 }
+
 
 .md-whiteframe-z1{
 	min-width: 100%;
@@ -401,6 +429,18 @@ USER MANAGEMENT
     	background-size: 17px;
 	    background-image:url('../../../apps/conspector/img/plusIcon.svg');
 	}
+	&.cnpSaveIconWhite{
+		background-position:12px;
+    	background-size: 19px;
+	    background-image:url('../../../apps/conspector/img/saveIconWhite.svg');
+		margin-right: 8px;
+		margin-left: 8px;
+	}
+	&.cnpDeleteIconWhite{
+		background-position:12px;
+    	background-size: 21px;
+	    background-image:url('../../../apps/conspector/img/deleteIconWhite.svg');
+	}
 	&.cnpViewDetailsIcon{
 		background-position:0px;
     	background-size: 19px;
@@ -413,7 +453,7 @@ USER MANAGEMENT
 	}
 	&.cnpEditDetailsIcon{
 		background-position:0px;
-    	background-size: 21px;
+    	background-size: 20px;
 	    background-image:url('../../../apps/conspector/img/editDetailsIcon.svg');
 	    width: 23px;
 	    height: 23px;
@@ -423,6 +463,11 @@ USER MANAGEMENT
 	    &.cnpEditDetailsIconAlone{
 	    	margin-left: 12px;
 	    }
+	}
+	&.cnpEditDetailsIconWhite{
+		background-position:12px;
+    	background-size: 19px;
+	    background-image:url('../../../apps/conspector/img/editDetailsIconWhite.svg');
 	}
 	&.cnpSaveIcon{
 		background-position:0px;
@@ -435,7 +480,7 @@ USER MANAGEMENT
 	    cursor: pointer;
 	}
 	&.cnpDeleteIcon{
-		background-position:0px 33%;
+		background-position: 50%;
     	background-size: 22px;
 	    background-image:url('../../../apps/conspector/img/deleteIcon.svg');
 	    width: 23px;
@@ -877,6 +922,8 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
     padding-right: 0px;
     padding-bottom: 10px;   
     width: 100%;
+    overflow-y: auto;
+	max-height: 400px;
     // max-height: 400px;
     // overflow-y: scroll;
 }
@@ -1572,7 +1619,8 @@ DETAILS VIEW
 	// box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 .cnpSubSectionLabel{
-	font-size: 18px;
+	font-size: 16px;
+	font-weight: 500;
 }
 
 .cnpSubSectionInput{
