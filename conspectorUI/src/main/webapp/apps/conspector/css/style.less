@@ -28,12 +28,17 @@ VARIABLE AND SETTINGS
 @navbarTextColor: rgba(255, 255, 255, 0.65);
 @fontSize: 18px;
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
-@font-face {
-  font-family: 'Glyphicons Halflings';
+// @font-face {
+//   font-family: 'Ubuntu';
+//   src: url('../fonts/glyphicons-halflings-regular.ttf') format('truetype');
+// }
 
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../../../apps/conspector/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
+// @font-face {
+//   font-family: 'Glyphicons Halflings';
+
+//   src: url('../fonts/glyphicons-halflings-regular.eot');
+//   src: url('../../../apps/conspector/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+// }
 //Class for making text unselectable
 .notSelectable {
 	-webkit-touch-callout: none;
@@ -126,6 +131,8 @@ body {
 	padding-left: 14px;
 	padding-right: 14px;
 	text-transform: none;
+	margin-top: 4px;
+	margin-bottom: 4px;
 
 	&.cnpLargeButton{
 		min-width: 100%;
@@ -150,6 +157,9 @@ body {
 		padding-left: 37px;
 		&.cnpDefaultColor{
 			color: @textColor;
+		}
+		&.cnpButtonMarginRight{
+			margin-right: 8px;
 		}
 	}
 }
@@ -373,28 +383,28 @@ USER MANAGEMENT
   		box-shadow: 0 0 5px rgba(50, 159, 198, 1);
   	}
   	}
-  	&.cnpTextInputFieldSubSection[disabled="disabled"]{
+ //  	&.cnpTextInputFieldSubSection[disabled="disabled"]{
 
-  	height: 40px;
-	width: 100%;
-	padding-left: 8px;
-	margin-left: 0px;
-	margin-right: 8px;
-	margin-top: 12px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-right: 8px;
-	border-width: 1px 1px 1px 1px;
-	border-color: rgba(91,91,91,.20);
-	border-style: none;
-	font-size: 14px;
-	font-weight: 500;
-	background-color: transparent;
-	box-shadow: none;
-	&:focus{
-  		box-shadow: 0 0 5px rgba(50, 159, 198, 1);
-  	}
-  	}
+ //  	height: 40px;
+	// width: 100%;
+	// padding-left: 8px;
+	// margin-left: 0px;
+	// margin-right: 8px;
+	// margin-top: 12px;
+	// padding-top: 10px;
+	// padding-bottom: 10px;
+	// padding-right: 8px;
+	// border-width: 1px 1px 1px 1px;
+	// border-color: rgba(91,91,91,.20);
+	// border-style: none;
+	// font-size: 14px;
+	// font-weight: 500;
+	// background-color: transparent;
+	// box-shadow: none;
+	// &:focus{
+ //  		box-shadow: 0 0 5px rgba(50, 159, 198, 1);
+ //  	}
+ //  	}
 }
 
 
@@ -433,8 +443,6 @@ USER MANAGEMENT
 		background-position:12px;
     	background-size: 19px;
 	    background-image:url('../../../apps/conspector/img/saveIconWhite.svg');
-		margin-right: 8px;
-		margin-left: 8px;
 	}
 	&.cnpDeleteIconWhite{
 		background-position:12px;
@@ -526,7 +534,7 @@ APP VIEW
 */
 .cnpAppView{
 	width: 100%;
-	min-width: 665px;
+	min-width: 585px;
 	height: 100%;
 	background-color: @lightGreyBackgroundColor;
 }
@@ -543,7 +551,7 @@ APP VIEW
 .cnpHeaderBackground{
 	width: 100%;
 	min-height: 65px;
-	min-width: 665px;
+	min-width: 585px;
 	background-color: @whiteColor;
 }
 .cnpSubHeader{
@@ -560,7 +568,7 @@ APP VIEW
 .cnpSubHeaderBackground{
 	width: 100%;
 	min-height: 55px;
-	min-width: 665px;
+	min-width: 585px;
 	background-color: @lightGreyBackgroundColor;
 }
 .cnpNavBar{
@@ -574,7 +582,7 @@ APP VIEW
 }
 .cnpNavBarBackground{
 	width: 100%;
-	min-width: 665px;
+	min-width: 585px;
 	background-color: @darkerGreyBackgroundColor;
 	min-height: 48px;
 	
@@ -1068,7 +1076,7 @@ APP VIEW CONTENT
 }
 .cnpAppViewContentBackground {
 	width: 100%;
-	min-width: 665px;
+	min-width: 585px;
 	height: 100%;
 	background-color: @lightGreyBackgroundColor;
 }
@@ -1106,15 +1114,14 @@ ADMIN PANEL
     overflow-x: hidden;
 }
 .cnpContentHeader{
-
 	height: 56px;
-
 }
 .cnpContentTitle{
 	font-size: 35px;
 	font-weight: 500;
 	color: @greyTitleTextColor;
-	text-transform: uppercase;
+	// text-transform: uppercase;
+	text-align: right;
 
 }
 
@@ -1156,9 +1163,10 @@ NG TABLE
 */
 .cnpActionBar{
 	// height: 56px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top: 0px;
+	padding-bottom: 0px;
 	padding-left: 1px;
+	margin-top: 0px;
 }
 .cnpNgTableWrapper{
 
@@ -1178,6 +1186,7 @@ NG TABLE
 	border-spacing: 0px;
 	table-layout: fixed;
 	border-collapse: collapse;
+	margin-bottom: 40px;
 
 }
 .cnpNgTable>thead>tr>th {
@@ -1585,8 +1594,8 @@ DETAILS VIEW
 
 
 .cnpSection{
-	margin-top: 10px;
-	margin-bottom: 25px;
+	margin-top: 8px;
+	margin-bottom: 60px;
 	padding: 4px;
 	width: 100%;
 	// height: 100%;
@@ -1623,10 +1632,27 @@ DETAILS VIEW
 	font-weight: 500;
 }
 
-.cnpSubSectionInput{
-
-
+.cnpSubSectionData{
+	width: 100%;
+	font-size: 14px;
+	font-weight: 500;
+	height: 40px;
+	padding-left: 8px;
+	margin-left: 0px;
+	margin-right: 8px;
+	margin-top: 12px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 8px;
+	border-width: 1px 1px 1px 1px;
+	border-color: @lightGreyBackgroundColor;
+	border-style: none;
+	font-size: 14px;	
+	font-weight: 500;
+	background-color: transparent;
+	box-shadow: none;
 }
+
 
 /*
 END OF DETAILS VIEW

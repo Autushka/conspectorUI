@@ -1,10 +1,10 @@
 <div class="cnpContent" layout="column">
-	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
-		<div layout="row" layout-align="start start">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
+		<div layout="row" layout-align="start start" >
 			<!-- <div>
-			<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-			Open Sidenav
-			</md-button>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				Open Sidenav
+				</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -13,27 +13,25 @@
 			</div>
 		</div>
 		<div layout="row" layout-align="end start">
-			<label class="cnpContentTitle notSelectable">
-				{{'contractorDetails_title' | translate}}
-			</label>
+			<!-- 			<label class="cnpContentTitle notSelectable">
+					{{'contractorDetails_title' | translate}}
+			</label> -->
 		</div>
 	</div>
 	<!-- END OF CONTENT VIEW -->
 	<!-- ACTION BAR -->
-	<div layout="row" layout-align="space-between start" class="md-default-theme cnpActionBar">
-		<div layout="row" layout-align="start start">
-			<div>
-				<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
-			</div>
-			<div>
-				Title
-			</div>
+	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
+		<div>
+			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
+			<md-button ng-show="sMode == 'display'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpEditDetailsIconWhite notSelectable" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
+			<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
+			<md-button ng-show="sMode == 'edit'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpDeleteIconWhite notSelectable " ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
+			<md-button ng-show="sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
 		</div>
 		<div layout="row" layout-align="end start">
-			<md-button ng-show="sMode == 'display'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpEditDetailsIconWhite notSelectable" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
-			<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
-			<md-button ng-show="sMode == 'edit'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpDeleteIconWhite notSelectable" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
-			<md-button ng-show="sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
+			<label class="cnpContentTitle notSelectable">
+				{{'contractorDetails_title' | translate}}
+			</label>
 		</div>
 	</div>
 	<!-- END OF ACTION BAR -->
@@ -43,9 +41,12 @@
 				<label class="cnpSubSectionLabel">
 					{{'global_billingCountry' | translate}}
 				</label>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sName" ng-disabled="sMode == 'display'" placeholder="{{'global_name' | translate}}" ng-change="onDataModified()">
-				<span ng-if="sMode == 'display">Yo</span>
+				<!-- <div class="cnpSubSectionData" ng-show="sMode == 'display'">{{oContractor.sName}}</div>
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sName" ng-show="sMode != 'display'"  ng-change="onDataModified()"> -->
+				<!-- placeholder="{{'global_name' | translate}}" -->
 				<!-- <input class="cnpTextInputField cnpTextInputFieldInline" ng-if="contactType._editMode" type="text" ng-model="contactType.nameEN"/> -->
+				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor.sName}}</div>
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()">
 			</div>
 			<div class="cnpSubSection" flex>
 				<label>{{'global_associatedPhases' | translate}}</label>

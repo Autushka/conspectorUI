@@ -1,11 +1,25 @@
 <div class="cnpContent" layout="column">
-	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader">
-		<div layout="row" layout-align="start start">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" hide-gt-md>
+		<div layout="row" layout-align="start start" >
 			<div>
-				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()">
 				{{'adminPanel_hideSidenav' | translate}}
 				</md-button>
 			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+			<!-- 			<label class="cnpContentTitle notSelectable">
+					{{'contractorDetails_title' | translate}}
+			</label> -->
+		</div>
+	</div>
+	<!-- ACTION BAR -->
+	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
+		<div>
+			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
+			<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
+				{{'global_addNew' | translate}}
+				</md-button>
 		</div>
 		<div layout="row" layout-align="end start">
 			<label class="cnpContentTitle notSelectable">
@@ -13,18 +27,7 @@
 			</label>
 		</div>
 	</div>
-	<div layout="row" layout-
-		align="space-between start" class="md-default-theme cnpActionBar">
-		<div layout="row" layout-align="start start">
-			<div>
-				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
-				{{'global_addNew' | translate}}
-				</md-button>
-			</div>
-		</div>
-		<div layout="row" layout-align="end start">
-		</div>
-	</div>
+	<!-- END OF ACTION BAR -->
 	<!-- NG TABLE -->
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="deficiencyStatusesList">
