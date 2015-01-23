@@ -48,63 +48,62 @@
 						<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">{{ group.value }}
 							<!-- <div class="glyphicon notSelectable" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }">{{ group.value }}</div> -->
 						</div>
-					</a>
+					</td>
+				</tr>
+				<tr ng-hide="group.$hideRows" ng-repeat="client in group.data">
+					<td data-title="actionsTE">
+						<div layout="row" layout-align="center center">
+							<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(client)">
+							</div>
+							<div class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(client)">
+							</div>
+						</div>
+					</td>
+					<td data-title="clientNameTE" sortable="'sClientName'" filter="{'sClientName': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>
+								{{client.sClientName}}
+								</span>
+							</div>
+						</div>
+					</td>
+					<td data-title="phoneTE" sortable="'sPhone'" filter="{'sPhone': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>{{client.sPhone}}</span>
+							</div>
+						</div>
+					</td>
+					
+					<td data-title="emailTE" sortable="'sEmail'" filter="{'sEmail': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>{{client.sEmail}}</span>
+							</div>
+						</div>
+					</td>
+					<td data-title="tagsTE" sortable="'sTags'" filter="{'sTags': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>{{client.sTags}}</span>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			<tr ng-hide="$groups.length > 0">
+				<td td colspan="5">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
 				</td>
 			</tr>
-			<tr ng-hide="group.$hideRows" ng-repeat="client in group.data">
-				<td data-title="actionsTE">
-					<div layout="row" layout-align="center center">
-						<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(client)">
-						</div>
-						<div class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(client)">
-						</div>
-					</div>
-				</td>
-				<td data-title="clientNameTE" sortable="'sClientName'" filter="{'sClientName': 'text'}">
-					<div layout="row" layout-align="start center">
-						<div>
-							<span>
-							{{client.sClientName}}
-							</span>
-						</div>
-					</div>
-				</td>
-				<td data-title="phoneTE" sortable="'sPhone'" filter="{'sPhone': 'text'}">
-					<div layout="row" layout-align="start center">
-						<div>
-							<span>{{client.sPhone}}</span>
-						</div>
-					</div>
-				</td>
-				
-				<td data-title="emailTE" sortable="'sEmail'" filter="{'sEmail': 'text'}">
-					<div layout="row" layout-align="start center">
-						<div>
-							<span>{{client.sEmail}}</span>
-						</div>
-					</div>
-				</td>
-				<td data-title="tagsTE" sortable="'sTags'" filter="{'sTags': 'text'}">
-					<div layout="row" layout-align="start center">
-						<div>
-							<span>{{client.sTags}}</span>
-						</div>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-		<tr ng-hide="$groups.length > 0">
-			<td td colspan="5">
-				<div layout="row" layout-align="start center">
-					<div>
-						{{'global_noTableData' | translate}}
-					</div>
-				</div>
-			</td>
-		</tr>
-	</table>
-</div>
-<!-- END OF NG TABLE -->
+		</table>
+	</div>
+	<!-- END OF NG TABLE -->
 </div>
 <!-- END OF CONTENT VIEW -->
 </md-content>
