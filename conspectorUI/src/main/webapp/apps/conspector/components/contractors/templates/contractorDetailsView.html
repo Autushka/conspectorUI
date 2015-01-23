@@ -120,13 +120,20 @@
 					on-tag-added="onDataModified()"
 					on-tag-removed="onDataModified()">
 					</tags-input>
-					<div ng-show="sMode == 'display'">
-						<ul>
-							<li ng-repeat="tag in oContractor.aTags">
-								<span>{{tag.text}}</span>
+					<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
+						<ul class="tags-list">
+							<li class="tag-item" ng-repeat="tag in oContractor.aTags">
+								<span style="padding: 2px;">{{tag.text}}</span>
 							</li>
 						</ul>
 					</div>
+				<!-- 	<div class="tags-wrapper" ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aTags.length" class="form-control">
+							<ul class="tags-list">
+								<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
+									<span style="padding: 2px;">{{tag.text}}</span>
+								</li>
+							</ul>
+						</div>	 -->
 				</div>
 			</div>
 			<div layout="row" flex style="width: 100%">

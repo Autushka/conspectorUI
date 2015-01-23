@@ -26,6 +26,7 @@ VARIABLE AND SETTINGS
 @ngTableHeaderTextColor: #505054;
 @textColorLight: rgba(66, 67, 71, 0.5);
 @navbarTextColor: rgba(255, 255, 255, 0.65);
+@tagColor: #93E890;
 @fontSize: 18px;
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
 // @font-face {
@@ -1536,12 +1537,13 @@ NG TABLE
 	}
 }
 
-.hideAccountContactsList &th:nth-of-type(3){
+.hideAccountContactsList &th:nth-of-type(3), .hideAccountContactsList &td:nth-of-type(3){
 	width: 0%;
 	visibility: hidden;
 	&>div{
 		display: none;
 	}
+	
 }
 .showAccountContactsList th:nth-of-type(3){
 	width: 20%;
@@ -1661,6 +1663,113 @@ DETAILS VIEW
 	}
 }
 
+
+.tags {
+/*	height: 40px;*/
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: @borderRadius;
+	box-shadow: none;
+	padding: 2px !important;
+	margin-top: 8px !important;	
+}
+
+.tags input{
+	width:11em;
+}
+
+tags-input .tags .input,
+tags-input .tags .tag-item,
+.tag-item {
+	height: 32px;
+
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 14px;
+	color: @textColor;
+}
+
+tags-input .tags .tag-item{
+	line-height: 31px;
+}
+
+tags-input .tags.focused{
+	box-shadow: none;
+}
+
+tags-input .tags .tag-item,
+.tag-item {
+	background: @tagColor;
+	border: 0;
+}
+tags-input .tags.location .tag-item,
+.tags-wrapper.location .tag-item {
+	background: @tagColor;
+
+}
+
+.tags-wrapper {
+	/*	-moz-appearance: textfield;
+	-webkit-appearance: textfield;*/
+	padding: 1px;
+	overflow: hidden;
+	word-wrap: break-word;
+	cursor: text;
+	background-color: initial;
+	border: 0px;
+	margin-top: 8px;
+}
+
+.tag-item>span {
+	font-size: 14px;
+}
+tags-input .tags .tag-item .remove-button {
+	color: @textColor;
+	font-size: 14px; /* 14px */
+	font-weight: normal;
+}
+tags-input .tags .tag-item.selected{
+	background: none;
+	background-color: rgb(248, 149, 149) !important;
+}
+
+
+.tags-list {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.tag-list>input {
+	font-family: Calibri;
+	font-size: 10pt;
+}
+
+.tag-item {
+	margin-right: 4px;
+	margin-bottom: 4px;
+	padding: 0 5px;
+	display: inline-block;
+	float: left;
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 14px;
+	height: 32px;
+	line-height: 31px;
+	border: 3px solid transparent;
+	border-radius: 3px;
+	background: none;
+	background-color: @tagColor;
+	border: 0;
+}
+
+.tag-item>span {
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 14px;
+}
+
+tags-input .host {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
 
 /*
 END OF DETAILS VIEW
