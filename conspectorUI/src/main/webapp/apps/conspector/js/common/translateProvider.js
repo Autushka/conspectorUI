@@ -73,7 +73,8 @@ app.config(['$translateProvider',
                   global_addTag: "Add a tag",
                   global_contactType: "Contact Type:",
                   global_account: "Account",
-
+                  global_selectCountry: "Select Country",
+                  global_selectState: "Select Province/State",
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -288,6 +289,8 @@ app.config(['$translateProvider',
                   global_addTag: "Add a tag",
                   global_contactType: "Contact Type:",
                   global_account: "Account",
+                  global_selectCountry: "Select Country",
+                  global_selectState: "Select Province/State",
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
