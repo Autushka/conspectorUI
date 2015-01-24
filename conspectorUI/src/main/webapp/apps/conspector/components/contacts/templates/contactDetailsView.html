@@ -2,9 +2,9 @@
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
 			<!-- <div>
-				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-				Open Sidenav
-				</md-button>
+									<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+									Open Sidenav
+									</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -13,16 +13,14 @@
 			</div>
 		</div>
 		<div layout="row" layout-align="end start">
-			<!-- <label class="cnpContentTitle notSelectable">
-				{{'clientDetails_title' | translate}}
-			</label> -->
+			
 		</div>
 	</div>
 	<!-- END OF CONTENT VIEW -->
 	<!-- ACTION BAR -->
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 		<div>
-			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
+			
 			<md-button ng-show="sMode == 'display'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpEditDetailsIconWhite notSelectable" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
 			<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
 			<md-button ng-show="sMode == 'edit'" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpDeleteIconWhite notSelectable " ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
@@ -30,26 +28,44 @@
 		</div>
 		<div layout="row" layout-align="end start">
 			<label class="cnpContentTitle notSelectable">
-				{{'clientDetails_title' | translate}}
+				{{'contactDetails_title' | translate}}
 			</label>
 		</div>
 	</div>
 	<!-- END OF ACTION BAR -->
 	<div class="cnpSection" layout="column" layout-align="start center" flex>
+		
 		<div layout="row" style="width: 100%" flex>
-			<div class="cnpSubSection" flex>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_name' | translate}}
-					</label>
+			<div class="cnpSubSection" flex layout="column" layout-gt-md="row">
+				<div flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_name' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oContact.sFirstName}}&nbsp;{{oContact.sLastName}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sFirstName" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+					<div  class="cnpSubSectionLabel" ng-if="sMode != 'display'">
+						<label>
+							{{'contactDetails_lastName' | translate}}
+						</label>
+					</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sLastName" ng-if="sMode != 'display'"  ng-change="onDataModified()">
 				</div>
-				<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oClient.sName}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+				<div flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_personTitle' | translate}}
+						</label>
+					</div>
+					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sTitle}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sTitle" ng-if="sMode != 'display'" ng-change="onDataModified()">
+				</div>
 			</div>
 			<div class="cnpSubSection" flex>
 				<div  class="cnpSubSectionLabel">
 					<label>
-						{{'clientDetails_associatedProjectsAndPhases' | translate}}
+						{{'contactDetails_associatedProjectsAndPhases' | translate}}
 					</label>
 				</div>
 				<div
@@ -66,54 +82,91 @@
 				</div>
 			</div>
 		</div>
+		<div layout="row" style="width: 100%" flex>
+			<div class="cnpSubSection" layout="row" flex>
+				<div flex>
+					<div  class="cnpSubSectionLabel" ng-if="bShowAccountSelector">
+						<label>
+							{{'contactDetails_associatedParentAccount' | translate}}
+						</label>
+					</div>
+					<div 
+						ng-if="bShowAccountSelector"
+						multi-select
+						input-model="aAccounts"
+						button-label="name"
+						default-label="{{'contactDetails_selectParentAccount' | translate }}"
+						item-label="name"
+						selection-mode="single"
+						tick-property="ticked"
+						group-property="multiSelectGroup"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						helper-elements="filter">
+					</div>
+				</div>
+				<div flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_contactType' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aContactTypes"
+						button-label="name"
+						default-label="{{'contactDetails_selectContactType' | translate }}"
+						item-label="name"
+						tick-property="ticked"
+						selection-mode="single"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						helper-elements=""
+						>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div layout="column" layout-gt-md="row" style="width: 100%" flex>
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
 					<div  class="cnpSubSectionLabel">
 						<label>
-							{{'clientDetails_phone' | translate}}
+							{{'contactDetails_homePhone' | translate}}
 						</label>
 					</div>
-					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sPhone}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sPhone" ng-if="sMode != 'display'" ng-change="onDataModified()">
+					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sHomePhone}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sHomePhone" ng-if="sMode != 'display'" ng-change="onDataModified()">
 					<div  class="cnpSubSectionLabel">
 						<label>
-							{{'clientDetails_secondaryPhone' | translate}}
+							{{'contactDetails_workPhone' | translate}}
 						</label>
 					</div>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sSecondaryPhone}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sSecondaryPhone" ng-if="sMode != 'display'" ng-change="onDataModified()">
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sWorkPhone}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sSecondaryPhone" ng-if="sMode != 'display'" ng-change="onDataModified()">
 					<div  class="cnpSubSectionLabel">
 						<label>
-							{{'clientDetails_website' | translate}}
+							{{'contactDetails_mobilePhone' | translate}}
 						</label>
 					</div>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="http://{{oClient.sWebsite}}" target="_blank">{{oClient.sWebsite}}</a></div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sWebsite" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sMobilePhone}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sMobilePhone" ng-if="sMode != 'display'" ng-change="onDataModified()">
 					<div  class="cnpSubSectionLabel">
 						<label>
-							{{'clientDetails_email' | translate}}
+							{{'contactDetails_email' | translate}}
 						</label>
 					</div>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="mailto:{{oClient.sEmail}}">{{oClient.sEmail}}</a></div>
-					<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()">
-					<div class="cnpSubSectionLabel">
-						<label>
-							{{'clientDetails_fax' | translate}}
-						</label>
-					</div>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sFax}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sFax" ng-if="sMode != 'display'" ng-change="onDataModified()">
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="mailto:{{oContact.sEmail}}">{{oContact.sEmail}}</a></div>
+					<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()">
 				</div>
 				<div class="cnpSubSection" flex>
 					<div class="cnpSubSectionLabel">
 						<label>
-							{{'clientDetails_descriptionTags' | translate}}
+							{{'contactDetails_descriptionTags' | translate}}
 						</label>
 					</div>
-					<!-- TO DO -->
 					<tags-input
-					ng-model="oClient.aTags"
+					ng-model="oContact.aTags"
 					ng-hide="sMode == 'display'"
 					replace-spaces-with-dashes="false"
 					placeholder="{{'global_addTag' | translate}}"
@@ -122,283 +175,136 @@
 					</tags-input>
 					<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
 						<ul class="tags-list">
-							<li class="tag-item" ng-repeat="tag in oClient.aTags">
+							<li class="tag-item" ng-repeat="tag in oContact.aTags">
 								<span style="padding: 2px;">{{tag.text}}</span>
 							</li>
 						</ul>
 					</div>
-				<!-- 	<div class="tags-wrapper" ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aTags.length" class="form-control">
-							<ul class="tags-list">
-								<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
-									<span style="padding: 2px;">{{tag.text}}</span>
-								</li>
-							</ul>
-						</div>	 -->
 				</div>
 			</div>
 			<div layout="row" flex style="width: 100%">
 				<div class="cnpSubSection" flex>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingStreet' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingStreet}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()">
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingCity' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingCity}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()">
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingPostalCode' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingPostalCode}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()">
-				
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingCountry' | translate}}
-					</label>
-				</div>
-				<div
-					multi-select
-					input-model="aBillingCountries"
-					button-label="name"
-					default-label="{{'global_selectCountry' | translate }}"
-					item-label="name"
-					tick-property="ticked"
-					selection-mode="single"
-					is-disabled="sMode == 'display'"
-					on-item-click="onBillingCountryChanged()"
-					helper-elements="filter"
-					>
-				</div>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingState' | translate}}
-					</label>
-				</div>
-				<div
-					multi-select
-					input-model="aBillingProvinces"
-					button-label="name"
-					default-label="{{'global_selectState' | translate }}"
-					item-label="name"
-					tick-property="ticked"
-					selection-mode="single"
-					is-disabled="sMode == 'display'"
-					on-item-click="onDataModified()"
-					helper-elements="filter"
-					>
-				</div>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_billingStreet' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sBillingStreet}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sBillingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_billingCity' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sBillingCity}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sBillingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_billingPostalCode' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sBillingPostalCode}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sBillingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+					
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_billingCountry' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aBillingCountries"
+						button-label="name"
+						default-label="{{'global_selectCountry' | translate }}"
+						item-label="name"
+						tick-property="ticked"
+						selection-mode="single"
+						is-disabled="sMode == 'display'"
+						on-item-click="onBillingCountryChanged()"
+						helper-elements="filter"
+						>
+					</div>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_billingState' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aBillingProvinces"
+						button-label="name"
+						default-label="{{'global_selectState' | translate }}"
+						item-label="name"
+						tick-property="ticked"
+						selection-mode="single"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						helper-elements="filter"
+						>
+					</div>
 				</div>
 				<div class="cnpSubSection" flex>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingStreet' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingStreet}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()">
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingCity' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingCity}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()">
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingPostalCode' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingPostalCode}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()">
-				
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingCountry' | translate}}
-					</label>
-				</div>
-				<div
-					multi-select
-					input-model="aShippingCountries"
-					button-label="name"
-					default-label="{{'global_selectCountry' | translate }}"
-					item-label="name"
-					tick-property="ticked"
-					selection-mode="single"
-					is-disabled="sMode == 'display'"
-					on-item-click="onShippingCountryChanged()"
-					helper-elements="filter"
-					>
-				</div>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingState' | translate}}
-					</label>
-				</div>
-				<div
-					multi-select
-					input-model="aShippingProvinces"
-					button-label="name"
-					default-label="{{'global_selectState' | translate }}"
-					item-label="name"
-					tick-property="ticked"
-					selection-mode="single"
-					is-disabled="sMode == 'display'"
-					on-item-click="onDataModified()"
-					helper-elements="filter"
-					>
-				</div>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_shippingStreet' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sShippingStreet}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_shippingCity' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sShippingCity}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_shippingPostalCode' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sShippingPostalCode}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+					
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_shippingCountry' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aShippingCountries"
+						button-label="name"
+						default-label="{{'global_selectCountry' | translate }}"
+						item-label="name"
+						tick-property="ticked"
+						selection-mode="single"
+						is-disabled="sMode == 'display'"
+						on-item-click="onShippingCountryChanged()"
+						helper-elements="filter"
+						>
+					</div>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'contactDetails_shippingState' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aShippingProvinces"
+						button-label="name"
+						default-label="{{'global_selectState' | translate }}"
+						item-label="name"
+						tick-property="ticked"
+						selection-mode="single"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						helper-elements="filter"
+						>
+					</div>
 				</div>
 			</div>
 		</div>
 		
 	</div>
 </div>
-
-<!--  -->
-
-
-<div>{{'contactDetails_title' | translate}}</div>
-<md-button class="md-primary md-raised" ng-if="bShowBackButton" ng-click="onBack()">{{'global_back' | translate}}</md-button>
-<md-button ng-show="sMode == 'display'" class="md-primary md-raised" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
-<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSave()">{{'global_save' | translate}}</md-button>
-<md-button ng-show="sMode == 'edit'" class="md-primary md-raised" ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
-<md-button ng-show="sMode == 'create'" type="submit" class="md-primary md-raised" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
-<form name="contactDetailsForm">
-	<label ng-if="bShowAccountSelector">{{'global_account' | translate}}</label>
-	<div ng-if="bShowAccountSelector" 
-		multi-select
-		input-model="aAccounts"
-		button-label="name"
-		item-label="name"
-		selection-mode="single"		
-		tick-property="ticked"
-		group-property="multiSelectGroup"
-		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
-		helper-elements="filter">
-	</div>	
-
-	<label>{{'global_contactType' | translate}}</label>
-	<div
-		multi-select
-		input-model="aContactTypes"
-		button-label="name"
-		item-label="name"
-		tick-property="ticked"
-		selection-mode="single"		
-		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
-		helper-elements=""
-		>
-	</div>	
-
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sFirstName" ng-disabled="sMode == 'display'" placeholder="{{'global_firstName' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sLastName" ng-disabled="sMode == 'display'" placeholder="{{'global_lastName' | translate}}" ng-change="onDataModified()">
-
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sTitle" ng-disabled="sMode == 'display'" placeholder="{{'global_title' | translate}}" ng-change="onDataModified()">	
-
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sHomePhone" ng-disabled="sMode == 'display'" placeholder="{{'global_homePhone' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sWorkPhone" ng-disabled="sMode == 'display'" placeholder="{{'global_workPhone' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sMobilePhone" ng-disabled="sMode == 'display'" placeholder="{{'global_mobilePhone' | translate}}" ng-change="onDataModified()">	
-
-	<input type="email" class="cnpTextInputField" ng-model="oContact.sEmail" ng-disabled="sMode == 'display'" placeholder="{{'global_email' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sFax" ng-disabled="sMode == 'display'" placeholder="{{'global_fax' | translate}}" ng-change="onDataModified()">
-	<label>{{'global_associatedPhases' | translate}}</label>
-	<div
-		multi-select
-		input-model="aUserProjectsPhasesForMultiselect"
-		button-label="fullName"
-		item-label="name"
-		tick-property="ticked"
-		group-property="multiSelectGroup"
-		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
-		>
-	</div>
-	<label>{{'global_tags' | translate}}</label>
-	<tags-input
-		ng-model="oContact.aTags"
-		ng-hide="sMode == 'display'"
-		replace-spaces-with-dashes="false"
-		placeholder="{{'global_addTag' | translate}}"
-		on-tag-added="onDataModified()"
-		on-tag-removed="onDataModified()">
-	</tags-input>
-	<div ng-show="sMode == 'display'">
-		<ul>
-			<li ng-repeat="tag in oContact.aTags">
-				<span>{{tag.text}}</span>
-			</li>
-		</ul>
-	</div>
-
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sBillingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_billingStreet' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sBillingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_billingCity' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sBillingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_billingPostalCode' | translate}}" ng-change="onDataModified()">
-	<label>{{'global_billingCountry' | translate}}</label>
-	<div
-		multi-select
-		input-model="aBillingCountries"
-		button-label="name"
-		item-label="name"
-		tick-property="ticked"
-		selection-mode="single"
-		is-disabled="sMode == 'display'"
-		on-item-click="onBillingCountryChanged()"
-		helper-elements="filter"
-		>
-	</div>
-	<label>{{'global_billingProvince' | translate}}</label>
-	<div
-		multi-select
-		input-model="aBillingProvinces"
-		button-label="name"
-		item-label="name"
-		tick-property="ticked"
-		selection-mode="single"
-		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
-		helper-elements="filter"
-		>
-	</div>
-	
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sShippingStreet" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingStreet' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sShippingCity" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingCity' | translate}}" ng-change="onDataModified()">
-	<input type="text" class="cnpTextInputField" ng-model="oContact.sShippingPostalCode" ng-disabled="sMode == 'display'" placeholder="{{'global_shippingPostalCode' | translate}}" ng-change="onDataModified()">
-	<label>{{'global_shippingCountry' | translate}}</label>
-	<div
-		multi-select
-		input-model="aShippingCountries"
-		button-label="name"
-		item-label="name"
-		tick-property="ticked"
-		selection-mode="single"
-		is-disabled="sMode == 'display'"
-		on-item-click="onShippingCountryChanged()"
-		helper-elements="filter"
-		>
-	</div>
-	<label>{{'global_shippingProvince' | translate}}</label>
-	<div
-		multi-select
-		input-model="aShippingProvinces"
-		button-label="name"
-		item-label="name"
-		tick-property="ticked"
-		selection-mode="single"
-		is-disabled="sMode == 'display'"
-		on-item-click="onDataModified()"
-		helper-elements="filter"
-		>
-	</div>
-	
-</form>
