@@ -6,6 +6,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 		$scope.bShowAccountSelector = sAccountGuid ? false : true;
+
 		$scope.sMode = $stateParams.sMode;
 		$scope.oContact = {
 			_aPhases: [],
@@ -287,7 +288,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		}
 
 		$scope.onEdit = function() {
-			$state.go('app.contactDetails', {
+			$state.go('app.contactDetailsWrapper.contactDetails', {
 				sMode: "edit",
 				sAccountGuid: sAccountGuid,
 				sContactGuid: $scope.oContact._guid,
@@ -383,7 +384,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 				}
 				if (!bSaveAndNew) {
-					$state.go('app.contactDetails', {
+					$state.go('app.contactDetailsWrapper.contactDetails', {
 						sMode: "display",
 						sAccountGuid: sAccountGuid,
 						sContactGuid: oData.Guid
@@ -416,7 +417,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 
 				$scope.oContact._lastModifiedAt = oData.LastModifiedAt;
 				$scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
-				$state.go('app.contactDetails', {
+				$state.go('app.contactDetailsWrapper.contactDetails', {
 					sMode: "display",
 					sAccountGuid: sAccountGuid,
 					sContactGuid: oData.Guid

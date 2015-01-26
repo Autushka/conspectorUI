@@ -2,8 +2,6 @@ viewControllers.controller('unitsListView', ['$scope', '$state', 'servicesProvid
 	function($scope, $state, servicesProvider, historyProvider, apiProvider) {
 		historyProvider.removeHistory();// because current view doesn't have a back button	
 
-		$scope.onGenerateReport = function(){
-			apiProvider.testXDocReport();
-		}
+
 	}
 ]);

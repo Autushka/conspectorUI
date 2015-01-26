@@ -98,6 +98,11 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 				sContractorGuid: "",
 			});
 		};
+
+		$scope.onGenerateReport = function() {
+			apiProvider.generateReport({});
+		};
+		
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
 			loadContractors();
 		});

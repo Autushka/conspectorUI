@@ -97,7 +97,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			if (!sAccountGuid) {
 				sAccountGuid = oContact._accountGuid;
 			}
-			$state.go('app.contactDetails', {
+			$state.go('app.contactDetailsWrapper.contactDetails', {
 				sMode: "display",
 				sAccountGuid: sAccountGuid,
 				sContactGuid: oContact._guid,
@@ -108,15 +108,15 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			if (!sAccountGuid) {
 				sAccountGuid = oContact._accountGuid;
 			}
-			$state.go('app.contactDetails', {
+			$state.go('app.contactDetailsWrapper.contactDetails', {
 				sMode: "edit",
 				sAccountGuid: sAccountGuid,
 				sContactGuid: oContact._guid,
 			});
 		};
 
-		$scope.onAddNew = function() {		
-			$state.go('app.contactDetails', {
+		$scope.onAddNew = function() {
+			$state.go('app.contactDetailsWrapper.contactDetails', {
 				sMode: "create",
 				sAccountGuid: sAccountGuid,
 				sContactGuid: "",

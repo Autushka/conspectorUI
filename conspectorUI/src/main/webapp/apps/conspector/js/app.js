@@ -181,13 +181,22 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			url: '/contactsList',
 			templateUrl: 'apps/conspector/components/contacts/templates/contactsListView.html',
 			controller: 'contactsListView'
-		});				
-
-		$stateProvider.state('app.contactDetails', {
-			url: '/contactDetails/:sAccountGuid/:sContactGuid/:sMode',
-			templateUrl: 'apps/conspector/components/contacts/templates/contactDetailsView.html',
-			controller: 'contactDetailsView'
 		});	
+
+		$stateProvider.state('app.contactDetailsWrapper', {//abstract view without controller that contains only ngView holders
+			templateUrl: 'apps/conspector/components/contacts/templates/contactDetailsWrapperView.html',
+			controller: 'contactDetailsWrapperView'
+		});
+
+		$stateProvider.state('app.contactDetailsWrapper.contactDetails', {//state that contains subviews
+			url: '/contactDetails/:sAccountGuid/:sContactGuid/:sMode',
+			views: {
+				'contactDetails': {
+					templateUrl: 'apps/conspector/components/contacts/templates/contactDetailsView.html',
+					controller: 'contactDetailsView'
+				},
+			}
+		});					
 
 		$stateProvider.state('app.adminPanel', {
 			url: '/adminPanel',
