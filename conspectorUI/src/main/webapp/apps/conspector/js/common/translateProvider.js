@@ -100,10 +100,14 @@ app.config(['$translateProvider',
                   profileSettings_menuHeader: 'User Menu',
                   profileSettings_profileDetails: 'User Profile',
                   profileSettings_changePassword: 'Change Password',
+                  profileSettings_hideSidenav: 'Open User Menu',
                   //profileDetails
                   profileDetails_title: 'User Profile',
                   //changePassword
                   changePassword_title: 'Change Password',
+                  changePassword_resetPassword: 'Change Password',
+                  changePassword_newPassword: 'New Password',
+                  changePassword_newPasswordConfirmation: 'New Password Confirmation',
                   //adminPanel
                   adminPanel_menuHeader: 'Admin Panel Menu',
                   adminPanel_companies: "Companies",
@@ -374,10 +378,14 @@ app.config(['$translateProvider',
                   profileSettings_menuHeader: 'User Menu',
                   profileSettings_profileDetails: 'User Profile',
                   profileSettings_changePassword: 'Change Password',
+                  profileSettings_hideSidenav: 'Open User Menu',
                   //profileDetails
                   profileDetails_title: 'User Profile',
-                  //changePassword
+                   //changePassword
                   changePassword_title: 'Change Password',
+                  changePassword_resetPassword: 'Change Password',
+                  changePassword_newPassword: 'New Password',
+                  changePassword_newPasswordConfirmation: 'New Password Confirmation',
                   //adminPanel
                   adminPanel_menuHeader: 'Admin Panel Menu',
                   adminPanel_companies: "Companies",

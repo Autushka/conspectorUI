@@ -4,7 +4,7 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 		$scope.userNameTE = $translate.instant('global_userName');
 		$scope.emailTE = $translate.instant('global_email');
 		$scope.rolesTE = $translate.instant('global_roles');
-		$scope.companiesTE = $translate.instant('global_companies');
+		$scope.companiesTE = $translate.instant('adminPanel_companies');
 
 		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
 		$scope.oStateParams = {};// for backNavigation
