@@ -74,7 +74,7 @@
 							{{'contractorDetails_phone' | translate}}
 						</label>
 					</div>
-					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor.sPhone}}</div>
+					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor.sPhone | phoneFormatter}}</div>
 					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sPhone" ng-if="sMode != 'display'" ng-change="onDataModified()">
 					<div  class="cnpSubSectionLabel">
 						<label>

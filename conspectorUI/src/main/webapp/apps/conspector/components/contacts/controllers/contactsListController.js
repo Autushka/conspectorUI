@@ -115,16 +115,17 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			});
 		};
 
-		$scope.onAddNew = function() {
-			// if(!sAccountGuid){
-			// 	sAccountGuid = oContact._accountGuid;
-			// }			
+		$scope.onAddNew = function() {		
 			$state.go('app.contactDetails', {
 				sMode: "create",
 				sAccountGuid: sAccountGuid,
 				sContactGuid: "",
 			});
 		};
+
+		$scope.$on('contactsShouldBeRefreshed', function(oParameters) {
+			loadContacts();
+		});		
 
 		$scope.$on("$destroy", function() {
 			if ($scope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $scope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") {//don't save in history if contact list is weathin the contractor/client details view...  

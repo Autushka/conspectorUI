@@ -881,6 +881,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			createAccount: function(oParameters) {
 				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oAccountEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 					PubNub.ngPublish({
 						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
 						message: {
@@ -888,11 +892,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sText: "Account has been created...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
 						}
-					});
-					cacheProvider.cleanEntitiesCache("oAccountEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
-					}
+					});					
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "Accounts",
@@ -911,6 +911,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			updateAccount: function(oParameters) {
 				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oAccountEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
 					PubNub.ngPublish({
 						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
 						message: {
@@ -918,11 +922,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sText: "Account has been updated...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
 						}
-					});
-					cacheProvider.cleanEntitiesCache("oAccountEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
-					}
+					});					
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -987,6 +987,14 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
+					PubNub.ngPublish({
+						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+						message: {
+							sEntityName: "oContactEntity",
+							sText: "Contact has been updated...",
+							sUserName: cacheProvider.oUserProfile.sUserName,
+						}
+					});					
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -1008,6 +1016,14 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
+					PubNub.ngPublish({
+						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+						message: {
+							sEntityName: "oContactEntity",
+							sText: "Contact has been created...",
+							sUserName: cacheProvider.oUserProfile.sUserName,
+						}
+					});						
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "Contacts",

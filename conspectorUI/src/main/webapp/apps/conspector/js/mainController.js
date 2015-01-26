@@ -19,11 +19,18 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 			});
 
 			$rootScope.$on(PubNub.ngMsgEv(sChannel), function(event, payload) {
-				cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
+				if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
+					cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
+				}
 				switch (payload.message.sEntityName) {
 					case "oAccountEntity":
 						if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
 							$rootScope.$broadcast('accountsShouldBeRefreshed');
+						}
+						break;
+					case "oContactEntity":
+						if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
+							$rootScope.$broadcast('contactsShouldBeRefreshed');
 						}
 						break;
 				}
