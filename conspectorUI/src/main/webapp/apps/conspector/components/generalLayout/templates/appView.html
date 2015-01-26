@@ -12,7 +12,7 @@
 					{{'app_adminPanel' | translate}}
 				</label>
 				<label ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="cnpLink cnpLinkHeader notSelectable">
-					{{'app_profileSettings' | translate}}
+					{{sCurrentUser}}
 				</label>
 				
 				<label ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeader notSelectable">

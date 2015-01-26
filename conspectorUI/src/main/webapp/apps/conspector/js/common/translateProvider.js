@@ -97,11 +97,11 @@ app.config(['$translateProvider',
                   app_clientsTab: 'Clients',
                   app_contactsTab: "Contacts",
                   //profileSettings
-                  profileSettings_menuHeader: 'Profile Settings Menu',
-                  profileSettings_profileDetails: 'Profile Details',
+                  profileSettings_menuHeader: 'User Menu',
+                  profileSettings_profileDetails: 'User Profile',
                   profileSettings_changePassword: 'Change Password',
                   //profileDetails
-                  profileDetails_title: 'Profile Details',
+                  profileDetails_title: 'User Profile',
                   //changePassword
                   changePassword_title: 'Change Password',
                   //adminPanel
@@ -371,11 +371,11 @@ app.config(['$translateProvider',
                   app_clientsTab: 'Clients',
                   app_contactsTab: "Contacts",
                   //profileSettings
-                  profileSettings_menuHeader: 'Profile Settings Menu',
-                  profileSettings_profileDetails: 'Profile Details',
+                  profileSettings_menuHeader: 'User Menu',
+                  profileSettings_profileDetails: 'User Profile',
                   profileSettings_changePassword: 'Change Password',
                   //profileDetails
-                  profileDetails_title: 'Profile Details',
+                  profileDetails_title: 'User Profile',
                   //changePassword
                   changePassword_title: 'Change Password',
                   //adminPanel

@@ -3,6 +3,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		var sCurrentUser = cacheProvider.oUserProfile.sUserName;
 		var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
 		var aSelectedPhases = [];
+		$scope.sCurrentUser = sCurrentUser;
 
 		if (!sCurrentUser) {
 			servicesProvider.logOut();
