@@ -3,8 +3,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		var sContractorGuid = $stateParams.sContractorGuid;
 		$scope.sAccountType = "";
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-		if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { //for logic hide/show contacts table
-			$scope.$parent.oStateParams = angular.copy($stateParams);
+		if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { 
+			$scope.$parent.oStateParams = angular.copy($stateParams); // needed for properBackNavigation with wrapper view...
 			$scope.sAccountType = "Contractor";
 		}
 

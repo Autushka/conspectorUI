@@ -85,13 +85,13 @@
 		<div layout="row" style="width: 100%" flex>
 			<div class="cnpSubSection" layout="row" flex>
 				<div flex>
-					<div  class="cnpSubSectionLabel" ng-if="bShowAccountSelector">
+					<div  class="cnpSubSectionLabel">
 						<label>
 							{{'contactDetails_associatedParentAccount' | translate}}
 						</label>
 					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'" ><a ng-click="onNavigateToAccountDetails()">{{oContact._sAccountName}}</a></div>				
 					<div 
-						ng-if="bShowAccountSelector"
 						multi-select
 						input-model="aAccounts"
 						button-label="name"

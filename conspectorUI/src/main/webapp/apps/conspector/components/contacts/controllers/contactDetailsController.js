@@ -5,7 +5,12 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
-		$scope.bShowAccountSelector = sAccountGuid ? false : true;
+		if ($scope.$parent && $scope.$parent.sViewName === "contactDetailsWrapperView") {
+			$scope.$parent.oStateParams = angular.copy($stateParams); // needed for properBackNavigation with wrapper view...
+		}
+
+		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$scope.oStateParams = {}; // for backNavigation
 
 		$scope.sMode = $stateParams.sMode;
 		$scope.oContact = {
@@ -65,6 +70,10 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				$scope.oContact._shippingProvinceCode = oContact.ShippingAddress.ShippingProvince;
 			}
 
+			if (oContact.AccountDetails) {
+				$scope.oContact._sAccountName = oContact.AccountDetails.Name;
+			}
+
 			$scope.oContact.sCreatedAt = utilsProvider.dBDateToSting(oContact.CreatedAt);
 			$scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oContact.LastModifiedAt);
 
@@ -78,13 +87,13 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		};
 
 		var sRequestSettings = "";
-		if(historyProvider.getPreviousStateName() === "app.contactsList"){ // if navigated from contactsList
+		if (historyProvider.getPreviousStateName() === "app.contactsList") { // if navigated from contactsList
 			sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false";
-			
-		}else{// if navigated from contract details
+
+		} else { // if navigated from contract details
 			sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + sAccountGuid + "'";
 		}
-		
+
 		sRequestSettings = sRequestSettings + "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails";
 		var oContact = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oContactEntity",
@@ -211,6 +220,11 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				bShowSpinner: false,
 				onSuccess: onContactTypesLoaded
 			});
+
+			apiProvider.getAccountTypesWithAccounts({
+				bShowSpinner: false,
+				onSuccess: onAccountTypesWithAccountsLoaded
+			});
 		};
 
 		var getContactDetails = function() {
@@ -221,7 +235,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			});
 		};
 
-		var onAccountTypesWithAccountsLoaded = function(aData){
+		var onAccountTypesWithAccountsLoaded = function(aData) {
 			//Sort aData by accountType sorting sequence and then by AccountName
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
@@ -240,7 +254,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				sNameEN: "NameEN",
 				sNameFR: "NameFR",
 				sDependentKey: "Guid",
-				sParentKey: "",
+				sParentKey: "_accountGuid",
 				sTargetArrayNameInParent: "aAccounts"
 			});
 
@@ -263,12 +277,16 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 					bShowSpinner: false,
 					onSuccess: onContactTypesLoaded
 				});
+				apiProvider.getAccountTypesWithAccounts({
+					bShowSpinner: false,
+					onSuccess: onAccountTypesWithAccountsLoaded
+				});
 			}
 		} else {
 			constructPhasesMultiSelect({
 				aSelectedPhases: []
 			});
-			
+
 			apiProvider.getCountriesWithProvinces({
 				bShowSpinner: false,
 				onSuccess: onCountriesLoaded
@@ -277,14 +295,12 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			apiProvider.getContactTypes({
 				bShowSpinner: false,
 				onSuccess: onContactTypesLoaded
-			});	
+			});
 
-			if(!sAccountGuid){ 
-				apiProvider.getAccountTypesWithAccounts({
-					bShowSpinner: false,
-					onSuccess: onAccountTypesWithAccountsLoaded
-				});					
-			}						
+			apiProvider.getAccountTypesWithAccounts({
+				bShowSpinner: false,
+				onSuccess: onAccountTypesWithAccountsLoaded
+			});
 		}
 
 		$scope.onEdit = function() {
@@ -426,13 +442,13 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			oDataForSave.Guid = $scope.oContact._guid;
 			oDataForSave.AccountGuid = sAccountGuid;
 
-			if(!oDataForSave.AccountGuid){ //in case of new contact creation from contact list...
+			if (!oDataForSave.AccountGuid) { //in case of new contact creation from contact list...
 				for (var i = 0; i < $scope.aAccounts.length; i++) {
 					if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
 						oDataForSave.AccountGuid = $scope.aAccounts[i].Guid;
 						break;
 					}
-				}				
+				}
 			}
 
 			for (var i = 0; i < $scope.aContactTypes.length; i++) {
@@ -442,7 +458,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				}
 			}
 
-			
+
 
 			oDataForSave.FirstName = $scope.oContact.sFirstName;
 			oDataForSave.LastName = $scope.oContact.sLastName;
@@ -520,6 +536,13 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		$scope.onBack = function() {
 			historyProvider.navigateBack({
 				oState: $state
+			});
+		};
+
+		$scope.onNavigateToAccountDetails = function() {
+			$state.go('app.contractorDetailsWrapper.contractorDetails', {
+				sMode: "display",
+				sContractorGuid: sAccountGuid,
 			});
 		};
 
