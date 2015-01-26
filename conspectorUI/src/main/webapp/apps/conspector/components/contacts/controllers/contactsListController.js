@@ -38,6 +38,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		var onContactsLoaded = function(aData) {
 			var sName = "";
 			var sProjectAndPhase = "";
+			var bMatchFound = false;
 			for (var i = 0; i < aData.length; i++) {
 				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 					aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
@@ -45,6 +46,17 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 				aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
 
 				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+					bMatchFound = false;
+					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+						if(aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]){
+							bMatchFound = true;
+							break;
+						}
+					}
+					if(!bMatchFound){
+						continue;
+					}
+
 					sName = "";
 					sProjectAndPhase = "";
 					if (aData[i].FirstName) {
@@ -122,6 +134,10 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 				sContactGuid: "",
 			});
 		};
+
+		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
+			loadContacts();
+		});		
 
 		$scope.$on('contactsShouldBeRefreshed', function(oParameters) {
 			loadContacts();

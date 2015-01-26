@@ -18,7 +18,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		};
 
 		var oContactWrapper = {
-			aData: [{}]
+			aData: [{_accountGuid: sAccountGuid}] //initial accountGuid needed here for new contract creation scenario
 		};
 
 		$scope.aContactTypes = [];
@@ -296,6 +296,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				bShowSpinner: false,
 				onSuccess: onContactTypesLoaded
 			});
+
 
 			apiProvider.getAccountTypesWithAccounts({
 				bShowSpinner: false,
