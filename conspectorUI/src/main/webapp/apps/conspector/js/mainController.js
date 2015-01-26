@@ -1,7 +1,5 @@
 app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider', 'servicesProvider', 'PubNub', 'cacheProvider',
 	function($scope, $rootScope, $state, apiProvider, servicesProvider, PubNub, cacheProvider) {
-
-
 		var sUserName = apiProvider.getCurrentUserName();
 
 		if (sUserName) {

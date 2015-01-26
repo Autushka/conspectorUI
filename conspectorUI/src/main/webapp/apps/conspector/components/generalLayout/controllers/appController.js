@@ -59,7 +59,6 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].deficiencies) {
 			$scope.aTabs.push({
-				iIndex: 0,
 				sTitle: $translate.instant("app_deficienciesTab"),
 				sState: "app.deficienciesList" //"#/app/deficienciesList"
 			});
@@ -67,7 +66,6 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].units) {
 			$scope.aTabs.push({
-				iIndex: 1,
 				sTitle: $translate.instant("app_unitsTab"),
 				sState: "app.unitsList" //"#/app/unitsList"
 			});
@@ -75,7 +73,6 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contractors) {
 			$scope.aTabs.push({
-				iIndex: 2,
 				sTitle: $translate.instant("app_contractorsTab"),
 				sState: "app.contractorsList" //"#/app/contractorsList"
 			});
@@ -83,7 +80,6 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].clients) {
 			$scope.aTabs.push({
-				iIndex: 3,
 				sTitle: $translate.instant("app_clientsTab"),
 				sState: "app.clientsList" //"#/app/clientsList"
 			});
@@ -91,11 +87,10 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contacts) {
 			$scope.aTabs.push({
-				iIndex: 4,
 				sTitle: $translate.instant("app_contactsTab"),
 				sState: "app.contactsList" //"#/app/clientsList"
 			});
-		}		
+		}
 
 		$scope.onSwitchCompanies = function() {
 			$state.go('companySelection');
@@ -109,29 +104,42 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			servicesProvider.logOut();
 		};
 
+		var getITabIndexForCurrentState = function(sState) {
+			for (var i = 0; i < $scope.aTabs.length; i++) { // can't use static numbering due to hidden tabs scenario (for some user roles)
+				if ($scope.aTabs[i].sState === sState) {
+					return i;
+				}
+			};
+		}
+
 		var tabSelectionBasedOnHash = function() {
-			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1  || $window.location.hash.indexOf("#/app/clientDetails") > -1 ||  $window.location.hash.indexOf("#/app/contractorDetails") > -1  || $window.location.hash.indexOf("#/app/contactDetails") > -1) {
+			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1 || $window.location.hash.indexOf("#/app/clientDetails") > -1 || $window.location.hash.indexOf("#/app/contractorDetails") > -1 || $window.location.hash.indexOf("#/app/contactDetails") > -1) {
 				$scope.selectedTabIndex = -1;
 				$scope.$broadcast("$mdTabsPaginationChanged");
 				return;
 			}
 
 			if ($window.location.hash.indexOf("deficienc") > -1) {
-				$scope.selectedTabIndex = 0;
+				$scope.selectedTabIndex = getITabIndexForCurrentState("app.deficienciesList");
+				return;
 			}
 
 			if ($window.location.hash.indexOf("unit") > -1) {
-				$scope.selectedTabIndex = 1;
+				$scope.selectedTabIndex = getITabIndexForCurrentState("app.unitsList");
+				return;
 			}
-			if ($window.location.hash.indexOf("contractor") > -1) { 
-				$scope.selectedTabIndex = 2;
+			if ($window.location.hash.indexOf("contractor") > -1) {
+				$scope.selectedTabIndex = getITabIndexForCurrentState("app.contractorsList");
+				return;
 			}
 			if ($window.location.hash.indexOf("client") > -1) {
-				$scope.selectedTabIndex = 3;
+				$scope.selectedTabIndex = getITabIndexForCurrentState("app.clientsList");
+				return;
 			}
 			if ($window.location.hash.indexOf("contact") > -1) {
-				$scope.selectedTabIndex = 4;
-			}			
+				$scope.selectedTabIndex = getITabIndexForCurrentState("app.contactsList");
+				return;
+			}
 		};
 
 		$timeout(tabSelectionBasedOnHash, 100);
@@ -141,7 +149,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("unit") > -1) {
 				sCurrentSelectedTab = "Units";
 			}
-			if ($window.location.hash.indexOf("contractor") > -1) { 
+			if ($window.location.hash.indexOf("contractor") > -1) {
 				sCurrentSelectedTab = "Contractors";
 			}
 			if ($window.location.hash.indexOf("client") > -1) {
@@ -149,7 +157,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			}
 			if ($window.location.hash.indexOf("contact") > -1) {
 				sCurrentSelectedTab = "Contacts";
-			}			
+			}
 
 			// if (oTab.iIndex === 1 && sCurrentSelectedTab === "Units") {
 			// 	return;
