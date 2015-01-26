@@ -605,7 +605,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					data: oParameters.oData,
 					dataType: oParameters.sDataType,
 					beforeSend: function() {},
-					success: $.proxy(function(data) {
+					success: $.proxy(function(data, response) {
 						this.commonOnSuccess(oParameters);
 						if (oParameters.oEventHandlers && oParameters.oEventHandlers.onSuccess) {
 							oParameters.oEventHandlers.onSuccess(data);
