@@ -2,7 +2,8 @@ app.factory('historyProvider', [
 	function() {
 		return {
 			aHistoryStates: [],
-			bBackNavigationFlag: false,//needed to deel with problem when navigating from view with back button to view with back button
+			bBackNavigationFlag: false,//needed to deel with problem when navigating from view with back button to view with back button;
+			//onDestroy logic needed for each details view or wrapper(if details view is wrapped) in order back button to work properly
 
 			addStateToHistory: function(oParameters){
 				if(!this.bBackNavigationFlag){

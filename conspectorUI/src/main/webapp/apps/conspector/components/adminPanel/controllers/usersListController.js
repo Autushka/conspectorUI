@@ -1,5 +1,6 @@
 viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$window', 'cacheProvider', 'CONSTANTS', 'historyProvider',
 	function($scope, $state, servicesProvider, apiProvider, $translate, $window, cacheProvider, CONSTANTS, historyProvider) {
+ 		historyProvider.removeHistory();// because current view doesn't have a back button		
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.userNameTE = $translate.instant('global_userName');
 		$scope.emailTE = $translate.instant('global_email');

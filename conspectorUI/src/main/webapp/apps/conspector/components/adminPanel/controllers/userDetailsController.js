@@ -5,6 +5,9 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 
+		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
+		$scope.oStateParams = {};// for backNavigation
+
 		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.sMode = $stateParams.sMode;
@@ -470,5 +473,12 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				});
 			}
 		});
+
+		$scope.$on("$destroy", function() {
+			historyProvider.addStateToHistory({
+				sStateName: $scope.sCurrentStateName,
+				oStateParams: angular.copy($scope.oStateParams)
+			});
+		});		
 	}
 ]);
