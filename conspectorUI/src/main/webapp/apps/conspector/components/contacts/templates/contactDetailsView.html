@@ -112,6 +112,7 @@
 							{{'contactDetails_contactType' | translate}}
 						</label>
 					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'" ><a ng-click="onNavigateToAccountDetails()">{{oContact._sAccountName}}</a></div>
 					<div
 						multi-select
 						input-model="aContactTypes"
@@ -136,21 +137,21 @@
 							{{'contactDetails_homePhone' | translate}}
 						</label>
 					</div>
-					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sHomePhone | phoneFormatter}}</div>
+					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContact.sHomePhone | phoneFormatter}}">{{oContact.sHomePhone | phoneFormatter}}</a></div>
 					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sHomePhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 					<div  class="cnpSubSectionLabel">
 						<label>
 							{{'contactDetails_workPhone' | translate}}
 						</label>
 					</div>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sWorkPhone | phoneFormatter}}</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContact.sWorkPhone | phoneFormatter}}">{{oContact.sWorkPhone | phoneFormatter}}</a></div>
 					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sWorkPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 					<div  class="cnpSubSectionLabel">
 						<label>
 							{{'contactDetails_mobilePhone' | translate}}
 						</label>
 					</div>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sMobilePhone | phoneFormatter}}</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContact.sMobilePhone | phoneFormatter}}">{{oContact.sMobilePhone | phoneFormatter}}</a></div>
 					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sMobilePhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 					<div class="cnpSubSectionLabel">
 						<label>
