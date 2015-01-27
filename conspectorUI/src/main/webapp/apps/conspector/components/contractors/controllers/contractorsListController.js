@@ -1,14 +1,27 @@
-viewControllers.controller('contractorsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter',
-	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter) {
-		historyProvider.removeHistory();// because current view doesn't have a back button
+viewControllers.controller('contractorsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
+	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
+		historyProvider.removeHistory(); // because current view doesn't have a back button
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.contractorNameTE = $translate.instant('global_contractorName');
 		$scope.phoneTE = $translate.instant('global_phone');
 		$scope.emailTE = $translate.instant('global_email');
 		$scope.tagsTE = $translate.instant('global_tags');
 
-		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
-		$scope.oStateParams = {};// for backNavigation
+		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oContractor",
+			sOperation: "bCreate"
+		});
+
+		$scope.bDisplayEditButtons = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oContractor",
+			sOperation: "bUpdate"
+		});		
+
+		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$scope.oStateParams = {}; // for backNavigation
 
 		var oContractorsListData = {
 			aData: []
@@ -36,23 +49,23 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 					bMatchFound = false;
 					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-						if(aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]){
+						if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
 							bMatchFound = true;
 							break;
 						}
 					}
-					if(!bMatchFound){
+					if (!bMatchFound) {
 						continue;
 					}
 
 					sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-					if(!sProjectName){
+					if (!sProjectName) {
 						sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
 					}
 					sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-					if(!sPhaseName){
+					if (!sPhaseName) {
 						sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-					}					
+					}
 
 					oContractorsListData.aData.push({
 						sContractorName: aData[i].Name,
@@ -68,7 +81,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 			$scope.tableParams.reload();
 		};
 
-		var loadContractors = function(){
+		var loadContractors = function() {
 			oContractorsListData.aData = [];
 			apiProvider.getContractorsWithPhases({
 				bShowSpinner: true,
@@ -76,7 +89,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 			});
 		};
 
-		loadContractors();//load Contractors
+		loadContractors(); //load Contractors
 
 		$scope.onDisplay = function(oContractor) {
 			$state.go('app.contractorDetailsWrapper.contractorDetails', {
@@ -102,7 +115,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 		$scope.onGenerateReport = function() {
 			apiProvider.generateReport({});
 		};
-		
+
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
 			loadContractors();
 		});
@@ -116,6 +129,6 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 				sStateName: $scope.sCurrentStateName,
 				oStateParams: $scope.oStateParams
 			});
-		});		
+		});
 	}
 ]);

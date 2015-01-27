@@ -1,7 +1,21 @@
-viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider) {
+viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
 		var sContractorGuid = $stateParams.sContractorGuid;
 		$scope.sAccountType = "";
+
+		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oContractor",
+			sOperation: "bUpdate"
+		});
+
+		$scope.bDisplayDeleteButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oContractor",
+			sOperation: "bDelete"
+		});	
+
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { 
 			$scope.$parent.oStateParams = angular.copy($stateParams); // needed for properBackNavigation with wrapper view...

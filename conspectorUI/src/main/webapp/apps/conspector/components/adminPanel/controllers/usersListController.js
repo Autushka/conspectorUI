@@ -1,5 +1,5 @@
-viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$window', 'cacheProvider', 'CONSTANTS', 'historyProvider',
-	function($scope, $state, servicesProvider, apiProvider, $translate, $window, cacheProvider, CONSTANTS, historyProvider) {
+viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$window', 'cacheProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
+	function($scope, $state, servicesProvider, apiProvider, $translate, $window, cacheProvider, CONSTANTS, historyProvider, rolesSettings) {
  		historyProvider.removeHistory();// because current view doesn't have a back button		
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.userNameTE = $translate.instant('global_userName');
@@ -8,10 +8,22 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 		$scope.companiesTE = $translate.instant('adminPanel_companies');
 
 		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
-		$scope.oStateParams = {};// for backNavigation
+		$scope.oStateParams = {};// for backNavigation	
+		
+		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;			
 
-		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
-		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;		
+		$scope.bIsGlobalUserAdministrator = rolesSettings[$scope.sCurrentRole].bIsGlobalUserAdministrator;
+		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: $scope.sCurrentRole,
+			sEntityName: "oUser",
+			sOperation: "bCreate"
+		});
+
+		$scope.bDisplayEditButtons = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: $scope.sCurrentRole,
+			sEntityName: "oUser",
+			sOperation: "bUpdate"
+		});				
 
 		var oUsersListData = {
 			aData: []

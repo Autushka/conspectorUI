@@ -18,7 +18,7 @@
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 		<div>
 			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
-			<md-button ng-if="sCurrentRole == sGlobalAdministratorRole" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
+			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
 				{{'global_addNew' | translate}}
 				</md-button>
 		</div>
@@ -37,7 +37,7 @@
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(user)">
 						</div>
-						<div class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(user)">
+						<div ng-if="bDisplayEditButtons" class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(user)">
 						</div>
 					</div>
 				</td>
@@ -56,7 +56,7 @@
 					</div>
 					
 				</td>
-				<td ng-show="sCurrentRole == sGlobalAdministratorRole" data-title="companiesTE">
+				<td ng-show="bIsGlobalUserAdministrator" data-title="companiesTE">
 					<div layout="row" layout-align="start center">
 						<div>
 							<span>{{user.sCompanies}}</span>

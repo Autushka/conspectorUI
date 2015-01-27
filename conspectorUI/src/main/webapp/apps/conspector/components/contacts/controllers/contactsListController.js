@@ -1,11 +1,24 @@
-viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter',
-	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter) {
+viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter', 'rolesSettings',
+	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter, rolesSettings) {
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.nameTE = $translate.instant('global_name');
 		$scope.titleTE = $translate.instant('global_title');
 		$scope.phoneTE = $translate.instant('global_phone');
 		$scope.emailTE = $translate.instant('global_email');
 		$scope.accountTE = $translate.instant('global_account');
+
+		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oContact",
+			sOperation: "bCreate"
+		});
+
+		$scope.bDisplayEditButtons = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oContact",
+			sOperation: "bUpdate"
+		});			
 
 		$scope.bDisplayAccountColumn = $state.current.name === "app.contactsList" ? true : false;
 

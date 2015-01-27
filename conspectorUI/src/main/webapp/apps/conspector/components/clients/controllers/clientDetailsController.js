@@ -1,6 +1,20 @@
-viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider) {
+viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
 		var sClientGuid = $stateParams.sClientGuid;
+
+		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oClient",
+			sOperation: "bUpdate"
+		});
+
+		$scope.bDisplayDeleteButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oClient",
+			sOperation: "bDelete"
+		});	
+
 		$scope.sAccountType = "";
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		if ($scope.$parent && $scope.$parent.sViewName === "clientDetailsWrapperView") { //for logic hide/show contacts table

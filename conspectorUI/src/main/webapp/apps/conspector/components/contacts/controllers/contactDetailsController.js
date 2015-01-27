@@ -1,7 +1,21 @@
-viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider) {
+viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
 		var sAccountGuid = $stateParams.sAccountGuid;
 		var sContactGuid = $stateParams.sContactGuid;
+
+		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oContact",
+			sOperation: "bUpdate"
+		});
+
+		$scope.bDisplayDeleteButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oContact",
+			sOperation: "bDelete"
+		});	
+
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)

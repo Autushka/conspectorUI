@@ -36,7 +36,7 @@
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 		<div>
 			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
-			<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'contractorsList_addNew' | translate}}</md-button>
+			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'contractorsList_addNew' | translate}}</md-button>
 		</div>
 		<div>
 			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
@@ -66,7 +66,7 @@
 						<div layout="row" layout-align="center center">
 							<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(contractor)">
 							</div>
-							<div class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(contractor)">
+							<div ng-if="bDisplayEditButtons" class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(contractor)">
 							</div>
 						</div>
 					</td>

@@ -28,9 +28,13 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 				return this[oParameters.sRole].oAdminPanelMenu[oParameters.sMenuItem];
 			},
 
+			getRolesSettingsForEntityAndOperation: function(oParameters){
+				return this[oParameters.sRole].oAuthorizationsPerEntity[oParameters.sEntityName][oParameters.sOperation];
+			},
+
 			globalAdministrator: {
 				sInitialState: "app.deficienciesList",
-				bGlobalAdministrator: true,
+				bIsGlobalUserAdministrator: true,
 				oMainMenu: {
 					bShowDeficiencies: true,
 					bShowUnits: true,
@@ -95,7 +99,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			systemAdministrator: {
 				sInitialState: "app.deficienciesList",
-				bGlobalAdministrator: false,
+				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,
 					bShowUnits: true,
@@ -115,7 +119,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowDeficiencyPrioritiesManagement: true,
 					bShowSystemFilesManagement: true,
 					bShowOperationLogs: true,
-					bShowAccountTypesManagement: true,
+					bShowAccountTypesManagement: false,
 					bShowContactTypesManagement: true,
 				},
 				oAuthorizationsPerEntity: {
@@ -152,8 +156,8 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					oUser: {
 						bDisplay: true,
 						bUpdate: true,
-						bCreate: true,
-						bDelete: true
+						bCreate: false,
+						bDelete: false
 					},
 
 				}
@@ -161,7 +165,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 
 			contactManagementUser: {
 				sInitialState: "app.deficienciesList",
-				bGlobalAdministrator: false,
+				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,
 					bShowUnits: false,
@@ -216,10 +220,10 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 						bDelete: true
 					},
 					oUser: {
-						bDisplay: true,
-						bUpdate: true,
-						bCreate: true,
-						bDelete: true
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
 					},
 
 				}

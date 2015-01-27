@@ -47,12 +47,13 @@
 		<script src="apps/conspector/js/app.js"></script>
 		<script src="apps/conspector/js/constants.js"></script>
 		<script src="apps/conspector/js/types.js"></script>
-		<script src="apps/conspector/js/rolesSettings.js"></script>
+
 		<script src="apps/conspector/js/common/cacheProvider.js"></script>
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
 		<script src="apps/conspector/js/common/dataProvider.js"></script>
 		<script src="apps/conspector/js/common/apiProvider.js"></script>
+		<script src="apps/conspector/js/rolesSettings.js"></script>			
 		<script src="apps/conspector/js/common/servicesProvider.js"></script>
 		<script src="apps/conspector/js/common/historyProvider.js"></script>
 		<script src="apps/conspector/js/common/filtersProvider.js"></script>				

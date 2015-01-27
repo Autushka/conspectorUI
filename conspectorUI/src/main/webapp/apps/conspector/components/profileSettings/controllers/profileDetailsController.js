@@ -1,11 +1,13 @@
-viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$state', '$translate', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider', 'apiProvider', '$cookieStore', '$window', '$upload',
-	function($scope, $rootScope, $state, $translate, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider, $cookieStore, $window, $upload) {
+viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$state', '$translate', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider', 'apiProvider', '$cookieStore', '$window', '$upload', 'rolesSettings',
+	function($scope, $rootScope, $state, $translate, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider, $cookieStore, $window, $upload, rolesSettings) {
 		var sCurrentUser = cacheProvider.oUserProfile.sUserName;
 		var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 		$scope.oUser = {};
 		$scope.sMode = "display";
+
+		$scope.bIsGlobalUserAdministrator = rolesSettings[sCurrentRole].bIsGlobalUserAdministrator;	
 
 		var onUserDetailsLoaded = function(oData) {
 			var sProjectName = "";

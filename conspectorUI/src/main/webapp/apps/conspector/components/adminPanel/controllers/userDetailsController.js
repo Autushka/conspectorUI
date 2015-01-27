@@ -1,15 +1,27 @@
-viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS', 'historyProvider',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS, historyProvider) {
+viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS', 'historyProvider', 'rolesSettings',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS, historyProvider, rolesSettings) {
 		var sUserName = $stateParams.sUserName;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 
+		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+		$scope.bIsGlobalUserAdministrator = rolesSettings[sCurrentRole].bIsGlobalUserAdministrator;		
+		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oUser",
+			sOperation: "bUpdate"
+		});
+
+		$scope.bDisplayDeleteButton = rolesSettings.getRolesSettingsForEntityAndOperation({
+			sRole: sCurrentRole,
+			sEntityName: "oUser",
+			sOperation: "bDelete"
+		});	
+
 		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
 		$scope.oStateParams = {};// for backNavigation
 
-		$scope.sGlobalAdministratorRole = CONSTANTS.sGlobalAdministatorRole;
-		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.sMode = $stateParams.sMode;
 		$scope.oUser = {
 			_aCompanies: [], //needed for manyToMany links...
