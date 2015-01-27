@@ -18,7 +18,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			sRole: sCurrentRole,
 			sEntityName: "oContact",
 			sOperation: "bUpdate"
-		});			
+		});
 
 		$scope.bDisplayAccountColumn = $state.current.name === "app.contactsList" ? true : false;
 
@@ -46,6 +46,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 				sName: 'asc'
 			},
 			sGroupBy: "sContactType",
+			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
 		});
 
 		var onContactsLoaded = function(aData) {
@@ -61,12 +62,12 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 					bMatchFound = false;
 					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-						if(aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]){
+						if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
 							bMatchFound = true;
 							break;
 						}
 					}
-					if(!bMatchFound){
+					if (!bMatchFound) {
 						continue;
 					}
 
@@ -92,6 +93,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 						sContactType: sProjectAndPhase,
 						_accountGuid: aData[i].AccountGuid,
 						sAccountName: aData[i].AccountDetails.Name,
+						_sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting						
 					});
 				}
 			}
@@ -150,14 +152,14 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
 			loadContacts();
-		});		
+		});
 
 		$scope.$on('contactsShouldBeRefreshed', function(oParameters) {
 			loadContacts();
-		});		
+		});
 
 		$scope.$on("$destroy", function() {
-			if ($scope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $scope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") {//don't save in history if contact list is weathin the contractor/client details view...  
+			if ($scope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $scope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
 				historyProvider.addStateToHistory({
 					sStateName: $scope.sCurrentStateName,
 					oStateParams: $scope.oStateParams

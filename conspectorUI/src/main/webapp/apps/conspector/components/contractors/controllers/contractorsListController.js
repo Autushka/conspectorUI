@@ -34,6 +34,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 				sContractorName: 'asc'
 			},
 			sGroupBy: "sProjectPhase",
+			sGroupsSortingAttribue: "_sortingSequence"//for default groups sorting
 		});
 
 		var onContractorsLoaded = function(aData) {
@@ -74,6 +75,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$state', 'services
 						_guid: aData[i].Guid,
 						sTags: aData[i].DescriptionTags,
 						sProjectPhase: sProjectName + " - " + sPhaseName,
+						_sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting
 					});
 				}
 			}

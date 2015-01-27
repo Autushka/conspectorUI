@@ -138,8 +138,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				if (cacheProvider.oUserProfile.aUserRoles.length === 1) {
 					sCurrentRole = cacheProvider.oUserProfile.aUserRoles[0].RoleName;
 					bCanContinue = rolesSettings.setCurrentRole(sCurrentRole);
-					if(!bCanContinue){
-						this.logOut(); 
+					if (!bCanContinue) {
+						this.logOut();
 						return;
 					}
 					this.logSuccessLogIn(); //log login_success operation 
@@ -479,8 +479,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 								aArrayItem.ticked = true;
 								bMatchFound = true;
 							}
-						} 
-						if(oParameters.aParentKeys) {
+						}
+						if (oParameters.aParentKeys) {
 							for (var k = 0; k < oParameters.aParentKeys.length; k++) {
 								if (aMultiSelectArray[j][oParameters.sDependentKey] === oParameters.aParentKeys[k]) {
 									aArrayItem.ticked = true;
@@ -507,6 +507,18 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				}
 			},
 
+
+			// if (params.sorting() === undefined || JSON.stringify(params.sorting()) === JSON.stringify({})) {
+			// 	oFilteredCategoriesData = oParameters.oTableDataArrays[oParameters.sSourceDataArrayAttribute];
+			// } else {
+			// 	var aSortingBy = params.orderBy();
+			// 	if (oParameters.groupTableBy) {
+			// 		aSortingBy.unshift(oParameters.groupTableBy);
+			// 	}
+
+			// 	oFilteredCategoriesData = $filter('orderBy')(oParameters.oTableDataArrays[oParameters.sSourceDataArrayAttribute], aSortingBy);
+			// }
+
 			createNgTable: function(oParameters) {
 				var oTableParams = new ngTableParams({
 					page: 1, // show first page
@@ -519,13 +531,21 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					sDisplayedDataArrayName: oParameters.sDisplayedDataArrayName,
 					getData: function($defer, params) {
 						var aInitialData = oParameters.oInitialDataArrayWrapper.aData; // need a wrapper for the array here to be able to pass values by reference
-						var aSortedData = params.sorting() ?
-							$filter('orderBy')(aInitialData, params.orderBy()) :
-							aInitialData;
 
-						var aFilteredData = params.filter() ? $filter('filter')(aSortedData, params.filter()) : aSortedData;
+						var aFilteredData = params.filter() ? $filter('filter')(aInitialData, params.filter()) : aInitialData;
 
-						$defer.resolve(aFilteredData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+						var aSortedData = [];
+						if (params.sorting() === undefined || angular.equals(params.sorting(), {})) {
+							aSortedData = aFilteredData;
+						} else {
+							var aSortingBy = angular.copy(params.orderBy());
+							if (oParameters.sGroupsSortingAttribue) {
+								aSortingBy.unshift(oParameters.sGroupsSortingAttribue);
+							}
+							aSortedData = $filter('orderBy')(aFilteredData, aSortingBy)
+						}
+
+						$defer.resolve(aSortedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 					},
 					counts: []
 				});

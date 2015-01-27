@@ -1,6 +1,6 @@
 viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
 	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
-		historyProvider.removeHistory();// because current view doesn't have a back button
+		historyProvider.removeHistory(); // because current view doesn't have a back button
 		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
 		$scope.clientNameTE = $translate.instant('global_clientName');
 		$scope.phoneTE = $translate.instant('global_phone');
@@ -18,10 +18,10 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 			sRole: sCurrentRole,
 			sEntityName: "oClient",
 			sOperation: "bUpdate"
-		});			
+		});
 
-		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
-		$scope.oStateParams = {};// for backNavigation
+		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$scope.oStateParams = {}; // for backNavigation
 
 		var oClientsListData = {
 			aData: []
@@ -34,6 +34,7 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 				sClientName: 'asc'
 			},
 			sGroupBy: "sProjectPhase",
+			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
 		});
 
 		var onClientsLoaded = function(aData) {
@@ -49,23 +50,23 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 					bMatchFound = false;
 					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-						if(aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]){
+						if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
 							bMatchFound = true;
 							break;
 						}
 					}
-					if(!bMatchFound){
+					if (!bMatchFound) {
 						continue;
 					}
 
 					sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-					if(!sProjectName){
+					if (!sProjectName) {
 						sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
 					}
 					sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-					if(!sPhaseName){
+					if (!sPhaseName) {
 						sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-					}					
+					}
 
 					oClientsListData.aData.push({
 						sClientName: aData[i].Name,
@@ -74,6 +75,7 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 						_guid: aData[i].Guid,
 						sTags: aData[i].DescriptionTags,
 						sProjectPhase: sProjectName + " - " + sPhaseName,
+						_sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting
 					});
 				}
 			}
@@ -81,7 +83,7 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 			$scope.tableParams.reload();
 		};
 
-		var loadClients = function(){
+		var loadClients = function() {
 			oClientsListData.aData = [];
 			apiProvider.getClientsWithPhases({
 				bShowSpinner: true,
@@ -89,13 +91,13 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 			});
 		};
 
-		loadClients();//load Clients
+		loadClients(); //load Clients
 
 		$scope.onDisplay = function(oClient) {
 			$state.go('app.clientDetailsWrapper.clientDetails', {
 				sMode: "display",
 				sClientGuid: oClient._guid,
-			});		
+			});
 		};
 
 		$scope.onEdit = function(oClient) {
@@ -124,6 +126,6 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 				sStateName: $scope.sCurrentStateName,
 				oStateParams: $scope.oStateParams
 			});
-		});		
+		});
 	}
 ]);
