@@ -116,6 +116,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 			checkUserRolesAssignment: function(sCurrentCompany) {
 				var aUserRolesForCurrentCompany = [];
+				var bCanContinue = false;
 				cacheProvider.oUserProfile.aUserRoles = angular.copy(cacheProvider.oUserProfile.aAllUserRoles);
 				for (var i = 0; i < cacheProvider.oUserProfile.aUserRoles.length; i++) {
 					if (cacheProvider.oUserProfile.aUserRoles[i].CompanyName === sCurrentCompany) {
@@ -136,16 +137,13 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 				if (cacheProvider.oUserProfile.aUserRoles.length === 1) {
 					sCurrentRole = cacheProvider.oUserProfile.aUserRoles[0].RoleName;
-					if (!rolesSettings.oInitialViews[sCurrentRole]) {
-						this.onNoDefaultViewForTheRole();
+					bCanContinue = rolesSettings.setCurrentRole(sCurrentRole);
+					if(!bCanContinue){
+						this.logOut(); 
 						return;
 					}
-					cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
-					$rootScope.sCurrentRole = sCurrentRole;
-					apiProvider.setCurrentRole(sCurrentRole); //current role is cached here				
-					// menu setup for the current role should happen here
 					this.logSuccessLogIn(); //log login_success operation 
-					$state.go(rolesSettings.oInitialViews[sCurrentRole]); //navigation to the initial view for the role
+					$state.go(rolesSettings.getRolesInitialState(sCurrentRole)); //navigation to the initial view for the role
 					return;
 				} else {
 					$state.go("roleSelection");
@@ -218,7 +216,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					return;
 
 				} else {
-					cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+					//cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+					rolesSettings.setCurrentRole(sCurrentRole);
 				}
 			},
 

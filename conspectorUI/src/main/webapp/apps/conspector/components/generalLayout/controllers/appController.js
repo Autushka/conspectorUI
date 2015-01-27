@@ -39,11 +39,19 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			$scope.$broadcast('globalUserPhasesHaveBeenChanged');
 		};
 
-		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].adminPanel) {
+		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+
+		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
+			sRole: sCurrentRole,
+			sMenuItem: "bShowAdminPanel"
+		})) {
 			$scope.bDisplayAdminPanel = true;
 		}
 
-		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].profileSettings) {
+		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
+			sRole: sCurrentRole,
+			sMenuItem: "bShowProfileSettings"
+		})) {
 			$scope.bDisplayProfileSettings = true;
 		}
 
@@ -57,35 +65,50 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		$scope.aTabs = [];
 
-		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].deficiencies) {
+		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
+			sRole: sCurrentRole,
+			sMenuItem: "bShowDeficiencies"
+		})) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_deficienciesTab"),
 				sState: "app.deficienciesList" //"#/app/deficienciesList"
 			});
 		}
 
-		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].units) {
+		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
+			sRole: sCurrentRole,
+			sMenuItem: "bShowUnits"
+		})) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_unitsTab"),
 				sState: "app.unitsList" //"#/app/unitsList"
 			});
 		}
 
-		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contractors) {
+		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
+			sRole: sCurrentRole,
+			sMenuItem: "bShowContractors"
+		})) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_contractorsTab"),
 				sState: "app.contractorsList" //"#/app/contractorsList"
 			});
 		}
 
-		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].clients) {
+		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
+			sRole: sCurrentRole,
+			sMenuItem: "bShowClients"
+		})) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_clientsTab"),
 				sState: "app.clientsList" //"#/app/clientsList"
 			});
 		}
 
-		if (cacheProvider.oUserProfile.sCurrentRole && rolesSettings.oDisplayedSections[cacheProvider.oUserProfile.sCurrentRole].contacts) {
+		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
+			sRole: sCurrentRole,
+			sMenuItem: "bShowContacts"
+		})) {
 			$scope.aTabs.push({
 				sTitle: $translate.instant("app_contactsTab"),
 				sState: "app.contactsList" //"#/app/clientsList"
@@ -158,16 +181,6 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("contact") > -1) {
 				sCurrentSelectedTab = "Contacts";
 			}
-
-			// if (oTab.iIndex === 1 && sCurrentSelectedTab === "Units") {
-			// 	return;
-			// }
-			// if (oTab.iIndex === 2 && sCurrentSelectedTab === "Contractors") {
-			// 	return;
-			// }
-			// if (oTab.iIndex === 3 && sCurrentSelectedTab === "Clients") {
-			// 	return;
-			// }
 
 			if ($scope.selectedTabIndex !== undefined) { //($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {
 				$state.go(oTab.sState);

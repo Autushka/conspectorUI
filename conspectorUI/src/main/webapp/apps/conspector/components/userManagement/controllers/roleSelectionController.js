@@ -29,17 +29,23 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 
 		$scope.onContinue = function() {
 			var sCurrentRole = $scope.sSelectedRoleName;
+			var bCanContinue = false;
+			// if (!rolesSettings.oInitialViews[sCurrentRole]) {
+			// 	servicesProvider.onNoDefaultViewForTheRole();
+			// 	return;
+			// }
 
-			if (!rolesSettings.oInitialViews[sCurrentRole]) {
-				servicesProvider.onNoDefaultViewForTheRole();
+			// cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+			// $rootScope.sCurrentRole = sCurrentRole;
+			// apiProvider.setCurrentRole(sCurrentRole); //current role is cached here	
+			bCanContinue = rolesSettings.setCurrentRole(sCurrentRole);
+			if(!bCanContinue){
+				servicesProvider.logOut();
 				return;
 			}
 
-			cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
-			$rootScope.sCurrentRole = sCurrentRole;
-			apiProvider.setCurrentRole(sCurrentRole); //current role is cached here	
 			servicesProvider.logSuccessLogIn(); //log login_success operation 
-			$state.go(rolesSettings.oInitialViews[sCurrentRole]);
+			$state.go(rolesSettings.getRolesInitialState(sCurrentRole));
 		};
 
 		$scope.onChangeLanguage = function() {
