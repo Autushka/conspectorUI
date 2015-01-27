@@ -28,8 +28,12 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 				return this[oParameters.sRole].oAdminPanelMenu[oParameters.sMenuItem];
 			},
 
-			getRolesSettingsForEntityAndOperation: function(oParameters){
+			getRolesSettingsForEntityAndOperation: function(oParameters) {
 				return this[oParameters.sRole].oAuthorizationsPerEntity[oParameters.sEntityName][oParameters.sOperation];
+			},
+
+			getRolesProfileMenuItemSettings: function(oParameters) {
+				return this[oParameters.sRole].oProfileMenu[oParameters.sMenuItem];
 			},
 
 			globalAdministrator: {
@@ -56,6 +60,11 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowOperationLogs: true,
 					bShowAccountTypesManagement: true,
 					bShowContactTypesManagement: true,
+				},
+				oProfileMenu: {
+					bShowContactDetails: true,
+					bShowProfileDetails: true,
+					bShowChangePassword: true
 				},
 				oAuthorizationsPerEntity: {
 					oDeficiency: {
@@ -122,6 +131,11 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowAccountTypesManagement: false,
 					bShowContactTypesManagement: true,
 				},
+				oProfileMenu: {
+					bShowContactDetails: true,
+					bShowProfileDetails: true,
+					bShowChangePassword: true
+				},
 				oAuthorizationsPerEntity: {
 					oDeficiency: {
 						bDisplay: true,
@@ -187,6 +201,11 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowOperationLogs: false,
 					bShowAccountTypesManagement: false,
 					bShowContactTypesManagement: false,
+				},
+				oProfileMenu: {
+					bShowContactDetails: true,
+					bShowProfileDetails: true,
+					bShowChangePassword: true
 				},
 				oAuthorizationsPerEntity: {
 					oDeficiency: {

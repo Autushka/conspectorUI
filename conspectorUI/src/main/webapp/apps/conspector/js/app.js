@@ -268,6 +268,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/profileSettings/templates/profileSettingsView.html',
 			controller: 'profileSettingsView'
 		});
+		$stateProvider.state('app.profileSettings.contactDetails', {
+			url: '/profileSettings.contactDetails/:sAccountGuid/:sContactGuid/:sMode',
+			templateUrl: 'apps/conspector/components/contacts/templates/contactDetailsView.html',
+			controller: 'contactDetailsView'
+		});		
 		$stateProvider.state('app.profileSettings.profileDetails', {
 			url: '/profileDetails',
 			templateUrl: 'apps/conspector/components/profileSettings/templates/profileDetailsView.html',

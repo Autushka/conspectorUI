@@ -12,7 +12,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 			$state.go(sStateName);
 		}
 
-		$scope.onMenuItemselected = function(oMenuItem) {
+		$scope.onMenuItemSelected = function(oMenuItem) {
 			navigateToCustomizing(oMenuItem.sStateName);
 		}
 
@@ -122,7 +122,6 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 			if ($mdSidenav('left')) {
 				$mdSidenav('left').close();
 			}
-
 		});
 	}
 ]);

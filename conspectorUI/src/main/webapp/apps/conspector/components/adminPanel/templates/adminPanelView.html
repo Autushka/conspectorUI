@@ -8,7 +8,7 @@
         <div class="cnpSidenavElements">  <!-- ng-controller="LeftCtrl" -->  
 
             <div ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}">
-                <md-button  layout="row" layout-align="start center" ng-click="onMenuItemselected(menuItem)" class="md-button cnpSidebarButton"> {{menuItem.sMenuLabel}}</md-button>
+                <md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton"> {{menuItem.sMenuLabel}}</md-button>
             </div>
         </div>
     </md-sidenav>

@@ -5,13 +5,16 @@
                 {{'profileSettings_menuHeader' | translate}}
             </label>
         </md-toolbar>       
-        <div class="cnpSidenavElements">  <!-- ng-controller="LeftCtrl" -->    
-             <md-button layout="row" layout-align="start center" ng-click="onProfileDetails()" class="md-button cnpSidebarButton">
+        <div class="cnpSidenavElements">  
+            <div ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}">
+                <md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton"> {{menuItem.sMenuLabel}}</md-button>
+            </div>
+<!--              <md-button layout="row" layout-align="start center" ng-click="onProfileDetails()" class="md-button cnpSidebarButton">
                       {{'profileSettings_profileDetails' | translate}}
              </md-button>
              <md-button layout="row" layout-align="start center" ng-click="onChangePassword()" class="md-button cnpSidebarButton">
                        {{'profileSettings_changePassword' | translate}}
-             </md-button>
+             </md-button> -->
         </div>
     </md-sidenav>
        <div ui-view style="width: 100%; height: 100%;">

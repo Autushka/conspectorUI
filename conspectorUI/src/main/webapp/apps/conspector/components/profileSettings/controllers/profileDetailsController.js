@@ -6,9 +6,6 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 		$scope.oUser = {};
 		$scope.sMode = "display";
-		
-		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
-		$scope.bIsGlobalUserAdministrator = rolesSettings[sCurrentRole].bIsGlobalUserAdministrator;	
 
 		var onUserDetailsLoaded = function(oData) {
 			var sProjectName = "";
