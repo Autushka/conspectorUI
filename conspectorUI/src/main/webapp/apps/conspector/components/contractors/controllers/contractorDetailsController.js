@@ -367,8 +367,19 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			};
 			oDataForSave.Guid = $scope.oContractor._guid;
 			oDataForSave.Name = $scope.oContractor.sName;
-			oDataForSave.MainPhone = $scope.oContractor.sPhone;
-			oDataForSave.SecondaryPhone = $scope.oContractor.sSecondaryPhone;
+
+			if ($scope.oContractor.sMainPhone) {
+				oDataForSave.MainPhone = $scope.oContractor.sMainPhone.replace(/\D/g, '');
+			} else {
+				oDataForSave.MainPhone = "";
+			}
+
+			if ($scope.oContractor.sSecondaryPhone) {
+				oDataForSave.SecondaryPhone = $scope.oContractor.sSecondaryPhone.replace(/\D/g, '');
+			} else {
+				oDataForSave.SecondaryPhone = "";
+			}
+
 			oDataForSave.Website = $scope.oContractor.sWebsite;
 			oDataForSave.Email = $scope.oContractor.sEmail;
 			oDataForSave.Fax = $scope.oContractor.sFax;

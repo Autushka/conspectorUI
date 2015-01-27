@@ -18,7 +18,9 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		};
 
 		var oContactWrapper = {
-			aData: [{_accountGuid: sAccountGuid}] //initial accountGuid needed here for new contract creation scenario
+			aData: [{
+				_accountGuid: sAccountGuid
+			}] //initial accountGuid needed here for new contract creation scenario
 		};
 
 		$scope.aContactTypes = [];
@@ -459,13 +461,26 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				}
 			}
 
-
-
 			oDataForSave.FirstName = $scope.oContact.sFirstName;
 			oDataForSave.LastName = $scope.oContact.sLastName;
-			oDataForSave.HomePhone = $scope.oContact.sHomePhone;
-			oDataForSave.WorkPhone = $scope.oContact.sWorkPhone;
-			oDataForSave.MobilePhone = $scope.oContact.sMobilePhone;
+
+			if ($scope.oContact.sHomePhone) {
+				oDataForSave.HomePhone = $scope.oContact.sHomePhone.replace(/\D/g, '');
+			} else {
+				oDataForSave.HomePhone = "";
+			}
+
+			if ($scope.oContact.sWorkPhone) {
+				oDataForSave.WorkPhone = $scope.oContact.sWorkPhone.replace(/\D/g, '');
+			} else {
+				oDataForSave.WorkPhone = "";
+			}
+			if ($scope.oContact.sMobilePhone) {
+				oDataForSave.MobilePhone = $scope.oContact.sMobilePhone.replace(/\D/g, '');
+			} else {
+				oDataForSave.MobilePhone = "";
+			}
+
 			oDataForSave.Email = $scope.oContact.sEmail;
 			oDataForSave.Fax = $scope.oContact.sFax;
 			oDataForSave.Title = $scope.oContact.sTitle;

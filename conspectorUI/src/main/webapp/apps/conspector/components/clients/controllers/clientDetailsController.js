@@ -367,8 +367,17 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 			};
 			oDataForSave.Guid = $scope.oClient._guid;
 			oDataForSave.Name = $scope.oClient.sName;
-			oDataForSave.MainPhone = $scope.oClient.sPhone;
-			oDataForSave.SecondaryPhone = $scope.oClient.sSecondaryPhone;
+			if ($scope.oClient.sPhone) {
+				oDataForSave.MainPhone = $scope.oClient.sPhone.replace(/\D/g, '');
+			} else {
+				oDataForSave.MainPhone = "";
+			}
+
+			if ($scope.oClient.sSecondaryPhone) {
+				oDataForSave.SecondaryPhone = $scope.oClient.sSecondaryPhone.replace(/\D/g, '');
+			} else {
+				oDataForSave.SecondaryPhone = "";
+			}
 			oDataForSave.Website = $scope.oClient.sWebsite;
 			oDataForSave.Email = $scope.oClient.sEmail;
 			oDataForSave.Fax = $scope.oClient.sFax;
