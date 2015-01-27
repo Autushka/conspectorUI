@@ -70,40 +70,41 @@
 					</td>
 					<td data-title="phoneTE" sortable="'sPhone'" filter="{'sPhone': 'text'}">
 						<div layout="row" layout-align="start center">
-							<div>
-								<span>{{client.sPhone | phoneFormatter}}</span>
+							<div><a href="tel:+{{client.sPhone | phoneFormatter}}">
+								<span>{{client.sPhone | phoneFormatter}}</span></a>
 							</div>
 						</div>
 					</td>
 					
 					<td data-title="emailTE" sortable="'sEmail'" filter="{'sEmail': 'text'}">
 						<div layout="row" layout-align="start center">
-							<div>
-								<span>{{client.sEmail}}</span>
-							</div>
+							<div><a href="mailto:{{client.sEmail}}">
+							<span>{{client.sEmail}}</span></a>
+							
 						</div>
-					</td>
-					<td data-title="tagsTE" sortable="'sTags'" filter="{'sTags': 'text'}">
-						<div layout="row" layout-align="start center">
-							<div>
-								<span>{{client.sTags}}</span>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-			<tr ng-hide="$groups.length > 0">
-				<td td colspan="5">
+					</div>
+				</td>
+				<td data-title="tagsTE" sortable="'sTags'" filter="{'sTags': 'text'}">
 					<div layout="row" layout-align="start center">
 						<div>
-							{{'global_noTableData' | translate}}
+							<span>{{client.sTags}}</span>
 						</div>
 					</div>
 				</td>
 			</tr>
-		</table>
-	</div>
-	<!-- END OF NG TABLE -->
+		</tbody>
+		<tr ng-hide="$groups.length > 0">
+			<td td colspan="5">
+				<div layout="row" layout-align="start center">
+					<div>
+						{{'global_noTableData' | translate}}
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- END OF NG TABLE -->
 </div>
 <!-- END OF CONTENT VIEW -->
 </md-content>
