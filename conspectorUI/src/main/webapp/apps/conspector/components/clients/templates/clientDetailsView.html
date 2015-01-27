@@ -74,14 +74,14 @@
 							{{'clientDetails_phone' | translate}}
 						</label>
 					</div>
-					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sPhone}}</div>
+					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sPhone | phoneFormatter}}</div>
 					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 					<div  class="cnpSubSectionLabel">
 						<label>
 							{{'clientDetails_secondaryPhone' | translate}}
 						</label>
 					</div>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sSecondaryPhone}}</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sSecondaryPhone | phoneFormatter}}</div>
 					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sSecondaryPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 					<div  class="cnpSubSectionLabel">
 						<label>
@@ -102,7 +102,7 @@
 							{{'clientDetails_fax' | translate}}
 						</label>
 					</div>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sFax}}</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sFax | phoneFormatter}}</div>
 					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sFax" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 				</div>
 				<div class="cnpSubSection" flex>

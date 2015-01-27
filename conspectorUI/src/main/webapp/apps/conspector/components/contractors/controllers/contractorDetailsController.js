@@ -380,10 +380,15 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				oDataForSave.SecondaryPhone = "";
 			}
 
+			if ($scope.oContractor.sFax) {
+				oDataForSave.Fax = $scope.oContractor.sFax.replace(/\D/g, '');
+			} else {
+				oDataForSave.Fax = "";
+			}
+
 			oDataForSave.Website = $scope.oContractor.sWebsite;
 			oDataForSave.Email = $scope.oContractor.sEmail;
-			oDataForSave.Fax = $scope.oContractor.sFax;
-
+			
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oContractor.aTags);
 
 			oDataForSave.BillingAddress = {};

@@ -469,7 +469,6 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			} else {
 				oDataForSave.HomePhone = "";
 			}
-
 			if ($scope.oContact.sWorkPhone) {
 				oDataForSave.WorkPhone = $scope.oContact.sWorkPhone.replace(/\D/g, '');
 			} else {
