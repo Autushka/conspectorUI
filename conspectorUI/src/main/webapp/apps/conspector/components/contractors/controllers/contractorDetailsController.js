@@ -368,8 +368,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			oDataForSave.Guid = $scope.oContractor._guid;
 			oDataForSave.Name = $scope.oContractor.sName;
 
-			if ($scope.oContractor.sMainPhone) {
-				oDataForSave.MainPhone = $scope.oContractor.sMainPhone.replace(/\D/g, '');
+			if ($scope.oContractor.sPhone) {
+				oDataForSave.MainPhone = $scope.oContractor.sPhone.replace(/\D/g, '');
 			} else {
 				oDataForSave.MainPhone = "";
 			}
