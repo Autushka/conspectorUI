@@ -52,7 +52,7 @@
 						</label>
 					</div>
 					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUser.sEmail}}</div>
-					<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sEmail" ng-if="(sMode == 'edit' || sMode == 'create') && sCurrentRole == sGlobalAdministratorRole" ng-change="onDataModified()" required>
+					<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sEmail" ng-if="(sMode == 'edit' || sMode == 'create') && sCurrentRole == sGlobalAdministratorRole" ng-change="onDataModified()" required placeholder="{{'global_emailPlaceholder' | translate}}">
 				</div>
 				<div flex>
 					<div  class="cnpSubSectionLabel">

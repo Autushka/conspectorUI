@@ -44,7 +44,7 @@
 					</label>
 				</div>
 				<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oClient.sName}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'clientDetails_namePlaceholder' | translate}}">
 			</div>
 			<div class="cnpSubSection" flex>
 				<div  class="cnpSubSectionLabel">
@@ -75,35 +75,35 @@
 						</label>
 					</div>
 					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sPhone}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sPhone" ng-if="sMode != 'display'" ng-change="onDataModified()">
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 					<div  class="cnpSubSectionLabel">
 						<label>
 							{{'clientDetails_secondaryPhone' | translate}}
 						</label>
 					</div>
 					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sSecondaryPhone}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sSecondaryPhone" ng-if="sMode != 'display'" ng-change="onDataModified()">
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sSecondaryPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 					<div  class="cnpSubSectionLabel">
 						<label>
 							{{'clientDetails_website' | translate}}
 						</label>
 					</div>
 					<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="http://{{oClient.sWebsite}}" target="_blank">{{oClient.sWebsite}}</a></div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sWebsite" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sWebsite" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_websitePlaceholder' | translate}}">
 					<div  class="cnpSubSectionLabel">
 						<label>
 							{{'clientDetails_email' | translate}}
 						</label>
 					</div>
 					<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="mailto:{{oClient.sEmail}}">{{oClient.sEmail}}</a></div>
-					<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()">
+					<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_emailPlaceholder' | translate}}">
 					<div class="cnpSubSectionLabel">
 						<label>
 							{{'clientDetails_fax' | translate}}
 						</label>
 					</div>
 					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sFax}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sFax" ng-if="sMode != 'display'" ng-change="onDataModified()">
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sFax" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 				</div>
 				<div class="cnpSubSection" flex>
 					<div class="cnpSubSectionLabel">
@@ -144,21 +144,21 @@
 					</label>
 				</div>
 				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingStreet}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingStreetPlaceholder' | translate}}">
 				<div  class="cnpSubSectionLabel">
 					<label>
 						{{'clientDetails_billingCity' | translate}}
 					</label>
 				</div>
 				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingCity}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingCityPlaceholder' | translate}}">
 				<div  class="cnpSubSectionLabel">
 					<label>
 						{{'clientDetails_billingPostalCode' | translate}}
 					</label>
 				</div>
 				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingPostalCode}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingPostalCodePlaceholder' | translate}}">
 				
 				<div  class="cnpSubSectionLabel">
 					<label>
@@ -204,21 +204,21 @@
 					</label>
 				</div>
 				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingStreet}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingStreetPlaceholder' | translate}}">
 				<div  class="cnpSubSectionLabel">
 					<label>
 						{{'clientDetails_shippingCity' | translate}}
 					</label>
 				</div>
 				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingCity}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingCityPlaceholder' | translate}}">
 				<div  class="cnpSubSectionLabel">
 					<label>
 						{{'clientDetails_shippingPostalCode' | translate}}
 					</label>
 				</div>
 				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingPostalCode}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()">
+				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingPostalCodePlaceholder' | translate}}">
 				
 				<div  class="cnpSubSectionLabel">
 					<label>
