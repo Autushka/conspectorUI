@@ -51,7 +51,7 @@
 							{{'userDetails_email' | translate}}
 						</label>
 					</div>
-					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || !bIsGlobalUserAdministrator">{{oUser.sEmail}}</div>
+					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || !bIsGlobalUserAdministrator"><a href="mailto:{{oUser.sEmail}}">{{oUser.sEmail}}</a></div>
 					<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sEmail" ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator" ng-change="onDataModified()" required placeholder="{{'global_emailPlaceholder' | translate}}">
 				</div>
 				<div flex ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator">
