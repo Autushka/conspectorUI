@@ -18,7 +18,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			sEntityName: "oContact",
 			sOperation: "bDelete"
 		});
-		if($scope.sCurrentStateName === "app.profileSettings.contactDetails"){
+		if ($scope.sCurrentStateName === "app.profileSettings.contactDetails") {
 			$scope.bDisplayDeleteButton = false;
 		}
 
@@ -28,8 +28,6 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		if ($scope.$parent && $scope.$parent.sViewName === "contactDetailsWrapperView") {
 			$scope.$parent.oStateParams = angular.copy($stateParams); // needed for properBackNavigation with wrapper view...
 		}
-
-
 
 		$scope.sMode = $stateParams.sMode;
 		$scope.oContact = {
@@ -487,14 +485,10 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				}
 			};
 			oDataForSave.Guid = $scope.oContact._guid;
-			oDataForSave.AccountGuid = sAccountGuid;
-
-			if (!oDataForSave.AccountGuid) { //in case of new contact creation from contact list...
-				for (var i = 0; i < $scope.aAccounts.length; i++) {
-					if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
-						oDataForSave.AccountGuid = $scope.aAccounts[i].Guid;
-						break;
-					}
+			for (var i = 0; i < $scope.aAccounts.length; i++) {
+				if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
+					oDataForSave.AccountGuid = $scope.aAccounts[i].Guid;
+					break;
 				}
 			}
 
@@ -599,6 +593,14 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		};
 
 		$scope.onNavigateToAccountDetails = function() {
+			var sAccountGuid = "";
+			for (var i = 0; i < $scope.aAccounts.length; i++) {
+				if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
+					sAccountGuid = $scope.aAccounts[i].Guid;
+					break;
+				}
+			}			
+
 			$state.go('app.contractorDetailsWrapper.contractorDetails', {
 				sMode: "display",
 				sContractorGuid: sAccountGuid,
