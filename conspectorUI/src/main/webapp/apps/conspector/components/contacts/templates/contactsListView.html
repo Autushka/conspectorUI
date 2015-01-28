@@ -59,7 +59,7 @@
 					</td>
 				</tr>
 				<tr ng-hide="group.$hideRows" ng-repeat="contact in group.data">
-					<td data-title="actionsTE">
+					<td data-title="'global_actions' | translate">
 						<div layout="row" layout-align="center center">
 							<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(contact)">
 							</div>
@@ -67,7 +67,7 @@
 							</div>
 						</div>
 					</td>
-					<td data-title="nameTE" sortable="'sName'" filter="{'sName': 'text'}">
+					<td data-title="'global_name' | translate" sortable="'sName'" filter="{'sName': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>
@@ -76,7 +76,7 @@
 							</div>
 						</div>
 					</td>
-					<td data-title="accountTE" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">
+					<td data-title="'global_account' | translate" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>
@@ -86,14 +86,14 @@
 						</div>
 					</td>
 					
-					<td data-title="titleTE" sortable="'sTitle'" filter="{'sTitle': 'text'}">
+					<td data-title="'global_title' | translate" sortable="'sTitle'" filter="{'sTitle': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>{{contact.sTitle}}</span>
 							</div>
 						</div>
 					</td>
-					<td data-title="phoneTE" sortable="'sPhone'" filter="{'sPhone': 'text'}">
+					<td data-title="'global_email' | translate" sortable="'sPhone'" filter="{'sPhone': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div><a href="tel:+{{contact.sPhone | phoneFormatter}}">
 								<span>
@@ -101,7 +101,7 @@
 							</div>
 						</div>
 					</td>
-					<td data-title="emailTE" sortable="'sEmail'" filter="{'sEmail': 'text'}">
+					<td data-title="'global_name' | translate" sortable="'sEmail'" filter="{'sEmail': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span><a href="mailto:{{contact.sEmail}}">{{contact.sEmail}}

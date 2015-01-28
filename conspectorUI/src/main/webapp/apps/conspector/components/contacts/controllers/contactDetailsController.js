@@ -3,6 +3,8 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		var sAccountGuid = $stateParams.sAccountGuid;
 		var sContactGuid = $stateParams.sContactGuid;
 
+		$scope.bShowParentAccountAndContactType = true;
+		$scope.bShowDescriptionTags = true;
 		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$scope.oStateParams = {}; // for backNavigation
 
@@ -20,6 +22,8 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		});
 		if ($scope.sCurrentStateName === "app.profileSettings.contactDetails") {
 			$scope.bDisplayDeleteButton = false;
+			$scope.bShowParentAccountAndContactType = false;
+			$scope.bShowDescriptionTags = false;
 		}
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
@@ -599,7 +603,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 					sAccountGuid = $scope.aAccounts[i].Guid;
 					break;
 				}
-			}			
+			}
 
 			$state.go('app.contractorDetailsWrapper.contractorDetails', {
 				sMode: "display",
