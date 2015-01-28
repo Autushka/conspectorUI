@@ -3,6 +3,9 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		var sAccountGuid = $stateParams.sAccountGuid;
 		var sContactGuid = $stateParams.sContactGuid;
 
+		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$scope.oStateParams = {}; // for backNavigation
+
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
 			sRole: sCurrentRole,
@@ -15,6 +18,9 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			sEntityName: "oContact",
 			sOperation: "bDelete"
 		});
+		if($scope.sCurrentStateName === "app.profileSettings.contactDetails"){
+			$scope.bDisplayDeleteButton = false;
+		}
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		var bDataHasBeenModified = false;
@@ -23,8 +29,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			$scope.$parent.oStateParams = angular.copy($stateParams); // needed for properBackNavigation with wrapper view...
 		}
 
-		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
-		$scope.oStateParams = {}; // for backNavigation
+
 
 		$scope.sMode = $stateParams.sMode;
 		$scope.oContact = {
