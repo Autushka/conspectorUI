@@ -1,10 +1,10 @@
-viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider',
-	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider) {
+viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider', 'historyProvider',
+	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider, historyProvider) {
 		$scope.resetPasswordData = {
 			sNewPassword: "",
 			sNewPasswordConfirmation: ""
 		};
-
+		$scope.sCurrentStateName = $state.current.name;	
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
 		};
@@ -49,12 +49,19 @@ viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', 
 			});			
 		};
 
-		$scope.onBack = function(){
-			if(!$rootScope.sFromState){
+		$scope.onBack = function() {
+			if(!historyProvider.aHistoryStates.length){
 				$state.go('signIn');
-				return;
-			}				
-			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
-		};		
+			}
+			historyProvider.navigateBack({
+				oState: $state
+			});
+		};
+
+		$scope.$on("$destroy", function() {
+			historyProvider.addStateToHistory({
+				sStateName: $scope.sCurrentStateName
+			});
+		});		
 	}
 ]);

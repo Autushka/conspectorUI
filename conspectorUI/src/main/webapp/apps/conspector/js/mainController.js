@@ -44,9 +44,9 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 			$rootScope.showSpinner = false;
 		});
 
-		$rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
-			$rootScope.sFromState = from.name;
-			$rootScope.oFromStateParams = fromParams;
-		});
+		// $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+		// 	$rootScope.sFromState = from.name;
+		// 	$rootScope.oFromStateParams = fromParams;
+		// });
 	}
 ]);

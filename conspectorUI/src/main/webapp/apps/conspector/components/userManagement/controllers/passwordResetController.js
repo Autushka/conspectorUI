@@ -1,10 +1,10 @@
-viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider', '$stateParams',
-	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider, $stateParams) {
+viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider', '$stateParams', 'historyProvider',
+	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider, $stateParams, historyProvider) {
 		$scope.resetPasswordData = {
 			sNewPassword: "",
 			sNewPasswordConfirmation: ""
 		};
-
+		$scope.sCurrentStateName = $state.current.name;	
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
 		}
@@ -40,21 +40,21 @@ viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state
 			}
 
 			var oResetPasswordSvc = apiProvider.resetPasswordWithPRCode({oData: oData, onSuccess: onSuccess});
-
-//			oResetPasswordSvc.then(function(oData) {
-//				var bNoErrorMessages = servicesProvider.messagesHandler(oData.messages);
-//				if (bNoErrorMessages) {
-//					$state.go("signIn");
-//				}
-//			});
 		};
 
-		$scope.onBack = function(){
-			if(!$rootScope.sFromState){
+		$scope.onBack = function() {
+			if(!historyProvider.aHistoryStates.length){
 				$state.go('signIn');
-				return;
-			}				
-			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
-		};			
+			}
+			historyProvider.navigateBack({
+				oState: $state
+			});
+		};
+
+		$scope.$on("$destroy", function() {
+			historyProvider.addStateToHistory({
+				sStateName: $scope.sCurrentStateName
+			});
+		});			
 	}
 ]);
