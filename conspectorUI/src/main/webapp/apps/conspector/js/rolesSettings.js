@@ -178,7 +178,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 
 			contactManagementUser: {
-				sInitialState: "app.deficienciesList",
+				sInitialState: "app.contactsList",
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,

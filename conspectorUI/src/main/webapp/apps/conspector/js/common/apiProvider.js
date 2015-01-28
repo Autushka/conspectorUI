@@ -892,6 +892,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			createAccount: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
+					cacheProvider.cleanEntitiesCache("oAccountTypeEntity");//for cases when accountTypes are readed with Accounts;
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
@@ -922,6 +923,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateAccount: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
+					cacheProvider.cleanEntitiesCache("oAccountTypeEntity");//for cases when accountTypes are readed with Accounts;					
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}

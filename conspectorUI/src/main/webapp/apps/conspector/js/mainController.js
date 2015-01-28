@@ -19,6 +19,9 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 			$rootScope.$on(PubNub.ngMsgEv(sChannel), function(event, payload) {
 				if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
 					cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
+					if(payload.message.sEntityName === "oAccountEntity"){
+						cacheProvider.cleanEntitiesCache("oAccountTypeEntity");//for cases when accountTypes are readed with Accounts;
+					}
 				}
 				switch (payload.message.sEntityName) {
 					case "oAccountEntity":
