@@ -164,8 +164,9 @@
 					<label>
 						{{'clientDetails_billingCountry' | translate}}
 					</label>
-				</div>
+				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._billingCountryCode}}</div>
 				<div
+					ng-if="sMode == 'edit'"
 					multi-select
 					input-model="aBillingCountries"
 					button-label="name"
@@ -182,8 +183,9 @@
 					<label>
 						{{'clientDetails_billingProvince' | translate}}
 					</label>
-				</div>
+				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._billingProvinceCode}}</div>
 				<div
+					ng-if="sMode == 'edit'"
 					multi-select
 					input-model="aBillingProvinces"
 					button-label="name"
@@ -224,8 +226,9 @@
 					<label>
 						{{'clientDetails_shippingCountry' | translate}}
 					</label>
-				</div>
+				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._shippingCountryCode}}</div>
 				<div
+					ng-if="sMode == 'edit'"
 					multi-select
 					input-model="aShippingCountries"
 					button-label="name"
@@ -242,8 +245,9 @@
 					<label>
 						{{'clientDetails_shippingProvince' | translate}}
 					</label>
-				</div>
+				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._shippingProvinceCode}}</div>
 				<div
+					ng-if="sMode == 'edit'"
 					multi-select
 					input-model="aShippingProvinces"
 					button-label="name"

@@ -93,6 +93,7 @@
 					</div>
 					<div class="cnpSubSectionData" ng-if="sMode == 'display'" ><a ng-click="onNavigateToAccountDetails()">{{oContact._sAccountName}}</a></div>				
 					<div 
+						ng-if="sMode == 'edit'"
 						multi-select
 						input-model="aAccounts"
 						button-label="name"
@@ -106,7 +107,7 @@
 						helper-elements="filter">
 					</div>
 				</div>
-				<div flex>
+				<div flex style="margin-left: 36px;">
 					<div  class="cnpSubSectionLabel">
 						<label>
 							{{'contactDetails_contactType' | translate}}
@@ -114,6 +115,7 @@
 					</div>
 					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._sContactType}}</div>
 					<div
+						ng-if="sMode == 'edit'"
 						multi-select
 						input-model="aContactTypes"
 						button-label="name"
@@ -212,8 +214,9 @@
 						<label>
 							{{'contactDetails_billingCountry' | translate}}
 						</label>
-					</div>
+					</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._billingCountryCode}}</div>
 					<div
+						ng-if="sMode == 'edit'"
 						multi-select
 						input-model="aBillingCountries"
 						button-label="name"
@@ -230,8 +233,9 @@
 						<label>
 							{{'contactDetails_billingProvince' | translate}}
 						</label>
-					</div>
+					</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._billingProvinceCode}}</div>
 					<div
+						ng-if="sMode == 'edit'"
 						multi-select
 						input-model="aBillingProvinces"
 						button-label="name"
@@ -273,7 +277,9 @@
 							{{'contactDetails_shippingCountry' | translate}}
 						</label>
 					</div>
+					<div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._shippingCountryCode}}</div>
 					<div
+						ng-if="sMode == 'edit'"
 						multi-select
 						input-model="aShippingCountries"
 						button-label="name"
@@ -290,8 +296,9 @@
 						<label>
 							{{'contactDetails_shippingProvince' | translate}}
 						</label>
-					</div>
+					</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._shippingProvinceCode}}</div>
 					<div
+						ng-if="sMode == 'edit'"
 						multi-select
 						input-model="aShippingProvinces"
 						button-label="name"
