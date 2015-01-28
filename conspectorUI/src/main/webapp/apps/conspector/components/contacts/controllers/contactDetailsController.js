@@ -100,6 +100,13 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				$scope.oContact._sAccountName = oContact.AccountDetails.Name;
 			}
 
+			if (oContact.ContactTypeDetails) {
+				$scope.oContact._sContactType = $translate.use() === "en" ? oContact.ContactTypeDetails.NameEN : oContact.ContactTypeDetails.NameFR;
+				if(!$scope.oContact._sContactType){
+					$scope.oContact._sContactType = oContact.ContactTypeDetails.NameEN
+				}
+			}			
+
 			$scope.oContact.sCreatedAt = utilsProvider.dBDateToSting(oContact.CreatedAt);
 			$scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oContact.LastModifiedAt);
 

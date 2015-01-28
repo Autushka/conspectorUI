@@ -19,7 +19,7 @@
 				</label>
 			</div>
 			<md-radio-group ng-model="sSelectedCompanyName" class="cnpInputWrapper cnpInputWrapperNoMargin notSelectable">
-			<md-radio-button ng-repeat="company in aUserCompanies" ng-value="company.CompanyName">{{company.CompanyName}} ({{sLanguage === "en" ? company.DescriptionEN : company.DescriptionFR}})
+			<md-radio-button ng-repeat="company in aUserCompanies" ng-value="company.CompanyName">{{sLanguage === "en" ? company.DescriptionEN : company.DescriptionFR}}
 			</md-radio-button>
 			</md-radio-group>
 			<div class="cnpInputWrapper">

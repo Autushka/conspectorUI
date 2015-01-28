@@ -24,7 +24,7 @@
 			</div>
 			<md-radio-group ng-model="sSelectedRoleName" class="cnpInputWrapper cnpInputWrapperNoMargin notSelectable">
 			<md-radio-button ng-repeat="role in aUserRoles" ng-value="role.RoleName">
-			{{role.RoleName}} ({{sLanguage === "en" ? role.DescriptionEN : role.DescriptionFR}})
+			{{sLanguage === "en" ? role.DescriptionEN : role.DescriptionFR}}
 			</md-radio-button>
 			</md-radio-group>
 			

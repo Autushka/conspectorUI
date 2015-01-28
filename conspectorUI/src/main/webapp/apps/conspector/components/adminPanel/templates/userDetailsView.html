@@ -73,13 +73,13 @@
 				</div>
 			</div>
 			<div layout="column" flex>
-				<div class="cnpSubSection" flex>
+				<div class="cnpSubSection" flex ng-if="bIsGlobalUserAdministrator">
 					<div  class="cnpSubSectionLabel">
 						<label ng-if="bIsGlobalUserAdministrator">
 							{{'userDetails_associatedCompanies' | translate}}
 						</label>
 					</div>
-					<div ng-if="bIsGlobalUserAdministrator"
+					<div 
 						multi-select
 						input-model="aCompanies"
 						button-label="name"
