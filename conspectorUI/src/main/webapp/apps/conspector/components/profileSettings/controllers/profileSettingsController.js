@@ -1,19 +1,26 @@
-viewControllers.controller('profileSettingsView', ['$scope', '$state', 'servicesProvider', '$cookieStore', 'cacheProvider', '$window','$mdSidenav', 'historyProvider', '$translate', 'rolesSettings',
+viewControllers.controller('profileSettingsView', ['$scope', '$state', 'servicesProvider', '$cookieStore', 'cacheProvider', '$window', '$mdSidenav', 'historyProvider', '$translate', 'rolesSettings',
 	function($scope, $state, servicesProvider, $cookieStore, cacheProvider, $window, $mdSidenav, historyProvider, $translate, rolesSettings) {
-		historyProvider.removeHistory();// because current view doesn't have a back button				
-		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;		
+		historyProvider.removeHistory(); // because current view doesn't have a back button				
+		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 
 		$scope.toggleLeftSidenav = function() {
 			$mdSidenav('left').toggle();
 		};
 
-		var navigateToCustomizing = function(sStateName) {
-			$mdSidenav('left').close();
-			$state.go(sStateName);
+		var navigateToCustomizing = function(sStateName, oStateParams) {
+			if ($mdSidenav('left'))  {
+				$mdSidenav('left').close();
+			}
+
+			if (oStateParams) {
+				$state.go(sStateName, oStateParams);
+			} else {
+				$state.go(sStateName);
+			}
 		};
 
 		$scope.onMenuItemSelected = function(oMenuItem) {
-			navigateToCustomizing(oMenuItem.sStateName);
+			navigateToCustomizing(oMenuItem.sStateName, oMenuItem.oStateParams);
 		};
 
 		$scope.aMenuItems = [];
@@ -23,8 +30,13 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 				sMenuItem: "bShowContactDetails",
 			}),
 			sStateName: "app.profileSettings.contactDetails",
-			sMenuLabel: $translate.instant('profileSettings_contactDetails')
-		});	
+			sMenuLabel: $translate.instant('profileSettings_contactDetails'),
+			oStateParams: {
+				sMode: "display",
+				sAccountGuid: cacheProvider.oUserProfile.sUserAccountGuid,
+				sContactGuid: cacheProvider.oUserProfile.sUserContactGuid,
+			}
+		});
 
 		$scope.aMenuItems.push({
 			bShouldBeDisplayed: rolesSettings.getRolesProfileMenuItemSettings({
@@ -33,7 +45,7 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 			}),
 			sStateName: "app.profileSettings.profileDetails",
 			sMenuLabel: $translate.instant('profileSettings_profileDetails')
-		});	
+		});
 
 		$scope.aMenuItems.push({
 			bShouldBeDisplayed: rolesSettings.getRolesProfileMenuItemSettings({
@@ -42,8 +54,8 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 			}),
 			sStateName: "app.profileSettings.changePassword",
 			sMenuLabel: $translate.instant('profileSettings_changePassword')
-		});								
-		
+		});
+
 		var oWindow = angular.element($window);
 
 		oWindow.bind('resize', function() {

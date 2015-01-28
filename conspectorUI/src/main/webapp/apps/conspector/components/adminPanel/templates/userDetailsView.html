@@ -133,6 +133,29 @@
 				</div>
 			</div>
 		</div>
+		<div layout="row" style="width: 100%" flex>
+			<div class="cnpSubSection" layout="row" flex>
+				<div flex>
+					<div  class="cnpSubSectionLabel">
+						<label ng-if="sbIsGlobalUserAdministrator">
+							{{'userDetails_associatedContact' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aContacts"
+						button-label="name"
+						item-label="name"
+						tick-property="ticked"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						selection-mode="single"
+						helper-elements="filter"						
+						>
+					</div>
+				</div>
+			</div>
+		</div>		
 		<div layout="column" layout-gt-md="row" style="width: 100%" flex>
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>

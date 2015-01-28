@@ -14,7 +14,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			sRole: sCurrentRole,
 			sEntityName: "oContact",
 			sOperation: "bDelete"
-		});	
+		});
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		var bDataHasBeenModified = false;
@@ -321,11 +321,19 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		}
 
 		$scope.onEdit = function() {
-			$state.go('app.contactDetailsWrapper.contactDetails', {
-				sMode: "edit",
-				sAccountGuid: sAccountGuid,
-				sContactGuid: $scope.oContact._guid,
-			});
+			if ($scope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
+				$state.go('app.contactDetailsWrapper.contactDetails', {
+					sMode: "edit",
+					sAccountGuid: sAccountGuid,
+					sContactGuid: $scope.oContact._guid,
+				});
+			} else {
+				$state.go('app.profileSettings.contactDetails', {
+					sMode: "edit",
+					sAccountGuid: sAccountGuid,
+					sContactGuid: $scope.oContact._guid,
+				});
+			}
 		};
 
 
@@ -417,11 +425,19 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 				}
 				if (!bSaveAndNew) {
-					$state.go('app.contactDetailsWrapper.contactDetails', {
-						sMode: "display",
-						sAccountGuid: sAccountGuid,
-						sContactGuid: oData.Guid
-					});
+					if ($scope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
+						$state.go('app.contactDetailsWrapper.contactDetails', {
+							sMode: "display",
+							sAccountGuid: sAccountGuid,
+							sContactGuid: oData.Guid
+						});
+					} else {
+						$state.go('app.profileSettings.contactDetails', {
+							sMode: "display",
+							sAccountGuid: sAccountGuid,
+							sContactGuid: oData.Guid
+						});
+					}
 					$scope.oContact._lastModifiedAt = oData.LastModifiedAt;
 					$scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oContact.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
@@ -450,11 +466,20 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 
 				$scope.oContact._lastModifiedAt = oData.LastModifiedAt;
 				$scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
-				$state.go('app.contactDetailsWrapper.contactDetails', {
-					sMode: "display",
-					sAccountGuid: sAccountGuid,
-					sContactGuid: oData.Guid
-				});
+
+				if ($scope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
+					$state.go('app.contactDetailsWrapper.contactDetails', {
+						sMode: "display",
+						sAccountGuid: sAccountGuid,
+						sContactGuid: oData.Guid
+					});
+				} else {
+					$state.go('app.profileSettings.contactDetails', {
+						sMode: "display",
+						sAccountGuid: sAccountGuid,
+						sContactGuid: oData.Guid
+					});
+				}
 			};
 			oDataForSave.Guid = $scope.oContact._guid;
 			oDataForSave.AccountGuid = sAccountGuid;

@@ -2,13 +2,15 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 	function(dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider, PubNub) {
 		return {
 			getUserProfile: function(sUserName) {
-				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=CompanyDetails,RoleDetails,PhaseDetails/ProjectDetails&$format=json";
+				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=CompanyDetails,RoleDetails,PhaseDetails/ProjectDetails,ContactDetails/AccountDetails&$format=json";
 				var aUserCompanies = [];
 				var aUserRoles = [];
 				var aUserPhases = [];
 				var sCreatedAt = "";
 				var sLastModifiedAt = "";
 				var bIsInitialPassword = false;
+				var sUserContactGuid = "";//needed for contact management scenario from profile
+				var sUserAccountGuid = "";//needed for contact management scenario from profile
 				var onSuccess = function(oData) {
 					bIsInitialPassword = oData.d.IsPasswordInitial;
 					sLastModifiedAt = oData.d.LastModifiedAt;
@@ -29,6 +31,12 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							aUserPhases.push(oData.d.PhaseDetails.results[i]);
 						}
 					}
+					if(oData.d.ContactDetails){
+						sUserContactGuid = oData.d.ContactDetails.Guid;
+						if(oData.d.ContactDetails.AccountDetails){
+							sUserAccountGuid = oData.d.ContactDetails.AccountDetails.Guid;
+						}						
+					}
 				}
 
 				dataProvider.ajaxRequest({ //TODO: add busy indicator here as well if needed
@@ -48,7 +56,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					aUserCompanies: aUserCompanies,
 					bIsInitialPassword: bIsInitialPassword,
 					sLastModifiedAt: sLastModifiedAt,
-					aGloballySelectedPhasesGuids: [] //will be bopupated in appController
+					aGloballySelectedPhasesGuids: [], //will be bopupated in appController
+					sUserContactGuid: sUserContactGuid,
+					sUserAccountGuid: sUserAccountGuid
 				};
 			},
 

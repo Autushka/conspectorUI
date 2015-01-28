@@ -6,7 +6,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
-		$scope.bIsGlobalUserAdministrator = rolesSettings[sCurrentRole].bIsGlobalUserAdministrator;		
+		$scope.bIsGlobalUserAdministrator = rolesSettings[sCurrentRole].bIsGlobalUserAdministrator;
 		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
 			sRole: sCurrentRole,
 			sEntityName: "oUser",
@@ -17,10 +17,10 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			sRole: sCurrentRole,
 			sEntityName: "oUser",
 			sOperation: "bDelete"
-		});	
+		});
 
-		$scope.sCurrentStateName = $state.current.name;	// for backNavigation	
-		$scope.oStateParams = {};// for backNavigation
+		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$scope.oStateParams = {}; // for backNavigation
 
 		$scope.sMode = $stateParams.sMode;
 		$scope.oUser = {
@@ -36,6 +36,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		$scope.aCompanies = [];
 		$scope.aRoles = [];
 		$scope.aPhases = [];
+		$scope.aContacts = [];
 
 		var setDisplayedUserDetails = function(oUser) {
 			$scope.oUser.sUserName = oUser.UserName;
@@ -45,7 +46,8 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			$scope.oUser.sLastModifiedAt = utilsProvider.dBDateToSting(oUser.LastModifiedAt);
 			$scope.oUser._aCompanies = angular.copy(oUser.CompanyDetails.results)
 			$scope.oUser._aPhases = angular.copy(oUser.PhaseDetails.results);
-			$scope.oUser._aRoles = angular.copy(oUser.RoleDetails.results)
+			$scope.oUser._aRoles = angular.copy(oUser.RoleDetails.results);
+			$scope.oUser._contactGuid = oUser.ContactGuid;
 			if (oUser.AvatarFileGuid) {
 				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oUser.AvatarFileGuid;
 			} else {
@@ -162,6 +164,38 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			}
 		};
 
+		var onContactsLoaded = function(aData) {
+			//Sort aData by role sorting sequence 
+			for (var i = 0; i < aData.length; i++) {
+				if(aData[i].FirstName){
+					aData[i].sName = aData[i].FirstName;
+				}
+				if(aData[i].LastName){
+					if(aData[i].FirstName){
+						aData[i].sName = aData[i].sName + " ";
+					}
+					aData[i].sName = aData[i].sName + aData[i].LastName;
+				}				
+			}
+			aData = $filter('orderBy')(aData, ["sName"]);
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oUserWrapper,
+				sNameEN: "sName",
+				sNameFR: "sName",
+				sDependentKey: "Guid",
+				sParentKey: "_contactGuid",
+				sTargetArrayNameInParent: "aContacts"
+			});
+
+			if (oUserWrapper.aData[0]) {
+				$scope.aContacts = angular.copy(oUserWrapper.aData[0].aContacts);
+			}
+		};
+
 		var onUserDetailsLoaded = function(oData) {
 			setDisplayedUserDetails(oData);
 
@@ -178,6 +212,11 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			apiProvider.getRoles({
 				bShowSpinner: false,
 				onSuccess: onRolesLoaded
+			});
+
+			apiProvider.getContacts({
+				bShowSpinner: false,
+				onSuccess: onContactsLoaded
 			});
 		};
 
@@ -206,6 +245,10 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 					bShowSpinner: false,
 					onSuccess: onRolesLoaded
 				});
+				apiProvider.getContacts({
+					bShowSpinner: false,
+					onSuccess: onContactsLoaded
+				});
 			}
 		} else {
 			$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
@@ -221,6 +264,10 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				bShowSpinner: false,
 				onSuccess: onRolesLoaded
 			});
+			apiProvider.getContacts({
+				bShowSpinner: false,
+				onSuccess: onContactsLoaded
+			});				
 		}
 
 		$scope.onBack = function() {
@@ -398,6 +445,13 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				oDataForSave.IsPasswordInitial = true;
 			}
 
+			for (var i = 0; i < $scope.aContacts.length; i++) {
+				if($scope.aContacts[i].ticked){
+					oDataForSave.ContactGuid = $scope.aContacts[i].Guid;
+					break;
+				}
+			}
+
 			aLinks = prepareLinksForSave();
 			switch ($scope.sMode) {
 				case "edit":
@@ -491,6 +545,6 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				sStateName: $scope.sCurrentStateName,
 				oStateParams: angular.copy($scope.oStateParams)
 			});
-		});		
+		});
 	}
 ]);
