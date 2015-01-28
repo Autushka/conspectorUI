@@ -41,7 +41,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="logosTableParams" class="cnpNgTable" id="logosList">
 			<tr ng-repeat="logo in aDisplayedLogos">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="logo._editMode == false"  ng-click="onEditImg(logo)">
 						</div>
@@ -51,7 +51,7 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="logoTE">
+				<td data-title="'systemFiles_logo' | translate">
 					<img ng-if="!logo._createMode" ng-src="{{logo.sUrl}}" style="width:200px;"/>
 					<button ng-if="logo._createMode" ng-file-select accept="image/*,*.svg" ng-file-change="onLogoSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
 				</td>
@@ -89,7 +89,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="deficiencyStatusesTableParams" class="cnpNgTable" id="deficiencyStatusIconsList">
 			<tr ng-repeat="deficiencyStatus in aDisplayedDeficiencyStatuses">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="deficiencyStatus._editMode == false"  ng-click="onEditImg(deficiencyStatus)">
 						</div>
@@ -99,7 +99,7 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="iconTE">
+				<td data-title="'systemFiles_Icon' | translate">
 					<img ng-if="!deficiencyStatus._createMode" ng-src="{{deficiencyStatus.sUrl}}" style="width:24px; height:24px;"/>
 					<button ng-if="deficiencyStatus._createMode" ng-file-select accept="image/*,*.svg" ng-file-change="onDeficiencyStatusSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
 				</td>

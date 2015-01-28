@@ -1,10 +1,6 @@
 viewControllers.controller('operationLogsListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'utilsProvider',
 	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, utilsProvider) {
-		$scope.operationNameTE = $translate.instant('operationLogsList_operationName');
-		$scope.operationContentTE = $translate.instant('operationLogsList_operationContent');
-		$scope.createdByTE = $translate.instant('global_createdBy');
-		$scope.createdAtTE = $translate.instant('global_createdAt');
-
+		
 		var oOperationLogsListData = {
 			aData: []
 		};

@@ -31,7 +31,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="deficiencyPrioritiesList">
 			<tr ng-repeat="deficiencyPriority in aDisplayedDeficiencyPriorities">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!deficiencyPriority._editMode" ng-click="onEdit(deficiencyPriority)">
 						</div>
@@ -41,25 +41,25 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="nameENTE" sortable="'nameEN'">
+				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.nameEN}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyPriority._editMode" type="text" ng-model="deficiencyPriority.nameEN"/>
 					</div>
 				</td>
-				<td data-title="nameFRTE" sortable="'nameFR'">
+				<td data-title="'global_descriptionFR' | translate" sortable="'nameFR'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.nameFR}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyPriority._editMode" type="text" ng-model="deficiencyPriority.nameFR"/>
 					</div>
 				</td>
-				<td data-title="associatedColorTE" sortable="'associatedColor'">
+				<td data-title="'global_associatedColor' | translate" sortable="'associatedColor'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.associatedColor}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" colorpicker type="text" ng-if="deficiencyPriority._editMode" ng-model="deficiencyPriority.associatedColor" />
 					</div>
 				</td>
-				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!deficiencyPriority._editMode">{{deficiencyPriority.sortingSequence}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyPriority._editMode" type="number" ng-model="deficiencyPriority.sortingSequence"/>

@@ -1,9 +1,6 @@
 viewControllers.controller('systemFilesView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$upload', '$window', 'cacheProvider',
 	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $upload, $window, cacheProvider) {
-		$scope.actionsTE = $translate.instant('global_actions');
-		$scope.logoTE = $translate.instant('systemFiles_logo');
-		$scope.iconTE = $translate.instant('systemFiles_Icon');
-
+		
 		var oLogosListData = {
 			aData: []
 		};

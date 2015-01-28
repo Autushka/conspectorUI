@@ -1,12 +1,6 @@
 viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$window', 'cacheProvider',
 	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $window, cacheProvider) {
-		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
-		$scope.iconTE = $translate.instant('global_icon');
-		$scope.nameENTE = $translate.instant('global_descriptionEN');
-		$scope.nameFRTE = $translate.instant('global_descriptionFR');
-		$scope.associatedColorTE = $translate.instant('global_associatedColor');
-		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
-
+		
 		var oStatusIconArrayWrapper = {
 			aData: []
 		};

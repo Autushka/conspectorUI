@@ -1,11 +1,6 @@
 viewControllers.controller('companiesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'CONSTANTS', 'cacheProvider', 'dataProvider',
 	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, CONSTANTS, cacheProvider, dataProvider) {
-		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
-		$scope.companyNameTE = $translate.instant('companiesList_companyName');
-		$scope.descriptionENTE = $translate.instant('global_descriptionEN');
-		$scope.descriptionFRTE = $translate.instant('global_descriptionFR');
-		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
-
+		
 		var oCompaniesListData = {
 			aData: []
 		};

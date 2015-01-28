@@ -1,10 +1,6 @@
 viewControllers.controller('contactTypesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate',
 	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate) {
-		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
-		$scope.nameENTE = $translate.instant('global_descriptionEN');
-		$scope.nameFRTE = $translate.instant('global_descriptionFR');
-		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
-
+		
 		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
 
 		var oContactTypesListData = {

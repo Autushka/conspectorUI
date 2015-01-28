@@ -31,7 +31,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="companiesList">
 			<tr ng-repeat="company in aDisplayedCompanies">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!company._editMode" ng-click="onEdit(company)">
 						</div>
@@ -41,25 +41,25 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="companyNameTE" sortable="'companyName'">
+				<td data-title="'companiesList_companyName' | translate" sortable="'companyName'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!company._createMode">{{company.companyName}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="company._createMode" type="text" ng-model="company.companyName"/>
 					</div>
 				</td>
-				<td data-title="descriptionENTE" sortable="'descriptionEN'">
+				<td data-title="'global_descriptionEN' | translate" sortable="'descriptionEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!company._editMode">{{company.descriptionEN}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="company._editMode" type="text" ng-model="company.descriptionEN"/>
 					</div>
 				</td>
-				<td data-title="descriptionFRTE" sortable="'descriptionFR'">
+				<td data-title="'global_descriptionFR' | translate" sortable="'descriptionFR'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!company._editMode">{{company.descriptionFR}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="company._editMode" type="text" ng-model="company.descriptionFR"/>
 					</div>
 				</td>
-				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!company._editMode">{{company.sortingSequence}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="company._editMode" type="number" ng-model="company.sortingSequence"/>

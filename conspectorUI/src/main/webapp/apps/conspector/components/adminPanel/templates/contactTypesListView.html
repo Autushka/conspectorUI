@@ -31,7 +31,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="contactTypesList">
 			<tr ng-repeat="contactType in aDisplayedContactTypes">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!contactType._editMode" ng-click="onEdit(contactType)">
 						</div>
@@ -41,19 +41,19 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="nameENTE" sortable="'nameEN'">
+				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!contactType._editMode">{{contactType.nameEN}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="contactType._editMode" type="text" ng-model="contactType.nameEN"/>
 					</div>
 				</td>
-				<td data-title="nameFRTE" sortable="'nameFR'">
+				<td data-title="'global_descriptionFR' | translate" sortable="'nameFR'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!contactType._editMode">{{contactType.nameFR}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="contactType._editMode" type="text" ng-model="contactType.nameFR"/>
 					</div>
 				</td>
-				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!contactType._editMode">{{contactType.sortingSequence}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="contactType._editMode" type="number" ng-model="contactType.sortingSequence"/>

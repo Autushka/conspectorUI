@@ -33,7 +33,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="usersList">
 			<tr ng-repeat="user in aDisplayedUsers">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(user)">
 						</div>
@@ -41,14 +41,14 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="userNameTE" sortable="'userName'">
+				<td data-title="'global_userName' | translate" sortable="'userName'">
 					<div layout="row" layout-align="start center">
 						<div>
 							<span>{{user.userName}}</span>
 						</div>
 					</div>
 				</td>
-				<td data-title="emailTE" sortable="'email'">
+				<td data-title="'global_email' | translate" sortable="'email'">
 					<div layout="row" layout-align="start center">
 						<div>
 							<span>{{user.email}}</span>
@@ -56,7 +56,7 @@
 					</div>
 					
 				</td>
-				<td ng-show="bIsGlobalUserAdministrator" data-title="companiesTE">
+				<td ng-show="bIsGlobalUserAdministrator" data-title="'global_companies' | translate">
 					<div layout="row" layout-align="start center">
 						<div>
 							<span>{{user.sCompanies}}</span>
@@ -64,7 +64,7 @@
 					</div>
 					
 				</td>
-				<td data-title="rolesTE" >
+				<td data-title="'global_roles' | translate" >
 					<div layout="row" layout-align="start center">
 						<div>
 							<span>{{user.sRoles}}</span>

@@ -1,11 +1,6 @@
 viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate',
 	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate) {
-		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
-		$scope.roleNameTE = $translate.instant('rolesList_roleName');
-		$scope.descriptionENTE = $translate.instant('global_descriptionEN');
-		$scope.descriptionFRTE = $translate.instant('global_descriptionFR');
-		$scope.sortingSequenceTE = $translate.instant('global_sortingSequence');
-
+		
 		var oRolesListData = {
 			aData: []
 		};

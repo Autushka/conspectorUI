@@ -31,7 +31,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="accountTypesList">
 			<tr ng-repeat="accountType in aDisplayedAccountTypes">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!accountType._editMode" ng-click="onEdit(accountType)">
 						</div>
@@ -41,19 +41,19 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="nameENTE" sortable="'nameEN'">
+				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!accountType._editMode">{{accountType.nameEN}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="accountType._editMode" type="text" ng-model="accountType.nameEN"/>
 					</div>
 				</td>
-				<td data-title="nameFRTE" sortable="'nameFR'">
+				<td data-title="'global_descriptionFR' | translate" sortable="'nameFR'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!accountType._editMode">{{accountType.nameFR}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="accountType._editMode" type="text" ng-model="accountType.nameFR"/>
 					</div>
 				</td>
-				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!accountType._editMode">{{accountType.sortingSequence}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="accountType._editMode" type="number" ng-model="accountType.sortingSequence"/>

@@ -32,7 +32,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="projectsList">
 			<tr ng-repeat="project in aDisplayedProjects">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!project._editMode" ng-click="onEdit(project)">
 						</div>
@@ -42,19 +42,19 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="nameENTE" sortable="'nameEN'">
+				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!project._editMode">{{project.nameEN}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="project._editMode" type="text" ng-model="project.nameEN"/>
 					</div>
 				</td>
-				<td data-title="nameFRTE" sortable="'nameFR'">
+				<td data-title="'global_descriptionFR' | translate" sortable="'nameFR'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!project._editMode">{{project.nameFR}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="project._editMode" type="text" ng-model="project.nameFR"/>
 					</div>
 				</td>
-				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!project._editMode">{{project.sortingSequence}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="project._editMode" type="number" ng-model="project.sortingSequence"/>

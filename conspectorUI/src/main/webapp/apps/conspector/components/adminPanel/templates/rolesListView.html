@@ -32,7 +32,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="rolesList">
 			<tr ng-repeat="role in aDisplayedRoles">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!role._editMode" ng-click="onEdit(role)">
 						</div>
@@ -42,7 +42,7 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="roleNameTE" sortable="'roleName'">
+				<td data-title="' rolesList_roleName' | translate" sortable="'roleName'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!role._createMode">{{role.roleName}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="role._createMode" type="text" ng-model="role.roleName"/>
@@ -60,7 +60,7 @@
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="role._editMode" type="text" ng-model="role.descriptionFR"/>
 					</div>
 				</td>
-				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!role._editMode">{{role.sortingSequence}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="role._editMode" type="number" ng-model="role.sortingSequence"/>

@@ -32,7 +32,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="phasesList">
 			<tr ng-repeat="phase in aDisplayedPhases">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!phase._editMode" ng-click="onEdit(phase)">
 						</div>
@@ -42,7 +42,7 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="projectTE" style="width: 60px;">
+				<td data-title="'global_project' | translate" style="width: 60px;">
 					<span ng-if="!phase._editMode">{{phase.projectName}}</span>
 					<div ng-if="phase._editMode"
 						multi-select
@@ -56,19 +56,19 @@
 						>
 					</div>
 				</td>
-				<td data-title="nameENTE" sortable="'nameEN'">
+				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!phase._editMode">{{phase.nameEN}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="phase._editMode" type="text" ng-model="phase.nameEN"/>
 					</div>
 				</td>
-				<td data-title="nameFRTE" sortable="'nameFR'">
+				<td data-title="'global_descriptionFR' | translate" sortable="'nameFR'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!phase._editMode">{{phase.nameFR}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="phase._editMode" type="text" ng-model="phase.nameFR"/>
 					</div>
 				</td>
-				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!phase._editMode">{{phase.sortingSequence}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="phase._editMode" type="number" ng-model="phase.sortingSequence"/>

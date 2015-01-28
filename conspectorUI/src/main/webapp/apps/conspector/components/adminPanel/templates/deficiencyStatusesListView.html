@@ -32,7 +32,7 @@
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="deficiencyStatusesList">
 			<tr ng-repeat="deficiencyStatus in aDisplayedDeficiencyStatuses">
-				<td data-title="actionsTE">
+				<td data-title="'global_actions' | translate">
 					<div layout="row" layout-align="center center">
 						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!deficiencyStatus._editMode" ng-click="onEdit(deficiencyStatus)">
 						</div>
@@ -43,7 +43,8 @@
 					</div>
 				</td>
 				<!-- TO DO STYLE PROPERLY -->
-				<td data-title="iconTE" style="width: 60px;">
+				<td data-title="'global_icon' | translate" style="width: 60px;">
+					<div layout="row" layout-align="center center">
 					<img ng-if="!deficiencyStatus._editMode" ng-src="{{deficiencyStatus.sUrl}}" style="width:24px; height:24px;"/>
 					<div ng-if="deficiencyStatus._editMode"
 						multi-select
@@ -56,26 +57,27 @@
 						helper-elements=""
 						>
 					</div>
+					</div>
 				</td>
-				<td data-title="nameENTE" sortable="'nameEN'">
+				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.nameEN}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyStatus._editMode" type="text" ng-model="deficiencyStatus.nameEN"/>
 					</div>
 				</td>
-				<td data-title="nameFRTE" sortable="'nameFR'">
+				<td data-title="'global_descriptionFR' | translate" sortable="'nameFR'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.nameFR}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyStatus._editMode" type="text" ng-model="deficiencyStatus.nameFR"/>
 					</div>
 				</td>
-				<td data-title="associatedColorTE" sortable="'associatedColor'">
+				<td data-title="'global_associatedColor' | translate" sortable="'associatedColor'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.associatedColor}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" colorpicker ng-if="deficiencyStatus._editMode" type="text" ng-model="deficiencyStatus.associatedColor"/>
 					</div>
 				</td>
-				<td data-title="sortingSequenceTE" sortable="'sortingSequence'">
+				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!deficiencyStatus._editMode">{{deficiencyStatus.sortingSequence}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="deficiencyStatus._editMode" type="number" ng-model="deficiencyStatus.sortingSequence"/>
