@@ -246,7 +246,77 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					},
 
 				}
-			}
+			},
+			contactViewerUser: {
+				sInitialState: "app.contactsList",
+				bIsGlobalUserAdministrator: false,
+				oMainMenu: {
+					bShowDeficiencies: false,
+					bShowUnits: false,
+					bShowContractors: true,
+					bShowClients: true,
+					bShowContacts: true,
+					bShowAdminPanel: false,
+					bShowProfileSettings: true
+				},
+				oAdminPanelMenu: {
+					bShowCompaniesManagement: false,
+					bShowUsersManagement: false,
+					bShowRolesManagement: false,
+					bShowProjectsManagement: false,
+					bShowPhasesManagement: false,
+					bShowDeficiencyStatusesManagement: false,
+					bShowDeficiencyPrioritiesManagement: false,
+					bShowSystemFilesManagement: false,
+					bShowOperationLogs: false,
+					bShowAccountTypesManagement: false,
+					bShowContactTypesManagement: false,
+				},
+				oProfileMenu: {
+					bShowContactDetails: true,
+					bShowProfileDetails: true,
+					bShowChangePassword: true
+				},
+				oAuthorizationsPerEntity: {
+					oDeficiency: {
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oUnit: {
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oContractor: {
+						bDisplay: true,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oClient: {
+						bDisplay: true,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oContact: {
+						bDisplay: true,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oUser: {
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+
+				}
+			}			
 		}
 	}
 ]);
