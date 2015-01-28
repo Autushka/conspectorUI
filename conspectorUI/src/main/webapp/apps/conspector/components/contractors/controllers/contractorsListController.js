@@ -1,11 +1,6 @@
 viewControllers.controller('contractorsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
 	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button
-		$scope.actionsTE = $translate.instant('global_actions'); //need TE for ngTable columns headers
-		$scope.contractorNameTE = $translate.instant('global_contractorName');
-		$scope.phoneTE = $translate.instant('global_phone');
-		$scope.emailTE = $translate.instant('global_email');
-		$scope.tagsTE = $translate.instant('global_tags');
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({

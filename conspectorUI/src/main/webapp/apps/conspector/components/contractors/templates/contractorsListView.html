@@ -61,7 +61,7 @@
 					</td>
 				</tr>
 				<tr ng-hide="group.$hideRows" ng-repeat="contractor in group.data">
-					<td data-title="actionsTE">
+					<td data-title="'global_actions' | translate">
 						<div layout="row" layout-align="center center">
 							<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(contractor)">
 							</div>
@@ -69,7 +69,7 @@
 							</div>
 						</div>
 					</td>
-					<td data-title="contractorNameTE" sortable="'sContractorName'" filter="{'sContractorName': 'text'}">
+					<td data-title="'global_contractorName' | translate" sortable="'sContractorName'" filter="{'sContractorName': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>
@@ -78,7 +78,7 @@
 							</div>
 						</div>
 					</td>
-					<td data-title="phoneTE" sortable="'sPhone'" filter="{'sPhone': 'text'}">
+					<td data-title="'global_phone' | translate" sortable="'sPhone'" filter="{'sPhone': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div><a href="tel:+{{contractor.sPhone | phoneFormatter}}">
 								<span>{{contractor.sPhone | phoneFormatter}}</span></a>
@@ -86,7 +86,7 @@
 						</div>
 					</td>
 					
-					<td data-title="emailTE" sortable="'sEmail'" filter="{'sEmail': 'text'}">
+					<td data-title="'global_email' | translate" sortable="'sEmail'" filter="{'sEmail': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<a href="mailto:{{contractor.sEmail}}">
@@ -97,7 +97,7 @@
 							</div>
 						</div>
 					</td>
-					<td data-title="tagsTE" sortable="'sTags'" filter="{'sTags': 'text'}">
+					<td data-title="'global_tags' | translate" sortable="'sTags'" filter="{'sTags': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>{{contractor.sTags}}</span>
