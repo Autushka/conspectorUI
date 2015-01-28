@@ -1,5 +1,5 @@
-viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$state', '$stateParams', 'utilsProvider', 'dataProvider', 'servicesProvider', 'apiProvider', '$translate',
-	function($scope, $rootScope, $state, $stateParams, utilsProvider, dataProvider, servicesProvider, apiProvider, $translate) {
+viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$state', '$stateParams', 'utilsProvider', 'dataProvider', 'servicesProvider', 'apiProvider', '$translate', 'historyProvider',
+	function($scope, $rootScope, $state, $stateParams, utilsProvider, dataProvider, servicesProvider, apiProvider, $translate, historyProvider) {
 		$scope.sSelectedResetType = "userName";
 
 		$scope.resetData = {
@@ -30,13 +30,16 @@ viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$stat
 					sType: 'error'
 				});
 				return;
-			}	
+			}
 
-			var onSuccess = function(oData){
+			var onSuccess = function(oData) {
 				var bNoErrorMessages = servicesProvider.messagesHandler(oData.messages);
 			};
 
-			apiProvider.resetPassword({oData: oData, onSuccess: onSuccess});
+			apiProvider.resetPassword({
+				oData: oData,
+				onSuccess: onSuccess
+			});
 		};
 
 		$scope.onResetTypeChange = function() {
@@ -46,13 +49,14 @@ viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$stat
 				$scope.resetData.sUserName = "";
 			}
 		};
-		
-		$scope.onBack = function(){
-			if(!$rootScope.sFromState){
+
+		$scope.onBack = function() {
+			if(!historyProvider.aHistoryStates.length){
 				$state.go('signIn');
-				return;
-			}			
-			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
+			}
+			historyProvider.navigateBack({
+				oState: $state
+			});
 		}
 	}
 ]);

@@ -1,6 +1,7 @@
-viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$state', '$translate', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider', 'apiProvider',
-	function($scope, $rootScope, $state, $translate, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider) {
+viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$state', '$translate', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider', 'apiProvider', 'historyProvider',
+	function($scope, $rootScope, $state, $translate, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider, historyProvider) {
 		var aCompanies = [];
+		$scope.sCurrentStateName = $state.current.name;		
 		$scope.sLanguage = $translate.use();
 
 		$rootScope.$on('languageChanged', function() {
@@ -48,11 +49,18 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 		};
 
 		$scope.onBack = function() {
-			if(!$rootScope.sFromState){
+			if(!historyProvider.aHistoryStates.length){
 				$state.go('signIn');
-				return;
-			}				
-			$state.go($rootScope.sFromState, $rootScope.oFromStateParams);
+			}
+			historyProvider.navigateBack({
+				oState: $state
+			});
 		};
+
+		$scope.$on("$destroy", function() {
+			historyProvider.addStateToHistory({
+				sStateName: $scope.sCurrentStateName
+			});
+		});		
 	}
 ]);

@@ -1,5 +1,7 @@
-viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider', 'dataProvider', '$cookieStore', 'utilsProvider', '$translate',
-	function($scope, $state, servicesProvider, dataProvider, $cookieStore, utilsProvider, $translate) {
+viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider', 'dataProvider', '$cookieStore', 'utilsProvider', '$translate', 'historyProvider',
+	function($scope, $state, servicesProvider, dataProvider, $cookieStore, utilsProvider, $translate, historyProvider) {
+		$scope.sCurrentStateName = $state.current.name;
+
 		var sUserName = "";
 		if ($cookieStore.get("userName")) {
 			sUserName = $cookieStore.get("userName").sUserName;
@@ -49,5 +51,11 @@ viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider'
 		$scope.onForgotPassword = function() {
 			$state.go('forgotPassword');
 		};
+
+		$scope.$on("$destroy", function() {
+			historyProvider.addStateToHistory({
+				sStateName: $scope.sCurrentStateName
+			});
+		});
 	}
 ]);
