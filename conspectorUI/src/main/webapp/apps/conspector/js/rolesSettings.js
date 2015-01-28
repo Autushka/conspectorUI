@@ -128,7 +128,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowDeficiencyPrioritiesManagement: true,
 					bShowSystemFilesManagement: true,
 					bShowOperationLogs: true,
-					bShowAccountTypesManagement: false,
+					bShowAccountTypesManagement: true,
 					bShowContactTypesManagement: true,
 				},
 				oProfileMenu: {
