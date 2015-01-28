@@ -5,6 +5,8 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 
 		$scope.bShowParentAccountAndContactType = true;
 		$scope.bShowDescriptionTags = true;
+		$scope.bIsChangePhasesAssignmentAllowed = true;
+
 		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$scope.oStateParams = {}; // for backNavigation
 
@@ -24,6 +26,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			$scope.bDisplayDeleteButton = false;
 			$scope.bShowParentAccountAndContactType = false;
 			$scope.bShowDescriptionTags = false;
+			$scope.bIsChangePhasesAssignmentAllowed = false;
 		}
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;

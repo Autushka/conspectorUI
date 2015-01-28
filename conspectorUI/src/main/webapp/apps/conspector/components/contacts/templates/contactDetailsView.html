@@ -69,7 +69,7 @@
 						{{'contactDetails_associatedProjectsAndPhases' | translate}}
 					</label>
 				</div>
-				<div
+				<div ng-if="bIsChangePhasesAssignmentAllowed" 
 					multi-select
 					input-model="aUserProjectsPhasesForMultiselect"
 					button-label="fullName"
