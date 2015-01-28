@@ -7,7 +7,7 @@
         </md-toolbar>       
         <div class="cnpSidenavElements">  
             <div ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}">
-                <md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton"> {{menuItem.sMenuLabel}}</md-button>
+                <md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton"> {{menuItem.sMenuLabel | translate}}</md-button>
             </div>
 <!--              <md-button layout="row" layout-align="start center" ng-click="onProfileDetails()" class="md-button cnpSidebarButton">
                       {{'profileSettings_profileDetails' | translate}}

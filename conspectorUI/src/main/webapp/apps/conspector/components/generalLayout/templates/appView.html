@@ -50,7 +50,7 @@
 	<div class="cnpNavBarBackground" layout="column" layout-align="start center">
 		<div class="cnpNavBar">
 			<md-tabs md-selected="selectedTabIndex" md-stretch-tabs='no' md-theme="conspectorColorPaletteNavbar">
-			<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle}}">
+			<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle | translate}}">
 			</md-tab>
 			</md-tabs>
 		</div>

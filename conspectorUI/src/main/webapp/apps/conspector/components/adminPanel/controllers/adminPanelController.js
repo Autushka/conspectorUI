@@ -23,7 +23,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowCompaniesManagement",
 			}),
 			sStateName: "app.adminPanel.companiesList",
-			sMenuLabel: $translate.instant('adminPanel_companies')
+			sMenuLabel: "adminPanel_companies",
 		});
 
 		$scope.aMenuItems.push({
@@ -32,7 +32,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowUsersManagement"
 			}),
 			sStateName: "app.adminPanel.usersList",
-			sMenuLabel: $translate.instant('adminPanel_userManagement')
+			sMenuLabel: "adminPanel_userManagement",
 		});
 
 		$scope.aMenuItems.push({
@@ -41,7 +41,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowRolesManagement"
 			}),
 			sStateName: "app.adminPanel.rolesList",
-			sMenuLabel: $translate.instant('adminPanel_roles')
+			sMenuLabel: "adminPanel_roles",
 		});
 
 		$scope.aMenuItems.push({
@@ -50,7 +50,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowProjectsManagement"
 			}),
 			sStateName: "app.adminPanel.projectsList",
-			sMenuLabel: $translate.instant('adminPanel_projects')
+			sMenuLabel: "adminPanel_projects",
 		});
 
 		$scope.aMenuItems.push({
@@ -59,7 +59,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowPhasesManagement"
 			}),
 			sStateName: "app.adminPanel.phasesList",
-			sMenuLabel: $translate.instant('adminPanel_phases')
+			sMenuLabel: "adminPanel_phases",
 		});
 
 		$scope.aMenuItems.push({
@@ -68,7 +68,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowDeficiencyStatusesManagement"
 			}),
 			sStateName: "app.adminPanel.deficiencyStatusesList",
-			sMenuLabel: $translate.instant('adminPanel_deficiencyStatuses')
+			sMenuLabel: "adminPanel_deficiencyStatuses",
 		});
 
 		$scope.aMenuItems.push({
@@ -77,7 +77,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowDeficiencyPrioritiesManagement"
 			}),
 			sStateName: "app.adminPanel.deficiencyPrioritiesList",
-			sMenuLabel: $translate.instant('adminPanel_deficiencyPriorities')
+			sMenuLabel: "adminPanel_deficiencyPriorities",
 		});
 
 		$scope.aMenuItems.push({
@@ -86,7 +86,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowSystemFilesManagement"
 			}),
 			sStateName: "app.adminPanel.systemFiles",
-			sMenuLabel: $translate.instant('adminPanel_systemFiles')
+			sMenuLabel: "adminPanel_systemFiles",
 		});
 
 		$scope.aMenuItems.push({
@@ -95,7 +95,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowOperationLogs"
 			}),
 			sStateName: "app.adminPanel.operationLogsList",
-			sMenuLabel: $translate.instant('adminPanel_operationLogs')
+			sMenuLabel: "adminPanel_operationLogs",
 		});
 
 		$scope.aMenuItems.push({
@@ -104,7 +104,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowAccountTypesManagement"
 			}),
 			sStateName: "app.adminPanel.accountTypesList",
-			sMenuLabel: $translate.instant('adminPanel_accountTypes')
+			sMenuLabel: "adminPanel_accountTypes",
 		});
 
 		$scope.aMenuItems.push({
@@ -113,7 +113,7 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				sMenuItem: "bShowContactTypesManagement"
 			}),
 			sStateName: "app.adminPanel.contactTypesList",
-			sMenuLabel: $translate.instant('adminPanel_contactTypes')
+			sMenuLabel: "adminPanel_contactTypes",
 		});
 
 		var oWindow = angular.element($window);

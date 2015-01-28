@@ -30,7 +30,7 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 				sMenuItem: "bShowContactDetails",
 			}),
 			sStateName: "app.profileSettings.contactDetails",
-			sMenuLabel: $translate.instant('profileSettings_contactDetails'),
+			sMenuLabel: "profileSettings_contactDetails",
 			oStateParams: {
 				sMode: "display",
 				sAccountGuid: cacheProvider.oUserProfile.sUserAccountGuid,
@@ -44,7 +44,7 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 				sMenuItem: "bShowProfileDetails",
 			}),
 			sStateName: "app.profileSettings.profileDetails",
-			sMenuLabel: $translate.instant('profileSettings_profileDetails')
+			sMenuLabel: "profileSettings_profileDetails",
 		});
 
 		$scope.aMenuItems.push({
@@ -53,7 +53,7 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 				sMenuItem: "bShowChangePassword",
 			}),
 			sStateName: "app.profileSettings.changePassword",
-			sMenuLabel: $translate.instant('profileSettings_changePassword')
+			sMenuLabel: "profileSettings_changePassword",
 		});
 
 		var oWindow = angular.element($window);

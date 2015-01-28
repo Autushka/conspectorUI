@@ -70,8 +70,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			sMenuItem: "bShowDeficiencies"
 		})) {
 			$scope.aTabs.push({
-				sTitle: $translate.instant("app_deficienciesTab"),
-				sState: "app.deficienciesList" //"#/app/deficienciesList"
+				sTitle: "app_deficienciesTab",
+				sState: "app.deficienciesList" 
 			});
 		}
 
@@ -80,8 +80,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			sMenuItem: "bShowUnits"
 		})) {
 			$scope.aTabs.push({
-				sTitle: $translate.instant("app_unitsTab"),
-				sState: "app.unitsList" //"#/app/unitsList"
+				sTitle: "app_unitsTab",
+				sState: "app.unitsList"
 			});
 		}
 
@@ -90,8 +90,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			sMenuItem: "bShowContractors"
 		})) {
 			$scope.aTabs.push({
-				sTitle: $translate.instant("app_contractorsTab"),
-				sState: "app.contractorsList" //"#/app/contractorsList"
+				sTitle: "app_contractorsTab",
+				sState: "app.contractorsList"
 			});
 		}
 
@@ -100,8 +100,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			sMenuItem: "bShowClients"
 		})) {
 			$scope.aTabs.push({
-				sTitle: $translate.instant("app_clientsTab"),
-				sState: "app.clientsList" //"#/app/clientsList"
+				sTitle: "app_clientsTab",
+				sState: "app.clientsList"
 			});
 		}
 
@@ -110,8 +110,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			sMenuItem: "bShowContacts"
 		})) {
 			$scope.aTabs.push({
-				sTitle: $translate.instant("app_contactsTab"),
-				sState: "app.contactsList" //"#/app/clientsList"
+				sTitle: "app_contactsTab",
+				sState: "app.contactsList"
 			});
 		}
 
