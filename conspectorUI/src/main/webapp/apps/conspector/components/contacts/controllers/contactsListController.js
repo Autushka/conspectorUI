@@ -45,13 +45,14 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 			oInitialSorting: {
 				sName: 'asc'
 			},
-			sGroupBy: "sContactType",
+			sGroupBy: "sProjectPhase",
 			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
 		});
 
 		var onContactsLoaded = function(aData) {
 			var sName = "";
-			var sProjectAndPhase = "";
+			var sProjectName = "";
+			var sPhaseName = "";
 			var bMatchFound = false;
 			for (var i = 0; i < aData.length; i++) {
 				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
@@ -72,25 +73,32 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 					}
 
 					sName = "";
-					sProjectAndPhase = "";
 					if (aData[i].FirstName) {
-						sName = aData[i].FirstName + " ";
+						sName = aData[i].FirstName;
 					}
 					if (aData[i].LastName) {
+						if(aData[i].FirstName){
+							sName = sName + " ";
+						}
 						sName = sName + aData[i].LastName;
 					}
 
-					sProjectAndPhase = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN + ' - ' + aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR + ' - ' + aData[i].PhaseDetails.results[j].NameFR;
-					if (!sProjectAndPhase) {
-						sProjectAndPhase = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN + ' - ' + aData[i].PhaseDetails.results[j].NameEN;
+					sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
+					if (!sProjectName) {
+						sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
 					}
+					sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
+					if (!sPhaseName) {
+						sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
+					}
+
 					oContactsListData.aData.push({
 						sName: sName,
 						sTitle: aData[i].Title,
 						sPhone: aData[i].MobilePhone,
 						sEmail: aData[i].Email,
 						_guid: aData[i].Guid,
-						sContactType: sProjectAndPhase,
+						sProjectPhase: sProjectName + ' - ' + sPhaseName,
 						_accountGuid: aData[i].AccountGuid,
 						sAccountName: aData[i].AccountDetails.Name,
 						_sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting						
