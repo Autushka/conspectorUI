@@ -414,10 +414,12 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			var onSuccessUpdate = function(oData) {
 				var sCurrentCompany = cacheProvider.oUserProfile.sCurrentCompany;
 				var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+				var aGloballySelectedPhasesGuids = angular.copy(cacheProvider.oUserProfile.aGloballySelectedPhasesGuids);
 				if (oData.UserName === cacheProvider.oUserProfile.sUserName) {
 					cacheProvider.oUserProfile = apiProvider.getUserProfile(oData.UserName); //refresh user Profile if current user has been modified;
 					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
 					cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+					cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aGloballySelectedPhasesGuids;
 				}
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {

@@ -46,10 +46,5 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 		$rootScope.$on('UNLOAD', function() {
 			$rootScope.showSpinner = false;
 		});
-
-		// $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
-		// 	$rootScope.sFromState = from.name;
-		// 	$rootScope.oFromStateParams = fromParams;
-		// });
 	}
 ]);
