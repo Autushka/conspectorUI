@@ -25,7 +25,17 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 		}
 
 		$scope.aUserRoles = $filter('orderBy')(aRoles, ["_sortingSequence"]);
-		$scope.sSelectedRoleName = $scope.aUserRoles[0].RoleName;
+
+		if(cacheProvider.oUserProfile.sCurrentRole){
+			for (var i = 0; i < $scope.aUserRoles.length; i++) {
+				if($scope.aUserRoles[i].RoleName === cacheProvider.oUserProfile.sCurrentRole){
+					$scope.sSelectedRoleName = $scope.aUserRoles[i].RoleName;
+					break;
+				}
+			}
+		}else{
+			$scope.sSelectedRoleName = $scope.aUserRoles[0].RoleName;
+		}	
 
 		$scope.onContinue = function() {
 			var sCurrentRole = $scope.sSelectedRoleName;

@@ -21,7 +21,17 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 		}
 
 		$scope.aUserCompanies = $filter('orderBy')(aCompanies, ["_sortingSequence"]);
-		$scope.sSelectedCompanyName = $scope.aUserCompanies[0].CompanyName;
+
+		if(cacheProvider.oUserProfile.sCurrentCompany){
+			for (var i = 0; i < $scope.aUserCompanies.length; i++) {
+				if($scope.aUserCompanies[i].CompanyName === cacheProvider.oUserProfile.sCurrentCompany){
+					$scope.sSelectedCompanyName = $scope.aUserCompanies[i].CompanyName;
+					break;
+				}
+			}
+		}else{
+			$scope.sSelectedCompanyName = $scope.aUserCompanies[0].CompanyName;
+		}		
 
 		$scope.onContinue = function() {
 			var sCurrentCompany = $scope.sSelectedCompanyName;;
