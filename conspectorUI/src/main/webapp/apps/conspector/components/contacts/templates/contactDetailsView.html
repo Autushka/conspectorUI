@@ -93,7 +93,7 @@
 					</div>
 					<div class="cnpSubSectionData" ng-if="sMode == 'display'" ><a ng-click="onNavigateToAccountDetails()">{{oContact._sAccountName}}</a></div>				
 					<div 
-						ng-if="sMode == 'edit'"
+						ng-if="sMode == 'edit' || sMode == 'create'"
 						multi-select
 						input-model="aAccounts"
 						button-label="name"
@@ -115,7 +115,7 @@
 					</div>
 					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._sContactType}}</div>
 					<div
-						ng-if="sMode == 'edit'"
+						ng-if="sMode == 'edit' || sMode == 'create'"
 						multi-select
 						input-model="aContactTypes"
 						button-label="name"
