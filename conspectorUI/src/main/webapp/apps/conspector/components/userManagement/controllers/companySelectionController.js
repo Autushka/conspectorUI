@@ -1,7 +1,8 @@
 viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$state', '$translate', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider', 'apiProvider', 'historyProvider',
 	function($scope, $rootScope, $state, $translate, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider, historyProvider) {
 		var aCompanies = [];
-		$scope.sCurrentStateName = $state.current.name;		
+		$rootScope.sCurrentStateName = $state.current.name;	
+ 		$rootScope.oStateParams = {};// for backNavigation			
 		$scope.sLanguage = $translate.use();
 
 		$rootScope.$on('languageChanged', function() {
@@ -59,7 +60,7 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 
 		$scope.$on("$destroy", function() {
 			historyProvider.addStateToHistory({
-				sStateName: $scope.sCurrentStateName
+				sStateName: $rootScope.sCurrentStateName
 			});
 		});		
 	}

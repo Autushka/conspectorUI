@@ -1,6 +1,8 @@
-viewControllers.controller('systemFilesView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$upload', '$window', 'cacheProvider',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $upload, $window, cacheProvider) {
-		
+viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$upload', '$window', 'cacheProvider', 'historyProvider',
+	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $upload, $window, cacheProvider, historyProvider) {
+		historyProvider.removeHistory(); // because current view doesn't have a back button				
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation			
 		var oLogosListData = {
 			aData: []
 		};

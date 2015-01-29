@@ -7,6 +7,9 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 		$scope.oUser = {};
 		$scope.sMode = "display";
 
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation		
+
 		var oUserWrapper = {
 			aData: [{}]
 		};

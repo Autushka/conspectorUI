@@ -1,5 +1,5 @@
-viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS', 'historyProvider', 'rolesSettings',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS, historyProvider, rolesSettings) {
+viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', 'apiProvider', '$translate', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS', 'historyProvider', 'rolesSettings',
+	function($scope, $rootScope, $state, $stateParams, servicesProvider, apiProvider, $translate, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS, historyProvider, rolesSettings) {
 		var sUserName = $stateParams.sUserName;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
@@ -19,8 +19,8 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			sOperation: "bDelete"
 		});
 
-		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
-		$scope.oStateParams = {}; // for backNavigation
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation 
+		$rootScope.oStateParams = angular.copy($stateParams);// for backNavigation
 
 		$scope.sMode = $stateParams.sMode;
 		$scope.oUser = {
@@ -574,9 +574,13 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		});
 
 		$scope.$on("$destroy", function() {
+			if(historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName){ //current state was already put to the history in the parent views
+				return;
+			}
+			
 			historyProvider.addStateToHistory({
-				sStateName: $scope.sCurrentStateName,
-				oStateParams: angular.copy($scope.oStateParams)
+				sStateName: $rootScope.sCurrentStateName,
+				oStateParams: angular.copy($rootScope.oStateParams)
 			});
 		});
 	}

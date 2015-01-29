@@ -1,2 +1,2 @@
   <div ui-view="contractorDetails" style="width: 100%; height: 100%;"></div>
-  <div ng-if="oStateParams.sMode == 'display' || oStateParams.sMode == 'edit'" ui-view="contractorContacts"></div>
+  <div ng-if="bDisplayContactsList" ui-view="contractorContacts"></div>

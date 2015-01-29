@@ -1,5 +1,10 @@
-viewControllers.controller('companiesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'CONSTANTS', 'cacheProvider', 'dataProvider',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, CONSTANTS, cacheProvider, dataProvider) {
+viewControllers.controller('companiesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'CONSTANTS', 'cacheProvider', 'dataProvider', 'historyProvider',
+	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, CONSTANTS, cacheProvider, dataProvider, historyProvider) {
+		historyProvider.removeHistory(); // because current view doesn't have a back button
+
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation		
+
 
 		var oCompaniesListData = {
 			aData: []

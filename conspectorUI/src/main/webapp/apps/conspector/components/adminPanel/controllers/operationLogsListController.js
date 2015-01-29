@@ -1,6 +1,8 @@
-viewControllers.controller('operationLogsListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'utilsProvider',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, utilsProvider) {
-		
+viewControllers.controller('operationLogsListView', ['$scope', '$rootScope','$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'utilsProvider', 'historyProvider',
+	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, utilsProvider, historyProvider) {
+		historyProvider.removeHistory(); // because current view doesn't have a back button			
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation			
 		var oOperationLogsListData = {
 			aData: []
 		};

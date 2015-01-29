@@ -1,14 +1,15 @@
-viewControllers.controller('contractorDetailsWrapperView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
-	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider) {
-		//$scope.sMode = "";
-		$scope.sViewName = "contractorDetailsWrapperView";
-		$scope.sCurrentStateName = $state.current.name;
-		$scope.oStateParams = angular.copy($stateParams);
+viewControllers.controller('contractorDetailsWrapperView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
+	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider) {
+		$scope.bDisplayContactsList = false;
 
 		$scope.$on("$destroy", function() {
+			if(historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName){ //current state was already put to the history in the parent views
+				return;
+			}	
+						
 			historyProvider.addStateToHistory({
-				sStateName: $scope.sCurrentStateName,
-				oStateParams: angular.copy($scope.oStateParams)
+				sStateName: $rootScope.sCurrentStateName,
+				oStateParams: angular.copy($rootScope.oStateParams)
 			});
 		});
 	}

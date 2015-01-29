@@ -4,6 +4,9 @@ viewControllers.controller('changePasswordView', ['$scope', '$rootScope', '$stat
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 		$scope.oUser = {};
 
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation		
+
 		$scope.onSave = function() {
 			var SHA512 = new Hashes.SHA512;
 

@@ -2,6 +2,10 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
 		var sContractorGuid = $stateParams.sContractorGuid;
 		$scope.sAccountType = "";
+		$scope.sMode = $stateParams.sMode;
+
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
@@ -17,8 +21,10 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		});	
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-		if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { 
-			$scope.$parent.oStateParams = angular.copy($stateParams); // needed for properBackNavigation with wrapper view...
+		if ($rootScope.sCurrentStateName === "app.contractorDetailsWrapper.contractorDetails") { 
+			if($scope.sMode === "display" || $scope.sMode === "edit"){
+				$scope.$parent.bDisplayContactsList = true;
+			}
 			$scope.sAccountType = "Contractor";
 		}
 
@@ -27,7 +33,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
-		$scope.sMode = $stateParams.sMode;
+
 		$scope.oContractor = {
 			_aPhases: [],
 		};
@@ -343,9 +349,9 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					$scope.oContractor.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oContractor.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
 					$scope.oContractor._guid = oData.Guid;
-					if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
-						$scope.$parent.oStateParams.sMode = "display";
-					}
+					// if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
+					// 	//$scope.$parent.oStateParams.sMode = "display";
+					// }
 					$state.go('app.contractorDetailsWrapper.contractorDetails', {
 						sMode: "display",
 						sContractorGuid: oData.Guid,
@@ -371,9 +377,10 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
 				}
-				if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
-					$scope.$parent.oStateParams.sMode = "display";
-				}
+				// if ($scope.$parent && $scope.$parent.sViewName === "contractorDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
+				// 	//$scope.$parent.oStateParams.sMode = "display";
+
+				// }
 				$state.go('app.contractorDetailsWrapper.contractorDetails', {
 					sMode: "display",
 					sContractorGuid: oData.Guid,

@@ -1,5 +1,5 @@
-viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
-	function($scope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
+viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
+	function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button
 		
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
@@ -15,8 +15,8 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 			sOperation: "bUpdate"
 		});
 
-		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
-		$scope.oStateParams = {}; // for backNavigation
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation
 
 		var oClientsListData = {
 			aData: []
@@ -117,9 +117,13 @@ viewControllers.controller('clientsListView', ['$scope', '$state', 'servicesProv
 		});
 
 		$scope.$on("$destroy", function() {
+			if(historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName){ //current state was already put to the history in the parent views
+				return;
+			}
+						
 			historyProvider.addStateToHistory({
-				sStateName: $scope.sCurrentStateName,
-				oStateParams: $scope.oStateParams
+				sStateName: $rootScope.sCurrentStateName,
+				oStateParams: $rootScope.oStateParams
 			});
 		});
 	}

@@ -1,5 +1,5 @@
-viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
+viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
+	function($scope, $rootScope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
 		var sAccountGuid = $stateParams.sAccountGuid;
 		var sContactGuid = $stateParams.sContactGuid;
 
@@ -7,8 +7,8 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		$scope.bShowDescriptionTags = true;
 		$scope.bIsChangePhasesAssignmentAllowed = true;
 
-		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
-		$scope.oStateParams = {}; // for backNavigation
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
@@ -22,7 +22,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 			sEntityName: "oContact",
 			sOperation: "bDelete"
 		});
-		if ($scope.sCurrentStateName === "app.profileSettings.contactDetails") {
+		if ($rootScope.sCurrentStateName === "app.profileSettings.contactDetails") {
 			$scope.bDisplayDeleteButton = false;
 			$scope.bShowParentAccountAndContactType = false;
 			$scope.bShowDescriptionTags = false;
@@ -32,9 +32,6 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
-		if ($scope.$parent && $scope.$parent.sViewName === "contactDetailsWrapperView") {
-			$scope.$parent.oStateParams = angular.copy($stateParams); // needed for properBackNavigation with wrapper view...
-		}
 
 		$scope.sMode = $stateParams.sMode;
 		$scope.oContact = {
@@ -338,7 +335,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 		}
 
 		$scope.onEdit = function() {
-			if ($scope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
+			if ($rootScope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
 				$state.go('app.contactDetailsWrapper.contactDetails', {
 					sMode: "edit",
 					sAccountGuid: sAccountGuid,
@@ -442,7 +439,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 				}
 				if (!bSaveAndNew) {
-					if ($scope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
+					if ($rootScope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
 						$state.go('app.contactDetailsWrapper.contactDetails', {
 							sMode: "display",
 							sAccountGuid: sAccountGuid,
@@ -484,7 +481,7 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$stat
 				$scope.oContact._lastModifiedAt = oData.LastModifiedAt;
 				$scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 
-				if ($scope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
+				if ($rootScope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
 					$state.go('app.contactDetailsWrapper.contactDetails', {
 						sMode: "display",
 						sAccountGuid: sAccountGuid,

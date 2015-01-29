@@ -1,9 +1,12 @@
-viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$window', 'servicesProvider', '$translate', '$timeout', 'cacheProvider', 'rolesSettings', '$cookieStore',
-	function($scope, $rootScope, $state, $window, servicesProvider, $translate, $timeout, cacheProvider, rolesSettings, $cookieStore) {
+viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$window', 'servicesProvider', '$translate', '$timeout', 'cacheProvider', 'rolesSettings', '$cookieStore', 'historyProvider',
+	function($scope, $rootScope, $state, $window, servicesProvider, $translate, $timeout, cacheProvider, rolesSettings, $cookieStore, historyProvider) {
 		var sCurrentUser = cacheProvider.oUserProfile.sUserName;
 		var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
 		var aSelectedPhases = [];
 		$scope.sCurrentUser = sCurrentUser;
+
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation (i.e. switch role/company views)	
+		$rootScope.oStateParams = {}; // for backNavigation
 
 		if (!sCurrentUser) {
 			servicesProvider.logOut();
@@ -206,5 +209,12 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		$scope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
 			$timeout(tabSelectionBasedOnHash, 100);
 		});
+
+		$scope.$on("$destroy", function() {
+			historyProvider.addStateToHistory({
+				sStateName: $rootScope.sCurrentStateName,
+				oStateParams: $rootScope.oStateParams
+			});
+		});			
 	}
 ]);

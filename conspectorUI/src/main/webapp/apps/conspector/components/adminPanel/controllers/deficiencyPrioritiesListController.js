@@ -1,6 +1,8 @@
-viewControllers.controller('deficiencyPrioritiesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$window',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $window) {
-		
+viewControllers.controller('deficiencyPrioritiesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$window', 'historyProvider',
+	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $window, historyProvider) {
+		historyProvider.removeHistory(); // because current view doesn't have a back button			
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation			
 		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
 
 		var oDeficiencyPrioritiesListData = {

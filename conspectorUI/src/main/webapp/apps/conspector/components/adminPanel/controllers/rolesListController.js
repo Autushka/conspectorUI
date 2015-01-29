@@ -1,6 +1,8 @@
-viewControllers.controller('rolesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate) {
-		
+viewControllers.controller('rolesListView', ['$scope', '$rootScope','$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'historyProvider',
+	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, historyProvider) {
+		historyProvider.removeHistory(); // because current view doesn't have a back button				
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation			
 		var oRolesListData = {
 			aData: []
 		};

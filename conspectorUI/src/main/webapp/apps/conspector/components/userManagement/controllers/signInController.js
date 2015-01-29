@@ -1,6 +1,6 @@
-viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider', 'dataProvider', '$cookieStore', 'utilsProvider', '$translate', 'historyProvider',
-	function($scope, $state, servicesProvider, dataProvider, $cookieStore, utilsProvider, $translate, historyProvider) {
-		$scope.sCurrentStateName = $state.current.name;
+viewControllers.controller('signInView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'dataProvider', '$cookieStore', 'utilsProvider', '$translate', 'historyProvider',
+	function($scope, $rootScope, $state, servicesProvider, dataProvider, $cookieStore, utilsProvider, $translate, historyProvider) {
+		$rootScope.sCurrentStateName = $state.current.name;
 
 		var sUserName = "";
 		if ($cookieStore.get("userName")) {
@@ -54,7 +54,7 @@ viewControllers.controller('signInView', ['$scope', '$state', 'servicesProvider'
 
 		$scope.$on("$destroy", function() {
 			historyProvider.addStateToHistory({
-				sStateName: $scope.sCurrentStateName
+				sStateName: $rootScope.sCurrentStateName
 			});
 		});
 	}

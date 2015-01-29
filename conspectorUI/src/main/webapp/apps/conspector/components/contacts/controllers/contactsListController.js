@@ -1,5 +1,5 @@
-viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter', 'rolesSettings',
-	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter, rolesSettings) {
+viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter', 'rolesSettings',
+	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter, rolesSettings) {
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
 			sRole: sCurrentRole,
@@ -15,9 +15,8 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 
 		$scope.bDisplayAccountColumn = $state.current.name === "app.contactsList" ? true : false;
 
-
-		$scope.sCurrentStateName = $state.current.name; // for backNavigation	
-		$scope.oStateParams = {}; // for backNavigation		
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation
 
 		var sAccountGuid = "";
 
@@ -70,7 +69,7 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 						sName = aData[i].FirstName;
 					}
 					if (aData[i].LastName) {
-						if(aData[i].FirstName){
+						if (aData[i].FirstName) {
 							sName = sName + " ";
 						}
 						sName = sName + aData[i].LastName;
@@ -116,7 +115,6 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 					onSuccess: onContactsLoaded,
 				});
 			}
-
 		};
 
 		loadContacts();
@@ -160,10 +158,13 @@ viewControllers.controller('contactsListView', ['$scope', '$state', '$stateParam
 		});
 
 		$scope.$on("$destroy", function() {
-			if ($scope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $scope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
+			if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
+				if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
+					return;
+				}
 				historyProvider.addStateToHistory({
-					sStateName: $scope.sCurrentStateName,
-					oStateParams: $scope.oStateParams
+					sStateName: $rootScope.sCurrentStateName,
+					oStateParams: $rootScope.oStateParams
 				});
 			}
 		});

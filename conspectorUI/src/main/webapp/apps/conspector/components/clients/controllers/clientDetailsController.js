@@ -1,6 +1,10 @@
 viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
 	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
 		var sClientGuid = $stateParams.sClientGuid;
+		$scope.sMode = $stateParams.sMode;
+
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
@@ -17,8 +21,10 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 
 		$scope.sAccountType = "";
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-		if ($scope.$parent && $scope.$parent.sViewName === "clientDetailsWrapperView") { //for logic hide/show contacts table
-			$scope.$parent.oStateParams = angular.copy($stateParams);
+		if ($rootScope.sCurrentStateName === "app.clientDetailsWrapper.clientDetails") { 
+			if($scope.sMode === "display" || $scope.sMode === "edit"){
+				$scope.$parent.bDisplayContactsList = true;
+			}
 			$scope.sAccountType = "Client";
 		}
 
@@ -27,7 +33,6 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
-		$scope.sMode = $stateParams.sMode;
 		$scope.oClient = {
 			_aPhases: [],
 		};
@@ -343,9 +348,6 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 					$scope.oClient.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oClient.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
 					$scope.oClient._guid = oData.Guid;
-					if ($scope.$parent && $scope.$parent.sViewName === "clientDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
-						$scope.$parent.oStateParams.sMode = "display";
-					}
 					$state.go('app.clientDetailsWrapper.clientDetails', {
 						sMode: "display",
 						sClientGuid: oData.Guid,
@@ -370,9 +372,6 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
-				}
-				if ($scope.$parent && $scope.$parent.sViewName === "clientDetailsWrapperView") { // to pass current mode to the wrapper (info needed to show/hide subviews based on the current mode)
-					$scope.$parent.oStateParams.sMode = "display";
 				}
 				$state.go('app.clientDetailsWrapper.clientDetails', {
 					sMode: "display",

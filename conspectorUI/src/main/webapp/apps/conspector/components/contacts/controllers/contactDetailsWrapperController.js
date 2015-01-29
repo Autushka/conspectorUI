@@ -1,14 +1,13 @@
-viewControllers.controller('contactDetailsWrapperView', ['$scope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
-	function($scope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider) {
-		//$scope.sMode = "";
-		$scope.sViewName = "contactDetailsWrapperView";
-		$scope.sCurrentStateName = $state.current.name;
-		$scope.oStateParams = angular.copy($stateParams);
-
+viewControllers.controller('contactDetailsWrapperView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider',
+	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider) {
 		$scope.$on("$destroy", function() {
+			if(historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName){ //current state was already put to the history in the parent views
+				return;
+			}
+
 			historyProvider.addStateToHistory({
-				sStateName: $scope.sCurrentStateName,
-				oStateParams: angular.copy($scope.oStateParams)
+				sStateName: $rootScope.sCurrentStateName,
+				oStateParams: angular.copy($rootScope.oStateParams)
 			});
 		});
 	}

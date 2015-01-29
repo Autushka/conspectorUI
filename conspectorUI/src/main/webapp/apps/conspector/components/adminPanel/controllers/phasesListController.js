@@ -1,6 +1,8 @@
-viewControllers.controller('phasesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'cacheProvider',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, cacheProvider) {
-		
+viewControllers.controller('phasesListView', ['$scope', '$rootScope','$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'cacheProvider', 'historyProvider',
+	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, cacheProvider, historyProvider) {
+		historyProvider.removeHistory(); // because current view doesn't have a back button				
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation			
 		var oProjectArrayWrapper = {
 			aData: []
 		};

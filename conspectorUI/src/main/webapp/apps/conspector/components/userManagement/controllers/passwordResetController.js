@@ -4,7 +4,8 @@ viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state
 			sNewPassword: "",
 			sNewPasswordConfirmation: ""
 		};
-		$scope.sCurrentStateName = $state.current.name;	
+		$rootScope.sCurrentStateName = $state.current.name;	
+ 		$rootScope.oStateParams = {};// for backNavigation			
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
 		}
@@ -53,7 +54,7 @@ viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state
 
 		$scope.$on("$destroy", function() {
 			historyProvider.addStateToHistory({
-				sStateName: $scope.sCurrentStateName
+				sStateName: $rootScope.sCurrentStateName
 			});
 		});			
 	}

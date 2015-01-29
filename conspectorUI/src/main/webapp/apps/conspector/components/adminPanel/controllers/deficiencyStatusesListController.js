@@ -1,6 +1,8 @@
-viewControllers.controller('deficiencyStatusesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$window', 'cacheProvider',
-	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $window, cacheProvider) {
-		
+viewControllers.controller('deficiencyStatusesListView', ['$scope', '$rootScope','$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$window', 'cacheProvider', 'historyProvider',
+	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $window, cacheProvider, historyProvider) {
+		historyProvider.removeHistory(); // because current view doesn't have a back button				
+		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+		$rootScope.oStateParams = {}; // for backNavigation			
 		var oStatusIconArrayWrapper = {
 			aData: []
 		};
