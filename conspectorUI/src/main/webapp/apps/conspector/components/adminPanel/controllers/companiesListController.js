@@ -1,6 +1,6 @@
 viewControllers.controller('companiesListView', ['$scope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'CONSTANTS', 'cacheProvider', 'dataProvider',
 	function($scope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, CONSTANTS, cacheProvider, dataProvider) {
-		
+
 		var oCompaniesListData = {
 			aData: []
 		};
@@ -124,12 +124,7 @@ viewControllers.controller('companiesListView', ['$scope', '$state', 'servicesPr
 			}];
 
 			var onSuccess = function() {
-				var sCurrentCompany = cacheProvider.oUserProfile.sCurrentCompany;
-				var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
-				cacheProvider.cleanEntitiesCache("oUserEntity");
-				cacheProvider.oUserProfile = apiProvider.getUserProfile(sCurrentUserName);	//refresh user Profile after new company creation
-				cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
-				cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+				servicesProvider.refreshUserProfile();
 			};
 
 			dataProvider.createLinks({
@@ -156,6 +151,8 @@ viewControllers.controller('companiesListView', ['$scope', '$state', 'servicesPr
 			var onSuccessUpdate = function(oData) {
 				oCompany._editMode = false;
 				oCompany._lastModifiedAt = oData.LastModifiedAt;
+
+				servicesProvider.refreshUserProfile();
 			};
 
 			oDataForSave.DescriptionEN = oCompany.descriptionEN;

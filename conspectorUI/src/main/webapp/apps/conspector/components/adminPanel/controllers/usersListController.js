@@ -64,7 +64,7 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 			var bMatchFound = false;
 
 			for (var i = 0; i < aData.length; i++) {
-				if (cacheProvider.oUserProfile.sCurrentRole !== CONSTANTS.sGlobalAdministatorRole) { 
+				if (!rolesSettings[cacheProvider.oUserProfile.sCurrentRole].bIsGlobalUserAdministrator) { 
 					bMatchFound = false;
 					for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
 						if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
@@ -78,7 +78,7 @@ viewControllers.controller('usersListView', ['$scope', '$state', 'servicesProvid
 					} else {
 						bMatchFound = false;
 						for (var j = 0; j < aData[i].RoleDetails.results.length; j++) {
-							if (aData[i].RoleDetails.results[j].RoleName === CONSTANTS.sGlobalAdministatorRole && aData[i].UserName !== cacheProvider.oUserProfile.sUserName) {
+							if (rolesSettings[aData[i].RoleDetails.results[j].RoleName].bIsGlobalUserAdministrator && aData[i].UserName !== cacheProvider.oUserProfile.sUserName) {
 								bMatchFound = true;
 								break;
 							}

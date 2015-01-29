@@ -507,18 +507,6 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				}
 			},
 
-
-			// if (params.sorting() === undefined || JSON.stringify(params.sorting()) === JSON.stringify({})) {
-			// 	oFilteredCategoriesData = oParameters.oTableDataArrays[oParameters.sSourceDataArrayAttribute];
-			// } else {
-			// 	var aSortingBy = params.orderBy();
-			// 	if (oParameters.groupTableBy) {
-			// 		aSortingBy.unshift(oParameters.groupTableBy);
-			// 	}
-
-			// 	oFilteredCategoriesData = $filter('orderBy')(oParameters.oTableDataArrays[oParameters.sSourceDataArrayAttribute], aSortingBy);
-			// }
-
 			createNgTable: function(oParameters) {
 				var oTableParams = new ngTableParams({
 					page: 1, // show first page
@@ -566,7 +554,17 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						oParameters.onCancel();
 					}
 				});
-			}
+			},
+
+			refreshUserProfile: function(){
+				var sCurrentCompany = cacheProvider.oUserProfile.sCurrentCompany;
+				var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+				var aGloballySelectedPhasesGuids = angular.copy(cacheProvider.oUserProfile.aGloballySelectedPhasesGuids);
+				cacheProvider.oUserProfile = apiProvider.getUserProfile(cacheProvider.oUserProfile.sUserName); 
+				cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
+				cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+				cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aGloballySelectedPhasesGuids;
+			}			
 		}
 	}
 ]);
