@@ -205,7 +205,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 					if (aData[i].FirstName) {
 						aData[i].sName = aData[i].sName + " ";
 					}
-					aData[i].sName = aData[i].sName + aData[i].LastName;
+					aData[i].sName = aData[i].sName + aData[i].LastName + ", " + aData[i].AccountDetails.Name;
 				}
 			}
 			aData = $filter('orderBy')(aData, ["sName"]);
