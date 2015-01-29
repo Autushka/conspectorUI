@@ -63,5 +63,9 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 				$mdSidenav('left').close();
 			}
 		});
+
+		$scope.$on("$destroy", function() {
+			oWindow.unbind();
+		});		
 	}
 ]);

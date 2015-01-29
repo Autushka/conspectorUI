@@ -123,5 +123,9 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 				$mdSidenav('left').close();
 			}
 		});
+
+		$scope.$on("$destroy", function() {
+			oWindow.unbind();
+		});				
 	}
 ]);
