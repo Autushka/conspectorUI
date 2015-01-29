@@ -37,6 +37,36 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		$scope.aRoles = [];
 		$scope.aPhases = [];
 		$scope.aContacts = [];
+		$scope.aLanguages = [];
+
+		var constructLanguageMultiSelect = function() {
+			var aData = [];
+			aData.push({
+				languageCode: "en",
+				descriptionEN: "English",
+				descriptionFR: "Anglais"
+			});
+			aData.push({
+				languageCode: "fr",
+				descriptionEN: "French",
+				descriptionFR: "Fran\u00E7ais"
+			});
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oUserWrapper,
+				sNameEN: "descriptionEN",
+				sNameFR: "descriptionFR",
+				sDependentKey: "languageCode",
+				sParentKey: "_sLanguage",
+				sTargetArrayNameInParent: "aLanguages"
+			});
+
+			if (oUserWrapper.aData[0]) {
+				$scope.aLanguages = angular.copy(oUserWrapper.aData[0].aLanguages);
+			}
+		};
 
 		var setDisplayedUserDetails = function(oUser) {
 			$scope.oUser.sUserName = oUser.UserName;
@@ -48,6 +78,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			$scope.oUser._aPhases = angular.copy(oUser.PhaseDetails.results);
 			$scope.oUser._aRoles = angular.copy(oUser.RoleDetails.results);
 			$scope.oUser._contactGuid = oUser.ContactGuid;
+			$scope.oUser._sLanguage = oUser.Language;
 			if (oUser.AvatarFileGuid) {
 				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oUser.AvatarFileGuid;
 			} else {
@@ -167,15 +198,15 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 		var onContactsLoaded = function(aData) {
 			//Sort aData by role sorting sequence 
 			for (var i = 0; i < aData.length; i++) {
-				if(aData[i].FirstName){
+				if (aData[i].FirstName) {
 					aData[i].sName = aData[i].FirstName;
 				}
-				if(aData[i].LastName){
-					if(aData[i].FirstName){
+				if (aData[i].LastName) {
+					if (aData[i].FirstName) {
 						aData[i].sName = aData[i].sName + " ";
 					}
 					aData[i].sName = aData[i].sName + aData[i].LastName;
-				}				
+				}
 			}
 			aData = $filter('orderBy')(aData, ["sName"]);
 
@@ -203,21 +234,19 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 				bShowSpinner: false,
 				onSuccess: onCompaniesLoaded
 			});
-
 			apiProvider.getProjectsWithPhases({
 				bShowSpinner: false,
 				onSuccess: onProjectsLoaded
 			});
-
 			apiProvider.getRoles({
 				bShowSpinner: false,
 				onSuccess: onRolesLoaded
 			});
-
 			apiProvider.getContacts({
 				bShowSpinner: false,
 				onSuccess: onContactsLoaded
 			});
+			constructLanguageMultiSelect();
 		};
 
 		var getUserDetails = function() {
@@ -249,6 +278,7 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 					bShowSpinner: false,
 					onSuccess: onContactsLoaded
 				});
+				constructLanguageMultiSelect();
 			}
 		} else {
 			$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
@@ -267,7 +297,8 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			apiProvider.getContacts({
 				bShowSpinner: false,
 				onSuccess: onContactsLoaded
-			});				
+			});
+			constructLanguageMultiSelect();
 		}
 
 		$scope.onBack = function() {
@@ -448,11 +479,17 @@ viewControllers.controller('userDetailsView', ['$rootScope', '$scope', '$state',
 			}
 
 			for (var i = 0; i < $scope.aContacts.length; i++) {
-				if($scope.aContacts[i].ticked){
+				if ($scope.aContacts[i].ticked) {
 					oDataForSave.ContactGuid = $scope.aContacts[i].Guid;
 					break;
 				}
 			}
+			for (var i = 0; i < $scope.aLanguages.length; i++) {
+				if ($scope.aLanguages[i].ticked) {
+					oDataForSave.Language = $scope.aLanguages[i].languageCode;
+					break;
+				}
+			}			
 
 			aLinks = prepareLinksForSave();
 			switch ($scope.sMode) {

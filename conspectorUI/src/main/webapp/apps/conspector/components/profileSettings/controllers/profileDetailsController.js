@@ -7,6 +7,41 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 		$scope.oUser = {};
 		$scope.sMode = "display";
 
+		var oUserWrapper = {
+			aData: [{}]
+		};
+
+		$scope.aLanguages = [];		
+
+		var constructLanguageMultiSelect = function() {
+			var aData = [];
+			aData.push({
+				languageCode: "en",
+				descriptionEN: "English",
+				descriptionFR: "Anglais"
+			});
+			aData.push({
+				languageCode: "fr",
+				descriptionEN: "French",
+				descriptionFR: "Fran\u00E7ais"
+			});
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oUserWrapper,
+				sNameEN: "descriptionEN",
+				sNameFR: "descriptionFR",
+				sDependentKey: "languageCode",
+				sParentKey: "_sLanguage",
+				sTargetArrayNameInParent: "aLanguages"
+			});
+
+			if (oUserWrapper.aData[0]) {
+				$scope.aLanguages = angular.copy(oUserWrapper.aData[0].aLanguages);
+			}
+		};		
+
 		var onUserDetailsLoaded = function(oData) {
 			var sProjectName = "";
 			var sPhaseName = "";
@@ -50,7 +85,11 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 			} else {
 				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
 			}
-		}
+			
+			$scope.oUser._sLanguage = oData.Language;
+			oUserWrapper.aData[0] = angular.copy($scope.oUser);
+			constructLanguageMultiSelect();
+		};
 
 		var getUserDetails = function() {
 			apiProvider.getUserWithCompaniesPhasesAndRoles({
@@ -92,6 +131,13 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 			oDataForSave.EMail = $scope.oUser.sEmail;
 			oDataForSave.LastModifiedAt = $scope.oUser._lastModifiedAt;
 			oDataForSave.AvatarFileGuid = $scope.oUser._avatarFileGuid;
+
+			for (var i = 0; i < $scope.aLanguages.length; i++) {
+				if ($scope.aLanguages[i].ticked) {
+					oDataForSave.Language = $scope.aLanguages[i].languageCode;
+					break;
+				}
+			}				
 
 			apiProvider.updateUser({
 				bShowSpinner: true,
