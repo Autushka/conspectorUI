@@ -79,8 +79,8 @@
 					<td data-title="'global_account' | translate" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">
 						<div layout="row" layout-align="start center">
 							<div>
-								<span>
-								{{contact.sAccountName}}
+								<span><a ng-click="onNavigateToAccountDetails(contact)">
+								{{contact.sAccountName}}</a>
 								</span>
 							</div>
 						</div>

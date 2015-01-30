@@ -2,9 +2,9 @@
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
 			<!-- <div>
-				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-				Open Sidenav
-				</md-button>
+					<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+					Open Sidenav
+					</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -14,7 +14,7 @@
 		</div>
 		<div layout="row" layout-align="end start">
 			<!-- <label class="cnpContentTitle notSelectable">
-				{{'clientDetails_title' | translate}}
+					{{'clientDetails_title' | translate}}
 			</label> -->
 		</div>
 	</div>
@@ -127,144 +127,147 @@
 							</li>
 						</ul>
 					</div>
-				<!-- 	<div class="tags-wrapper" ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aTags.length" class="form-control">
-							<ul class="tags-list">
-								<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
-									<span style="padding: 2px;">{{tag.text}}</span>
-								</li>
-							</ul>
-						</div>	 -->
+					<!-- 	<div class="tags-wrapper" ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aTags.length" class="form-control">
+								<ul class="tags-list">
+										<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
+												<span style="padding: 2px;">{{tag.text}}</span>
+										</li>
+								</ul>
+					</div>	 -->
 				</div>
 			</div>
 			<div layout="row" flex style="width: 100%">
 				<div class="cnpSubSection" flex>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingStreet' | translate}}
-					</label>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'clientDetails_billingStreet' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingStreet}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingStreetPlaceholder' | translate}}">
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'clientDetails_billingCity' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingCity}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingCityPlaceholder' | translate}}">
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'clientDetails_billingPostalCode' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingPostalCode}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingPostalCodePlaceholder' | translate}}">
+					
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'clientDetails_billingCountry' | translate}}
+						</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._billingCountryCode}}</div>
+						<div
+							ng-if="sMode == 'edit' || sMode == 'create'"
+							multi-select
+							input-model="aBillingCountries"
+							button-label="name"
+							default-label="{{'global_selectCountry' | translate }}"
+							item-label="name"
+							tick-property="ticked"
+							selection-mode="single"
+							is-disabled="sMode == 'display'"
+							on-item-click="onBillingCountryChanged()"
+							helper-elements="filter"
+							>
+						</div>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'clientDetails_billingProvince' | translate}}
+							</label>
+							</div>
+							<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._billingProvinceCode}}</div>
+							<div
+								ng-if="sMode == 'edit' || sMode == 'create'"
+								multi-select
+								input-model="aBillingProvinces"
+								button-label="name"
+								default-label="{{'global_selectState' | translate }}"
+								item-label="name"
+								tick-property="ticked"
+								selection-mode="single"
+								is-disabled="sMode == 'display'"
+								on-item-click="onDataModified()"
+								helper-elements="filter"
+								>
+							</div>
+						</div>
+						<div class="cnpSubSection" flex>
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'clientDetails_shippingStreet' | translate}}
+								</label>
+							</div>
+							<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingStreet}}</div>
+							<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingStreetPlaceholder' | translate}}">
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'clientDetails_shippingCity' | translate}}
+								</label>
+							</div>
+							<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingCity}}</div>
+							<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingCityPlaceholder' | translate}}">
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'clientDetails_shippingPostalCode' | translate}}
+								</label>
+							</div>
+							<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingPostalCode}}</div>
+							<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingPostalCodePlaceholder' | translate}}">
+							
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'clientDetails_shippingCountry' | translate}}
+								</label>
+							</div>
+							<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._shippingCountryCode}}</div>
+							<div
+								ng-if="sMode == 'edit' || sMode == 'create'"
+								multi-select
+								input-model="aShippingCountries"
+								button-label="name"
+								default-label="{{'global_selectCountry' | translate }}"
+								item-label="name"
+								tick-property="ticked"
+								selection-mode="single"
+								is-disabled="sMode == 'display'"
+								on-item-click="onShippingCountryChanged()"
+								helper-elements="filter"
+								>
+							</div>
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'clientDetails_shippingProvince' | translate}}
+								</label>
+							</div>
+							<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._shippingProvinceCode}}</div>
+							<div
+								ng-if="sMode == 'edit' || sMode == 'create'"
+								multi-select
+								input-model="aShippingProvinces"
+								button-label="name"
+								default-label="{{'global_selectState' | translate }}"
+								item-label="name"
+								tick-property="ticked"
+								selection-mode="single"
+								is-disabled="sMode == 'display'"
+								on-item-click="onDataModified()"
+								helper-elements="filter"
+								>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingStreet}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingStreetPlaceholder' | translate}}">
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingCity' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingCity}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingCityPlaceholder' | translate}}">
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingPostalCode' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingPostalCode}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingPostalCodePlaceholder' | translate}}">
 				
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingCountry' | translate}}
-					</label>
-				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._billingCountryCode}}</div>
-				<div
-					ng-if="sMode == 'edit'"
-					multi-select
-					input-model="aBillingCountries"
-					button-label="name"
-					default-label="{{'global_selectCountry' | translate }}"
-					item-label="name"
-					tick-property="ticked"
-					selection-mode="single"
-					is-disabled="sMode == 'display'"
-					on-item-click="onBillingCountryChanged()"
-					helper-elements="filter"
-					>
-				</div>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_billingProvince' | translate}}
-					</label>
-				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._billingProvinceCode}}</div>
-				<div
-					ng-if="sMode == 'edit'"
-					multi-select
-					input-model="aBillingProvinces"
-					button-label="name"
-					default-label="{{'global_selectState' | translate }}"
-					item-label="name"
-					tick-property="ticked"
-					selection-mode="single"
-					is-disabled="sMode == 'display'"
-					on-item-click="onDataModified()"
-					helper-elements="filter"
-					>
-				</div>
-				</div>
-				<div class="cnpSubSection" flex>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingStreet' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingStreet}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingStreetPlaceholder' | translate}}">
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingCity' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingCity}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingCityPlaceholder' | translate}}">
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingPostalCode' | translate}}
-					</label>
-				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingPostalCode}}</div>
-				<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingPostalCodePlaceholder' | translate}}">
-				
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingCountry' | translate}}
-					</label>
-				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._shippingCountryCode}}</div>
-				<div
-					ng-if="sMode == 'edit'"
-					multi-select
-					input-model="aShippingCountries"
-					button-label="name"
-					default-label="{{'global_selectCountry' | translate }}"
-					item-label="name"
-					tick-property="ticked"
-					selection-mode="single"
-					is-disabled="sMode == 'display'"
-					on-item-click="onShippingCountryChanged()"
-					helper-elements="filter"
-					>
-				</div>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'clientDetails_shippingProvince' | translate}}
-					</label>
-				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._shippingProvinceCode}}</div>
-				<div
-					ng-if="sMode == 'edit'"
-					multi-select
-					input-model="aShippingProvinces"
-					button-label="name"
-					default-label="{{'global_selectState' | translate }}"
-					item-label="name"
-					tick-property="ticked"
-					selection-mode="single"
-					is-disabled="sMode == 'display'"
-					on-item-click="onDataModified()"
-					helper-elements="filter"
-					>
-				</div>
-				</div>
 			</div>
 		</div>
-		
-	</div>
-</div>
-
-<!--  -->
+		<!--  -->

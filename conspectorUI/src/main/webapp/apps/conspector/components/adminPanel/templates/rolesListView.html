@@ -42,19 +42,19 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="' rolesList_roleName' | translate" sortable="'roleName'">
+				<td data-title="'rolesList_roleName' | translate" sortable="'roleName'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!role._createMode">{{role.roleName}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="role._createMode" type="text" ng-model="role.roleName"/>
 					</div>
 				</td>
-				<td data-title="descriptionENTE" sortable="'descriptionEN'">
+				<td data-title="'global_descriptionEN' | translate" sortable="'descriptionEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!role._editMode">{{role.descriptionEN}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="role._editMode" type="text" ng-model="role.descriptionEN"/>
 					</div>
 				</td>
-				<td data-title="descriptionFRTE" sortable="'descriptionFR'">
+				<td data-title="'global_descriptionFR' | translate" sortable="'descriptionFR'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!role._editMode">{{role.descriptionFR}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="role._editMode" type="text" ng-model="role.descriptionFR"/>

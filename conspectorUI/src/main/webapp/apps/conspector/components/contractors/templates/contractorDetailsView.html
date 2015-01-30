@@ -164,9 +164,10 @@
 					<label>
 						{{'contractorDetails_billingCountry' | translate}}
 					</label>
-				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor._billingCountryCode}}</div>
+				</div>
+				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor._billingCountryCode}}</div>
 				<div
-					ng-if="sMode == 'edit'"
+					ng-if="sMode == 'edit' || sMode == 'create'"
 					multi-select
 					input-model="aBillingCountries"
 					button-label="name"
@@ -183,9 +184,10 @@
 					<label>
 						{{'contractorDetails_billingProvince' | translate}}
 					</label>
-				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor._billingProvinceCode}}</div>
+				</div>
+				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor._billingProvinceCode}}</div>
 				<div
-					ng-if="sMode == 'edit'"
+					ng-if="sMode == 'edit' || sMode == 'create'"
 					multi-select
 					input-model="aBillingProvinces"
 					button-label="name"
@@ -226,9 +228,10 @@
 					<label>
 						{{'contractorDetails_shippingCountry' | translate}}
 					</label>
-				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor._shippingCountryCode}}</div>
+				</div>
+				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor._shippingCountryCode}}</div>
 				<div
-					ng-if="sMode == 'edit'"
+					ng-if="sMode == 'edit' || sMode == 'create'"
 					multi-select
 					input-model="aShippingCountries"
 					button-label="name"
@@ -245,9 +248,10 @@
 					<label>
 						{{'contractorDetails_shippingProvince' | translate}}
 					</label>
-				</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor._shippingProvinceCode}}</div>
+				</div>
+				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor._shippingProvinceCode}}</div>
 				<div
-					ng-if="sMode == 'edit'"
+					ng-if="sMode == 'edit' || sMode == 'create'"
 					multi-select
 					input-model="aShippingProvinces"
 					button-label="name"

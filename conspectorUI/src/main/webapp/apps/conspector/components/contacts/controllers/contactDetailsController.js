@@ -124,7 +124,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and AccountGuid eq '" + sAccountGuid + "'";
 		}
 
-		sRequestSettings = sRequestSettings + "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails";
+		sRequestSettings = sRequestSettings + "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails";
 		var oContact = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oContactEntity",
 			sRequestSettings: sRequestSettings, //filter + expand

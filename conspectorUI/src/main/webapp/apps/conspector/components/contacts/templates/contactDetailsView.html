@@ -216,7 +216,7 @@
 						</label>
 					</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._billingCountryCode}}</div>
 					<div
-						ng-if="sMode == 'edit'"
+						ng-if="sMode == 'edit' || sMode == 'create'"
 						multi-select
 						input-model="aBillingCountries"
 						button-label="name"
@@ -235,7 +235,7 @@
 						</label>
 					</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._billingProvinceCode}}</div>
 					<div
-						ng-if="sMode == 'edit'"
+						ng-if="sMode == 'edit' || sMode == 'create'"
 						multi-select
 						input-model="aBillingProvinces"
 						button-label="name"
@@ -279,7 +279,7 @@
 					</div>
 					<div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._shippingCountryCode}}</div>
 					<div
-						ng-if="sMode == 'edit'"
+						ng-if="sMode == 'edit' || sMode == 'create'"
 						multi-select
 						input-model="aShippingCountries"
 						button-label="name"
@@ -298,7 +298,7 @@
 						</label>
 					</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._shippingProvinceCode}}</div>
 					<div
-						ng-if="sMode == 'edit'"
+						ng-if="sMode == 'edit' || sMode == 'create'"
 						multi-select
 						input-model="aShippingProvinces"
 						button-label="name"
