@@ -3,6 +3,8 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 		var sAccountGuid = $stateParams.sAccountGuid;
 		var sContactGuid = $stateParams.sContactGuid;
 
+		$scope.oForms = {};		
+		
 		$scope.bShowParentAccountAndContactType = true;
 		$scope.bShowDescriptionTags = true;
 		$scope.bIsChangePhasesAssignmentAllowed = true;
@@ -428,6 +430,12 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
+			$scope.oForms.contactDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
+
+			if(!$scope.oForms.contactDetailsForm.$valid){
+				return;
+			}			
+			
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};

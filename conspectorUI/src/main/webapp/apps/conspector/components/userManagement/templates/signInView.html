@@ -1,5 +1,8 @@
 <div class="cnpUserManagementWrapper" layout="column" layout-align="center center">
-	<form name="signInForm" class="cnpUserManagementForm md-whiteframe-z1">
+	<form name="oForms.signInForm" class="cnpUserManagementForm md-whiteframe-z1" novalidate ng-submit="login()" >
+		<div ng-init="setForm(signInForm)"></div>
+		<input type="password" style="display:none"/>	<!-- needed to bypass autocomplit-->
+
 		<div layout="row" layout-align="end start">
 			<label ng-click="onChangeLanguage()" class="cnpLink"><div class="notSelectable">{{'signIn_languageCode' | translate}}</div></label>
 		</div>
@@ -8,20 +11,25 @@
 		</div>
 		<div layout="column" layout-align="center center" >
 			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
-				<input type="text" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpUsernameTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}">
+				<input type="text" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpUsernameTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" name="userName" required>
+
+			    <div ng-messages="oForms.signInForm.userName.$error" ng-if="!oForms.signInForm.userName.$pristine">
+			      <div ng-message="required" >{{'global_emptyFieldError' | translate}}</div>
+			    </div>	
+
 			</div>
 			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
-				<input type="password" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpPasswordTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}">
+				<input type="password" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpPasswordTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" name="password" required>
+
+			    <div ng-messages="oForms.signInForm.password.$error" ng-if="!oForms.signInForm.password.$pristine">
+			      <div ng-message="required">{{'global_emptyFieldError' | translate}}</div>
+			    </div>	
+
 			</div>
 			<div class="cnpInputWrapper">
-				<md-button type="submit" class="md-button cnpLargeButton md-primary md-raised" ng-click="login()" >{{'signIn_logIn' | translate}}</md-button>
+				<md-button type="submit" class="md-button cnpLargeButton md-primary md-raised">{{'signIn_logIn' | translate}}</md-button>
 			</div>
-			<!-- Not using checkbox for now -->
-			<!-- <div class="checkboxWrapper">
-							<md-checkbox class="md-checkbox" ng-model="logInData.bRememberUserName">
-							{{'signIn_rememberUserName' | translate}}
-							</md-checkbox>
-			</div> -->
+
 			<div class="cnpInputWrapper">
 				<md-switch class="md-checkbox" ng-model="logInData.bRememberUserName">
 					<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
@@ -39,3 +47,42 @@
 		</div>
 	</form>
 </div>
+
+ <!--    <form name="userForm" novalidate>
+        <div>
+            <input type="text" ng-pattern="/^[a-zA-Z0-9]$/" ng-model="user.username" name="username" placeholder="Username" ng-required="true" />    
+            <div ng-messages="userForm.username.$error">
+                <div ng-message="required" ng-if="!userForm.$pristine">
+                    username is required
+                </div>
+                <div ng-message="pattern">
+                    username must contain only letters or number
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="email" ng-model="user.email" name="email" placeholder="Email" ng-required="true" />    
+            <div ng-messages="userForm.email.$error">
+                <div ng-message="required" ng-if="!userForm.$pristine">
+                    email is required
+                </div>
+                <div ng-message="email">
+                    enter a valid email
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="url" ng-model="user.url" name="url" placeholder="Url"/>    
+            <div ng-messages="userForm.url.$error">
+                <div ng-message="url">
+                    enter a valid url
+                </div>
+            </div>
+        </div>
+        <div>
+            <button type="reset" ng-disabled="userForm.$pristine">Reset</button>  
+            <button type="submit" ng-disabled="!userForm.$valid">Register</button>    
+        </div>
+        
+    
+    </form> -->

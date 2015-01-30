@@ -16,8 +16,9 @@
 			
 		</div>
 	</div>
-	<!-- END OF CONTENT VIEW -->
-	<!-- ACTION BAR -->
+<!-- END OF CONTENT VIEW -->
+<!-- ACTION BAR -->
+	<form name="oForms.contactDetailsForm" novalidate>
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 		<div>
 			
@@ -79,8 +80,14 @@
 					group-property="multiSelectGroup"
 					is-disabled="sMode == 'display' || bIsChangePhasesAssignmentAllowed == false"
 					on-item-click="onDataModified()"
+					output-model="aSelectedPhases"
 					>
 				</div>
+				
+				<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
+   				<div ng-messages="oForms.contactDetailsForm.selectedPhases.$error" ng-if="!oForms.contactDetailsForm.selectedPhases.$pristine">
+     				<div ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+   				</div>				
 			</div>
 		</div>
 		<div layout="row" ng-if="bShowParentAccountAndContactType" style="width: 100%" flex>
@@ -316,4 +323,5 @@
 		</div>
 		
 	</div>
+	</form>
 </div>

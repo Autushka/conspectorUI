@@ -2,6 +2,11 @@ viewControllers.controller('signInView', ['$scope', '$rootScope', '$state', 'ser
 	function($scope, $rootScope, $state, servicesProvider, dataProvider, $cookieStore, utilsProvider, $translate, historyProvider) {
 		$rootScope.sCurrentStateName = $state.current.name;
 
+		//servicesProvider.logOut();
+
+		$scope.oForms = {};
+
+		var oSignInFormController = {};
 		var sUserName = "";
 		if ($cookieStore.get("userName")) {
 			sUserName = $cookieStore.get("userName").sUserName;
@@ -18,20 +23,17 @@ viewControllers.controller('signInView', ['$scope', '$rootScope', '$state', 'ser
 		}
 
 		$scope.login = function() {
-			if (!$scope.logInData.sUserName || !$scope.logInData.sPassword) {
-				utilsProvider.displayMessage({
-					sText: $translate.instant("global_emptyFields"),
-					sType: 'error'
-				});
-				return;
+			$scope.oForms.signInForm.password.$setDirty();//to display validation messages on submit press
+			$scope.oForms.signInForm.userName.$setDirty();
+
+			if($scope.oForms.signInForm.$valid){
+				var oData = {
+					userName: $scope.logInData.sUserName,
+					password: $scope.logInData.sPassword
+				};
+
+				servicesProvider.logIn(oData, $scope.logInData.bRememberUserName);				
 			}
-
-			var oData = {
-				userName: $scope.logInData.sUserName,
-				password: $scope.logInData.sPassword
-			};
-
-			servicesProvider.logIn(oData, $scope.logInData.bRememberUserName);
 		};
 
 		$scope.passwordFldKeyDown = function(event) {
@@ -41,6 +43,7 @@ viewControllers.controller('signInView', ['$scope', '$rootScope', '$state', 'ser
 		};
 
 		$scope.onSignInClick = function() {
+			$scope.bSubmitted = true;	
 			this.login();
 		};
 
@@ -57,5 +60,9 @@ viewControllers.controller('signInView', ['$scope', '$rootScope', '$state', 'ser
 				sStateName: $rootScope.sCurrentStateName
 			});
 		});
+
+		$scope.setForm = function(oForm){
+			oSignInFormController = angular.copy(oForm);
+		}
 	}
 ]);

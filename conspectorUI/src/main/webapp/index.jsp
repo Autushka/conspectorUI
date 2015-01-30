@@ -31,6 +31,7 @@
 		<script src="bower_components/hammerjs/hammer.min.js"></script>
 		<script src="bower_components/angular-aria/angular-aria.min.js"></script>
 		<script src="bower_components/angular-material/angular-material.min.js"></script>
+		<script src="bower_components/angular-messages/angular-messages.min.js"></script>
 		<script src="bower_components/jshashes/hashes.min.js"></script>
 		<script src="bower_components/isteven-angular-multiselect/angular-multi-select.js"></script>
 		<script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>

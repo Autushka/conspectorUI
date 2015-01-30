@@ -87,15 +87,23 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					});
 				}
 			},
-			commonOnError: function(oParameters, deffered) {
+			commonOnError: function(oParameters, deffered, sErrorText) {//sErrorText - for special case when entity has been modified before you
 				if (oParameters.bShowSpinner) {
 					$rootScope.$emit('UNLOAD');
 				}
 				if (oParameters.bShowErrorMessage) {
-					utilsProvider.displayMessage({
-						sText: $translate.instant("global_errorOperation"),
-						sType: 'error'
-					});
+					if (sErrorText) {
+						utilsProvider.displayMessage({
+							sText: $translate.instant(sErrorText),
+							sType: 'error'
+						});
+					} else {
+						utilsProvider.displayMessage({
+							sText: $translate.instant("global_errorOperation"),
+							sType: 'error'
+						});
+					}
+
 				}
 				if (deffered) {
 					deffered.reject();
@@ -382,7 +390,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 							this.commonOnError(oParameters, deffered);
 						}, this));
 					} else {
-						this.commonOnError(oParameters, deffered);
+						this.commonOnError(oParameters, deffered, 'global_errorEntityWasUpdatedBefore');
 					}
 				}, this));
 				return deffered.promise;
