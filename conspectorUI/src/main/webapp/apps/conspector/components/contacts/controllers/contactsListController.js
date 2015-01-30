@@ -164,7 +164,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                 case "Client":
                     $state.go('app.clientDetailsWrapper.clientDetails', {
                         sMode: "display",
-                        sContractorGuid: sAccountGuid,
+                        sClientGuid: sAccountGuid,
                     });
                     break;
             }
