@@ -1,5 +1,8 @@
 viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
 	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
+
+		$scope.oForms = {};
+
 		var sClientGuid = $stateParams.sClientGuid;
 		$scope.sMode = $stateParams.sMode;
 
@@ -332,6 +335,13 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
+			$scope.oForms.clientDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
+			$scope.oForms.clientDetailsForm.clientName.$setDirty();
+
+			if(!$scope.oForms.clientDetailsForm.$valid){
+				return;
+			}	
+
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};

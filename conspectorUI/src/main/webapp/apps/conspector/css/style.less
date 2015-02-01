@@ -99,6 +99,32 @@ body {
 	color: @textColor;
 	// background-color: @lightGreyBackgroundColor;
 }
+.cnpErrorMessageValidation{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 8px;
+	padding-right: 8px;
+	position: relative;
+	margin-top: 0px;
+	margin-bottom: 12px;
+	background-color: #ED5050;
+	border-radius: @borderRadius*4;
+	&:after {
+		position: absolute;
+		top: -10px;
+		content: "";
+		left: 20px;
+		border-style: solid;
+		border-color: transparent transparent #ED5050;
+		border-width: 5px;
+	}
+}
+.cnpErrorMessageValidationMessage{
+color: @whiteColor;
+text-align: center;
+font-size: 16px;
+font-weight: 500;
+}
 .cnpLink{
 	color: @clickableTextColor;
 	font-size: 16px;
@@ -209,7 +235,7 @@ USER MANAGEMENT
 		@media
 		only screen and (min-height: @sd-height) and (max-width: @sd-width){
 		min-height: @sd-height;
-		max-height: @sd-height;
+		// max-height: @sd-height;
 		padding-left: @userManagementFormPadding*0.6;
 		padding-right: @userManagementFormPadding*0.6;
 			//For iPhone 4 (Retina Display)
@@ -221,12 +247,12 @@ USER MANAGEMENT
 		@media
 		only screen and (min-height: @md-height) and (max-width: @sd-width){
 		min-height: @md-height;
-		max-height: @md-height;
+		// max-height: @md-height;
 		}
 		//For iPhone 6 (Retina Display)
 		@media
 		only screen and (min-width: 375px){
-		max-height: @md-height;
+		// max-height: @md-height;
 		min-width: @md-width;
 		max-width: @md-width;
 		margin-top: 25px;
@@ -238,7 +264,7 @@ USER MANAGEMENT
 		//For iPad 1/2
 		@media
 		only screen and (min-width: 600px) and (max-width: 1024px){
-		margin-top: 75px;
+		margin-top: 6vh;
 		//For iPad 3/4 (Retina Display)
 			@media
 			only screen and (-webkit-min-device-pixel-ratio: 2){
@@ -247,8 +273,12 @@ USER MANAGEMENT
 		//For Desktop PC
 		@media
 		only screen and (min-width: 1025px){
-		margin-top: 125px;
+		margin-top: 6vh;
 		}
+		@media
+		only screen and (max-height: 700px){
+		}
+		
 	}
 }
 //Conspector Logo
@@ -284,7 +314,7 @@ USER MANAGEMENT
 	margin-bottom: 12px;
 	&.cnpInputWrapperLessMargin{
 	margin-top: 6px;
-	margin-bottom: 6px;
+	margin-bottom: 0px;
 	}
 	&.cnpInputWrapperNoMargin{
 	margin-top: 0px;
@@ -328,6 +358,7 @@ USER MANAGEMENT
 	padding-left: 45px;
 	padding-top: 16px;
 	padding-bottom: 16px;
+	margin-bottom: 12px;
 	border-width: 0 0 0 0px;
 	// margin-top: 6px;
 	// margin-bottom: 6px;
@@ -1067,7 +1098,7 @@ APP VIEW CONTENT
 
 .cnpAppViewContent{
 	width: 100%;
-	height: 100%;
+	min-height: 90vh;
 	max-width: 1280px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -1156,6 +1187,7 @@ md-toolbar.md-default-theme{
 	border-color: @greyBorderColorHeader;
 	border-style: solid;
 	color: @textColor;
+	overflow-y: auto;
 	}
 }
 .cnpSidenavElements{
@@ -1580,7 +1612,7 @@ NG TABLE
 	
 }
 .hideAccountContactsList th:nth-of-type(4), .hideAccountContactsList td:nth-of-type(4){
-	width: 125px;
+	width: 186px;
 	// &.>div{
 	// 	width: 0%;
 	// 	visibility: hidden;
@@ -1604,7 +1636,7 @@ NG TABLE
 
 }
 .showAccountContactsList th:nth-of-type(4), .showAccountContactsList td:nth-of-type(4){
-	width: 125px;
+	width: 186px;
 	// &.>div{
 	// 	width: 0%;
 	// 	visibility: hidden;
