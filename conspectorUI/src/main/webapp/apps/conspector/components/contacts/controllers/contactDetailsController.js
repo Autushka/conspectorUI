@@ -4,7 +4,9 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 		var sContactGuid = $stateParams.sContactGuid;
 
 		$scope.oForms = {};		
-		
+		$scope.aSelectedPhases = [];
+		$scope.aSelectedParentAccount = [];
+
 		$scope.bShowParentAccountAndContactType = true;
 		$scope.bShowDescriptionTags = true;
 		$scope.bIsChangePhasesAssignmentAllowed = true;
@@ -393,6 +395,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			var sUri = "";
 			for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
 				if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
+					$scope.aSelectedPhases.push({});
 					sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
 					aUri.push(sUri);
 				}
@@ -431,18 +434,34 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
 			$scope.oForms.contactDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
+			$scope.oForms.contactDetailsForm.firstName.$setDirty();
+			$scope.oForms.contactDetailsForm.lastName.$setDirty();
+			$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();
 
-			if(!$scope.oForms.contactDetailsForm.$valid){
-				return;
-			}			
-			
+			aLinks = prepareLinksForSave();
+
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
-			var aLinks = [];
+			// var aLinks = [];
+
+			oDataForSave.Guid = $scope.oContact._guid;
+			for (var i = 0; i < $scope.aAccounts.length; i++) {
+				if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
+					$scope.aSelectedParentAccount.push($scope.aAccounts[i]);
+					oDataForSave.AccountGuid = $scope.aAccounts[i].Guid;
+					break;
+				}
+			}
+
+			if(!$scope.oForms.contactDetailsForm.$valid){
+				return;
+			}	
 
 			var onSuccessCreation = function(oData) {
 				bDataHasBeenModified = false;
+				$scope.aSelectedParentAccount = [];
+				$scope.aSelectedPhases = [];
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 				}
@@ -481,6 +500,9 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 				}
 			};
 			var onSuccessUpdate = function(oData) {
+				$scope.aSelectedPhases = [];
+				$scope.aSelectedParentAccount = [];
+
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
@@ -503,13 +525,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 					});
 				}
 			};
-			oDataForSave.Guid = $scope.oContact._guid;
-			for (var i = 0; i < $scope.aAccounts.length; i++) {
-				if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
-					oDataForSave.AccountGuid = $scope.aAccounts[i].Guid;
-					break;
-				}
-			}
+
 
 			for (var i = 0; i < $scope.aContactTypes.length; i++) {
 				if ($scope.aContactTypes[i].ticked) {
@@ -579,7 +595,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			}
 
 			oDataForSave.LastModifiedAt = $scope.oContact._lastModifiedAt;
-			aLinks = prepareLinksForSave();
+			
 			switch ($scope.sMode) {
 				case "edit":
 					apiProvider.updateContact({
