@@ -1,11 +1,6 @@
 <div class="cnpContent" layout="column">
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
-			<!-- <div>
-																<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-																Open Sidenav
-																</md-button>
-			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
 					{{'global_back' | translate}}
@@ -16,8 +11,6 @@
 			
 		</div>
 	</div>
-	<!-- END OF CONTENT VIEW -->
-	<!-- ACTION BAR -->
 	<form name="oForms.contactDetailsForm" novalidate>
 		<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 			<div>
@@ -33,7 +26,6 @@
 				</label>
 			</div>
 		</div>
-		<!-- END OF ACTION BAR -->
 		<div class="cnpSection" layout="column" layout-align="start center" flex>
 			
 			<div layout="row" style="width: 100%" flex>
@@ -90,7 +82,7 @@
 						group-property="multiSelectGroup"
 						is-disabled="sMode == 'display' || bIsChangePhasesAssignmentAllowed == false"
 						on-item-click="onDataModified()"
-						output-model="aSelectedPhases"
+						output-model = "aSelectedPhases"
 						>
 					</div>
 					
@@ -108,9 +100,10 @@
 								{{'contactDetails_associatedParentAccount' | translate}}
 							</label>
 						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'" ><a ng-click="onNavigateToAccountDetails()">{{oContact._sAccountName}}</a></div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'" >
+							<a ng-click="onNavigateToAccountDetails()">{{oContact._sAccountName}}</a>
+						</div>
 						<div
-							ng-if="sMode == 'edit' || sMode == 'create'"
 							multi-select
 							input-model="aAccounts"
 							button-label="name"
@@ -122,35 +115,15 @@
 							is-disabled="sMode == 'display'"
 							on-item-click="onDataModified()"
 							helper-elements="filter"
-							
+							output-model = "aSelectedParentAccount"
 							>
 						</div>
 						<input ng-model="aSelectedParentAccount.length" type="number" ng-show="false" name="selectedParentAccount" min="1">
 						<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.selectedParentAccount.$error" ng-if="!oForms.contactDetailsForm.selectedParentAccount.$valid && !oForms.contactDetailsForm.selectedParentAccount.$pristine">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-					</div>
+							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+						</div>
 					</div>
 					<div flex style="margin-left: 36px;">
-						<!-- <div  class="cnpSubSectionLabel">
-														<label>
-																						{{'contactDetails_contactType' | translate}}
-														</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._sContactType}}</div>
-						<div
-														ng-if="sMode == 'edit' || sMode == 'create'"
-														multi-select
-														input-model="aContactTypes"
-														button-label="name"
-														default-label="{{'contactDetails_selectContactType' | translate }}"
-														item-label="name"
-														tick-property="ticked"
-														selection-mode="single"
-														is-disabled="sMode == 'display'"
-														on-item-click="onDataModified()"
-														helper-elements=""
-														>
-						</div> -->
 					</div>
 				</div>
 			</div>
@@ -237,107 +210,109 @@
 							<label>
 								{{'contactDetails_billingCountry' | translate}}
 							</label>
-							</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._billingCountryCode}}</div>
-							<div
-								ng-if="sMode == 'edit' || sMode == 'create'"
-								multi-select
-								input-model="aBillingCountries"
-								button-label="name"
-								default-label="{{'global_selectCountry' | translate }}"
-								item-label="name"
-								tick-property="ticked"
-								selection-mode="single"
-								is-disabled="sMode == 'display'"
-								on-item-click="onBillingCountryChanged()"
-								helper-elements="filter"
-								>
-							</div>
-							<div  class="cnpSubSectionLabel">
-								<label>
-									{{'contactDetails_billingProvince' | translate}}
-								</label>
-								</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._billingProvinceCode}}</div>
-								<div
-									ng-if="sMode == 'edit' || sMode == 'create'"
-									multi-select
-									input-model="aBillingProvinces"
-									button-label="name"
-									default-label="{{'global_selectState' | translate }}"
-									item-label="name"
-									tick-property="ticked"
-									selection-mode="single"
-									is-disabled="sMode == 'display'"
-									on-item-click="onDataModified()"
-									helper-elements="filter"
-									>
-								</div>
-							</div>
-							<div class="cnpSubSection" flex>
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'contactDetails_shippingStreet' | translate}}
-									</label>
-								</div>
-								<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sShippingStreet}}</div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingStreetPlaceholder' | translate}}">
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'contactDetails_shippingCity' | translate}}
-									</label>
-								</div>
-								<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sShippingCity}}</div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingCityPlaceholder' | translate}}">
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'contactDetails_shippingPostalCode' | translate}}
-									</label>
-								</div>
-								<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sShippingPostalCode}}</div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingPostalCodePlaceholder' | translate}}">
-								
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'contactDetails_shippingCountry' | translate}}
-									</label>
-								</div>
-								<div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._shippingCountryCode}}</div>
-								<div
-									ng-if="sMode == 'edit' || sMode == 'create'"
-									multi-select
-									input-model="aShippingCountries"
-									button-label="name"
-									default-label="{{'global_selectCountry' | translate }}"
-									item-label="name"
-									tick-property="ticked"
-									selection-mode="single"
-									is-disabled="sMode == 'display'"
-									on-item-click="onShippingCountryChanged()"
-									helper-elements="filter"
-									>
-								</div>
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'contactDetails_shippingProvince' | translate}}
-									</label>
-									</div><div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._shippingProvinceCode}}</div>
-									<div
-										ng-if="sMode == 'edit' || sMode == 'create'"
-										multi-select
-										input-model="aShippingProvinces"
-										button-label="name"
-										default-label="{{'global_selectState' | translate }}"
-										item-label="name"
-										tick-property="ticked"
-										selection-mode="single"
-										is-disabled="sMode == 'display'"
-										on-item-click="onDataModified()"
-										helper-elements="filter"
-										>
-									</div>
-								</div>
-							</div>
 						</div>
-						
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._billingCountryCode}}</div>
+						<div
+							ng-if="sMode == 'edit' || sMode == 'create'"
+							multi-select
+							input-model="aBillingCountries"
+							button-label="name"
+							default-label="{{'global_selectCountry' | translate }}"
+							item-label="name"
+							tick-property="ticked"
+							selection-mode="single"
+							is-disabled="sMode == 'display'"
+							on-item-click="onBillingCountryChanged()"
+							helper-elements="filter"
+							>
+						</div>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'contactDetails_billingProvince' | translate}}
+							</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._billingProvinceCode}}</div>
+						<div
+							ng-if="sMode == 'edit' || sMode == 'create'"
+							multi-select
+							input-model="aBillingProvinces"
+							button-label="name"
+							default-label="{{'global_selectState' | translate }}"
+							item-label="name"
+							tick-property="ticked"
+							selection-mode="single"
+							is-disabled="sMode == 'display'"
+							on-item-click="onDataModified()"
+							helper-elements="filter"
+							>
+						</div>
 					</div>
-				</form>
+					<div class="cnpSubSection" flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'contactDetails_shippingStreet' | translate}}
+							</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sShippingStreet}}</div>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingStreetPlaceholder' | translate}}">
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'contactDetails_shippingCity' | translate}}
+							</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sShippingCity}}</div>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingCityPlaceholder' | translate}}">
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'contactDetails_shippingPostalCode' | translate}}
+							</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sShippingPostalCode}}</div>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingPostalCodePlaceholder' | translate}}">
+						
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'contactDetails_shippingCountry' | translate}}
+							</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._shippingCountryCode}}</div>
+						<div
+							ng-if="sMode == 'edit' || sMode == 'create'"
+							multi-select
+							input-model="aShippingCountries"
+							button-label="name"
+							default-label="{{'global_selectCountry' | translate }}"
+							item-label="name"
+							tick-property="ticked"
+							selection-mode="single"
+							is-disabled="sMode == 'display'"
+							on-item-click="onShippingCountryChanged()"
+							helper-elements="filter"
+							>
+						</div>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'contactDetails_shippingProvince' | translate}}
+							</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact._shippingProvinceCode}}</div>
+						<div
+							ng-if="sMode == 'edit' || sMode == 'create'"
+							multi-select
+							input-model="aShippingProvinces"
+							button-label="name"
+							default-label="{{'global_selectState' | translate }}"
+							item-label="name"
+							tick-property="ticked"
+							selection-mode="single"
+							is-disabled="sMode == 'display'"
+							on-item-click="onDataModified()"
+							helper-elements="filter"
+							>
+						</div>
+					</div>
+				</div>
 			</div>
+		</div>
+	</form>
+</div>
