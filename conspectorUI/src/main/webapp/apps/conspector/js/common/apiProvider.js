@@ -503,16 +503,6 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 				aData = [];
 				oData = {
-					requestUri: "Users('" + cacheProvider.oUserProfile.sUserName + "')/$links/RoleDetails",
-					method: "POST",
-					data: {
-						uri: "Roles('" + oRoleData.sGuid + "')"
-					}
-				};
-
-				aData.push(oData);
-
-				oData = {
 					requestUri: "Users('" + cacheProvider.oUserProfile.sUserName + "')/$links/CompanyDetails",
 					method: "POST",
 					data: {
@@ -521,6 +511,18 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				};
 
 				aData.push(oData);
+
+				oData = {
+					requestUri: "Users('" + cacheProvider.oUserProfile.sUserName + "')/$links/RoleDetails",
+					method: "POST",
+					data: {
+						uri: "Roles('" + oRoleData.Guid + "')"
+					}
+				};
+
+				aData.push(oData);
+
+
 
 				dataProvider.constructChangeBlockForBatch({
 					oRequestData: oRequestData,
