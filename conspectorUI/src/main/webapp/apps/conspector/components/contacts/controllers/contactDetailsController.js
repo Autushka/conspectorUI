@@ -430,6 +430,8 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
 			$scope.oForms.contactDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
 			$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();
+			$scope.oForms.contactDetailsForm.firstName.$setDirty();
+			$scope.oForms.contactDetailsForm.lastName.$setDirty();
 
 			aLinks = prepareLinksForSave();
 

@@ -1,5 +1,8 @@
 viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
 	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
+		
+		$scope.oForms = {};
+
 		var sContractorGuid = $stateParams.sContractorGuid;
 		$scope.sAccountType = "";
 		$scope.sMode = $stateParams.sMode;
@@ -333,6 +336,13 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
+			$scope.oForms.contractorDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
+			$scope.oForms.contractorDetailsForm.contractorName.$setDirty();
+
+			if(!$scope.oForms.contractorDetailsForm.$valid){
+				return;
+			}	
+
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};

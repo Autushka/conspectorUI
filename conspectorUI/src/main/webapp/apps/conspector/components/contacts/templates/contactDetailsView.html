@@ -37,7 +37,7 @@
 							</label>
 						</div>
 						<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oContact.sFirstName}}&nbsp;{{oContact.sLastName}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sFirstName" ng-change="onDataModified()" placeholder="{{'contactDetails_namePlaceholder' | translate}}" name="firstName" required>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sFirstName" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'contactDetails_namePlaceholder' | translate}}" name="firstName" required>
 						<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.firstName.$error" ng-if="!oForms.contactDetailsForm.firstName.$valid && !oForms.contactDetailsForm.firstName.$pristine">
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}

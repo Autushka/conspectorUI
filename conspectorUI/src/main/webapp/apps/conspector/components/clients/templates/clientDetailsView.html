@@ -2,9 +2,9 @@
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
 			<!-- <div>
-							<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-							Open Sidenav
-							</md-button>
+									<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+									Open Sidenav
+									</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -14,7 +14,7 @@
 		</div>
 		<div layout="row" layout-align="end start">
 			<!-- <label class="cnpContentTitle notSelectable">
-							{{'clientDetails_title' | translate}}
+									{{'clientDetails_title' | translate}}
 			</label> -->
 		</div>
 	</div>
@@ -46,7 +46,7 @@
 					</div>
 					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oClient.sName}}</div>
 					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'clientDetails_namePlaceholder' | translate}}" name="clientName" required>
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.clientDetailsForm.clientName.$error" ng-if="!oForms.clientDetailsForm.clientName.$pristine">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.clientDetailsForm.clientName.$error" ng-if="!oForms.clientDetailsForm.clientName.$valid && !oForms.clientDetailsForm.clientName.$pristine">
 						<div class="cnpErrorMessageValidationMessage" ng-message="required">
 							{{'global_emptyFieldError' | translate}}
 						</div>
@@ -72,7 +72,7 @@
 						>
 					</div>
 					<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.clientDetailsForm.selectedPhases.$error" ng-if="!oForms.clientDetailsForm.selectedPhases.$pristine">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.clientDetailsForm.selectedPhases.$error" ng-if="!oForms.clientDetailsForm.selectedPhases.$valid && !oForms.clientDetailsForm.selectedPhases.$pristine">
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>
@@ -140,9 +140,9 @@
 						</div>
 						<!-- 	<div class="tags-wrapper" ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aTags.length" class="form-control">
 									<ul class="tags-list">
-													<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
-																	<span style="padding: 2px;">{{tag.text}}</span>
-													</li>
+															<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
+																					<span style="padding: 2px;">{{tag.text}}</span>
+															</li>
 									</ul>
 						</div>	 -->
 					</div>

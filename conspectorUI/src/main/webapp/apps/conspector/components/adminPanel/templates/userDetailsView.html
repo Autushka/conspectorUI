@@ -2,9 +2,9 @@
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
 			<!-- <div>
-			<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-			Open Sidenav
-			</md-button>
+					<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+					Open Sidenav
+					</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -31,186 +31,209 @@
 			</label>
 		</div>
 	</div>
-	<!-- END OF ACTION BAR -->
-	<div class="cnpSection" layout="column" layout-align="start center" flex>
-		
-		<div layout="row" style="width: 100%" flex>
-			<div class="cnpSubSection" flex layout="column" layout-gt-md="column">
-				<div flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'userDetails_username' | translate}}
-						</label>
-					</div>
-					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oUser.sUserName}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sUserName" ng-if="sMode == 'create'" ng-change="onDataModified()" required>
-				</div>
-				<div flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'userDetails_email' | translate}}
-						</label>
-					</div>
-					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || !bIsGlobalUserAdministrator"><a href="mailto:{{oUser.sEmail}}">{{oUser.sEmail}}</a></div>
-					<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sEmail" ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator" ng-change="onDataModified()" required placeholder="{{'global_emailPlaceholder' | translate}}">
-				</div>
-				<div flex ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator">
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'userDetails_password' | translate}}
-						</label>
-					</div>
+	<form name="oForms.userDetailsForm" novalidate>
+		<!-- END OF ACTION BAR -->
+		<div class="cnpSection" layout="column" layout-align="start center" flex>
 			
-					<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPassword" ng-change="onDataModified()" required>
-				</div>
-				<div flex ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator">
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'userDetails_passwordConfirmation' | translate}}
-						</label>
-					</div>
-					<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPasswordConfirmation" ng-change="onDataModified()" required>
-				</div>
-			</div>
-			<div layout="column" flex>
-				<div class="cnpSubSection" flex ng-if="bIsGlobalUserAdministrator">
-					<div  class="cnpSubSectionLabel">
-						<label ng-if="bIsGlobalUserAdministrator">
-							{{'userDetails_associatedCompanies' | translate}}
-						</label>
-					</div>
-					<div 
-						multi-select
-						input-model="aCompanies"
-						button-label="name"
-						item-label="name"
-						tick-property="ticked"
-						is-disabled="sMode == 'display'"
-						helper-elements=""
-						on-item-click="onDataModified()"
-						>
-					</div>
-				</div>
-				<div class="cnpSubSection" flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'userDetails_associatedRoles' | translate}}
-						</label>
-					</div>
-					<div
-						multi-select
-						input-model="aRoles"
-						button-label="name"
-						item-label="name"
-						tick-property="ticked"
-						is-disabled="sMode == 'display'"
-						helper-elements=""
-						on-item-click="onDataModified()"
-						>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div layout="row" style="width: 100%" flex>
-			<div class="cnpSubSection" layout="row" flex>
-				<div flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'userDetails_associatedProjectsAndPhases' | translate}}
-						</label>
-					</div>
-					<div
-						multi-select
-						input-model="aPhases"
-						button-label="fullName"
-						item-label="name"
-						tick-property="ticked"
-						group-property="multiSelectGroup"
-						is-disabled="sMode == 'display'"
-						on-item-click="onDataModified()"
-						>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div layout="row" style="width: 100%" flex>
-			<div class="cnpSubSection" layout="row" flex>
-				<div flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'userDetails_associatedContact' | translate}}
-						</label>
-					</div>
-					<div
-						multi-select
-						input-model="aContacts"
-						button-label="name"
-						item-label="name"
-						tick-property="ticked"
-						is-disabled="sMode == 'display'"
-						on-item-click="onDataModified()"
-						selection-mode="single"
-						helper-elements="filter"						
-						>
-					</div>
-				</div>
-			</div>
-		</div>	
-		<div layout="row" style="width: 100%" flex>
-			<div class="cnpSubSection" layout="row" flex>
-				<div flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'userDetails_communicationLanguage' | translate}}
-						</label>
-					</div>
-					<div
-						multi-select
-						input-model="aLanguages"
-						button-label="name"
-						item-label="name"
-						tick-property="ticked"
-						is-disabled="sMode == 'display'"
-						on-item-click="onDataModified()"
-						selection-mode="single"
-						helper-elements="filter"						
-						>
-					</div>
-				</div>
-			</div>
-		</div>			
-		<div layout="column" layout-gt-md="row" style="width: 100%" flex>
 			<div layout="row" style="width: 100%" flex>
-				<div class="cnpSubSection" flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'userDetails_avatar' | translate}}
-						</label>
+				<div class="cnpSubSection" flex layout="column" layout-gt-md="column">
+					<div flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'userDetails_username' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oUser.sUserName}}</div>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sUserName" ng-if="sMode == 'create'" ng-change="onDataModified()" name="username" required>
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.username.$error" ng-if="!oForms.userDetailsForm.username.$valid && !oForms.userDetailsForm.username.$pristine">
+							<div class="cnpErrorMessageValidationMessage" ng-message="required">
+								{{'global_emptyFieldError' | translate}}
+							</div>
+						</div>
 					</div>
-					<img style="width: 200px; height: 200px;" ng-src="{{oUser.sAvatarUrl}}"></img>
-					<button ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator" ng-file-select accept="image/*" ng-file-change="onAvatarSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
+					<div flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'userDetails_email' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || !bIsGlobalUserAdministrator"><a href="mailto:{{oUser.sEmail}}">{{oUser.sEmail}}</a></div>
+						<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sEmail" ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator" ng-change="onDataModified()" required placeholder="{{'global_emailPlaceholder' | translate}}">
+					</div>
+					<div flex ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator">
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'userDetails_password' | translate}}
+							</label>
+						</div>
+						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPassword" ng-change="onDataModified()" name="password" required>
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.password.$error" ng-if="!oForms.userDetailsForm.password.$valid && !oForms.userDetailsForm.password.$pristine">
+							<div class="cnpErrorMessageValidationMessage" ng-message="required">
+								{{'global_emptyFieldError' | translate}}
+							</div>
+						</div>
+					</div>
+					<div flex ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator">
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'userDetails_passwordConfirmation' | translate}}
+							</label>
+						</div>
+						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPasswordConfirmation" ng-change="onDataModified()" name="passwordConfirmation" required>
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.passwordConfirmation.$error" ng-if="!oForms.userDetailsForm.passwordConfirmation.$valid && !oForms.userDetailsForm.passwordConfirmation.$pristine">
+							<div class="cnpErrorMessageValidationMessage" ng-message="required">
+								{{'global_emptyFieldError' | translate}}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div layout="column" flex>
+					<div class="cnpSubSection" flex ng-if="bIsGlobalUserAdministrator">
+						<div  class="cnpSubSectionLabel">
+							<label ng-if="bIsGlobalUserAdministrator">
+								{{'userDetails_associatedCompanies' | translate}}
+							</label>
+						</div>
+						<div
+							multi-select
+							input-model="aCompanies"
+							button-label="name"
+							item-label="name"
+							tick-property="ticked"
+							is-disabled="sMode == 'display'"
+							helper-elements=""
+							on-item-click="onDataModified()"
+							output-model="aSelectedCompanies"
+							>
+							</div>
+							<input ng-model="aSelectedCompanies.length" type="number" ng-show="false" name="selectedCompanies" min="1">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.selectedCompanies.$error" ng-if="!oForms.userDetailsForm.selectedCompanies.$valid && !oForms.userDetailsForm.selectedCompanies.$pristine">
+							<div class="cnpErrorMessageValidationMessage" ng-message="min">
+								{{'global_emptyFieldError' | translate}}
+							</div>
+						</div>
+					</div>
+					<div class="cnpSubSection" flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'userDetails_associatedRoles' | translate}}
+							</label>
+						</div>
+						<div
+							multi-select
+							input-model="aRoles"
+							button-label="name"
+							item-label="name"
+							tick-property="ticked"
+							is-disabled="sMode == 'display'"
+							helper-elements=""
+							on-item-click="onDataModified()"
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" layout="row" flex>
+					<div flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'userDetails_associatedProjectsAndPhases' | translate}}
+							</label>
+						</div>
+						<div
+							multi-select
+							input-model="aPhases"
+							button-label="fullName"
+							item-label="name"
+							tick-property="ticked"
+							group-property="multiSelectGroup"
+							is-disabled="sMode == 'display'"
+							on-item-click="onDataModified()"
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" layout="row" flex>
+					<div flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'userDetails_associatedContact' | translate}}
+							</label>
+						</div>
+						<div
+							multi-select
+							input-model="aContacts"
+							button-label="name"
+							item-label="name"
+							tick-property="ticked"
+							is-disabled="sMode == 'display'"
+							on-item-click="onDataModified()"
+							selection-mode="single"
+							helper-elements="filter"
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" layout="row" flex>
+					<div flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'userDetails_communicationLanguage' | translate}}
+							</label>
+						</div>
+						<div
+							multi-select
+							input-model="aLanguages"
+							button-label="name"
+							item-label="name"
+							tick-property="ticked"
+							is-disabled="sMode == 'display'"
+							on-item-click="onDataModified()"
+							selection-mode="single"
+							helper-elements="filter"
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div layout="column" layout-gt-md="row" style="width: 100%" flex>
+				<div layout="row" style="width: 100%" flex>
+					<div class="cnpSubSection" flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'userDetails_avatar' | translate}}
+							</label>
+						</div>
+						<img style="width: 200px; height: 200px;" ng-src="{{oUser.sAvatarUrl}}"></img>
+						<button ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator" ng-file-select accept="image/*" ng-file-change="onAvatarSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
+					</div>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" layout="row" flex>
+					<div flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'global_creationDate' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oUser.sCreatedAt}}</div>
+					</div>
+					<div flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'global_lastModificationDate' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oUser.sLastModifiedAt}}</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div layout="row" style="width: 100%" flex>
-			<div class="cnpSubSection" layout="row" flex>
-				<div flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'global_creationDate' | translate}}
-						</label>
-					</div>
-					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oUser.sCreatedAt}}</div>
-				</div>
-				<div flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'global_lastModificationDate' | translate}}
-						</label>
-					</div>
-					<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oUser.sLastModifiedAt}}</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	</form>
 </div>

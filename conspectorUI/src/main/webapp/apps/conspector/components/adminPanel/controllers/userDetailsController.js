@@ -1,5 +1,8 @@
 viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', 'apiProvider', '$translate', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', '$window', '$upload', 'CONSTANTS', 'historyProvider', 'rolesSettings',
 	function($scope, $rootScope, $state, $stateParams, servicesProvider, apiProvider, $translate, cacheProvider, utilsProvider, $filter, dataProvider, $window, $upload, CONSTANTS, historyProvider, rolesSettings) {
+
+		$scope.oForms = {};
+
 		var sUserName = $stateParams.sUserName;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
@@ -408,6 +411,15 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
+			$scope.oForms.userDetailsForm.selectedCompanies.$setDirty();//to display validation messages on submit press
+			$scope.oForms.userDetailsForm.username.$setDirty();
+			$scope.oForms.userDetailsForm.password.$setDirty();
+			$scope.oForms.userDetailsForm.passwordConfirmation.$setDirty();
+
+			if(!$scope.oForms.userDetailsForm.$valid){
+				return;
+			}	
+
 			var SHA512 = new Hashes.SHA512;
 
 			var oDataForSave = {
