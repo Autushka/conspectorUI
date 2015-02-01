@@ -9,8 +9,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var sCreatedAt = "";
 				var sLastModifiedAt = "";
 				var bIsInitialPassword = false;
-				var sUserContactGuid = "";//needed for contact management scenario from profile
-				var sUserAccountGuid = "";//needed for contact management scenario from profile
+				var sUserContactGuid = ""; //needed for contact management scenario from profile
+				var sUserAccountGuid = ""; //needed for contact management scenario from profile
 				var onSuccess = function(oData) {
 					bIsInitialPassword = oData.d.IsPasswordInitial;
 					sLastModifiedAt = oData.d.LastModifiedAt;
@@ -31,11 +31,11 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							aUserPhases.push(oData.d.PhaseDetails.results[i]);
 						}
 					}
-					if(oData.d.ContactDetails){
+					if (oData.d.ContactDetails) {
 						sUserContactGuid = oData.d.ContactDetails.Guid;
-						if(oData.d.ContactDetails.AccountDetails){
+						if (oData.d.ContactDetails.AccountDetails) {
 							sUserAccountGuid = oData.d.ContactDetails.AccountDetails.Guid;
-						}						
+						}
 					}
 				}
 
@@ -447,22 +447,99 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			createCompany: function(oParameters) {
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oCompanyEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
+				var oSrv = {};
+				var oRequestData = {
+					__batchRequests: []
+				};
+				var aData = [];
+				var sCreatedAt = "";
+				var oCompanyData = angular.copy(oParameters.oData);
+				var oRoleData = {};
+
+				if (!oCompanyData.GeneralAttributes) {
+					oCompanyData.GeneralAttributes = {};
+				}
+
+				oCompanyData.GeneralAttributes.CreatedBy = cacheProvider.oUserProfile.sUserName;
+				oCompanyData.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
+				oCompanyData.GeneralAttributes.IsDeleted = false;
+				oCompanyData.GeneralAttributes.IsArchived = false;
+
+				if (!oCompanyData.GeneralAttributes.SortingSequence) {
+					oCompanyData.GeneralAttributes.SortingSequence = 0;
+				}
+
+				oCompanyData.CreatedAt = utilsProvider.dateToDBDate(new Date());
+				oCompanyData.LastModifiedAt = oCompanyData.CreatedAt;
+
+				var oData = {
+					requestUri: "Companys",
+					method: "POST",
+					data: oCompanyData
+				};
+
+				aData.push(oData);
+
+				oRoleData.Guid = utilsProvider.generateGUID();
+				oRoleData.RoleName = CONSTANTS.sDefaultRoleNameForNewCompany;
+				oRoleData.CompanyName = oParameters.oData.CompanyName;
+				oRoleData.CreatedAt = oCompanyData.CreatedAt;
+				oRoleData.LastModifiedAt = oCompanyData.LastModifiedAt;
+				oRoleData.GeneralAttributes = angular.copy(oCompanyData.GeneralAttributes);
+				oRoleData.GeneralAttributes.SortingSequence = 0;
+
+				oData = {
+					requestUri: "Roles",
+					method: "POST",
+					data: oRoleData
+				};
+
+				aData.push(oData);
+
+				dataProvider.constructChangeBlockForBatch({
+					oRequestData: oRequestData,
+					aData: aData
+				});
+
+				aData = [];
+				oData = {
+					requestUri: "Users('" + cacheProvider.oUserProfile.sUserName + "')/$links/RoleDetails",
+					method: "POST",
+					data: {
+						uri: "Roles('" + oRoleData.sGuid + "')"
 					}
 				};
-				var oSvc = dataProvider.createEntity({
-					sPath: "Companys",
-					oData: oParameters.oData,
+
+				aData.push(oData);
+
+				oData = {
+					requestUri: "Users('" + cacheProvider.oUserProfile.sUserName + "')/$links/CompanyDetails",
+					method: "POST",
+					data: {
+						uri: "Companys('" + oParameters.oData.CompanyName + "')"
+					}
+				};
+
+				aData.push(oData);
+
+				dataProvider.constructChangeBlockForBatch({
+					oRequestData: oRequestData,
+					aData: aData
+				});
+
+				oSrv = dataProvider.batchRequest({
+					oRequestData: oRequestData,
 					bShowSpinner: oParameters.bShowSpinner,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: false
 				});
 
-				oSvc.then(onSuccess);
+				oSrv.then(function(aData) {
+					cacheProvider.cleanEntitiesCache("oCompanyEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(aData);
+					}
+				});
 			},
 
 			updateCompany: function(oParameters) {
@@ -892,7 +969,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			createAccount: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
-					cacheProvider.cleanEntitiesCache("oAccountTypeEntity");//for cases when accountTypes are readed with Accounts;
+					cacheProvider.cleanEntitiesCache("oAccountTypeEntity"); //for cases when accountTypes are readed with Accounts;
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
@@ -903,7 +980,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sText: "Account has been created...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
 						}
-					});					
+					});
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "Accounts",
@@ -923,7 +1000,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateAccount: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
-					cacheProvider.cleanEntitiesCache("oAccountTypeEntity");//for cases when accountTypes are readed with Accounts;					
+					cacheProvider.cleanEntitiesCache("oAccountTypeEntity"); //for cases when accountTypes are readed with Accounts;					
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
@@ -934,7 +1011,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sText: "Account has been updated...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
 						}
-					});					
+					});
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -1006,7 +1083,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sText: "Contact has been updated...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
 						}
-					});					
+					});
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -1035,7 +1112,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sText: "Contact has been created...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
 						}
-					});						
+					});
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "Contacts",
@@ -1077,7 +1154,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					dispatch: "download",
 					entryName: ""
 				};
-				$.download('/conspector/xdocReportsService',  oData, "post");
+				$.download('/conspector/xdocReportsService', oData, "post");
 			}
 		}
 	}

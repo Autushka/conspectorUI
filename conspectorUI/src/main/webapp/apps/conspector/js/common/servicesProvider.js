@@ -473,6 +473,9 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					for (var j = 0; j < aMultiSelectArray.length; j++) {
 						aArrayItem = {};
 						angular.copy(aMultiSelectArray[j], aArrayItem);
+						if (aArrayItem.multiSelectGroup === undefined) {
+							aArrayItem.ticked = false;
+						}
 
 						if (oParameters.sParentKey) {
 							if (oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKey] === aMultiSelectArray[j][oParameters.sDependentKey]) {
@@ -556,15 +559,15 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				});
 			},
 
-			refreshUserProfile: function(){
+			refreshUserProfile: function() {
 				var sCurrentCompany = cacheProvider.oUserProfile.sCurrentCompany;
 				var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 				var aGloballySelectedPhasesGuids = angular.copy(cacheProvider.oUserProfile.aGloballySelectedPhasesGuids);
-				cacheProvider.oUserProfile = apiProvider.getUserProfile(cacheProvider.oUserProfile.sUserName); 
+				cacheProvider.oUserProfile = apiProvider.getUserProfile(cacheProvider.oUserProfile.sUserName);
 				cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
 				cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
 				cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aGloballySelectedPhasesGuids;
-			}			
+			}
 		}
 	}
 ]);

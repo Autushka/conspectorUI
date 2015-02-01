@@ -96,62 +96,17 @@ viewControllers.controller('companiesListView', ['$scope', '$rootScope', '$state
 			}
 		};
 
-		var createDefaultRoleForNewCompany = function(sCompanyName) {
-			var oRole = {};
-			var sCurrentUserName = cacheProvider.oUserProfile.sUserName;
-			oRole.RoleName = CONSTANTS.sDefaultRoleNameForNewCompany;
-			oRole.CompanyName = sCompanyName;
-
-			var onSuccess = function(oData) {
-				var aLinks = [{
-					sRelationName: "RoleDetails",
-					aUri: ["Roles('" + oData.Guid + "')"]
-				}];
-
-				dataProvider.createLinks({
-					aLinks: aLinks,
-					sParentEntityWithKey: "Users('" + sCurrentUserName + "')",
-				});
-
-			};
-
-			apiProvider.createRole({
-				oData: oRole,
-				onSuccess: onSuccess
-			});
-		};
-
-		var assignNewCompanyToAdmin = function(sCompanyName) {
-			var sCurrentUserName = cacheProvider.oUserProfile.sUserName;
-			var aLinks = [{
-				sRelationName: "CompanyDetails",
-				aUri: ["Companys('" + sCompanyName + "')"]
-			}];
-
-			var onSuccess = function() {
-				servicesProvider.refreshUserProfile();
-			};
-
-			dataProvider.createLinks({
-				aLinks: aLinks,
-				sParentEntityWithKey: "Users('" + sCurrentUserName + "')",
-				onSuccess: onSuccess
-			});
-		};
-
 		$scope.onSave = function(oCompany) {
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
-			var onSuccessCreation = function(oData) {
-				oCompany._companyName = oData.CompanyName;
-				oCompany._lastModifiedAt = oData.LastModifiedAt;
+			var onSuccessCreation = function(aData) {
+				oCompany._companyName = aData[0].__changeResponses[0].data.CompanyName;
+				oCompany._lastModifiedAt = aData[0].__changeResponses[0].data.LastModifiedAt;
 				oCompany._editMode = false;
 				oCompany._createMode = false;
 
-				createDefaultRoleForNewCompany(oData.CompanyName);
-				assignNewCompanyToAdmin(oData.CompanyName);
-
+				servicesProvider.refreshUserProfile();
 			};
 			var onSuccessUpdate = function(oData) {
 				oCompany._editMode = false;

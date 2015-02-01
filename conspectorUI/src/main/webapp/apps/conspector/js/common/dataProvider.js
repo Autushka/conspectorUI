@@ -87,7 +87,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					});
 				}
 			},
-			commonOnError: function(oParameters, deffered, sErrorText) {//sErrorText - for special case when entity has been modified before you
+			commonOnError: function(oParameters, deffered, sErrorText) { //sErrorText - for special case when entity has been modified before you
 				if (oParameters.bShowSpinner) {
 					$rootScope.$emit('UNLOAD');
 				}
@@ -586,14 +586,27 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 			batchRequest: function(oParameters) {
 				var deffered = $q.defer();
 
+				if (oParameters.bShowSpinner) {
+					$rootScope.$emit('LOAD');
+				}
+
 				if (oParameters.oRequestData.__batchRequests.length) {
 					OData.request({
 						requestUri: $window.location.origin + $window.location.pathname + "odata.svc/$batch",
 						method: "POST",
 						data: oParameters.oRequestData
-					}, function(data) {
-						deffered.resolve(data.__batchResponses);
-					}, function(err) {}, OData.batchHandler);
+					}, $.proxy(function(oData) {
+						for (var i = 0; i < oData.__batchResponses.length; i++) { //checking each subrequest status
+							if(oData.__batchResponses[i].message === "HTTP request failed"){
+								this.commonOnError(oParameters);
+								return;
+							}
+						}
+						this.commonOnSuccess(oParameters);
+						deffered.resolve(oData.__batchResponses);
+					}, this), $.proxy(function(err) {
+						this.commonOnError(oParameters);
+					}, this), OData.batchHandler);
 				}
 				return deffered.promise;
 			},
