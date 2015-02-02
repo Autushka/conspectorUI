@@ -63,7 +63,9 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 			$scope.oClient._lastModifiedAt = oClient.LastModifiedAt;
 			$scope.oClient.sName = oClient.Name;
 			$scope.oClient.sPhone = oClient.MainPhone;
+			$scope.oClient.sPhoneExtension = oClient.MainPhoneExtension;
 			$scope.oClient.sSecondaryPhone = oClient.SecondaryPhone;
+			$scope.oClient.sSecondaryPhoneExtension = oClient.SecondaryPhoneExtension;
 			$scope.oClient.sWebsite = oClient.Website;
 			$scope.oClient.sEmail = oClient.Email;
 			$scope.oClient.sFax = oClient.Fax;
@@ -379,7 +381,9 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 				} else {
 					$scope.oClient.sName = "";
 					$scope.oClient.sPhone = "";
+					$scope.oClient.sPhoneExtension = "";
 					$scope.oClient.sSecondaryPhone = "";
+					$scope.oClient.sSecondaryPhoneExtension = "";
 					$scope.oClient.sWebsite = "";
 					$scope.oClient.sEmail = "";
 					$scope.oClient.sFax = "";
@@ -432,6 +436,8 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 
 			oDataForSave.Website = $scope.oClient.sWebsite;
 			oDataForSave.Email = $scope.oClient.sEmail;
+			oDataForSave.MainPhoneExtension = $scope.oClient.sPhoneExtension;
+			oDataForSave.SecondaryPhoneExtension = $scope.oClient.sSecondaryPhoneExtension;
 			
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oClient.aTags);
 

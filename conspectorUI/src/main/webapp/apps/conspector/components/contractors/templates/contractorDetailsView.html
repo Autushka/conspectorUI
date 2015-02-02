@@ -79,11 +79,25 @@
 						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 						<div  class="cnpSubSectionLabel">
 							<label>
+								{{'global_phoneExtension' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor.sPhoneExtension}}</div>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
+						<div  class="cnpSubSectionLabel">
+							<label>
 								{{'contractorDetails_secondaryPhone' | translate}}
 							</label>
 						</div>
 						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContractor.sSecondaryPhone | phoneFormatter}}">{{oContractor.sSecondaryPhone | phoneFormatter}}</a></div>
 						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sSecondaryPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'global_phoneExtension' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContractor.sSecondaryPhoneExtension}}</div>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sSecondaryPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
 						<div  class="cnpSubSectionLabel">
 							<label>
 								{{'contractorDetails_website' | translate}}

@@ -88,6 +88,13 @@
 						</div>
 						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oClient.sPhone | phoneFormatter}}">{{oClient.sPhone | phoneFormatter}}</a></div>
 						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
+						<div class="cnpSubSectionLabel">
+							<label>
+								{{'global_phoneExtension' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sPhoneExtension}}</div>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
 						<div  class="cnpSubSectionLabel">
 							<label>
 								{{'clientDetails_secondaryPhone' | translate}}
@@ -95,6 +102,13 @@
 						</div>
 						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oClient.sSecondaryPhone | phoneFormatter}}">{{oClient.sSecondaryPhone | phoneFormatter}}</a></div>
 						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sSecondaryPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
+						<div class="cnpSubSectionLabel">
+							<label>
+								{{'global_phoneExtension' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sSecondaryPhoneExtension}}</div>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sSecondaryPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
 						<div  class="cnpSubSectionLabel">
 							<label>
 								{{'clientDetails_website' | translate}}

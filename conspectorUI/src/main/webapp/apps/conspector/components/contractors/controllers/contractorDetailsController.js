@@ -64,7 +64,9 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			$scope.oContractor._lastModifiedAt = oContractor.LastModifiedAt;
 			$scope.oContractor.sName = oContractor.Name;
 			$scope.oContractor.sPhone = oContractor.MainPhone;
+			$scope.oContractor.sPhoneExtension = oContractor.MainPhoneExtension;
 			$scope.oContractor.sSecondaryPhone = oContractor.SecondaryPhone;
+			$scope.oContractor.sSecondaryPhoneExtension = oContractor.SecondaryPhoneExtension;
 			$scope.oContractor.sWebsite = oContractor.Website;
 			$scope.oContractor.sEmail = oContractor.Email;
 			$scope.oContractor.sFax = oContractor.Fax;
@@ -383,7 +385,9 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				} else {
 					$scope.oContractor.sName = "";
 					$scope.oContractor.sPhone = "";
+					$scope.oContractor.sPhoneExtension = "";
 					$scope.oContractor.sSecondaryPhone = "";
+					$scope.oContractor.sSecondaryPhoneExtension = "";
 					$scope.oContractor.sWebsite = "";
 					$scope.oContractor.sEmail = "";
 					$scope.oContractor.sFax = "";
@@ -442,7 +446,9 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 
 			oDataForSave.Website = $scope.oContractor.sWebsite;
 			oDataForSave.Email = $scope.oContractor.sEmail;
-			
+			oDataForSave.MainPhoneExtension = $scope.oContractor.sPhoneExtension;
+			oDataForSave.SecondaryPhoneExtension = $scope.oContractor.sSecondaryPhoneExtension;
+
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oContractor.aTags);
 
 			oDataForSave.BillingAddress = {};
