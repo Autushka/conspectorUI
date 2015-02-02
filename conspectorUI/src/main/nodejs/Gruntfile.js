@@ -4,31 +4,39 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       options: {
-        separator: ';'
+        separator: ';',
+        sourceMap :true
       },
       dist: {
         src: [
         '../webapp/apps/conspector/js/app.js',
         '../webapp/apps/conspector/js/constants.js',
         '../webapp/apps/conspector/js/types.js',
-        '../webapp/apps/conspector/js/rolesSettings.js',
+
 
         '../webapp/apps/conspector/js/common/cacheProvider.js', 
         '../webapp/apps/conspector/js/common/utilsProvider.js', 
         '../webapp/apps/conspector/js/common/translateProvider.js', 
         '../webapp/apps/conspector/js/common/dataProvider.js', 
-        '../webapp/apps/conspector/js/common/apiProvider.js', 
-        '../webapp/apps/conspector/js/common/servicesProvider.js',         
+        '../webapp/apps/conspector/js/common/apiProvider.js',
+
+        '../webapp/apps/conspector/js/rolesSettings.js',
+        '../webapp/apps/conspector/js/common/servicesProvider.js',     
+        '../webapp/apps/conspector/js/common/historyProvider.js',   
+        '../webapp/apps/conspector/js/common/filtersProvider.js',                  
 
         '../webapp/apps/conspector/js/mainController.js',
 
         '../webapp/apps/conspector/components/userManagement/controllers/*.js', 
+        '../webapp/apps/conspector/components/generalLayout/controllers/*.js', 
+        '../webapp/apps/conspector/components/deficiencies/controllers/*.js',               
         '../webapp/apps/conspector/components/units/controllers/*.js', 
+
+        '../webapp/apps/conspector/components/contractors/controllers/*.js',
+        '../webapp/apps/conspector/components/contacts/controllers/*.js',    
+        '../webapp/apps/conspector/components/clients/controllers/*.js',                      
+
         '../webapp/apps/conspector/components/profileSettings/controllers/*.js',
-        '../webapp/apps/conspector/components/generalLayout/controllers/*.js',
-        '../webapp/apps/conspector/components/deficiencies/controllers/*.js',
-        '../webapp/apps/conspector/components/contractors/controllers/*.js',     
-        '../webapp/apps/conspector/components/clients/controllers/*.js',    
         '../webapp/apps/conspector/components/adminPanel/controllers/*.js'                  
         ],
         dest: '../webapp/dist/conspector.js'
@@ -36,7 +44,9 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        sourceMap: 'conspector.map',
+        sourceMap : true,
+        sourceMapIncludeSources : true,
+        sourceMapIn : '../webapp/dist/conspector.js.map',
         banner: '/*! conspector <%= grunt.template.today("dd-mm-yyyy") %> */\n'
       },
       dist: {

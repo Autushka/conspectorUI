@@ -1,7 +1,7 @@
 var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'ngAnimate', 'filtersProvider', 'ngMessages']);
 var viewControllers = angular.module('viewControllers', []);
 
-app.config(function($mdThemingProvider) {
+app.config(['$mdThemingProvider', function($mdThemingProvider) {
 	$mdThemingProvider.definePalette('conspectorColorPalette', {
 		'50': '55b0d0',
 		'100': '44a8cb',
@@ -75,7 +75,7 @@ app.config(function($mdThemingProvider) {
 	//   'contrastLightColors': undefined    // could also specify this if default was 'dark'
 	// });
 
-});
+}]);
 
 app.config(['$stateProvider', '$urlRouterProvider',
 	function($stateProvider, $urlRouterProvider) {
