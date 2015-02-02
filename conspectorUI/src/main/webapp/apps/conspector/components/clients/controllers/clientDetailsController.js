@@ -383,6 +383,14 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 					$scope.oClient.sWebsite = "";
 					$scope.oClient.sEmail = "";
 					$scope.oClient.sFax = "";
+					$scope.oClient.aTags = [];
+
+					$scope.oClient.sBillingStreet = "";
+					$scope.oClient.sBillingCity = "";
+					$scope.oClient.sBillingPostalCode = "";
+					$scope.oClient.sShippingStreet = "";
+					$scope.oClient.sShippingCity = "";
+					$scope.oClient.sShippingPostalCode = "";					
 
 					$scope.oForms.clientDetailsForm.clientName.$setPristine();
 					oDataForSave.BillingAddress = {};

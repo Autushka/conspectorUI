@@ -513,6 +513,14 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 					$scope.oContact.sFax = "";
 					$scope.oContact.sTitle = "";
 					$scope.oContact.aTags = [];
+
+					$scope.oContact.sBillingStreet = "";
+					$scope.oContact.sBillingCity = "";
+					$scope.oContact.sBillingPostalCode = "";
+					$scope.oContact.sShippingStreet = "";
+					$scope.oContact.sShippingCity = "";
+					$scope.oContact.sShippingPostalCode = "";
+
 					$scope.oForms.contactDetailsForm.lastName.$setPristine();
 					$scope.oForms.contactDetailsForm.firstName.$setPristine();
 					oDataForSave.BillingAddress = {};

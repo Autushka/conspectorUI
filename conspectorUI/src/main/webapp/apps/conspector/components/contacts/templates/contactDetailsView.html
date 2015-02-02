@@ -154,6 +154,13 @@
 						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sWorkPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
 						<div  class="cnpSubSectionLabel">
 							<label>
+								{{'global_phoneExtension' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sWorkPhoneExtension}}</div>
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sWorkPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
+						<div  class="cnpSubSectionLabel">
+							<label>
 								{{'contactDetails_mobilePhone' | translate}}
 							</label>
 						</div>

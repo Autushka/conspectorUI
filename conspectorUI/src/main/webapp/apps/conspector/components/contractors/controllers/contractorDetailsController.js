@@ -387,6 +387,14 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					$scope.oContractor.sWebsite = "";
 					$scope.oContractor.sEmail = "";
 					$scope.oContractor.sFax = "";
+					$scope.oContractor.aTags = [];
+
+					$scope.oContractor.sBillingStreet = "";
+					$scope.oContractor.sBillingCity = "";
+					$scope.oContractor.sBillingPostalCode = "";
+					$scope.oContractor.sShippingStreet = "";
+					$scope.oContractor.sShippingCity = "";
+					$scope.oContractor.sShippingPostalCode = "";
 
 					$scope.oForms.contractorDetailsForm.contractorName.$setPristine();
 					oDataForSave.BillingAddress = {};
