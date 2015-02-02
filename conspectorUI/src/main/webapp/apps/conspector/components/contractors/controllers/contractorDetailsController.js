@@ -378,6 +378,7 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 					$scope.oContractor.sEmail = "";
 					$scope.oContractor.sFax = "";
 
+					$scope.oForms.contractorDetailsForm.contractorName.$setPristine();
 					oDataForSave.BillingAddress = {};
 					oDataForSave.ShippingAddress = {};
 					$scope.oContractor._aPhases = [];

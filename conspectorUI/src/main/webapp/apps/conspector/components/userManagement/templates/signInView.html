@@ -11,7 +11,7 @@
 		<div layout="column" layout-align="center center" >
 			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
 				<input type="text" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpUsernameTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" name="userName" required>
-				<div class="cnpErrorMessageValidation" ng-messages="oForms.signInForm.userName.$error" ng-if="!oForms.signInForm.userName.$valid && !oForms.signInForm.userName.$pristine">
+				<div class="cnpErrorMessageValidation" ng-messages="oForms.signInForm.userName.$error" ng-if="oForms.signInForm.userName.$dirty || submitted">
 					<div class="cnpErrorMessageValidationMessage" ng-message="required">
 						{{'global_emptyFieldError' | translate}}
 					</div>
@@ -19,7 +19,7 @@
 			</div>
 			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
 				<input type="password" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpPasswordTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" name="password" required>
-				<div class="cnpErrorMessageValidation" ng-messages="oForms.signInForm.password.$error" ng-if="!oForms.signInForm.password.$valid && !oForms.signInForm.userName.$pristine">
+				<div class="cnpErrorMessageValidation" ng-messages="oForms.signInForm.password.$error" ng-if="oForms.signInForm.password.$dirty || submitted">
 					<div class="cnpErrorMessageValidationMessage" ng-message="required">
 						{{'global_emptyFieldError' | translate}}
 					</div>

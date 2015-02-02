@@ -374,6 +374,7 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 					$scope.oClient.sEmail = "";
 					$scope.oClient.sFax = "";
 
+					$scope.oForms.clientDetailsForm.clientName.$setPristine();
 					oDataForSave.BillingAddress = {};
 					oDataForSave.ShippingAddress = {};
 					$scope.oClient._aPhases = [];

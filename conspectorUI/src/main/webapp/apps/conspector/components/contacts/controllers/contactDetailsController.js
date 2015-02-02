@@ -494,7 +494,8 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 					$scope.oContact.sFax = "";
 					$scope.oContact.sTitle = "";
 					$scope.oContact.aTags = [];
-
+					$scope.oForms.contactDetailsForm.lastName.$setPristine();
+					$scope.oForms.contactDetailsForm.firstName.$setPristine();
 					oDataForSave.BillingAddress = {};
 					oDataForSave.ShippingAddress = {};
 				}
