@@ -428,10 +428,18 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			$scope.oForms.contactDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
-			$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();
-			$scope.oForms.contactDetailsForm.firstName.$setDirty();
-			$scope.oForms.contactDetailsForm.lastName.$setDirty();
+			if($scope.oForms.contactDetailsForm.selectedPhases){
+				$scope.oForms.contactDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
+			}
+			if($scope.oForms.contactDetailsForm.selectedParentAccount){
+				$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();//to display validation messages on submit press
+			}			
+			if($scope.oForms.contactDetailsForm.firstName){
+				$scope.oForms.contactDetailsForm.firstName.$setDirty();//to display validation messages on submit press
+			}			
+			if($scope.oForms.contactDetailsForm.lastName){
+				$scope.oForms.contactDetailsForm.lastName.$setDirty();//to display validation messages on submit press
+			}
 
 			aLinks = prepareLinksForSave();
 

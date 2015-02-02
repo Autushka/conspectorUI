@@ -336,8 +336,12 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			$scope.oForms.contractorDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
-			$scope.oForms.contractorDetailsForm.contractorName.$setDirty();
+			if($scope.oForms.contractorDetailsForm.selectedPhases){
+				$scope.oForms.contractorDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
+			}			
+			if($scope.oForms.contractorDetailsForm.contractorName){
+				$scope.oForms.contractorDetailsForm.contractorName.$setDirty();//to display validation messages on submit press
+			}				
 
 			if(!$scope.oForms.contractorDetailsForm.$valid){
 				return;

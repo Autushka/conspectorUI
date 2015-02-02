@@ -65,26 +65,26 @@
 							</div>
 						</div>						
 					</div>
-					<div flex ng-if="sMode == 'create' && bIsGlobalUserAdministrator">
+					<div flex ng-if="(sMode == 'create' || sMode == 'edit') && bIsGlobalUserAdministrator">
 						<div  class="cnpSubSectionLabel">
 							<label>
 								{{'userDetails_password' | translate}}
 							</label>
 						</div>
-						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPassword" ng-change="onDataModified()" name="password" required>
+						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPassword" ng-change="onDataModified()" name="password" ng-required="sMode == 'create' ? true : false">
 						<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.password.$error" ng-if="!oForms.userDetailsForm.password.$valid && !oForms.userDetailsForm.password.$pristine">
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}
 							</div>
 						</div>
 					</div>
-					<div flex ng-if="sMode == 'create' && bIsGlobalUserAdministrator">
+					<div flex ng-if="(sMode == 'create' || sMode == 'edit') && bIsGlobalUserAdministrator">
 						<div  class="cnpSubSectionLabel">
 							<label>
 								{{'userDetails_passwordConfirmation' | translate}}
 							</label>
 						</div>
-						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPasswordConfirmation" ng-change="onDataModified()" name="passwordConfirmation" required>
+						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPasswordConfirmation" ng-change="onDataModified()" name="passwordConfirmation" ng-required="sMode == 'create' ? true : false">
 						<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.passwordConfirmation.$error" ng-if="!oForms.userDetailsForm.passwordConfirmation.$valid && !oForms.userDetailsForm.passwordConfirmation.$pristine">
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}

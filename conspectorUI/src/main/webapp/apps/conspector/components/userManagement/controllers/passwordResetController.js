@@ -15,7 +15,7 @@ viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state
 			var oData = {};
 			
 			if (!$scope.resetPasswordData.sNewPassword || !$scope.resetPasswordData.sNewPasswordConfirmation) {
-				utilsProvider.displayMessage({
+				servicesProvider.displayMessage({
 					sText: $translate.instant("global_emptyFields"),
 					sType: 'error'
 				});

@@ -140,7 +140,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			resetPasswordWithPRCode: function(oParameters) {
 				var oSrv = dataProvider.httpRequest({
-					sPath: "rest/account/passwordRecoveryWithPRCode/" + oParameters.oData.passwordRecoveryCode + "/" + oParameters.oData.newPassword,
+					sPath: "rest/account/passwordRecovery/PRCode/" + oParameters.oData.passwordRecoveryCode + "/newPassword/" + oParameters.oData.newPassword,
 					sRequestType: "GET",
 					bShowSpinner: true,
 				});

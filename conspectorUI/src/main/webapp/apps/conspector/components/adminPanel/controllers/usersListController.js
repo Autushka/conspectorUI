@@ -75,10 +75,11 @@ viewControllers.controller('usersListView', ['$scope', '$rootScope', '$state', '
 
 					if (!bMatchFound) {
 						continue;
-					} else {
+					} 
+					else {
 						bMatchFound = false;
 						for (var j = 0; j < aData[i].RoleDetails.results.length; j++) {
-							if (rolesSettings[aData[i].RoleDetails.results[j].RoleName].bIsGlobalUserAdministrator && aData[i].UserName !== cacheProvider.oUserProfile.sUserName) {
+							if (rolesSettings[aData[i].RoleDetails.results[j].RoleName] && rolesSettings[aData[i].RoleDetails.results[j].RoleName].bIsGlobalUserAdministrator && aData[i].UserName !== cacheProvider.oUserProfile.sUserName) {
 								bMatchFound = true;
 								break;
 							}

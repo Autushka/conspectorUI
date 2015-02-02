@@ -335,9 +335,12 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			$scope.oForms.clientDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
-			$scope.oForms.clientDetailsForm.clientName.$setDirty();
-			
+			if($scope.oForms.clientDetailsForm.selectedPhases){
+				$scope.oForms.clientDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
+			}
+			if($scope.oForms.clientDetailsForm.clientName){
+				$scope.oForms.clientDetailsForm.clientName.$setDirty();//to display validation messages on submit press
+			}			
 
 			if(!$scope.oForms.clientDetailsForm.$valid){
 				return;
