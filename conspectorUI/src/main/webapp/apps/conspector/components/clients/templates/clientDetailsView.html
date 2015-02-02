@@ -72,7 +72,7 @@
 						>
 					</div>
 					<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.clientDetailsForm.selectedPhases.$error" ng-if="oForms.clientDetailsForm.selectedPhases.$dirty || submitted">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.clientDetailsForm.selectedPhases.$error" ng-if="oForms.clientDetailsForm.selectedPhases.$dirty || submitted  || !oForms.clientDetailsForm.selectedPhases.$valid">
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>

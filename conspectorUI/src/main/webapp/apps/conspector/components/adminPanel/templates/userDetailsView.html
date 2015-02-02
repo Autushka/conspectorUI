@@ -112,7 +112,7 @@
 							>
 							</div>
 							<input ng-model="aSelectedCompanies.length" type="number" ng-show="false" name="selectedCompanies" min="1">
-							<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.selectedCompanies.$error" ng-if="!oForms.userDetailsForm.selectedCompanies.$valid && !oForms.userDetailsForm.selectedCompanies.$pristine">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.selectedCompanies.$error" ng-if="oForms.userDetailsForm.selectedCompanies.$dirty || submitted  || !oForms.userDetailsForm.selectedCompanies.$valid">
 							<div class="cnpErrorMessageValidationMessage" ng-message="min">
 								{{'global_emptyFieldError' | translate}}
 							</div>

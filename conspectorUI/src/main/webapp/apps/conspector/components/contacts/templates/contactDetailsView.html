@@ -87,7 +87,7 @@
 					</div>
 					
 					<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.selectedPhases.$error" ng-if="oForms.contactDetailsForm.selectedPhases.$dirty || submitted">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.selectedPhases.$error" ng-if="oForms.contactDetailsForm.selectedPhases.$dirty || submitted || !oForms.contactDetailsForm.selectedPhases.$valid">
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>
@@ -119,7 +119,7 @@
 							>
 						</div>
 						<input ng-model="aSelectedParentAccount.length" type="number" ng-show="false" name="selectedParentAccount" min="1">
-						<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.selectedParentAccount.$error" ng-if="oForms.contactDetailsForm.selectedParentAccount.$dirty || submitted">
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.selectedParentAccount.$error" ng-if="oForms.contactDetailsForm.selectedParentAccount.$dirty || submitted  || !oForms.contactDetailsForm.selectedParentAccount.$valid"">
 							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 						</div>
 					</div>
