@@ -71,7 +71,9 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 
 			$scope.oContact.sEmail = oContact.Email;
 			$scope.oContact.sHomePhone = oContact.HomePhone;
+			$scope.oContact.sHomePhoneExtension = oContact.HomePhoneExtension;
 			$scope.oContact.sWorkPhone = oContact.WorkPhone;
+			$scope.oContact.sWorkPhoneExtension = oContact.WorkPhoneExtension;
 			$scope.oContact.sMobilePhone = oContact.MobilePhone;
 			$scope.oContact.sFax = oContact.Fax;
 			$scope.oContact.sTitle = oContact.Title;
@@ -405,6 +407,21 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			return aLinks;
 		};
 
+		$scope.onParentAccountModified = function() {
+			$scope.onDataModified();
+			$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();
+		};
+
+		$scope.onCloseCheckSelectedPhasesLength = function(){
+			if ($scope.aSelectedPhases.length == 0)
+			$scope.onSelectedPhasesModified();
+		};
+
+		$scope.onSelectedPhasesModified = function() {
+			$scope.onDataModified();
+			$scope.oForms.contactDetailsForm.selectedPhases.$setDirty();
+		};
+
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
 		};
@@ -489,7 +506,9 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 
 					$scope.oContact.sEmail = "";
 					$scope.oContact.sHomePhone = "";
+					$scope.oContact.sHomePhoneExtension = "";
 					$scope.oContact.sWorkPhone = "";
+					$scope.oContact.sWorkPhoneExtension = "";
 					$scope.oContact.sMobilePhone = "";
 					$scope.oContact.sFax = "";
 					$scope.oContact.sTitle = "";
@@ -553,6 +572,8 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			oDataForSave.Email = $scope.oContact.sEmail;
 			oDataForSave.Fax = $scope.oContact.sFax;
 			oDataForSave.Title = $scope.oContact.sTitle;
+			oDataForSave.HomePhoneExtension = $scope.oContact.sHomePhoneExtension;
+			oDataForSave.WorkPhoneExtension = $scope.oContact.sWorkPhoneExtension;
 
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oContact.aTags);
 

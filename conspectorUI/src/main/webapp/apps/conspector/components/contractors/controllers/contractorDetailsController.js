@@ -307,6 +307,16 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 			return aLinks;
 		};
 
+		$scope.onCloseCheckSelectedPhasesLength = function(){
+			if ($scope.aSelectedPhases.length == 0)
+			$scope.onSelectedPhasesModified();
+		};
+
+		$scope.onSelectedPhasesModified = function() {
+			$scope.onDataModified();
+			$scope.oForms.contractorDetailsForm.selectedPhases.$setDirty();
+		};
+
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
 		};
