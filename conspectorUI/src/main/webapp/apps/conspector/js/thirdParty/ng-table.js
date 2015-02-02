@@ -407,7 +407,20 @@ app.factory('ngTableParams', ['$q', '$log', function ($q, $log) {
                 log('ngTable: current scope', settings.$scope);
                 if (settings.groupBy) {
                 	if(settings.$scope){ //OA: additional check added (needed in case of cached values display)
-                		self.data = settings.$scope.$groups = data;
+                        //OA: grouping persistence added start
+                        if(params.groupsSettings && params.groupsSettings.length){
+                            for (var i = 0; i < params.groupsSettings.length; i++) {
+                                if(params.groupsSettings[i].$hideRows){
+                                    for (var j = 0; j <  data.length; j++) {
+                                        if(params.groupsSettings[i].value === data[j].value){
+                                            data[j].$hideRows = true;
+                                        }
+                                    }
+                                }
+                            }
+                        } 
+                        //OA: grouping persistence added end
+                        self.data = settings.$scope.$groups = data;                       
                 	}	
                 } else {
                 	//OA: deleted start
@@ -436,6 +449,9 @@ app.factory('ngTableParams', ['$q', '$log', function ($q, $log) {
             count: 1,
             filter: {},
             sorting: {},
+            //OA added start
+            groupsSettings: [],
+            //OA added end            
             group: {},
             groupBy: null
         };

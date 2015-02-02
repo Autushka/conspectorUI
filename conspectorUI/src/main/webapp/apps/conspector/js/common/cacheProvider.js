@@ -19,12 +19,54 @@ app.factory('cacheProvider', ['TYPES',
 				//
 				//oVersion: angular.copy(TYPES.oEntityCacheStructure),
 				oAccountTypeEntity: angular.copy(TYPES.oEntityCacheStructure),
-				oContactTypeEntity: angular.copy(TYPES.oEntityCacheStructure),				
+				oContactTypeEntity: angular.copy(TYPES.oEntityCacheStructure),
 				oCountryEntity: angular.copy(TYPES.oEntityCacheStructure),
 				oContactEntity: angular.copy(TYPES.oEntityCacheStructure)
 			},
 
 			oUserProfile: {},
+
+			oTableStatus: {
+				contactsList: [{
+					sStateName: "app.contactsList",
+					aGroups: [],
+					oFilter: {},
+					oSorting: {}
+				}]
+			},
+
+			getTableStatusFromCache: function(oParameters) {
+				for (var i = 0; i < this.oTableStatus[oParameters.sTableName].length; i++) {
+					if (this.oTableStatus[oParameters.sTableName][i].sStateName === oParameters.sStateName) {
+						return {
+							aGroups: angular.copy(this.oTableStatus[oParameters.sTableName][i].aGroups),
+							oSorting: angular.copy(this.oTableStatus[oParameters.sTableName][i].oSorting),
+							oFilter: angular.copy(this.oTableStatus[oParameters.sTableName][i].oFilter),
+						}
+					}
+				}
+			},
+
+			putTableStatusToCache: function(oParameters) {
+				var oGroupDescription = {};
+
+				for (var i = 0; i < this.oTableStatus[oParameters.sTableName].length; i++) {
+					if (this.oTableStatus[oParameters.sTableName][i].sStateName === oParameters.sStateName) {
+						this.oTableStatus[oParameters.sTableName][i].oFilter = angular.copy(oParameters.oFilter);
+						this.oTableStatus[oParameters.sTableName][i].oSorting = angular.copy(oParameters.oSorting);
+
+						this.oTableStatus[oParameters.sTableName][i].aGroups = angular.copy([]);
+						for (var j = 0; j < oParameters.aGroups.length; j++) {
+							oGroupDescription = angular.copy({});
+							oGroupDescription.value = oParameters.aGroups[j].value;
+							if (oParameters.aGroups[j].$hideRows) {
+								oGroupDescription.$hideRows = true;
+							}
+							this.oTableStatus[oParameters.sTableName][i].aGroups.push(oGroupDescription);
+						}
+					}
+				}
+			},
 
 			getFromCache: function(sCacheProviderAttribute, sRequestSettings) {
 				for (var i = 0; i < this.oEntitiesCache[sCacheProviderAttribute].aCachedRequests.length; i++) {
@@ -84,7 +126,6 @@ app.factory('cacheProvider', ['TYPES',
 						break;
 					}
 				}
-
 				return oEntity;
 			}
 		}

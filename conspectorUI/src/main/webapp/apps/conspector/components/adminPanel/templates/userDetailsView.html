@@ -58,9 +58,14 @@
 							</label>
 						</div>
 						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || !bIsGlobalUserAdministrator"><a href="mailto:{{oUser.sEmail}}">{{oUser.sEmail}}</a></div>
-						<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sEmail" ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator" ng-change="onDataModified()" required placeholder="{{'global_emailPlaceholder' | translate}}">
+						<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sEmail" ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator" ng-change="onDataModified()" required placeholder="{{'global_emailPlaceholder' | translate}}" name="email">
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.email.$error" ng-if="!oForms.userDetailsForm.email.$valid && !oForms.userDetailsForm.email.$pristine">
+							<div class="cnpErrorMessageValidationMessage" ng-message="required">
+								{{'global_emptyFieldError' | translate}}
+							</div>
+						</div>						
 					</div>
-					<div flex ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator">
+					<div flex ng-if="sMode == 'create' && bIsGlobalUserAdministrator">
 						<div  class="cnpSubSectionLabel">
 							<label>
 								{{'userDetails_password' | translate}}
@@ -73,7 +78,7 @@
 							</div>
 						</div>
 					</div>
-					<div flex ng-if="(sMode == 'edit' || sMode == 'create') && bIsGlobalUserAdministrator">
+					<div flex ng-if="sMode == 'create' && bIsGlobalUserAdministrator">
 						<div  class="cnpSubSectionLabel">
 							<label>
 								{{'userDetails_passwordConfirmation' | translate}}

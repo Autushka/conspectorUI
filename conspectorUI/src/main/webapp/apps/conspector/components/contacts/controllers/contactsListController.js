@@ -31,14 +31,34 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             aData: []
         };
 
+        var oTableStatusFromCache = cacheProvider.getTableStatusFromCache({
+            sTableName: "contactsList",
+            sStateName: $rootScope.sCurrentStateName,
+        });
+
+        var oInitialSortingForContactList = {
+            sName: 'asc'
+        };
+        if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
+            oInitialSortingForContactList = angular.copy(oTableStatusFromCache.oSorting);
+        }
+        var oInitialFilterForContactList = {};  
+        if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oFilter, {})) {
+            oInitialFilterForContactList = angular.copy(oTableStatusFromCache.oFilter);
+        }  
+        var oInitialGroupsSettingsForContactList = [];  
+        if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.aGroups, [])) {
+            oInitialGroupsSettingsForContactList = angular.copy(oTableStatusFromCache.aGroups);
+        }                      
+
         $scope.tableParams = servicesProvider.createNgTable({
             oInitialDataArrayWrapper: oContactsListData,
             sDisplayedDataArrayName: "aDisplayedContacts",
-            oInitialSorting: {
-                sName: 'asc'
-            },
+            oInitialSorting: oInitialSortingForContactList,
+            oInitialFilter: oInitialFilterForContactList,
+            aInitialGroupsSettings: oInitialGroupsSettingsForContactList,            
             sGroupBy: "sProjectPhase",
-            sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
+            sGroupsSortingAttribue: "_sortingSequence", //for default groups sorting
         });
 
         var onContactsLoaded = function(aData) {
@@ -188,6 +208,14 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                     oStateParams: $rootScope.oStateParams
                 });
             }
+
+            cacheProvider.putTableStatusToCache({
+                sTableName: "contactsList",
+                sStateName: $rootScope.sCurrentStateName,
+                aGroups: $scope.tableParams.settings().$scope.$groups,
+                oFilter: $scope.tableParams.$params.filter,
+                oSorting: $scope.tableParams.$params.sorting,
+            });
         });
     }
 ]);

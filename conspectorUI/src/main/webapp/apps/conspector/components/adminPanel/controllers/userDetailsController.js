@@ -411,10 +411,21 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			$scope.oForms.userDetailsForm.selectedCompanies.$setDirty();//to display validation messages on submit press
-			$scope.oForms.userDetailsForm.username.$setDirty();
-			$scope.oForms.userDetailsForm.password.$setDirty();
-			$scope.oForms.userDetailsForm.passwordConfirmation.$setDirty();
+			if($scope.oForms.userDetailsForm.selectedCompanies){
+				$scope.oForms.userDetailsForm.selectedCompanies.$setDirty();//to display validation messages on submit press
+			}
+			if($scope.oForms.userDetailsForm.username){
+				$scope.oForms.userDetailsForm.username.$setDirty();
+			}
+			if($scope.oForms.userDetailsForm.email){
+				$scope.oForms.userDetailsForm.email.$setDirty();
+			}
+			if($scope.oForms.userDetailsForm.password){
+				$scope.oForms.userDetailsForm.password.$setDirty();
+			}	
+			if($scope.oForms.userDetailsForm.passwordConfirmation){
+				$scope.oForms.userDetailsForm.passwordConfirmation.$setDirty();
+			}			
 
 			if(!$scope.oForms.userDetailsForm.$valid){
 				return;

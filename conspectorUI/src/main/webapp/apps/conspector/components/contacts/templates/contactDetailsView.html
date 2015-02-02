@@ -38,7 +38,7 @@
 						</div>
 						<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oContact.sFirstName}}&nbsp;{{oContact.sLastName}}</div>
 						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sFirstName" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'contactDetails_namePlaceholder' | translate}}" name="firstName" required>
-						<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.firstName.$error" ng-if="!oForms.contactDetailsForm.firstName.$valid && !oForms.contactDetailsForm.firstName.$pristine">
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.firstName.$error" ng-if="!oForms.contactDetailsForm.firstName.$valid && !oForms.contactDetailsForm.firstName.$pristine && sMode != 'display'">
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}
 							</div>
@@ -49,7 +49,7 @@
 							</label>
 						</div>
 						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sLastName" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'contactDetails_lastNamePlaceholder' | translate}}" name="lastName" required>
-						<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.lastName.$error" ng-if="!oForms.contactDetailsForm.lastName.$valid && !oForms.contactDetailsForm.lastName.$pristine">
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.lastName.$error" ng-if="!oForms.contactDetailsForm.lastName.$valid && !oForms.contactDetailsForm.lastName.$pristine && sMode != 'display'">
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}
 							</div>
@@ -103,7 +103,7 @@
 						<div class="cnpSubSectionData" ng-if="sMode == 'display'" >
 							<a ng-click="onNavigateToAccountDetails()">{{oContact._sAccountName}}</a>
 						</div>
-						<div
+						<div ng-show="sMode != 'display'"
 							multi-select
 							input-model="aAccounts"
 							button-label="name"

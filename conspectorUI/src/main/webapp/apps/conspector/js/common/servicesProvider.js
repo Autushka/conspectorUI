@@ -515,7 +515,9 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					page: 1, // show first page
 					count: 10000, // count per page
 					filterDelay: 250,
-					sorting: oParameters.oInitialSorting
+					sorting: oParameters.oInitialSorting,
+					filter: oParameters.oInitialFilter,
+					groupsSettings: oParameters.aInitialGroupsSettings,
 				}, {
 					groupBy: oParameters.sGroupBy,
 					total: oParameters.oInitialDataArrayWrapper.aData.length,
