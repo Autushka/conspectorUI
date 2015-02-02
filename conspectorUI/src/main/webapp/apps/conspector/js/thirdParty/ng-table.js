@@ -461,7 +461,7 @@ app.factory('ngTableParams', ['$q', '$log', function ($q, $log) {
             data: null, //allows data to be set when table is initialized
             total: 0,
             defaultSort: 'desc',
-            filterDelay: 750,
+            filterDelay: 1,
             counts: [10, 25, 50, 100],
             getGroups: this.getGroups,
             getData: this.getData

@@ -111,7 +111,7 @@
 					</td>
 				</tr>
 			</tbody>
-			<tr ng-hide="$groups.length > 0">
+			<tr ng-if="$groups.length == 0">
 				<td colspan="{{$columns.length}}">
 					<div layout="row" layout-align="start center">
 						<div>

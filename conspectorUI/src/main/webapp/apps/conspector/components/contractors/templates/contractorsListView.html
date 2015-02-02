@@ -16,9 +16,9 @@
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
 			<!-- <div>
-						<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-						Open Sidenav
-						</md-button>
+							<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+							Open Sidenav
+							</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -38,8 +38,8 @@
 			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
 			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'contractorsList_addNew' | translate}}</md-button>
 		</div>
-<!-- 		<div>
-			<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onGenerateReport()">{{'global_generateReport' | translate}}</md-button>
+		<!-- 		<div>
+				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onGenerateReport()">{{'global_generateReport' | translate}}</md-button>
 		</div> -->
 		<div layout="row" layout-align="end start">
 			<label class="cnpContentTitle notSelectable">
@@ -56,8 +56,7 @@
 					<td colspan="{{$columns.length}}" style="overflow: visible; padding-left: 0; padding-right: 0">
 						<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">{{ group.value }}
 							<!-- <div class="glyphicon notSelectable" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }">{{ group.value }}</div> -->
-						</div>
-						
+						</div>						
 					</td>
 				</tr>
 				<tr ng-hide="group.$hideRows" ng-repeat="contractor in group.data">
@@ -81,11 +80,11 @@
 					<td data-title="'global_phone' | translate" sortable="'sPhone'" filter="{'sPhone': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div><a href="tel:+{{contractor.sPhone | phoneFormatter}}">
-								<span>{{contractor.sPhone | phoneFormatter}}</span></a>
-							</div>
+							<span>{{contractor.sPhone | phoneFormatter}}</span></a>
 						</div>
+
 					</td>
-					
+				
 					<td data-title="'global_email' | translate" sortable="'sEmail'" filter="{'sEmail': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
@@ -106,18 +105,18 @@
 					</td>
 				</tr>
 			</tbody>
-			<tr ng-hide="$groups.length > 0">
-				<td td colspan="5">
-					<div layout="row" layout-align="start center">
-						<div>
-							{{'global_noTableData' | translate}}
-						</div>
+			<tr ng-if="$groups.length == 0">
+			<td td colspan="5">
+				<div layout="row" layout-align="start center">
+					<div>
+						{{'global_noTableData' | translate}}
 					</div>
-				</td>
+				</div>
+			</td>
 			</tr>
 		</table>
-	</div>
-	<!-- END OF NG TABLE -->
+	</div>	
 </div>
+<!-- END OF NG TABLE -->
 <!-- END OF CONTENT VIEW -->
 </md-content>

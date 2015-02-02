@@ -514,7 +514,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var oTableParams = new ngTableParams({
 					page: 1, // show first page
 					count: 10000, // count per page
-					filterDelay: 250,
+					filterDelay: 10,
 					sorting: oParameters.oInitialSorting,
 					filter: oParameters.oInitialFilter,
 					groupsSettings: oParameters.aInitialGroupsSettings,

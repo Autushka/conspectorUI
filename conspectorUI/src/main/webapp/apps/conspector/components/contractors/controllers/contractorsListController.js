@@ -22,12 +22,32 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
 			aData: []
 		};
 
+		var oTableStatusFromCache = cacheProvider.getTableStatusFromCache({
+			sTableName: "contractorsList",
+			sStateName: $rootScope.sCurrentStateName,
+		});
+
+		var oInitialSortingForContractorsList = {
+			sContractorName: 'asc'
+		};
+		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
+			oInitialSortingForContractorsList = angular.copy(oTableStatusFromCache.oSorting);
+		}
+		var oInitialFilterForContractorsList = {};
+		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oFilter, {})) {
+			oInitialFilterForContractorsList = angular.copy(oTableStatusFromCache.oFilter);
+		}
+		var oInitialGroupsSettingsForContractorsList = [];
+		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.aGroups, [])) {
+			oInitialGroupsSettingsForContractorsList = angular.copy(oTableStatusFromCache.aGroups);
+		}		
+
 		$scope.tableParams = servicesProvider.createNgTable({
 			oInitialDataArrayWrapper: oContractorsListData,
 			sDisplayedDataArrayName: "aDisplayedContractors",
-			oInitialSorting: {
-				sContractorName: 'asc'
-			},
+			oInitialSorting: oInitialSortingForContractorsList,
+			oInitialFilter: oInitialFilterForContractorsList,
+			aInitialGroupsSettings: oInitialGroupsSettingsForContractorsList,			
 			sGroupBy: "sProjectPhase",
 			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
 		});
@@ -129,6 +149,14 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
 				sStateName: $rootScope.sCurrentStateName,
 				oStateParams: $rootScope.oStateParams
 			});
+
+			cacheProvider.putTableStatusToCache({
+				sTableName: "contractorsList",
+				sStateName: $rootScope.sCurrentStateName,
+				aGroups: $scope.tableParams.settings().$scope.$groups,
+				oFilter: $scope.tableParams.$params.filter,
+				oSorting: $scope.tableParams.$params.sorting,
+			});			
 		});
 	}
 ]);

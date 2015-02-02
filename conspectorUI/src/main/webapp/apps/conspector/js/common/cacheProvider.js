@@ -32,7 +32,19 @@ app.factory('cacheProvider', ['TYPES',
 					aGroups: [],
 					oFilter: {},
 					oSorting: {}
-				}]
+				}],
+				clientsList: [{
+					sStateName: "app.clientsList",
+					aGroups: [],
+					oFilter: {},
+					oSorting: {}
+				}],
+				contractorsList: [{
+					sStateName: "app.contractorsList",
+					aGroups: [],
+					oFilter: {},
+					oSorting: {}
+				}]								
 			},
 
 			getTableStatusFromCache: function(oParameters) {

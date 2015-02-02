@@ -42,21 +42,21 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
             oInitialSortingForContactList = angular.copy(oTableStatusFromCache.oSorting);
         }
-        var oInitialFilterForContactList = {};  
+        var oInitialFilterForContactList = {};
         if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oFilter, {})) {
             oInitialFilterForContactList = angular.copy(oTableStatusFromCache.oFilter);
-        }  
-        var oInitialGroupsSettingsForContactList = [];  
+        }
+        var oInitialGroupsSettingsForContactList = [];
         if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.aGroups, [])) {
             oInitialGroupsSettingsForContactList = angular.copy(oTableStatusFromCache.aGroups);
-        }                      
+        }
 
         $scope.tableParams = servicesProvider.createNgTable({
             oInitialDataArrayWrapper: oContactsListData,
             sDisplayedDataArrayName: "aDisplayedContacts",
             oInitialSorting: oInitialSortingForContactList,
             oInitialFilter: oInitialFilterForContactList,
-            aInitialGroupsSettings: oInitialGroupsSettingsForContactList,            
+            aInitialGroupsSettings: oInitialGroupsSettingsForContactList,
             sGroupBy: "sProjectPhase",
             sGroupsSortingAttribue: "_sortingSequence", //for default groups sorting
         });

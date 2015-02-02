@@ -1,7 +1,7 @@
 viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
 	function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button
-		
+
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
 			sRole: sCurrentRole,
@@ -22,12 +22,32 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
 			aData: []
 		};
 
+		var oTableStatusFromCache = cacheProvider.getTableStatusFromCache({
+			sTableName: "clientsList",
+			sStateName: $rootScope.sCurrentStateName,
+		});
+
+		var oInitialSortingForClientsList = {
+			sClientName: 'asc'
+		};
+		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
+			oInitialSortingForClientsList = angular.copy(oTableStatusFromCache.oSorting);
+		}
+		var oInitialFilterForClientsList = {};
+		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oFilter, {})) {
+			oInitialFilterForClientsList = angular.copy(oTableStatusFromCache.oFilter);
+		}
+		var oInitialGroupsSettingsForClientsList = [];
+		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.aGroups, [])) {
+			oInitialGroupsSettingsForClientsList = angular.copy(oTableStatusFromCache.aGroups);
+		}
+
 		$scope.tableParams = servicesProvider.createNgTable({
 			oInitialDataArrayWrapper: oClientsListData,
 			sDisplayedDataArrayName: "aDisplayedClients",
-			oInitialSorting: {
-				sClientName: 'asc'
-			},
+			oInitialSorting: oInitialSortingForClientsList,
+			oInitialFilter: oInitialFilterForClientsList,
+			aInitialGroupsSettings: oInitialGroupsSettingsForClientsList,
 			sGroupBy: "sProjectPhase",
 			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
 		});
@@ -74,7 +94,6 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
 					});
 				}
 			}
-
 			$scope.tableParams.reload();
 		};
 
@@ -117,13 +136,21 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
 		});
 
 		$scope.$on("$destroy", function() {
-			if(historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName){ //current state was already put to the history in the parent views
+			if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
 				return;
 			}
-						
+
 			historyProvider.addStateToHistory({
 				sStateName: $rootScope.sCurrentStateName,
 				oStateParams: $rootScope.oStateParams
+			});
+
+			cacheProvider.putTableStatusToCache({
+				sTableName: "clientsList",
+				sStateName: $rootScope.sCurrentStateName,
+				aGroups: $scope.tableParams.settings().$scope.$groups,
+				oFilter: $scope.tableParams.$params.filter,
+				oSorting: $scope.tableParams.$params.sorting,
 			});
 		});
 	}
