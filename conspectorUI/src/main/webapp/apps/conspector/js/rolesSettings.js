@@ -60,6 +60,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowOperationLogs: true,
 					bShowAccountTypesManagement: true,
 					bShowContactTypesManagement: true,
+					bShowUnitOptionSetManagement: true
 				},
 				oProfileMenu: {
 					bShowContactDetails: true,
@@ -130,6 +131,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowOperationLogs: true,
 					bShowAccountTypesManagement: true,
 					bShowContactTypesManagement: true,
+					bShowUnitOptionSetManagement: true
 				},
 				oProfileMenu: {
 					bShowContactDetails: true,
@@ -201,6 +203,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowOperationLogs: false,
 					bShowAccountTypesManagement: false,
 					bShowContactTypesManagement: false,
+					bShowUnitOptionSetManagement: false
 				},
 				oProfileMenu: {
 					bShowContactDetails: true,
@@ -271,6 +274,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowOperationLogs: false,
 					bShowAccountTypesManagement: false,
 					bShowContactTypesManagement: false,
+					bShowUnitOptionSetManagement: false
 				},
 				oProfileMenu: {
 					bShowContactDetails: true,

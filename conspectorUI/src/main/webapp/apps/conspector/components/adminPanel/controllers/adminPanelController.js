@@ -116,6 +116,15 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 			sMenuLabel: "adminPanel_contactTypes",
 		});
 
+		$scope.aMenuItems.push({
+			bShouldBeDisplayed: rolesSettings.getRolesAdminPanelMenuItemSettings({
+				sRole: sCurrentRole,
+				sMenuItem: "bShowUnitOptionSetManagement"
+			}),
+			sStateName: "app.adminPanel.unitOptionSetList",
+			sMenuLabel: "adminPanel_unitOptionSet",
+		});		
+
 		var oWindow = angular.element($window);
 
 		oWindow.bind('resize', function() {
