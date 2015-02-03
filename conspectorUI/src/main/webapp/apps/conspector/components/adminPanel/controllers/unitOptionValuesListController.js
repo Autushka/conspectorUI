@@ -1,4 +1,4 @@
-viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'cacheProvider', 'historyProvider',
+viewControllers.controller('unitOptionValuesListView', ['$scope', '$rootScope','$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'cacheProvider', 'historyProvider',
 	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, cacheProvider, historyProvider) {
 //		historyProvider.removeHistory(); // because current view doesn't have a back button				
 //		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
