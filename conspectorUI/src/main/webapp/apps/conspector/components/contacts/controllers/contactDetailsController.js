@@ -317,7 +317,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			}
 		} else {
 			var aSelectedPhases = [];
-			if (historyProvider.getPreviousStateName() === "app.contractorDetailsWrapper.contractorDetails") {
+			if (historyProvider.getPreviousStateName() === "app.contractorDetailsWrapper.contractorDetails" || historyProvider.getPreviousStateName() === "app.clientDetailsWrapper.clientDetails") {
 				aSelectedPhases = angular.copy($rootScope.aAccountPhasesGuids);
 			}
 			constructPhasesMultiSelect(aSelectedPhases);
