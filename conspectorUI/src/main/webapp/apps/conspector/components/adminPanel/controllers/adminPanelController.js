@@ -123,7 +123,16 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 			}),
 			sStateName: "app.adminPanel.unitOptionSetList",
 			sMenuLabel: "adminPanel_unitOptionSet",
-		});		
+		});
+
+		$scope.aMenuItems.push({
+			bShouldBeDisplayed: rolesSettings.getRolesAdminPanelMenuItemSettings({
+				sRole: sCurrentRole,
+				sMenuItem: "bShowUnitOptionValuesManagement"
+			}),
+			sStateName: "app.adminPanel.unitOptionValuesList",
+			sMenuLabel: "adminPanel_unitOptionValues",
+		});			
 
 		var oWindow = angular.element($window);
 
