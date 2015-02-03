@@ -111,7 +111,7 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 
 			if (oUnitOptionSet._guid) {
 				oDataForSave.Guid = oUnitOptionSet._guid;
-				oDataForSave.LastModifiedAt = oPhase._lastModifiedAt;
+				oDataForSave.LastModifiedAt = oUnitOptionSet._lastModifiedAt;
 				apiProvider.updateUnitOptionSet({
 					bShowSpinner: true,
 					sKey: oDataForSave.Guid,
