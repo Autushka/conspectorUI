@@ -22,7 +22,8 @@ app.factory('cacheProvider', ['TYPES',
 				oContactTypeEntity: angular.copy(TYPES.oEntityCacheStructure),
 				oCountryEntity: angular.copy(TYPES.oEntityCacheStructure),
 				oContactEntity: angular.copy(TYPES.oEntityCacheStructure),
-				oUnitOptionSetEntity: angular.copy(TYPES.oEntityCacheStructure)
+				oUnitOptionSetEntity: angular.copy(TYPES.oEntityCacheStructure),
+				oUnitOptionValueEntity: angular.copy(TYPES.oEntityCacheStructure)
 			},
 
 			oUserProfile: {},

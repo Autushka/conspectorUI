@@ -100,7 +100,7 @@
 		<script src="apps/conspector/components/adminPanel/controllers/contactTypesListController.js"></script>		
 		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script>  
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionSetListController.js"></script>  	
-		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValuesListController.js"></script> 	
+		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValueListController.js"></script> 	
 		<%@page import="java.util.*" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file

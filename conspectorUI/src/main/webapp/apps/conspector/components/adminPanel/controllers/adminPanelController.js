@@ -128,10 +128,10 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 		$scope.aMenuItems.push({
 			bShouldBeDisplayed: rolesSettings.getRolesAdminPanelMenuItemSettings({
 				sRole: sCurrentRole,
-				sMenuItem: "bShowUnitOptionValuesManagement"
+				sMenuItem: "bShowUnitOptionValueManagement"
 			}),
-			sStateName: "app.adminPanel.unitOptionValuesList",
-			sMenuLabel: "adminPanel_unitOptionValues",
+			sStateName: "app.adminPanel.unitOptionValueList",
+			sMenuLabel: "adminPanel_unitOptionValue",
 		});			
 
 		var oWindow = angular.element($window);

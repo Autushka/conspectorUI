@@ -139,7 +139,9 @@ app.config(['$translateProvider',
                   adminPanel_contactTypes: 'Contact Types',
                   adminPanel_hideSidenav: 'Open Admin Panel Menu',
                   adminPanel_unitOptionSet: 'Unit Option Set',
-                  adminPanel_unitOptionValues: 'Unit Option Values',
+                  adminPanel_unitOptionValue: 'Unit Option Values',
+                  //unitOptionValuesList
+                  unitOptionValuesList_title: 'Unit Option Values',
                   //companiesList
                   companiesList_title: "Companies",
                   companiesList_companyName: "Company Name",
@@ -440,7 +442,9 @@ app.config(['$translateProvider',
                   adminPanel_contactTypes: 'Types de contact',
                   adminPanel_hideSidenav: 'Ouvrir menu',
                   adminPanel_unitOptionSet: 'Unit Option Set',
-                  adminPanel_unitOptionValues: 'Unit Option Values',
+                  adminPanel_unitOptionValue: 'Unit Option Values',
+                  //unitOptionValuesList
+                  unitOptionValuesList_title: 'Unit Option Values',
                   //companiesList
                   companiesList_title: 'Compagnies',
                   companiesList_companyName: 'Nom compagnie',
