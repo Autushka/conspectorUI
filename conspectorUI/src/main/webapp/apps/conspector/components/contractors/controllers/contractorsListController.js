@@ -40,14 +40,14 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
 		var oInitialGroupsSettingsForContractorsList = [];
 		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.aGroups, [])) {
 			oInitialGroupsSettingsForContractorsList = angular.copy(oTableStatusFromCache.aGroups);
-		}		
+		}
 
 		$scope.tableParams = servicesProvider.createNgTable({
 			oInitialDataArrayWrapper: oContractorsListData,
 			sDisplayedDataArrayName: "aDisplayedContractors",
 			oInitialSorting: oInitialSortingForContractorsList,
 			oInitialFilter: oInitialFilterForContractorsList,
-			aInitialGroupsSettings: oInitialGroupsSettingsForContractorsList,			
+			aInitialGroupsSettings: oInitialGroupsSettingsForContractorsList,
 			sGroupBy: "sProjectPhase",
 			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
 		});
@@ -156,7 +156,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
 				aGroups: $scope.tableParams.settings().$scope.$groups,
 				oFilter: $scope.tableParams.$params.filter,
 				oSorting: $scope.tableParams.$params.sorting,
-			});			
+			});
 		});
 	}
 ]);

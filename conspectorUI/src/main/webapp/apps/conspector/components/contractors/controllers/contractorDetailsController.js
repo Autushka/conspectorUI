@@ -547,5 +547,12 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 				});
 			}
 		});
+
+		$scope.$on("$destroy", function() {
+			$rootScope.aAccountPhasesGuids = [];
+			for (var i = 0; i < $scope.aSelectedPhases.length; i++) {
+				$rootScope.aAccountPhasesGuids.push($scope.aSelectedPhases[i].Guid);
+			}			
+		});		
 	}
 ]);

@@ -3,7 +3,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 		var sAccountGuid = $stateParams.sAccountGuid;
 		var sContactGuid = $stateParams.sContactGuid;
 
-		$scope.oForms = {};		
+		$scope.oForms = {};
 
 		$scope.bShowParentAccountAndContactType = true;
 		$scope.bShowDescriptionTags = true;
@@ -103,10 +103,10 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 
 			if (oContact.ContactTypeDetails) {
 				$scope.oContact._sContactType = $translate.use() === "en" ? oContact.ContactTypeDetails.NameEN : oContact.ContactTypeDetails.NameFR;
-				if(!$scope.oContact._sContactType){
+				if (!$scope.oContact._sContactType) {
 					$scope.oContact._sContactType = oContact.ContactTypeDetails.NameEN
 				}
-			}			
+			}
 
 			$scope.oContact.sCreatedAt = utilsProvider.dBDateToSting(oContact.CreatedAt);
 			$scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oContact.LastModifiedAt);
@@ -316,9 +316,11 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 				});
 			}
 		} else {
-			constructPhasesMultiSelect({
-				aSelectedPhases: []
-			});
+			var aSelectedPhases = [];
+			if (historyProvider.getPreviousStateName() === "app.contractorDetailsWrapper.contractorDetails") {
+				aSelectedPhases = angular.copy($rootScope.aAccountPhasesGuids);
+			}
+			constructPhasesMultiSelect(aSelectedPhases);
 
 			apiProvider.getCountriesWithProvinces({
 				bShowSpinner: false,
@@ -412,9 +414,9 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();
 		};
 
-		$scope.onCloseCheckSelectedPhasesLength = function(){
+		$scope.onCloseCheckSelectedPhasesLength = function() {
 			if ($scope.aSelectedPhases.length == 0)
-			$scope.onSelectedPhasesModified();
+				$scope.onSelectedPhasesModified();
 		};
 
 		$scope.onSelectedPhasesModified = function() {
@@ -445,17 +447,17 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			if($scope.oForms.contactDetailsForm.selectedPhases){
-				$scope.oForms.contactDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
+			if ($scope.oForms.contactDetailsForm.selectedPhases) {
+				$scope.oForms.contactDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
 			}
-			if($scope.oForms.contactDetailsForm.selectedParentAccount){
-				$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();//to display validation messages on submit press
-			}			
-			if($scope.oForms.contactDetailsForm.firstName){
-				$scope.oForms.contactDetailsForm.firstName.$setDirty();//to display validation messages on submit press
-			}			
-			if($scope.oForms.contactDetailsForm.lastName){
-				$scope.oForms.contactDetailsForm.lastName.$setDirty();//to display validation messages on submit press
+			if ($scope.oForms.contactDetailsForm.selectedParentAccount) {
+				$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty(); //to display validation messages on submit press
+			}
+			if ($scope.oForms.contactDetailsForm.firstName) {
+				$scope.oForms.contactDetailsForm.firstName.$setDirty(); //to display validation messages on submit press
+			}
+			if ($scope.oForms.contactDetailsForm.lastName) {
+				$scope.oForms.contactDetailsForm.lastName.$setDirty(); //to display validation messages on submit press
 			}
 
 			aLinks = prepareLinksForSave();
@@ -473,9 +475,9 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 				}
 			}
 
-			if(!$scope.oForms.contactDetailsForm.$valid){
+			if (!$scope.oForms.contactDetailsForm.$valid) {
 				return;
-			}	
+			}
 
 			var onSuccessCreation = function(oData) {
 				bDataHasBeenModified = false;
@@ -621,7 +623,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			}
 
 			oDataForSave.LastModifiedAt = $scope.oContact._lastModifiedAt;
-			
+
 			switch ($scope.sMode) {
 				case "edit":
 					apiProvider.updateContact({

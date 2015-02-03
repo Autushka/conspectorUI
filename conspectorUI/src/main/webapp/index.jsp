@@ -19,7 +19,7 @@
 		<script src="bower_components/pubnub/web/pubnub.min.js"></script>
 		
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
-		<script src="bower_components/angular/angular.min.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-route/angular-route.min.js"></script>
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<script src="bower_components/angular-animate/angular-animate.min.js"></script>
@@ -98,10 +98,14 @@
 		<script src="apps/conspector/components/adminPanel/controllers/systemFilesController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/accountTypesListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/contactTypesListController.js"></script>		
-		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script> 
-		
-		<!--<script src="dist/conspector.js"></script>
-		<script src="dist/conspector.min.js.map"></script>  -->
+		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script>  
+		<%@page import="java.util.*" %>
+		<%
+			Random rand = new Random();// needed to prevent caching of the minimized file
+			int n = rand.nextInt(1000);
+		%>		
+		<!--<script src="dist/conspector.min.js?number=<%=n%>"></script> -->
+
 	</head>
 	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;">
 		<div ng-show="$root.showSpinner" layout="row" layout-align="center center" style="position: absolute; z-index: 2; height: 100%; width: 100%;">
