@@ -165,7 +165,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 				'contractorContacts': {
 					templateUrl: 'apps/conspector/components/contacts/templates/contactsListView.html',
 					controller: 'contactsListView'
-				}
+				},
+				'contractorActivities': {
+					templateUrl: 'apps/conspector/components/activities/templates/activitiesListView.html',
+					controller: 'activitiesListView'
+				},
 			}
 		});
 
@@ -190,7 +194,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 				'clientContacts': {
 					templateUrl: 'apps/conspector/components/contacts/templates/contactsListView.html',
 					controller: 'contactsListView'
-				}
+				},
+				'clientActivities': {
+					templateUrl: 'apps/conspector/components/activities/templates/activitiesListView.html',
+					controller: 'activitiesListView'
+				},
 			}
 		});			
 
@@ -213,7 +221,28 @@ app.config(['$stateProvider', '$urlRouterProvider',
 					controller: 'contactDetailsView'
 				},
 			}
-		});					
+		});	
+
+		$stateProvider.state('app.activitiesList', {
+			url: '/activitiesList',
+			templateUrl: 'apps/conspector/components/activities/templates/activitiesListView.html',
+			controller: 'activitiesListView'
+		});
+
+		$stateProvider.state('app.activityDetailsWrapper', {//abstract view without controller that contains only ngView holders
+			templateUrl: 'apps/conspector/components/activities/templates/activityDetailsWrapperView.html',
+			controller: 'activityDetailsWrapperView'
+		});
+
+		$stateProvider.state('app.activityDetailsWrapper.activityDetails', {//state that contains subviews
+			url: '/activityDetails/:sActivityGuid/:sMode',
+			views: {
+				'activityDetails': {
+					templateUrl: 'apps/conspector/components/activities/templates/activityDetailsView.html',
+					controller: 'activityDetailsView'
+				},
+			}
+		});				
 
 		$stateProvider.state('app.adminPanel', {
 			url: '/adminPanel',

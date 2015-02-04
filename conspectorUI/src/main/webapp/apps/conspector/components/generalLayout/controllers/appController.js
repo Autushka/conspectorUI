@@ -118,6 +118,16 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			});
 		}
 
+		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
+			sRole: sCurrentRole,
+			sMenuItem: "bShowActivities"
+		})) {
+			$scope.aTabs.push({
+				sTitle: "app_activitiesTab",
+				sState: "app.activitiesList"
+			});
+		}
+
 		$scope.onSwitchCompanies = function() {
 			$state.go('companySelection');
 		};
@@ -166,6 +176,10 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 				$scope.selectedTabIndex = getITabIndexForCurrentState("app.contactsList");
 				return;
 			}
+			if ($window.location.hash.indexOf("activity") > -1) {
+				$scope.selectedTabIndex = getITabIndexForCurrentState("app.activitiesList");
+				return;
+			}
 		};
 
 		$timeout(tabSelectionBasedOnHash, 100);
@@ -183,6 +197,9 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			}
 			if ($window.location.hash.indexOf("contact") > -1) {
 				sCurrentSelectedTab = "Contacts";
+			}
+			if ($window.location.hash.indexOf("activity") > -1) {
+				sCurrentSelectedTab = "Activities";
 			}
 
 			if ($scope.selectedTabIndex !== undefined) { //($window.location.hash !== oTab.sHash && $scope.selectedTabIndex !== undefined) {

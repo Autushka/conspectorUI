@@ -45,6 +45,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContractors: true,
 					bShowClients: true,
 					bShowContacts: true,
+					bShowActivities: true,
 					bShowAdminPanel: true,
 					bShowProfileSettings: true
 				},
@@ -100,6 +101,12 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 						bCreate: true,
 						bDelete: true
 					},
+					oActivity: {
+						bDisplay: true,
+						bUpdate: true,
+						bCreate: true,
+						bDelete: true
+					},
 					oUser: {
 						bDisplay: true,
 						bUpdate: true,
@@ -118,6 +125,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContractors: true,
 					bShowClients: true,
 					bShowContacts: true,
+					bShowActivities: true,
 					bShowAdminPanel: true,
 					bShowProfileSettings: true
 				},
@@ -173,6 +181,12 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 						bCreate: true,
 						bDelete: true
 					},
+					oActivity: {
+						bDisplay: true,
+						bUpdate: true,
+						bCreate: true,
+						bDelete: true
+					},
 					oUser: {
 						bDisplay: true,
 						bUpdate: true,
@@ -192,6 +206,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContractors: true,
 					bShowClients: true,
 					bShowContacts: true,
+					bShowActivities: false,
 					bShowAdminPanel: false,
 					bShowProfileSettings: true
 				},
@@ -246,6 +261,12 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 						bUpdate: true,
 						bCreate: true,
 						bDelete: true
+					},
+					oActivity: {
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
 					},
 					oUser: {
 						bDisplay: false,
@@ -265,6 +286,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContractors: true,
 					bShowClients: true,
 					bShowContacts: true,
+					bShowActivities: false,
 					bShowAdminPanel: false,
 					bShowProfileSettings: true
 				},
@@ -316,6 +338,12 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					},
 					oContact: {
 						bDisplay: true,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oActivity: {
+						bDisplay: false,
 						bUpdate: false,
 						bCreate: false,
 						bDelete: false

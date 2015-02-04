@@ -20,6 +20,7 @@ app.factory('cacheProvider', ['TYPES',
 				//oVersion: angular.copy(TYPES.oEntityCacheStructure),
 				oAccountTypeEntity: angular.copy(TYPES.oEntityCacheStructure),
 				oContactTypeEntity: angular.copy(TYPES.oEntityCacheStructure),
+				oActivityTypeEntity: angular.copy(TYPES.oEntityCacheStructure),
 				oCountryEntity: angular.copy(TYPES.oEntityCacheStructure),
 				oContactEntity: angular.copy(TYPES.oEntityCacheStructure),
 				oUnitOptionSetEntity: angular.copy(TYPES.oEntityCacheStructure),
@@ -44,6 +45,12 @@ app.factory('cacheProvider', ['TYPES',
 				}],
 				contractorsList: [{
 					sStateName: "app.contractorsList",
+					aGroups: [],
+					oFilter: {},
+					oSorting: {}
+				}],
+				activitiesList: [{
+					sStateName: "app.activitiesList",
 					aGroups: [],
 					oFilter: {},
 					oSorting: {}
