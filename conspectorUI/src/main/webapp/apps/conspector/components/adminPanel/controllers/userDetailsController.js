@@ -495,6 +495,14 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 				oDataForSave.IsPasswordInitial = true;
 			}
 
+			if ($scope.oUser.sPassword !== $scope.oUser.sPasswordConfirmation) {
+				utilsProvider.displayMessage({
+					sText: $translate.instant('global_passwordsDontMatch'),
+					sType: "error"
+				});
+				return;
+			}
+
 			for (var i = 0; i < $scope.aContacts.length; i++) {
 				if ($scope.aContacts[i].ticked) {
 					oDataForSave.ContactGuid = $scope.aContacts[i].Guid;

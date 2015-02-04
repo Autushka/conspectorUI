@@ -1,5 +1,8 @@
 viewControllers.controller('changePasswordView', ['$scope', '$rootScope', '$state', '$translate', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider', 'apiProvider',
 	function($scope, $rootScope, $state, $translate, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider) {
+		
+		$scope.oForms = {};
+
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 		$scope.oUser = {};
@@ -8,6 +11,8 @@ viewControllers.controller('changePasswordView', ['$scope', '$rootScope', '$stat
 		$rootScope.oStateParams = {}; // for backNavigation		
 
 		$scope.onSave = function() {
+			$scope.oForms.profileSettingsPasswordResetForm.password.$setDirty();
+			$scope.oForms.profileSettingsPasswordResetForm.passwordConfirmation.$setDirty();
 			var SHA512 = new Hashes.SHA512;
 
 			var oDataForSave = {

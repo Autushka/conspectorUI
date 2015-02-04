@@ -1,5 +1,8 @@
-viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider', 'historyProvider',
-	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider, historyProvider) {
+viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'utilsProvider', 'cacheProvider', 'apiProvider', 'historyProvider',
+	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, utilsProvider, cacheProvider, apiProvider, historyProvider) {
+		
+		$scope.oForms = {};
+
 		$scope.resetPasswordData = {
 			sNewPassword: "",
 			sNewPasswordConfirmation: ""
@@ -16,6 +19,8 @@ viewControllers.controller('initialPasswordResetView', ['$scope', '$rootScope', 
 		};
 
 		$scope.resetPassword = function() {
+			$scope.oForms.initialPasswordResetForm.password.$setDirty();
+			$scope.oForms.initialPasswordResetForm.passwordConfirmation.$setDirty();
 			var SHA512 = new Hashes.SHA512;
 			var oDataForSave = {};
 

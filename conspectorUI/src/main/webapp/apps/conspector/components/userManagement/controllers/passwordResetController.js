@@ -1,5 +1,8 @@
-viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'cacheProvider', 'apiProvider', '$stateParams', 'historyProvider',
-	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, cacheProvider, apiProvider, $stateParams, historyProvider) {
+viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state', 'dataProvider', '$translate', 'servicesProvider', 'utilsProvider', 'cacheProvider', 'apiProvider', '$stateParams', 'historyProvider',
+	function($scope, $rootScope, $state, dataProvider, $translate, servicesProvider, utilsProvider, cacheProvider, apiProvider, $stateParams, historyProvider) {
+		
+		$scope.oForms = {};
+
 		$scope.resetPasswordData = {
 			sNewPassword: "",
 			sNewPasswordConfirmation: ""
@@ -11,19 +14,21 @@ viewControllers.controller('passwordResetView', ['$scope', '$rootScope', '$state
 		}
 
 		$scope.resetPassword = function() {
+			$scope.oForms.passwordResetForm.password.$setDirty();
+			$scope.oForms.passwordResetForm.passwordConfirmation.$setDirty();
 			var SHA512 = new Hashes.SHA512;
 			var oData = {};
 			
 			if (!$scope.resetPasswordData.sNewPassword || !$scope.resetPasswordData.sNewPasswordConfirmation) {
-				servicesProvider.displayMessage({
+				utilsProvider.displayMessage({
 					sText: $translate.instant("global_emptyFields"),
 					sType: 'error'
 				});
 				return;
-			}	
+			}
 
 			if ($scope.resetPasswordData.sNewPassword !== $scope.resetPasswordData.sNewPasswordConfirmation) {
-				servicesProvider.displayMessage({
+				utilsProvider.displayMessage({
 					sText: $translate.instant('passwordReset_passwordsDontMatch'),
 					sType: "error"
 				});

@@ -71,10 +71,13 @@
 								{{'userDetails_password' | translate}}
 							</label>
 						</div>
-						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPassword" ng-change="onDataModified()" name="password" ng-required="sMode == 'create' ? true : false">
+						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPassword" ng-change="onDataModified()" name="password" ng-required="sMode == 'create' ? true : false" ng-minlength="8">
 						<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.password.$error" ng-if="!oForms.userDetailsForm.password.$valid && !oForms.userDetailsForm.password.$pristine">
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}
+							</div>
+							<div class="cnpErrorMessageValidationMessage" ng-message="minlength">
+								{{'global_minPasswordLength' | translate}}
 							</div>
 						</div>
 					</div>
@@ -84,10 +87,13 @@
 								{{'userDetails_passwordConfirmation' | translate}}
 							</label>
 						</div>
-						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPasswordConfirmation" ng-change="onDataModified()" name="passwordConfirmation" ng-required="sMode == 'create' ? true : false">
+						<input type="password" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUser.sPasswordConfirmation" ng-change="onDataModified()" name="passwordConfirmation" ng-required="sMode == 'create' ? true : false" ng-minlength="8">
 						<div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.passwordConfirmation.$error" ng-if="!oForms.userDetailsForm.passwordConfirmation.$valid && !oForms.userDetailsForm.passwordConfirmation.$pristine">
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}
+							</div>
+							<div class="cnpErrorMessageValidationMessage" ng-message="minlength">
+								{{'global_minPasswordLength' | translate}}
 							</div>
 						</div>
 					</div>
