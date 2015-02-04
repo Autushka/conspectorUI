@@ -116,11 +116,28 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/generalLayout/templates/appView.html',
 			controller: 'appView'
 		});
+
 		$stateProvider.state('app.deficienciesList', {
 			url: '/deficienciesList',
 			templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListView.html',
 			controller: 'deficienciesListView'
 		});
+
+		$stateProvider.state('app.deficiecnyDetailsWrapper', {//abstract view without controller that contains only ngView holders
+			templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyDetailsWrapperView.html',
+			controller: 'deficiencyDetailsWrapperView'
+		});
+
+		$stateProvider.state('app.deficiencyDetailsWrapper.deficiencyDetails', {//state that contains subviews
+			url: '/deficiecnyDetails/:sDeficiencyGuid/:sMode',
+			views: {
+				'deficiencyDetails': {
+					templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyDetailsView.html',
+					controller: 'deficiencyDetailsView'
+				},
+			}
+		});	
+
 		$stateProvider.state('app.unitsList', {
 			url: '/unitsList',
 			templateUrl: 'apps/conspector/components/units/templates/unitsListView.html',

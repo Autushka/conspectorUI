@@ -69,6 +69,8 @@
 		<script src="apps/conspector/components/generalLayout/controllers/appController.js"></script>
 		
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListController.js"></script>
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsWrapperController.js"></script>				
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsController.js"></script>			
 		
 		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
 
