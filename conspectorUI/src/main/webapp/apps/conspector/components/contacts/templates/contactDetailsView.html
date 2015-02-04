@@ -133,39 +133,51 @@
 					<div class="cnpSubSection" flex>
 						<div  class="cnpSubSectionLabel">
 							<label>
-								{{'contactDetails_homePhone' | translate}}
-							</label>
-						</div>
-						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContact.sHomePhone | phoneFormatter}}">{{oContact.sHomePhone | phoneFormatter}}</a></div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sHomePhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'global_phoneExtension' | translate}}
-							</label>
-						</div>
-						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sHomePhoneExtension}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sHomePhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'contactDetails_workPhone' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContact.sWorkPhone | phoneFormatter}}">{{oContact.sWorkPhone | phoneFormatter}}</a></div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sWorkPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'global_phoneExtension' | translate}}
-							</label>
-						</div>
-						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sWorkPhoneExtension}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sWorkPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
 								{{'contactDetails_mobilePhone' | translate}}
 							</label>
 						</div>
 						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContact.sMobilePhone | phoneFormatter}}">{{oContact.sMobilePhone | phoneFormatter}}</a></div>
 						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sMobilePhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
+						<div layout="row">
+							<div flex="70">
+								<div  class="cnpSubSectionLabel">
+									<label>
+										{{'contactDetails_homePhone' | translate}}
+									</label>
+								</div>
+								<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContact.sHomePhone | phoneFormatter}}">{{oContact.sHomePhone | phoneFormatter}}</a></div>
+								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sHomePhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
+							</div>
+							<div flex="30">
+								<div  class="cnpSubSectionLabel">
+									<label>
+										{{'global_phoneExtension' | translate}}
+									</label>
+								</div>
+								<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sHomePhoneExtension}}</div>
+								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sHomePhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
+							</div>
+						</div>
+						<div layout="row">
+							<div flex="70">
+								<div  class="cnpSubSectionLabel">
+									<label>
+										{{'contactDetails_workPhone' | translate}}
+									</label>
+								</div>
+								<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContact.sWorkPhone | phoneFormatter}}">{{oContact.sWorkPhone | phoneFormatter}}</a></div>
+								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sWorkPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
+							</div>
+							<div flex="30">
+								<div  class="cnpSubSectionLabel">
+									<label>
+										{{'global_phoneExtension' | translate}}
+									</label>
+								</div>
+								<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oContact.sWorkPhoneExtension}}</div>
+								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sWorkPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
+							</div>
+						</div>
 						<div class="cnpSubSectionLabel">
 							<label>
 								{{'contactDetails_email' | translate}}
