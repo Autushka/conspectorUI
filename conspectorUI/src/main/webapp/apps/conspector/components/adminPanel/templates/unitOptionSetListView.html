@@ -37,20 +37,18 @@
 						</div>
 					</div>
 				</td>
-<!-- 				<td data-title="'global_project' | translate" style="width: 60px;">
-					<span ng-if="!unitOptionSet._editMode">{{unitOptionSet.projectName}}</span>
-					<div ng-if="unitOptionSet._editMode"
+				<td data-title="'global_project' | translate" style="width: 60px;">
+					<div
 						multi-select
-						input-model="unitOptionSet.aProjects"
-						default-label="{{'adminPanel_projectDefaultLabel' | translate }}"
-						button-label="name"
+						input-model="unitOptionSet.aPhases"
+						button-label="fullName"
 						item-label="name"
+						is-disabled="!unitOptionSet._editMode"
 						tick-property="ticked"
-						selection-mode="single"
-						helper-elements=""
-						>
-					</div>
-				</td> -->
+						group-property="multiSelectGroup"
+							>
+					</div>					
+				</td>
 				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!unitOptionSet._editMode">{{unitOptionSet.nameEN}}</span>

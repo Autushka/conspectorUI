@@ -72,49 +72,64 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                 }
                 aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
 
-                for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-                    bMatchFound = false;
-                    for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-                        if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-                            bMatchFound = true;
-                            break;
-                        }
-                    }
-                    if (!bMatchFound) {
-                        continue;
-                    }
-
-                    sName = "";
+                sName = "";
+                if (aData[i].FirstName) {
+                    sName = aData[i].FirstName;
+                }
+                if (aData[i].LastName) {
                     if (aData[i].FirstName) {
-                        sName = aData[i].FirstName;
+                        sName = sName + " ";
                     }
-                    if (aData[i].LastName) {
-                        if (aData[i].FirstName) {
-                            sName = sName + " ";
+                    sName = sName + aData[i].LastName;
+                }
+
+                if (aData[i].PhaseDetails.results.length) {
+                    for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+                        bMatchFound = false;
+                        for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+                            if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
+                                bMatchFound = true;
+                                break;
+                            }
                         }
-                        sName = sName + aData[i].LastName;
-                    }
+                        if (!bMatchFound) {
+                            continue;
+                        }
 
-                    sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-                    if (!sProjectName) {
-                        sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
-                    }
-                    sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-                    if (!sPhaseName) {
-                        sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-                    }
+                        sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
+                        if (!sProjectName) {
+                            sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
+                        }
+                        sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
+                        if (!sPhaseName) {
+                            sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
+                        }
 
+                        oContactsListData.aData.push({
+                            sName: sName,
+                            sTitle: aData[i].Title,
+                            sPhone: aData[i].MobilePhone,
+                            sEmail: aData[i].Email,
+                            _guid: aData[i].Guid,
+                            sProjectPhase: sProjectName + ' - ' + sPhaseName,
+                            _accountGuid: aData[i].AccountGuid,
+                            _accountTypeName: aData[i].AccountDetails.AccountTypeDetails.NameEN,
+                            sAccountName: aData[i].AccountDetails.Name,
+                            _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting                       
+                        });
+                    }
+                } else {
                     oContactsListData.aData.push({
                         sName: sName,
                         sTitle: aData[i].Title,
                         sPhone: aData[i].MobilePhone,
                         sEmail: aData[i].Email,
                         _guid: aData[i].Guid,
-                        sProjectPhase: sProjectName + ' - ' + sPhaseName,
+                        sProjectPhase: "Not Assigned",// TODO should be translatable...
                         _accountGuid: aData[i].AccountGuid,
                         _accountTypeName: aData[i].AccountDetails.AccountTypeDetails.NameEN,
                         sAccountName: aData[i].AccountDetails.Name,
-                        _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting						
+                        _sortingSequence: -1, //for default groups sorting                       
                     });
                 }
             }

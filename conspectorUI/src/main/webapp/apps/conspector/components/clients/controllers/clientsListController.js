@@ -57,42 +57,56 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
 			var sPhaseName = "";
 			var bMatchFound = false;
 			for (var i = 0; i < aData.length; i++) {
-				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-					aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
-				}
-				aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
 
-				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-					bMatchFound = false;
-					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-						if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-							bMatchFound = true;
-							break;
+				if (aData[i].PhaseDetails.results.length) {
+					for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+						aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
+					}
+					aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
+
+					for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+						bMatchFound = false;
+						for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+							if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
+								bMatchFound = true;
+								break;
+							}
 						}
-					}
-					if (!bMatchFound) {
-						continue;
-					}
+						if (!bMatchFound) {
+							continue;
+						}
 
-					sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-					if (!sProjectName) {
-						sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
-					}
-					sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-					if (!sPhaseName) {
-						sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-					}
+						sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
+						if (!sProjectName) {
+							sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
+						}
+						sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
+						if (!sPhaseName) {
+							sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
+						}
 
+						oClientsListData.aData.push({
+							sClientName: aData[i].Name,
+							sPhone: aData[i].MainPhone,
+							sEmail: aData[i].Email,
+							_guid: aData[i].Guid,
+							sTags: aData[i].DescriptionTags,
+							sProjectPhase: sProjectName + " - " + sPhaseName,
+							_sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting
+						});
+					}
+				} else {
 					oClientsListData.aData.push({
 						sClientName: aData[i].Name,
 						sPhone: aData[i].MainPhone,
 						sEmail: aData[i].Email,
 						_guid: aData[i].Guid,
 						sTags: aData[i].DescriptionTags,
-						sProjectPhase: sProjectName + " - " + sPhaseName,
-						_sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting
+						sProjectPhase: "Not Assigned", // TODO should be translatable...
+						_sortingSequence: -1, //for default groups sorting
 					});
 				}
+
 			}
 			$scope.tableParams.reload();
 		};

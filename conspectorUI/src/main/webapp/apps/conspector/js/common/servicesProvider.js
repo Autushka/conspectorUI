@@ -483,13 +483,21 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 								bMatchFound = true;
 							}
 						}
+						if (oParameters.sParentKeys) {
+							for (var k = 0; k < oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKeys].length; k++) {
+								if (aMultiSelectArray[j][oParameters.sDependentKey] === oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKeys][k]) {
+									aArrayItem.ticked = true;
+									bMatchFound = true;
+								}
+							}
+						}						
 						if (oParameters.aParentKeys) {
 							for (var k = 0; k < oParameters.aParentKeys.length; k++) {
 								if (aMultiSelectArray[j][oParameters.sDependentKey] === oParameters.aParentKeys[k]) {
 									aArrayItem.ticked = true;
 									bMatchFound = true;
 								}
-							};
+							}
 						}
 						aArray.push(aArrayItem);
 					}

@@ -1,19 +1,18 @@
-viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'cacheProvider', 'historyProvider',
+viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'cacheProvider', 'historyProvider',
 	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, cacheProvider, historyProvider) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button				
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = {}; // for backNavigation			
-//		var oProjectArrayWrapper = {
-//			aData: []
-//		};
-//		//$scope.aProjects = [];
-//
+		var oPhasesArrayWrapper = {
+			aData: []
+		};
+
 		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
-//
+
 		var UnitOptionSetsListData = {
 			aData: []
 		};
-//
+
 		$scope.tableParams = servicesProvider.createNgTable({
 			oInitialDataArrayWrapper: UnitOptionSetsListData,
 			sDisplayedDataArrayName: "aDisplayedUnitOptionSets",
@@ -21,30 +20,43 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 				sortingSequence: 'asc'
 			}
 		});
-//
-//		var aProjectArray = [];
-//
-//		var onProjectsLoaded = function(aData) {
-//			for (var i = 0; i < aData.length; i++) {
-//				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-//			}
-//			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-//
-//			servicesProvider.constructDependentMultiSelectArray({
-//				oDependentArrayWrapper: {
-//					aData: aData
-//				},
-//				oParentArrayWrapper: oPhasesListData,
-//				oNewParentItemArrayWrapper: oProjectArrayWrapper,
-//				sNameEN: "NameEN",
-//				sNameFR: "NameFR",
-//				sDependentKey: "Guid",
-//				sParentKey: "_projectGuid",
-//				sTargetArrayNameInParent: "aProjects"
-//			});
-//		};
-//
+
+		var onProjectsLoaded = function(aData) {
+			//Sort aData by project sorting sequence and then by phases sorting sequence...
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+				for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+					if (aData[i].PhaseDetails.results[j].GeneralAttributes.IsDeleted) { // Filtering on expanded entities doesn't work right now in olingo...
+						aData[i].PhaseDetails.results.splice(j, 1);
+						break;
+					}
+					aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
+				}
+				aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: UnitOptionSetsListData,
+				oNewParentItemArrayWrapper: oPhasesArrayWrapper,
+				sSecondLevelAttribute: "PhaseDetails",
+				sSecondLevelNameEN: "NameEN",
+				sSecondLevelNameFR: "NameFR",
+				sNameEN: "NameEN",
+				sNameFR: "NameFR",
+				sDependentKey: "Guid",
+				sParentKeys: "_unitOptionSetGuids",
+				sTargetArrayNameInParent: "aPhases"
+			});
+		};
+
 		var onUnitOptionSetsLoaded = function(aData) {
+			var sProjectName = "";
+			var sPhaseName = "";
+			var sProjectPhase = "";			
 			for (var i = 0; i < aData.length; i++) {
 				var oUnitOptionSet = {};
 				oUnitOptionSet._editMode = false; //symbol _ here meens that this attribute is not displayed in the table and is used for the logic only
@@ -53,16 +65,22 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 				oUnitOptionSet.nameEN = aData[i].NameEN;
 				oUnitOptionSet.nameFR = aData[i].NameFR;
 				oUnitOptionSet.sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-				// if (aData[i].ProjectDetails) {
-				// 	oPhase._projectGuid = aData[i].ProjectDetails.Guid;
-				// 	oPhase.projectName = $translate.use() === "en" ? aData[i].ProjectDetails.NameEN : aData[i].ProjectDetails.NameFR;
-				// 	if (!oPhase.projectName) {
-				// 		oPhase.projectName = aData[i].ProjectDetails.NameEN;
-				// 	}
-				// }
+
+				oUnitOptionSet._unitOptionSetGuids = [];
+				if (aData[i].PhaseDetails && aData[i].PhaseDetails.results) {
+					for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+						oUnitOptionSet._unitOptionSetGuids.push(aData[i].PhaseDetails.results[j].Guid);
+					}
+				}
+
 				UnitOptionSetsListData.aData.push(oUnitOptionSet);
 			}
 			$scope.tableParams.reload();
+
+			apiProvider.getProjectsWithPhases({
+				bShowSpinner: false,
+				onSuccess: onProjectsLoaded
+			});
 
 			// apiProvider.getProjects({
 			// 	bShowSpinner: false,
@@ -74,7 +92,7 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 			bShowSpinner: true,
 			onSuccess: onUnitOptionSetsLoaded
 		});
-//
+		//
 		$scope.onAddNew = function() {
 			UnitOptionSetsListData.aData.push({
 				_editMode: true,
@@ -82,17 +100,17 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 				nameEN: "",
 				nameFR: "",
 				_counter: iNewItemsCounter,
-				//aProjects: angular.copy(oProjectArrayWrapper.aData)
+				aPhases: angular.copy(oPhasesArrayWrapper.aData)
 
 			});
 			iNewItemsCounter++;
 			$scope.tableParams.reload();
 		};
-//
+		//
 		$scope.onEdit = function(oUnitOptionSet) {
 			oUnitOptionSet._editMode = true;
 		};
-//
+		//
 		$scope.onDelete = function(oUnitOptionSet) {
 			var oDataForSave = {
 				GeneralAttributes: {
@@ -130,9 +148,28 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 				}
 			}
 		};
-//
-//		var sProjectName = "";
-//
+
+		var prepareLinksForSave = function(oUnitOptionSet) { // link unitOptenSet to phases
+			var aLinks = [];
+			var aUri = [];
+			var sUri = "";
+
+			for (var i = 0; i < oUnitOptionSet.aPhases.length; i++) {
+				if (oUnitOptionSet.aPhases[i].ticked) {
+					sUri = "Phases('" + oUnitOptionSet.aPhases[i].Guid + "')";
+					aUri.push(sUri);
+				}
+			}
+
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "PhaseDetails",
+					aUri: aUri
+				});
+			}
+			return aLinks;
+		};
+
 		$scope.onSave = function(oUnitOptionSet) {
 			var oDataForSave = {
 				GeneralAttributes: {}
@@ -141,16 +178,10 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 				oUnitOptionSet._guid = oData.Guid;
 				oUnitOptionSet._lastModifiedAt = oData.LastModifiedAt;
 				oUnitOptionSet._editMode = false;
-
-
-				
 			};
 			var onSuccessUpdate = function(oData) {
 				oUnitOptionSet._editMode = false;
 				oUnitOptionSet._lastModifiedAt = oData.LastModifiedAt;
-
-
-
 			};
 
 			oDataForSave.NameEN = oUnitOptionSet.nameEN;
@@ -158,14 +189,7 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 			oDataForSave.GeneralAttributes.SortingSequence = oUnitOptionSet.sortingSequence;
 			oDataForSave.LastModifiedAt = oUnitOptionSet._lastModifiedAt;
 
-			// for (var i = 0; i < oPhase.aProjects.length; i++) {
-			// 	if (oPhase.aProjects[i].ticked) {
-			// 		oDataForSave.ProjectGuid = oPhase.aProjects[i].Guid;
-			// 		sProjectName = oPhase.aProjects[i].name;
-			// 		break;
-			// 	}
-			// }
-
+			var aLinks = prepareLinksForSave(oUnitOptionSet);
 			if (oUnitOptionSet._guid) {
 				oDataForSave.Guid = oUnitOptionSet._guid;
 				apiProvider.updateUnitOptionSet({
@@ -174,7 +198,8 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 					oData: oDataForSave,
 					bShowSuccessMessage: true,
 					bShowErrorMessage: true,
-					onSuccess: onSuccessUpdate
+					onSuccess: onSuccessUpdate,
+					aLinks: aLinks
 				});
 			} else {
 				apiProvider.createUnitOptionSet({
@@ -182,7 +207,8 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope','$st
 					oData: oDataForSave,
 					bShowSuccessMessage: true,
 					bShowErrorMessage: true,
-					onSuccess: onSuccessCreation
+					onSuccess: onSuccessCreation,
+					aLinks: aLinks
 				});
 			}
 		};

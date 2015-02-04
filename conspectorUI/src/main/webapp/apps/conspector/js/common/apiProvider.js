@@ -903,7 +903,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oUnitOptionSetEntity"
+					sCacheProviderAttribute: "oUnitOptionSetEntity",
+					sExpand: "PhaseDetails/ProjectDetails",					
 				});
 				if (svc instanceof Array) {
 					oParameters.onSuccess(svc) // data retrived from cache
@@ -926,7 +927,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
 					bGuidNeeded: true,
-					bCompanyNeeded: true
+					bCompanyNeeded: true,
+					aLinks: oParameters.aLinks,
+					sKeyAttribute: "Guid",
 				});
 
 				oSvc.then(onSuccess);
@@ -946,6 +949,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					oData: oParameters.oData,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
+					aLinks: oParameters.aLinks,
+					sKeyAttribute: "Guid",
 				});
 
 				oSvc.then(onSuccess);
@@ -1003,7 +1008,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},		
+			},
 
 			getContractorsWithPhases: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
