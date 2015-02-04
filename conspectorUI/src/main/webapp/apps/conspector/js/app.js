@@ -290,6 +290,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			templateUrl: 'apps/conspector/components/adminPanel/templates/unitOptionValueListView.html',
 			controller: 'unitOptionValueListView'
 		});
+		
+        $stateProvider.state('app.adminPanel.taskTypeList', {
+            url: '/taskTypeList',
+            templateUrl: 'apps/conspector/components/adminPanel/templates/taskTypeListView.html',
+            controller: 'taskTypeListView'
+        });		
 		$stateProvider.state('app.profileSettings', {
 			url: '/profileSettings',
 			templateUrl: 'apps/conspector/components/profileSettings/templates/profileSettingsView.html',

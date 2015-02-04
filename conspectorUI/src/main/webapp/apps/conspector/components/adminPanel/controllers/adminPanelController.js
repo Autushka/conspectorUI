@@ -132,7 +132,16 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 			}),
 			sStateName: "app.adminPanel.unitOptionValueList",
 			sMenuLabel: "adminPanel_unitOptionValue",
-		});			
+		});		
+
+		$scope.aMenuItems.push({
+			bShouldBeDisplayed: rolesSettings.getRolesAdminPanelMenuItemSettings({
+				sRole: sCurrentRole,
+				sMenuItem: "bShowTaskTypeManagement"
+			}),
+			sStateName: "app.adminPanel.taskTypeList",
+			sMenuLabel: "adminPanel_taskType",
+		});		
 
 		var oWindow = angular.element($window);
 

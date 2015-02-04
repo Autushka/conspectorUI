@@ -144,8 +144,11 @@ app.config(['$translateProvider',
                   adminPanel_hideSidenav: 'Open Admin Panel Menu',
                   adminPanel_unitOptionSet: 'Unit Option Set',
                   adminPanel_unitOptionValue: 'Unit Option Values',
+                  adminPanel_taskType: 'Task Type',
                   //unitOptionValuesList
                   unitOptionValuesList_title: 'Unit Option Values',
+                  //taskTypesList_title
+                  taskTypesList_title: 'Task Types',
                   //companiesList
                   companiesList_title: "Companies",
                   companiesList_companyName: "Company Name",
@@ -451,8 +454,11 @@ app.config(['$translateProvider',
                   adminPanel_hideSidenav: 'Ouvrir menu',
                   adminPanel_unitOptionSet: 'Unit Option Set',
                   adminPanel_unitOptionValue: 'Unit Option Values',
+                  adminPanel_taskType: 'Task Type',
                   //unitOptionValuesList
                   unitOptionValuesList_title: 'Unit Option Values',
+                  //taskTypesList_title
+                  taskTypesList_title: 'Task Types',
                   //companiesList
                   companiesList_title: 'Compagnies',
                   companiesList_companyName: 'Nom compagnie',
