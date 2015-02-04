@@ -3,47 +3,44 @@ viewControllers.controller('unitOptionValueListView', ['$scope', '$rootScope','$
 		historyProvider.removeHistory(); // because current view doesn't have a back button				
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = {}; // for backNavigation			
-//		var oProjectArrayWrapper = {
-//			aData: []
-//		};
-//		//$scope.aProjects = [];
-//
-		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
-//
-		var UnitOptionValuesListData = {
+		var unitOptionSetArrayWrapper = {
 			aData: []
 		};
-//
+
+		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
+
+		var oUnitOptionValuesListData = {
+			aData: []
+		};
+
 		$scope.tableParams = servicesProvider.createNgTable({
-			oInitialDataArrayWrapper: UnitOptionValuesListData,
+			oInitialDataArrayWrapper: oUnitOptionValuesListData,
 			sDisplayedDataArrayName: "aDisplayedUnitOptionValues",
 			oInitialSorting: {
 				sortingSequence: 'asc'
 			}
 		});
-//
-//		var aProjectArray = [];
-//
-//		var onProjectsLoaded = function(aData) {
-//			for (var i = 0; i < aData.length; i++) {
-//				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-//			}
-//			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-//
-//			servicesProvider.constructDependentMultiSelectArray({
-//				oDependentArrayWrapper: {
-//					aData: aData
-//				},
-//				oParentArrayWrapper: oPhasesListData,
-//				oNewParentItemArrayWrapper: oProjectArrayWrapper,
-//				sNameEN: "NameEN",
-//				sNameFR: "NameFR",
-//				sDependentKey: "Guid",
-//				sParentKey: "_projectGuid",
-//				sTargetArrayNameInParent: "aProjects"
-//			});
-//		};
-//
+
+		var onUnitOptionSetsLoaded = function(aData) {
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oUnitOptionValuesListData,
+				oNewParentItemArrayWrapper: unitOptionSetArrayWrapper,
+				sNameEN: "NameEN",
+				sNameFR: "NameFR",
+				sDependentKey: "Guid",
+				sParentKey: "_unitOptionSetGuid",
+				sTargetArrayNameInParent: "aUnitOptionSets"
+			});
+		};
+
 		var onUnitOptionValuesLoaded = function(aData) {
 			for (var i = 0; i < aData.length; i++) {
 				var oUnitOptionValue = {};
@@ -53,46 +50,42 @@ viewControllers.controller('unitOptionValueListView', ['$scope', '$rootScope','$
 				oUnitOptionValue.nameEN = aData[i].NameEN;
 				oUnitOptionValue.nameFR = aData[i].NameFR;
 				oUnitOptionValue.sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-				// if (aData[i].ProjectDetails) {
-				// 	oPhase._projectGuid = aData[i].ProjectDetails.Guid;
-				// 	oPhase.projectName = $translate.use() === "en" ? aData[i].ProjectDetails.NameEN : aData[i].ProjectDetails.NameFR;
-				// 	if (!oPhase.projectName) {
-				// 		oPhase.projectName = aData[i].ProjectDetails.NameEN;
-				// 	}
-				// }
-				UnitOptionValuesListData.aData.push(oUnitOptionValue);
+				if (aData[i].UnitOptionSetDetails) {
+					oUnitOptionValue._unitOptionSetGuid = aData[i].UnitOptionSetDetails.Guid;
+				}
+				oUnitOptionValuesListData.aData.push(oUnitOptionValue);
 			}
 			$scope.tableParams.reload();
 
-			// apiProvider.getProjects({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onProjectsLoaded
-			// });
+			apiProvider.getUnitOptionSets({
+				bShowSpinner: false,
+				onSuccess: onUnitOptionSetsLoaded
+			});
 		}
 
 		apiProvider.getUnitOptionValues({
 			bShowSpinner: true,
 			onSuccess: onUnitOptionValuesLoaded
 		});
-//
+
 		$scope.onAddNew = function() {
-			UnitOptionValuesListData.aData.push({
+			oUnitOptionValuesListData.aData.push({
 				_editMode: true,
 				sortingSequence: 0,
 				nameEN: "",
 				nameFR: "",
 				_counter: iNewItemsCounter,
-				//aProjects: angular.copy(oProjectArrayWrapper.aData)
+				aUnitOptionSets: angular.copy(unitOptionSetArrayWrapper.aData)
 
 			});
 			iNewItemsCounter++;
 			$scope.tableParams.reload();
 		};
-//
+
 		$scope.onEdit = function(oUnitOptionValue) {
 			oUnitOptionValue._editMode = true;
 		};
-//
+
 		$scope.onDelete = function(oUnitOptionValue) {
 			var oDataForSave = {
 				GeneralAttributes: {
@@ -100,9 +93,9 @@ viewControllers.controller('unitOptionValueListView', ['$scope', '$rootScope','$
 				}
 			};
 			var onSuccessDelete = function() {
-				for (var i = 0; i < UnitOptionValuesListData.aData.length; i++) {
-					if (UnitOptionValuesListData.aData[i]._guid === oUnitOptionValue._guid) {
-						UnitOptionValuesListData.aData.splice(i, 1);
+				for (var i = 0; i < oUnitOptionValuesListData.aData.length; i++) {
+					if (oUnitOptionValuesListData.aData[i]._guid === oUnitOptionValue._guid) {
+						oUnitOptionValuesListData.aData.splice(i, 1);
 						break;
 					}
 				}
@@ -121,18 +114,16 @@ viewControllers.controller('unitOptionValueListView', ['$scope', '$rootScope','$
 					onSuccess: onSuccessDelete
 				});
 			} else {
-				for (var i = 0; i < UnitOptionValuesListData.aData.length; i++) {
-					if (UnitOptionValuesListData.aData[i]._counter === oUnitOptionValue._counter) {
-						UnitOptionValuesListData.aData.splice(i, 1);
+				for (var i = 0; i < oUnitOptionValuesListData.aData.length; i++) {
+					if (oUnitOptionValuesListData.aData[i]._counter === oUnitOptionValue._counter) {
+						oUnitOptionValuesListData.aData.splice(i, 1);
 						$scope.tableParams.reload();
 						break;
 					}
 				}
 			}
 		};
-//
-//		var sProjectName = "";
-//
+
 		$scope.onSave = function(oUnitOptionValue) {
 			var oDataForSave = {
 				GeneralAttributes: {}
@@ -158,13 +149,12 @@ viewControllers.controller('unitOptionValueListView', ['$scope', '$rootScope','$
 			oDataForSave.GeneralAttributes.SortingSequence = oUnitOptionValue.sortingSequence;
 			oDataForSave.LastModifiedAt = oUnitOptionValue._lastModifiedAt;
 
-			// for (var i = 0; i < oPhase.aProjects.length; i++) {
-			// 	if (oPhase.aProjects[i].ticked) {
-			// 		oDataForSave.ProjectGuid = oPhase.aProjects[i].Guid;
-			// 		sProjectName = oPhase.aProjects[i].name;
-			// 		break;
-			// 	}
-			// }
+			for (var i = 0; i < oUnitOptionValue.aUnitOptionSets.length; i++) {
+				if (oUnitOptionValue.aUnitOptionSets[i].ticked) {
+					oDataForSave.UnitOptionSetGuid = oUnitOptionValue.aUnitOptionSets[i].Guid;
+					break;
+				}
+			}
 
 			if (oUnitOptionValue._guid) {
 				oDataForSave.Guid = oUnitOptionValue._guid;

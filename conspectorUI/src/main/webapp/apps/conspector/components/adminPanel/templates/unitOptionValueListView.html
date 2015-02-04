@@ -37,20 +37,20 @@
 						</div>
 					</div>
 				</td>
-<!-- 				<td data-title="'global_project' | translate" style="width: 60px;">
-					<span ng-if="!unitOptionValue._editMode">{{unitOptionValue.projectName}}</span>
-					<div ng-if="unitOptionValue._editMode"
+ 				<td data-title="'global_unitOptionSet' | translate" style="width: 60px;">
+					<div 
 						multi-select
-						input-model="unitOptionValue.aProjects"
-						default-label="{{'adminPanel_projectDefaultLabel' | translate }}"
+						input-model="unitOptionValue.aUnitOptionSets"
+						default-label="{{'adminPanel_unitOptionSetDefaultLabel' | translate }}"
 						button-label="name"
 						item-label="name"
+						is-disabled="!unitOptionValue._editMode"
 						tick-property="ticked"
 						selection-mode="single"
 						helper-elements=""
 						>
 					</div>
-				</td> -->
+				</td>
 				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!unitOptionValue._editMode">{{unitOptionValue.nameEN}}</span>

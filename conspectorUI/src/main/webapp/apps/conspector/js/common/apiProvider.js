@@ -901,10 +901,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "UnitOptionSets",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					sExpand: "PhaseDetails/ProjectDetails",						
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oUnitOptionSetEntity",
-					sExpand: "PhaseDetails/ProjectDetails",					
+					sCacheProviderAttribute: "oUnitOptionSetEntity"				
 				});
 				if (svc instanceof Array) {
 					oParameters.onSuccess(svc) // data retrived from cache
@@ -960,6 +960,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "UnitOptions",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					sExpand: "UnitOptionSetDetails",	
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oUnitOptionValueEntity"
