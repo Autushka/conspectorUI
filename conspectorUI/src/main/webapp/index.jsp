@@ -73,6 +73,8 @@
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsController.js"></script>			
 		
 		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
+		<script src="apps/conspector/components/units/controllers/unitsDetailsController.js"></script>
+		<script src="apps/conspector/components/units/controllers/unitsDetailsWrapperController.js"></script>
 
 		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
 		<script src="apps/conspector/components/contractors/controllers/contractorDetailsWrapperController.js"></script>
@@ -109,7 +111,6 @@
 		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script>  
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionSetListController.js"></script>  	
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValueListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/taskTypeListController.js"></script>		
 		<%@page import="java.util.*" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file
