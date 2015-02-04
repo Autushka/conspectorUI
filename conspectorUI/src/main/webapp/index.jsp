@@ -67,11 +67,13 @@
 		<script src="apps/conspector/components/userManagement/controllers/initialPasswordResetController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/passwordResetController.js"></script>
 		<script src="apps/conspector/components/generalLayout/controllers/appController.js"></script>
+		
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListController.js"></script>
+		
 		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
 
 		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
-		<script src="apps/conspector/components/contractors/controllers/contractorDetailsWrapperController.js"></script>			
+		<script src="apps/conspector/components/contractors/controllers/contractorDetailsWrapperController.js"></script>
 		<script src="apps/conspector/components/contractors/controllers/contractorDetailsController.js"></script>
 
 		<script src="apps/conspector/components/contacts/controllers/contactsListController.js"></script>
@@ -80,7 +82,11 @@
 
 		<script src="apps/conspector/components/clients/controllers/clientsListController.js"></script>
 		<script src="apps/conspector/components/clients/controllers/clientDetailsWrapperController.js"></script>			
-		<script src="apps/conspector/components/clients/controllers/clientDetailsController.js"></script>		
+		<script src="apps/conspector/components/clients/controllers/clientDetailsController.js"></script>
+
+		<script src="apps/conspector/components/activities/controllers/activitiesListController.js"></script>
+		<script src="apps/conspector/components/activities/controllers/activityDetailsWrapperController.js"></script>			
+		<script src="apps/conspector/components/activities/controllers/activityDetailsController.js"></script>
 
 		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>
 		<script src="apps/conspector/components/profileSettings/controllers/profileDetailsController.js"></script>
@@ -100,7 +106,7 @@
 		<script src="apps/conspector/components/adminPanel/controllers/contactTypesListController.js"></script>		
 		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script>  
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionSetListController.js"></script>  	
-		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValueListController.js"></script> 	
+		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValueListController.js"></script>
 		<%@page import="java.util.*" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file
