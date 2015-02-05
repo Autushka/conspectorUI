@@ -1,5 +1,5 @@
-viewControllers.controller('unitsListView', ['$scope', '$state', 'servicesProvider', 'historyProvider', 'apiProvider',
-	function($scope, $state, servicesProvider, historyProvider, apiProvider) {
+viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
+	function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
 		historyProvider.removeHistory();// because current view doesn't have a back button
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
