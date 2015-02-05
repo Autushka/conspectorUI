@@ -73,8 +73,8 @@
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsController.js"></script>		
 
 		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
-		<script src="apps/conspector/components/units/controllers/unitsDetailsController.js"></script>
-		<script src="apps/conspector/components/units/controllers/unitsDetailsWrapperController.js"></script>
+		<script src="apps/conspector/components/units/controllers/unitDetailsController.js"></script>
+		<script src="apps/conspector/components/units/controllers/unitDetailsWrapperController.js"></script>
 
 		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
 		<script src="apps/conspector/components/contractors/controllers/contractorDetailsWrapperController.js"></script>
