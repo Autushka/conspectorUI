@@ -1289,6 +1289,22 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 				oSvc.then(onSuccess);
 			},
+
+			getDeficiencies: function(oParameters){
+				var svc = dataProvider.getEntitySet({
+					sPath: "Deficiencys",
+					//sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oDeficiencyEntity"
+				});
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},			
 			
 			getDeficiency: function(oParameters) {
 				var svc = dataProvider.getEntity({
