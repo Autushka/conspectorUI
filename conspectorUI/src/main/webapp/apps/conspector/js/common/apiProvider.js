@@ -1292,7 +1292,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			getDeficiencies: function(oParameters){
 				var svc = dataProvider.getEntitySet({
-					sPath: "Deficiencys",
+					sPath: "Tasks",
 					//sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
@@ -1308,7 +1308,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			
 			getDeficiency: function(oParameters) {
 				var svc = dataProvider.getEntity({
-					sPath: "Deficiencys",
+					sPath: "Tasks",
 					sKey: oParameters.sKey,
 					//sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
@@ -1334,7 +1334,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				};
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
-					sPath: "Deficiencys",
+					sPath: "Tasks",
 					sKeyAttribute: "Guid", //
 					sKey: oParameters.sKey,
 					oData: oParameters.oData,
