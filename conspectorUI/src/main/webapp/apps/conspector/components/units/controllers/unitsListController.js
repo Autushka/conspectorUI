@@ -1,6 +1,6 @@
 viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
 	function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
-		historyProvider.removeHistory();// because current view doesn't have a back button
+		historyProvider.removeHistory(); // because current view doesn't have a back button
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
@@ -48,70 +48,63 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 			aInitialGroupsSettings: oInitialGroupsSettingsForUnitsList,
 			sGroupBy: "sProjectPhase",
 			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
-		});	
+		});
 
 		var onUnitsLoaded = function(aData) {
-			// var sProjectName = "";
-			// var sPhaseName = "";
-			// var bMatchFound = false;
-			// for (var i = 0; i < aData.length; i++) {
+			var sProjectName = "";
+			var sPhaseName = "";
+			var bMatchFound = false;
+			var iSortingSequence = 0;
+			for (var i = 0; i < aData.length; i++) {
+				iSortingSequence = 0;
 
-			// 	if (aData[i].PhaseDetails.results.length) {
-			// 		for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-			// 			aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
-			// 		}
-			// 		aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
+				// for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+				bMatchFound = false;
 
-			// 		for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-			// 			bMatchFound = false;
-			// 			for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-			// 				if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-			// 					bMatchFound = true;
-			// 					break;
-			// 				}
-			// 			}
-			// 			if (!bMatchFound) {
-			// 				continue;
-			// 			}
+				if (aData[i].PhaseDetails) {
+					iSortingSequence = aData[i].PhaseDetails.GeneralAttributes.SortingSequence;
+					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+						if (aData[i].PhaseDetails.Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
+							bMatchFound = true;
+							break;
+						}
+					}
+				}
 
-			// 			sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-			// 			if (!sProjectName) {
-			// 				sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
-			// 			}
-			// 			sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-			// 			if (!sPhaseName) {
-			// 				sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-			// 			}
+				// if (!bMatchFound) {
+				// 	continue;
+				// }
+				//aData[i].PhaseDetails._sortingSequence = 
 
-			// 			oUnitsListData.aData.push({
-			// 				sUnitName: aData[i].Name,
-			// 				sPhone: aData[i].MainPhone,
-			// 				sEmail: aData[i].Email,
-			// 				_guid: aData[i].Guid,
-			// 				sTags: aData[i].DescriptionTags,
-			// 				sProjectPhase: sProjectName + " - " + sPhaseName,
-			// 				_sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting
-			// 			});
-			// 		}
-			// 	} else {
-			// 		oUnitsListData.aData.push({
-			// 			sUnitName: aData[i].Name,
-			// 			sPhone: aData[i].MainPhone,
-			// 			sEmail: aData[i].Email,
-			// 			_guid: aData[i].Guid,
-			// 			sTags: aData[i].DescriptionTags,
-			// 			sProjectPhase: "Not Assigned", // TODO should be translatable...
-			// 			_sortingSequence: -1, //for default groups sorting
-			// 		});
-			// 	}
+				// sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
+				// if (!sProjectName) {
+				// 	sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
+				// }
+				// sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
+				// if (!sPhaseName) {
+				// 	sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
+				// }
 
-			// }
+				oUnitsListData.aData.push({
+					// sUnitName: aData[i].Name,
+					// sPhone: aData[i].MainPhone,
+					// sEmail: aData[i].Email,
+					_guid: aData[i].Guid,
+					sTags: aData[i].DescriptionTags,
+					sProjectPhase: "None",//sProjectName + " - " + sPhaseName,
+					_sortingSequence: iSortingSequence
+				});
+				// }
+
+
+			}
 			$scope.tableParams.reload();
 		};
 
 		var loadUnits = function() {
 			oUnitsListData.aData = [];
 			apiProvider.getUnits({
+				sExpand: "PhaseDetails/ProjectDetails",
 				bShowSpinner: true,
 				onSuccess: onUnitsLoaded
 			});
@@ -120,21 +113,21 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 		loadUnits(); //load Units
 
 		$scope.onDisplay = function(oUnit) {
-			$state.go('app.UnitDetailsWrapper.UnitDetails', {
+			$state.go('app.unitDetailsWrapper.unitDetails', {
 				sMode: "display",
 				sUnitGuid: oUnit._guid,
 			});
 		};
 
 		$scope.onEdit = function(oUnit) {
-			$state.go('app.UnitDetailsWrapper.UnitDetails', {
+			$state.go('app.unitDetailsWrapper.unitDetails', {
 				sMode: "edit",
 				sUnitGuid: oUnit._guid,
 			});
 		};
 
 		$scope.onAddNew = function() {
-			$state.go('app.UnitDetailsWrapper.UnitDetails', {
+			$state.go('app.unitDetailsWrapper.unitDetails', {
 				sMode: "create",
 				sUnitGuid: "",
 			});
@@ -164,6 +157,6 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 				oFilter: $scope.tableParams.$params.filter,
 				oSorting: $scope.tableParams.$params.sorting,
 			});
-		});		
+		});
 	}
 ]);
