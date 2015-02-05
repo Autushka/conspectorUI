@@ -141,6 +141,15 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 			}),
 			sStateName: "app.adminPanel.taskTypeList",
 			sMenuLabel: "adminPanel_taskType",
+		});	
+
+		$scope.aMenuItems.push({
+			bShouldBeDisplayed: rolesSettings.getRolesAdminPanelMenuItemSettings({
+				sRole: sCurrentRole,
+				sMenuItem: "bShowActivityTypesManagement"
+			}),
+			sStateName: "app.adminPanel.activityTypesList",
+			sMenuLabel: "adminPanel_activityTypes",
 		});		
 
 		var oWindow = angular.element($window);

@@ -1,0 +1,70 @@
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" hide-gt-md>
+		<div layout="row" layout-align="start start" >
+			<div>
+				<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()">
+				{{'adminPanel_hideSidenav' | translate}}
+				</md-button>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+		</div>
+	</div>
+
+	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
+		<div>
+			<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
+				{{'global_addNew' | translate}}
+				</md-button>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				{{'activityTypesList_title' | translate}}
+			</label>
+		</div>
+	</div>
+
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="tableParams" class="cnpNgTable" id="activityTypesList">
+			<tr ng-repeat="activityType in aDisplayedActivityTypes">
+				<td data-title="'global_actions' | translate">
+					<div layout="row" layout-align="center center">
+						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!activityType._editMode" ng-click="onEdit(activityType)">
+						</div>
+						<div class="cnpInputIcon cnpSaveIcon" ng-if="activityType._editMode" ng-click="onSave(activityType)">
+						</div>
+						<div class="cnpInputIcon cnpDeleteIcon" ng-if="activityType._editMode" ng-click="onDelete(activityType)">
+						</div>
+					</div>
+				</td>
+				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!activityType._editMode">{{activityType.nameEN}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="activityType._editMode" type="text" ng-model="activityType.nameEN"/>
+					</div>
+				</td>
+				<td data-title="'global_descriptionFR' | translate" sortable="'nameFR'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!activityType._editMode">{{activityType.nameFR}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="activityType._editMode" type="text" ng-model="activityType.nameFR"/>
+					</div>
+				</td>
+				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!activityType._editMode">{{activityType.sortingSequence}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="activityType._editMode" type="number" ng-model="activityType.sortingSequence"/>
+					</div>
+				</td>
+			</tr>
+			<tr ng-hide="aDisplayedActivityTypes.length > 0">
+				<td td colspan="5">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

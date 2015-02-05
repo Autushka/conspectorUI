@@ -145,10 +145,13 @@ app.config(['$translateProvider',
                   adminPanel_unitOptionSet: 'Unit Option Set',
                   adminPanel_unitOptionValue: 'Unit Option Values',
                   adminPanel_taskType: 'Task Type',
+                  adminPanel_activityTypes: 'Logbook Entries Types',
                   //unitOptionValuesList
                   unitOptionValuesList_title: 'Unit Option Values',
                   //taskTypesList_title
                   taskTypesList_title: 'Task Types',
+                  //activityTypesList_title
+                  activityTypesList_title: 'Logbook Entries Types',
                   //companiesList
                   companiesList_title: "Companies",
                   companiesList_companyName: "Company Name",
@@ -455,10 +458,13 @@ app.config(['$translateProvider',
                   adminPanel_unitOptionSet: 'Unit Option Set',
                   adminPanel_unitOptionValue: 'Unit Option Values',
                   adminPanel_taskType: 'Task Type',
+                  adminPanel_activityTypes: 'Types d\u0027entr\u00E9es du Journal',
                   //unitOptionValuesList
                   unitOptionValuesList_title: 'Unit Option Values',
                   //taskTypesList_title
                   taskTypesList_title: 'Task Types',
+                  //activityTypesList_title
+                  activityTypesList_title: 'Types d\u0027entr\u00E9es du Journal',
                   //companiesList
                   companiesList_title: 'Compagnies',
                   companiesList_companyName: 'Nom compagnie',

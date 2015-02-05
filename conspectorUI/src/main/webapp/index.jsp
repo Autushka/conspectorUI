@@ -69,9 +69,9 @@
 		<script src="apps/conspector/components/generalLayout/controllers/appController.js"></script>
 		
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListController.js"></script>
-		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsWrapperController.js"></script>				
-		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsController.js"></script>			
-		
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsWrapperController.js"></script>	
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsController.js"></script>		
+
 		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
 		<script src="apps/conspector/components/units/controllers/unitsDetailsController.js"></script>
 		<script src="apps/conspector/components/units/controllers/unitsDetailsWrapperController.js"></script>
@@ -81,7 +81,7 @@
 		<script src="apps/conspector/components/contractors/controllers/contractorDetailsController.js"></script>
 
 		<script src="apps/conspector/components/contacts/controllers/contactsListController.js"></script>
-		<script src="apps/conspector/components/contacts/controllers/contactDetailsWrapperController.js"></script>				
+		<script src="apps/conspector/components/contacts/controllers/contactDetailsWrapperController.js"></script>
 		<script src="apps/conspector/components/contacts/controllers/contactDetailsController.js"></script>	
 
 		<script src="apps/conspector/components/clients/controllers/clientsListController.js"></script>
@@ -89,7 +89,7 @@
 		<script src="apps/conspector/components/clients/controllers/clientDetailsController.js"></script>
 
 		<script src="apps/conspector/components/activities/controllers/activitiesListController.js"></script>
-		<script src="apps/conspector/components/activities/controllers/activityDetailsWrapperController.js"></script>			
+		<script src="apps/conspector/components/activities/controllers/activityDetailsWrapperController.js"></script>		
 		<script src="apps/conspector/components/activities/controllers/activityDetailsController.js"></script>
 
 		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>
@@ -111,6 +111,8 @@
 		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script>  
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionSetListController.js"></script>  	
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValueListController.js"></script>
+		<script src="apps/conspector/components/adminPanel/controllers/taskTypeListController.js"></script>
+		<script src="apps/conspector/components/adminPanel/controllers/activityTypesListController.js"></script>
 		<%@page import="java.util.*" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file

@@ -843,6 +843,63 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
+			getActivityTypes: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "ActivityTypes",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oActivityTypeEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			createActivityType: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oActivityTypeEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "ActivityTypes",
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true,
+					bCompanyNeeded: true
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			updateActivityType: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oActivityTypeEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "ActivityTypes",
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+
+
 			getDeficiencyPriorities: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "TaskPrioritys",
@@ -888,174 +945,6 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "TaskPrioritys",
-					sKey: oParameters.sKey,
-					oData: oParameters.oData,
-					bShowSuccessMessage: oParameters.bShowSuccessMessage,
-					bShowErrorMessage: oParameters.bShowErrorMessage,
-				});
-
-				oSvc.then(onSuccess);
-			},
-
-			getUnitOptionSets: function(oParameters) {
-				var svc = dataProvider.getEntitySet({
-					sPath: "UnitOptionSets",
-					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
-					sExpand: "PhaseDetails/ProjectDetails",						
-					bShowSpinner: oParameters.bShowSpinner,
-					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oUnitOptionSetEntity"				
-				});
-				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
-				} else {
-					svc.then(oParameters.onSuccess);
-				}
-			},
-
-			createUnitOptionSet: function(oParameters) {
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oUnitOptionSetEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
-					}
-				};
-				var oSvc = dataProvider.createEntity({
-					sPath: "UnitOptionSets",
-					oData: oParameters.oData,
-					bShowSpinner: oParameters.bShowSpinner,
-					bShowSuccessMessage: oParameters.bShowSuccessMessage,
-					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: true,
-					bCompanyNeeded: true,
-					aLinks: oParameters.aLinks,
-					sKeyAttribute: "Guid",
-				});
-
-				oSvc.then(onSuccess);
-			},
-
-			updateUnitOptionSet: function(oParameters) {
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oUnitOptionSetEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
-					}
-				};
-				var oSvc = dataProvider.updateEntity({
-					bShowSpinner: oParameters.bShowSpinner,
-					sPath: "UnitOptionSets",
-					sKey: oParameters.sKey,
-					oData: oParameters.oData,
-					bShowSuccessMessage: oParameters.bShowSuccessMessage,
-					bShowErrorMessage: oParameters.bShowErrorMessage,
-					aLinks: oParameters.aLinks,
-					sKeyAttribute: "Guid",
-				});
-
-				oSvc.then(onSuccess);
-			},
-
-			getUnitOptionValues: function(oParameters) {
-				var svc = dataProvider.getEntitySet({
-					sPath: "UnitOptions",
-					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
-					sExpand: "UnitOptionSetDetails",	
-					bShowSpinner: oParameters.bShowSpinner,
-					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oUnitOptionValueEntity"
-				});
-				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
-				} else {
-					svc.then(oParameters.onSuccess);
-				}
-			},
-
-			createUnitOptionValue: function(oParameters) {
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oUnitOptionValueEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
-					}
-				};
-				var oSvc = dataProvider.createEntity({
-					sPath: "UnitOptions",
-					oData: oParameters.oData,
-					bShowSpinner: oParameters.bShowSpinner,
-					bShowSuccessMessage: oParameters.bShowSuccessMessage,
-					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: true,
-					bCompanyNeeded: true
-				});
-
-				oSvc.then(onSuccess);
-			},
-
-			updateUnitOptionValue: function(oParameters) {
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oUnitOptionValueEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
-					}
-				};
-				var oSvc = dataProvider.updateEntity({
-					bShowSpinner: oParameters.bShowSpinner,
-					sPath: "UnitOptions",
-					sKey: oParameters.sKey,
-					oData: oParameters.oData,
-					bShowSuccessMessage: oParameters.bShowSuccessMessage,
-					bShowErrorMessage: oParameters.bShowErrorMessage,
-				});
-
-				oSvc.then(onSuccess);
-			},
-
-			getTaskTypes: function(oParameters) {
-				var svc = dataProvider.getEntitySet({
-					sPath: "TaskTypes",
-					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",	
-					bShowSpinner: oParameters.bShowSpinner,
-					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oTaskTypeEntity"
-				});
-				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
-				} else {
-					svc.then(oParameters.onSuccess);
-				}
-			},
-
-			createTaskType: function(oParameters) {
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oTaskTypeEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
-					}
-				};
-				var oSvc = dataProvider.createEntity({
-					sPath: "TaskTypes",
-					oData: oParameters.oData,
-					bShowSpinner: oParameters.bShowSpinner,
-					bShowSuccessMessage: oParameters.bShowSuccessMessage,
-					bShowErrorMessage: oParameters.bShowErrorMessage,
-					bGuidNeeded: true,
-					bCompanyNeeded: true
-				});
-
-				oSvc.then(onSuccess);
-			},
-
-			updateTaskType: function(oParameters) {
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oTaskTypeEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
-					}
-				};
-				var oSvc = dataProvider.updateEntity({
-					bShowSpinner: oParameters.bShowSpinner,
-					sPath: "TaskTypes",
 					sKey: oParameters.sKey,
 					oData: oParameters.oData,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
@@ -1313,6 +1202,92 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
+			},
+
+			getActivities: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "Activitys",
+					sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oActivityEntity"
+				});
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc) // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			getActivity: function(oParameters) {
+				var svc = dataProvider.getEntity({
+					sPath: "Activitys",
+					sKey: oParameters.sKey,
+					sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(oParameters.onSuccess);
+			},
+
+			updateActivity: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oActivityEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+					PubNub.ngPublish({
+						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+						message: {
+							sEntityName: "oActivityEntity",
+							sText: "Activity has been updated...",
+							sUserName: cacheProvider.oUserProfile.sUserName,
+						}
+					});
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "Activitys",
+					sKeyAttribute: "Guid", //
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			createActivity: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oActivityEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+					PubNub.ngPublish({
+						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+						message: {
+							sEntityName: "oActivityEntity",
+							sText: "Activity has been created...",
+							sUserName: cacheProvider.oUserProfile.sUserName,
+						}
+					});
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Activitys",
+					sKeyAttribute: "Guid", //needed for links creation
+					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true,
+					bCompanyNeeded: true
+				});
+
+				oSvc.then(onSuccess);
 			},
 
 			generateReport: function(oParameters) {
