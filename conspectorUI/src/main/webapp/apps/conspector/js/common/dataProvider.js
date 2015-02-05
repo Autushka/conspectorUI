@@ -190,7 +190,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					oOdataSrv = (new genericODataFactory()).$getEntityWithFilter({
 						path: oParameters.sPath,
 						key: oParameters.sKey,
-						expand: oParameters.sExpand,
+						filter: oParameters.sFilter,
 					});
 				}
 

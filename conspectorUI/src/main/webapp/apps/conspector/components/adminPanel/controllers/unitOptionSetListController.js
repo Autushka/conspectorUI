@@ -81,11 +81,6 @@ viewControllers.controller('unitOptionSetListView', ['$scope', '$rootScope', '$s
 				bShowSpinner: false,
 				onSuccess: onProjectsLoaded
 			});
-
-			// apiProvider.getProjects({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onProjectsLoaded
-			// });
 		}
 
 		apiProvider.getUnitOptionSets({

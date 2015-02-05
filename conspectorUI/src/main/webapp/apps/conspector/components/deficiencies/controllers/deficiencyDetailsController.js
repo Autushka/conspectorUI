@@ -48,15 +48,15 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		// 	$scope.aShippingCountries = [];
 		// 	$scope.aShippingProvinces = [];
 
-		// 	var constructPhasesMultiSelect = function(aSelectedPhases) {
-		// 		$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
-		// 			aSelectedPhases: aSelectedPhases
-		// 		});
-		// 	};
+		var constructPhasesMultiSelect = function(aSelectedPhases) {
+			$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
+				aSelectedPhases: aSelectedPhases
+			});
+		};
 
-		var setDisplayedContactDetails = function(oDeficiency) {
+		var setDisplayedDeficiencyDetails = function(oDeficiency) {
 			// var oContactPhasesGuids = [];
-			 $scope.oDeficiency._guid = oDeficiency.Guid;
+			$scope.oDeficiency._guid = oDeficiency.Guid;
 			// $scope.oContact._accountGuid = oContact.AccountGuid;
 
 			$scope.oDeficiency._lastModifiedAt = oDeficiency.LastModifiedAt;
@@ -72,6 +72,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// $scope.oContact.sFax = oContact.Fax;
 			// $scope.oContact.sTitle = oContact.Title;
 			$scope.oDeficiency.aDescriptionTags = utilsProvider.tagsStringToTagsArray(oDeficiency.DescriptionTags);
+
+			if(oDeficiency.PhaseDetails){
+				constructPhasesMultiSelect([oDeficiency.PhaseDetails.Guid]);				
+			}else{
+				constructPhasesMultiSelect([]);		
+			}
 
 			// $scope.oContact._contactTypeGuid = oContact.ContactTypeGuid;
 
@@ -109,14 +115,14 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// for (var i = 0; i < $scope.oContact._aPhases.length; i++) {
 			// 	oContactPhasesGuids.push($scope.oContact._aPhases[i].Guid);
 			// }
-			// constructPhasesMultiSelect(oContactPhasesGuids);
+
 
 			// oContactWrapper.aData[0] = angular.copy($scope.oContact);
 		};
 
 		var sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false";
 
-		sRequestSettings = sRequestSettings + "";
+		sRequestSettings = sRequestSettings + "PhaseDetails/ProjectDetails";
 		var oDeficiency = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oDeficiencyEntity",
 			sRequestSettings: sRequestSettings, //filter + expand
@@ -229,27 +235,28 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		// 		}
 		// 	};
 
-			var onDeficiencyDetailsLoaded = function(oData) {
-				setDisplayedDeficiencyDetails(oData);
+		var onDeficiencyDetailsLoaded = function(oData) {
+			setDisplayedDeficiencyDetails(oData);
 
-				// apiProvider.getCountriesWithProvinces({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onCountriesLoaded
-				// });
+			// apiProvider.getCountriesWithProvinces({
+			// 	bShowSpinner: false,
+			// 	onSuccess: onCountriesLoaded
+			// });
 
-				// apiProvider.getContactTypes({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onContactTypesLoaded
-				// });
+			// apiProvider.getContactTypes({
+			// 	bShowSpinner: false,
+			// 	onSuccess: onContactTypesLoaded
+			// });
 
-				// apiProvider.getAccountTypesWithAccounts({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onAccountTypesWithAccountsLoaded
-				// });
-			};
+			// apiProvider.getAccountTypesWithAccounts({
+			// 	bShowSpinner: false,
+			// 	onSuccess: onAccountTypesWithAccountsLoaded
+			// });
+		};
 
 		var getDeficiencyDetails = function() {
 			apiProvider.getDeficiency({
+				sExpand: "PhaseDetails/ProjectDetails",
 				sKey: sDeficiencyGuid,
 				bShowSpinner: true,
 				onSuccess: onDeficiencyDetailsLoaded,
@@ -304,11 +311,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				// });
 			}
 		} else {
-			// var aSelectedPhases = [];
-			// if (historyProvider.getPreviousStateName() === "app.contractorDetailsWrapper.contractorDetails" || historyProvider.getPreviousStateName() === "app.clientDetailsWrapper.clientDetails") {
-			// 	aSelectedPhases = angular.copy($rootScope.aAccountPhasesGuids);
-			// }
-			// constructPhasesMultiSelect(aSelectedPhases);
+			constructPhasesMultiSelect({
+				aSelectedPhases: []
+			});
 
 			// apiProvider.getCountriesWithProvinces({
 			// 	bShowSpinner: false,
@@ -368,25 +373,25 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		// 		});
 		// 	};
 
-		// 	var prepareLinksForSave = function() { // link contact to phases
-		// 		var aLinks = [];
-		// 		var aUri = [];
-		// 		var sUri = "";
-		// 		for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
-		// 			if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
-		// 				sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
-		// 				aUri.push(sUri);
-		// 			}
-		// 		}
-		// 		if (aUri.length) {
-		// 			aLinks.push({
-		// 				sRelationName: "PhaseDetails",
-		// 				bKeepCompanyDependentLinks: true,
-		// 				aUri: aUri
-		// 			});
-		// 		}
-		// 		return aLinks;
-		// 	};
+			var prepareLinksForSave = function() { // link contact to phases
+				var aLinks = [];
+				var aUri = [];
+				var sUri = "";
+				// for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
+				// 	if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
+				// 		sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
+				// 		aUri.push(sUri);
+				// 	}
+				// }
+				// if (aUri.length) {
+				// 	aLinks.push({
+				// 		sRelationName: "PhaseDetails",
+				// 		bKeepCompanyDependentLinks: true,
+				// 		aUri: aUri
+				// 	});
+				// }
+				return aLinks;
+			};
 
 		// 	$scope.onParentAccountModified = function() {
 		// 		$scope.onDataModified();
@@ -444,7 +449,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
-			// var aLinks = [];
+			var aLinks = [];
 
 			oDataForSave.Guid = $scope.oDeficiency._guid;
 			// for (var i = 0; i < $scope.aAccounts.length; i++) {
@@ -585,7 +590,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// 		break;
 			// 	}
 			// }
+			if($scope.aSelectedPhases.length){
+				oDataForSave.PhaseGuid = $scope.aSelectedPhases[0].Guid;
+			}
+			
 
+			//aLinks = prepareLinksForSave();
 			oDataForSave.LastModifiedAt = $scope.oDeficiency._lastModifiedAt;
 
 			switch ($scope.sMode) {
