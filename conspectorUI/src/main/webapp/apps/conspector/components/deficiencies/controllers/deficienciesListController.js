@@ -1,6 +1,6 @@
 viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
 	function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
-		historyProvider.removeHistory();// because current view doesn't have a back button
+		historyProvider.removeHistory(); // because current view doesn't have a back button
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
@@ -48,62 +48,54 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			aInitialGroupsSettings: oInitialGroupsSettingsForDeficienciesList,
 			sGroupBy: "sProjectPhase",
 			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
-		});	
+		});
 
 		var onDeficienciesLoaded = function(aData) {
 			var sProjectName = "";
 			var sPhaseName = "";
 			var bMatchFound = false;
+			var iSortingSequence = 0;
 			for (var i = 0; i < aData.length; i++) {
+				iSortingSequence = 0;
 
-				if (aData[i].PhaseDetails.results.length) {
-					for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-						aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
+				// for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+				bMatchFound = false;
+
+				if (aData[i].PhaseDetails) {
+					iSortingSequence = aData[i].PhaseDetails.GeneralAttributes.SortingSequence;
+					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+						if (aData[i].PhaseDetails.Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
+							bMatchFound = true;
+							break;
+						}
 					}
-					aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
-
-					for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-						bMatchFound = false;
-						for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-							if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-								bMatchFound = true;
-								break;
-							}
-						}
-						if (!bMatchFound) {
-							continue;
-						}
-
-						sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-						if (!sProjectName) {
-							sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
-						}
-						sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-						if (!sPhaseName) {
-							sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-						}
-
-						oDeficiencysListData.aData.push({
-							// sDeficiencyName: aData[i].Name,
-							// sPhone: aData[i].MainPhone,
-							// sEmail: aData[i].Email,
-							_guid: aData[i].Guid,
-							sTags: aData[i].DescriptionTags,
-							sProjectPhase: sProjectName + " - " + sPhaseName,
-							_sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting
-						});
-					}
-				} else {
-					oDeficiencysListData.aData.push({
-						// sDeficiencyName: aData[i].Name,
-						// sPhone: aData[i].MainPhone,
-						// sEmail: aData[i].Email,
-						_guid: aData[i].Guid,
-						sTags: aData[i].DescriptionTags,
-						sProjectPhase: "Not Assigned", // TODO should be translatable...
-						_sortingSequence: -1, //for default groups sorting
-					});
 				}
+
+				// if (!bMatchFound) {
+				// 	continue;
+				// }
+				//aData[i].PhaseDetails._sortingSequence = 
+
+				// sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
+				// if (!sProjectName) {
+				// 	sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
+				// }
+				// sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
+				// if (!sPhaseName) {
+				// 	sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
+				// }
+
+				oDeficienciesListData.aData.push({
+					// sDeficiencyName: aData[i].Name,
+					// sPhone: aData[i].MainPhone,
+					// sEmail: aData[i].Email,
+					_guid: aData[i].Guid,
+					sTags: aData[i].DescriptionTags,
+					sProjectPhase: "None",//sProjectName + " - " + sPhaseName,
+					_sortingSequence: iSortingSequence
+				});
+				// }
+
 
 			}
 			$scope.tableParams.reload();
@@ -112,6 +104,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		var loadDeficiencies = function() {
 			oDeficienciesListData.aData = [];
 			apiProvider.getDeficiencies({
+				sExpand: "PhaseDetails/ProjectDetails",
 				bShowSpinner: true,
 				onSuccess: onDeficienciesLoaded
 			});
@@ -164,6 +157,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				oFilter: $scope.tableParams.$params.filter,
 				oSorting: $scope.tableParams.$params.sorting,
 			});
-		});			
+		});
 	}
 ]);

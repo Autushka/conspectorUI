@@ -1293,6 +1293,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getDeficiencies: function(oParameters){
 				var svc = dataProvider.getEntitySet({
 					sPath: "Tasks",
+					sExpand: oParameters.sExpand,
 					//sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
@@ -1343,6 +1344,36 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowErrorMessage: oParameters.bShowErrorMessage,
 				});
 			},	
+
+			createDeficiency: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+					PubNub.ngPublish({
+						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+						message: {
+							sEntityName: "oDeficiencyEntity",
+							sText: "Deficiency has been created...",
+							sUserName: cacheProvider.oUserProfile.sUserName,
+						}
+					});
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Tasks",
+					sKeyAttribute: "Guid", //needed for links creation
+					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true,
+					bCompanyNeeded: true
+				});
+
+				oSvc.then(onSuccess);
+			},			
 
 			getUnits: function(oParameters){
 				var svc = dataProvider.getEntitySet({
