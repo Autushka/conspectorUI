@@ -1,4 +1,4 @@
-<!-- <div class="cnpContent" layout="column">
+<div class="cnpContent" layout="column">
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
@@ -22,13 +22,37 @@
 			</div>
 			<div layout="row" layout-align="end start">
 				<label class="cnpContentTitle notSelectable">
-					{{'deficiencyDetails_title' | translate}}
+					{{'unitDetails_title' | translate}}
 				</label>
 			</div>
-		</div> -->
-<!-- 		<div class="cnpSection" layout="column" layout-align="start center" flex>
+		</div>
+		<div class="cnpSection" layout="column" layout-align="start center" flex>
+					<div class="cnpSubSection" flex>
+						<div class="cnpSubSectionLabel">
+							<label>
+								{{'unitDetails_descriptionTags' | translate}}
+							</label>
+						</div>
+						<tags-input
+						ng-model="oUnit.aDescriptionTags"
+						ng-hide="sMode == 'display'"
+						replace-spaces-with-dashes="false"
+						placeholder="{{'global_addTag' | translate}}"
+						on-tag-added="onDataModified()"
+						on-tag-removed="onDataModified()">
+						</tags-input>
+						<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
+							<ul class="tags-list">
+								<li class="tag-item" ng-repeat="tag in oUnit.aDescriptionTags">
+									<span style="padding: 2px;">{{tag.text}}</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+
 			
-			<div layout="row" style="width: 100%" flex>
+<!-- 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex layout="column">
 					<div flex class="cnpSubSectionTitleWrapper">
 						<div  class="cnpSubSectionLabel">
@@ -339,7 +363,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
-		</div> -->
-<!-- 	</form>
-</div> -->
+			</div> -->
+		</div>
+	</form>
+</div>

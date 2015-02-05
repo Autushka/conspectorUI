@@ -1,3 +1,103 @@
-<div>Units List</div>
+<md-content layout="row" layout="center start" class="cnpContentWrapper">
 
-<md-button class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpEditDetailsIconWhite notSelectable" ng-click="onGenerateReport()">Generate Report</md-button>
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
+		<div layout="row" layout-align="start start" >
+			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
+				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
+					{{'global_back' | translate}}
+				</div>
+			</div>
+		</div>
+		<div layout="row" layout-align="end start">
+
+		</div>
+	</div>
+
+	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
+		<div>
+			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'unitsList_addNew' | translate}}</md-button>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				{{'unitsList_title' | translate}}
+			</label>
+		</div>
+	</div>
+
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="tableParams" class="cnpNgTable" id="unitsList" show-filter="true">
+			<tbody ng-repeat="group in $groups">
+				<tr class="ng-table-group notSelectable" >
+					<td colspan="{{$columns.length}}" style="overflow: visible; padding-left: 0; padding-right: 0" >
+						<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">
+							{{ group.value }}
+						</div>
+						
+					</td>
+				</tr>
+				<tr ng-hide="group.$hideRows" ng-repeat="unit in group.data">
+					<td data-title="'global_actions' | translate">
+						<div layout="row" layout-align="center center">
+							<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(contact)">
+							</div>
+							<div ng-if="bDisplayEditButtons" class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(contact)">
+							</div>
+						</div>
+					</td>
+					<td data-title="'global_tags' | translate" sortable="'sTags'" filter="{'sTags': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>
+								{{unit.sTags}}
+								</span>
+							</div>
+						</div>
+					</td>
+<!-- 					<td data-title="'global_account' | translate" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span><a ng-click="onNavigateToAccountDetails(contact)">
+								{{contact.sAccountName}}</a>
+								</span>
+							</div>
+						</div>
+					</td>
+					
+					<td data-title="'global_title' | translate" sortable="'sTitle'" filter="{'sTitle': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>{{contact.sTitle}}</span>
+							</div>
+						</div>
+					</td>
+					<td data-title="'global_mobile' | translate" sortable="'sPhone'" filter="{'sPhone': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div><a href="tel:+{{contact.sPhone | phoneFormatter}}">
+								<span>
+									{{contact.sPhone | phoneFormatter}}</span></a>
+							</div>
+						</div>
+					</td> -->
+<!-- 					<td data-title="'global_email' | translate" sortable="'sEmail'" filter="{'sEmail': 'text'}">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span><a href="mailto:{{contact.sEmail}}">{{contact.sEmail}}
+								</a></span>
+							</div>
+						</div>
+					</td> -->
+				</tr>
+			</tbody>
+			<tr ng-if="$groups.length == 0">
+				<td colspan="{{$columns.length}}">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</md-content>
