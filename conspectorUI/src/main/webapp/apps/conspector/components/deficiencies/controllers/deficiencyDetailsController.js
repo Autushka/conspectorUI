@@ -398,10 +398,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		// 		$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();
 		// 	};
 
-		// 	$scope.onCloseCheckSelectedPhasesLength = function() {
-		// 		if ($scope.aSelectedPhases.length == 0)
-		// 			$scope.onSelectedPhasesModified();
-		// 	};
+		$scope.onCloseCheckSelectedPhasesLength = function() {
+			if ($scope.aSelectedPhases.length == 0)
+				$scope.onSelectedPhasesModified();
+		};
 
 		// 	$scope.onSelectedPhasesModified = function() {
 		// 		$scope.onDataModified();
@@ -431,9 +431,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		// 	};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			// if ($scope.oForms.contactDetailsForm.selectedPhases) {
-			// 	$scope.oForms.contactDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
-			// }
+			if ($scope.oForms.deficiencyDetailsForm.selectedPhases) {
+				$scope.oForms.deficiencyDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
+			}
 			// if ($scope.oForms.contactDetailsForm.selectedParentAccount) {
 			// 	$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty(); //to display validation messages on submit press
 			// }
@@ -443,6 +443,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// if ($scope.oForms.contactDetailsForm.lastName) {
 			// 	$scope.oForms.contactDetailsForm.lastName.$setDirty(); //to display validation messages on submit press
 			// }
+
+			if (!$scope.oForms.deficiencyDetailsForm.$valid) {
+				return;
+			}			
 
 			// aLinks = prepareLinksForSave();
 
@@ -459,9 +463,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// 	}
 			// }
 
-			// if (!$scope.oForms.contactDetailsForm.$valid) {
-			// 	return;
-			// }
+
 
 			var onSuccessCreation = function(oData) {
 				bDataHasBeenModified = false;

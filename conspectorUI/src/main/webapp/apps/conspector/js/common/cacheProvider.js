@@ -33,7 +33,7 @@ app.factory('cacheProvider', ['TYPES',
 
 			oTableStatus: {
 				deficienciesList: [{
-					sStateName: "app.contactsList",
+					sStateName: "app.deficienciesList",
 					aGroups: [],
 					oFilter: {},
 					oSorting: {}

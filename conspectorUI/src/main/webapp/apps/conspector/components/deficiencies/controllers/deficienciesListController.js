@@ -53,9 +53,13 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		var onDeficienciesLoaded = function(aData) {
 			var sProjectName = "";
 			var sPhaseName = "";
+			var sProjectPhase = "";
 			var bMatchFound = false;
 			var iSortingSequence = 0;
 			for (var i = 0; i < aData.length; i++) {
+				sProjectName = "";
+				sPhaseName = "";
+				sProjectPhase = "";
 				iSortingSequence = 0;
 
 				// for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
@@ -69,6 +73,19 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 							break;
 						}
 					}
+
+					sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.ProjectDetails.NameEN : aData[i].PhaseDetails.ProjectDetails.NameFR;
+					if (!sProjectName) {
+						sProjectName = aData[i].PhaseDetails.ProjectDetails.NameEN;
+					}
+					sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.NameEN : aData[i].PhaseDetails.NameFR;
+					if (!sPhaseName) {
+						sPhaseName = aData[i].PhaseDetails.NameEN;
+					}
+
+					sProjectPhase = sProjectName + " - " + sPhaseName;
+				}else{
+					sProjectPhase = "Not Assigned";
 				}
 
 				// if (!bMatchFound) {
@@ -91,7 +108,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					// sEmail: aData[i].Email,
 					_guid: aData[i].Guid,
 					sTags: aData[i].DescriptionTags,
-					sProjectPhase: "None",//sProjectName + " - " + sPhaseName,
+					sProjectPhase: sProjectPhase,
 					_sortingSequence: iSortingSequence
 				});
 				// }

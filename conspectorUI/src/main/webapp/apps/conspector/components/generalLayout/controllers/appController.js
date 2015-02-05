@@ -74,7 +74,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		})) {
 			$scope.aTabs.push({
 				sTitle: "app_deficienciesTab",
-				sState: "app.deficienciesList" 
+				sState: "app.deficienciesList"
 			});
 		}
 
@@ -149,7 +149,12 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		}
 
 		var tabSelectionBasedOnHash = function() {
-			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 || $window.location.hash.indexOf("#/app/profileSettings") > -1 || $window.location.hash.indexOf("#/app/clientDetails") > -1 || $window.location.hash.indexOf("#/app/contractorDetails") > -1 || $window.location.hash.indexOf("#/app/contactDetails") > -1) {
+			if ($window.location.hash.indexOf("#/app/adminPanel") > -1 ||
+				$window.location.hash.indexOf("#/app/profileSettings") > -1 ||
+				$window.location.hash.indexOf("#/app/clientDetails") > -1 ||
+				$window.location.hash.indexOf("#/app/contractorDetails") > -1 ||
+				$window.location.hash.indexOf("#/app/contactDetails") > -1 ||
+				$window.location.hash.indexOf("#/app/deficiencyDetails") > -1) {
 				$scope.selectedTabIndex = -1;
 				$scope.$broadcast("$mdTabsPaginationChanged");
 				return;
@@ -186,6 +191,9 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 
 		$scope.onTabSelect = function(oTab) {
 			var sCurrentSelectedTab = "";
+			if ($window.location.hash.indexOf("deficienc") > -1) {
+				sCurrentSelectedTab = "Deficiencies";
+			}
 			if ($window.location.hash.indexOf("unit") > -1) {
 				sCurrentSelectedTab = "Units";
 			}
@@ -232,6 +240,6 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 				sStateName: $rootScope.sCurrentStateName,
 				oStateParams: $rootScope.oStateParams
 			});
-		});			
+		});
 	}
 ]);
