@@ -1289,6 +1289,76 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 				oSvc.then(onSuccess);
 			},
+			
+			getDeficiency: function(oParameters) {
+				var svc = dataProvider.getEntity({
+					sPath: "Deficiencys",
+					sKey: oParameters.sKey,
+					//sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(oParameters.onSuccess);
+			},
+
+			updateDeficiency: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+					PubNub.ngPublish({
+						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+						message: {
+							sEntityName: "oDeficiencyEntity",
+							sText: "Deficiency has been updated...",
+							sUserName: cacheProvider.oUserProfile.sUserName,
+						}
+					});
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "Deficiencys",
+					sKeyAttribute: "Guid", //
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			createDeficiency: function(oParameters) {
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+					PubNub.ngPublish({
+						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+						message: {
+							sEntityName: "oDeficiencyEntity",
+							sText: "Deficiency has been created...",
+							sUserName: cacheProvider.oUserProfile.sUserName,
+						}
+					});
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Deficiencys",
+					sKeyAttribute: "Guid", //needed for links creation
+					oData: oParameters.oData,
+					aLinks: oParameters.aLinks,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true,
+					bCompanyNeeded: true
+				});
+
+				oSvc.then(onSuccess);
+			},				
 
 			generateReport: function(oParameters) {
 				var oData = {

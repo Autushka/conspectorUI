@@ -32,6 +32,12 @@ app.factory('cacheProvider', ['TYPES',
 			oUserProfile: {},
 
 			oTableStatus: {
+				deficienciesList: [{
+					sStateName: "app.contactsList",
+					aGroups: [],
+					oFilter: {},
+					oSorting: {}
+				}],				
 				contactsList: [{
 					sStateName: "app.contactsList",
 					aGroups: [],
