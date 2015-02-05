@@ -27,32 +27,32 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 			sStateName: $rootScope.sCurrentStateName,
 		});
 
-		var oInitialSortingForClientsList = {
+		var oInitialSortingForActivitiesList = {
 			sClientName: 'asc'
 		};
 		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
-			oInitialSortingForClientsList = angular.copy(oTableStatusFromCache.oSorting);
+			oInitialSortingForActivitiesList = angular.copy(oTableStatusFromCache.oSorting);
 		}
-		var oInitialFilterForClientsList = {};
+		var oInitialFilterForActivitiesList = {};
 		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oFilter, {})) {
-			oInitialFilterForClientsList = angular.copy(oTableStatusFromCache.oFilter);
+			oInitialFilterForActivitiesList = angular.copy(oTableStatusFromCache.oFilter);
 		}
-		var oInitialGroupsSettingsForClientsList = [];
+		var oInitialGroupsSettingsForActivitiesList = [];
 		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.aGroups, [])) {
-			oInitialGroupsSettingsForClientsList = angular.copy(oTableStatusFromCache.aGroups);
+			oInitialGroupsSettingsForActivitiesList = angular.copy(oTableStatusFromCache.aGroups);
 		}
 
 		$scope.tableParams = servicesProvider.createNgTable({
-			oInitialDataArrayWrapper: oClientsListData,
-			sDisplayedDataArrayName: "aDisplayedClients",
-			oInitialSorting: oInitialSortingForClientsList,
-			oInitialFilter: oInitialFilterForClientsList,
-			aInitialGroupsSettings: oInitialGroupsSettingsForClientsList,
+			oInitialDataArrayWrapper: oActivitiesListData,
+			sDisplayedDataArrayName: "aDisplayedActivities",
+			oInitialSorting: oInitialSortingForActivitiesList,
+			oInitialFilter: oInitialFilterForActivitiesList,
+			aInitialGroupsSettings: oInitialGroupsSettingsForActivitiesList,
 			sGroupBy: "sProjectPhase",
 			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
 		});
 
-		var onClientsLoaded = function(aData) {
+		var onActivitiesLoaded = function(aData) {
 			var sProjectName = "";
 			var sPhaseName = "";
 			var bMatchFound = false;
@@ -85,41 +85,54 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 							sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
 						}
 
-						oClientsListData.aData.push({
-							sClientName: aData[i].Name,
-							sPhone: aData[i].MainPhone,
-							sEmail: aData[i].Email,
+						sActivityType = $translate.use() === "en" ? aData[i].ActivityTypeDetails.NameEN : aData[i].ActivityTypeDetails.NameFR;
+
+						// _aAccounts = []; // needed in order to figure out if sCompanies info should be displayed (> 1 compmanies should be assigned to the user)
+						// sAccounts = "";
+						// for (var k = 0; k < aData.CompanyDetails.results.length; i++) {
+						// 	if (!oData.CompanyDetails.results[i].GeneralAttributes.IsDeleted) {
+						// 		$scope.oUser._aCompanies.push(oData.CompanyDetails.results[i]);
+						// 		$scope.oUser.sCompanies = $scope.oUser.sCompanies + oData.CompanyDetails.results[i].CompanyName + ", ";
+						// 	}
+						// }
+
+						oActivitiesListData.aData.push({
+							sActivityType: sActivityType,
+							sObject: aData[i].Object,
+							// aAccounts: 
+							// aContacts:
 							_guid: aData[i].Guid,
-							sTags: aData[i].DescriptionTags,
+							
 							sProjectPhase: sProjectName + " - " + sPhaseName,
 							_sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting
 						});
 					}
 				} else {
-					oClientsListData.aData.push({
-						sClientName: aData[i].Name,
-						sPhone: aData[i].MainPhone,
-						sEmail: aData[i].Email,
-						_guid: aData[i].Guid,
-						sTags: aData[i].DescriptionTags,
-						sProjectPhase: "Not Assigned", // TODO should be translatable...
-						_sortingSequence: -1, //for default groups sorting
-					});
+					// oActivitiesListData.aData.push({
+					// 	sClientName: aData[i].Name,
+					// 	sPhone: aData[i].MainPhone,
+					// 	sEmail: aData[i].Email,
+					// 	_guid: aData[i].Guid,
+					// 	sTags: aData[i].DescriptionTags,
+					// 	sProjectPhase: "Not Assigned", // TODO should be translatable...
+					// 	_sortingSequence: -1, //for default groups sorting
+					// });
 				}
 
 			}
 			$scope.tableParams.reload();
 		};
 
-		var loadClients = function() {
-			oClientsListData.aData = [];
-			apiProvider.getClientsWithPhases({
+		var loadActivities = function() {
+			oActivitiesListData.aData = [];
+			apiProvider.getActivities({
+				sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
 				bShowSpinner: true,
-				onSuccess: onClientsLoaded
+				onSuccess: onActivitiesLoaded
 			});
 		};
 
-		loadClients(); //load Clients
+		loadActivities(); //load Activities
 
 		$scope.onDisplay = function(oClient) {
 			$state.go('app.clientDetailsWrapper.clientDetails', {
@@ -142,11 +155,11 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 			});
 		};
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-			loadClients();
+			loadActivities();
 		});
 
-		$scope.$on('accountsShouldBeRefreshed', function(oParameters) {
-			loadClients();
+		$scope.$on('activitiesShouldBeRefreshed', function(oParameters) {
+			loadActivities();
 		});
 
 		$scope.$on("$destroy", function() {
@@ -160,7 +173,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 			});
 
 			cacheProvider.putTableStatusToCache({
-				sTableName: "clientsList",
+				sTableName: "activitiesList",
 				sStateName: $rootScope.sCurrentStateName,
 				aGroups: $scope.tableParams.settings().$scope.$groups,
 				oFilter: $scope.tableParams.$params.filter,

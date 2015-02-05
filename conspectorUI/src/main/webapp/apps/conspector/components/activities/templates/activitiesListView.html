@@ -31,17 +31,17 @@
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 		<div>
 			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
-			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'clientsList_addNew' | translate}}</md-button>
+			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'activitiesList_addNew' | translate}}</md-button>
 		</div>
 		<div layout="row" layout-align="end start">
 			<label class="cnpContentTitle notSelectable">
-				{{'clientsList_title' | translate}}
+				{{'activitiesList_title' | translate}}
 			</label>
 		</div>
 	</div>
 	<!-- NG TABLE -->
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
-		<table ng-table="tableParams" class="cnpNgTable" id="clientsList" show-filter="true">
+		<table ng-table="tableParams" class="cnpNgTable" id="activitiesList" show-filter="true">
 			<tbody ng-repeat="group in $groups">
 				<tr class="ng-table-group notSelectable" >
 					<td colspan="{{$columns.length}}" style="overflow: visible; padding-left: 0; padding-right: 0" >
@@ -50,42 +50,45 @@
 						</div>
 					</td>
 				</tr>
-				<tr ng-hide="group.$hideRows" ng-repeat="client in group.data">
+				<tr ng-hide="group.$hideRows" ng-repeat="activity in group.data">
 					<td data-title="'global_actions' | translate">
 						<div layout="row" layout-align="center center">
-							<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(client)">
+							<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(activity)">
 							</div>
-							<div ng-if="bDisplayEditButtons" class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(client)">
+							<div ng-if="bDisplayEditButtons" class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(activity)">
 							</div>
 						</div>
 					</td>
-					<td data-title="'global_clientName' | translate" sortable="'sClientName'" filter="{'sClientName': 'text'}">
+					<td data-title="'activity_activityType' | translate" sortable="'sActivityType'" filter="{'sActivityType': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>
-								{{client.sClientName}}
+								{{activity.sActivityType}}
 								</span>
 							</div>
 						</div>
 					</td>
-					<td data-title="'global_phone' | translate" sortable="'sPhone'" filter="{'sPhone': 'text'}">
+					<td data-title="'activity_object' | translate" filter="{'sObject': 'text'}">
 						<div layout="row" layout-align="start center">
-							<div><a href="tel:+{{client.sPhone | phoneFormatter}}">
-							<span>{{client.sPhone | phoneFormatter}}</span></a>
+							<div>
+								<span>
+									{{activity.sObject}}
+								</span>
+							</div>
 						</div>
 					</td>
 				
 					<td data-title="'global_email' | translate" sortable="'sEmail'" filter="{'sEmail': 'text'}">
 						<div layout="row" layout-align="start center">
-							<div><a href="mailto:{{client.sEmail}}">
-							<span>{{client.sEmail}}</span></a>
+							<div><a href="mailto:{{activity.sEmail}}">
+							<span>{{activity.sEmail}}</span></a>
 							
 						</div>
 					</td>
 					<td data-title="'global_tags' | translate" sortable="'sTags'" filter="{'sTags': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
-								<span>{{client.sTags}}</span>
+								<span>{{activity.sTags}}</span>
 							</div>
 						</div>
 					</td>

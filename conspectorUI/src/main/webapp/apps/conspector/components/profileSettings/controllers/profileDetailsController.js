@@ -58,13 +58,13 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 			for (var i = 0; i < oData.CompanyDetails.results.length; i++) {
 				if (!oData.CompanyDetails.results[i].GeneralAttributes.IsDeleted) {
 					$scope.oUser._aCompanies.push(oData.CompanyDetails.results[i]);
-					$scope.oUser.sCompanies = $scope.oUser.sCompanies + oData.CompanyDetails.results[i].CompanyName + "; ";
+					$scope.oUser.sCompanies = $scope.oUser.sCompanies + oData.CompanyDetails.results[i].CompanyName + ", ";
 				}
 			}
 			$scope.oUser.sRoles = "";
 			for (var i = 0; i < oData.RoleDetails.results.length; i++) {
 				if (!oData.RoleDetails.results[i].GeneralAttributes.IsDeleted && oData.RoleDetails.results[i].CompanyName === sCompany) {
-					$scope.oUser.sRoles = $scope.oUser.sRoles + oData.RoleDetails.results[i].RoleName + "; ";
+					$scope.oUser.sRoles = $scope.oUser.sRoles + oData.RoleDetails.results[i].RoleName + ", ";
 				}
 			}
 			$scope.oUser.sPhases = "";
@@ -79,7 +79,7 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 					if (!sPhaseName) {
 						sPhaseName = oData.PhaseDetails.results[i].NameEN;
 					}
-					$scope.oUser.sPhases = $scope.oUser.sPhases + sPhaseName + "; ";
+					$scope.oUser.sPhases = $scope.oUser.sPhases + sPhaseName + ", ";
 				}
 			}
 

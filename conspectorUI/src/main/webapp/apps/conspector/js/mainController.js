@@ -16,6 +16,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 				channel: sChannel
 			});
 
+			//to do add activities
 			$rootScope.$on(PubNub.ngMsgEv(sChannel), function(event, payload) {
 				if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
 					cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
