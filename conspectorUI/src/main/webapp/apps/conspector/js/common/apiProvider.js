@@ -210,7 +210,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -296,7 +296,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -312,7 +312,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -329,7 +329,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -385,7 +385,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -440,7 +440,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -573,7 +573,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -626,7 +626,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -681,7 +681,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -697,7 +697,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -713,7 +713,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -730,7 +730,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(function(aData) {
 						var aAccounts = [];
@@ -798,7 +798,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -853,7 +853,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -909,7 +909,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sCacheProviderAttribute: "oTaskPriorityEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -1096,7 +1096,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sCacheProviderAttribute: "oCountryEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -1112,7 +1112,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sCacheProviderAttribute: "oContactEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -1198,7 +1198,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sCacheProviderAttribute: "oContactEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -1214,7 +1214,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sCacheProviderAttribute: "oUnitOptionSetEntity"				
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -1273,7 +1273,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sCacheProviderAttribute: "oUnitOptionValueEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -1327,7 +1327,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sCacheProviderAttribute: "oTaskTypeEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -1375,14 +1375,15 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getActivities: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Activitys",
-					sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
+					// sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
+					sExpand: oParameters.sExpand,
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oActivityEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -1469,7 +1470,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sCacheProviderAttribute: "oDeficiencyEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
@@ -1553,7 +1554,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sCacheProviderAttribute: "oUnitEntity"
 				});
 				if (svc instanceof Array) {
-					oParameters.onSuccess(svc) // data retrived from cache
+					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
