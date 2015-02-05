@@ -14,7 +14,7 @@
 		</div>
 		<div layout="row" layout-align="end start">
 			<!-- <label class="cnpContentTitle notSelectable">
-									{{'clientDetails_title' | translate}}
+									{{'activityDetails_title' | translate}}
 			</label> -->
 		</div>
 	</div>
@@ -30,23 +30,23 @@
 		</div>
 		<div layout="row" layout-align="end start">
 			<label class="cnpContentTitle notSelectable">
-				{{'clientDetails_title' | translate}}
+				{{'activityDetails_title' | translate}}
 			</label>
 		</div>
 	</div>
 	<!-- END OF ACTION BAR -->
-	<form name="oForms.clientDetailsForm" novalidate>
+	<form name="oForms.activityDetailsForm" novalidate>
 		<div class="cnpSection" layout="column" layout-align="start center" flex>
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
 					<div  class="cnpSubSectionLabel">
 						<label>
-							{{'clientDetails_name' | translate}}
+							{{'activityDetails_name' | translate}}
 						</label>
 					</div>
-					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oClient.sName}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'clientDetails_namePlaceholder' | translate}}" name="clientName" required>
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.clientDetailsForm.clientName.$error" ng-if="(oForms.clientDetailsForm.clientName.$dirty || submitted) && sMode != 'display'">
+					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oActivity.sObject}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oActivity.sObject" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'activityDetails_objectPlaceholder' | translate}}" name="activityObject" required>
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.activityObject.$error" ng-if="(oForms.activityDetailsForm.activityObject.$dirty || submitted) && sMode != 'display'">
 						<div class="cnpErrorMessageValidationMessage" ng-message="required">
 							{{'global_emptyFieldError' | translate}}
 						</div>
@@ -55,7 +55,7 @@
 				<div class="cnpSubSection" flex>
 					<div  class="cnpSubSectionLabel">
 						<label>
-							{{'clientDetails_associatedProjectsAndPhases' | translate}}
+							{{'activityDetails_associatedProjectsAndPhases' | translate}}
 						</label>
 					</div>
 					<div
@@ -73,239 +73,38 @@
 						>
 					</div>
 					<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.clientDetailsForm.selectedPhases.$error" ng-if="(oForms.clientDetailsForm.selectedPhases.$dirty && !oForms.clientDetailsForm.selectedPhases.$valid) || submitted">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.selectedPhases.$error" ng-if="(oForms.activityDetailsForm.selectedPhases.$dirty && !oForms.activityDetailsForm.selectedPhases.$valid) || submitted">
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>
 			</div>
-			<div layout="column" layout-gt-md="row" style="width: 100%" flex>
-				<div layout="row" style="width: 100%" flex>
-					<div class="cnpSubSection" flex>
-						<div layout="row">
-							<div flex="70">
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'clientDetails_phone' | translate}}
-									</label>
-								</div>
-								<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oClient.sPhone | phoneFormatter}}">{{oClient.sPhone | phoneFormatter}}</a></div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
-							</div>
-							<div flex="30">
-								<div class="cnpSubSectionLabel">
-									<label>
-										{{'global_phoneExtension' | translate}}
-									</label>
-								</div>
-								<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sPhoneExtension}}</div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
-							</div>
-						</div>
-						<div layout="row">
-							<div flex="70">
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'clientDetails_secondaryPhone' | translate}}
-									</label>
-								</div>
-								<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oClient.sSecondaryPhone | phoneFormatter}}">{{oClient.sSecondaryPhone | phoneFormatter}}</a></div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sSecondaryPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
-							</div>
-							<div flex="30">
-								<div class="cnpSubSectionLabel">
-									<label>
-										{{'global_phoneExtension' | translate}}
-									</label>
-								</div>
-								<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sSecondaryPhoneExtension}}</div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sSecondaryPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
-							</div>
-						</div>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_website' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="http://{{oClient.sWebsite}}" target="_blank">{{oClient.sWebsite}}</a></div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sWebsite" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_websitePlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_email' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="mailto:{{oClient.sEmail}}">{{oClient.sEmail}}</a></div>
-						<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_emailPlaceholder' | translate}}">
-						<div class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_fax' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sFax | phoneFormatter}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sFax" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'activityDetails_activityType' | translate}}
+						</label>
 					</div>
-					<div class="cnpSubSection" flex>
-						<div class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_descriptionTags' | translate}}
-							</label>
-						</div>
-						<!-- TO DO -->
-						<tags-input
-						ng-model="oClient.aTags"
-						ng-hide="sMode == 'display'"
-						replace-spaces-with-dashes="false"
-						placeholder="{{'global_addTag' | translate}}"
-						on-tag-added="onDataModified()"
-						on-tag-removed="onDataModified()">
-						</tags-input>
-						<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
-							<ul class="tags-list">
-								<li class="tag-item" ng-repeat="tag in oClient.aTags">
-									<span style="padding: 2px;">{{tag.text}}</span>
-								</li>
-							</ul>
-						</div>
-						<!-- 	<div class="tags-wrapper" ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aTags.length" class="form-control">
-									<ul class="tags-list">
-															<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
-																					<span style="padding: 2px;">{{tag.text}}</span>
-															</li>
-									</ul>
-						</div>	 -->
+					<div
+						multi-select
+						input-model="aActivityTypes"
+						button-label="name"
+						default-label="{{'global_selectedProjectsAndPhases' | translate }}"
+						item-label="name"
+						selection-mode="single"
+						tick-property="ticked"
+						group-property="multiSelectGroup"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						output-model="aSelectedActivityType"
+						>
 					</div>
-				</div>
-				<div layout="row" flex style="width: 100%">
-					<div class="cnpSubSection" flex>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_billingStreet' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingStreet}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingStreetPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_billingCity' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingCity}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingCityPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_billingPostalCode' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sBillingPostalCode}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sBillingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingPostalCodePlaceholder' | translate}}">
-						
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_billingCountry' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._billingCountryCode}}</div>
-						<div
-							ng-if="sMode == 'edit' || sMode == 'create'"
-							multi-select
-							input-model="aBillingCountries"
-							button-label="name"
-							default-label="{{'global_selectCountry' | translate }}"
-							item-label="name"
-							tick-property="ticked"
-							selection-mode="single"
-							is-disabled="sMode == 'display'"
-							on-item-click="onBillingCountryChanged()"
-							helper-elements="filter"
-							>
-						</div>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_billingProvince' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._billingProvinceCode}}</div>
-						<div
-							ng-if="sMode == 'edit' || sMode == 'create'"
-							multi-select
-							input-model="aBillingProvinces"
-							button-label="name"
-							default-label="{{'global_selectState' | translate }}"
-							item-label="name"
-							tick-property="ticked"
-							selection-mode="single"
-							is-disabled="sMode == 'display'"
-							on-item-click="onDataModified()"
-							helper-elements="filter"
-							>
-						</div>
-					</div>
-					<div class="cnpSubSection" flex>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_shippingStreet' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingStreet}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingStreetPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_shippingCity' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingCity}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingCityPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_shippingPostalCode' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient.sShippingPostalCode}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingPostalCodePlaceholder' | translate}}">
-						
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_shippingCountry' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._shippingCountryCode}}</div>
-						<div
-							ng-if="sMode == 'edit' || sMode == 'create'"
-							multi-select
-							input-model="aShippingCountries"
-							button-label="name"
-							default-label="{{'global_selectCountry' | translate }}"
-							item-label="name"
-							tick-property="ticked"
-							selection-mode="single"
-							is-disabled="sMode == 'display'"
-							on-item-click="onShippingCountryChanged()"
-							helper-elements="filter"
-							>
-						</div>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'clientDetails_shippingProvince' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oClient._shippingProvinceCode}}</div>
-						<div
-							ng-if="sMode == 'edit' || sMode == 'create'"
-							multi-select
-							input-model="aShippingProvinces"
-							button-label="name"
-							default-label="{{'global_selectState' | translate }}"
-							item-label="name"
-							tick-property="ticked"
-							selection-mode="single"
-							is-disabled="sMode == 'display'"
-							on-item-click="onDataModified()"
-							helper-elements="filter"
-							>
-						</div>
+					<input ng-model="aSelectedActivityType.length" type="number" ng-show="false" name="selectedActivityType" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.selectedActivityType.$error" ng-if="(oForms.activityDetailsForm.selectedActivityType.$dirty && !oForms.activityDetailsForm.selectedActivityType.$valid) || submitted">
+						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>
 			</div>
-			
 		</div>
 	</form>
 </div>

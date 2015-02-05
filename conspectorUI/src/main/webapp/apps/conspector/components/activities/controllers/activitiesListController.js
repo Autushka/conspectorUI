@@ -28,7 +28,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         });
 
         var oInitialSortingForActivitiesList = {
-            sClientName: 'asc'
+            sActivityName: 'asc'
         };
         if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
             oInitialSortingForActivitiesList = angular.copy(oTableStatusFromCache.oSorting);
@@ -141,7 +141,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         var loadActivities = function() {
             oActivitiesListData.aData = [];
             apiProvider.getActivities({
-                sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
+                sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails",
                 bShowSpinner: true,
                 onSuccess: onActivitiesLoaded
             });
@@ -149,24 +149,24 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 
         loadActivities(); //load Activities
 
-        $scope.onDisplay = function(oClient) {
-            $state.go('app.clientDetailsWrapper.clientDetails', {
+        $scope.onDisplay = function(oActivity) {
+            $state.go('app.activityDetailsWrapper.activityDetails', {
                 sMode: "display",
-                sClientGuid: oClient._guid,
+                sActivityGuid: oActivity._guid,
             });
         };
 
-        $scope.onEdit = function(oClient) {
-            $state.go('app.clientDetailsWrapper.clientDetails', {
+        $scope.onEdit = function(oActivity) {
+            $state.go('app.activityDetailsWrapper.activityDetails', {
                 sMode: "edit",
-                sClientGuid: oClient._guid,
+                sActivityGuid: oActivity._guid,
             });
         };
 
         $scope.onAddNew = function() {
-            $state.go('app.clientDetailsWrapper.clientDetails', {
+            $state.go('app.activityDetailsWrapper.activityDetails', {
                 sMode: "create",
-                sClientGuid: "",
+                sActivityGuid: "",
             });
         };
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {

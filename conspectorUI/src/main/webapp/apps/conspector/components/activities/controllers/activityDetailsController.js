@@ -1,9 +1,9 @@
-viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
+viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
 	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
 
 		$scope.oForms = {};
 
-		var sClientGuid = $stateParams.sClientGuid;
+		var sActivityGuid = $stateParams.sActivityGuid;
 		$scope.sMode = $stateParams.sMode;
 
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
@@ -12,44 +12,39 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
 			sRole: sCurrentRole,
-			sEntityName: "oClient",
+			sEntityName: "oActivity",
 			sOperation: "bUpdate"
 		});
 
 		$scope.bDisplayDeleteButton = rolesSettings.getRolesSettingsForEntityAndOperation({
 			sRole: sCurrentRole,
-			sEntityName: "oClient",
+			sEntityName: "oActivity",
 			sOperation: "bDelete"
 		});	
 
-		$scope.sAccountType = "";
-		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-		if ($rootScope.sCurrentStateName === "app.clientDetailsWrapper.clientDetails") { 
-			if($scope.sMode === "display" || $scope.sMode === "edit"){
-				$scope.$parent.bDisplayContactsList = true;
-			}
-			$scope.sAccountType = "Client";
-		}
+//to delete
+		// $scope.sActivityType = "";
+		// $scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
+		// if ($rootScope.sCurrentStateName === "app.activityDetailsWrapper.activityDetails") { 
+		// 	if($scope.sMode === "display" || $scope.sMode === "edit"){
+		// 		$scope.$parent.bDisplayContactsList = true;
+		// 	}
+		// 	$scope.sActivityType = "Activity";
+		// }
 
-		$scope.sAccountTypeGuid = ""; //for new client creation flow
+		// $scope.sActivityTypeGuid = ""; 
+		//for new activity creation flow
 
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
-		$scope.oClient = {
+		$scope.oActivity = {
 			_aPhases: [],
 		};
 
-		var oClientWrapper = {
+		var oActivityWrapper = {
 			aData: [{}]
 		};
-
-		var aCountriesWithProvinces = [];
-
-		$scope.aBillingCountries = [];
-		$scope.aBillingProvinces = [];
-		$scope.aShippingCountries = [];
-		$scope.aShippingProvinces = [];
 
 		var constructPhasesMultiSelect = function(aSelectedPhases) {
 			$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
@@ -57,204 +52,110 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 			});
 		};
 
-		var setDisplayedClientDetails = function(oClient) {
-			var aClientPhasesGuids = [];
-			$scope.oClient._guid = oClient.Guid;
-			$scope.oClient._lastModifiedAt = oClient.LastModifiedAt;
-			$scope.oClient.sName = oClient.Name;
-			$scope.oClient.sPhone = oClient.MainPhone;
-			$scope.oClient.sPhoneExtension = oClient.MainPhoneExtension;
-			$scope.oClient.sSecondaryPhone = oClient.SecondaryPhone;
-			$scope.oClient.sSecondaryPhoneExtension = oClient.SecondaryPhoneExtension;
-			$scope.oClient.sWebsite = oClient.Website;
-			$scope.oClient.sEmail = oClient.Email;
-			$scope.oClient.sFax = oClient.Fax;
+		var setDisplayedActivityDetails = function(oActivity) {
+			var aActivityPhasesGuids = [];
+			$scope.oActivity._guid = oActivity.Guid;
+			$scope.oActivity.sObject =  oActivity.Object;
+			// $scope.oActivity._lastModifiedAt = oActivity.LastModifiedAt;
+			// $scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oActivity.CreatedAt);
+			// $scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oActivity.LastModifiedAt);
 
-			$scope.oClient.aTags = utilsProvider.tagsStringToTagsArray(oClient.DescriptionTags);
-
-			if (oClient.BillingAddress) {
-				$scope.oClient.sBillingStreet = oClient.BillingAddress.BillingStreet;
-				$scope.oClient.sBillingCity = oClient.BillingAddress.BillingCity;
-				$scope.oClient.sBillingPostalCode = oClient.BillingAddress.BillingPostalCode;
-				$scope.oClient._billingCountryCode = oClient.BillingAddress.BillingCountry;
-				$scope.oClient._billingProvinceCode = oClient.BillingAddress.BillingProvince;
+			$scope.oActivity._aPhases = angular.copy(oActivity.PhaseDetails.results);
+			for (var i = 0; i < $scope.oActivity._aPhases.length; i++) {
+				aActivityPhasesGuids.push($scope.oActivity._aPhases[i].Guid);
 			}
+			constructPhasesMultiSelect(aActivityPhasesGuids);
 
-			if (oClient.ShippingAddress) {
-				$scope.oClient.sShippingStreet = oClient.ShippingAddress.ShippingStreet;
-				$scope.oClient.sShippingCity = oClient.ShippingAddress.ShippingCity;
-				$scope.oClient.sShippingPostalCode = oClient.ShippingAddress.ShippingPostalCode;
-				$scope.oClient._shippingCountryCode = oClient.ShippingAddress.ShippingCountry;
-				$scope.oClient._shippingProvinceCode = oClient.ShippingAddress.ShippingProvince;
-			}
-
-			$scope.oClient.sCreatedAt = utilsProvider.dBDateToSting(oClient.CreatedAt);
-			$scope.oClient.sLastModifiedAt = utilsProvider.dBDateToSting(oClient.LastModifiedAt);
-
-			$scope.oClient._aPhases = angular.copy(oClient.PhaseDetails.results);
-			for (var i = 0; i < $scope.oClient._aPhases.length; i++) {
-				aClientPhasesGuids.push($scope.oClient._aPhases[i].Guid);
-			}
-			constructPhasesMultiSelect(aClientPhasesGuids);
-
-			oClientWrapper.aData[0] = angular.copy($scope.oClient);
+			oActivityWrapper.aData[0] = angular.copy($scope.oActivity);
 		};
 
-		var oClient = cacheProvider.getEntityDetails({
-			sCacheProviderAttribute: "oAccountEntity",
-			sRequestSettings: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + "PhaseDetails/ProjectDetails,AccountTypeDetails", //filter + expand
+		var oActivity = cacheProvider.getEntityDetails({
+			sCacheProviderAttribute: "oActivityEntity",
+			sRequestSettings: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + "PhaseDetails/ProjectDetails,ActivityTypeDetails", //filter + expand
 			sKeyName: "Guid",
-			sKeyValue: $stateParams.sClientGuid
+			sKeyValue: $stateParams.sActivityGuid
 		});
 
-		var constructProvinceSelect = function(oParameters) {
-			var sParentKey = oParameters.sParentKey;
-			var sTargetArrayName = "";
-			var sCountriesArrayName = "";
-
-			if (oParameters.sProvincesFor === "billingAddress") {
-				sTargetArrayName = "aBillingProvinces";
-				sCountriesArrayName = "aBillingCountries";
-			} else {
-				sTargetArrayName = "aShippingProvinces";
-				sCountriesArrayName = "aShippingCountries";
-			}
-
-			for (var i = 0; i < $scope[sCountriesArrayName].length; i++) {
-				if ($scope[sCountriesArrayName][i].ticked) {
-					for (var j = 0; j < aCountriesWithProvinces.length; j++) {
-						if ($scope[sCountriesArrayName][i].CountryCode === aCountriesWithProvinces[j].CountryCode) {
-							servicesProvider.constructDependentMultiSelectArray({
-								oDependentArrayWrapper: {
-									aData: aCountriesWithProvinces[j].ProvinceDetails.results
-								},
-								oParentArrayWrapper: oClientWrapper,
-								sNameEN: "Name",
-								sNameFR: "Name",
-								sDependentKey: "ProvinceCode",
-								sParentKey: sParentKey,
-								sTargetArrayNameInParent: sTargetArrayName
-							});
-							if (oClientWrapper.aData[0]) {
-								$scope[sTargetArrayName] = angular.copy(oClientWrapper.aData[0][sTargetArrayName]);
-							}
-							break;
-						}
-					}
-					break;
-				}
-			}
+		var onActivityDetailsLoaded = function(oData) {
+			setDisplayedActivityDetails(oData);
 		};
 
-		var onCountriesLoaded = function(aData) {
-			aCountriesWithProvinces = angular.copy(aData);
-			servicesProvider.constructDependentMultiSelectArray({
-				oDependentArrayWrapper: {
-					aData: aData
-				},
-				oParentArrayWrapper: oClientWrapper,
-				sNameEN: "Name",
-				sNameFR: "Name",
-				sDependentKey: "CountryCode",
-				sParentKey: "_billingCountryCode",
-				sTargetArrayNameInParent: "aBillingCountries"
-			});
+	
+
+		var onActivityTypesLoaded = function(aData) {
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
 
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
 				},
-				oParentArrayWrapper: oClientWrapper,
-				sNameEN: "Name",
-				sNameFR: "Name",
-				sDependentKey: "CountryCode",
-				sParentKey: "_shippingCountryCode",
-				sTargetArrayNameInParent: "aShippingCountries"
+				oParentArrayWrapper: oActivityWrapper,
+				sNameEN: "NameEN",
+				sNameFR: "NameFR",
+				sDependentKey: "Guid",
+				sParentKey: "_activityTypeGuid",
+				sTargetArrayNameInParent: "aActivityTypes"
 			});
-			if (oClientWrapper.aData[0]) {
-				$scope.aBillingCountries = angular.copy(oClientWrapper.aData[0].aBillingCountries);
-				$scope.aShippingCountries = angular.copy(oClientWrapper.aData[0].aShippingCountries);
-			}
-
-			if ($scope.oClient._billingCountryCode) {
-				constructProvinceSelect({
-					sParentKey: "_billingProvinceCode",
-					sProvincesFor: "billingAddress"
-				});
-			}
-			if ($scope.oClient._shippingCountryCode) {
-				constructProvinceSelect({
-					sParentKey: "_shippingProvinceCode",
-					sProvincesFor: "shippingAddress"
-				});
+			if (oActivityWrapper.aData[0]) {
+				$scope.aActivityTypes = angular.copy(oActivityWrapper.aData[0].aActivityTypes);
 			}
 		};
 
-		var onClientDetailsLoaded = function(oData) {
-			setDisplayedClientDetails(oData);
-
-			apiProvider.getCountriesWithProvinces({
-				bShowSpinner: false,
-				onSuccess: onCountriesLoaded
-			});
-		};
-
-		var getClientDetails = function() {
-			apiProvider.getAccountWithPhases({
-				sKey: sClientGuid,
+		var getActivity = function() {
+			apiProvider.getActivityWithPhases({
+				sKey: sActivityGuid,
+				sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
 				bShowSpinner: true,
-				onSuccess: onClientDetailsLoaded,
+				onSuccess: onActivityDetailsLoaded,
 			});
-		};
-
-		var onAccountTypeLoaded = function(oData){
-			$scope.sAccountTypeGuid = oData[0].Guid;
 		};
 
 		if ($scope.sMode !== "create") {
-			if (angular.equals(oClient, {})) { //in case of F5
-				getClientDetails();
+			if (angular.equals(oActivity, {})) { //in case of F5
+				getActivityDetails();
 			} else { //in case when data is retrieved from the cash
-				setDisplayedClientDetails(oClient);
+				setDisplayedActivityDetails(oActivity);
 
-				apiProvider.getCountriesWithProvinces({
+				apiProvider.getActivityTypes({
 					bShowSpinner: false,
-					onSuccess: onCountriesLoaded
+					onSuccess: onActivityTypesLoaded
 				});
+				// apiProvider.getAccountTypesWithAccounts({
+				// 	bShowSpinner: false,
+				// 	onSuccess: onAccountTypesWithAccountsLoaded
+				// });
 			}
 		} else {
-			constructPhasesMultiSelect({
-				aSelectedPhases: []
-			});
+			var aSelectedPhases = [];
+			// if (historyProvider.getPreviousStateName() === "app.contractorDetailsWrapper.contractorDetails" || historyProvider.getPreviousStateName() === "app.clientDetailsWrapper.clientDetails") {
+			// 	aSelectedPhases = angular.copy($rootScope.aAccountPhasesGuids);
+			// }
+			constructPhasesMultiSelect(aSelectedPhases);
 
-			apiProvider.getCountriesWithProvinces({
-				bShowSpinner: false,
-				onSuccess: onCountriesLoaded
-			});
+			apiProvider.getActivityTypes({
+					bShowSpinner: false,
+					onSuccess: onActivityTypesLoaded
+				});
 
-			if($scope.sAccountType === "Client"){
-				apiProvider.getClientAccountType({
-					bShowSpinner: false,
-					onSuccess: onAccountTypeLoaded
-				});		
-			}
-			if($scope.sAccountType === "Client"){
-				apiProvider.getClientAccountType({
-					bShowSpinner: false,
-					onSuccess: onAccountTypeLoaded
-				});					
-			}			
+
+			// apiProvider.getAccountTypesWithAccounts({
+			// 	bShowSpinner: false,
+			// 	onSuccess: onAccountTypesWithAccountsLoaded
+			// });
 		}
 
 		$scope.onEdit = function() {
-			$state.go('app.clientDetailsWrapper.clientDetails', {
+			$state.go('app.activityDetailsWrapper.activityDetails', {
 				sMode: "edit",
-				sClientGuid: $scope.oClient._guid,
+				sActivityGuid: $scope.oActivity._guid,
 			});
 		};
 
 
-		var deleteClient = function() {
+		var deleteActivity = function() {
 			var oDataForSave = {
 				GeneralAttributes: {
 					IsDeleted: true
@@ -265,9 +166,9 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 					oState: $state
 				});
 			}
-			oDataForSave.Guid = $scope.oClient._guid;
-			oDataForSave.LastModifiedAt = $scope.oClient._lastModifiedAt;
-			apiProvider.updateAccount({
+			oDataForSave.Guid = $scope.oActivity._guid;
+			oDataForSave.LastModifiedAt = $scope.oActivity._lastModifiedAt;
+			apiProvider.updateActivity({
 				bShowSpinner: true,
 				sKey: oDataForSave.Guid,
 				oData: oDataForSave,
@@ -279,16 +180,16 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 
 		$scope.onDelete = function($event) {
 			servicesProvider.showConfirmationPopup({
-				sHeader: $translate.instant('clientDetails_deletionConfirmationHeader'),
-				sContent: $translate.instant('clientDetails_deletionConfirmationContent'),
+				sHeader: $translate.instant('activityDetails_deletionConfirmationHeader'),
+				sContent: $translate.instant('activityDetails_deletionConfirmationContent'),
 				sOk: $translate.instant('global_ok'),
 				sCancel: $translate.instant('global_cancel'),
-				onOk: deleteClient,
+				onOk: deleteActivity,
 				event: $event
 			});
 		};
 
-		var prepareLinksForSave = function() { // link client to phases
+		var prepareLinksForSave = function() { // link activity to phases
 			var aLinks = [];
 			var aUri = [];
 			var sUri = "";
@@ -315,29 +216,11 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 
 		$scope.onSelectedPhasesModified = function() {
 			$scope.onDataModified();
-			$scope.oForms.clientDetailsForm.selectedPhases.$setDirty();
+			$scope.oForms.activityDetailsForm.selectedPhases.$setDirty();
 		};
 
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
-		};
-
-		$scope.onBillingCountryChanged = function() {
-			$scope.onDataModified();
-			constructProvinceSelect({
-				sParentKey: "",
-				sProvincesFor: "billingAddress"
-			});
-
-		};
-
-		$scope.onShippingCountryChanged = function() {
-			$scope.onDataModified();
-			constructProvinceSelect({
-				sParentKey: "",
-				sProvincesFor: "shippingAddress"
-			});
-
 		};
 
 		$scope.onBack = function() {
@@ -347,14 +230,17 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			if($scope.oForms.clientDetailsForm.selectedPhases){
-				$scope.oForms.clientDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
+			if($scope.oForms.activityDetailsForm.selectedPhases){
+				$scope.oForms.activityDetailsForm.selectedPhases.$setDirty();//to display validation messages on submit press
 			}
-			if($scope.oForms.clientDetailsForm.clientName){
-				$scope.oForms.clientDetailsForm.clientName.$setDirty();//to display validation messages on submit press
+			if($scope.oForms.activityDetailsForm.activityObject){
+				$scope.oForms.activityDetailsForm.selectedActivityType.$setDirty();//to display validation messages on submit press
+			}
+			if($scope.oForms.activityDetailsForm.activityObject){
+				$scope.oForms.activityDetailsForm.activityObject.$setDirty();//to display validation messages on submit press
 			}			
 
-			if(!$scope.oForms.clientDetailsForm.$valid){
+			if(!$scope.oForms.activityDetailsForm.$valid){
 				return;
 			}	
 
@@ -369,119 +255,120 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
 				}
-				if (!bSaveAndNew) {
-					$scope.oClient._lastModifiedAt = oData.LastModifiedAt;
-					$scope.oClient.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
-					$scope.oClient.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
-					$scope.oClient._guid = oData.Guid;
-					$state.go('app.clientDetailsWrapper.clientDetails', {
-						sMode: "display",
-						sClientGuid: oData.Guid,
-					});
-				} else {
-					$scope.oClient.sName = "";
-					$scope.oClient.sPhone = "";
-					$scope.oClient.sPhoneExtension = "";
-					$scope.oClient.sSecondaryPhone = "";
-					$scope.oClient.sSecondaryPhoneExtension = "";
-					$scope.oClient.sWebsite = "";
-					$scope.oClient.sEmail = "";
-					$scope.oClient.sFax = "";
-					$scope.oClient.aTags = [];
+				// if (!bSaveAndNew) {
+				// 	$scope.oActivity._lastModifiedAt = oData.LastModifiedAt;
+				// 	$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
+				// 	$scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
+				// 	$scope.oActivity._guid = oData.Guid;
+				// 	$state.go('app.activityDetailsWrapper.activityDetails', {
+				// 		sMode: "display",
+				// 		sActivityGuid: oData.Guid,
+				// 	});
+				// } else {
+				// 	$scope.oActivity.sName = "";
+				// 	$scope.oActivity.sPhone = "";
+				// 	$scope.oActivity.sPhoneExtension = "";
+				// 	$scope.oActivity.sSecondaryPhone = "";
+				// 	$scope.oActivity.sSecondaryPhoneExtension = "";
+				// 	$scope.oActivity.sWebsite = "";
+				// 	$scope.oActivity.sEmail = "";
+				// 	$scope.oActivity.sFax = "";
+				// 	$scope.oActivity.aTags = [];
 
-					$scope.oClient.sBillingStreet = "";
-					$scope.oClient.sBillingCity = "";
-					$scope.oClient.sBillingPostalCode = "";
-					$scope.oClient.sShippingStreet = "";
-					$scope.oClient.sShippingCity = "";
-					$scope.oClient.sShippingPostalCode = "";					
+				// 	$scope.oActivity.sBillingStreet = "";
+				// 	$scope.oActivity.sBillingCity = "";
+				// 	$scope.oActivity.sBillingPostalCode = "";
+				// 	$scope.oActivity.sShippingStreet = "";
+				// 	$scope.oActivity.sShippingCity = "";
+				// 	$scope.oActivity.sShippingPostalCode = "";					
 
-					$scope.oForms.clientDetailsForm.clientName.$setPristine();
-					oDataForSave.BillingAddress = {};
-					oDataForSave.ShippingAddress = {};
-					$scope.oClient._aPhases = [];
-				}
+				// 	$scope.oForms.activityDetailsForm.activityName.$setPristine();
+				// 	oDataForSave.BillingAddress = {};
+				// 	oDataForSave.ShippingAddress = {};
+				// 	$scope.oActivity._aPhases = [];
+				// }
 			};
 			var onSuccessUpdate = function(oData) {
 				bDataHasBeenModified = false;
-				$scope.oClient._lastModifiedAt = oData.LastModifiedAt;
-				$scope.oClient.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
+				$scope.oActivity._lastModifiedAt = oData.LastModifiedAt;
+				$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
 				}
-				$state.go('app.clientDetailsWrapper.clientDetails', {
+				$state.go('app.activityDetailsWrapper.activityDetails', {
 					sMode: "display",
-					sClientGuid: oData.Guid,
+					sActivityGuid: oData.Guid,
 				});
 			};
-			oDataForSave.Guid = $scope.oClient._guid;
-			oDataForSave.Name = $scope.oClient.sName;
 
-			if ($scope.oClient.sPhone) {
-				oDataForSave.MainPhone = $scope.oClient.sPhone.replace(/\D/g, '');
-			} else {
-				oDataForSave.MainPhone = "";
-			}
-			if ($scope.oClient.sSecondaryPhone) {
-				oDataForSave.SecondaryPhone = $scope.oClient.sSecondaryPhone.replace(/\D/g, '');
-			} else {
-				oDataForSave.SecondaryPhone = "";
-			}
-			if ($scope.oClient.sFax) {
-				oDataForSave.Fax = $scope.oClient.sFax.replace(/\D/g, '');
-			} else {
-				oDataForSave.Fax = "";
-			}	
+			oDataForSave.Guid = $scope.oActivity._guid;
+			// oDataForSave.Name = $scope.oActivity.sName;
 
-			oDataForSave.Website = $scope.oClient.sWebsite;
-			oDataForSave.Email = $scope.oClient.sEmail;
-			oDataForSave.MainPhoneExtension = $scope.oClient.sPhoneExtension;
-			oDataForSave.SecondaryPhoneExtension = $scope.oClient.sSecondaryPhoneExtension;
+			// if ($scope.oActivity.sPhone) {
+			// 	oDataForSave.MainPhone = $scope.oActivity.sPhone.replace(/\D/g, '');
+			// } else {
+			// 	oDataForSave.MainPhone = "";
+			// }
+			// if ($scope.oActivity.sSecondaryPhone) {
+			// 	oDataForSave.SecondaryPhone = $scope.oActivity.sSecondaryPhone.replace(/\D/g, '');
+			// } else {
+			// 	oDataForSave.SecondaryPhone = "";
+			// }
+			// if ($scope.oActivity.sFax) {
+			// 	oDataForSave.Fax = $scope.oActivity.sFax.replace(/\D/g, '');
+			// } else {
+			// 	oDataForSave.Fax = "";
+			// }	
+
+			oDataForSave.Object = $scope.oActivity.sObject;
+			// oDataForSave.Email = $scope.oActivity.sEmail;
+			// oDataForSave.MainPhoneExtension = $scope.oActivity.sPhoneExtension;
+			// oDataForSave.SecondaryPhoneExtension = $scope.oActivity.sSecondaryPhoneExtension;
 			
-			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oClient.aTags);
+			// oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oActivity.aTags);
 
-			oDataForSave.BillingAddress = {};
-			oDataForSave.BillingAddress.BillingStreet = $scope.oClient.sBillingStreet;
-			oDataForSave.BillingAddress.BillingCity = $scope.oClient.sBillingCity;
-			oDataForSave.BillingAddress.BillingPostalCode = $scope.oClient.sBillingPostalCode;
+			// oDataForSave.BillingAddress = {};
+			// oDataForSave.BillingAddress.BillingStreet = $scope.oActivity.sBillingStreet;
+			// oDataForSave.BillingAddress.BillingCity = $scope.oActivity.sBillingCity;
+			// oDataForSave.BillingAddress.BillingPostalCode = $scope.oActivity.sBillingPostalCode;
 
-			oDataForSave.ShippingAddress = {};
-			oDataForSave.ShippingAddress.ShippingStreet = $scope.oClient.sShippingStreet;
-			oDataForSave.ShippingAddress.ShippingCity = $scope.oClient.sShippingCity;
-			oDataForSave.ShippingAddress.ShippingPostalCode = $scope.oClient.sShippingPostalCode;
+			// oDataForSave.ShippingAddress = {};
+			// oDataForSave.ShippingAddress.ShippingStreet = $scope.oActivity.sShippingStreet;
+			// oDataForSave.ShippingAddress.ShippingCity = $scope.oActivity.sShippingCity;
+			// oDataForSave.ShippingAddress.ShippingPostalCode = $scope.oActivity.sShippingPostalCode;
 
-			for (var i = 0; i < $scope.aBillingCountries.length; i++) {
-				if ($scope.aBillingCountries[i].ticked) {
-					oDataForSave.BillingAddress.BillingCountry = $scope.aBillingCountries[i].CountryCode;
-					break;
-				}
-			}
-			for (var i = 0; i < $scope.aBillingProvinces.length; i++) {
-				if ($scope.aBillingProvinces[i].ticked) {
-					oDataForSave.BillingAddress.BillingProvince = $scope.aBillingProvinces[i].ProvinceCode;
-					break;
-				}
-			}
-			for (var i = 0; i < $scope.aShippingCountries.length; i++) {
-				if ($scope.aShippingCountries[i].ticked) {
-					oDataForSave.ShippingAddress.ShippingCountry = $scope.aShippingCountries[i].CountryCode;
-					break;
-				}
-			}
-			for (var i = 0; i < $scope.aShippingProvinces.length; i++) {
-				if ($scope.aShippingProvinces[i].ticked) {
-					oDataForSave.ShippingAddress.ShippingProvince = $scope.aShippingProvinces[i].ProvinceCode;
-					break;
-				}
-			}
+			// for (var i = 0; i < $scope.aBillingCountries.length; i++) {
+			// 	if ($scope.aBillingCountries[i].ticked) {
+			// 		oDataForSave.BillingAddress.BillingCountry = $scope.aBillingCountries[i].CountryCode;
+			// 		break;
+			// 	}
+			// }
+			// for (var i = 0; i < $scope.aBillingProvinces.length; i++) {
+			// 	if ($scope.aBillingProvinces[i].ticked) {
+			// 		oDataForSave.BillingAddress.BillingProvince = $scope.aBillingProvinces[i].ProvinceCode;
+			// 		break;
+			// 	}
+			// }
+			// for (var i = 0; i < $scope.aShippingCountries.length; i++) {
+			// 	if ($scope.aShippingCountries[i].ticked) {
+			// 		oDataForSave.ShippingAddress.ShippingCountry = $scope.aShippingCountries[i].CountryCode;
+			// 		break;
+			// 	}
+			// }
+			// for (var i = 0; i < $scope.aShippingProvinces.length; i++) {
+			// 	if ($scope.aShippingProvinces[i].ticked) {
+			// 		oDataForSave.ShippingAddress.ShippingProvince = $scope.aShippingProvinces[i].ProvinceCode;
+			// 		break;
+			// 	}
+			// }
 
-			oDataForSave.LastModifiedAt = $scope.oClient._lastModifiedAt;
+			oDataForSave.LastModifiedAt = $scope.oActivity._lastModifiedAt;
 
 			aLinks = prepareLinksForSave();
 			switch ($scope.sMode) {
 				case "edit":
-					apiProvider.updateAccount({
+					apiProvider.updateActivity({
 						bShowSpinner: true,
 						sKey: oDataForSave.Guid,
 						oData: oDataForSave,
@@ -492,8 +379,8 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 					});
 					break;
 				case "create":
-					oDataForSave.AccountTypeGuid = $scope.sAccountTypeGuid;
-					apiProvider.createAccount({
+					oDataForSave.ActivityTypeGuid = $scope.sActivityTypeGuid;
+					apiProvider.createActivity({
 						bShowSpinner: true,
 						oData: oDataForSave,
 						aLinks: aLinks,
@@ -538,11 +425,11 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 			}
 		});
 
-		$scope.$on("$destroy", function() {
-			$rootScope.aAccountPhasesGuids = [];
-			for (var i = 0; i < $scope.aSelectedPhases.length; i++) {
-				$rootScope.aAccountPhasesGuids.push($scope.aSelectedPhases[i].Guid);
-			}			
-		});			
+		// $scope.$on("$destroy", function() {
+		// 	$rootScope.aActivityPhasesGuids = [];
+		// 	for (var i = 0; i < $scope.aSelectedPhases.length; i++) {
+		// 		$rootScope.aActivityPhasesGuids.push($scope.aSelectedPhases[i].Guid);
+		// 	}			
+		// });			
 	}
 ]);
