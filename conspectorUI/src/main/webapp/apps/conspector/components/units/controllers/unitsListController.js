@@ -61,15 +61,15 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 				// for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 				bMatchFound = false;
 
-				if (aData[i].PhaseDetails) {
-					iSortingSequence = aData[i].PhaseDetails.GeneralAttributes.SortingSequence;
-					for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-						if (aData[i].PhaseDetails.Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-							bMatchFound = true;
-							break;
-						}
-					}
-				}
+				// if (aData[i].PhaseDetails) {
+				// 	iSortingSequence = aData[i].PhaseDetails.GeneralAttributes.SortingSequence;
+				// 	for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+				// 		if (aData[i].PhaseDetails.Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
+				// 			bMatchFound = true;
+				// 			break;
+				// 		}
+				// 	}
+				// }
 
 				// if (!bMatchFound) {
 				// 	continue;

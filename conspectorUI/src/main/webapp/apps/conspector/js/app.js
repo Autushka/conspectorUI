@@ -144,6 +144,21 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			controller: 'unitsListView'
 		});
 
+		$stateProvider.state('app.unitDetailsWrapper', {//abstract view without controller that contains only ngView holders
+			templateUrl: 'apps/conspector/components/units/templates/unitDetailsWrapperView.html',
+			controller: 'unitDetailsWrapperView'
+		});
+
+		$stateProvider.state('app.unitDetailsWrapper.unitDetails', {//state that contains subviews
+			url: '/unityDetails/:sUnitGuid/:sMode',
+			views: {
+				'unitDetails': {
+					templateUrl: 'apps/conspector/components/units/templates/unitDetailsView.html',
+					controller: 'unitDetailsView'
+				},
+			}
+		});	
+
 		$stateProvider.state('app.contractorsList', {
 			url: '/contractorsList',
 			templateUrl: 'apps/conspector/components/contractors/templates/contractorsListView.html',

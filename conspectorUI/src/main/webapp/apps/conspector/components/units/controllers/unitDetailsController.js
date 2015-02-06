@@ -54,7 +54,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 		// 		});
 		// 	};
 
-		var setDisplayedContactDetails = function(oUnit) {
+		var setDisplayedUnitDetails = function(oUnit) {
 			// var oContactPhasesGuids = [];
 			 $scope.oUnit._guid = oUnit.Guid;
 			// $scope.oContact._accountGuid = oContact.AccountGuid;
@@ -334,39 +334,39 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			});
 		};
 
-		// 	var deleteContact = function() {
-		// 		var oDataForSave = {
-		// 			GeneralAttributes: {
-		// 				IsDeleted: true
-		// 			}
-		// 		};
-		// 		var onSuccessDelete = function() {
-		// 			historyProvider.navigateBack({
-		// 				oState: $state
-		// 			});
-		// 		};
-		// 		oDataForSave.Guid = $scope.oContact._guid;
-		// 		oDataForSave.LastModifiedAt = $scope.oContact._lastModifiedAt;
-		// 		apiProvider.updateContact({
-		// 			bShowSpinner: true,
-		// 			sKey: oDataForSave.Guid,
-		// 			oData: oDataForSave,
-		// 			bShowSuccessMessage: true,
-		// 			bShowErrorMessage: true,
-		// 			onSuccess: onSuccessDelete
-		// 		});
-		// 	};
+			var deleteUnit = function() {
+				var oDataForSave = {
+					GeneralAttributes: {
+						IsDeleted: true
+					}
+				};
+				var onSuccessDelete = function() {
+					historyProvider.navigateBack({
+						oState: $state
+					});
+				};
+				oDataForSave.Guid = $scope.oUnit._guid;
+				oDataForSave.LastModifiedAt = $scope.oUnit._lastModifiedAt;
+				apiProvider.updateUnit({
+					bShowSpinner: true,
+					sKey: oDataForSave.Guid,
+					oData: oDataForSave,
+					bShowSuccessMessage: true,
+					bShowErrorMessage: true,
+					onSuccess: onSuccessDelete
+				});
+			};
 
-		// 	$scope.onDelete = function($event) {
-		// 		servicesProvider.showConfirmationPopup({
-		// 			sHeader: $translate.instant('contactDetails_deletionConfirmationHeader'),
-		// 			sContent: $translate.instant('contactDetails_deletionConfirmationContent'),
-		// 			sOk: $translate.instant('global_ok'),
-		// 			sCancel: $translate.instant('global_cancel'),
-		// 			onOk: deleteContact,
-		// 			event: $event
-		// 		});
-		// 	};
+			$scope.onDelete = function($event) {
+				servicesProvider.showConfirmationPopup({
+					sHeader: $translate.instant('unitDetails_deletionConfirmationHeader'),
+					sContent: $translate.instant('unitDetails_deletionConfirmationContent'),
+					sOk: $translate.instant('global_ok'),
+					sCancel: $translate.instant('global_cancel'),
+					onOk: deleteUnit,
+					event: $event
+				});
+			};
 
 		// 	var prepareLinksForSave = function() { // link contact to phases
 		// 		var aLinks = [];
