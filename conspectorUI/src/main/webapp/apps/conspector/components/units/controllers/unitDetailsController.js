@@ -77,11 +77,13 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			// $scope.oContact.sMobilePhone = oContact.MobilePhone;
 			// $scope.oContact.sFax = oContact.Fax;
 			// $scope.oContact.sTitle = oContact.Title;
-			$scope.oUnit.aDescriptionTags = utilsProvider.tagsStringToTagsArray(oUnit.DescriptionTags);
-			$scope.oUnit.sName = oUnit.Name;
+			
 			//if (oUnit.PhaseDetails) {
 			constructPhasesMultiSelect([oUnit.PhaseGuid]);
 			//} 
+			$scope.oUnit.sName = oUnit.Name;
+			//constructClientsMultiSelect([oUnit.ClientGuid]);
+			$scope.oUnit.aDescriptionTags = utilsProvider.tagsStringToTagsArray(oUnit.DescriptionTags);
 
 			// $scope.oUnit._unitStatusGuid = oUnit.TaskStatusGuid;
 			// $scope.oUnit._taskTypeGuid = oUnit.TaskTypeGuid;
@@ -575,12 +577,14 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			// oDataForSave.Title = $scope.oUnit.sTitle;
 			// oDataForSave.HomePhoneExtension = $scope.oUnit.sHomePhoneExtension;
 			// oDataForSave.WorkPhoneExtension = $scope.oUnit.sWorkPhoneExtension;
-
-			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oUnit.aDescriptionTags);
-			oDataForSave.Name = $scope.oUnit.sName;
 			if ($scope.aSelectedPhases.length) {
 				oDataForSave.PhaseGuid = $scope.aSelectedPhases[0].Guid;
 			}
+			oDataForSave.Name = $scope.oUnit.sName;
+			// if ($scope.aSelectedClients.length) {
+			// 	oDataForSave.ClientGuid = $scope.aSelectedClients[0].Guid;
+			// }
+			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oUnit.aDescriptionTags);
 
 			// oDataForSave.BillingAddress = {};
 			// oDataForSave.BillingAddress.BillingStreet = $scope.oUnit.sBillingStreet;
