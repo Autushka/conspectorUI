@@ -62,6 +62,13 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			$scope.oActivity._lastModifiedAt = oActivity.LastModifiedAt;
 			$scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oActivity.CreatedAt);
 			$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oActivity.LastModifiedAt);
+				
+			$scope.oActivity.sDueDate = utilsProvider.dBDateToSting(oActivity.DueDate);
+
+	       	if(oActivity.DueDate){
+	        	$scope.oActivity.dDueDate = new Date(parseInt(oActivity.DueDate.substring(6, oActivity.DueDate.length-2)));
+	       	}
+
 			$scope.oActivity._aPhases = angular.copy(oActivity.PhaseDetails.results);
 			for (var i = 0; i < $scope.oActivity._aPhases.length; i++) {
 				aActivityPhasesGuids.push($scope.oActivity._aPhases[i].Guid);
@@ -422,6 +429,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				} else {
 					$scope.oActivity.sObject = "";
 					$scope.oForms.activityDetailsForm.activityObject.$setPristine();
+					$scope.oActivity.dDueDate = "";
 					// $scope.oActivity.sPhone = "";
 					// $scope.oActivity.sPhoneExtension = "";
 					// $scope.oActivity.sSecondaryPhone = "";
@@ -471,6 +479,10 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				
 				oDataForSave.AssignedUser = $scope.aSelectedUser[0].UserName;
 			}
+
+			if($scope.oActivity.dDueDate){
+            	oDataForSave.DueDate = "/Date(" + $scope.oActivity.dDueDate.getTime() + ")/";	
+        	}	
 
 			oDataForSave.LastModifiedAt = $scope.oActivity._lastModifiedAt;
 

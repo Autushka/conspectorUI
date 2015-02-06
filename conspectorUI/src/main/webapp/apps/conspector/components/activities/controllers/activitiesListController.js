@@ -61,11 +61,39 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             var bMatchFound = false;
             for (var i = 0; i < aData.length; i++) {
 
+            	sActivityType = $translate.use() === "en" ? aData[i].ActivityTypeDetails.NameEN : aData[i].ActivityTypeDetails.NameFR;
+
                 if (aData[i].PhaseDetails.results.length) {
+                	sAccounts = "";
+                	sContacts = "";
                     for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
                         aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
                     }
                     aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
+
+                    if (aData[i].AccountDetails.results.length == 0) {
+                        
+	                } else {
+	                for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
+	                                        
+	                        if (!aData[i].AccountDetails.results[j].GeneralAttributes.IsDeleted) {
+	                            // _aAccounts.push(oData.AccountDetails.results[i]);
+	                            sAccounts = sAccounts + aData[i].AccountDetails.results[j].Name + ", ";
+	                        }
+	                    }
+	                }
+
+	                if (aData[i].ContactDetails.results.length == 0) {
+	                        
+	                } else {
+	                for (var j = 0; j < aData[i].ContactDetails.results.length; j++) {
+	                    
+	                        if (!aData[i].ContactDetails.results[j].GeneralAttributes.IsDeleted) {
+	                            // _aContacts.push(oData.ContactDetails.results[i]);
+	                            sContacts = sContacts + aData[i].ContactDetails.results[j].FirstName + " " + aData[i].ContactDetails.results[j].LastName + ", ";
+	                        }
+	                    }
+	                }
 
                     for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
                         bMatchFound = false;
@@ -87,53 +115,18 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                         if (!sPhaseName) {
                             sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
                         }
-
-                        sProjectPhase = sProjectName + " - " + sPhaseName;
-                        _sortingSequence = aData[i].PhaseDetails.results[j]._sortingSequence;
-
+						
+						oActivitiesListData.aData.push({
+		                    sActivityType: sActivityType, 
+		                    sObject: aData[i].Object,
+		                    sAccounts: sAccounts,
+		                    sContacts: sContacts,
+		                    _guid: aData[i].Guid,
+		                    sProjectPhase: sProjectName + " - " + sPhaseName,
+		                    _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence,
+		                });
                     }
                 }
-                sActivityType = $translate.use() === "en" ? aData[i].ActivityTypeDetails.NameEN : aData[i].ActivityTypeDetails.NameFR;
-
-                // _aAccounts = [];
-                // needed in order to figure out if sCompanies info should be displayed (> 1 compmanies should be assigned to the user)
-                if (aData[i].AccountDetails.results.length == 0) {
-                        sAccounts = ""; 
-                } else {
-                for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
-                                        
-                        if (!aData[i].AccountDetails.results[j].GeneralAttributes.IsDeleted) {
-                            // _aAccounts.push(oData.AccountDetails.results[i]);
-                            sAccounts = sAccounts + aData[i].AccountDetails.results[j].Name + ", ";
-                        }
-                    }
-                }
-
-                if (aData[i].ContactDetails.results.length == 0) {
-                        sContacts = "";
-                } else {
-                for (var j = 0; j < aData[i].ContactDetails.results.length; j++) {
-                    
-                        if (!aData[i].ContactDetails.results[j].GeneralAttributes.IsDeleted) {
-                            // _aContacts.push(oData.ContactDetails.results[i]);
-                            sContacts = sContacts + aData[i].ContactDetails.results[j].FirstName + " " + aData[i].ContactDetails.results[j].LastName + ", ";
-                        }
-                    }
-                }
-
-                oActivitiesListData.aData.push({
-                    sActivityType: sActivityType,
-                    sObject: aData[i].Object,
-                    sAccounts: sAccounts,
-                    sContacts: sContacts,
-                    // aAccounts: 
-                    // aContacts:
-                    _guid: aData[i].Guid,
-
-                    sProjectPhase: sProjectPhase,
-                    _sortingSequence: _sortingSequence,
-                });
-
             }
             $scope.tableParams.reload();
         };

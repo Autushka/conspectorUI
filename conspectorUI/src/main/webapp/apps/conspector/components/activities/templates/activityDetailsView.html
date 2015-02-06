@@ -156,6 +156,15 @@
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>
+				<div class="cnpSubSection" flex>
+					<div class="cnpSubSectionLabel">
+						<label>
+							{{'activityDetails_dueDate' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oActivity.sDueDate}}</div>			
+					<quick-datepicker ng-if="sMode != 'display'" ng-model='oActivity.dDueDate' width="100%"></quick-datepicker>
+				</div>
 			</div>
 			<div layout="row" style="width: 100%" flex>
 				<!-- <div class="cnpSubSection" flex>
