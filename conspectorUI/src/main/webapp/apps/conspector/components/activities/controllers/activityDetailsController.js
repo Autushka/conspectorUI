@@ -26,7 +26,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 		
 		//to delete
 		// $scope.sActivityType = "";
-		// $scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		// if ($rootScope.sCurrentStateName === "app.activityDetailsWrapper.activityDetails") { 
 		// 	if($scope.sMode === "display" || $scope.sMode === "edit"){
 		// 		$scope.$parent.bDisplayContactsList = true;
@@ -58,16 +57,17 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			var aActivityPhasesGuids = [];
 			$scope.oActivity._guid = oActivity.Guid;
 			$scope.oActivity.sObject =  oActivity.Object;
-			// $scope.oActivity._lastModifiedAt = oActivity.LastModifiedAt;
-			// $scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oActivity.CreatedAt);
-			// $scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oActivity.LastModifiedAt);
-
+			$scope.oActivity._lastModifiedAt = oActivity.LastModifiedAt;
+			$scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oActivity.CreatedAt);
+			$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oActivity.LastModifiedAt);
 			$scope.oActivity._aPhases = angular.copy(oActivity.PhaseDetails.results);
 			for (var i = 0; i < $scope.oActivity._aPhases.length; i++) {
 				aActivityPhasesGuids.push($scope.oActivity._aPhases[i].Guid);
 			}
 			constructPhasesMultiSelect(aActivityPhasesGuids);
 
+			$scope.oActivity._activityTypeGuid = oActivity.ActivityTypeGuid;
+		
 			oActivityWrapper.aData[0] = angular.copy($scope.oActivity);
 		};
 
@@ -80,6 +80,12 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 
 		var onActivityDetailsLoaded = function(oData) {
 			setDisplayedActivityDetails(oData);
+
+			apiProvider.getActivityTypes({
+				bShowSpinner: false,
+				onSuccess: onActivityTypesLoaded
+			});
+
 		};
 
 	
@@ -89,7 +95,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-			debugger
+			
+
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
@@ -151,8 +158,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 		// 	}
 		// };
 
-		var getActivity = function() {
-			apiProvider.getActivityWithPhases({
+		var getActivityDetails = function() {
+			apiProvider.getActivity({
 				sKey: sActivityGuid,
 				sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
 				bShowSpinner: true,
@@ -184,11 +191,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 
 			}
 		} else {
-			var aSelectedPhases = [];
-			// if (historyProvider.getPreviousStateName() === "app.contractorDetailsWrapper.contractorDetails" || historyProvider.getPreviousStateName() === "app.clientDetailsWrapper.clientDetails") {
-			// 	aSelectedPhases = angular.copy($rootScope.aAccountPhasesGuids);
-			// }
-			constructPhasesMultiSelect(aSelectedPhases);
+			constructPhasesMultiSelect({
+				aSelectedPhases: []
+			});
 
 			apiProvider.getActivityTypes({
 				bShowSpinner: false,
@@ -267,20 +272,20 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 					aUri: aUri
 				});
 			}
-			var aUri = [];
-			for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
-				if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
-					sUri = "ActivityType('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
-					aUri.push(sUri);
-				}
-			}
-			if (aUri.length) {
-				aLinks.push({
-					sRelationName: "ActivityTypeDetails",
-					bKeepCompanyDependentLinks: true,
-					aUri: aUri
-				});
-			}
+			// var aUri = [];
+			// for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
+			// 	if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
+			// 		sUri = "ActivityType('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
+			// 		aUri.push(sUri);
+			// 	}
+			// }
+			// if (aUri.length) {
+			// 	aLinks.push({
+			// 		sRelationName: "ActivityTypeDetails",
+			// 		bKeepCompanyDependentLinks: true,
+			// 		aUri: aUri
+			// 	});
+			// }
 			return aLinks;
 		};
 
@@ -330,38 +335,38 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
 				}
-				// if (!bSaveAndNew) {
-				// 	$scope.oActivity._lastModifiedAt = oData.LastModifiedAt;
-				// 	$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
-				// 	$scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
-				// 	$scope.oActivity._guid = oData.Guid;
-				// 	$state.go('app.activityDetailsWrapper.activityDetails', {
-				// 		sMode: "display",
-				// 		sActivityGuid: oData.Guid,
-				// 	});
-				// } else {
-				// 	$scope.oActivity.sName = "";
-				// 	$scope.oActivity.sPhone = "";
-				// 	$scope.oActivity.sPhoneExtension = "";
-				// 	$scope.oActivity.sSecondaryPhone = "";
-				// 	$scope.oActivity.sSecondaryPhoneExtension = "";
-				// 	$scope.oActivity.sWebsite = "";
-				// 	$scope.oActivity.sEmail = "";
-				// 	$scope.oActivity.sFax = "";
-				// 	$scope.oActivity.aTags = [];
+				if (!bSaveAndNew) {
+					$scope.oActivity._lastModifiedAt = oData.LastModifiedAt;
+					$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
+					$scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
+					$scope.oActivity._guid = oData.Guid;
+					$state.go('app.activityDetailsWrapper.activityDetails', {
+						sMode: "display",
+						sActivityGuid: oData.Guid,
+					});
+				} else {
+					// $scope.oActivity.sName = "";
+					// $scope.oActivity.sPhone = "";
+					// $scope.oActivity.sPhoneExtension = "";
+					// $scope.oActivity.sSecondaryPhone = "";
+					// $scope.oActivity.sSecondaryPhoneExtension = "";
+					// $scope.oActivity.sWebsite = "";
+					// $scope.oActivity.sEmail = "";
+					// $scope.oActivity.sFax = "";
+					// $scope.oActivity.aTags = [];
 
-				// 	$scope.oActivity.sBillingStreet = "";
-				// 	$scope.oActivity.sBillingCity = "";
-				// 	$scope.oActivity.sBillingPostalCode = "";
-				// 	$scope.oActivity.sShippingStreet = "";
-				// 	$scope.oActivity.sShippingCity = "";
-				// 	$scope.oActivity.sShippingPostalCode = "";					
+					// $scope.oActivity.sBillingStreet = "";
+					// $scope.oActivity.sBillingCity = "";
+					// $scope.oActivity.sBillingPostalCode = "";
+					// $scope.oActivity.sShippingStreet = "";
+					// $scope.oActivity.sShippingCity = "";
+					// $scope.oActivity.sShippingPostalCode = "";					
 
-				// 	$scope.oForms.activityDetailsForm.activityName.$setPristine();
-				// 	oDataForSave.BillingAddress = {};
-				// 	oDataForSave.ShippingAddress = {};
-				// 	$scope.oActivity._aPhases = [];
-				// }
+					// $scope.oForms.activityDetailsForm.activityName.$setPristine();
+					// oDataForSave.BillingAddress = {};
+					// oDataForSave.ShippingAddress = {};
+					// $scope.oActivity._aPhases = [];
+				}
 			};
 			var onSuccessUpdate = function(oData) {
 				bDataHasBeenModified = false;
@@ -378,65 +383,12 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			};
 
 			oDataForSave.Guid = $scope.oActivity._guid;
-			// oDataForSave.Name = $scope.oActivity.sName;
-
-			// if ($scope.oActivity.sPhone) {
-			// 	oDataForSave.MainPhone = $scope.oActivity.sPhone.replace(/\D/g, '');
-			// } else {
-			// 	oDataForSave.MainPhone = "";
-			// }
-			// if ($scope.oActivity.sSecondaryPhone) {
-			// 	oDataForSave.SecondaryPhone = $scope.oActivity.sSecondaryPhone.replace(/\D/g, '');
-			// } else {
-			// 	oDataForSave.SecondaryPhone = "";
-			// }
-			// if ($scope.oActivity.sFax) {
-			// 	oDataForSave.Fax = $scope.oActivity.sFax.replace(/\D/g, '');
-			// } else {
-			// 	oDataForSave.Fax = "";
-			// }	
-
 			oDataForSave.Object = $scope.oActivity.sObject;
-			// oDataForSave.Email = $scope.oActivity.sEmail;
-			// oDataForSave.MainPhoneExtension = $scope.oActivity.sPhoneExtension;
-			// oDataForSave.SecondaryPhoneExtension = $scope.oActivity.sSecondaryPhoneExtension;
 			
-			// oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oActivity.aTags);
-
-			// oDataForSave.BillingAddress = {};
-			// oDataForSave.BillingAddress.BillingStreet = $scope.oActivity.sBillingStreet;
-			// oDataForSave.BillingAddress.BillingCity = $scope.oActivity.sBillingCity;
-			// oDataForSave.BillingAddress.BillingPostalCode = $scope.oActivity.sBillingPostalCode;
-
-			// oDataForSave.ShippingAddress = {};
-			// oDataForSave.ShippingAddress.ShippingStreet = $scope.oActivity.sShippingStreet;
-			// oDataForSave.ShippingAddress.ShippingCity = $scope.oActivity.sShippingCity;
-			// oDataForSave.ShippingAddress.ShippingPostalCode = $scope.oActivity.sShippingPostalCode;
-
-			// for (var i = 0; i < $scope.aBillingCountries.length; i++) {
-			// 	if ($scope.aBillingCountries[i].ticked) {
-			// 		oDataForSave.BillingAddress.BillingCountry = $scope.aBillingCountries[i].CountryCode;
-			// 		break;
-			// 	}
-			// }
-			// for (var i = 0; i < $scope.aBillingProvinces.length; i++) {
-			// 	if ($scope.aBillingProvinces[i].ticked) {
-			// 		oDataForSave.BillingAddress.BillingProvince = $scope.aBillingProvinces[i].ProvinceCode;
-			// 		break;
-			// 	}
-			// }
-			// for (var i = 0; i < $scope.aShippingCountries.length; i++) {
-			// 	if ($scope.aShippingCountries[i].ticked) {
-			// 		oDataForSave.ShippingAddress.ShippingCountry = $scope.aShippingCountries[i].CountryCode;
-			// 		break;
-			// 	}
-			// }
-			// for (var i = 0; i < $scope.aShippingProvinces.length; i++) {
-			// 	if ($scope.aShippingProvinces[i].ticked) {
-			// 		oDataForSave.ShippingAddress.ShippingProvince = $scope.aShippingProvinces[i].ProvinceCode;
-			// 		break;
-			// 	}
-			// }
+			if ($scope.aSelectedActivityType.length) {
+				
+				oDataForSave.ActivityTypeGuid = $scope.aSelectedActivityType[0].Guid;
+			}
 
 			oDataForSave.LastModifiedAt = $scope.oActivity._lastModifiedAt;
 
@@ -454,7 +406,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 					});
 					break;
 				case "create":
-					oDataForSave.ActivityTypeGuid = $scope.sActivityTypeGuid;
 					apiProvider.createActivity({
 						bShowSpinner: true,
 						oData: oDataForSave,
