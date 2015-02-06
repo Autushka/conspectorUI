@@ -71,6 +71,15 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// $scope.oContact.sMobilePhone = oContact.MobilePhone;
 			// $scope.oContact.sFax = oContact.Fax;
 			// $scope.oContact.sTitle = oContact.Title;
+			$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oDeficiency.DueDate);
+
+	        if($scope.oDeficiency.DueDate){
+	        	$scope.oDeficiency.dDueDate = new Date(parseInt(oDeficiency.DueDate.substring(6, oDeficiency.DueDate.length-2)));
+	        }
+
+			$scope.oDeficiency.sCreatedAt = utilsProvider.dBDateToSting(oDeficiency.CreatedAt);
+			$scope.oDeficiency.sLastModifiedAt = utilsProvider.dBDateToSting(oDeficiency.LastModifiedAt);
+
 			$scope.oDeficiency.aDescriptionTags = utilsProvider.tagsStringToTagsArray(oDeficiency.DescriptionTags);
 			$scope.oDeficiency.aLocationTags = utilsProvider.tagsStringToTagsArray(oDeficiency.LocationTags);
 
@@ -661,6 +670,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aDescriptionTags);
 			oDataForSave.LocationTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aLocationTags);
+
+        	if($scope.oDeficiency.dDueDate){
+            	oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";	
+        	}			
 			// oDataForSave.BillingAddress = {};
 			// oDataForSave.BillingAddress.BillingStreet = $scope.oContact.sBillingStreet;
 			// oDataForSave.BillingAddress.BillingCity = $scope.oContact.sBillingCity;

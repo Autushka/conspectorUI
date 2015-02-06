@@ -149,7 +149,16 @@
 					</div>
 			</div>
 
-
+			<div class="cnpSubSection" flex>
+				<div class="cnpSubSectionLabel">
+					<label>
+						{{'deficiencyDetails_dueDate' | translate}}
+					</label>
+				</div>
+				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oDeficiency.sDueDate}}</div>
+				<input type="text" pick-a-date="oDeficiency.dDueDate" placeholder="Select Date" /> 				
+<!-- 				<quick-datepicker ng-if="sMode != 'display'" ng-model='oDeficiency.dDueDate' width="100%"></quick-datepicker> -->
+			</div>
 
 
 
