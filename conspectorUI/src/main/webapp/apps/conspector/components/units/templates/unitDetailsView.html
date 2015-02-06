@@ -26,30 +26,97 @@
 			</div>
 		</div>
 		<div class="cnpSection" layout="column" layout-align="start center" flex>
-					<div class="cnpSubSection" flex>
-						<div class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_descriptionTags' | translate}}
-							</label>
-						</div>
-						<tags-input
-						ng-model="oUnit.aDescriptionTags"
-						ng-hide="sMode == 'display'"
-						replace-spaces-with-dashes="false"
-						placeholder="{{'global_addTag' | translate}}"
-						on-tag-added="onDataModified()"
-						on-tag-removed="onDataModified()">
-						</tags-input>
-						<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
-							<ul class="tags-list">
-								<li class="tag-item" ng-repeat="tag in oUnit.aDescriptionTags">
-									<span style="padding: 2px;">{{tag.text}}</span>
-								</li>
-							</ul>
-						</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'unitDetails_associatedProjectsAndPhases' | translate}}
+						</label>
 					</div>
-
-
+					<div
+						multi-select
+						input-model="aUserProjectsPhasesForMultiselect"
+						button-label="fullName"
+						default-label="{{'global_selectedProjectsAndPhases' | translate }}"
+						item-label="name"
+						tick-property="ticked"
+						group-property="multiSelectGroup"
+						is-disabled="sMode == 'display'"
+						on-item-click="onSelectedPhasesModified()"
+						selection-mode="single"
+						helper-elements=""
+						output-model="aSelectedPhases"
+						on-close="onCloseCheckSelectedPhasesLength()"
+						>
+					</div>
+					<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.selectedPhases.$error" ng-if="(oForms.unitDetailsForm.selectedPhases.$dirty && !oForms.unitDetailsForm.selectedPhases.$valid) || submitted">
+						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					</div>
+				</div>
+				<div class="cnpSubSection" flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'unitDetails_unitName' | translate}}
+						</label>
+					</div>
+					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oContractor.sName}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()" name="unitName" required>
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.unitName.$error" ng-if="(oForms.unitDetailsForm.unitName.$dirty || submitted) && sMode != 'display'">
+							<div class="cnpErrorMessageValidationMessage" ng-message="required">
+								{{'global_emptyFieldError' | translate}}
+							</div>
+					</div>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div class="cnpSubSectionLabel">
+						<label>
+							{{'unitDetails_associatedClients' | translate}}
+						</label>
+					</div>
+					<tags-input
+					ng-model="oUnit.aAssociatedClients"
+					ng-hide="sMode == 'display'"
+					replace-spaces-with-dashes="false"
+					placeholder="{{'global_addClient' | translate}}"
+					on-tag-added="onDataModified()"
+					on-tag-removed="onDataModified()">
+					</tags-input>
+					<div class="clients-wrapper form-control"  ng-show="sMode == 'display'">
+						<ul class="clients-list">
+							<li class="tag-item" ng-repeat="clients in oUnit.aAssociatedClients">
+								<span style="padding: 2px;">{{client.text}}</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div class="cnpSubSectionLabel">
+						<label>
+							{{'unitDetails_descriptionTags' | translate}}
+						</label>
+					</div>
+					<tags-input
+					ng-model="oUnit.aDescriptionTags"
+					ng-hide="sMode == 'display'"
+					replace-spaces-with-dashes="false"
+					placeholder="{{'global_addTag' | translate}}"
+					on-tag-added="onDataModified()"
+					on-tag-removed="onDataModified()">
+					</tags-input>
+					<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
+						<ul class="tags-list">
+							<li class="tag-item" ng-repeat="tag in oUnit.aDescriptionTags">
+								<span style="padding: 2px;">{{tag.text}}</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 			
 <!-- 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex layout="column">
