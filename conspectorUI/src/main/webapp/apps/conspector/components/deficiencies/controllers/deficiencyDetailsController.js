@@ -510,7 +510,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					// $scope.oContact.sMobilePhone = "";
 					// $scope.oContact.sFax = "";
 					// $scope.oContact.sTitle = "";
-					// $scope.oContact.aTags = [];
+					$scope.oDeficiency.aDescriptionTags = [];
+					$scope.oDeficiency.aLocationTags = [];
 
 					// $scope.oContact.sBillingStreet = "";
 					// $scope.oContact.sBillingCity = "";
