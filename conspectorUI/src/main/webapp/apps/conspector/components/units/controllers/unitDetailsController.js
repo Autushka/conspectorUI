@@ -59,61 +59,76 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 		};
 
 		var setDisplayedUnitDetails = function(oUnit) {
-			// var oUnitPhasesGuids = [];
-			 $scope.oUnit._guid = oUnit.Guid;
-			// $scope.oUnit._accountGuid = oUnit.AccountGuid;
+			// var oContactPhasesGuids = [];
+			$scope.oUnit._guid = oUnit.Guid;
+			// $scope.oContact._accountGuid = oContact.AccountGuid;
 
 			$scope.oUnit._lastModifiedAt = oUnit.LastModifiedAt;
-			// $scope.oUnit.sFirstName = oUnit.FirstName;
-			// $scope.oUnit.sLastName = oUnit.LastName;
+			// $scope.oContact.sFirstName = oContact.FirstName;
+			// $scope.oContact.sLastName = oContact.LastName;
 
-			// $scope.oUnit.sEmail = oUnit.Email;
-			// $scope.oUnit.sHomePhone = oUnit.HomePhone;
-			// $scope.oUnit.sHomePhoneExtension = oUnit.HomePhoneExtension;
-			// $scope.oUnit.sWorkPhone = oUnit.WorkPhone;
-			// $scope.oUnit.sWorkPhoneExtension = oUnit.WorkPhoneExtension;
-			// $scope.oUnit.sMobilePhone = oUnit.MobilePhone;
-			// $scope.oUnit.sFax = oUnit.Fax;
-			// $scope.oUnit.sTitle = oUnit.Title;
+			// $scope.oContact.sEmail = oContact.Email;
+			// $scope.oContact.sHomePhone = oContact.HomePhone;
+			// $scope.oContact.sHomePhoneExtension = oContact.HomePhoneExtension;
+			// $scope.oContact.sWorkPhone = oContact.WorkPhone;
+			// $scope.oContact.sWorkPhoneExtension = oContact.WorkPhoneExtension;
+			// $scope.oContact.sMobilePhone = oContact.MobilePhone;
+			// $scope.oContact.sFax = oContact.Fax;
+			// $scope.oContact.sTitle = oContact.Title;
 			$scope.oUnit.aDescriptionTags = utilsProvider.tagsStringToTagsArray(oUnit.DescriptionTags);
+			$scope.oUnit.aLocationTags = utilsProvider.tagsStringToTagsArray(oUnit.LocationTags);
 
-			// $scope.oUnit._unitTypeGuid = oUnit.UnitTypeGuid;
+			//if (oUnit.PhaseDetails) {
+			constructPhasesMultiSelect([oUnit.PhaseGuid]);
+			//} 
 
-			// if (oUnit.BillingAddress) {
-			// 	$scope.oUnit.sBillingStreet = oUnit.BillingAddress.BillingStreet;
-			// 	$scope.oUnit.sBillingCity = oUnit.BillingAddress.BillingCity;
-			// 	$scope.oUnit.sBillingPostalCode = oUnit.BillingAddress.BillingPostalCode;
-			// 	$scope.oUnit._billingCountryCode = oUnit.BillingAddress.BillingCountry;
-			// 	$scope.oUnit._billingProvinceCode = oUnit.BillingAddress.BillingProvince;
-			// }
+			$scope.oUnit._unitStatusGuid = oUnit.TaskStatusGuid;
+			$scope.oUnit._taskTypeGuid = oUnit.TaskTypeGuid;
 
-			// if (oUnit.ShippingAddress) {
-			// 	$scope.oUnit.sShippingStreet = oUnit.ShippingAddress.ShippingStreet;
-			// 	$scope.oUnit.sShippingCity = oUnit.ShippingAddress.ShippingCity;
-			// 	$scope.oUnit.sShippingPostalCode = oUnit.ShippingAddress.ShippingPostalCode;
-			// 	$scope.oUnit._shippingCountryCode = oUnit.ShippingAddress.ShippingCountry;
-			// 	$scope.oUnit._shippingProvinceCode = oUnit.ShippingAddress.ShippingProvince;
-			// }
-
-			// if (oUnit.AccountDetails) {
-			// 	$scope.oUnit._sAccountName = oUnit.AccountDetails.Name;
-			// }
-
-			if (oUnit.UnitTypeDetails) {
-				$scope.oUnit._sUnitType = $translate.use() === "en" ? oUnit.UnitTypeDetails.NameEN : oUnit.UnitTypeDetails.NameFR;
-				if (!$scope.oUnit._sUnitType) {
-					$scope.oUnit._sUnitType = oUnit.UnitTypeDetails.NameEN
+			$scope.oUnit._contractorsGuids = [];
+			if (oUnit.AccountDetails) {
+				for (var i = 0; i < oUnit.AccountDetails.results.length; i++) {
+					$scope.oUnit._contractorsGuids.push(oUnit.AccountDetails.results[i].Guid);
 				}
 			}
 
-			// $scope.oUnit.sCreatedAt = utilsProvider.dBDateToSting(oUnit.CreatedAt);
-			// $scope.oUnit.sLastModifiedAt = utilsProvider.dBDateToSting(oUnit.LastModifiedAt);
+			// $scope.oContact._contactTypeGuid = oContact.ContactTypeGuid;
 
-			// $scope.oUnit._aPhases = angular.copy(oUnit.PhaseDetails.results);
-			// for (var i = 0; i < $scope.oUnit._aPhases.length; i++) {
-			// 	oUnitPhasesGuids.push($scope.oUnit._aPhases[i].Guid);
+			// if (oContact.BillingAddress) {
+			// 	$scope.oContact.sBillingStreet = oContact.BillingAddress.BillingStreet;
+			// 	$scope.oContact.sBillingCity = oContact.BillingAddress.BillingCity;
+			// 	$scope.oContact.sBillingPostalCode = oContact.BillingAddress.BillingPostalCode;
+			// 	$scope.oContact._billingCountryCode = oContact.BillingAddress.BillingCountry;
+			// 	$scope.oContact._billingProvinceCode = oContact.BillingAddress.BillingProvince;
 			// }
-			constructPhasesMultiSelect([oUnit.PhaseGuid]);
+
+			// if (oContact.ShippingAddress) {
+			// 	$scope.oContact.sShippingStreet = oContact.ShippingAddress.ShippingStreet;
+			// 	$scope.oContact.sShippingCity = oContact.ShippingAddress.ShippingCity;
+			// 	$scope.oContact.sShippingPostalCode = oContact.ShippingAddress.ShippingPostalCode;
+			// 	$scope.oContact._shippingCountryCode = oContact.ShippingAddress.ShippingCountry;
+			// 	$scope.oContact._shippingProvinceCode = oContact.ShippingAddress.ShippingProvince;
+			// }
+
+			// if (oContact.AccountDetails) {
+			// 	$scope.oContact._sAccountName = oContact.AccountDetails.Name;
+			// }
+
+			// if (oContact.ContactTypeDetails) {
+			// 	$scope.oContact._sContactType = $translate.use() === "en" ? oContact.ContactTypeDetails.NameEN : oContact.ContactTypeDetails.NameFR;
+			// 	if (!$scope.oContact._sContactType) {
+			// 		$scope.oContact._sContactType = oContact.ContactTypeDetails.NameEN
+			// 	}
+			// }
+
+			// $scope.oContact.sCreatedAt = utilsProvider.dBDateToSting(oContact.CreatedAt);
+			// $scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oContact.LastModifiedAt);
+
+			// $scope.oContact._aPhases = angular.copy(oContact.PhaseDetails.results);
+			// for (var i = 0; i < $scope.oContact._aPhases.length; i++) {
+			// 	oContactPhasesGuids.push($scope.oContact._aPhases[i].Guid);
+			// }
+
 
 			oUnitWrapper.aData[0] = angular.copy($scope.oUnit);
 		};
@@ -233,24 +248,24 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 		// 		}
 		// 	};
 
-			var onUnitDetailsLoaded = function(oData) {
-				setDisplayedUnitDetails(oData);
+		var onUnitDetailsLoaded = function(oData) {
+			setDisplayedUnitDetails(oData);
 
-				// apiProvider.getCountriesWithProvinces({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onCountriesLoaded
-				// });
+			// apiProvider.getCountriesWithProvinces({
+			// 	bShowSpinner: false,
+			// 	onSuccess: onCountriesLoaded
+			// });
 
-				// apiProvider.getUnitTypes({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onUnitTypesLoaded
-				// });
+			// apiProvider.getUnitTypes({
+			// 	bShowSpinner: false,
+			// 	onSuccess: onUnitTypesLoaded
+			// });
 
-				// apiProvider.getAccountTypesWithAccounts({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onAccountTypesWithAccountsLoaded
-				// });
-			};
+			// apiProvider.getAccountTypesWithAccounts({
+			// 	bShowSpinner: false,
+			// 	onSuccess: onAccountTypesWithAccountsLoaded
+			// });
+		};
 
 		var getUnitDetails = function() {
 			apiProvider.getUnit({
@@ -308,6 +323,10 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 				// });
 			}
 		} else {
+			constructPhasesMultiSelect({
+				aSelectedPhases: []
+			});
+
 			// var aSelectedPhases = [];
 			// if (historyProvider.getPreviousStateName() === "app.contractorDetailsWrapper.contractorDetails" || historyProvider.getPreviousStateName() === "app.clientDetailsWrapper.clientDetails") {
 			// 	aSelectedPhases = angular.copy($rootScope.aAccountPhasesGuids);
@@ -338,74 +357,74 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			});
 		};
 
-			var deleteUnit = function() {
-				var oDataForSave = {
-					GeneralAttributes: {
-						IsDeleted: true
-					}
-				};
-				var onSuccessDelete = function() {
-					historyProvider.navigateBack({
-						oState: $state
-					});
-				};
-				oDataForSave.Guid = $scope.oUnit._guid;
-				oDataForSave.LastModifiedAt = $scope.oUnit._lastModifiedAt;
-				apiProvider.updateUnit({
-					bShowSpinner: true,
-					sKey: oDataForSave.Guid,
-					oData: oDataForSave,
-					bShowSuccessMessage: true,
-					bShowErrorMessage: true,
-					onSuccess: onSuccessDelete
+		var deleteUnit = function() {
+			var oDataForSave = {
+				GeneralAttributes: {
+					IsDeleted: true
+				}
+			};
+			var onSuccessDelete = function() {
+				historyProvider.navigateBack({
+					oState: $state
 				});
 			};
+			oDataForSave.Guid = $scope.oUnit._guid;
+			oDataForSave.LastModifiedAt = $scope.oUnit._lastModifiedAt;
+			apiProvider.updateUnit({
+				bShowSpinner: true,
+				sKey: oDataForSave.Guid,
+				oData: oDataForSave,
+				bShowSuccessMessage: true,
+				bShowErrorMessage: true,
+				onSuccess: onSuccessDelete
+			});
+		};
 
-			$scope.onDelete = function($event) {
-				servicesProvider.showConfirmationPopup({
-					sHeader: $translate.instant('unitDetails_deletionConfirmationHeader'),
-					sContent: $translate.instant('unitDetails_deletionConfirmationContent'),
-					sOk: $translate.instant('global_ok'),
-					sCancel: $translate.instant('global_cancel'),
-					onOk: deleteUnit,
-					event: $event
+		$scope.onDelete = function($event) {
+			servicesProvider.showConfirmationPopup({
+				sHeader: $translate.instant('unitDetails_deletionConfirmationHeader'),
+				sContent: $translate.instant('unitDetails_deletionConfirmationContent'),
+				sOk: $translate.instant('global_ok'),
+				sCancel: $translate.instant('global_cancel'),
+				onOk: deleteUnit,
+				event: $event
+			});
+		};
+
+		var prepareLinksForSave = function() { // link unit to phases
+			var aLinks = [];
+			var aUri = [];
+			var sUri = "";
+			for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
+				if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
+					sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
+					aUri.push(sUri);
+				}
+			}
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "PhaseDetails",
+					bKeepCompanyDependentLinks: true,
+					aUri: aUri
 				});
-			};
-
-		// 	var prepareLinksForSave = function() { // link unit to phases
-		// 		var aLinks = [];
-		// 		var aUri = [];
-		// 		var sUri = "";
-		// 		for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
-		// 			if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
-		// 				sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
-		// 				aUri.push(sUri);
-		// 			}
-		// 		}
-		// 		if (aUri.length) {
-		// 			aLinks.push({
-		// 				sRelationName: "PhaseDetails",
-		// 				bKeepCompanyDependentLinks: true,
-		// 				aUri: aUri
-		// 			});
-		// 		}
-		// 		return aLinks;
-		// 	};
+			}
+			return aLinks;
+		};
 
 		// 	$scope.onParentAccountModified = function() {
 		// 		$scope.onDataModified();
 		// 		$scope.oForms.unitDetailsForm.selectedParentAccount.$setDirty();
 		// 	};
 
-		// 	$scope.onCloseCheckSelectedPhasesLength = function() {
-		// 		if ($scope.aSelectedPhases.length == 0)
-		// 			$scope.onSelectedPhasesModified();
-		// 	};
+		$scope.onCloseCheckSelectedPhasesLength = function() {
+			if ($scope.aSelectedPhases.length == 0)
+				$scope.onSelectedPhasesModified();
+		};
 
-		// 	$scope.onSelectedPhasesModified = function() {
-		// 		$scope.onDataModified();
-		// 		$scope.oForms.unitDetailsForm.selectedPhases.$setDirty();
-		// 	};
+		$scope.onSelectedPhasesModified = function() {
+			$scope.onDataModified();
+			$scope.oForms.unitDetailsForm.selectedPhases.$setDirty();
+		};
 
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
@@ -430,25 +449,29 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 		// 	};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
+			if ($scope.oForms.unitDetailsForm.selectedPhases) {
+				$scope.oForms.unitDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
+			}
+			if ($scope.oForms.unitDetailsForm.selectedUnits) {
+				$scope.oForms.unitDetailsForm.selectedUnits.$setDirty(); //to display validation messages on submit press
+			}
 			// if ($scope.oForms.unitDetailsForm.selectedPhases) {
 			// 	$scope.oForms.unitDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
 			// }
-			// if ($scope.oForms.unitDetailsForm.selectedParentAccount) {
-			// 	$scope.oForms.unitDetailsForm.selectedParentAccount.$setDirty(); //to display validation messages on submit press
+			// if ($scope.oForms.unitDetailsForm.selectedPhases) {
+			// 	$scope.oForms.unitDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
 			// }
-			// if ($scope.oForms.unitDetailsForm.firstName) {
-			// 	$scope.oForms.unitDetailsForm.firstName.$setDirty(); //to display validation messages on submit press
-			// }
-			// if ($scope.oForms.unitDetailsForm.lastName) {
-			// 	$scope.oForms.unitDetailsForm.lastName.$setDirty(); //to display validation messages on submit press
-			// }
+
+			if (!$scope.oForms.unitDetailsForm.$valid) {
+				return;
+			}
 
 			// aLinks = prepareLinksForSave();
 
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
-			// var aLinks = [];
+			var aLinks = [];
 
 			oDataForSave.Guid = $scope.oUnit._guid;
 			// for (var i = 0; i < $scope.aAccounts.length; i++) {
@@ -466,6 +489,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+					return;
 				}
 				if (!bSaveAndNew) {
 					$state.go('app.unitDetailsWrapper.unitDetails', {
@@ -489,7 +513,8 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 					// $scope.oUnit.sMobilePhone = "";
 					// $scope.oUnit.sFax = "";
 					// $scope.oUnit.sTitle = "";
-					// $scope.oUnit.aTags = [];
+					$scope.oUnit.aDescriptionTags = [];
+					$scope.oUnit.aClientTags = [];
 
 					// $scope.oUnit.sBillingStreet = "";
 					// $scope.oUnit.sBillingCity = "";
@@ -508,6 +533,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+					return;
 				}
 
 				$scope.oUnit._lastModifiedAt = oData.LastModifiedAt;
@@ -552,8 +578,8 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			// oDataForSave.HomePhoneExtension = $scope.oUnit.sHomePhoneExtension;
 			// oDataForSave.WorkPhoneExtension = $scope.oUnit.sWorkPhoneExtension;
 
-
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oUnit.aDescriptionTags);
+			oDataForSave.ClientTags = utilsProvider.tagsArrayToTagsString($scope.oUnit.aClientTags);
 
 			// oDataForSave.BillingAddress = {};
 			// oDataForSave.BillingAddress.BillingStreet = $scope.oUnit.sBillingStreet;
@@ -623,52 +649,37 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			});
 		};
 
-		// 	$scope.onNavigateToAccountDetails = function() {
-		// 		var sAccountGuid = "";
-		// 		for (var i = 0; i < $scope.aAccounts.length; i++) {
-		// 			if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
-		// 				sAccountGuid = $scope.aAccounts[i].Guid;
-		// 				break;
-		// 			}
-		// 		}
+		$scope.onSaveAndNew = function() {
+			$scope.onSave(true);
+		};
 
-		// 		$state.go('app.contractorDetailsWrapper.contractorDetails', {
-		// 			sMode: "display",
-		// 			sContractorGuid: sAccountGuid,
-		// 		});
-		// 	};
+		var saveAndLeaveView = function() {
+			$scope.onSave(false, oNavigateToInfo);
+		};
 
-		// 	$scope.onSaveAndNew = function() {
-		// 		$scope.onSave(true);
-		// 	};
+		var leaveView = function() {
+			bDataHasBeenModified = false;
+			$state.go(oNavigateToInfo.toState, oNavigateToInfo.toParams);
+		};
 
-		// 	var saveAndLeaveView = function() {
-		// 		$scope.onSave(false, oNavigateToInfo);
-		// 	};
+		$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+			if (bDataHasBeenModified) {
+				event.preventDefault();
 
-		// 	var leaveView = function() {
-		// 		bDataHasBeenModified = false;
-		// 		$state.go(oNavigateToInfo.toState, oNavigateToInfo.toParams);
-		// 	};
-
-		// 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-		// 		if (bDataHasBeenModified) {
-		// 			event.preventDefault();
-
-		// 			oNavigateToInfo = {
-		// 				toState: toState,
-		// 				toParams: toParams
-		// 			};
-		// 			servicesProvider.showConfirmationPopup({
-		// 				sHeader: $translate.instant('global_changesSaveConfirmationHeader'), //"Do you want to save changes before leaving the view?", //$translate.instant('userDetails_deletionConfirmationHeader'),
-		// 				sContent: $translate.instant('global_changesSaveConfirmationContent'), //"Not saved changes will be lost...", //$translate.instant('userDetails_deletionConfirmationContent'),
-		// 				sOk: $translate.instant('global_yes'),
-		// 				sCancel: $translate.instant('global_no'),
-		// 				onOk: saveAndLeaveView,
-		// 				onCancel: leaveView,
-		// 				event: event
-		// 			});
-		// 		}
-		// 	});
+				oNavigateToInfo = {
+					toState: toState,
+					toParams: toParams
+				};
+				servicesProvider.showConfirmationPopup({
+					sHeader: $translate.instant('global_changesSaveConfirmationHeader'), //"Do you want to save changes before leaving the view?", //$translate.instant('userDetails_deletionConfirmationHeader'),
+					sContent: $translate.instant('global_changesSaveConfirmationContent'), //"Not saved changes will be lost...", //$translate.instant('userDetails_deletionConfirmationContent'),
+					sOk: $translate.instant('global_yes'),
+					sCancel: $translate.instant('global_no'),
+					onOk: saveAndLeaveView,
+					onCancel: leaveView,
+					event: event
+				});
+			}
+		});
 	}
 ]);

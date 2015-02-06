@@ -73,21 +73,21 @@
 				<div class="cnpSubSection" flex>
 					<div class="cnpSubSectionLabel">
 						<label>
-							{{'unitDetails_associatedClients' | translate}}
+							{{'unitDetails_clientTags' | translate}}
 						</label>
 					</div>
 					<tags-input
-					ng-model="oUnit.aAssociatedClients"
+					ng-model="oUnit.aClientTags"
 					ng-hide="sMode == 'display'"
 					replace-spaces-with-dashes="false"
-					placeholder="{{'global_addClient' | translate}}"
+					placeholder="{{'global_addTag' | translate}}"
 					on-tag-added="onDataModified()"
 					on-tag-removed="onDataModified()">
 					</tags-input>
-					<div class="clients-wrapper form-control"  ng-show="sMode == 'display'">
-						<ul class="clients-list">
-							<li class="tag-item" ng-repeat="clients in oUnit.aAssociatedClients">
-								<span style="padding: 2px;">{{client.text}}</span>
+					<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
+						<ul class="tags-list">
+							<li class="tag-item" ng-repeat="tag in oUnit.aClientTags">
+								<span style="padding: 2px;">{{tag.text}}</span>
 							</li>
 						</ul>
 					</div>
