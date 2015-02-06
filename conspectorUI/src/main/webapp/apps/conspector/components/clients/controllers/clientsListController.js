@@ -113,7 +113,8 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
 
 		var loadClients = function() {
 			oClientsListData.aData = [];
-			apiProvider.getClientsWithPhases({
+			apiProvider.getClients({
+				sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
 				bShowSpinner: true,
 				onSuccess: onClientsLoaded
 			});

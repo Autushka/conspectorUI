@@ -200,7 +200,8 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
 		};
 
 		var getClientDetails = function() {
-			apiProvider.getAccountWithPhases({
+			apiProvider.getAccounts({
+				sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
 				sKey: sClientGuid,
 				bShowSpinner: true,
 				onSuccess: onClientDetailsLoaded,

@@ -130,7 +130,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		var loadDeficiencies = function() {
 			oDeficienciesListData.aData = [];
 			apiProvider.getDeficiencies({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails",
 				bShowSpinner: true,
 				onSuccess: onDeficienciesLoaded
 			});

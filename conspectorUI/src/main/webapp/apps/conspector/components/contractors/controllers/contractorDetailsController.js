@@ -201,7 +201,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 		};
 
 		var getContractorDetails = function() {
-			apiProvider.getAccountWithPhases({
+			apiProvider.getAccount({
+				sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
 				sKey: sContractorGuid,
 				bShowSpinner: true,
 				onSuccess: onContractorDetailsLoaded,

@@ -114,9 +114,10 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
 
 		var loadContractors = function() {
 			oContractorsListData.aData = [];
-			apiProvider.getContractorsWithPhases({
+			apiProvider.getContractors({
+				sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
 				bShowSpinner: true,
-				onSuccess: onContractorsLoaded
+				onSuccess: onContractorsLoaded,				
 			});
 		};
 
