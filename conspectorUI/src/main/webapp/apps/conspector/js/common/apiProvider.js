@@ -1027,13 +1027,19 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			getAccounts: function(oParameters) {
-				var svc = dataProvider.getEntity({
+				var svc = dataProvider.getEntitySet({
 					sPath: "Accounts",
-					sKey: oParameters.sKey,
+					sExpand: oParameters.sExpand,
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oAccountEntity"
 				});
-				svc.then(oParameters.onSuccess);
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc); // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
 			},
 
 			createAccount: function(oParameters) {

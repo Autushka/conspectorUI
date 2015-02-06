@@ -44,7 +44,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 		};
 
 		var oActivityWrapper = {
-			aData: [{}]
+			aData: [{
+				_accountsGuids: []
+			}]
 		};
 
 		var constructPhasesMultiSelect = function(aSelectedPhases) {
@@ -67,8 +69,15 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			constructPhasesMultiSelect(aActivityPhasesGuids);
 			
 			$scope.oActivity._activityTypeGuid = oActivity.ActivityTypeGuid;
-			$scope.oActivity._assignedUserName = oActivity.UserDetails.UserName;
-		
+			$scope.oActivity._assignedUserName = oActivity.AssignedUser;
+			
+			$scope.oActivity._accountsGuids = [];
+			if (oActivity.AccountDetails) {
+				for (var i = 0; i < oActivity.AccountDetails.results.length; i++) {
+					$scope.oActivity._accountsGuids.push(oActivity.AccountDetails.results[i].Guid);
+				}
+			}
+
 			oActivityWrapper.aData[0] = angular.copy($scope.oActivity);
 		};
 
@@ -91,6 +100,11 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				sExpand: "CompanyDetails",
 				bShowSpinner: false,
 				onSuccess: onUsersWithCompaniesLoaded
+			});
+
+			apiProvider.getAccounts({
+				bShowSpinner: false,
+				onSuccess: onAccountsLoaded
 			});
 		};
 
@@ -121,7 +135,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 
 		var onUsersWithCompaniesLoaded = function(aData) {
 			var aFilteredUser = [{}];
-			debugger
+		
 			for(var i = 0; i < aData.length; i++){
 				for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
 						if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
@@ -156,50 +170,29 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			}
 		};
 
-		// var onAccountTypesWithAccountsLoaded = function(aData) {
-		// 	//Sort aData by accountType sorting sequence and then by AccountName
-		// 	for (var i = 0; i < aData.length; i++) {
-		// 		aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-		// 		aData[i].AccountDetails.results = $filter('orderBy')(aData[i].AccountDetails.results, ["Name"]);
-		// 	}
-		// 	aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+		var onAccountsLoaded = function(aData) {
+			//Sort aData by accountType sorting sequence and then by AccountName
+			aData = $filter('orderBy')(aData, ["Name"]);
 
-		// 	servicesProvider.constructDependentMultiSelectArray({
-		// 		oDependentArrayWrapper: {
-		// 			aData: aData
-		// 		},
-		// 		sSecondLevelAttribute: "AccountDetails",
-		// 		sSecondLevelNameEN: "Name",
-		// 		sSecondLevelNameFR: "Name",
-		// 		oParentArrayWrapper: oContactWrapper,
-		// 		sNameEN: "NameEN",
-		// 		sNameFR: "NameFR",
-		// 		sDependentKey: "Guid",
-		// 		sParentKey: "_accountGuid",
-		// 		sTargetArrayNameInParent: "aAccounts"
-		// 	});
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				// sSecondLevelAttribute: "AccountDetails",
+				// sSecondLevelNameEN: "Name",
+				// sSecondLevelNameFR: "Name",
+				oParentArrayWrapper: oActivityWrapper,
+				sNameEN: "Name",
+				sNameFR: "Name",
+				sDependentKey: "Guid",
+				sParentKeys: "_accountsGuids",
+				sTargetArrayNameInParent: "aAccounts"
+			});
 
-		// var onContactsLoaded = function(aData) {
-		// 	for (var i = 0; i < aData.length; i++) {
-		// 		aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-		// 	}
-		// 	aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-
-		// 	servicesProvider.constructDependentMultiSelectArray({
-		// 		oDependentArrayWrapper: {
-		// 			aData: aData
-		// 		},
-		// 		oParentArrayWrapper: oActivityWrapper,
-		// 		sNameEN: "NameEN",
-		// 		sNameFR: "NameFR",
-		// 		sDependentKey: "Guid",
-		// 		sParentKey: "_activityTypeGuid",
-		// 		sTargetArrayNameInParent: "aActivityTypes"
-		// 	});
-		// 	if (oActivityWrapper.aData[0]) {
-		// 		$scope.aActivityTypes = angular.copy(oActivityWrapper.aData[0].aActivityTypes);
-		// 	}
-		// };
+			if (oActivityWrapper.aData[0]) {
+				$scope.aAccounts = angular.copy(oActivityWrapper.aData[0].aAccounts);
+			}
+		};
 
 		var getActivityDetails = function() {
 			apiProvider.getActivity({
@@ -225,6 +218,11 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				sExpand: "CompanyDetails",
 				bShowSpinner: false,
 				onSuccess: onUsersWithCompaniesLoaded
+				});
+
+				apiProvider.getAccounts({
+					bShowSpinner: false,
+					onSuccess: onAccountsLoaded
 				});
 
 //todo
@@ -253,6 +251,11 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				sExpand: "CompanyDetails",
 				bShowSpinner: false,
 				onSuccess: onUsersWithCompaniesLoaded
+			});
+
+			apiProvider.getAccounts({
+				bShowSpinner: false,
+				onSuccess: onAccountsLoaded
 			});
 
 //todo
@@ -323,6 +326,18 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if (aUri.length) {
 				aLinks.push({
 					sRelationName: "PhaseDetails",
+					bKeepCompanyDependentLinks: true,
+					aUri: aUri
+				});
+			}
+			var aUri = [];
+			for (var i = 0; i < $scope.aSelectedAccounts.length; i++) {
+				sUri = "Accounts('" + $scope.aSelectedAccounts[i].Guid + "')";
+				aUri.push(sUri);
+			}
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "AccountDetails",
 					bKeepCompanyDependentLinks: true,
 					aUri: aUri
 				});
