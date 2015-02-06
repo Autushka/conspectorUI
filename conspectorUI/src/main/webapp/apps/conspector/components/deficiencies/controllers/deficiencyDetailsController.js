@@ -73,9 +73,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// $scope.oContact.sTitle = oContact.Title;
 			$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oDeficiency.DueDate);
 
-	        if($scope.oDeficiency.DueDate){
-	        	$scope.oDeficiency.dDueDate = new Date(parseInt(oDeficiency.DueDate.substring(6, oDeficiency.DueDate.length-2)));
-	        }
+	       // if(oDeficiency.DueDate){
+	        $scope.oDeficiency.dDueDate = new Date(parseInt(oDeficiency.DueDate.substring(6, oDeficiency.DueDate.length-2)));
+	       // }
 
 			$scope.oDeficiency.sCreatedAt = utilsProvider.dBDateToSting(oDeficiency.CreatedAt);
 			$scope.oDeficiency.sLastModifiedAt = utilsProvider.dBDateToSting(oDeficiency.LastModifiedAt);
@@ -89,7 +89,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 			$scope.oDeficiency._deficiencyStatusGuid = oDeficiency.TaskStatusGuid;
 			$scope.oDeficiency._taskTypeGuid = oDeficiency.TaskTypeGuid;
-			$scope.oDeficiency._assignedUserName = oDeficiency.UserDetails.UserName;
+			$scope.oDeficiency._assignedUserName = oDeficiency.UserName;
 		
 			$scope.oDeficiency._contractorsGuids = [];
 			if (oDeficiency.AccountDetails) {
@@ -778,7 +778,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				oDataForSave.TaskStatusGuid = $scope.aSelectedStatuses[0].Guid;
 			}
 			if ($scope.aSelectedUser.length) {
-				oDataForSave.AssignedUser = $scope.aSelectedUser[0].UserName;
+				oDataForSave.UserName = $scope.aSelectedUser[0].UserName;
 			}
 
 			aLinks = prepareLinksForSave();
