@@ -99,6 +99,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				}
 			}
 
+			$scope.oDeficiency.sDescription = oDeficiency.Description;	
 			// $scope.oContact._contactTypeGuid = oContact.ContactTypeGuid;
 
 			// if (oContact.BillingAddress) {
@@ -730,6 +731,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aDescriptionTags);
 			oDataForSave.LocationTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aLocationTags);
+			oDataForSave.Description = $scope.oDeficiency.sDescription;
+
 
         	if($scope.oDeficiency.dDueDate){
             	oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";	

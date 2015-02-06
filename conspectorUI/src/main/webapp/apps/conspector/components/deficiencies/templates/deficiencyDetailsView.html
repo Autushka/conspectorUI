@@ -217,12 +217,10 @@
 
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
-					<div text-angular ng-model="htmlVariable">123 123123123 3123123123 </div>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'" ng-bind-html="oDeficiency.sDescription"></div>	
+					<div text-angular ng-model="oDeficiency.sDescription" ng-if="sMode != 'display'"></div>
 				</div>
 			</div>
-
-
-
 
 		</div>
 	</form>
