@@ -35,6 +35,11 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 							$rootScope.$broadcast('contactsShouldBeRefreshed');
 						}
 						break;
+					case "oDeficiencyEntity":
+						if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
+							$rootScope.$broadcast('deficienciesShouldBeRefreshed');
+						}
+						break;						
 				}
 			});
 		} else {

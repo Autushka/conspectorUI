@@ -162,7 +162,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			loadDeficiencys();
 		});
 
-		$scope.$on('accountsShouldBeRefreshed', function(oParameters) {
+		$scope.$on('deficienciesShouldBeRefreshed', function(oParameters) {
 			loadDeficiencys();
 		});
 
