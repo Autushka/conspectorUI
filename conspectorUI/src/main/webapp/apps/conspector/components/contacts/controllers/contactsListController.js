@@ -147,6 +147,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                 });
             } else {
                 apiProvider.getContacts({
+                    sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
                     bShowSpinner: true,
                     onSuccess: onContactsLoaded,
                 });

@@ -246,9 +246,10 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 				onSuccess: onRolesLoaded
 			});
 			apiProvider.getContacts({
-				bShowSpinner: false,
-				onSuccess: onContactsLoaded
-			});
+                sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+                bShowSpinner: true,
+                onSuccess: onContactsLoaded,
+            });
 			constructLanguageMultiSelect();
 		};
 
@@ -278,9 +279,10 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 					onSuccess: onRolesLoaded
 				});
 				apiProvider.getContacts({
-					bShowSpinner: false,
-					onSuccess: onContactsLoaded
-				});
+	                sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+	                bShowSpinner: true,
+	                onSuccess: onContactsLoaded,
+            	});
 				constructLanguageMultiSelect();
 			}
 		} else {
@@ -298,9 +300,10 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 				onSuccess: onRolesLoaded
 			});
 			apiProvider.getContacts({
-				bShowSpinner: false,
-				onSuccess: onContactsLoaded
-			});
+                sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+                bShowSpinner: true,
+                onSuccess: onContactsLoaded,
+            });
 			constructLanguageMultiSelect();
 		}
 

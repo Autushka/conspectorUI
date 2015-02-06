@@ -45,7 +45,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 
 		var oActivityWrapper = {
 			aData: [{
-				_accountsGuids: []
+				_accountsGuids: [],
+				_contactsGuids: []
 			}]
 		};
 
@@ -63,9 +64,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			$scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oActivity.CreatedAt);
 			$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oActivity.LastModifiedAt);
 				
-			$scope.oActivity.sDueDate = utilsProvider.dBDateToSting(oActivity.DueDate);
-
-	       	if(oActivity.DueDate){
+			if(oActivity.DueDate && oActivity.DueDate != "/Date(0)/"){
+	        	$scope.oActivity.sDueDate = utilsProvider.dBDateToSting(oActivity.DueDate);
 	        	$scope.oActivity.dDueDate = new Date(parseInt(oActivity.DueDate.substring(6, oActivity.DueDate.length-2)));
 	       	}
 
@@ -82,6 +82,13 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if (oActivity.AccountDetails) {
 				for (var i = 0; i < oActivity.AccountDetails.results.length; i++) {
 					$scope.oActivity._accountsGuids.push(oActivity.AccountDetails.results[i].Guid);
+				}
+			}
+
+			$scope.oActivity._contactsGuids = [];
+			if (oActivity.ContactDetails) {
+				for (var i = 0; i < oActivity.ContactDetails.results.length; i++) {
+					$scope.oActivity._contactsGuids.push(oActivity.ContactDetails.results[i].Guid);
 				}
 			}
 
@@ -113,9 +120,13 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				bShowSpinner: false,
 				onSuccess: onAccountsLoaded
 			});
-		};
 
-	
+			apiProvider.getContacts({
+				sExpand: "AccountDetails/AccountTypeDetails",
+				bShowSpinner: false,
+				onSuccess: onContactsLoaded
+			});
+		};
 
 		var onActivityTypesLoaded = function(aData) {
 			for (var i = 0; i < aData.length; i++) {
@@ -201,6 +212,31 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			}
 		};
 
+
+		var onContactsLoaded = function(aData) {
+			//Sort aData by accountType sorting sequence and then by AccountName
+			aData = $filter('orderBy')(aData, ["FirstName"]);
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				// sSecondLevelAttribute: "AccountDetails",
+				// sSecondLevelNameEN: "Name",
+				// sSecondLevelNameFR: "Name",
+				oParentArrayWrapper: oActivityWrapper,
+				sNameEN: "FirstName",
+				sNameFR: "FirstName",
+				sDependentKey: "Guid",
+				sParentKeys: "_contactsGuids",
+				sTargetArrayNameInParent: "aContacts"
+			});
+
+			if (oActivityWrapper.aData[0]) {
+				$scope.aContacts = angular.copy(oActivityWrapper.aData[0].aContacts);
+			}
+		};
+
 		var getActivityDetails = function() {
 			apiProvider.getActivity({
 				sKey: sActivityGuid,
@@ -232,17 +268,11 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 					onSuccess: onAccountsLoaded
 				});
 
-//todo
-				// apiProvider.getAccountTypesWithAccounts({
-				// bShowSpinner: false,
-				// onSuccess: onAccountTypesWithAccountsLoaded
-				// });
-
-				// apiProvider.getContacts({
-				// 		bShowSpinner: false,
-				// 		onSuccess: onContactsLoaded
-				// });
-
+				apiProvider.getContacts({
+					sExpand: "AccountDetails/AccountTypeDetails",
+					bShowSpinner: false,
+					onSuccess: onContactsLoaded
+				});
 			}
 		} else {
 			constructPhasesMultiSelect({
@@ -265,17 +295,11 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				onSuccess: onAccountsLoaded
 			});
 
-//todo
-			// apiProvider.getAccountTypesWithAccounts({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onAccountTypesWithAccountsLoaded
-			// });
-
-			// apiProvider.getContacts({
-			// 		bShowSpinner: false,
-			// 		onSuccess: onContactsLoaded
-			// });
-
+			apiProvider.getContacts({
+				sExpand: "AccountDetails/AccountTypeDetails",
+				bShowSpinner: false,
+				onSuccess: onContactsLoaded
+			});
 		}
 
 		$scope.onEdit = function() {
@@ -345,6 +369,18 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if (aUri.length) {
 				aLinks.push({
 					sRelationName: "AccountDetails",
+					bKeepCompanyDependentLinks: true,
+					aUri: aUri
+				});
+			}
+			var aUri = [];
+			for (var i = 0; i < $scope.aSelectedContacts.length; i++) {
+				sUri = "Contacts('" + $scope.aSelectedContacts[i].Guid + "')";
+				aUri.push(sUri);
+			}
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "ContactDetails",
 					bKeepCompanyDependentLinks: true,
 					aUri: aUri
 				});
@@ -471,18 +507,18 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			oDataForSave.Object = $scope.oActivity.sObject;
 			
 			if ($scope.aSelectedActivityType.length) {
-				
 				oDataForSave.ActivityTypeGuid = $scope.aSelectedActivityType[0].Guid;
 			}
 
 			if ($scope.aSelectedUser.length) {
-				
 				oDataForSave.AssignedUser = $scope.aSelectedUser[0].UserName;
 			}
 
 			if($scope.oActivity.dDueDate){
             	oDataForSave.DueDate = "/Date(" + $scope.oActivity.dDueDate.getTime() + ")/";	
-        	}	
+        	}else{
+        		oDataForSave.DueDate = "/Date(0)/";
+        	}		
 
 			oDataForSave.LastModifiedAt = $scope.oActivity._lastModifiedAt;
 
