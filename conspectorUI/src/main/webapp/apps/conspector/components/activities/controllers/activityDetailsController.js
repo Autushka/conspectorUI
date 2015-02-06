@@ -65,7 +65,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				aActivityPhasesGuids.push($scope.oActivity._aPhases[i].Guid);
 			}
 			constructPhasesMultiSelect(aActivityPhasesGuids);
-			debugger
+			
 			$scope.oActivity._activityTypeGuid = oActivity.ActivityTypeGuid;
 			$scope.oActivity._assignedUserName = oActivity.UserDetails.UserName;
 		
@@ -121,7 +121,23 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 		};
 
 		var onUsersWithCompaniesLoaded = function(aData) {
-			
+			var aFilteredUser = [{}];
+			debugger
+			for(var i = 0; i < aData.length; i++){
+				for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
+						if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
+							bMatchFound = true;
+							aFilteredUser[i] = aData[i];
+							break;
+						}
+					}
+					if (!bMatchFound) {
+						continue;
+					} 
+			}
+
+			aData = [{}];
+			aData = aFilteredUser;
 			
 			aData = $filter('orderBy')(aData, ["UserName"]);
 			

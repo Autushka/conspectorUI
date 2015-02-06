@@ -199,27 +199,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 			},
 
-			getUsersWithCompaniesPhasesAndRoles: function(oParameters) {
-				var svc = dataProvider.getEntitySet({
-					sPath: "Users",
-					sExpand: "CompanyDetails,PhaseDetails,RoleDetails",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
-					bShowSpinner: oParameters.bShowSpinner,
-					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oUserEntity"
-				});
-
-				if (svc instanceof Array) {
-					oParameters.onSuccess(svc); // data retrived from cache
-				} else {
-					svc.then(oParameters.onSuccess);
-				}
-			},
-
 			getUsers: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Users",
-					sExpand: oParameters.expand,
+					sExpand: oParameters.sExpand,
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,

@@ -113,7 +113,8 @@ viewControllers.controller('usersListView', ['$scope', '$rootScope', '$state', '
 			});
 		}
 
-		apiProvider.getUsersWithCompaniesPhasesAndRoles({
+		apiProvider.getUsers({
+			sExpand: "CompanyDetails,PhaseDetails,RoleDetails",
 			bShowSpinner: true,
 			onSuccess: onUsersLoaded
 		});
