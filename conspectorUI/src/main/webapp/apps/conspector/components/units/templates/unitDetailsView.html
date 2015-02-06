@@ -60,8 +60,8 @@
 							{{'unitDetails_unitName' | translate}}
 						</label>
 					</div>
-					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oContractor.sName}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()" name="unitName" required>
+					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oUnit.sName}}</div>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()" name="unitName" required>
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.unitName.$error" ng-if="(oForms.unitDetailsForm.unitName.$dirty || submitted) && sMode != 'display'">
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}
@@ -73,24 +73,26 @@
 				<div class="cnpSubSection" flex>
 					<div class="cnpSubSectionLabel">
 						<label>
-							{{'unitDetails_clientTags' | translate}}
+							{{'unitDetails_clients' | translate}}
 						</label>
 					</div>
-					<tags-input
-					ng-model="oUnit.aClientTags"
-					ng-hide="sMode == 'display'"
-					replace-spaces-with-dashes="false"
-					placeholder="{{'global_addTag' | translate}}"
-					on-tag-added="onDataModified()"
-					on-tag-removed="onDataModified()">
-					</tags-input>
-					<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
-						<ul class="tags-list">
-							<li class="tag-item" ng-repeat="tag in oUnit.aClientTags">
-								<span style="padding: 2px;">{{tag.text}}</span>
-							</li>
-						</ul>
-					</div>
+						<div
+							multi-select
+							input-model="aClients"
+							default-label="{{'unitDetails_unitClientsDefaultLabel' | translate }}"
+							button-label="name"
+							item-label="name"
+							is-disabled="sMode == 'display'"					
+							tick-property="ticked"
+							on-item-click="onSelectedClientsModified()"					
+							output-model="aSelectedClients"
+							on-close="onCloseCheckSelectedClientsLength()"										
+							helper-elements="filter">
+						</div>	
+						<input ng-model="aSelectedClients.length" type="number" ng-show="false" name="selectedClients" min="1">
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.selectedClients.$error" ng-if="(oForms.unitDetailsForm.selectedClients.$dirty && !oForms.unitDetailsForm.selectedClients.$valid) || submitted">
+							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+						</div>
 				</div>
 			</div>
 			<div layout="row" style="width: 100%" flex>
