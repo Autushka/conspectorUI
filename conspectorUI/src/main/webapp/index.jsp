@@ -14,7 +14,11 @@
 		<link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.min.css">
 		<link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css">	
 		<link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date.css">			
-		<link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date-default-theme.css">			
+		<link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date-default-theme.css">
+		<link rel='stylesheet' href='bower_components/textAngular/src/textAngular.css'>		
+		<link rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css'>
+
+<!--     <link data-require="bootstrap@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" /> -->								
 		
 		<link rel="stylesheet" href="apps/conspector/css/style.css">
 
@@ -39,7 +43,11 @@
 		<script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>
 		<script src="bower_components/datajs/datajs-1.1.2.min.js"></script>
 		<script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>	
-		<script src="bower_components/ngQuickDate/dist/ng-quick-date.min.js"></script>			
+		<script src="bower_components/ngQuickDate/dist/ng-quick-date.min.js"></script>	
+
+		<script src='bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
+		<script src='bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
+		<script src='bower_components/textAngular/dist/textAngular.min.js'></script>				
 		
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->
 		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->

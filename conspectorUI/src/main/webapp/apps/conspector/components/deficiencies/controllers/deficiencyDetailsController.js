@@ -71,11 +71,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// $scope.oContact.sMobilePhone = oContact.MobilePhone;
 			// $scope.oContact.sFax = oContact.Fax;
 			// $scope.oContact.sTitle = oContact.Title;
-			$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oDeficiency.DueDate);
+			
 
-	       // if(oDeficiency.DueDate){
-	        $scope.oDeficiency.dDueDate = new Date(parseInt(oDeficiency.DueDate.substring(6, oDeficiency.DueDate.length-2)));
-	       // }
+	       	if(oDeficiency.DueDate && oDeficiency.DueDate != "/Date(0)/"){
+	       		$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oDeficiency.DueDate);
+	        	$scope.oDeficiency.dDueDate = new Date(parseInt(oDeficiency.DueDate.substring(6, oDeficiency.DueDate.length-2)));
+	        }
 
 			$scope.oDeficiency.sCreatedAt = utilsProvider.dBDateToSting(oDeficiency.CreatedAt);
 			$scope.oDeficiency.sLastModifiedAt = utilsProvider.dBDateToSting(oDeficiency.LastModifiedAt);
@@ -732,6 +733,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
         	if($scope.oDeficiency.dDueDate){
             	oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";	
+        	}else{
+        		oDataForSave.DueDate = "/Date(0)/";
         	}			
 			// oDataForSave.BillingAddress = {};
 			// oDataForSave.BillingAddress.BillingStreet = $scope.oContact.sBillingStreet;
