@@ -91,7 +91,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				sExpand: "CompanyDetails",
 				bShowSpinner: false,
 				onSuccess: onUsersWithCompaniesLoaded
-
 			});
 		};
 
@@ -395,14 +394,16 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
 				}
 				if (!bSaveAndNew) {
-					$scope.oActivity._lastModifiedAt = oData.LastModifiedAt;
-					$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
-					$scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
-					$scope.oActivity._guid = oData.Guid;
 					$state.go('app.activityDetailsWrapper.activityDetails', {
 						sMode: "display",
 						sActivityGuid: oData.Guid,
 					});
+
+					$scope.oActivity._lastModifiedAt = oData.LastModifiedAt;
+					$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
+					$scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
+					$scope.oActivity._guid = oData.Guid;
+					
 				} else {
 					$scope.oActivity.sObject = "";
 					$scope.oForms.activityDetailsForm.activityObject.$setPristine();
@@ -430,12 +431,13 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			};
 			var onSuccessUpdate = function(oData) {
 				bDataHasBeenModified = false;
-				$scope.oActivity._lastModifiedAt = oData.LastModifiedAt;
-				$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
 				}
+				$scope.oActivity._lastModifiedAt = oData.LastModifiedAt;
+				$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
+				
 				$state.go('app.activityDetailsWrapper.activityDetails', {
 					sMode: "display",
 					sActivityGuid: oData.Guid,

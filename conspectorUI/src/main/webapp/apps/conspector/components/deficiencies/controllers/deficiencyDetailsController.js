@@ -89,7 +89,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 			$scope.oDeficiency._deficiencyStatusGuid = oDeficiency.TaskStatusGuid;
 			$scope.oDeficiency._taskTypeGuid = oDeficiency.TaskTypeGuid;
-
+			$scope.oDeficiency._assignedUserName = oDeficiency.UserDetails.UserName;
+		
 			$scope.oDeficiency._contractorsGuids = [];
 			if (oDeficiency.AccountDetails) {
 				for (var i = 0; i < oDeficiency.AccountDetails.results.length; i++) {
@@ -297,6 +298,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				onSuccess: onTaskTypesLoaded
 			});
 
+			apiProvider.getUsers({
+				sExpand: "CompanyDetails",
+				bShowSpinner: false,
+				onSuccess: onUsersWithCompaniesLoaded
+			});
+
 
 			// apiProvider.getCountriesWithProvinces({
 			// 	bShowSpinner: false,
@@ -347,6 +354,43 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			}
 		};
 
+		var onUsersWithCompaniesLoaded = function(aData) {
+			var aFilteredUser = [{}];
+			
+			for(var i = 0; i < aData.length; i++){
+				for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
+						if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
+							bMatchFound = true;
+							aFilteredUser[i] = aData[i];
+							break;
+						}
+					}
+					if (!bMatchFound) {
+						continue;
+					} 
+			}
+
+			aData = [{}];
+			aData = aFilteredUser;
+			
+			aData = $filter('orderBy')(aData, ["UserName"]);
+			
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oDeficiencyWrapper,
+				sNameEN: "UserName",
+				sNameFR: "UserName",
+				sDependentKey: "UserName",
+				sParentKey: "_assignedUserName",
+				sTargetArrayNameInParent: "aUsers"
+			});
+			if (oDeficiencyWrapper.aData[0]) {
+				$scope.aUsers = angular.copy(oDeficiencyWrapper.aData[0].aUsers);
+			}
+		};
+
 		if ($scope.sMode !== "create") {
 			if (angular.equals(oDeficiency, {})) { //in case of F5
 				getDeficiencyDetails();
@@ -367,6 +411,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					bShowSpinner: false,
 					onSuccess: onTaskTypesLoaded
 				});
+
+				apiProvider.getUsers({
+					sExpand: "CompanyDetails",
+					bShowSpinner: false,
+					onSuccess: onUsersWithCompaniesLoaded
+				});	
 
 				// apiProvider.getProjects({
 				// 	bShowSpinner: false,
@@ -401,7 +451,13 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			apiProvider.getTaskTypes({
 				bShowSpinner: false,
 				onSuccess: onTaskTypesLoaded
-			});				
+			});
+
+			apiProvider.getUsers({
+				sExpand: "CompanyDetails",
+				bShowSpinner: false,
+				onSuccess: onUsersWithCompaniesLoaded
+			});		
 
 
 			// apiProvider.getAccountTypesWithAccounts({
@@ -481,7 +537,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		$scope.onSelectedTaskTypesModified = function() {
 			$scope.onDataModified();
-			$scope.oForms.deficiencyDetailsForm.aSelectedTaskTypes.$setDirty();
+			$scope.oForms.deficiencyDetailsForm.selectedTaskTypes.$setDirty();
 		};		
 
 		$scope.onCloseCheckSelectedPhasesLength = function() {
@@ -548,6 +604,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			}
 			if ($scope.oForms.deficiencyDetailsForm.selectedContractors) {
 				$scope.oForms.deficiencyDetailsForm.selectedContractors.$setDirty(); //to display validation messages on submit press
+			}
+			if($scope.oForms.deficiencyDetailsForm.selectedUser){
+				$scope.oForms.deficiencyDetailsForm.selectedUser.$setDirty();//to display validation messages on submit press
 			}
 			// if ($scope.oForms.contactDetailsForm.lastName) {
 			// 	$scope.oForms.contactDetailsForm.lastName.$setDirty(); //to display validation messages on submit press
@@ -717,6 +776,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			}
 			if ($scope.aSelectedStatuses.length) {
 				oDataForSave.TaskStatusGuid = $scope.aSelectedStatuses[0].Guid;
+			}
+			if ($scope.aSelectedUser.length) {
+				oDataForSave.AssignedUser = $scope.aSelectedUser[0].UserName;
 			}
 
 			aLinks = prepareLinksForSave();
