@@ -216,6 +216,23 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				}
 			},
 
+			getUsers: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "Users",
+					sExpand: oParameters.expand,
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oUserEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc); // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
 			getUserWithCompaniesPhasesAndRoles: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "Users",
@@ -1021,6 +1038,16 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sKey: oParameters.sKey,
 					sExpand: oParameters.sExpand,//"PhaseDetails/ProjectDetails,AccountTypeDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(oParameters.onSuccess);
+			},
+
+			getAccounts: function(oParameters) {
+				var svc = dataProvider.getEntity({
+					sPath: "Accounts",
+					sKey: oParameters.sKey,
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
 				svc.then(oParameters.onSuccess);

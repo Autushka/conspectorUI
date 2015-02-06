@@ -65,8 +65,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				aActivityPhasesGuids.push($scope.oActivity._aPhases[i].Guid);
 			}
 			constructPhasesMultiSelect(aActivityPhasesGuids);
-
+			debugger
 			$scope.oActivity._activityTypeGuid = oActivity.ActivityTypeGuid;
+			$scope.oActivity._assignedUserName = oActivity.UserDetails.UserName;
 		
 			oActivityWrapper.aData[0] = angular.copy($scope.oActivity);
 		};
@@ -86,6 +87,12 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				onSuccess: onActivityTypesLoaded
 			});
 
+			apiProvider.getUsers({
+				sExpand: "CompanyDetails",
+				bShowSpinner: false,
+				onSuccess: onUsersWithCompaniesLoaded
+
+			});
 		};
 
 	
@@ -110,6 +117,27 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			});
 			if (oActivityWrapper.aData[0]) {
 				$scope.aActivityTypes = angular.copy(oActivityWrapper.aData[0].aActivityTypes);
+			}
+		};
+
+		var onUsersWithCompaniesLoaded = function(aData) {
+			
+			
+			aData = $filter('orderBy')(aData, ["UserName"]);
+			
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oActivityWrapper,
+				sNameEN: "UserName",
+				sNameFR: "UserName",
+				sDependentKey: "UserName",
+				sParentKey: "_assignedUserName",
+				sTargetArrayNameInParent: "aUsers"
+			});
+			if (oActivityWrapper.aData[0]) {
+				$scope.aUsers = angular.copy(oActivityWrapper.aData[0].aUsers);
 			}
 		};
 
@@ -178,6 +206,12 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				onSuccess: onActivityTypesLoaded
 				});
 
+				apiProvider.getUsers({
+				sExpand: "CompanyDetails",
+				bShowSpinner: false,
+				onSuccess: onUsersWithCompaniesLoaded
+				});
+
 //todo
 				// apiProvider.getAccountTypesWithAccounts({
 				// bShowSpinner: false,
@@ -198,6 +232,12 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			apiProvider.getActivityTypes({
 				bShowSpinner: false,
 				onSuccess: onActivityTypesLoaded
+			});
+
+			apiProvider.getUsers({
+				sExpand: "CompanyDetails",
+				bShowSpinner: false,
+				onSuccess: onUsersWithCompaniesLoaded
 			});
 
 //todo
@@ -316,6 +356,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if($scope.oForms.activityDetailsForm.activityObject){
 				$scope.oForms.activityDetailsForm.selectedActivityType.$setDirty();//to display validation messages on submit press
 			}
+			if($scope.oForms.activityDetailsForm.selectedUser){
+				$scope.oForms.activityDetailsForm.selectedUser.$setDirty();//to display validation messages on submit press
+			}
 			if($scope.oForms.activityDetailsForm.activityObject){
 				$scope.oForms.activityDetailsForm.activityObject.$setDirty();//to display validation messages on submit press
 			}			
@@ -345,7 +388,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 						sActivityGuid: oData.Guid,
 					});
 				} else {
-					// $scope.oActivity.sName = "";
+					$scope.oActivity.sObject = "";
+					$scope.oForms.activityDetailsForm.activityObject.$setPristine();
 					// $scope.oActivity.sPhone = "";
 					// $scope.oActivity.sPhoneExtension = "";
 					// $scope.oActivity.sSecondaryPhone = "";
@@ -362,7 +406,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 					// $scope.oActivity.sShippingCity = "";
 					// $scope.oActivity.sShippingPostalCode = "";					
 
-					// $scope.oForms.activityDetailsForm.activityName.$setPristine();
+					// 
 					// oDataForSave.BillingAddress = {};
 					// oDataForSave.ShippingAddress = {};
 					// $scope.oActivity._aPhases = [];
@@ -388,6 +432,11 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if ($scope.aSelectedActivityType.length) {
 				
 				oDataForSave.ActivityTypeGuid = $scope.aSelectedActivityType[0].Guid;
+			}
+
+			if ($scope.aSelectedUser.length) {
+				
+				oDataForSave.AssignedUser = $scope.aSelectedUser[0].UserName;
 			}
 
 			oDataForSave.LastModifiedAt = $scope.oActivity._lastModifiedAt;

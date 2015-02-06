@@ -107,6 +107,34 @@
 				</div>
 			</div>
 			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'activityDetails_assignedUser' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aUsers"
+						button-label="name"
+						default-label="{{'global_assignedUser' | translate }}"
+						item-label="name"
+						selection-mode="single"
+						tick-property="ticked"
+						group-property="multiSelectGroup"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						output-model="aSelectedUser"
+						helper-elements=""
+						>
+					</div>
+					<input ng-model="aSelectedUser.length" type="number" ng-show="false" name="selectedUser" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.selectedUser.$error" ng-if="(oForms.activityDetailsForm.selectedUser.$dirty && !oForms.activityDetailsForm.selectedUser.$valid) || submitted">
+						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					</div>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
 				<!-- <div class="cnpSubSection" flex>
 					<div  class="cnpSubSectionLabel">
 						<label>
