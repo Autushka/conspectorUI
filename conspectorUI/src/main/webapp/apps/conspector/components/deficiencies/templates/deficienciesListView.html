@@ -56,9 +56,16 @@
 					</td>
 					<td data-title="'global_status' | translate" sortable="'sTags'" filter="{'sTags': 'text'}">
 						<div layout="row" layout-align="start center">
-							<img class="cnpCompanyLogo" ng-src="{{deficiency.sStatuseIconUrl}}" style="width:24px; height:24px;"/>
+							<img ng-src="{{deficiency.sStatuseIconUrl}}" style="width:24px; height:24px;"/>
 						</div>
-					</td>					
+					</td>	
+					<td data-title="'global_contractors' | translate" sortable="'sContractors'" filter="{'sContractors': 'text'}">
+						<div layout="row" layout-align="start center">
+								<span>
+								{{deficiency.sContractors}}
+								</span>
+						</div>
+					</td>									
 <!-- 					<td data-title="'global_account' | translate" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">
 						<div layout="row" layout-align="start center">
 							<div>

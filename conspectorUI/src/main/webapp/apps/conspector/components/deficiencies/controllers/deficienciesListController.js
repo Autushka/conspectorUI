@@ -57,12 +57,14 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			var bMatchFound = false;
 			var iSortingSequence = 0;
 			var sStatuseIconUrl = "";
+			var sContractors = "";
 			for (var i = 0; i < aData.length; i++) {
 				sProjectName = "";
 				sPhaseName = "";
 				sProjectPhase = "";
 				iSortingSequence = 0;
 				sStatuseIconUrl = "";
+				sContractors = "";
 
 				// for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 				bMatchFound = false;
@@ -94,6 +96,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
 				}
 
+				if(aData[i].AccountDetails){
+					for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
+						sContractors = sContractors + aData[i].AccountDetails.results[j].Name + "; ";
+					}
+				}
+
 				//$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].guid;
 
 				// if (!bMatchFound) {
@@ -117,6 +125,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					_guid: aData[i].Guid,
 					sTags: aData[i].DescriptionTags,
 					sProjectPhase: sProjectPhase,
+					sContractors: sContractors,
 					_sortingSequence: iSortingSequence,
 					sStatuseIconUrl: sStatuseIconUrl
 				});
