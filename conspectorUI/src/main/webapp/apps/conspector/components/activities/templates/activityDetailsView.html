@@ -89,7 +89,7 @@
 						multi-select
 						input-model="aActivityTypes"
 						button-label="name"
-						default-label="{{'global_selectedProjectsAndPhases' | translate }}"
+						default-label="{{'global_activityType' | translate }}"
 						item-label="name"
 						selection-mode="single"
 						tick-property="ticked"
@@ -97,10 +97,36 @@
 						is-disabled="sMode == 'display'"
 						on-item-click="onDataModified()"
 						output-model="aSelectedActivityType"
+						helper-elements=""
 						>
 					</div>
 					<input ng-model="aSelectedActivityType.length" type="number" ng-show="false" name="selectedActivityType" min="1">
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.selectedActivityType.$error" ng-if="(oForms.activityDetailsForm.selectedActivityType.$dirty && !oForms.activityDetailsForm.selectedActivityType.$valid) || submitted">
+						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					</div>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'activityDetails_accounts' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aAccounts"
+						button-label="name"
+						default-label="{{'global_accounts' | translate }}"
+						item-label="name"
+						tick-property="ticked"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						output-model="aSelectedAccounts"
+						>
+					</div>
+					<input ng-model="aSelectedAccounts.length" type="number" ng-show="false" name="selectedAccounts" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.aSelectedAccounts.$error" ng-if="(oForms.activityDetailsForm.aSelectedAccounts.$dirty && !oForms.activityDetailsForm.aSelectedAccounts.$valid) || submitted">
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>

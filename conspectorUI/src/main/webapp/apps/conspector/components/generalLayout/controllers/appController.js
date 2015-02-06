@@ -154,7 +154,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 				$window.location.hash.indexOf("#/app/clientDetails") > -1 ||
 				$window.location.hash.indexOf("#/app/contractorDetails") > -1 ||
 				$window.location.hash.indexOf("#/app/contactDetails") > -1 ||
-				$window.location.hash.indexOf("#/app/deficiencyDetails") > -1) {
+				$window.location.hash.indexOf("#/app/deficiencyDetails") > -1 ||
+				$window.location.hash.indexOf("#/app/activityDetails") > -1) {
 				$scope.selectedTabIndex = -1;
 				$scope.$broadcast("$mdTabsPaginationChanged");
 				return;
@@ -181,7 +182,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 				$scope.selectedTabIndex = getITabIndexForCurrentState("app.contactsList");
 				return;
 			}
-			if ($window.location.hash.indexOf("activity") > -1) {
+			if ($window.location.hash.indexOf("activit") > -1) {
 				$scope.selectedTabIndex = getITabIndexForCurrentState("app.activitiesList");
 				return;
 			}
@@ -206,7 +207,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			if ($window.location.hash.indexOf("contact") > -1) {
 				sCurrentSelectedTab = "Contacts";
 			}
-			if ($window.location.hash.indexOf("activity") > -1) {
+			if ($window.location.hash.indexOf("activit") > -1) {
 				sCurrentSelectedTab = "Activities";
 			}
 

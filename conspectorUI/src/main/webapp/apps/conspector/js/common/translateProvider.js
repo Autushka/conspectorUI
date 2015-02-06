@@ -112,6 +112,7 @@ app.config(['$translateProvider',
                   app_contractorsTab: 'Contractors',
                   app_clientsTab: 'Clients',
                   app_contactsTab: "Contacts",
+                  app_activitiesTab: "Logbook",
                   //profileSettings
                   profileSettings_menuHeader: 'User Menu',
                   profileSettings_profileDetails: 'User Profile',
@@ -224,6 +225,12 @@ app.config(['$translateProvider',
                   forgotPassword_email: 'Email',
                   forgotPassword_reset: 'Reset password',
                   forgotPassword_footerLabel: 'Having issues logging in?\nEmail us at ',
+                  //deficienciesList
+                  deficienciesList_title: 'Deficiencies List',
+                  deficienciesList_addNew: 'Add Deficiency',
+                  //activitiesList
+                  activitiesList_title: 'Logbook Entries',
+                  activitiesList_addNew: 'Add a Log',
                   //contractorsList
                   contractorsList_title: 'Contractors List',
                   contractorsList_addNew: 'Add Contractor',
@@ -425,6 +432,7 @@ app.config(['$translateProvider',
                   app_contractorsTab: 'Sous-traitants',
                   app_clientsTab: 'Clients',
                   app_contactsTab: 'Contacts',
+                  app_activitiesTab: "Logbook",
                   //profileSettings
                   profileSettings_menuHeader: 'Menu utilisateur',
                   profileSettings_contactDetails: 'Contact de l\u0027utilisateur',
@@ -537,8 +545,14 @@ app.config(['$translateProvider',
                   forgotPassword_email: 'Email',
                   forgotPassword_reset: 'R\u00E9initialiser mot de passe',
                   forgotPassword_footerLabel: 'Un probl\u00E8me de connexion?\n\u00C9crivez \u00E0 ',
+                  //deficienciesList
+                  deficienciesList_title: 'Liste des d\u00E9ficiences',
+                  deficienciesList_addNew: 'Ajouter d\u00E9ficience',
+                  //activitiesList
+                  activitiesList_title: 'Entr\u00E9es du Logbook',
+                  activitiesList_addNew: 'Ajouter une entr\u00E9e',
                   //contractorsList
-                  contractorsList_title: 'Liste de sous-traitants',
+                  contractorsList_title: 'Liste des sous-traitants',
                   contractorsList_addNew: 'Ajouter un sous-traitant',
                   //contractorDetails
                   contractorDetails_title: 'D\u00E9tails du sous-traitant',

@@ -22,7 +22,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			sOperation: "bDelete"
 		});	
 
-//to delete
+		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
+		
+		//to delete
 		// $scope.sActivityType = "";
 		// $scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		// if ($rootScope.sCurrentStateName === "app.activityDetailsWrapper.activityDetails") { 
@@ -87,7 +89,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-
+			debugger
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
@@ -103,6 +105,51 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				$scope.aActivityTypes = angular.copy(oActivityWrapper.aData[0].aActivityTypes);
 			}
 		};
+
+		// var onAccountTypesWithAccountsLoaded = function(aData) {
+		// 	//Sort aData by accountType sorting sequence and then by AccountName
+		// 	for (var i = 0; i < aData.length; i++) {
+		// 		aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+		// 		aData[i].AccountDetails.results = $filter('orderBy')(aData[i].AccountDetails.results, ["Name"]);
+		// 	}
+		// 	aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+		// 	servicesProvider.constructDependentMultiSelectArray({
+		// 		oDependentArrayWrapper: {
+		// 			aData: aData
+		// 		},
+		// 		sSecondLevelAttribute: "AccountDetails",
+		// 		sSecondLevelNameEN: "Name",
+		// 		sSecondLevelNameFR: "Name",
+		// 		oParentArrayWrapper: oContactWrapper,
+		// 		sNameEN: "NameEN",
+		// 		sNameFR: "NameFR",
+		// 		sDependentKey: "Guid",
+		// 		sParentKey: "_accountGuid",
+		// 		sTargetArrayNameInParent: "aAccounts"
+		// 	});
+
+		// var onContactsLoaded = function(aData) {
+		// 	for (var i = 0; i < aData.length; i++) {
+		// 		aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+		// 	}
+		// 	aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+		// 	servicesProvider.constructDependentMultiSelectArray({
+		// 		oDependentArrayWrapper: {
+		// 			aData: aData
+		// 		},
+		// 		oParentArrayWrapper: oActivityWrapper,
+		// 		sNameEN: "NameEN",
+		// 		sNameFR: "NameFR",
+		// 		sDependentKey: "Guid",
+		// 		sParentKey: "_activityTypeGuid",
+		// 		sTargetArrayNameInParent: "aActivityTypes"
+		// 	});
+		// 	if (oActivityWrapper.aData[0]) {
+		// 		$scope.aActivityTypes = angular.copy(oActivityWrapper.aData[0].aActivityTypes);
+		// 	}
+		// };
 
 		var getActivity = function() {
 			apiProvider.getActivityWithPhases({
@@ -120,13 +167,21 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				setDisplayedActivityDetails(oActivity);
 
 				apiProvider.getActivityTypes({
-					bShowSpinner: false,
-					onSuccess: onActivityTypesLoaded
+				bShowSpinner: false,
+				onSuccess: onActivityTypesLoaded
 				});
+
+//todo
 				// apiProvider.getAccountTypesWithAccounts({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onAccountTypesWithAccountsLoaded
+				// bShowSpinner: false,
+				// onSuccess: onAccountTypesWithAccountsLoaded
 				// });
+
+				// apiProvider.getContacts({
+				// 		bShowSpinner: false,
+				// 		onSuccess: onContactsLoaded
+				// });
+
 			}
 		} else {
 			var aSelectedPhases = [];
@@ -136,15 +191,21 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			constructPhasesMultiSelect(aSelectedPhases);
 
 			apiProvider.getActivityTypes({
-					bShowSpinner: false,
-					onSuccess: onActivityTypesLoaded
-				});
+				bShowSpinner: false,
+				onSuccess: onActivityTypesLoaded
+			});
 
-
+//todo
 			// apiProvider.getAccountTypesWithAccounts({
 			// 	bShowSpinner: false,
 			// 	onSuccess: onAccountTypesWithAccountsLoaded
 			// });
+
+			// apiProvider.getContacts({
+			// 		bShowSpinner: false,
+			// 		onSuccess: onContactsLoaded
+			// });
+
 		}
 
 		$scope.onEdit = function() {
@@ -202,6 +263,20 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if (aUri.length) {
 				aLinks.push({
 					sRelationName: "PhaseDetails",
+					bKeepCompanyDependentLinks: true,
+					aUri: aUri
+				});
+			}
+			var aUri = [];
+			for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
+				if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
+					sUri = "ActivityType('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
+					aUri.push(sUri);
+				}
+			}
+			if (aUri.length) {
+				aLinks.push({
+					sRelationName: "ActivityTypeDetails",
 					bKeepCompanyDependentLinks: true,
 					aUri: aUri
 				});
