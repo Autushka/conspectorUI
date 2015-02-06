@@ -26,6 +26,37 @@
 			</div>
 		</div>
 		<div class="cnpSection" layout="column" layout-align="start center" flex>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'detailsDetails_taskType' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aTaskTypes"
+						button-label="name"
+						default-label="{{'global_taskType' | translate }}"
+						item-label="name"
+						selection-mode="single"
+						tick-property="ticked"
+						group-property="multiSelectGroup"
+						is-disabled="sMode == 'display'"
+						on-item-click="onSelectedTaskTypesModified()"
+						output-model="aSelectedTaskTypes"
+						on-close="onCloseCheckSelectedTaskTypesLength()"						
+						helper-elements=""
+						>
+					</div>
+					<input ng-model="aSelectedTaskTypes.length" type="number" ng-show="false" name="selectedTaskTypes" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskTypes.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskTypes.$dirty && !oForms.deficiencyDetailsForm.selectedTaskTypes.$valid) || submitted">
+						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					</div>
+				</div>
+			</div>
+
+
 			<div class="cnpSubSection" flex>
 				<div  class="cnpSubSectionLabel">
 					<label>
