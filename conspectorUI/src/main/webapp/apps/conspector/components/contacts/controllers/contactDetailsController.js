@@ -483,6 +483,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+					return;
 				}
 				if (!bSaveAndNew) {
 					if ($rootScope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
@@ -533,6 +534,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
+					return;
 				}
 
 				$scope.oContact._lastModifiedAt = oData.LastModifiedAt;

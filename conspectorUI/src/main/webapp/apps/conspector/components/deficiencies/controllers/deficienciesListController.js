@@ -56,11 +56,13 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			var sProjectPhase = "";
 			var bMatchFound = false;
 			var iSortingSequence = 0;
+			var sStatuseIconUrl = "";
 			for (var i = 0; i < aData.length; i++) {
 				sProjectName = "";
 				sPhaseName = "";
 				sProjectPhase = "";
 				iSortingSequence = 0;
+				sStatuseIconUrl = "";
 
 				// for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 				bMatchFound = false;
@@ -88,6 +90,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					sProjectPhase = "Not Assigned";
 				}
 
+				if(aData[i].TaskStatusDetails){
+					sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
+				}
+
+				//$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].guid;
+
 				// if (!bMatchFound) {
 				// 	continue;
 				// }
@@ -109,7 +117,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					_guid: aData[i].Guid,
 					sTags: aData[i].DescriptionTags,
 					sProjectPhase: sProjectPhase,
-					_sortingSequence: iSortingSequence
+					_sortingSequence: iSortingSequence,
+					sStatuseIconUrl: sStatuseIconUrl
 				});
 				// }
 
@@ -121,7 +130,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		var loadDeficiencies = function() {
 			oDeficienciesListData.aData = [];
 			apiProvider.getDeficiencies({
-				sExpand: "PhaseDetails/ProjectDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails",
 				bShowSpinner: true,
 				onSuccess: onDeficienciesLoaded
 			});
