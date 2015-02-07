@@ -50,7 +50,7 @@ app.factory('utilsProvider', ['$mdToast',
 				if (sMonth.length === 1) {
 					sMonth = '0' + sMonth;
 				}
-				sFullDate = sMonth + "." + sDate + "." + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
+				sFullDate =  sMonth + "/" + sDate + "/" + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
 				return sFullDate;
 			},
 

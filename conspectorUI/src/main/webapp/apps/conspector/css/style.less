@@ -27,6 +27,7 @@ VARIABLE AND SETTINGS
 @textColorLight: rgba(66, 67, 71, 0.5);
 @navbarTextColor: rgba(255, 255, 255, 0.65);
 @tagColor: #93E890;
+@locationTagColor: rgb(144, 213, 232);
 @fontSize: 18px;
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
 // @font-face {
@@ -1813,6 +1814,10 @@ DETAILS VIEW
 	font-weight: 500;
 	color: #8F8F90;
 	margin-bottom: 4px;
+
+	&.cnpSubSectionLabelMarginTop{
+
+	}
 }
 
 .cnpSubSectionData{
@@ -1843,6 +1848,16 @@ DETAILS VIEW
 		color: @textColorLight;
 	}
 }
+.cnpSubSectionText{
+	margin-top: 12px;
+	background-color: @whiteColor;
+	font-size: 14px;
+	min-height: 80px;
+	padding-top: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
 
 
 .tags {
@@ -1889,6 +1904,10 @@ tags-input .tags.location .tag-item,
 
 }
 
+.tag-item[ng-repeat="tag in oDeficiency.aLocationTags"]{
+	background: @locationTagColor;
+}
+
 .tags-wrapper {
 	/*	-moz-appearance: textfield;
 	-webkit-appearance: textfield;*/
@@ -1898,7 +1917,7 @@ tags-input .tags.location .tag-item,
 	cursor: text;
 	background-color: initial;
 	border: 0px;
-	margin-top: 8px;
+	margin-top: 12px;
 	margin-bottom: 12px;
 }
 
@@ -1953,6 +1972,66 @@ tags-input .host {
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+
+.quickdate-popup{
+	position: relative;
+}
+
+.ta-root>div[text-angular-toolbar]>div:last-of-type{
+	display: none;
+}
+
+.ta-root{
+	color: @textColor;
+}
+
+.ta-scroll-window, .ta-scroll-window.form-control{
+	margin-top: 12px;
+	background-color: @whiteColor;
+}
+
+.ta-scroll-window > .ta-bind{
+	
+	background-color: @whiteColor;
+	font-size: 14px;
+	min-height: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 4px;
+	padding-right: 4px;
+	color: black;
+}
+
+.btn-group{
+	margin-bottom: 4px;
+	margin-right: 4px;
+}
+.btn-toolbar .btn-group, .btn-toolbar .input-group{
+	// float: left;
+}
+
+.btn-group, .btn-group-vertical{
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+}
+.ta-editor.ta-html, .ta-scroll-window.form-control{
+	min-height: 0;
+}
+
+.btn-group>.btn:first-child:not(:last-child):not(.dropdown-toggle){
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.btn-group>.btn:first-child{
+	margin-left: 0;
+}
+
+// .btn-default.disabled, .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active{
+// 	background-color: white;
+// 	border-color: #ccc;
+// }
 
 /*
 END OF DETAILS VIEW

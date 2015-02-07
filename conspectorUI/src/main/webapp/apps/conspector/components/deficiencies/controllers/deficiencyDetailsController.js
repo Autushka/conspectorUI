@@ -88,6 +88,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		var setDisplayedDeficiencyDetails = function(oDeficiency) {
 			// var oContactPhasesGuids = [];
+			
 			$scope.oDeficiency._guid = oDeficiency.Guid;
 			// $scope.oContact._accountGuid = oContact.AccountGuid;
 
@@ -103,7 +104,34 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// $scope.oContact.sMobilePhone = oContact.MobilePhone;
 			// $scope.oContact.sFax = oContact.Fax;
 			// $scope.oContact.sTitle = oContact.Title;
+			
+			if (oDeficiency.UnitDetails.Name){
+				$scope.oDeficiency._unitName = oDeficiency.UnitDetails.Name;
+			}
 
+			if (oDeficiency.PhaseDetails.NameEN && oDeficiency.PhaseDetails.ProjectDetails.NameEN && $translate.use() === "en"){
+				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameEN + " - " + oDeficiency.PhaseDetails.NameEN;
+			}
+
+			if (oDeficiency.PhaseDetails.NameFR && oDeficiency.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr"){
+				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameFR + " - " + oDeficiency.PhaseDetails.NameFR;
+			}else{
+				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameEN + " - " + oDeficiency.PhaseDetails.NameEN;
+			}
+
+			//
+
+			if (oDeficiency.TaskPriorityDetails.NameEN && oDeficiency.TaskPriorityDetails.NameEN && $translate.use() === "en"){
+				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
+			}
+
+			if (oDeficiency.TaskPriorityDetails.NameFR && oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr"){
+				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameFR;
+			}else{
+				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
+			}
+
+			//
 
 			if (oDeficiency.DueDate && oDeficiency.DueDate != "/Date(0)/") {
 				$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oDeficiency.DueDate);
@@ -179,7 +207,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		var sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false";
 
-		sRequestSettings = sRequestSettings + "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails";
+		sRequestSettings = sRequestSettings + "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails, UnitDetails";
 		var oDeficiency = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oDeficiencyEntity",
 			sRequestSettings: sRequestSettings, //filter + expand
@@ -369,11 +397,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				bShowSpinner: false,
 				onSuccess: onUsersWithCompaniesLoaded
 			});
+
 		};
 
 		var getDeficiencyDetails = function() {
 			apiProvider.getDeficiency({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails, TaskPriorityDetails, AccountDetails, UnitDetails",
 				sKey: sDeficiencyGuid,
 				bShowSpinner: true,
 				onSuccess: onDeficiencyDetailsLoaded,
