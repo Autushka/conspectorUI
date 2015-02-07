@@ -1567,7 +1567,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "Units",
 					//sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
-					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					//sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					sFilter: oParameters.sFilter,
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oUnitEntity"

@@ -105,6 +105,7 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 			oUnitsListData.aData = [];
 			apiProvider.getUnits({
 				sExpand: "PhaseDetails/ProjectDetails",
+				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 				bShowSpinner: true,
 				onSuccess: onUnitsLoaded
 			});

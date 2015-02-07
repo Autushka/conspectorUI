@@ -186,6 +186,36 @@
 					</div>
 				</div>
 			</div>
+
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'deficiencyDetails_unit' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aUnits"
+						button-label="name"
+						default-label="{{'global_unit' | translate }}"
+						item-label="name"
+						selection-mode="single"
+						tick-property="ticked"
+						group-property="multiSelectGroup"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						output-model="aSelectedUnits"
+						helper-elements=""
+						>
+					</div>
+					<input ng-model="aSelectedUnits.length" type="number" ng-show="false" name="selectedUnits" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedUnits.$error" ng-if="(oForms.deficiencyDetailsForm.selectedUnits.$dirty && !oForms.deficiencyDetailsForm.selectedUnits.$valid) || submitted">
+						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					</div>
+				</div>
+			</div>
+
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
 					<div  class="cnpSubSectionLabel">
