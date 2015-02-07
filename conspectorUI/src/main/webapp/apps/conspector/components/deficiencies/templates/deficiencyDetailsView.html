@@ -26,261 +26,294 @@
 			</div>
 		</div>
 		<div class="cnpSection" layout="column" layout-align="start center" flex>
-			<div class="cnpSubSection" flex>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'deficiencyDetails_associatedProjectsAndPhases' | translate}}
-					</label>
-				</div>
-				<div
-					multi-select
-					input-model="aUserProjectsPhasesForMultiselect"
-					button-label="fullName"
-					default-label="{{'global_selectedProjectsAndPhases' | translate }}"
-					item-label="name"
-					tick-property="ticked"
-					group-property="multiSelectGroup"
-					is-disabled="sMode == 'display'"
-					on-item-click="onSelectedPhasesModified()"
-					selection-mode="single"
-					helper-elements=""
-					output-model="aSelectedPhases"
-					on-close="onCloseCheckSelectedPhasesLength()"
-					>
-				</div>
-				<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
-				<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedPhases.$error" ng-if="(oForms.deficiencyDetailsForm.selectedPhases.$dirty && !oForms.deficiencyDetailsForm.selectedPhases.$valid) || submitted">
-					<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-				</div>
-			</div>
-			<div class="cnpSubSection" flex>
-				<div  class="cnpSubSectionLabel">
-					<label>
-						{{'deficiencyDetails_status' | translate}}
-					</label>
-				</div>
-				<div 
-					multi-select
-					input-model="aDeficiencyStatuses"
-					default-label="{{'deficiencyDetails_deficiencyStatusDefaultLabel' | translate }}"
-					button-label="icon name"
-					item-label="icon name"
-					is-disabled="sMode == 'display'"					
-					tick-property="ticked"
-					selection-mode="single"
-					on-item-click="onSelectedStatusesModified()"					
-					output-model="aSelectedStatuses"
-					on-close="onCloseCheckSelectedStatusesLength()"										
-					helper-elements=""
-					>
-				</div>
-				<input ng-model="aSelectedStatuses.length" type="number" ng-show="false" name="selectedStatuses" min="1">
-				<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedStatuses.$error" ng-if="(oForms.deficiencyDetailsForm.selectedStatuses.$dirty && !oForms.deficiencyDetailsForm.selectedStatuses.$valid) || submitted">
-					<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-				</div>
-			</div>
-			
-			<div class="cnpSubSection" flex>
-				<div class="cnpSubSectionLabel">
-					<label>
-						{{'deficiencyDetails_descriptionTags' | translate}}
-					</label>
-				</div>
-				<tags-input
-				ng-model="oDeficiency.aDescriptionTags"
-				ng-hide="sMode == 'display'"
-				replace-spaces-with-dashes="false"
-				placeholder="{{'global_addTag' | translate}}"
-				on-tag-added="onDataModified()"
-				on-tag-removed="onDataModified()">
-				</tags-input>
-				<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
-					<ul class="tags-list">
-						<li class="tag-item" ng-repeat="tag in oDeficiency.aDescriptionTags">
-							<span style="padding: 2px;">{{tag.text}}</span>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="cnpSubSection" flex>
-				<div class="cnpSubSectionLabel">
-					<label>
-						{{'deficiencyDetails_locationTags' | translate}}
-					</label>
-				</div>
-				<tags-input
-				ng-model="oDeficiency.aLocationTags"
-				ng-hide="sMode == 'display'"
-				replace-spaces-with-dashes="false"
-				placeholder="{{'global_addTag' | translate}}"
-				on-tag-added="onDataModified()"
-				on-tag-removed="onDataModified()">
-				</tags-input>
-				<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
-					<ul class="tags-list">
-						<li class="tag-item" ng-repeat="tag in oDeficiency.aLocationTags">
-							<span style="padding: 2px;">{{tag.text}}</span>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="cnpSubSection" flex>
-				<div class="cnpSubSectionLabel">
-					<label>
-						{{'deficiencyDetails_contractors' | translate}}
-					</label>
-				</div>
-					<div
-						multi-select
-						input-model="aContractors"
-						default-label="{{'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}"
-						button-label="name"
-						item-label="name"
-						is-disabled="sMode == 'display'"					
-						tick-property="ticked"
-						on-item-click="onSelectedContractorsModified()"					
-						output-model="aSelectedContractors"
-						on-close="onCloseCheckSelectedContractorsLength()"										
-						helper-elements="filter">
-					</div>	
-					<input ng-model="aSelectedContractors.length" type="number" ng-show="false" name="selectedContractors" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedContractors.$error" ng-if="(oForms.deficiencyDetailsForm.selectedContractors.$dirty && !oForms.deficiencyDetailsForm.selectedContractors.$valid) || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div layout="row" flex>
+						<div flex="40">
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_associatedProjectsAndPhases' | translate}}
+								</label>
+							</div>
+							<div
+								multi-select
+								input-model="aUserProjectsPhasesForMultiselect"
+								button-label="fullName"
+								default-label="{{'global_selectedProjectsAndPhases' | translate }}"
+								item-label="name"
+								tick-property="ticked"
+								group-property="multiSelectGroup"
+								is-disabled="sMode == 'display'"
+								on-item-click="onSelectedPhasesModified()"
+								selection-mode="single"
+								helper-elements=""
+								output-model="aSelectedPhases"
+								on-close="onCloseCheckSelectedPhasesLength()"
+								>
+							</div>
+							<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedPhases.$error" ng-if="(oForms.deficiencyDetailsForm.selectedPhases.$dirty && !oForms.deficiencyDetailsForm.selectedPhases.$valid) || submitted">
+								<div class="cnpErrorMessageValidationMessage" ng-message="min">
+									{{'global_emptyFieldError' | translate}}
+								</div>
+							</div>
+						</div>
+						<div flex="30">
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_unit' | translate}}
+								</label>
+							</div>
+							<div
+								multi-select
+								input-model="aUnits"
+								button-label="name"
+								default-label="{{'global_unit' | translate }}"
+								item-label="name"
+								selection-mode="single"
+								tick-property="ticked"
+								group-property="multiSelectGroup"
+								is-disabled="sMode == 'display'"
+								on-item-click="onDataModified()"
+								output-model="aSelectedUnits"
+								helper-elements=""
+								>
+							</div>
+							<input ng-model="aSelectedUnits.length" type="number" ng-show="false" name="selectedUnits" min="1">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedUnits.$error" ng-if="(oForms.deficiencyDetailsForm.selectedUnits.$dirty && !oForms.deficiencyDetailsForm.selectedUnits.$valid) || submitted">
+								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+							</div>
+						</div>
+						<div>
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_status' | translate}}
+								</label>
+							</div>
+							<div
+								multi-select
+								input-model="aDeficiencyStatuses"
+								default-label="{{'deficiencyDetails_deficiencyStatusDefaultLabel' | translate }}"
+								button-label="icon name"
+								item-label="icon name"
+								is-disabled="sMode == 'display'"
+								tick-property="ticked"
+								selection-mode="single"
+								on-item-click="onSelectedStatusesModified()"
+								output-model="aSelectedStatuses"
+								on-close="onCloseCheckSelectedStatusesLength()"
+								helper-elements=""
+								>
+							</div>
+							<input ng-model="aSelectedStatuses.length" type="number" ng-show="false" name="selectedStatuses" min="1">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedStatuses.$error" ng-if="(oForms.deficiencyDetailsForm.selectedStatuses.$dirty && !oForms.deficiencyDetailsForm.selectedStatuses.$valid) || submitted">
+								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+							</div>
+						</div>
 					</div>
-			</div>
-
-			<div class="cnpSubSection" flex>
-				<div class="cnpSubSectionLabel">
-					<label>
-						{{'deficiencyDetails_dueDate' | translate}}
-					</label>
 				</div>
-				<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oDeficiency.sDueDate}}</div>			
-				<quick-datepicker ng-if="sMode != 'display'" ng-model='oDeficiency.dDueDate' width="100%"></quick-datepicker>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div layout="column">
+						<div>
+							<div class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_descriptionTags' | translate}}
+								</label>
+							</div>
+							<tags-input
+							ng-model="oDeficiency.aDescriptionTags"
+							ng-hide="sMode == 'display'"
+							replace-spaces-with-dashes="false"
+							placeholder="{{'global_addTag' | translate}}"
+							on-tag-added="onDataModified()"
+							on-tag-removed="onDataModified()">
+							</tags-input>
+							<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
+								<ul class="tags-list">
+									<li class="tag-item" ng-repeat="tag in oDeficiency.aDescriptionTags">
+										<span style="padding: 2px;">{{tag.text}}</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div>
+							<div class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_locationTags' | translate}}
+								</label>
+							</div>
+							<tags-input
+							ng-model="oDeficiency.aLocationTags"
+							ng-hide="sMode == 'display'"
+							replace-spaces-with-dashes="false"
+							placeholder="{{'global_addTag' | translate}}"
+							on-tag-added="onDataModified()"
+							on-tag-removed="onDataModified()">
+							</tags-input>
+							<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
+								<ul class="tags-list">
+									<li class="tag-item" ng-repeat="tag in oDeficiency.aLocationTags">
+										<span style="padding: 2px;">{{tag.text}}</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="cnpSubSection" flex>
+					<div layout="column">
+						<div>
+							<div class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_contractors' | translate}}
+								</label>
+							</div>
+							<div
+								multi-select
+								input-model="aContractors"
+								default-label="{{'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}"
+								button-label="name"
+								item-label="name"
+								is-disabled="sMode == 'display'"
+								tick-property="ticked"
+								on-item-click="onSelectedContractorsModified()"
+								output-model="aSelectedContractors"
+								on-close="onCloseCheckSelectedContractorsLength()"
+								helper-elements="filter">
+							</div>
+							<input ng-model="aSelectedContractors.length" type="number" ng-show="false" name="selectedContractors" min="1">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedContractors.$error" ng-if="(oForms.deficiencyDetailsForm.selectedContractors.$dirty && !oForms.deficiencyDetailsForm.selectedContractors.$valid) || submitted">
+								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+							</div>
+						</div>
+						<div>
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_assignedUser' | translate}}
+								</label>
+							</div>
+							<div
+								multi-select
+								input-model="aUsers"
+								button-label="name"
+								default-label="{{'global_assignedUser' | translate }}"
+								item-label="name"
+								selection-mode="single"
+								tick-property="ticked"
+								group-property="multiSelectGroup"
+								is-disabled="sMode == 'display'"
+								on-item-click="onDataModified()"
+								output-model="aSelectedUser"
+								helper-elements=""
+								>
+							</div>
+							<input ng-model="aSelectedUser.length" type="number" ng-show="false" name="selectedUser" min="1">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedUser.$error" ng-if="(oForms.deficiencyDetailsForm.selectedUser.$dirty && !oForms.deficiencyDetailsForm.selectedUser.$valid) || submitted">
+								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+							</div>
+						</div>
+						<div>
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_deficiencyPriority' | translate}}
+								</label>
+							</div>
+							<div
+								multi-select
+								input-model="aTaskPriorities"
+								button-label="name"
+								default-label="{{'global_deficiencyPriority' | translate }}"
+								item-label="name"
+								selection-mode="single"
+								tick-property="ticked"
+								group-property="multiSelectGroup"
+								is-disabled="sMode == 'display'"
+								on-item-click="onDataModified()"
+								output-model="aSelectedTaskPriorities"
+								helper-elements=""
+								>
+							</div>
+							<input ng-model="aSelectedTaskPriorities.length" type="number" ng-show="false" name="selectedTaskPriorities" min="1">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskPriorities.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskPriorities.$dirty && !oForms.deficiencyDetailsForm.selectedTaskPriorities.$valid) || submitted">
+								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
 					<div  class="cnpSubSectionLabel">
 						<label>
-							{{'deficiencyDetails_assignedUser' | translate}}
+							{{'deficiencyDetails_description' | translate}}
 						</label>
 					</div>
-					<div
-						multi-select
-						input-model="aUsers"
-						button-label="name"
-						default-label="{{'global_assignedUser' | translate }}"
-						item-label="name"
-						selection-mode="single"
-						tick-property="ticked"
-						group-property="multiSelectGroup"
-						is-disabled="sMode == 'display'"
-						on-item-click="onDataModified()"
-						output-model="aSelectedUser"
-						helper-elements=""
-						>
-					</div>
-					<input ng-model="aSelectedUser.length" type="number" ng-show="false" name="selectedUser" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedUser.$error" ng-if="(oForms.deficiencyDetailsForm.selectedUser.$dirty && !oForms.deficiencyDetailsForm.selectedUser.$valid) || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-					</div>
-				</div>
-			</div>
-
-			<div layout="row" style="width: 100%" flex>
-				<div class="cnpSubSection" flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'deficiencyDetails_unit' | translate}}
-						</label>
-					</div>
-					<div
-						multi-select
-						input-model="aUnits"
-						button-label="name"
-						default-label="{{'global_unit' | translate }}"
-						item-label="name"
-						selection-mode="single"
-						tick-property="ticked"
-						group-property="multiSelectGroup"
-						is-disabled="sMode == 'display'"
-						on-item-click="onDataModified()"
-						output-model="aSelectedUnits"
-						helper-elements=""
-						>
-					</div>
-					<input ng-model="aSelectedUnits.length" type="number" ng-show="false" name="selectedUnits" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedUnits.$error" ng-if="(oForms.deficiencyDetailsForm.selectedUnits.$dirty && !oForms.deficiencyDetailsForm.selectedUnits.$valid) || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-					</div>
-				</div>
-			</div>
-
-			<div layout="row" style="width: 100%" flex>
-				<div class="cnpSubSection" flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'deficiencyDetails_deficiencyPriority' | translate}}
-						</label>
-					</div>
-					<div
-						multi-select
-						input-model="aTaskPriorities"
-						button-label="name"
-						default-label="{{'global_deficiencyPriority' | translate }}"
-						item-label="name"
-						selection-mode="single"
-						tick-property="ticked"
-						group-property="multiSelectGroup"
-						is-disabled="sMode == 'display'"
-						on-item-click="onDataModified()"
-						output-model="aSelectedTaskPriorities"
-						helper-elements=""
-						>
-					</div>
-					<input ng-model="aSelectedTaskPriorities.length" type="number" ng-show="false" name="selectedTaskPriorities" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskPriorities.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskPriorities.$dirty && !oForms.deficiencyDetailsForm.selectedTaskPriorities.$valid) || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-					</div>
-				</div>
-			</div>			
-
-			<div layout="row" style="width: 100%" flex>
-				<div class="cnpSubSection" flex>
-					<div  class="cnpSubSectionLabel">
-						<label>
-							{{'deficiencyDetails_deficiencyType' | translate}}
-						</label>
-					</div>
-					<div
-						multi-select
-						input-model="aTaskTypes"
-						button-label="name"
-						default-label="{{'global_deficiencyType' | translate }}"
-						item-label="name"
-						selection-mode="single"
-						tick-property="ticked"
-						group-property="multiSelectGroup"
-						is-disabled="sMode == 'display'"
-						on-item-click="onDataModified()"
-						output-model="aSelectedTaskTypes"
-						helper-elements=""
-						>
-					</div>
-					<input ng-model="aSelectedTaskTypes.length" type="number" ng-show="false" name="selectedTaskTypes" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskTypes.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskTypes.$dirty && !oForms.deficiencyDetailsForm.selectedTaskTypes.$valid) || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-					</div>
-				</div>
-			</div>
-
-			<div layout="row" style="width: 100%" flex>
-				<div class="cnpSubSection" flex>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'" ng-bind-html="oDeficiency.sDescription"></div>	
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'" ng-bind-html="oDeficiency.sDescription"></div>
 					<div text-angular ng-model="oDeficiency.sDescription" ng-if="sMode != 'display'"></div>
 				</div>
 			</div>
-
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" layout="row" flex>
+					<div flex>
+						<div class="cnpSubSectionLabel">
+							<label>
+								{{'deficiencyDetails_dueDate' | translate}}
+							</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oDeficiency.sDueDate}}</div>
+						<quick-datepicker ng-if="sMode != 'display'" ng-model='oDeficiency.dDueDate' width="100%"></quick-datepicker>
+					</div>
+					<div flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'deficiencyDetails_creationDate' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oDeficiency.sCreatedAt}}</div>
+					</div>
+					<div flex>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'deficiencyDetails_lastModificationDate' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oDeficiency.sLastModifiedAt}}</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</form>
+	</div>
+	<div layout="row" style="width: 100%" flex>
+		<div class="cnpSubSection" flex>
+			<div  class="cnpSubSectionLabel">
+				<label>
+					{{'deficiencyDetails_deficiencyType' | translate}}
+				</label>
+			</div>
+			<div
+				multi-select
+				input-model="aTaskTypes"
+				button-label="name"
+				default-label="{{'global_deficiencyType' | translate }}"
+				item-label="name"
+				selection-mode="single"
+				tick-property="ticked"
+				group-property="multiSelectGroup"
+				is-disabled="sMode == 'display'"
+				on-item-click="onDataModified()"
+				output-model="aSelectedTaskTypes"
+				helper-elements=""
+				>
+			</div>
+			<input ng-model="aSelectedTaskTypes.length" type="number" ng-show="false" name="selectedTaskTypes" min="1">
+			<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskTypes.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskTypes.$dirty && !oForms.deficiencyDetailsForm.selectedTaskTypes.$valid) || submitted">
+				<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+</form>
 </div>
