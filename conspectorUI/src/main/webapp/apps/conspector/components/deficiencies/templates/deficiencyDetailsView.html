@@ -220,6 +220,35 @@
 				<div class="cnpSubSection" flex>
 					<div  class="cnpSubSectionLabel">
 						<label>
+							{{'deficiencyDetails_deficiencyPriority' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aTaskPriorities"
+						button-label="name"
+						default-label="{{'global_deficiencyPriority' | translate }}"
+						item-label="name"
+						selection-mode="single"
+						tick-property="ticked"
+						group-property="multiSelectGroup"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						output-model="aSelectedTaskPriorities"
+						helper-elements=""
+						>
+					</div>
+					<input ng-model="aSelectedTaskPriorities.length" type="number" ng-show="false" name="selectedTaskPriorities" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskPriorities.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskPriorities.$dirty && !oForms.deficiencyDetailsForm.selectedTaskPriorities.$valid) || submitted">
+						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					</div>
+				</div>
+			</div>			
+
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
 							{{'deficiencyDetails_deficiencyType' | translate}}
 						</label>
 					</div>

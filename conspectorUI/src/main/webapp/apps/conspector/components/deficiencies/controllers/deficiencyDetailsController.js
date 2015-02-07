@@ -123,6 +123,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 			$scope.oDeficiency._deficiencyStatusGuid = oDeficiency.TaskStatusGuid;
 			$scope.oDeficiency._taskTypeGuid = oDeficiency.TaskTypeGuid;
+			$scope.oDeficiency._taskPriorityGuid = oDeficiency.TaskPriorityGuid;
 			$scope.oDeficiency._assignedUserName = oDeficiency.UserName;
 			$scope.oDeficiency._unitGuid = oDeficiency.UnitGuid;
 
@@ -294,6 +295,29 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			}
 		};
 
+		var onTaskPrioritiesLoaded = function(aData) {
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+			}
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oDeficiencyWrapper,
+				sNameEN: "NameEN",
+				sNameFR: "NameFR",
+				sDependentKey: "Guid",
+				sParentKey: "_taskPriorityGuid",
+				sTargetArrayNameInParent: "aTaskPriorities"
+			});
+			if (oDeficiencyWrapper.aData[0]) {
+				$scope.aTaskPriorities = angular.copy(oDeficiencyWrapper.aData[0].aTaskPriorities);
+			}
+		};		
+
 		var onDeficiencyStatusesLoaded = function(aData) {
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
@@ -335,26 +359,16 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				onSuccess: onTaskTypesLoaded
 			});
 
+			apiProvider.getDeficiencyPriorities({
+				bShowSpinner: false,
+				onSuccess: onTaskPrioritiesLoaded
+			});
+
 			apiProvider.getUsers({
 				sExpand: "CompanyDetails",
 				bShowSpinner: false,
 				onSuccess: onUsersWithCompaniesLoaded
 			});
-
-			// apiProvider.getUnits({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onUnitsLoaded
-			// });
-
-			// apiProvider.getContactTypes({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onContactTypesLoaded
-			// });
-
-			// apiProvider.getAccountTypesWithAccounts({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onAccountTypesWithAccountsLoaded
-			// });
 		};
 
 		var getDeficiencyDetails = function() {
@@ -374,9 +388,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				oDependentArrayWrapper: {
 					aData: aData
 				},
-				// sSecondLevelAttribute: "AccountDetails",
-				// sSecondLevelNameEN: "Name",
-				// sSecondLevelNameFR: "Name",
 				oParentArrayWrapper: oDeficiencyWrapper,
 				sNameEN: "Name",
 				sNameFR: "Name",
@@ -448,25 +459,16 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					onSuccess: onTaskTypesLoaded
 				});
 
+				apiProvider.getDeficiencyPriorities({
+					bShowSpinner: false,
+					onSuccess: onTaskPrioritiesLoaded
+				});
+
 				apiProvider.getUsers({
 					sExpand: "CompanyDetails",
 					bShowSpinner: false,
 					onSuccess: onUsersWithCompaniesLoaded
 				});
-
-				// apiProvider.getProjects({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onProjectsLoaded
-				// });
-
-				// apiProvider.getContactTypes({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onContactTypesLoaded
-				// });
-				// apiProvider.getAccountTypesWithAccounts({
-				// 	bShowSpinner: false,
-				// 	onSuccess: onAccountTypesWithAccountsLoaded
-				// });
 			}
 		} else {
 			constructPhasesMultiSelect({
@@ -489,17 +491,16 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				onSuccess: onTaskTypesLoaded
 			});
 
+			apiProvider.getDeficiencyPriorities({
+				bShowSpinner: false,
+				onSuccess: onTaskPrioritiesLoaded
+			});				
+
 			apiProvider.getUsers({
 				sExpand: "CompanyDetails",
 				bShowSpinner: false,
 				onSuccess: onUsersWithCompaniesLoaded
 			});
-
-
-			// apiProvider.getAccountTypesWithAccounts({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onAccountTypesWithAccountsLoaded
-			// });
 		}
 
 		$scope.onEdit = function() {
@@ -561,11 +562,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			return aLinks;
 		};
 
-		// 	$scope.onParentAccountModified = function() {
-		// 		$scope.onDataModified();
-		// 		$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();
-		// 	};
-
 		$scope.onCloseCheckSelectedTaskTypesLength = function() {
 			if ($scope.aSelectedTaskTypes.length == 0)
 				$scope.onSelectedTaskTypesModified();
@@ -576,21 +572,28 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			$scope.oForms.deficiencyDetailsForm.selectedTaskTypes.$setDirty();
 		};
 
+		$scope.onCloseCheckSelectedTaskPrioritiesLength = function() {
+			if ($scope.aSelectedTaskPriorities.length == 0)
+				$scope.onSelectedTaskPrioritiesModified();
+		};
+
+		$scope.onSelectedTaskPrioritiesModified = function() {
+			$scope.onDataModified();
+			$scope.oForms.deficiencyDetailsForm.selectedTaskPriorities.$setDirty();
+		};
+
 		$scope.onCloseCheckSelectedPhasesLength = function() {
 			if ($scope.aSelectedPhases.length == 0)
 				$scope.onSelectedPhasesModified();
-
-					
 		};
 
 		$scope.onSelectedPhasesModified = function() {
 			$scope.onDataModified();
 			$scope.oForms.deficiencyDetailsForm.selectedPhases.$setDirty();
 
-			if($scope.aSelectedPhases[0]){
+			if ($scope.aSelectedPhases[0]) {
 				getUnits($scope.aSelectedPhases[0].Guid);
 			}
-	
 		};
 
 		$scope.onCloseCheckSelectedStatusesLength = function() {
@@ -639,6 +642,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			if ($scope.oForms.deficiencyDetailsForm.selectedTaskTypes) {
 				$scope.oForms.deficiencyDetailsForm.selectedTaskTypes.$setDirty(); //to display validation messages on submit press
 			}
+			if ($scope.oForms.deficiencyDetailsForm.selectedTaskPriorities) {
+				$scope.oForms.deficiencyDetailsForm.selectedTaskPriorities.$setDirty(); //to display validation messages on submit press
+			}			
 			if ($scope.oForms.deficiencyDetailsForm.selectedPhases) {
 				$scope.oForms.deficiencyDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
 			}
@@ -651,7 +657,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			if ($scope.oForms.deficiencyDetailsForm.selectedUser) {
 				$scope.oForms.deficiencyDetailsForm.selectedUser.$setDirty(); //to display validation messages on submit press
 			}
-
 			if ($scope.oForms.deficiencyDetailsForm.selectedUnits) {
 				$scope.oForms.deficiencyDetailsForm.selectedUnits.$setDirty(); //to display validation messages on submit press
 			}
@@ -822,6 +827,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			if ($scope.aSelectedTaskTypes.length) {
 				oDataForSave.TaskTypeGuid = $scope.aSelectedTaskTypes[0].Guid;
 			}
+			if ($scope.aSelectedTaskPriorities.length) {
+				oDataForSave.TaskPriorityGuid = $scope.aSelectedTaskPriorities[0].Guid;
+			}			
 			if ($scope.aSelectedPhases.length) {
 				oDataForSave.PhaseGuid = $scope.aSelectedPhases[0].Guid;
 			}
