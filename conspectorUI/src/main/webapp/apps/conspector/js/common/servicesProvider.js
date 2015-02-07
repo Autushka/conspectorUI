@@ -536,13 +536,14 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						var aFilteredData = params.filter() ? $filter('filter')(aInitialData, params.filter()) : aInitialData;
 
 						var aSortedData = [];
-						if (params.sorting() === undefined || angular.equals(params.sorting(), {})) {
+
+						var aSortingBy = angular.copy(params.orderBy());
+						if (oParameters.sGroupsSortingAttribue) {
+							aSortingBy.unshift(oParameters.sGroupsSortingAttribue);
+						}
+						if (aSortingBy === undefined || angular.equals(aSortingBy, {})) {
 							aSortedData = aFilteredData;
 						} else {
-							var aSortingBy = angular.copy(params.orderBy());
-							if (oParameters.sGroupsSortingAttribue) {
-								aSortingBy.unshift(oParameters.sGroupsSortingAttribue);
-							}
 							aSortedData = $filter('orderBy')(aFilteredData, aSortingBy)
 						}
 

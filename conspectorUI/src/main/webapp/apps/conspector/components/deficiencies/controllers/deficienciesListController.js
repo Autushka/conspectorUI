@@ -66,7 +66,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				sStatuseIconUrl = "";
 				sContractors = "";
 
-				// for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 				bMatchFound = false;
 
 				if (aData[i].PhaseDetails) {
