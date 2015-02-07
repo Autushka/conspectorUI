@@ -149,7 +149,7 @@ app.factory('utilsProvider', ['$mdToast',
 				var sTags = "";
 				for (var i = 0; i < aTags.length; i++) {
 					if (i !== 0) {
-						sTags = sTags + " " + aTags[i].text + ';';
+						sTags = sTags + " " + aTags[i].text.trim() + ';';
 					} else {
 						sTags = sTags + aTags[i].text + ';';
 					}
