@@ -71,6 +71,7 @@ viewControllers.controller('phasesListView', ['$scope', '$rootScope','$state', '
 		}
 
 		apiProvider.getPhases({
+			sExpand: "ProjectDetails",
 			bShowSpinner: true,
 			onSuccess: onPhasesLoaded
 		});

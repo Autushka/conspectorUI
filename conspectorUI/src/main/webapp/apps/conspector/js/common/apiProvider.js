@@ -377,7 +377,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getPhases: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Phases",
-					sExpand: "ProjectDetails",
+					sExpand: oParameters.sExpand,//"ProjectDetails",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
@@ -390,6 +390,17 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					svc.then(oParameters.onSuccess);
 				}
 			},
+
+			getPhase: function(oParameters) {
+				var svc = dataProvider.getEntity({
+					sPath: "Phases",
+					sKey: oParameters.sKey,
+					sExpand: oParameters.sExpand,//"PhaseDetails/ProjectDetails,AccountTypeDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(oParameters.onSuccess);
+			},			
 
 			createPhase: function(oParameters) {
 				var onSuccess = function(oData) {
@@ -1584,7 +1595,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntity({
 					sPath: "Units",
 					sKey: oParameters.sKey,
-					//sExpand: "UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
+					sExpand: oParameters.sExpand,//"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});

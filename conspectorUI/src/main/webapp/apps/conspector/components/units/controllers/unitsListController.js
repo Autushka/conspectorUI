@@ -104,7 +104,7 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 		var loadUnits = function() {
 			oUnitsListData.aData = [];
 			apiProvider.getUnits({
-				sExpand: "PhaseDetails/ProjectDetails",
+				sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails",
 				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 				bShowSpinner: true,
 				onSuccess: onUnitsLoaded

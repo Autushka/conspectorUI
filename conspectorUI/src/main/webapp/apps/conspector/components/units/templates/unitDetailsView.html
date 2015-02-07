@@ -95,6 +95,37 @@
 						</div>
 				</div>
 			</div>
+
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div ng-repeat="optionSet in aUnitOptionsArrays">
+
+						<div class="cnpSubSectionLabel">
+							<label>
+								{{optionSet.sOptionSetName}}:
+							</label>
+						</div>
+						<div
+							multi-select
+							input-model="optionSet.aOptions"
+							default-label="{{'unitDetails_optionSet' | translate }}"
+							button-label="name"
+							item-label="name"
+							selection-mode="single"
+							is-disabled="sMode == 'display'"					
+							tick-property="ticked"
+							on-item-click="onDataModified()"					
+							output-model="optionSet.aSelectedOption"	
+							helper-elements="filter">
+						</div>	
+					</div>	
+				</div>
+			</div>
+
+
+
+
+
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
 					<div class="cnpSubSectionLabel">
