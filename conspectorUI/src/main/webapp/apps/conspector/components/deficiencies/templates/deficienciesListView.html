@@ -45,12 +45,14 @@
 						<div layout="row" layout-align="center center">
 							<div>
 								<span>
-									{{deficiency.sUnit}}
+									<a ng-click="onNavigateToUnitDetails(deficiency)">
+										{{deficiency.sUnit}}
+									</a>
 								</span>
 							</div>
 						</div>
 					</td>
-					<td data-title="'global_status' | translate" sortable="'sStatusSortingSequence'" filter="{'sTags': 'text'}">
+					<td data-title="'global_status' | translate" sortable="'sStatusSortingSequence'">
 						<div layout="row" layout-align="center center">
 							<img ng-src="{{deficiency.sStatuseIconUrl}}" style="width:24px; height:24px;"/>
 						</div>
@@ -78,6 +80,13 @@
 						<div layout="row" layout-align="start center">
 							<span>
 							{{deficiency.sContractors}}
+							</span>
+						</div>
+					</td>
+					<td data-title="'global_dueIn' | translate" sortable="'sDueIn'" filter="{'sDueIn': 'text'}">
+						<div layout="row" layout-align="center center">
+							<span>
+							{{deficiency.sDueIn}}
 							</span>
 						</div>
 					</td>

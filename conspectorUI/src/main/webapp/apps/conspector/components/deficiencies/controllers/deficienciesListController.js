@@ -1,5 +1,5 @@
-viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
-	function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
+viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
+	function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
@@ -54,6 +54,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			var sProjectName = "";
 			var sPhaseName = "";
 			var sUnitName = "";
+			var sDueIn = "";
+			var sDueDate = "";
+			var dCurrentDate = new Date();
 			var sProjectPhase = "";
 			var bMatchFound = false;
 			var iSortingSequence = 0;
@@ -65,6 +68,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				sPhaseName = "";
 				sProjectPhase = "";
 				sUnitName = "";
+				sDueIn = "";
+				sDueDate = "";
+				sStatusSortingSequence = "";
 				iSortingSequence = 0;
 				sStatuseIconUrl = "";
 				sContractors = "";
@@ -99,6 +105,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
 				if (aData[i].TaskStatusDetails) {
 					sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
+					sStatusSortingSequence = aData[i].TaskStatusDetails.GeneralAttributes.SortingSequence;
 				}
 
 				if (aData[i].AccountDetails) {
@@ -109,6 +116,17 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
 				if(aData[i].UnitDetails){
 					aData[i].sUnitName = aData[i].UnitDetails.Name;
+				}
+
+
+				
+				if (aData[i].DueDate && aData[i].DueDate != "/Date(0)/") {
+					sDueDate = utilsProvider.dBDateToSting(aData[i].DueDate);
+					dDueDate = new Date(parseInt(aData[i].DueDate.substring(6, aData[i].DueDate.length - 2)));
+					var timeDiff = Math.abs(dCurrentDate.getTime() - dDueDate.getTime());
+					durationNumber = Math.ceil(timeDiff / (1000 * 3600 * 24)) - 1;
+					sDueIn  = $translate.use() === "en" ? durationNumber + "d" : durationNumber + "j";;
+					// sDueIn = durationNumber + " d";					
 				}
 				//$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].guid;
 
@@ -127,16 +145,15 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				// }
 
 				oDeficienciesListData.aData.push({
-					// sDeficiencyName: aData[i].Name,
-					// sPhone: aData[i].MainPhone,
-					// sEmail: aData[i].Email,
 					_guid: aData[i].Guid,
 					sUnit: aData[i].sUnitName,
 					sTags: aData[i].DescriptionTags,
 					sLocationTags: aData[i].LocationTags,
+					sDueIn: sDueIn,
 					sProjectPhase: sProjectPhase,
 					sContractors: sContractors,
 					sStatusSortingSequence: sStatusSortingSequence,
+					_unitGuid: aData[i].UnitGuid,
 					_sortingSequence: iSortingSequence,
 					sStatuseIconUrl: sStatuseIconUrl
 				});
@@ -178,6 +195,13 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				sDeficiencyGuid: "",
 			});
 		};
+		$scope.onNavigateToUnitDetails = function(oDeficiency) {
+            var sUnitGuid = oDeficiency._unitGuid;
+           	$state.go('app.unitDetailsWrapper.unitDetails', {
+                        sMode: "display",
+                        sUnitGuid: sUnitGuid,
+                    });
+        };
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
 			loadDeficiencies();
 		});

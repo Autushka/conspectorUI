@@ -505,6 +505,7 @@ USER MANAGEMENT
 	    height: 23px;
 	    margin-right: -4px;
 	    margin-left: 4px;
+	    margin-right: 2px;
 	    cursor: pointer;
 	    &.cnpEditDetailsIconAlone{
 	    	margin-left: 12px;
@@ -1472,7 +1473,7 @@ NG TABLE
   border-style: solid;
   border-color: @blueColor transparent;
   visibility: visible;
-  right: 8%;
+  right: 6%;
   top: 30%;
   position: absolute;
   opacity: .3;
@@ -1544,6 +1545,7 @@ NG TABLE
 	border-left: 0px solid #99aab5;
 	border-right: 0px solid #99aab5;
 }
+
 .ng-table-filters th:first-child {
 	color: #fff;
 	vertical-align: middle;
@@ -1770,6 +1772,30 @@ NG TABLE
 	// }
 	@media
 	only screen and (max-width: 960px){
+	width: 0%;
+	visibility: hidden;
+	&>div{
+		display: none;
+	}
+		
+	}
+}
+#deficienciesList th:nth-of-type(7) {
+	width: 95px;
+}
+#deficienciesList th:nth-of-type(7)>div>div>div>input {
+	width: 60%; 
+}
+
+
+#deficienciesList th:nth-of-type(7), #clientsList td:nth-of-type(7){
+	// width: 18%;
+	// &.>div{
+	// 	width: 0%;
+	// 	visibility: hidden;
+	// }
+	@media
+	only screen and (max-width: 1020px){
 	width: 0%;
 	visibility: hidden;
 	&>div{
