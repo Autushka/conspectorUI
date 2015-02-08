@@ -29,18 +29,20 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			var sMediaType = "";
 			for (var i = 0; i < oData.FileMetadataDetails.results.length; i++) {
 				sMediaType = "";
-				if(oData.FileMetadataDetails.results[i].MediaType.indexOf("image") > -1){
+				if (oData.FileMetadataDetails.results[i].MediaType.indexOf("image") > -1) {
 					sMediaType = "Image";
 				}
-				if(oData.FileMetadataDetails.results[i].MediaType.indexOf("pdf") > -1){
+				if (oData.FileMetadataDetails.results[i].MediaType.indexOf("pdf") > -1) {
 					sMediaType = "PDF";
-				}				
+				}
+
 
 
 				oAttachmentsListData.aData.push({
 					_guid: oData.FileMetadataDetails.results[i].Guid,
 					sMediaType: sMediaType,
 					sOriginalFileName: oData.FileMetadataDetails.results[i].OriginalFileName,
+					_lastModifiedAt: oData.LastModifiedAt,
 					// sTags: aData[i].DescriptionTags,
 					// sProjectPhase: sProjectPhase,
 					// sContractors: sContractors,
@@ -65,9 +67,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			loadAttachments();
 		})
 
-		// if ($rootScope.sFileMetadataSetGuid) {
-		// 	loadAttachments(); //load attachments
-		// }
+
 
 		$scope.onFilesSelected = function(aFiles, $event) {
 			// var bParentEntityHasFileMetadataSetGuid = false;
@@ -86,11 +86,39 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				sParentEntityFileMetadataSetGuid: $rootScope.sFileMetadataSetGuid,
 				onSuccess: onSuccessUpload
 			});
+		};
 
+		$scope.onDisplay = function(oAttachment) {
+			$window.open("rest/file/get/" + oAttachment._guid);
+		};
 
+		$scope.onDelete = function(oAttachment) {
+			var oDataForSave = {
+				GeneralAttributes: {
+					IsDeleted: true
+				}
+			};
+			var onSuccessDelete = function() {
+				for (var i = 0; i < oAttachmentsListData.aData.length; i++) {
+					if (oAttachmentsListData.aData[i]._guid === oAttachment._guid) {
+						oAttachmentsListData.aData.splice(i, 1);
+						break;
+					}
+				}
+				$scope.tableParams.reload();
+			}
 
+			if (oAttachment._guid) {
+				oDataForSave.Guid = oAttachment._guid;
+				oDataForSave.LastModifiedAt = oAttachment._lastModifiedAt;
 
-
+				apiProvider.updateEntityAttachment({
+					sKey: oAttachment._guid,
+					oData: oDataForSave,
+					bShowSpinner: true,
+					onSuccess: onSuccessDelete
+				});
+			} 
 		};
 		//
 		//		$scope.onDisplay = function(oDeficiency) {

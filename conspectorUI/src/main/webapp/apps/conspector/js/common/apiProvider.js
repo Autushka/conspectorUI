@@ -377,7 +377,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getPhases: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Phases",
-					sExpand: oParameters.sExpand,//"ProjectDetails",
+					sExpand: oParameters.sExpand, //"ProjectDetails",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
@@ -395,12 +395,12 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntity({
 					sPath: "Phases",
 					sKey: oParameters.sKey,
-					sExpand: oParameters.sExpand,//"PhaseDetails/ProjectDetails,AccountTypeDetails",
+					sExpand: oParameters.sExpand, //"PhaseDetails/ProjectDetails,AccountTypeDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
 				svc.then(oParameters.onSuccess);
-			},			
+			},
 
 			createPhase: function(oParameters) {
 				var onSuccess = function(oData) {
@@ -1062,7 +1062,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntity({
 					sPath: "Accounts",
 					sKey: oParameters.sKey,
-					sExpand: oParameters.sExpand,//"PhaseDetails/ProjectDetails,AccountTypeDetails",
+					sExpand: oParameters.sExpand, //"PhaseDetails/ProjectDetails,AccountTypeDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
@@ -1268,10 +1268,10 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "UnitOptionSets",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
-					sExpand: "PhaseDetails/ProjectDetails",						
+					sExpand: "PhaseDetails/ProjectDetails",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oUnitOptionSetEntity"				
+					sCacheProviderAttribute: "oUnitOptionSetEntity"
 				});
 				if (svc instanceof Array) {
 					oParameters.onSuccess(svc); // data retrived from cache
@@ -1327,7 +1327,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var svc = dataProvider.getEntitySet({
 					sPath: "UnitOptions",
 					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
-					sExpand: "UnitOptionSetDetails",	
+					sExpand: "UnitOptionSetDetails",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oUnitOptionValueEntity"
@@ -1381,7 +1381,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			getTaskTypes: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "TaskTypes",
-					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",	
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oTaskTypeEntity"
@@ -1430,7 +1430,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},			
+			},
 
 			getActivities: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
@@ -1519,7 +1519,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
-			getDeficiencies: function(oParameters){
+			getDeficiencies: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Tasks",
 					sExpand: oParameters.sExpand,
@@ -1534,13 +1534,13 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
-			},			
-			
+			},
+
 			getDeficiency: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "Tasks",
 					sKey: oParameters.sKey,
-					sExpand: oParameters.sExpand,//"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
+					sExpand: oParameters.sExpand, //"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
@@ -1574,7 +1574,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},	
+			},
 
 			createDeficiency: function(oParameters) {
 				var onSuccess = function(oData) {
@@ -1604,9 +1604,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},			
+			},
 
-			getUnits: function(oParameters){
+			getUnits: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Units",
 					//sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
@@ -1621,13 +1621,13 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
-			},			
-			
+			},
+
 			getUnit: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "Units",
 					sKey: oParameters.sKey,
-					sExpand: oParameters.sExpand,//"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
+					sExpand: oParameters.sExpand, //"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
@@ -1658,7 +1658,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					aLinks: oParameters.aLinks,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
-				});				
+				});
 
 				oSvc.then(onSuccess);
 			},
@@ -1691,18 +1691,46 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},	
+			},
 
-			getEntityAttachments: function(oParameters){
+			getEntityAttachments: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "FileMetadataSets",
 					sKey: oParameters.sKey,
-					sExpand: oParameters.sExpand,//"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
+					sExpand: oParameters.sExpand, //"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
-				svc.then(oParameters.onSuccess);				
-			},					
+				svc.then(function(oData) {
+					var aAttachments = [];
+					for (var i = 0; i < oData.FileMetadataDetails.results.length; i++) { // filtering here needed only untill bug 414 in Olingo will be resolved (UI filtering will be replaced by oData filtering)
+						if (!oData.FileMetadataDetails.results[i].GeneralAttributes.IsDeleted) {
+							aAttachments.push(oData.FileMetadataDetails.results[i]);
+						}
+					}
+					oData.FileMetadataDetails.results = angular.copy(aAttachments);
+					oParameters.onSuccess(oData);
+				});
+			},
+
+			updateEntityAttachment: function(oParameters) {
+				var onSuccess = function(oData) {
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "FileMetadatas",
+					sKeyAttribute: "Guid", //
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},
 
 			generateReport: function(oParameters) {
 				var oData = {
