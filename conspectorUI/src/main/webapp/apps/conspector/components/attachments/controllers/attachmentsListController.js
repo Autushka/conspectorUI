@@ -1,6 +1,6 @@
 viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
 	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
-		historyProvider.removeHistory(); // because current view doesn't have a back button
+		//historyProvider.removeHistory(); // because current view doesn't have a back button
 
 //		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 //		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
