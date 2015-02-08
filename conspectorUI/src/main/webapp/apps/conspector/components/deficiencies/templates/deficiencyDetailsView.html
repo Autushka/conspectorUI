@@ -81,7 +81,7 @@
 									is-disabled="sMode == 'display'"
 									on-item-click="onDataModified()"
 									output-model="aSelectedUnits"
-									helper-elements=""
+									helper-elements="filter"
 									>
 								</div>
 							</div>
@@ -189,7 +189,8 @@
 								on-item-click="onSelectedContractorsModified()"
 								output-model="aSelectedContractors"
 								on-close="onCloseCheckSelectedContractorsLength()"
-								helper-elements="filter">
+								helper-elements="filter"
+								>
 							</div>
 							<input ng-model="aSelectedContractors.length" type="number" ng-show="false" name="selectedContractors" min="1">
 							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedContractors.$error" ng-if="(oForms.deficiencyDetailsForm.selectedContractors.$dirty && !oForms.deficiencyDetailsForm.selectedContractors.$valid) || submitted">
@@ -208,7 +209,7 @@
 									multi-select
 									input-model="aUsers"
 									button-label="name"
-									default-label="{{'global_assignedUser' | translate }}"
+									default-label="{{'deficiencyDetails_deficiencyAssignedUserDefaultLabel' | translate }}"
 									item-label="name"
 									selection-mode="single"
 									tick-property="ticked"
@@ -237,7 +238,7 @@
 									multi-select
 									input-model="aTaskPriorities"
 									button-label="name"
-									default-label="{{'global_deficiencyPriority' | translate }}"
+									default-label="{{'deficiencyDetails_deficiencyPriorityDefaultLabel' | translate }}"
 									item-label="name"
 									selection-mode="single"
 									tick-property="ticked"
@@ -299,7 +300,7 @@
 			</div>
 		</div>
 	</div>
-	<div layout="row" style="width: 100%" flex>
+<!-- 	<div layout="row" style="width: 100%" flex>
 		<div class="cnpSubSection" flex>
 			<div  class="cnpSubSectionLabel">
 				<label>
@@ -326,7 +327,7 @@
 				<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	
 </div>
 </form>

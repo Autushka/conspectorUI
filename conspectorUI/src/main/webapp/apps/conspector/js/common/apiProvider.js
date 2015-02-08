@@ -682,6 +682,38 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
+			getDeficiencyTaskType: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "TaskTypes",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and NameEN eq 'Deficiency'",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oTaskTypeEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc); // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			getHealthAndSafetyTaskType: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "TaskTypes",
+					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and NameEN eq 'Health and Safety'",
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oTaskTypeEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc); // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
 			getContractorAccountType: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "AccountTypes",

@@ -3,6 +3,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		var sDeficiencyGuid = $stateParams.sDeficiencyGuid;
 
 		$scope.oForms = {};
+		$scope.sTaskTypeGuid = "";
+		$scope.sTaskType = "";
 
 		// 	$scope.bShowParentAccountAndContactType = true;
 		// 	$scope.bIsChangePhasesAssignmentAllowed = true;
@@ -28,6 +30,15 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
+
+		if ($rootScope.sCurrentStateName === "app.deficiencyDetailsWrapper.deficiencyDetails") { 
+			// if($scope.sMode === "display" || $scope.sMode === "edit"){
+			// 	$scope.$parent.bDisplayContactsList = true;
+			// }
+			$scope.sTaskType = "Deficiency";
+		}
+
+
 
 		$scope.sMode = $stateParams.sMode;
 		$scope.oDeficiency = {
@@ -301,26 +312,28 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 
 		var onTaskTypesLoaded = function(aData) {
-			for (var i = 0; i < aData.length; i++) {
-				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-			}
-			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+			// for (var i = 0; i < aData.length; i++) {
+			// 	aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+			// }
+			// aData = $filter('orderBy')(aData, ["_sortingSequence"]);
 
 
-			servicesProvider.constructDependentMultiSelectArray({
-				oDependentArrayWrapper: {
-					aData: aData
-				},
-				oParentArrayWrapper: oDeficiencyWrapper,
-				sNameEN: "NameEN",
-				sNameFR: "NameFR",
-				sDependentKey: "Guid",
-				sParentKey: "_taskTypeGuid",
-				sTargetArrayNameInParent: "aTaskTypes"
-			});
-			if (oDeficiencyWrapper.aData[0]) {
-				$scope.aTaskTypes = angular.copy(oDeficiencyWrapper.aData[0].aTaskTypes);
-			}
+			// servicesProvider.constructDependentMultiSelectArray({
+			// 	oDependentArrayWrapper: {
+			// 		aData: aData
+			// 	},
+			// 	oParentArrayWrapper: oDeficiencyWrapper,
+			// 	sNameEN: "NameEN",
+			// 	sNameFR: "NameFR",
+			// 	sDependentKey: "Guid",
+			// 	sParentKey: "_taskTypeGuid",
+			// 	sTargetArrayNameInParent: "aTaskTypes"
+			// });
+			// if (oDeficiencyWrapper.aData[0]) {
+			// 	$scope.aTaskTypes = angular.copy(oDeficiencyWrapper.aData[0].aTaskTypes);
+			// }
+			
+			$scope.sTaskTypeGuid = aData[0].Guid;
 		};
 
 		var onTaskPrioritiesLoaded = function(aData) {
@@ -329,7 +342,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
 
-
+			debugger
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
@@ -483,10 +496,18 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					onSuccess: onContractorsLoaded
 				});
 
-				apiProvider.getTaskTypes({
-					bShowSpinner: false,
-					onSuccess: onTaskTypesLoaded
-				});
+				if($scope.sTaskType === "Deficiency"){
+					apiProvider.getDeficiencyTaskType({
+						bShowSpinner: false,
+						onSuccess: onTaskTypesLoaded
+					});		
+				}
+				if($scope.sTaskType === "Health and Safety"){
+					apiProvider.getHealthAndSafetyTaskType({
+						bShowSpinner: false,
+						onSuccess: onTaskTypesLoaded
+					});					
+				}	
 
 				apiProvider.getDeficiencyPriorities({
 					bShowSpinner: false,
@@ -515,11 +536,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				onSuccess: onContractorsLoaded
 			});
 
-			apiProvider.getTaskTypes({
-				bShowSpinner: false,
-				onSuccess: onTaskTypesLoaded
-			});
-
 			apiProvider.getDeficiencyPriorities({
 				bShowSpinner: false,
 				onSuccess: onTaskPrioritiesLoaded
@@ -530,6 +546,19 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				bShowSpinner: false,
 				onSuccess: onUsersWithCompaniesLoaded
 			});
+
+			if($scope.sTaskType === "Deficiency"){
+				apiProvider.getDeficiencyTaskType({
+					bShowSpinner: false,
+					onSuccess: onTaskTypesLoaded
+				});		
+			}
+			if($scope.sTaskType === "Health and Safety"){
+				apiProvider.getHealthAndSafetyTaskType({
+					bShowSpinner: false,
+					onSuccess: onTaskTypesLoaded
+				});					
+			}	
 		}
 
 		$scope.onEdit = function() {
@@ -591,15 +620,15 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			return aLinks;
 		};
 
-		$scope.onCloseCheckSelectedTaskTypesLength = function() {
-			if ($scope.aSelectedTaskTypes.length == 0)
-				$scope.onSelectedTaskTypesModified();
-		};
+		// $scope.onCloseCheckSelectedTaskTypesLength = function() {
+		// 	if ($scope.aSelectedTaskTypes.length == 0)
+		// 		$scope.onSelectedTaskTypesModified();
+		// };
 
-		$scope.onSelectedTaskTypesModified = function() {
-			$scope.onDataModified();
-			$scope.oForms.deficiencyDetailsForm.selectedTaskTypes.$setDirty();
-		};
+		// $scope.onSelectedTaskTypesModified = function() {
+		// 	$scope.onDataModified();
+		// 	$scope.oForms.deficiencyDetailsForm.selectedTaskTypes.$setDirty();
+		// };
 
 		$scope.onCloseCheckSelectedTaskPrioritiesLength = function() {
 			if ($scope.aSelectedTaskPriorities.length == 0)
@@ -853,9 +882,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// 	}
 			// }
 
-			if ($scope.aSelectedTaskTypes.length) {
-				oDataForSave.TaskTypeGuid = $scope.aSelectedTaskTypes[0].Guid;
-			}
+			// if ($scope.aSelectedTaskTypes.length) {
+			// 	oDataForSave.TaskTypeGuid = $scope.aSelectedTaskTypes[0].Guid;
+			// }
+			oDataForSave.TaskTypeGuid = $scope.sTaskTypeGuid;
+
 			if ($scope.aSelectedTaskPriorities.length) {
 				oDataForSave.TaskPriorityGuid = $scope.aSelectedTaskPriorities[0].Guid;
 			}			
