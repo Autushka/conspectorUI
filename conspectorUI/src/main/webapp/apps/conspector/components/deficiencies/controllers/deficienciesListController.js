@@ -125,7 +125,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					// sPhone: aData[i].MainPhone,
 					// sEmail: aData[i].Email,
 					_guid: aData[i].Guid,
+					sUnit: aData[i].UnitDetails.Name,
 					sTags: aData[i].DescriptionTags,
+					sLocationTags: aData[i].LocationTags,
 					sProjectPhase: sProjectPhase,
 					sContractors: sContractors,
 					_sortingSequence: iSortingSequence,
@@ -141,7 +143,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		var loadDeficiencies = function() {
 			oDeficienciesListData.aData = [];
 			apiProvider.getDeficiencies({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails",
 				bShowSpinner: true,
 				onSuccess: onDeficienciesLoaded
 			});

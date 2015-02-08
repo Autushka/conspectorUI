@@ -212,10 +212,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		var onTaskPrioritiesLoaded = function(aData) {
 
 			for (var i = 0; i < aData.length; i++) {
-				aData[i].selected = false;
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-				if(aData[i].NameEN === $scope.sTaskPriority ){
-					aData[i].selected = true;
+				if($scope.sMode === 'create' && aData[i].NameEN === $scope.sTaskPriority ){
+					oDeficiencyWrapper.aData[0]._taskPriorityGuid  = aData[i].Guid;
 				}
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
@@ -225,6 +224,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			//loop to tick element
 			//how to pass selected into method ?
 			// 
+			
 
 			
 			servicesProvider.constructDependentMultiSelectArray({
@@ -280,7 +280,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				bShowSpinner: false,
 				onSuccess: onContractorsLoaded
 			});
-
 			apiProvider.getTaskTypes({
 				bShowSpinner: false,
 				onSuccess: onTaskTypesLoaded
@@ -337,6 +336,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
 						bMatchFound = true;
 						aFilteredUser[i] = aData[i];
+						if($scope.sMode === 'create'){
+							oDeficiencyWrapper.aData[0]._assignedUserName = $scope.sCurrentUser;
+						}
 						break;
 					}
 				}
@@ -661,6 +663,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					// $scope.oContact.sTitle = "";
 					$scope.oDeficiency.aDescriptionTags = [];
 					$scope.oDeficiency.aLocationTags = [];
+					$scope.oDeficiency.sDescription = "";
+					$scope.oDeficiency.dDueDate = "/Date(0)/";
+					
 
 					// $scope.oContact.sBillingStreet = "";
 					// $scope.oContact.sBillingCity = "";
