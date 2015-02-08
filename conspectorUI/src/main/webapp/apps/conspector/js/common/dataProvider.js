@@ -270,7 +270,8 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				}
 
 				oSrv = this.batchRequest({
-					oRequestData: oRequestData
+					oRequestData: oRequestData,
+					bShowSpinner: oParameters.bShowSpinner,
 				});
 
 				oSrv.then($.proxy(function(aData) { //onGetLinks
@@ -375,6 +376,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 								var sParentEntityWithKey = oParameters.sPath + "('" + oData[oParameters.sKeyAttribute] + "')";
 								this.updateLinks({
 									aLinks: oParameters.aLinks,
+									bShowSpinner: oParameters.bShowSpinner,
 									sParentEntityWithKey: sParentEntityWithKey,
 									onSuccess: $.proxy(function() {
 										this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
@@ -426,7 +428,8 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				}
 
 				oSrv = this.batchRequest({
-					oRequestData: oRequestData
+					oRequestData: oRequestData,
+					bShowSpinner: oParameters.bShowSpinner,
 				});
 
 				oSrv.then(function(aData) {
@@ -481,6 +484,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						this.createLinks({
 							aLinks: oParameters.aLinks,
 							sParentEntityWithKey: sParentEntityWithKey,
+							sShowSpinner: oParameters.bShowSpinner,
 							onSuccess: $.proxy(function() {
 								this.commonOnSuccess(oParameters); //TO DO: check if there is better place for success message display (links are not considered here...)
 								deffered.resolve(oData.d);
@@ -586,18 +590,17 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 			batchRequest: function(oParameters) {
 				var deffered = $q.defer();
 
-				if (oParameters.bShowSpinner) {
-					$rootScope.$emit('LOAD');
-				}
-
-				if (oParameters.oRequestData.__batchRequests.length) {
+				if (oParameters.oRequestData && oParameters.oRequestData.__batchRequests && oParameters.oRequestData.__batchRequests.length) {
+					if (oParameters.bShowSpinner) {
+						$rootScope.$emit('LOAD');
+					}
 					OData.request({
 						requestUri: $window.location.origin + $window.location.pathname + "odata.svc/$batch",
 						method: "POST",
 						data: oParameters.oRequestData
 					}, $.proxy(function(oData) {
 						for (var i = 0; i < oData.__batchResponses.length; i++) { //checking each subrequest status
-							if(oData.__batchResponses[i].message === "HTTP request failed"){
+							if (oData.__batchResponses[i].message === "HTTP request failed") {
 								this.commonOnError(oParameters);
 								return;
 							}
@@ -607,6 +610,9 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					}, this), $.proxy(function(err) {
 						this.commonOnError(oParameters);
 					}, this), OData.batchHandler);
+				} else {//when nothing to send
+					this.commonOnSuccess(oParameters);
+					deffered.resolve([]);
 				}
 				return deffered.promise;
 			},

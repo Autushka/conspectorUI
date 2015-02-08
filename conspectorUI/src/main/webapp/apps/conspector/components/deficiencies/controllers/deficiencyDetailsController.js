@@ -33,7 +33,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
-		if ($rootScope.sCurrentStateName === "app.deficiencyDetailsWrapper.deficiencyDetails") { 
+		if ($rootScope.sCurrentStateName === "app.deficiencyDetailsWrapper.deficiencyDetails") {
 			// if($scope.sMode === "display" || $scope.sMode === "edit"){
 			// 	$scope.$parent.bDisplayContactsList = true;
 			// }
@@ -94,7 +94,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		var setDisplayedDeficiencyDetails = function(oDeficiency) {
 			// var oContactPhasesGuids = [];
-			
+
 			$scope.oDeficiency._guid = oDeficiency.Guid;
 			// $scope.oContact._accountGuid = oContact.AccountGuid;
 
@@ -110,30 +110,30 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// $scope.oContact.sMobilePhone = oContact.MobilePhone;
 			// $scope.oContact.sFax = oContact.Fax;
 			// $scope.oContact.sTitle = oContact.Title;
-			
-			if (oDeficiency.UnitDetails.Name){
+
+			if (oDeficiency.UnitDetails.Name) {
 				$scope.oDeficiency._unitName = oDeficiency.UnitDetails.Name;
 			}
 
-			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.NameEN && oDeficiency.PhaseDetails.ProjectDetails.NameEN && $translate.use() === "en"){
+			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.NameEN && oDeficiency.PhaseDetails.ProjectDetails.NameEN && $translate.use() === "en") {
 				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameEN + " - " + oDeficiency.PhaseDetails.NameEN;
 			}
 
-			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.NameFR && oDeficiency.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr"){
+			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.NameFR && oDeficiency.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr") {
 				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameFR + " - " + oDeficiency.PhaseDetails.NameFR;
-			}else{
+			} else {
 				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameEN + " - " + oDeficiency.PhaseDetails.NameEN;
 			}
 
 			//
 
-			if (oDeficiency.TaskPriorityDetails && oDeficiency.TaskPriorityDetails.NameEN && oDeficiency.TaskPriorityDetails.NameEN && $translate.use() === "en"){
+			if (oDeficiency.TaskPriorityDetails && oDeficiency.TaskPriorityDetails.NameEN && oDeficiency.TaskPriorityDetails.NameEN && $translate.use() === "en") {
 				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
 			}
 
-			if (oDeficiency.TaskPriorityDetails && oDeficiency.TaskPriorityDetails.NameFR && oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr"){
+			if (oDeficiency.TaskPriorityDetails && oDeficiency.TaskPriorityDetails.NameFR && oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr") {
 				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameFR;
-			}else{
+			} else {
 				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
 			}
 
@@ -205,7 +205,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// if (oDeficiencyWrapper.aData[0]) {
 			// 	$scope.aTaskTypes = angular.copy(oDeficiencyWrapper.aData[0].aTaskTypes);
 			// }
-			
+
 			$scope.sTaskTypeGuid = aData[0].Guid;
 		};
 
@@ -213,20 +213,20 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-				if($scope.sMode === 'create' && aData[i].NameEN === $scope.sTaskPriority ){
-					oDeficiencyWrapper.aData[0]._taskPriorityGuid  = aData[i].Guid;
+				if ($scope.sMode === 'create' && aData[i].NameEN === $scope.sTaskPriority) {
+					oDeficiencyWrapper.aData[0]._taskPriorityGuid = aData[i].Guid;
 				}
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
 
-			
+
 
 			//loop to tick element
 			//how to pass selected into method ?
 			// 
-			
 
-			
+
+
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
@@ -239,11 +239,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				sParentKey: "_taskPriorityGuid",
 				sTargetArrayNameInParent: "aTaskPriorities"
 			});
-			
+
 			if (oDeficiencyWrapper.aData[0]) {
 				$scope.aTaskPriorities = angular.copy(oDeficiencyWrapper.aData[0].aTaskPriorities);
 			}
-		};		
+		};
 
 		var onDeficiencyStatusesLoaded = function(aData) {
 			for (var i = 0; i < aData.length; i++) {
@@ -336,7 +336,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
 						bMatchFound = true;
 						aFilteredUser[i] = aData[i];
-						if($scope.sMode === 'create'){
+						if ($scope.sMode === 'create') {
 							oDeficiencyWrapper.aData[0]._assignedUserName = $scope.sCurrentUser;
 						}
 						break;
@@ -384,18 +384,18 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					onSuccess: onContractorsLoaded
 				});
 
-				if($scope.sTaskType === "Deficiency"){
+				if ($scope.sTaskType === "Deficiency") {
 					apiProvider.getDeficiencyTaskType({
 						bShowSpinner: false,
 						onSuccess: onTaskTypesLoaded
-					});		
+					});
 				}
-				if($scope.sTaskType === "Health and Safety"){
+				if ($scope.sTaskType === "Health and Safety") {
 					apiProvider.getHealthAndSafetyTaskType({
 						bShowSpinner: false,
 						onSuccess: onTaskTypesLoaded
-					});					
-				}	
+					});
+				}
 
 				apiProvider.getDeficiencyPriorities({
 					bShowSpinner: false,
@@ -427,7 +427,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			apiProvider.getDeficiencyPriorities({
 				bShowSpinner: false,
 				onSuccess: onTaskPrioritiesLoaded
-			});				
+			});
 
 			apiProvider.getUsers({
 				sExpand: "CompanyDetails",
@@ -435,18 +435,18 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				onSuccess: onUsersWithCompaniesLoaded
 			});
 
-			if($scope.sTaskType === "Deficiency"){
+			if ($scope.sTaskType === "Deficiency") {
 				apiProvider.getDeficiencyTaskType({
 					bShowSpinner: false,
 					onSuccess: onTaskTypesLoaded
-				});		
+				});
 			}
-			if($scope.sTaskType === "Health and Safety"){
+			if ($scope.sTaskType === "Health and Safety") {
 				apiProvider.getHealthAndSafetyTaskType({
 					bShowSpinner: false,
 					onSuccess: onTaskTypesLoaded
-				});					
-			}	
+				});
+			}
 		}
 
 		$scope.onEdit = function() {
@@ -494,19 +494,20 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			var aLinks = [];
 			var aUri = [];
 			var sUri = "";
-			
+
+			if ($scope.aSelectedContractors && $scope.aSelectedContractors.length) {
 				for (var i = 0; i < $scope.aSelectedContractors.length; i++) {
 					sUri = "Accounts('" + $scope.aSelectedContractors[i].Guid + "')";
 					aUri.push(sUri);
 				}
-			
-			if (aUri.length) {
-				aLinks.push({
-					sRelationName: "AccountDetails",
-					bKeepCompanyDependentLinks: true,
-					aUri: aUri
-				});
 			}
+
+			aLinks.push({
+				sRelationName: "AccountDetails",
+				bKeepCompanyDependentLinks: true,
+				aUri: aUri
+			});
+
 			return aLinks;
 		};
 
@@ -592,7 +593,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			}
 			if ($scope.oForms.deficiencyDetailsForm.selectedTaskPriorities) {
 				$scope.oForms.deficiencyDetailsForm.selectedTaskPriorities.$setDirty(); //to display validation messages on submit press
-			}			
+			}
 			if ($scope.oForms.deficiencyDetailsForm.selectedPhases) {
 				$scope.oForms.deficiencyDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
 			}
@@ -665,7 +666,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					$scope.oDeficiency.aLocationTags = [];
 					$scope.oDeficiency.sDescription = "";
 					$scope.oDeficiency.dDueDate = "/Date(0)/";
-					
+
 
 					// $scope.oContact.sBillingStreet = "";
 					// $scope.oContact.sBillingCity = "";
@@ -782,7 +783,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 			if ($scope.aSelectedTaskPriorities.length) {
 				oDataForSave.TaskPriorityGuid = $scope.aSelectedTaskPriorities[0].Guid;
-			}			
+			}
 			if ($scope.aSelectedPhases.length) {
 				oDataForSave.PhaseGuid = $scope.aSelectedPhases[0].Guid;
 			}
