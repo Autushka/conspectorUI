@@ -76,6 +76,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 							break;
 						}
 					}
+					if (!bMatchFound) {
+						continue;
+					}
 
 					sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.ProjectDetails.NameEN : aData[i].PhaseDetails.ProjectDetails.NameFR;
 					if (!sProjectName) {
@@ -87,15 +90,15 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					}
 
 					sProjectPhase = sProjectName + " - " + sPhaseName;
-				}else{
+				} else {
 					sProjectPhase = "Not Assigned";
 				}
 
-				if(aData[i].TaskStatusDetails){
+				if (aData[i].TaskStatusDetails) {
 					sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
 				}
 
-				if(aData[i].AccountDetails){
+				if (aData[i].AccountDetails) {
 					for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
 						sContractors = sContractors + aData[i].AccountDetails.results[j].Name + "; ";
 					}
@@ -167,11 +170,11 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			});
 		};
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-			loadDeficiencys();
+			loadDeficiencies();
 		});
 
 		$scope.$on('deficienciesShouldBeRefreshed', function(oParameters) {
-			loadDeficiencys();
+			loadDeficiencies();
 		});
 
 		$scope.$on("$destroy", function() {
