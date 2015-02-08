@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog',
-	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog) {
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload',
+	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -273,6 +273,81 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				return sReturnUrl;
 			},
 
+			uploadAttachmentsForEntity: function(oParameters) {
+				var oRequestData = {
+					__batchRequests: []
+				};
+				var aData = [];
+				var oData = {};
+				var sFileMetadataSetGuid = "";
+				var oSrv = {};
+
+				var uploadFiles = $.proxy(function(sFileMetadataSetGuid) {
+					for (var i = 0; i < oParameters.aFiles.length; i++) {
+						var file = oParameters.aFiles[i];
+						var sPath = this.costructUploadUrl({
+							sPath: "rest/file/createUploadUrlWithFileMetadataSetGuid/Deficiency/" + oParameters.sParentEntityGuid + "/_attachments_/" + sFileMetadataSetGuid,
+						});
+						var oUpload = $upload.upload({
+							url: sPath,
+							file: file,
+						});
+						if (i === (oParameters.aFiles.length - 1)) {
+							oUpload.success(oParameters.onSuccess);
+						}
+					}
+				}, this);
+
+				if (!oParameters.sParentEntityFileMetadataSetGuid) {
+					sFileMetadataSetGuid = utilsProvider.generateGUID();
+					oData = {
+						requestUri: "FileMetadataSets",
+						method: "POST",
+						data: {
+							Guid: sFileMetadataSetGuid,
+							GeneralAttributes: {
+								IsDeleted: false
+							}
+						}
+					};
+
+					aData.push(oData);
+
+					oData = {
+						requestUri: "Tasks('" + oParameters.sParentEntityGuid + "')",
+						method: "PUT",
+						data: {
+							FileMetadataSetGuid: sFileMetadataSetGuid
+						}
+					};
+
+					aData.push(oData);
+
+					dataProvider.constructChangeBlockForBatch({
+						oRequestData: oRequestData,
+						aData: aData
+					});
+
+					oSrv = dataProvider.batchRequest({
+						oRequestData: oRequestData,
+						//bShowSpinner: oParameters.bShowSpinner,
+						//bShowSuccessMessage: oParameters.bShowSuccessMessage,
+						//bShowErrorMessage: oParameters.bShowErrorMessage,
+					});
+
+					var onFileMetadaSetCreated = function(sFileMetadataSetGuid) {
+						$rootScope.sFileMetadataSetGuid = sFileMetadataSetGuid;
+						uploadFiles(sFileMetadataSetGuid);
+					}
+
+					oSrv.then(function(aData) {
+						onFileMetadaSetCreated(sFileMetadataSetGuid)
+					});
+				} else {
+					uploadFiles(oParameters.sParentEntityFileMetadataSetGuid);
+				}
+			},
+
 			deleteFileAttachment: function(sGuid) {
 				var sUrl = "rest/file/delete/" + sGuid;
 				dataProvider.ajaxRequest({
@@ -490,7 +565,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 									bMatchFound = true;
 								}
 							}
-						}						
+						}
 						if (oParameters.aParentKeys) {
 							for (var k = 0; k < oParameters.aParentKeys.length; k++) {
 								if (aMultiSelectArray[j][oParameters.sDependentKey] === oParameters.aParentKeys[k]) {

@@ -8,9 +8,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		$scope.sTaskPriority = "";
 		$scope.sTaskPriorityGuid = "";
 
-		// 	$scope.bShowParentAccountAndContactType = true;
-		// 	$scope.bIsChangePhasesAssignmentAllowed = true;
-
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation
 
@@ -34,16 +31,16 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
 		if ($rootScope.sCurrentStateName === "app.deficiencyDetailsWrapper.deficiencyDetails") {
-			// if($scope.sMode === "display" || $scope.sMode === "edit"){
-			// 	$scope.$parent.bDisplayContactsList = true;
-			// }
 			$scope.sTaskType = "Deficiency";
 			$scope.sTaskPriority = "Normal";
 		}
 
-
-
 		$scope.sMode = $stateParams.sMode;
+
+		if ($scope.sMode === "display" || $scope.sMode === "edit") {
+			$scope.$parent.bDisplayAttachmentsList = true;
+		}
+		
 		$scope.oDeficiency = {
 			//aDescriptionTags: [],
 			//_aPhases: [],
@@ -93,51 +90,40 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		};
 
 		var setDisplayedDeficiencyDetails = function(oDeficiency) {
-			// var oContactPhasesGuids = [];
-
 			$scope.oDeficiency._guid = oDeficiency.Guid;
-			// $scope.oContact._accountGuid = oContact.AccountGuid;
-
 			$scope.oDeficiency._lastModifiedAt = oDeficiency.LastModifiedAt;
-			// $scope.oContact.sFirstName = oContact.FirstName;
-			// $scope.oContact.sLastName = oContact.LastName;
+			var sProject = "";
+			var sPhase = "";
 
-			// $scope.oContact.sEmail = oContact.Email;
-			// $scope.oContact.sHomePhone = oContact.HomePhone;
-			// $scope.oContact.sHomePhoneExtension = oContact.HomePhoneExtension;
-			// $scope.oContact.sWorkPhone = oContact.WorkPhone;
-			// $scope.oContact.sWorkPhoneExtension = oContact.WorkPhoneExtension;
-			// $scope.oContact.sMobilePhone = oContact.MobilePhone;
-			// $scope.oContact.sFax = oContact.Fax;
-			// $scope.oContact.sTitle = oContact.Title;
+			$rootScope.sFileMetadataSetGuid = oDeficiency.FileMetadataSetGuid;
+			$rootScope.$broadcast("FileAttachemntsCanBeLoaded");
+
 
 			if (oDeficiency.UnitDetails.Name) {
 				$scope.oDeficiency._unitName = oDeficiency.UnitDetails.Name;
 			}
 
-			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.NameEN && oDeficiency.PhaseDetails.ProjectDetails.NameEN && $translate.use() === "en") {
-				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameEN + " - " + oDeficiency.PhaseDetails.NameEN;
+			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.ProjectDetails){
+				if(oDeficiency.PhaseDetails.NameFR && $translate.use() === "fr"){
+					sPhase = oDeficiency.PhaseDetails.NameFR;
+				}else{
+					sPhase = oDeficiency.PhaseDetails.NameEN;
+				}
+				if(oDeficiency.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr"){
+					sProject = oDeficiency.PhaseDetails.ProjectDetails.NameFR;
+				}else{
+					sProject = oDeficiency.PhaseDetails.ProjectDetails.NameEN;
+				}
+			}	
+			$scope.oDeficiency._ProjectAndPhaseName = sProject + " - " + sPhase;
+
+			if (oDeficiency.TaskPriorityDetails){
+				if(oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr"){
+					$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameFR;
+				}else{
+					$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
+				}
 			}
-
-			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.NameFR && oDeficiency.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr") {
-				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameFR + " - " + oDeficiency.PhaseDetails.NameFR;
-			} else {
-				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameEN + " - " + oDeficiency.PhaseDetails.NameEN;
-			}
-
-			//
-
-			if (oDeficiency.TaskPriorityDetails && oDeficiency.TaskPriorityDetails.NameEN && oDeficiency.TaskPriorityDetails.NameEN && $translate.use() === "en") {
-				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
-			}
-
-			if (oDeficiency.TaskPriorityDetails && oDeficiency.TaskPriorityDetails.NameFR && oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr") {
-				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameFR;
-			} else {
-				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
-			}
-
-			//
 
 			if (oDeficiency.DueDate && oDeficiency.DueDate != "/Date(0)/") {
 				$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oDeficiency.DueDate);
@@ -185,28 +171,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		});
 
 		var onTaskTypesLoaded = function(aData) {
-			// for (var i = 0; i < aData.length; i++) {
-			// 	aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-			// }
-			// aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-
-
-			// servicesProvider.constructDependentMultiSelectArray({
-			// 	oDependentArrayWrapper: {
-			// 		aData: aData
-			// 	},
-			// 	oParentArrayWrapper: oDeficiencyWrapper,
-			// 	sNameEN: "NameEN",
-			// 	sNameFR: "NameFR",
-			// 	sDependentKey: "Guid",
-			// 	sParentKey: "_taskTypeGuid",
-			// 	sTargetArrayNameInParent: "aTaskTypes"
-			// });
-			// if (oDeficiencyWrapper.aData[0]) {
-			// 	$scope.aTaskTypes = angular.copy(oDeficiencyWrapper.aData[0].aTaskTypes);
-			// }
-
-			$scope.sTaskTypeGuid = aData[0].Guid;
+			for (var i = 0; i < aData.length; i++) {
+				if (aData[i].NameEN === $scope.sTaskType) {
+					$scope.sTaskTypeGuid = aData[i].Guid;
+					break;
+				}
+			}			
 		};
 
 		var onTaskPrioritiesLoaded = function(aData) {
@@ -215,17 +185,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
 				if ($scope.sMode === 'create' && aData[i].NameEN === $scope.sTaskPriority) {
 					oDeficiencyWrapper.aData[0]._taskPriorityGuid = aData[i].Guid;
+					break;
 				}
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-
-
-
-			//loop to tick element
-			//how to pass selected into method ?
-			// 
-
-
 
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
@@ -511,16 +474,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			return aLinks;
 		};
 
-		// $scope.onCloseCheckSelectedTaskTypesLength = function() {
-		// 	if ($scope.aSelectedTaskTypes.length == 0)
-		// 		$scope.onSelectedTaskTypesModified();
-		// };
-
-		// $scope.onSelectedTaskTypesModified = function() {
-		// 	$scope.onDataModified();
-		// 	$scope.oForms.deficiencyDetailsForm.selectedTaskTypes.$setDirty();
-		// };
-
 		$scope.onCloseCheckSelectedTaskPrioritiesLength = function() {
 			if ($scope.aSelectedTaskPriorities.length == 0)
 				$scope.onSelectedTaskPrioritiesModified();
@@ -555,37 +508,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			$scope.oForms.deficiencyDetailsForm.selectedStatuses.$setDirty();
 		};
 
-		// $scope.onCloseCheckSelectedContractorsLength = function() {
-		// 	if ($scope.aSelectedContractors.length == 0)
-		// 		$scope.onSelectedContractorsModified();
-		// };
-
-		// $scope.onSelectedContractorsModified = function() {
-		// 	$scope.onDataModified();
-		// 	$scope.oForms.deficiencyDetailsForm.selectedContractors.$setDirty();
-		// };
-
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
 		};
-
-		// 	$scope.onBillingCountryChanged = function() {
-		// 		$scope.onDataModified();
-		// 		constructProvinceSelect({
-		// 			sParentKey: "",
-		// 			sProvincesFor: "billingAddress"
-		// 		});
-
-		// 	};
-
-		// 	$scope.onShippingCountryChanged = function() {
-		// 		$scope.onDataModified();
-		// 		constructProvinceSelect({
-		// 			sParentKey: "",
-		// 			sProvincesFor: "shippingAddress"
-		// 		});
-
-		// 	};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
 			if ($scope.oForms.deficiencyDetailsForm.selectedTaskTypes) {
@@ -600,24 +525,15 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			if ($scope.oForms.deficiencyDetailsForm.selectedStatuses) {
 				$scope.oForms.deficiencyDetailsForm.selectedStatuses.$setDirty(); //to display validation messages on submit press
 			}
-			// if ($scope.oForms.deficiencyDetailsForm.selectedContractors) {
-			// 	$scope.oForms.deficiencyDetailsForm.selectedContractors.$setDirty(); //to display validation messages on submit press
-			// }
 			if ($scope.oForms.deficiencyDetailsForm.selectedUser) {
 				$scope.oForms.deficiencyDetailsForm.selectedUser.$setDirty(); //to display validation messages on submit press
 			}
 			if ($scope.oForms.deficiencyDetailsForm.selectedUnits) {
 				$scope.oForms.deficiencyDetailsForm.selectedUnits.$setDirty(); //to display validation messages on submit press
 			}
-			// if ($scope.oForms.contactDetailsForm.lastName) {
-			// 	$scope.oForms.contactDetailsForm.lastName.$setDirty(); //to display validation messages on submit press
-			// }
-
 			if (!$scope.oForms.deficiencyDetailsForm.$valid) {
 				return;
 			}
-
-			// aLinks = prepareLinksForSave();
 
 			var oDataForSave = {
 				GeneralAttributes: {}
@@ -625,15 +541,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			var aLinks = [];
 
 			oDataForSave.Guid = $scope.oDeficiency._guid;
-			// for (var i = 0; i < $scope.aAccounts.length; i++) {
-			// 	if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
-			// 		oDataForSave.AccountGuid = $scope.aAccounts[i].Guid;
-			// 		break;
-			// 	}
-			// }
-
-
-
 			var onSuccessCreation = function(oData) {
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
@@ -651,34 +558,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					$scope.oDeficiency.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
 					$scope.oDeficiency._guid = oData.Guid;
 				} else {
-					// $scope.oContact.sFirstName = "";
-					// $scope.oContact.sLastName = "";
-
-					// $scope.oContact.sEmail = "";
-					// $scope.oContact.sHomePhone = "";
-					// $scope.oContact.sHomePhoneExtension = "";
-					// $scope.oContact.sWorkPhone = "";
-					// $scope.oContact.sWorkPhoneExtension = "";
-					// $scope.oContact.sMobilePhone = "";
-					// $scope.oContact.sFax = "";
-					// $scope.oContact.sTitle = "";
 					$scope.oDeficiency.aDescriptionTags = [];
 					$scope.oDeficiency.aLocationTags = [];
 					$scope.oDeficiency.sDescription = "";
 					$scope.oDeficiency.dDueDate = "/Date(0)/";
-
-
-					// $scope.oContact.sBillingStreet = "";
-					// $scope.oContact.sBillingCity = "";
-					// $scope.oContact.sBillingPostalCode = "";
-					// $scope.oContact.sShippingStreet = "";
-					// $scope.oContact.sShippingCity = "";
-					// $scope.oContact.sShippingPostalCode = "";
-
-					// $scope.oForms.contactDetailsForm.lastName.$setPristine();
-					// $scope.oForms.contactDetailsForm.firstName.$setPristine();
-					// oDataForSave.BillingAddress = {};
-					// oDataForSave.ShippingAddress = {};
 				}
 			};
 			var onSuccessUpdate = function(oData) {
@@ -697,40 +580,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				});
 			};
 
-
-			// for (var i = 0; i < $scope.aContactTypes.length; i++) {
-			// 	if ($scope.aContactTypes[i].ticked) {
-			// 		oDataForSave.ContactTypeGuid = $scope.aContactTypes[i].Guid;
-			// 		break;
-			// 	}
-			// }
-
-			// oDataForSave.FirstName = $scope.oContact.sFirstName;
-			// oDataForSave.LastName = $scope.oContact.sLastName;
-
-			// if ($scope.oContact.sHomePhone) {
-			// 	oDataForSave.HomePhone = $scope.oContact.sHomePhone.replace(/\D/g, '');
-			// } else {
-			// 	oDataForSave.HomePhone = "";
-			// }
-			// if ($scope.oContact.sWorkPhone) {
-			// 	oDataForSave.WorkPhone = $scope.oContact.sWorkPhone.replace(/\D/g, '');
-			// } else {
-			// 	oDataForSave.WorkPhone = "";
-			// }
-			// if ($scope.oContact.sMobilePhone) {
-			// 	oDataForSave.MobilePhone = $scope.oContact.sMobilePhone.replace(/\D/g, '');
-			// } else {
-			// 	oDataForSave.MobilePhone = "";
-			// }
-
-			// oDataForSave.Email = $scope.oContact.sEmail;
-			// oDataForSave.Fax = $scope.oContact.sFax;
-			// oDataForSave.Title = $scope.oContact.sTitle;
-			// oDataForSave.HomePhoneExtension = $scope.oContact.sHomePhoneExtension;
-			// oDataForSave.WorkPhoneExtension = $scope.oContact.sWorkPhoneExtension;
-
-
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aDescriptionTags);
 			oDataForSave.LocationTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aLocationTags);
 			oDataForSave.Description = $scope.oDeficiency.sDescription;
@@ -741,44 +590,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			} else {
 				oDataForSave.DueDate = "/Date(0)/";
 			}
-			// oDataForSave.BillingAddress = {};
-			// oDataForSave.BillingAddress.BillingStreet = $scope.oContact.sBillingStreet;
-			// oDataForSave.BillingAddress.BillingCity = $scope.oContact.sBillingCity;
-			// oDataForSave.BillingAddress.BillingPostalCode = $scope.oContact.sBillingPostalCode;
 
-			// oDataForSave.ShippingAddress = {};
-			// oDataForSave.ShippingAddress.ShippingStreet = $scope.oContact.sShippingStreet;
-			// oDataForSave.ShippingAddress.ShippingCity = $scope.oContact.sShippingCity;
-			// oDataForSave.ShippingAddress.ShippingPostalCode = $scope.oContact.sShippingPostalCode;
-
-			// for (var i = 0; i < $scope.aBillingCountries.length; i++) {
-			// 	if ($scope.aBillingCountries[i].ticked) {
-			// 		oDataForSave.BillingAddress.BillingCountry = $scope.aBillingCountries[i].CountryCode;
-			// 		break;
-			// 	}
-			// }
-			// for (var i = 0; i < $scope.aBillingProvinces.length; i++) {
-			// 	if ($scope.aBillingProvinces[i].ticked) {
-			// 		oDataForSave.BillingAddress.BillingProvince = $scope.aBillingProvinces[i].ProvinceCode;
-			// 		break;
-			// 	}
-			// }
-			// for (var i = 0; i < $scope.aShippingCountries.length; i++) {
-			// 	if ($scope.aShippingCountries[i].ticked) {
-			// 		oDataForSave.ShippingAddress.ShippingCountry = $scope.aShippingCountries[i].CountryCode;
-			// 		break;
-			// 	}
-			// }
-			// for (var i = 0; i < $scope.aShippingProvinces.length; i++) {
-			// 	if ($scope.aShippingProvinces[i].ticked) {
-			// 		oDataForSave.ShippingAddress.ShippingProvince = $scope.aShippingProvinces[i].ProvinceCode;
-			// 		break;
-			// 	}
-			// }
-
-			// if ($scope.aSelectedTaskTypes.length) {
-			// 	oDataForSave.TaskTypeGuid = $scope.aSelectedTaskTypes[0].Guid;
-			// }
 			oDataForSave.TaskTypeGuid = $scope.sTaskTypeGuid;
 
 			if ($scope.aSelectedTaskPriorities.length) {
@@ -830,14 +642,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				oState: $state
 			});
 		};
-
-		$scope.onNavigateToUnitDetails = function(oDeficiency) {
-            var sUnitGuid = oDeficiency._unitGuid;
-           	$state.go('app.unitDetailsWrapper.unitDetails', {
-                        sMode: "display",
-                        sUnitGuid: sUnitGuid,
-                    });
-        };
 
 		$scope.onSaveAndNew = function() {
 			$scope.onSave(true);

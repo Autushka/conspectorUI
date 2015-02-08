@@ -1694,7 +1694,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},	
 
 			getEntityAttachments: function(oParameters){
-				var svc = dataProvider.getEntitySet({
+				var svc = dataProvider.getEntity({
 					sPath: "FileMetadataSets",
 					sKey: oParameters.sKey,
 					sExpand: oParameters.sExpand,//"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
@@ -1702,7 +1702,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					bShowSpinner: oParameters.bShowSpinner,
 				});
 				svc.then(oParameters.onSuccess);				
-			},						
+			},					
 
 			generateReport: function(oParameters) {
 				var oData = {

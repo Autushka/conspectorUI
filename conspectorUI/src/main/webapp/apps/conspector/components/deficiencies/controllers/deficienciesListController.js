@@ -155,7 +155,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					sStatusSortingSequence: sStatusSortingSequence,
 					_unitGuid: aData[i].UnitGuid,
 					_sortingSequence: iSortingSequence,
-					sStatuseIconUrl: sStatuseIconUrl
+					sStatuseIconUrl: sStatuseIconUrl,
+					_fileMetadataSetGuid: aData[i].FileMetadataSetGuid
 				});
 				// }
 
@@ -176,6 +177,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		loadDeficiencies(); //load Deficiencys
 
 		$scope.onDisplay = function(oDeficiency) {
+			$rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
 			$state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
 				sMode: "display",
 				sDeficiencyGuid: oDeficiency._guid,

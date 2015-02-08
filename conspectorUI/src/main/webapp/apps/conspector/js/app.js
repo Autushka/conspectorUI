@@ -129,7 +129,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 		});
 
 		$stateProvider.state('app.deficiencyDetailsWrapper.deficiencyDetails', {//state that contains subviews
-			url: '/deficiencyDetails/:sDeficiencyGuid/:sFileMetadataSetGuid/:sMode',
+			url: '/deficiencyDetails/:sDeficiencyGuid/:sMode',
 			views: {
 				'deficiencyDetails': {
 					templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyDetailsView.html',
