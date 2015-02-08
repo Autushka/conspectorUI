@@ -360,51 +360,46 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 			var aUri = [];
 			var sUri = "";
 
-			for (var i = 0; i < $scope.aCompanies.length; i++) {
-				if ($scope.aCompanies[i].ticked) {
-					sUri = "Companys('" + $scope.aCompanies[i].CompanyName + "')";
-					aUri.push(sUri);
-				}
-			}
+			if ($scope.aSelectedCompanies && $scope.aSelectedCompanies.length) {
+                for (var i = 0; i < $scope.aSelectedCompanies.length; i++) {
+                    sUri = "Companys('" + $scope.aSelectedCompanies[i].Guid + "')";
+                    aUri.push(sUri);
+                }
+            }
 
-			if (aUri.length) {
-				aLinks.push({
-					sRelationName: "CompanyDetails",
-					aUri: aUri
-				});
-			}
+            aLinks.push({
+                sRelationName: "CompanyDetails",
+                bKeepCompanyDependentLinks: true,
+                aUri: aUri
+            });
 			aUri = [];
 
-			for (var i = 0; i < $scope.aRoles.length; i++) {
-				if ($scope.aRoles[i].ticked) {
-					sUri = "Roles('" + $scope.aRoles[i].Guid + "')";
-					aUri.push(sUri);
-				}
-			}
+			if ($scope.aSelectedRoles && $scope.aSelectedRoles.length) {
+                for (var i = 0; i < $scope.aSelectedRoles.length; i++) {
+                    sUri = "Roles('" + $scope.aSelectedRoles[i].Guid + "')";
+                    aUri.push(sUri);
+                }
+            }
 
-			if (aUri.length) {
-				aLinks.push({
-					sRelationName: "RoleDetails",
-					bKeepCompanyDependentLinks: true,
-					aUri: aUri
-				});
-			}
+            aLinks.push({
+                sRelationName: "RoleDetails",
+                bKeepCompanyDependentLinks: true,
+                aUri: aUri
+            });
 			aUri = [];
 
-			for (var i = 0; i < $scope.aPhases.length; i++) {
-				if ($scope.aPhases[i].ticked) {
-					sUri = "Phases('" + $scope.aPhases[i].Guid + "')";
-					aUri.push(sUri);
-				}
-			}
+			if ($scope.aSelectedPhases && $scope.aSelectedPhases.length) {
+                for (var i = 0; i < $scope.aSelectedPhases.length; i++) {
+                    sUri = "Phases('" + $scope.aSelectedPhases[i].Guid + "')";
+                    aUri.push(sUri);
+                }
+            }
 
-			if (aUri.length) {
-				aLinks.push({
-					sRelationName: "PhaseDetails",
-					bKeepCompanyDependentLinks: true,
-					aUri: aUri
-				});
-			}
+            aLinks.push({
+                sRelationName: "PhaseDetails",
+                bKeepCompanyDependentLinks: true,
+                aUri: aUri
+            });
 
 			return aLinks;
 		};
@@ -414,9 +409,9 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			if($scope.oForms.userDetailsForm.selectedCompanies){
-				$scope.oForms.userDetailsForm.selectedCompanies.$setDirty();//to display validation messages on submit press
-			}
+			// if($scope.oForms.userDetailsForm.selectedCompanies){
+			// 	$scope.oForms.userDetailsForm.selectedCompanies.$setDirty();//to display validation messages on submit press
+			// }
 			if($scope.oForms.userDetailsForm.username){
 				$scope.oForms.userDetailsForm.username.$setDirty();
 			}
