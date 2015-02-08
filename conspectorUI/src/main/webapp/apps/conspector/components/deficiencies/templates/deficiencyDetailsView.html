@@ -29,7 +29,7 @@
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
 					<div layout="column" layout-gt-md="row" flex>
-						<div flex="100" flex-gt-md="60">
+						<div flex="100" flex-gt-md="60" class="cnpDeficiencyPrNPhWrapper">
 							<div  class="cnpSubSectionLabel">
 								<label>
 									{{'deficiencyDetails_associatedProjectsAndPhases' | translate}}
@@ -192,10 +192,10 @@
 								helper-elements="filter"
 								>
 							</div>
-							<input ng-model="aSelectedContractors.length" type="number" ng-show="false" name="selectedContractors" min="1">
+							<!-- <input ng-model="aSelectedContractors.length" type="number" ng-show="false" name="selectedContractors" min="1">
 							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedContractors.$error" ng-if="(oForms.deficiencyDetailsForm.selectedContractors.$dirty && !oForms.deficiencyDetailsForm.selectedContractors.$valid) || submitted">
 								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-							</div>
+							</div> -->
 						</div>
 						<div style="margin-top: 12px; margin-bottom: 12px;">
 							<div  class="cnpSubSectionLabel">

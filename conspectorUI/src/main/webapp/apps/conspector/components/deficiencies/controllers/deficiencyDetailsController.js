@@ -5,6 +5,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		$scope.oForms = {};
 		$scope.sTaskTypeGuid = "";
 		$scope.sTaskType = "";
+		$scope.sTaskPriority = "";
+		$scope.sTaskPriorityGuid = "";
 
 		// 	$scope.bShowParentAccountAndContactType = true;
 		// 	$scope.bIsChangePhasesAssignmentAllowed = true;
@@ -36,6 +38,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			// 	$scope.$parent.bDisplayContactsList = true;
 			// }
 			$scope.sTaskType = "Deficiency";
+			$scope.sTaskPriority = "Normal";
 		}
 
 
@@ -51,14 +54,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				_contractorsGuids: []
 			}]
 		};
-
-		// 	$scope.aContactTypes = [];
-		// 	var aCountriesWithProvinces = [];
-
-		// 	$scope.aBillingCountries = [];
-		// 	$scope.aBillingProvinces = [];
-		// 	$scope.aShippingCountries = [];
-		// 	$scope.aShippingProvinces = [];
 
 		var onUnitsLoaded = function(aData) {
 			aData = $filter('orderBy')(aData, ["Name"]);
@@ -174,43 +169,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			}
 
 			$scope.oDeficiency.sDescription = oDeficiency.Description;
-			// $scope.oContact._contactTypeGuid = oContact.ContactTypeGuid;
-
-			// if (oContact.BillingAddress) {
-			// 	$scope.oContact.sBillingStreet = oContact.BillingAddress.BillingStreet;
-			// 	$scope.oContact.sBillingCity = oContact.BillingAddress.BillingCity;
-			// 	$scope.oContact.sBillingPostalCode = oContact.BillingAddress.BillingPostalCode;
-			// 	$scope.oContact._billingCountryCode = oContact.BillingAddress.BillingCountry;
-			// 	$scope.oContact._billingProvinceCode = oContact.BillingAddress.BillingProvince;
-			// }
-
-			// if (oContact.ShippingAddress) {
-			// 	$scope.oContact.sShippingStreet = oContact.ShippingAddress.ShippingStreet;
-			// 	$scope.oContact.sShippingCity = oContact.ShippingAddress.ShippingCity;
-			// 	$scope.oContact.sShippingPostalCode = oContact.ShippingAddress.ShippingPostalCode;
-			// 	$scope.oContact._shippingCountryCode = oContact.ShippingAddress.ShippingCountry;
-			// 	$scope.oContact._shippingProvinceCode = oContact.ShippingAddress.ShippingProvince;
-			// }
-
-			// if (oContact.AccountDetails) {
-			// 	$scope.oContact._sAccountName = oContact.AccountDetails.Name;
-			// }
-
-			// if (oContact.ContactTypeDetails) {
-			// 	$scope.oContact._sContactType = $translate.use() === "en" ? oContact.ContactTypeDetails.NameEN : oContact.ContactTypeDetails.NameFR;
-			// 	if (!$scope.oContact._sContactType) {
-			// 		$scope.oContact._sContactType = oContact.ContactTypeDetails.NameEN
-			// 	}
-			// }
-
-			// $scope.oContact.sCreatedAt = utilsProvider.dBDateToSting(oContact.CreatedAt);
-			// $scope.oContact.sLastModifiedAt = utilsProvider.dBDateToSting(oContact.LastModifiedAt);
-
-			// $scope.oContact._aPhases = angular.copy(oContact.PhaseDetails.results);
-			// for (var i = 0; i < $scope.oContact._aPhases.length; i++) {
-			// 	oContactPhasesGuids.push($scope.oContact._aPhases[i].Guid);
-			// }
-
 
 			oDeficiencyWrapper.aData[0] = angular.copy($scope.oDeficiency);
 			constructPhasesMultiSelect([$scope.oDeficiency._phaseGuid]);
@@ -225,91 +183,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			sKeyName: "Guid",
 			sKeyValue: sDeficiencyGuid
 		});
-
-
-		// 	var constructProvinceSelect = function(oParameters) {
-		// 		var sParentKey = oParameters.sParentKey;
-		// 		var sTargetArrayName = "";
-		// 		var sCountriesArrayName = "";
-
-		// 		if (oParameters.sProvincesFor === "billingAddress") {
-		// 			sTargetArrayName = "aBillingProvinces";
-		// 			sCountriesArrayName = "aBillingCountries";
-		// 		} else {
-		// 			sTargetArrayName = "aShippingProvinces";
-		// 			sCountriesArrayName = "aShippingCountries";
-		// 		}
-
-		// 		for (var i = 0; i < $scope[sCountriesArrayName].length; i++) {
-		// 			if ($scope[sCountriesArrayName][i].ticked) {
-		// 				for (var j = 0; j < aCountriesWithProvinces.length; j++) {
-		// 					if ($scope[sCountriesArrayName][i].CountryCode === aCountriesWithProvinces[j].CountryCode) {
-		// 						servicesProvider.constructDependentMultiSelectArray({
-		// 							oDependentArrayWrapper: {
-		// 								aData: aCountriesWithProvinces[j].ProvinceDetails.results
-		// 							},
-		// 							oParentArrayWrapper: oContactWrapper,
-		// 							sNameEN: "Name",
-		// 							sNameFR: "Name",
-		// 							sDependentKey: "ProvinceCode",
-		// 							sParentKey: sParentKey,
-		// 							sTargetArrayNameInParent: sTargetArrayName
-		// 						});
-		// 						if (oContactWrapper.aData[0]) {
-		// 							$scope[sTargetArrayName] = angular.copy(oContactWrapper.aData[0][sTargetArrayName]);
-		// 						}
-		// 						break;
-		// 					}
-		// 				}
-		// 				break;
-		// 			}
-		// 		}
-		// 	};
-
-		// 	var onCountriesLoaded = function(aData) {
-		// 		aCountriesWithProvinces = angular.copy(aData);
-		// 		servicesProvider.constructDependentMultiSelectArray({
-		// 			oDependentArrayWrapper: {
-		// 				aData: aData
-		// 			},
-		// 			oParentArrayWrapper: oContactWrapper,
-		// 			sNameEN: "Name",
-		// 			sNameFR: "Name",
-		// 			sDependentKey: "CountryCode",
-		// 			sParentKey: "_billingCountryCode",
-		// 			sTargetArrayNameInParent: "aBillingCountries"
-		// 		});
-
-		// 		servicesProvider.constructDependentMultiSelectArray({
-		// 			oDependentArrayWrapper: {
-		// 				aData: aData
-		// 			},
-		// 			oParentArrayWrapper: oContactWrapper,
-		// 			sNameEN: "Name",
-		// 			sNameFR: "Name",
-		// 			sDependentKey: "CountryCode",
-		// 			sParentKey: "_shippingCountryCode",
-		// 			sTargetArrayNameInParent: "aShippingCountries"
-		// 		});
-		// 		if (oContactWrapper.aData[0]) {
-		// 			$scope.aBillingCountries = angular.copy(oContactWrapper.aData[0].aBillingCountries);
-		// 			$scope.aShippingCountries = angular.copy(oContactWrapper.aData[0].aShippingCountries);
-		// 		}
-
-		// 		if ($scope.oContact._billingCountryCode) {
-		// 			constructProvinceSelect({
-		// 				sParentKey: "_billingProvinceCode",
-		// 				sProvincesFor: "billingAddress"
-		// 			});
-		// 		}
-		// 		if ($scope.oContact._shippingCountryCode) {
-		// 			constructProvinceSelect({
-		// 				sParentKey: "_shippingProvinceCode",
-		// 				sProvincesFor: "shippingAddress"
-		// 			});
-		// 		}
-		// 	};
-
 
 		var onTaskTypesLoaded = function(aData) {
 			// for (var i = 0; i < aData.length; i++) {
@@ -337,12 +210,23 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		};
 
 		var onTaskPrioritiesLoaded = function(aData) {
+
 			for (var i = 0; i < aData.length; i++) {
+				aData[i].selected = false;
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+				if(aData[i].NameEN === $scope.sTaskPriority ){
+					aData[i].selected = true;
+				}
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
 
-			debugger
+			
+
+			//loop to tick element
+			//how to pass selected into method ?
+			// 
+
+			
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
@@ -350,10 +234,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				oParentArrayWrapper: oDeficiencyWrapper,
 				sNameEN: "NameEN",
 				sNameFR: "NameFR",
+				sSelected: "selected",
 				sDependentKey: "Guid",
 				sParentKey: "_taskPriorityGuid",
 				sTargetArrayNameInParent: "aTaskPriorities"
 			});
+			
 			if (oDeficiencyWrapper.aData[0]) {
 				$scope.aTaskPriorities = angular.copy(oDeficiencyWrapper.aData[0].aTaskPriorities);
 			}
@@ -606,10 +492,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			var aLinks = [];
 			var aUri = [];
 			var sUri = "";
-			for (var i = 0; i < $scope.aSelectedContractors.length; i++) {
-				sUri = "Accounts('" + $scope.aSelectedContractors[i].Guid + "')";
-				aUri.push(sUri);
-			}
+			
+				for (var i = 0; i < $scope.aSelectedContractors.length; i++) {
+					sUri = "Accounts('" + $scope.aSelectedContractors[i].Guid + "')";
+					aUri.push(sUri);
+				}
+			
 			if (aUri.length) {
 				aLinks.push({
 					sRelationName: "AccountDetails",
@@ -664,15 +552,15 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			$scope.oForms.deficiencyDetailsForm.selectedStatuses.$setDirty();
 		};
 
-		$scope.onCloseCheckSelectedContractorsLength = function() {
-			if ($scope.aSelectedContractors.length == 0)
-				$scope.onSelectedContractorsModified();
-		};
+		// $scope.onCloseCheckSelectedContractorsLength = function() {
+		// 	if ($scope.aSelectedContractors.length == 0)
+		// 		$scope.onSelectedContractorsModified();
+		// };
 
-		$scope.onSelectedContractorsModified = function() {
-			$scope.onDataModified();
-			$scope.oForms.deficiencyDetailsForm.selectedContractors.$setDirty();
-		};
+		// $scope.onSelectedContractorsModified = function() {
+		// 	$scope.onDataModified();
+		// 	$scope.oForms.deficiencyDetailsForm.selectedContractors.$setDirty();
+		// };
 
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
@@ -709,9 +597,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			if ($scope.oForms.deficiencyDetailsForm.selectedStatuses) {
 				$scope.oForms.deficiencyDetailsForm.selectedStatuses.$setDirty(); //to display validation messages on submit press
 			}
-			if ($scope.oForms.deficiencyDetailsForm.selectedContractors) {
-				$scope.oForms.deficiencyDetailsForm.selectedContractors.$setDirty(); //to display validation messages on submit press
-			}
+			// if ($scope.oForms.deficiencyDetailsForm.selectedContractors) {
+			// 	$scope.oForms.deficiencyDetailsForm.selectedContractors.$setDirty(); //to display validation messages on submit press
+			// }
 			if ($scope.oForms.deficiencyDetailsForm.selectedUser) {
 				$scope.oForms.deficiencyDetailsForm.selectedUser.$setDirty(); //to display validation messages on submit press
 			}
