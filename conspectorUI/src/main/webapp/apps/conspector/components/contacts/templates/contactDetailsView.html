@@ -83,14 +83,14 @@
 						is-disabled="sMode == 'display' || bIsChangePhasesAssignmentAllowed == false"
 						on-item-click="onSelectedPhasesModified()"
 						output-model ="aSelectedPhases"
-						on-close="onCloseCheckSelectedPhasesLength()"
+						
 						>
 					</div>
 					
-					<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
+					<!-- <input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.selectedPhases.$error" ng-if="(oForms.contactDetailsForm.selectedPhases.$dirty && !oForms.contactDetailsForm.selectedPhases.$valid) || submitted">
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div layout="row" ng-if="bShowParentAccountAndContactType" style="width: 100%" flex>

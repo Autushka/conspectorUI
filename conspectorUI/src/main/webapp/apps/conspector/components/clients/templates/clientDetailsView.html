@@ -69,13 +69,13 @@
 						is-disabled="sMode == 'display'"
 						on-item-click="onDataModified()"
 						output-model="aSelectedPhases"
-						on-close="onCloseCheckSelectedPhasesLength()"
+						
 						>
 					</div>
-					<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
+					<!-- <input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.clientDetailsForm.selectedPhases.$error" ng-if="(oForms.clientDetailsForm.selectedPhases.$dirty && !oForms.clientDetailsForm.selectedPhases.$valid) || submitted">
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div layout="column" layout-gt-md="row" style="width: 100%" flex>

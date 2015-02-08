@@ -65,6 +65,7 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			$scope.oContact._guid = oContact.Guid;
 			$scope.oContact._accountGuid = oContact.AccountGuid;
 
+
 			$scope.oContact._lastModifiedAt = oContact.LastModifiedAt;
 			$scope.oContact.sFirstName = oContact.FirstName;
 			$scope.oContact.sLastName = oContact.LastName;
@@ -96,9 +97,10 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 				$scope.oContact._shippingCountryCode = oContact.ShippingAddress.ShippingCountry;
 				$scope.oContact._shippingProvinceCode = oContact.ShippingAddress.ShippingProvince;
 			}
-
-			if (oContact.AccountDetails) {
+			
+			if (oContact.AccountDetails && oContact.AccountDetails.AccountTypeDetails) {
 				$scope.oContact._sAccountName = oContact.AccountDetails.Name;
+				$scope.oContact._accountTypeName = oContact.AccountDetails.AccountTypeDetails.NameEN;
 			}
 
 			if (oContact.ContactTypeDetails) {
@@ -393,19 +395,20 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			var aLinks = [];
 			var aUri = [];
 			var sUri = "";
-			for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
-				if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
-					sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
-					aUri.push(sUri);
-				}
-			}
-			if (aUri.length) {
-				aLinks.push({
-					sRelationName: "PhaseDetails",
-					bKeepCompanyDependentLinks: true,
-					aUri: aUri
-				});
-			}
+
+			if ($scope.aSelectedPhases && $scope.aSelectedPhases.length) {
+                for (var i = 0; i < $scope.aSelectedPhases.length; i++) {
+                    sUri = "Phases('" + $scope.aSelectedPhases[i].Guid + "')";
+                    aUri.push(sUri);
+                }
+            }
+
+            aLinks.push({
+                sRelationName: "PhaseDetails",
+                bKeepCompanyDependentLinks: true,
+                aUri: aUri
+            });
+
 			return aLinks;
 		};
 
@@ -414,15 +417,15 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty();
 		};
 
-		$scope.onCloseCheckSelectedPhasesLength = function() {
-			if ($scope.aSelectedPhases.length == 0)
-				$scope.onSelectedPhasesModified();
-		};
+		// $scope.onCloseCheckSelectedPhasesLength = function() {
+		// 	if ($scope.aSelectedPhases.length == 0)
+		// 		$scope.onSelectedPhasesModified();
+		// };
 
-		$scope.onSelectedPhasesModified = function() {
-			$scope.onDataModified();
-			$scope.oForms.contactDetailsForm.selectedPhases.$setDirty();
-		};
+		// $scope.onSelectedPhasesModified = function() {
+		// 	$scope.onDataModified();
+		// 	$scope.oForms.contactDetailsForm.selectedPhases.$setDirty();
+		// };
 
 		$scope.onDataModified = function() {
 			bDataHasBeenModified = true;
@@ -447,9 +450,9 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			if ($scope.oForms.contactDetailsForm.selectedPhases) {
-				$scope.oForms.contactDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
-			}
+			// if ($scope.oForms.contactDetailsForm.selectedPhases) {
+			// 	$scope.oForms.contactDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
+			// }
 			if ($scope.oForms.contactDetailsForm.selectedParentAccount) {
 				$scope.oForms.contactDetailsForm.selectedParentAccount.$setDirty(); //to display validation messages on submit press
 			}
@@ -658,19 +661,25 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 		};
 
 		$scope.onNavigateToAccountDetails = function() {
-			var sAccountGuid = "";
-			for (var i = 0; i < $scope.aAccounts.length; i++) {
-				if ($scope.aAccounts[i].ticked && $scope.aAccounts[i].multiSelectGroup === undefined) {
-					sAccountGuid = $scope.aAccounts[i].Guid;
-					break;
-				}
-			}
+			
+            // var sAccountGuid = oContact._accountGuid;
+            var sAccountTypeName = $scope.oContact._accountTypeName;
 
-			$state.go('app.contractorDetailsWrapper.contractorDetails', {
-				sMode: "display",
-				sContractorGuid: sAccountGuid,
-			});
-		};
+            switch (sAccountTypeName) {
+                case "Contractor":
+                    $state.go('app.contractorDetailsWrapper.contractorDetails', {
+                        sMode: "display",
+                        sContractorGuid: $scope.oContact._accountGuid,
+                    });
+                    break;
+                case "Client":
+                    $state.go('app.clientDetailsWrapper.clientDetails', {
+                        sMode: "display",
+                        sClientGuid: $scope.oContact._accountGuid,
+                    });
+                    break;
+            }
+        };
 
 		$scope.onSaveAndNew = function() {
 			$scope.onSave(true);
