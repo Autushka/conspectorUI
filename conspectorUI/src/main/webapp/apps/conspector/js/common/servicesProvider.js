@@ -307,7 +307,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 							Guid: sFileMetadataSetGuid,
 							GeneralAttributes: {
 								IsDeleted: false
-							}
+							},
+							LastModifiedAt: utilsProvider.dateToDBDate(new Date())
 						}
 					};
 

@@ -1693,6 +1693,25 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				oSvc.then(onSuccess);
 			},
 
+			updateFileMetadataSet: function(oParameters) {
+				var onSuccess = function(oData) {
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "FileMetadataSets",
+					sKeyAttribute: "Guid", 
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},			
+
 			getEntityAttachments: function(oParameters) {
 				var svc = dataProvider.getEntity({
 					sPath: "FileMetadataSets",

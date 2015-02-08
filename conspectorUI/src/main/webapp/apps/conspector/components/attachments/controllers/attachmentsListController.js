@@ -25,19 +25,34 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
 		});
 
+		var updateAttachmentsNumber = function(iImagesNumber) {
+			var onSuccessUpdate = function(oData){
+				$rootScope.sFileMetadataSetLastModifiedAt = oData.LastModifiedAt;
+			};
+
+			apiProvider.updateFileMetadataSet({
+				sKey: $rootScope.sFileMetadataSetGuid,
+				oData: {
+					Guid: $rootScope.sFileMetadataSetGuid,
+					AttachmentsNumber: iImagesNumber,
+					LastModifiedAt: $rootScope.sFileMetadataSetLastModifiedAt,
+					onSuccess: onSuccessUpdate
+				}
+			});
+		};
+
 		var onAttachmentsLoaded = function(oData) {
 			var sMediaType = "";
+			var iImagesNumber = 0;
 			for (var i = 0; i < oData.FileMetadataDetails.results.length; i++) {
 				sMediaType = "";
 				if (oData.FileMetadataDetails.results[i].MediaType.indexOf("image") > -1) {
 					sMediaType = "Image";
+					iImagesNumber++;
 				}
 				if (oData.FileMetadataDetails.results[i].MediaType.indexOf("pdf") > -1) {
 					sMediaType = "PDF";
 				}
-
-
-
 				oAttachmentsListData.aData.push({
 					_guid: oData.FileMetadataDetails.results[i].Guid,
 					sMediaType: sMediaType,
@@ -51,6 +66,8 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				});
 			}
 			$scope.tableParams.reload();
+			updateAttachmentsNumber(iImagesNumber);
+
 		};
 
 		var loadAttachments = function() {
@@ -75,7 +92,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			// 	bParentEntityHasFileMetadataSetGuid = true;
 			// }
 
-			var onSuccessUpload = function(){
+			var onSuccessUpload = function() { //called once for the last uploaded file
 				loadAttachments();
 			};
 
@@ -96,7 +113,8 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			var oDataForSave = {
 				GeneralAttributes: {
 					IsDeleted: true
-				}
+				},
+				//LastModifiedAt
 			};
 			var onSuccessDelete = function() {
 				for (var i = 0; i < oAttachmentsListData.aData.length; i++) {
@@ -118,7 +136,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 					bShowSpinner: true,
 					onSuccess: onSuccessDelete
 				});
-			} 
+			}
 		};
 		//
 		//		$scope.onDisplay = function(oDeficiency) {

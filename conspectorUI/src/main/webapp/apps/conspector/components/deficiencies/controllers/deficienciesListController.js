@@ -63,6 +63,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			var sStatusSortingSequence = "";
 			var sStatuseIconUrl = "";
 			var sContractors = "";
+			var iImagesNumber = 0;
 			for (var i = 0; i < aData.length; i++) {
 				sProjectName = "";
 				sPhaseName = "";
@@ -74,6 +75,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				iSortingSequence = 0;
 				sStatuseIconUrl = "";
 				sContractors = "";
+				iImagesNumber = 0;
 
 				bMatchFound = false;
 
@@ -118,7 +120,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					aData[i].sUnitName = aData[i].UnitDetails.Name;
 				}
 
-
+				if(aData[i].FileMetadataSetDetails){
+					iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
+				}
 				
 				if (aData[i].DueDate && aData[i].DueDate != "/Date(0)/") {
 					sDueDate = utilsProvider.dBDateToSting(aData[i].DueDate);
@@ -156,7 +160,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					_unitGuid: aData[i].UnitGuid,
 					_sortingSequence: iSortingSequence,
 					sStatuseIconUrl: sStatuseIconUrl,
-					_fileMetadataSetGuid: aData[i].FileMetadataSetGuid
+					_fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
+					iImagesNumber: iImagesNumber
 				});
 				// }
 
@@ -168,7 +173,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		var loadDeficiencies = function() {
 			oDeficienciesListData.aData = [];
 			apiProvider.getDeficiencies({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails",
 				bShowSpinner: true,
 				onSuccess: onDeficienciesLoaded
 			});

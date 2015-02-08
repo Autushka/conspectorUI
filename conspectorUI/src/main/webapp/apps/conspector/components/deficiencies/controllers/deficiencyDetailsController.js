@@ -96,10 +96,13 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			var sPhase = "";
 
 			$rootScope.sFileMetadataSetGuid = oDeficiency.FileMetadataSetGuid;
+			if(oDeficiency.FileMetadataSetDetails){
+				$rootScope.sFileMetadataSetLastModifiedAt = oDeficiency.FileMetadataSetDetails.LastModifiedAt;
+			}			
 			$rootScope.$broadcast("FileAttachemntsCanBeLoaded");
 
 
-			if (oDeficiency.UnitDetails.Name) {
+			if (oDeficiency.UnitDetails && oDeficiency.UnitDetails.Name) {
 				$scope.oDeficiency._unitName = oDeficiency.UnitDetails.Name;
 			}
 
@@ -263,7 +266,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		var getDeficiencyDetails = function() {
 			apiProvider.getDeficiency({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails, TaskPriorityDetails, AccountDetails, UnitDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails, TaskPriorityDetails, AccountDetails, UnitDetails,FileMetadataSetDetails",
 				sKey: sDeficiencyGuid,
 				bShowSpinner: true,
 				onSuccess: onDeficiencyDetailsLoaded,
