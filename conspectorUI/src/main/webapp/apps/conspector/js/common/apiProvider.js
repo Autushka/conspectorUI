@@ -1691,7 +1691,18 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},				
+			},	
+
+			getEntityAttachments: function(oParameters){
+				var svc = dataProvider.getEntity({
+					sPath: "FileMetadataSet",
+					sKey: oParameters.sKey,
+					sExpand: oParameters.sExpand,//"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(oParameters.onSuccess);				
+			},						
 
 			generateReport: function(oParameters) {
 				var oData = {
