@@ -1847,6 +1847,9 @@ DETAILS VIEW
 	&.cnpSubSectionDataFaded{
 		color: @textColorLight;
 	}
+	&.cnpSubSectionDataNoBottomMargin{
+		margin-bottom: 0px;
+	}
 }
 .cnpSubSectionText{
 	margin-top: 12px;
@@ -1907,6 +1910,13 @@ tags-input .tags.location .tag-item,
 .tag-item[ng-repeat="tag in oDeficiency.aLocationTags"]{
 	background: @locationTagColor;
 }
+
+tags-input[ng-model="oDeficiency.aLocationTags"]>div>div>ul>li[class*="tag-item"]{
+	background: @locationTagColor;
+
+}
+
+
 
 .tags-wrapper {
 	/*	-moz-appearance: textfield;

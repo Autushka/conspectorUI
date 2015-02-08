@@ -61,8 +61,8 @@
 		<script src="apps/conspector/js/types.js"></script>
 
 		<script src="apps/conspector/js/common/cacheProvider.js"></script>
-		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
+		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 		<script src="apps/conspector/js/common/dataProvider.js"></script>
 		<script src="apps/conspector/js/common/apiProvider.js"></script>
 		<script src="apps/conspector/js/rolesSettings.js"></script>			

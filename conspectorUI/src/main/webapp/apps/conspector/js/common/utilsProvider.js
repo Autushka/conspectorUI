@@ -1,5 +1,5 @@
-app.factory('utilsProvider', ['$mdToast',
-	function($mdToast) {
+app.factory('utilsProvider', ['$mdToast', '$translate',
+	function($mdToast, $translate) {
 		return {
 			displayMessage: function(oParameters) { //sText, sType
 				var oToast = $mdToast.simple();
@@ -26,7 +26,12 @@ app.factory('utilsProvider', ['$mdToast',
 				return "/Date(" + iDate.toString() + ")/";
 			},
 
-			dateToString: function(date) { // always fixed ISO date format
+			dateToString: function(date,bNoTime) { // always fixed ISO date format
+
+				if(bNoTime){
+
+				}
+				
 				var sFullDate = "";
 				var sDate = date.getDate().toString();
 				var sMonth = (date.getMonth() + 1).toString();
@@ -49,8 +54,93 @@ app.factory('utilsProvider', ['$mdToast',
 				}
 				if (sMonth.length === 1) {
 					sMonth = '0' + sMonth;
+					if($translate.use() === "en") {
+						switch(sMonth) {
+							case '01':
+							sMonth = "January";
+							break;
+							case '02':
+							sMonth = "February";
+							break;
+							case '03':
+							sMonth = "March";
+							break;
+							case '04':
+							sMonth = "April";
+							break;
+							case '05':
+							sMonth = "May";
+							break;
+							case '06':
+							sMonth = "June";
+							break;
+							case '07':
+							sMonth = "July";
+							break;
+							case '08':
+							sMonth = "August";
+							break;
+							case '09':
+							sMonth = "September";
+							break;
+							case '10':
+							sMonth = "October";
+							break;
+							case '11':
+							sMonth = "November";
+							break;
+							case '12':
+							sMonth = "December";
+							break;
+						}
+					}
+					if($translate.use() === "fr") {
+						switch(sMonth) {
+							case '01':
+							sMonth = "janvier";
+							break;
+							case '02':
+							sMonth = "f\u00E9vrier";
+							break;
+							case '03':
+							sMonth = "mars";
+							break;
+							case '04':
+							sMonth = "avril";
+							break;
+							case '05':
+							sMonth = "mai";
+							break;
+							case '06':
+							sMonth = "juin";
+							break;
+							case '07':
+							sMonth = "juillet";
+							break;
+							case '08':
+							sMonth = "ao\u00D4t";
+							break;
+							case '09':
+							sMonth = "septembre";
+							break;
+							case '10':
+							sMonth = "octobre";
+							break;
+							case '11':
+							sMonth = "novembre";
+							break;
+							case '12':
+							sMonth = "d\u00E9cembre";
+							break;
+						}
+					}
 				}
-				sFullDate =  sMonth + "/" + sDate + "/" + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
+				if($translate.use() === "en"){
+					sFullDate =  sMonth + " " + sDate + "th " + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
+				}
+				if($translate.use() === "fr"){
+					sFullDate =   sDate + " " + sMonth + " " + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
+				}
 				return sFullDate;
 			},
 

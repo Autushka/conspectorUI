@@ -28,8 +28,8 @@
 		<div class="cnpSection" layout="column" layout-align="start center" flex>
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
-					<div layout="row" flex>
-						<div flex="45" flex-gt-md="33">
+					<div layout="column" layout-gt-md="row" flex>
+						<div flex="100" flex-gt-md="60">
 							<div  class="cnpSubSectionLabel">
 								<label>
 									{{'deficiencyDetails_associatedProjectsAndPhases' | translate}}
@@ -61,13 +61,13 @@
 								</div>
 							</div>
 						</div>
-						<div flex="30">
+						<div flex="100" flex-gt-md="40">
 							<div  class="cnpSubSectionLabel">
 								<label>
 									{{'deficiencyDetails_unit' | translate}}
 								</label>
 							</div>
-							<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oDeficiency._unitName}}</div>
+							<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oDeficiency._unitName}}</div>
 							<div ng-show="sMode != 'display'">
 								<div
 									multi-select
@@ -90,31 +90,33 @@
 								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 							</div>
 						</div>
-						<div>
-							<div  class="cnpSubSectionLabel">
-								<label>
-									{{'deficiencyDetails_status' | translate}}
-								</label>
-							</div>
-							<div
-								multi-select
-								input-model="aDeficiencyStatuses"
-								default-label="{{'deficiencyDetails_deficiencyStatusDefaultLabel' | translate }}"
-								button-label="icon name"
-								item-label="icon name"
-								is-disabled="sMode == 'display'"
-								tick-property="ticked"
-								selection-mode="single"
-								on-item-click="onSelectedStatusesModified()"
-								output-model="aSelectedStatuses"
-								on-close="onCloseCheckSelectedStatusesLength()"
-								helper-elements=""
-								>
-							</div>
-							<input ng-model="aSelectedStatuses.length" type="number" ng-show="false" name="selectedStatuses" min="1">
-							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedStatuses.$error" ng-if="(oForms.deficiencyDetailsForm.selectedStatuses.$dirty && !oForms.deficiencyDetailsForm.selectedStatuses.$valid) || submitted">
-								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-							</div>
+					</div>
+				</div>
+				<div class="cnpSubSection" flex>
+					<div>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'deficiencyDetails_status' | translate}}
+							</label>
+						</div>
+						<div
+							multi-select
+							input-model="aDeficiencyStatuses"
+							default-label="{{'deficiencyDetails_deficiencyStatusDefaultLabel' | translate }}"
+							button-label="icon name"
+							item-label="icon name"
+							is-disabled="sMode == 'display'"
+							tick-property="ticked"
+							selection-mode="single"
+							on-item-click="onSelectedStatusesModified()"
+							output-model="aSelectedStatuses"
+							on-close="onCloseCheckSelectedStatusesLength()"
+							helper-elements=""
+							>
+						</div>
+						<input ng-model="aSelectedStatuses.length" type="number" ng-show="false" name="selectedStatuses" min="1">
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedStatuses.$error" ng-if="(oForms.deficiencyDetailsForm.selectedStatuses.$dirty && !oForms.deficiencyDetailsForm.selectedStatuses.$valid) || submitted">
+							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 						</div>
 					</div>
 				</div>
@@ -268,30 +270,30 @@
 			</div>
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" layout="row" layout-align="space-between start" flex>
-					<div flex>
+					<div>
 						<div class="cnpSubSectionLabel">
 							<label>
 								{{'deficiencyDetails_dueDate' | translate}}
 							</label>
 						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oDeficiency.sDueDate}}</div>
+						<div class="cnpSubSectionData cnpSubSectionDataNoBottomMargin" ng-if="sMode == 'display'">{{oDeficiency.sDueDate}}</div>
 						<quick-datepicker ng-if="sMode != 'display'" ng-model='oDeficiency.dDueDate' width="100%"></quick-datepicker>
 					</div>
-					<div flex>
+					<div>
 						<div  class="cnpSubSectionLabel">
 							<label>
 								{{'deficiencyDetails_creationDate' | translate}}
 							</label>
 						</div>
-						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oDeficiency.sCreatedAt}}</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData cnpSubSectionDataNoBottomMargin" ng-if="sMode == 'display' || sMode == 'edit'">{{oDeficiency.sCreatedAt}}</div>
 					</div>
-					<div flex>
+					<div>
 						<div  class="cnpSubSectionLabel">
 							<label>
 								{{'deficiencyDetails_lastModificationDate' | translate}}
 							</label>
 						</div>
-						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display' || sMode == 'edit'">{{oDeficiency.sLastModifiedAt}}</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData cnpSubSectionDataNoBottomMargin" ng-if="sMode == 'display' || sMode == 'edit'">{{oDeficiency.sLastModifiedAt}}</div>
 					</div>
 				</div>
 			</div>

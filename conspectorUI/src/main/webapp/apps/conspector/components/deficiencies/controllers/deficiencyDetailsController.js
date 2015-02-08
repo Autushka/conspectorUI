@@ -109,11 +109,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				$scope.oDeficiency._unitName = oDeficiency.UnitDetails.Name;
 			}
 
-			if (oDeficiency.PhaseDetails.NameEN && oDeficiency.PhaseDetails.ProjectDetails.NameEN && $translate.use() === "en"){
+			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.NameEN && oDeficiency.PhaseDetails.ProjectDetails.NameEN && $translate.use() === "en"){
 				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameEN + " - " + oDeficiency.PhaseDetails.NameEN;
 			}
 
-			if (oDeficiency.PhaseDetails.NameFR && oDeficiency.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr"){
+			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.NameFR && oDeficiency.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr"){
 				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameFR + " - " + oDeficiency.PhaseDetails.NameFR;
 			}else{
 				$scope.oDeficiency._ProjectAndPhaseName = oDeficiency.PhaseDetails.ProjectDetails.NameEN + " - " + oDeficiency.PhaseDetails.NameEN;
@@ -121,11 +121,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 			//
 
-			if (oDeficiency.TaskPriorityDetails.NameEN && oDeficiency.TaskPriorityDetails.NameEN && $translate.use() === "en"){
+			if (oDeficiency.TaskPriorityDetails && oDeficiency.TaskPriorityDetails.NameEN && oDeficiency.TaskPriorityDetails.NameEN && $translate.use() === "en"){
 				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
 			}
 
-			if (oDeficiency.TaskPriorityDetails.NameFR && oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr"){
+			if (oDeficiency.TaskPriorityDetails && oDeficiency.TaskPriorityDetails.NameFR && oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr"){
 				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameFR;
 			}else{
 				$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
