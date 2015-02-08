@@ -53,15 +53,18 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		var onDeficienciesLoaded = function(aData) {
 			var sProjectName = "";
 			var sPhaseName = "";
+			var sUnitName = "";
 			var sProjectPhase = "";
 			var bMatchFound = false;
 			var iSortingSequence = 0;
+			var sStatusSortingSequence = "";
 			var sStatuseIconUrl = "";
 			var sContractors = "";
 			for (var i = 0; i < aData.length; i++) {
 				sProjectName = "";
 				sPhaseName = "";
 				sProjectPhase = "";
+				sUnitName = "";
 				iSortingSequence = 0;
 				sStatuseIconUrl = "";
 				sContractors = "";
@@ -104,6 +107,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					}
 				}
 
+				if(aData[i].UnitDetails){
+					aData[i].sUnitName = aData[i].UnitDetails.Name;
+				}
 				//$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].guid;
 
 				// if (!bMatchFound) {
@@ -125,11 +131,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					// sPhone: aData[i].MainPhone,
 					// sEmail: aData[i].Email,
 					_guid: aData[i].Guid,
-					sUnit: aData[i].UnitDetails.Name,
+					sUnit: aData[i].sUnitName,
 					sTags: aData[i].DescriptionTags,
 					sLocationTags: aData[i].LocationTags,
 					sProjectPhase: sProjectPhase,
 					sContractors: sContractors,
+					sStatusSortingSequence: sStatusSortingSequence,
 					_sortingSequence: iSortingSequence,
 					sStatuseIconUrl: sStatuseIconUrl
 				});
