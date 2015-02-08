@@ -1,5 +1,8 @@
 viewControllers.controller('forgotPasswordView', ['$scope', '$rootScope', '$state', '$stateParams', 'utilsProvider', 'dataProvider', 'servicesProvider', 'apiProvider', '$translate', 'historyProvider',
 	function($scope, $rootScope, $state, $stateParams, utilsProvider, dataProvider, servicesProvider, apiProvider, $translate, historyProvider) {
+		
+		$scope.oForms = {};
+
 		$scope.sSelectedResetType = "userName";
 
 		$scope.resetData = {

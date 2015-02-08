@@ -134,7 +134,12 @@
 							</label>
 						</div>
 						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="mailto:{{oClient.sEmail}}">{{oClient.sEmail}}</a></div>
-						<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_emailPlaceholder' | translate}}">
+						<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oClient.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_emailPlaceholder' | translate}}" name="clientEmail">
+						<div class="cnpWarningMessageValidation" ng-messages="oForms.clientDetailsForm.clientEmail.$error" ng-if="oForms.clientDetailsForm.clientEmail.$invalid && sMode != 'display'" >
+							<div class="cnpErrorMessageValidationMessage" ng-message="email">
+								{{'global_emailValidationWarning' | translate}}
+							</div>
+						</div>
 						<div class="cnpSubSectionLabel">
 							<label>
 								{{'clientDetails_fax' | translate}}

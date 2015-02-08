@@ -831,6 +831,14 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			});
 		};
 
+		$scope.onNavigateToUnitDetails = function(oDeficiency) {
+            var sUnitGuid = oDeficiency._unitGuid;
+           	$state.go('app.unitDetailsWrapper.unitDetails', {
+                        sMode: "display",
+                        sUnitGuid: sUnitGuid,
+                    });
+        };
+
 		$scope.onSaveAndNew = function() {
 			$scope.onSave(true);
 		};

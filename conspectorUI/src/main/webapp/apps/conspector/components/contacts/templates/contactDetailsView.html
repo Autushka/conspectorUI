@@ -138,6 +138,18 @@
 						</div>
 						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oContact.sMobilePhone | phoneFormatter}}">{{oContact.sMobilePhone | phoneFormatter}}</a></div>
 						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sMobilePhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
+						<div class="cnpSubSectionLabel">
+							<label>
+								{{'contactDetails_email' | translate}}
+							</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="mailto:{{oContact.sEmail}}">{{oContact.sEmail}}</a></div>
+						<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_emailPlaceholder' | translate}}" name="contactEmail">
+						<div class="cnpWarningMessageValidation" ng-messages="oForms.contactDetailsForm.contactEmail.$error" ng-if="oForms.contactDetailsForm.contactEmail.$invalid && sMode != 'display'" >
+							<div class="cnpErrorMessageValidationMessage" ng-message="email">
+								{{'global_emailValidationWarning' | translate}}
+							</div>
+						</div>
 						<div layout="row">
 							<div flex="70">
 								<div  class="cnpSubSectionLabel">
@@ -178,13 +190,7 @@
 								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sWorkPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
 							</div>
 						</div>
-						<div class="cnpSubSectionLabel">
-							<label>
-								{{'contactDetails_email' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="mailto:{{oContact.sEmail}}">{{oContact.sEmail}}</a></div>
-						<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_emailPlaceholder' | translate}}">
+						
 					</div>
 					<div class="cnpSubSection" flex ng-if="bShowDescriptionTags">
 						<div class="cnpSubSectionLabel">

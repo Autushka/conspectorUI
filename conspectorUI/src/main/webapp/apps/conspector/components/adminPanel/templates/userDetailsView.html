@@ -2,9 +2,9 @@
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
 			<!-- <div>
-						<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-						Open Sidenav
-						</md-button>
+							<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+							Open Sidenav
+							</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -63,7 +63,13 @@
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}
 							</div>
+							<div class="cnpErrorMessageValidationMessage" ng-message="email">
+								{{'global_emailValidationWarning' | translate}}
+							</div>
 						</div>
+						<!-- <div class="cnpWarningMessageValidation" ng-messages="oForms.userDetailsForm.email.$error" ng-if="oForms.userDetailsForm.email.$invalid && sMode != 'display'" >
+							
+						</div> -->
 					</div>
 					<div flex ng-if="(sMode == 'create' || sMode == 'edit') && bIsGlobalUserAdministrator">
 						<div  class="cnpSubSectionLabel">
@@ -119,9 +125,9 @@
 						</div>
 						<input ng-model="aSelectedCompanies.length" type="number" ng-show="false" name="selectedCompanies" min="1">
 						<!-- <div class="cnpErrorMessageValidation" ng-messages="oForms.userDetailsForm.selectedCompanies.$error" ng-if="oForms.userDetailsForm.selectedCompanies.$dirty || submitted  || !oForms.userDetailsForm.selectedCompanies.$valid">
-							<div class="cnpErrorMessageValidationMessage" ng-message="min">
-								{{'global_emptyFieldError' | translate}}
-							</div>
+								<div class="cnpErrorMessageValidationMessage" ng-message="min">
+										{{'global_emptyFieldError' | translate}}
+								</div>
 						</div> -->
 					</div>
 					<div class="cnpSubSection" flex>
