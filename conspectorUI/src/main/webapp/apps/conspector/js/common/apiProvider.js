@@ -1694,8 +1694,8 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},	
 
 			getEntityAttachments: function(oParameters){
-				var svc = dataProvider.getEntity({
-					sPath: "FileMetadataSet",
+				var svc = dataProvider.getEntitySet({
+					sPath: "FileMetadataSets",
 					sKey: oParameters.sKey,
 					sExpand: oParameters.sExpand,//"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",

@@ -1,7 +1,5 @@
 viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
 	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
-		//historyProvider.removeHistory(); // because current view doesn't have a back button
-
 //		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 //		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
 //			sRole: sCurrentRole,
@@ -23,9 +21,11 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		};
 
         var sParentEntityGuid = "";
+        var sParentEntityFileMetadataSetGuid = "";
 
         if ($stateParams.sDeficiencyGuid) {
             sParentEntityGuid = $stateParams.sDeficiencyGuid;
+            sParentEntityFileMetadataSetGuid = $stateParams.sFileMetadataSetGuid;
         }
 
 		$scope.tableParams = servicesProvider.createNgTable({
@@ -55,7 +55,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		var loadAttachments = function() {
 			oAttachmentsListData.aData = [];
 			apiProvider.getEntityAttachments({
-				sKey: sParentEntityGuid,
+				sKey: sParentEntityFileMetadataSetGuid,
 				sExpand: "FileMetadataDetails",//"PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails",
 				bShowSpinner: true,
 				onSuccess: onAttachmentsLoaded
