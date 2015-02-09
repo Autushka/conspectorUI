@@ -296,7 +296,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		var onUsersWithCompaniesLoaded = function(aData) {
 			var aFilteredUser = [{}];
-
+			var bMatchFound = false;
 			for (var i = 0; i < aData.length; i++) {
 				for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
 					if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {

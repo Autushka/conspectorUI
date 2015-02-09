@@ -369,7 +369,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 
             aLinks.push({
                 sRelationName: "CompanyDetails",
-                bKeepCompanyDependentLinks: true,
+                bKeepCompanyDependentLinks: false,
                 aUri: aUri
             });
 			aUri = [];
