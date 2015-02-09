@@ -1,14 +1,14 @@
-viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$upload',
-	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload) {
+viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$upload', 'utilsProvider',
+	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload, utilsProvider) {
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
-		$rootScope.oStateParams = {}; // for backNavigation			
+		$rootScope.oStateParams = {}; // for backNavigation	
+		var bUpdateImagesNumber = false;		
 
 		var oAttachmentsListData = {
 			aData: []
 		};
 
 		var sParentEntityGuid = "";
-		//var sParentEntityFileMetadataSetGuid = "";
 
 		if ($stateParams.sDeficiencyGuid) {
 			sParentEntityGuid = $stateParams.sDeficiencyGuid;
@@ -18,7 +18,9 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		$scope.tableParams = servicesProvider.createNgTable({
 			oInitialDataArrayWrapper: oAttachmentsListData,
 			sDisplayedDataArrayName: "aDisplayedAttachments",
-			oInitialSorting: {},
+			oInitialSorting: {
+				_createdAt: 'desc'
+			},
 			oInitialFilter: {},
 			aInitialGroupsSettings: {},
 			sGroupBy: "sMediaType",
@@ -26,8 +28,9 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		});
 
 		var updateAttachmentsNumber = function(iImagesNumber) {
-			var onSuccessUpdate = function(oData){
+			var onSuccessUpdate = function(oData) {
 				$rootScope.sFileMetadataSetLastModifiedAt = oData.LastModifiedAt;
+				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
 			};
 
 			apiProvider.updateFileMetadataSet({
@@ -36,38 +39,41 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 					Guid: $rootScope.sFileMetadataSetGuid,
 					AttachmentsNumber: iImagesNumber,
 					LastModifiedAt: $rootScope.sFileMetadataSetLastModifiedAt,
-					onSuccess: onSuccessUpdate
-				}
+				},
+				onSuccess: onSuccessUpdate
 			});
 		};
 
 		var onAttachmentsLoaded = function(oData) {
 			var sMediaType = "";
 			var iImagesNumber = 0;
+			var iSortingSequence = 0;
 			for (var i = 0; i < oData.FileMetadataDetails.results.length; i++) {
 				sMediaType = "";
+				iSortingSequence = 0;
 				if (oData.FileMetadataDetails.results[i].MediaType.indexOf("image") > -1) {
 					sMediaType = "Image";
 					iImagesNumber++;
+					iSortingSequence = 1;
 				}
 				if (oData.FileMetadataDetails.results[i].MediaType.indexOf("pdf") > -1) {
 					sMediaType = "PDF";
+					iSortingSequence = 2;
 				}
 				oAttachmentsListData.aData.push({
 					_guid: oData.FileMetadataDetails.results[i].Guid,
 					sMediaType: sMediaType,
 					sOriginalFileName: oData.FileMetadataDetails.results[i].OriginalFileName,
-					_lastModifiedAt: oData.LastModifiedAt,
-					// sTags: aData[i].DescriptionTags,
-					// sProjectPhase: sProjectPhase,
-					// sContractors: sContractors,
-					// _sortingSequence: iSortingSequence,
-					// sStatuseIconUrl: sStatuseIconUrl
+					_lastModifiedAt: oData.FileMetadataDetails.results[i].LastModifiedAt,
+					_sortingSequence: iSortingSequence,
+					_createdAt: oData.FileMetadataDetails.results[i].CreatedAt,
+					sCreatedAt: utilsProvider.dBDateToSting(oData.FileMetadataDetails.results[i].CreatedAt)
 				});
 			}
 			$scope.tableParams.reload();
-			updateAttachmentsNumber(iImagesNumber);
-
+			if(bUpdateImagesNumber){
+				updateAttachmentsNumber(iImagesNumber);
+			}
 		};
 
 		var loadAttachments = function() {
@@ -82,17 +88,11 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 
 		$scope.$on("FileAttachemntsCanBeLoaded", function() {
 			loadAttachments();
-		})
-
-
+		});
 
 		$scope.onFilesSelected = function(aFiles, $event) {
-			// var bParentEntityHasFileMetadataSetGuid = false;
-			// if (sParentEntityFileMetadataSetGuid) {
-			// 	bParentEntityHasFileMetadataSetGuid = true;
-			// }
-
 			var onSuccessUpload = function() { //called once for the last uploaded file
+				bUpdateImagesNumber = true;
 				loadAttachments();
 			};
 
@@ -117,13 +117,8 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				//LastModifiedAt
 			};
 			var onSuccessDelete = function() {
-				for (var i = 0; i < oAttachmentsListData.aData.length; i++) {
-					if (oAttachmentsListData.aData[i]._guid === oAttachment._guid) {
-						oAttachmentsListData.aData.splice(i, 1);
-						break;
-					}
-				}
-				$scope.tableParams.reload();
+				bUpdateImagesNumber = true;
+				loadAttachments();
 			}
 
 			if (oAttachment._guid) {

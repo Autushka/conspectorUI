@@ -3,7 +3,7 @@
 <div class="cnpContent" layout="column">
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 		<div>
-			<button ng-file-select accept="image/*,*.svg,.pdf" ng-multiple="true" ng-file-change="onFilesSelected($files, $event)">{{'global_upload' | translate}}</button>
+			<button ng-file-select accept="image/*,.pdf" ng-multiple="true" ng-file-change="onFilesSelected($files, $event)">{{'global_upload' | translate}}</button>
 <!-- 			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'deficienciesList_addNew' | translate}}</md-button> -->
 		</div>
 		<div layout="row" layout-align="end start">
@@ -41,7 +41,16 @@
 								</span>
 							</div>
 						</div>
-					</td>					
+					</td>	
+					<td data-title="'global_createdAt' | translate">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>
+								{{attachment.sCreatedAt}}
+								</span>
+							</div>
+						</div>
+					</td>										
 <!-- 					<td data-title="'global_tags' | translate" sortable="'sTags'" filter="{'sTags': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>

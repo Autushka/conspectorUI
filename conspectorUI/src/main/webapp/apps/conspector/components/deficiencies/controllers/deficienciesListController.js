@@ -64,6 +64,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			var sStatuseIconUrl = "";
 			var sContractors = "";
 			var iImagesNumber = 0;
+			var sFileMetadataSetLastModifiedAt;
 			for (var i = 0; i < aData.length; i++) {
 				sProjectName = "";
 				sPhaseName = "";
@@ -122,6 +123,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
 				if(aData[i].FileMetadataSetDetails){
 					iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
+					sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
+
 				}
 				
 				if (aData[i].DueDate && aData[i].DueDate != "/Date(0)/") {
@@ -161,6 +164,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					_sortingSequence: iSortingSequence,
 					sStatuseIconUrl: sStatuseIconUrl,
 					_fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
+					_fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,
 					iImagesNumber: iImagesNumber
 				});
 				// }
@@ -183,6 +187,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
 		$scope.onDisplay = function(oDeficiency) {
 			$rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
+			$rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
 			$state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
 				sMode: "display",
 				sDeficiencyGuid: oDeficiency._guid,
