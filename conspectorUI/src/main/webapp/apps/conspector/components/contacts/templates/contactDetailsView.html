@@ -48,12 +48,12 @@
 								{{'contactDetails_lastName' | translate}}
 							</label>
 						</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sLastName" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'contactDetails_lastNamePlaceholder' | translate}}" name="lastName" required>
-						<div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.lastName.$error" ng-if="(oForms.contactDetailsForm.lastName.$dirty || submitted) && sMode != 'display'">
+						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContact.sLastName" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'contactDetails_lastNamePlaceholder' | translate}}" name="lastName">
+						<!-- <div class="cnpErrorMessageValidation" ng-messages="oForms.contactDetailsForm.lastName.$error" ng-if="(oForms.contactDetailsForm.lastName.$dirty || submitted) && sMode != 'display'">
 							<div class="cnpErrorMessageValidationMessage" ng-message="required">
 								{{'global_emptyFieldError' | translate}}
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div flex>
 						<div  class="cnpSubSectionLabel">

@@ -359,7 +359,6 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 			var aLinks = [];
 			var aUri = [];
 			var sUri = "";
-			debugger
 			if ($scope.aSelectedCompanies && $scope.aSelectedCompanies.length) {
                 for (var i = 0; i < $scope.aSelectedCompanies.length; i++) {
                     sUri = "Companys('" + $scope.aSelectedCompanies[i].CompanyName + "')";

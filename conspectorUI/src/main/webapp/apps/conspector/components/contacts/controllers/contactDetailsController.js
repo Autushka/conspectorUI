@@ -459,9 +459,9 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			if ($scope.oForms.contactDetailsForm.firstName) {
 				$scope.oForms.contactDetailsForm.firstName.$setDirty(); //to display validation messages on submit press
 			}
-			if ($scope.oForms.contactDetailsForm.lastName) {
-				$scope.oForms.contactDetailsForm.lastName.$setDirty(); //to display validation messages on submit press
-			}
+			// if ($scope.oForms.contactDetailsForm.lastName) {
+			// 	$scope.oForms.contactDetailsForm.lastName.$setDirty(); //to display validation messages on submit press
+			// }
 
 			aLinks = prepareLinksForSave();
 
