@@ -2,7 +2,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload, utilsProvider) {
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = {}; // for backNavigation	
-		var bUpdateImagesNumber = false;		
+		var bUpdateImagesNumber = false;
 
 		var oAttachmentsListData = {
 			aData: []
@@ -71,19 +71,21 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				});
 			}
 			$scope.tableParams.reload();
-			if(bUpdateImagesNumber){
+			if (bUpdateImagesNumber) {
 				updateAttachmentsNumber(iImagesNumber);
 			}
 		};
 
 		var loadAttachments = function() {
-			oAttachmentsListData.aData = [];
-			apiProvider.getEntityAttachments({
-				sKey: $rootScope.sFileMetadataSetGuid,
-				sExpand: "FileMetadataDetails", //"PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails",
-				bShowSpinner: true,
-				onSuccess: onAttachmentsLoaded
-			});
+			if ($rootScope.sFileMetadataSetGuid) {
+				oAttachmentsListData.aData = [];
+				apiProvider.getEntityAttachments({
+					sKey: $rootScope.sFileMetadataSetGuid,
+					sExpand: "FileMetadataDetails", //"PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails",
+					bShowSpinner: true,
+					onSuccess: onAttachmentsLoaded
+				});
+			}
 		};
 
 		$scope.$on("FileAttachemntsCanBeLoaded", function() {

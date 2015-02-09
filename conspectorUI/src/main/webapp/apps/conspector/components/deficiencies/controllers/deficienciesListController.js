@@ -122,9 +122,10 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				}
 
 				if(aData[i].FileMetadataSetDetails){
-					iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
+					if(aData[i].FileMetadataSetDetails.AttachmentsNumber){// to display default 0
+						iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
+					}					
 					sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
-
 				}
 				
 				if (aData[i].DueDate && aData[i].DueDate != "/Date(0)/") {
@@ -195,6 +196,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		};
 
 		$scope.onEdit = function(oDeficiency) {
+			$rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
+			$rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;			
 			$state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
 				sMode: "edit",
 				sDeficiencyGuid: oDeficiency._guid,

@@ -336,13 +336,14 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						//bShowErrorMessage: oParameters.bShowErrorMessage,
 					});
 
-					var onFileMetadaSetCreated = function(sFileMetadataSetGuid) {
-						$rootScope.sFileMetadataSetGuid = sFileMetadataSetGuid;
+					var onFileMetadaSetCreated = function(oData) {
+						$rootScope.sFileMetadataSetGuid = oData.Guid;
+						$rootScope.sFileMetadataSetLastModifiedAt = oData.LastModifiedAt;
 						uploadFiles(sFileMetadataSetGuid);
 					}
 
 					oSrv.then(function(aData) {
-						onFileMetadaSetCreated(sFileMetadataSetGuid)
+						onFileMetadaSetCreated(aData[0].__changeResponses[0].data)
 					});
 				} else {
 					uploadFiles(oParameters.sParentEntityFileMetadataSetGuid);
