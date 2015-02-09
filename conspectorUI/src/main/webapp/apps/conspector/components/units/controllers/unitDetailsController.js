@@ -221,20 +221,19 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			}
 
 			var aUri = [];
-			debugger
-			for (var i = 0; i < $scope.aSelectedClients.length; i++) {
-				if ($scope.aSelectedClients[i].length) {
+			if ($scope.aSelectedClients && $scope.aSelectedClients.length) {
+				for (var i = 0; i < $scope.aSelectedClients.length; i++) {
 					sUri = "Accounts('" + $scope.aSelectedClients[i].Guid + "')";
 					aUri.push(sUri);
 				}
 			}
-			if (aUri.length) {
-				aLinks.push({
-					sRelationName: "AccountDetails",
-					bKeepCompanyDependentLinks: true,
-					aUri: aUri
-				});
-			}
+
+			aLinks.push({
+				sRelationName: "AccountDetails",
+				bKeepCompanyDependentLinks: true,
+				aUri: aUri
+			});
+			
 			return aLinks;
 		};
 

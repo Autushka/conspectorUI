@@ -55,48 +55,27 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 			var sPhaseName = "";
 			var bMatchFound = false;
 			var iSortingSequence = 0;
+			//var sClients = "";
 			for (var i = 0; i < aData.length; i++) {
 				iSortingSequence = 0;
+				//sClients = "";
 
-				// for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
 				bMatchFound = false;
 
-				// if (aData[i].PhaseDetails) {
-				// 	iSortingSequence = aData[i].PhaseDetails.GeneralAttributes.SortingSequence;
-				// 	for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-				// 		if (aData[i].PhaseDetails.Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-				// 			bMatchFound = true;
-				// 			break;
-				// 		}
+				// if (aData[i].AccountDetails) {
+				// 	for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
+				// 		sClients = sClients + aData[i].AccountDetails.results[j].Name + "; ";
 				// 	}
 				// }
 
-				// if (!bMatchFound) {
-				// 	continue;
-				// }
-				//aData[i].PhaseDetails._sortingSequence = 
-
-				// sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-				// if (!sProjectName) {
-				// 	sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
-				// }
-				// sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-				// if (!sPhaseName) {
-				// 	sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-				// }
-
 				oUnitsListData.aData.push({
-					// sUnitName: aData[i].Name,
-					// sPhone: aData[i].MainPhone,
-					// sEmail: aData[i].Email,
+					sUnitName: aData[i].Name,
 					_guid: aData[i].Guid,
 					sTags: aData[i].DescriptionTags,
 					sProjectPhase: "None",//sProjectName + " - " + sPhaseName,
+					//sClients: sClients,
 					_sortingSequence: iSortingSequence
 				});
-				// }
-
-
 			}
 			$scope.tableParams.reload();
 		};
@@ -104,7 +83,7 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 		var loadUnits = function() {
 			oUnitsListData.aData = [];
 			apiProvider.getUnits({
-				sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails",
+				sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails,AccountDetails",
 				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 				bShowSpinner: true,
 				onSuccess: onUnitsLoaded
