@@ -76,26 +76,26 @@
 							{{'unitDetails_clients' | translate}}
 						</label>
 					</div>
-						<div
-							multi-select
-							input-model="aClients"
-							default-label="{{'unitDetails_unitClientsDefaultLabel' | translate }}"
-							button-label="name"
-							item-label="name"
-							is-disabled="sMode == 'display'"					
-							tick-property="ticked"
-							on-item-click="onSelectedClientsModified()"					
-							output-model="aSelectedClients"
-							on-close="onCloseCheckSelectedClientsLength()"										
-							helper-elements="filter">
-						</div>	
-						<input ng-model="aSelectedClients.length" type="number" ng-show="false" name="selectedClients" min="1">
-						<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.selectedClients.$error" ng-if="(oForms.unitDetailsForm.selectedClients.$dirty && !oForms.unitDetailsForm.selectedClients.$valid) || submitted">
-							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-						</div>
+					<div
+						multi-select
+						input-model="aClients"
+						default-label="{{'unitDetails_unitClientsDefaultLabel' | translate }}"
+						button-label="name"
+						item-label="name"
+						is-disabled="sMode == 'display'"					
+						tick-property="ticked"
+						on-item-click="onSelectedClientsModified()"					
+						output-model="aSelectedClients"
+						on-close="onCloseCheckSelectedClientsLength()"										
+						helper-elements="filter"
+						>
+					</div>	
+					<input ng-model="aSelectedClients.length" type="number" ng-show="false" name="selectedClients" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.selectedClients.$error" ng-if="(oForms.unitDetailsForm.selectedClients.$dirty && !oForms.unitDetailsForm.selectedClients.$valid) || submitted">
+						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					</div>
 				</div>
 			</div>
-
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
 					<div ng-repeat="optionSet in aUnitOptionsArrays">
