@@ -1,0 +1,24 @@
+<div class="bg" ng-hide="$root.bIsGalleryHidden" ng-click="stopPropagation($event)">
+    <img ng-click="$root.hideGallery()" src="img/close_icon.png" style="width:23px; height:23px; float: right; margin-top: -25px; margin-right: -25px; cursor: pointer;">
+    <div class="mainimageshell">
+        <div class="viewwindow">
+            <ul id="fullscroller" ng-style="$root.oGalleryListPosition" class="fullsizelist galleryList" >
+                <li ng-repeat="image in $root.aGalleryData" class="oGalleryListItem" style="ist-style:none; display:inline-block;">
+                    <div id="fullsize" style="width: 400px; height: 400px; overflow: hidden; background-size: cover; background-position: center center; background-image: url({{$root.sGalleryPhotosLocation+image.sGuid}});"> </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div style="clear:both;"></div>
+    <div class="thumbsshell">
+        <div class="thumbswrapper">
+            <ul class="galleryList">
+                <li ng-repeat="image in $root.aGalleryData" class="oGalleryListItem" style="ist-style:none; display:inline-block;">
+                    <a ng-href="" ng-click="scrollTo(image,$index)">
+                        <img class="thumbnail" ng-src="{{$root.sGalleryPhotosLocation+image.sGuid}}" />
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

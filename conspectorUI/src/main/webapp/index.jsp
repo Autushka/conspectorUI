@@ -21,6 +21,7 @@
 <!--     <link data-require="bootstrap@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" /> -->								
 		
 		<link rel="stylesheet" href="apps/conspector/css/style.css">
+		<link rel="stylesheet" type="text/css" href="apps/conspector/css/photoGallery.css" />
 
 		<script src="bower_components/pubnub/web/pubnub.min.js"></script>
 		
@@ -68,7 +69,8 @@
 		<script src="apps/conspector/js/rolesSettings.js"></script>			
 		<script src="apps/conspector/js/common/servicesProvider.js"></script>
 		<script src="apps/conspector/js/common/historyProvider.js"></script>
-		<script src="apps/conspector/js/common/filtersProvider.js"></script>				
+		<script src="apps/conspector/js/common/filtersProvider.js"></script>
+		<script src="apps/conspector/js/common/controlsProvider.js"></script>						
 		<script src="apps/conspector/js/mainController.js"></script>
 		
 		<script src="apps/conspector/components/userManagement/controllers/signInController.js"></script>
@@ -134,10 +136,11 @@
 		<!--<script src="dist/conspector.min.js?number=<%=n%>"></script> -->
 
 	</head>
-	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;">
+	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;" ng-click="$root.hideGallery()">
 		<div ng-show="$root.showSpinner" layout="row" layout-align="center center" style="position: absolute; z-index: 2; height: 100%; width: 100%;">
 			<md-progress-circular md-mode="indeterminate"> </md-progress-circular>
 		</div>
+		<cnp-photo-gallery></cnp-photo-gallery>			
 		<div ui-view></div>
 	</body>
 </html>

@@ -64,7 +64,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			var sStatuseIconUrl = "";
 			var sContractors = "";
 			var iImagesNumber = 0;
-			var sFileMetadataSetLastModifiedAt;
+			var sFileMetadataSetLastModifiedAt = "";
+			var aImages = [];
+
 			for (var i = 0; i < aData.length; i++) {
 				sProjectName = "";
 				sPhaseName = "";
@@ -77,6 +79,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				sStatuseIconUrl = "";
 				sContractors = "";
 				iImagesNumber = 0;
+				aImages = [];
 
 				bMatchFound = false;
 
@@ -126,6 +129,14 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 						iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
 					}					
 					sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
+					if(aData[i].FileMetadataSetDetails.FileMetadataDetails){
+						for (var j = 0; j < aData[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
+							//Things[i]
+							if(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false){
+								aImages.push(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
+							}
+						}
+					}
 				}
 				
 				if (aData[i].DueDate && aData[i].DueDate != "/Date(0)/") {
@@ -166,7 +177,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					sStatuseIconUrl: sStatuseIconUrl,
 					_fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
 					_fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,
-					iImagesNumber: iImagesNumber
+					iImagesNumber: iImagesNumber,
+					_aImages: aImages,
 				});
 				// }
 
@@ -178,7 +190,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		var loadDeficiencies = function() {
 			oDeficienciesListData.aData = [];
 			apiProvider.getDeficiencies({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
 				bShowSpinner: true,
 				onSuccess: onDeficienciesLoaded
 			});
@@ -224,6 +236,13 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		$scope.$on('deficienciesShouldBeRefreshed', function(oParameters) {
 			loadDeficiencies();
 		});
+
+		$scope.onDisplayPhotoGallery = function(oDeficiency, oEvent){
+			oEvent.stopPropagation();
+			if(oDeficiency._aImages.length){
+				servicesProvider.setUpPhotoGallery(oDeficiency._aImages);
+			}			
+		};
 
 		$scope.$on("$destroy", function() {
 			if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views

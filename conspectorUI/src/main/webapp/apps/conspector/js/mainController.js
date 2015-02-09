@@ -52,5 +52,11 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 		$rootScope.$on('UNLOAD', function() {
 			$rootScope.showSpinner = false;
 		});
+
+		$rootScope.bIsGalleryHidden = true;
+
+		$rootScope.hideGallery = function(){
+			$rootScope.bIsGalleryHidden = true;
+		};
 	}
 ]);

@@ -165,7 +165,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		var sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false";
 
-		sRequestSettings = sRequestSettings + "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails, UnitDetails";
+		sRequestSettings = sRequestSettings + "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails";
 		var oDeficiency = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oDeficiencyEntity",
 			sRequestSettings: sRequestSettings, //filter + expand

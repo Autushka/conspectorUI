@@ -631,6 +631,27 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				return oTableParams;
 			},
 
+			setUpPhotoGallery: function(aImages) {
+				$rootScope.sGalleryPhotosLocation = $window.location.origin + $window.location.pathname + "rest/file/get/";
+				$rootScope.aGalleryData = [];
+
+				for (var i = 0; i < aImages.length; i++) {
+					$rootScope.aGalleryData.push({
+						sGuid: aImages[i].Guid
+					});
+				}
+				$rootScope.oSelectedPhoto = $rootScope.aGalleryData[0];
+				if ($rootScope.aGalleryData[0]) {
+					$rootScope.sSelectedPhotoID = $rootScope.aGalleryData[0].sGuid;
+				}
+
+				$rootScope.oGalleryListPosition = {
+					left: "0px"
+				};
+
+				$rootScope.bIsGalleryHidden = false;
+			},			
+
 			showConfirmationPopup: function(oParameters) {
 				var confirm = $mdDialog.confirm()
 					.title(oParameters.sHeader)
