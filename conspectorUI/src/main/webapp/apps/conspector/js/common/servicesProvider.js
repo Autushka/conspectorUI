@@ -283,6 +283,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var oSrv = {};
 
 				var uploadFiles = $.proxy(function(sFileMetadataSetGuid) {
+					var iCounter = 0; //needed because files are sent async
 					for (var i = 0; i < oParameters.aFiles.length; i++) {
 						var file = oParameters.aFiles[i];
 						var sPath = this.costructUploadUrl({
@@ -292,9 +293,15 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 							url: sPath,
 							file: file,
 						});
-						if (i === (oParameters.aFiles.length - 1)) {
-							oUpload.success(oParameters.onSuccess);
-						}
+
+						oUpload.success(function(){
+							iCounter++;
+							if (iCounter === (oParameters.aFiles.length)) {
+								// console.log("Total images: " + oParameters.aFiles.length);
+								// console.log("Updated for Index: " + iCounter);
+								oUpload.success(oParameters.onSuccess);
+							}
+						});
 					}
 				}, this);
 
@@ -650,7 +657,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				};
 
 				$rootScope.bIsGalleryHidden = false;
-			},			
+			},
 
 			showConfirmationPopup: function(oParameters) {
 				var confirm = $mdDialog.confirm()

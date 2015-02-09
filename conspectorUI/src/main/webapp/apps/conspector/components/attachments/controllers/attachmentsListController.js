@@ -135,52 +135,5 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				});
 			}
 		};
-		//
-		//		$scope.onDisplay = function(oDeficiency) {
-		//			$state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
-		//				sMode: "display",
-		//				sDeficiencyGuid: oDeficiency._guid,
-		//			});
-		//		};
-		//
-		//		$scope.onEdit = function(oDeficiency) {
-		//			$state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
-		//				sMode: "edit",
-		//				sDeficiencyGuid: oDeficiency._guid,
-		//			});
-		//		};
-		//
-		//		$scope.onAddNew = function() {
-		//			$state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
-		//				sMode: "create",
-		//				sDeficiencyGuid: "",
-		//			});
-		//		};
-		//		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-		//			loadDeficiencys();
-		//		});
-		//
-		//		$scope.$on('AttachmentsShouldBeRefreshed', function(oParameters) {
-		//			loadDeficiencys();
-		//		});
-		//
-		//		$scope.$on("$destroy", function() {
-		//			if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
-		//				return;
-		//			}
-		//
-		//			historyProvider.addStateToHistory({
-		//				sStateName: $rootScope.sCurrentStateName,
-		//				oStateParams: $rootScope.oStateParams
-		//			});
-		//
-		//			cacheProvider.putTableStatusToCache({
-		//				sTableName: "AttachmentsList",
-		//				sStateName: $rootScope.sCurrentStateName,
-		//				aGroups: $scope.tableParams.settings().$scope.$groups,
-		//				oFilter: $scope.tableParams.$params.filter,
-		//				oSorting: $scope.tableParams.$params.sorting,
-		//			});
-		//		});
 	}
 ]);

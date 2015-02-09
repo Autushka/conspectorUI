@@ -1,4 +1,4 @@
-<div class="bg" ng-hide="$root.bIsGalleryHidden" ng-click="stopPropagation($event)">
+<div class="bg" ng-if="!$root.bIsGalleryHidden" ng-click="stopPropagation($event)">
     <img ng-click="$root.hideGallery()" src="img/close_icon.png" style="width:23px; height:23px; float: right; margin-top: -25px; margin-right: -25px; cursor: pointer;">
     <div class="mainimageshell">
         <div class="viewwindow">
