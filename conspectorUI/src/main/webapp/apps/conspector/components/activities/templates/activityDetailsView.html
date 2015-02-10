@@ -123,10 +123,10 @@
 					output-model="aSelectedAccounts"
 					helper-elements="filter">
 				</div>	
-				<input ng-model="aSelectedAccounts.length" type="number" ng-show="false" name="selectedAccounts" min="1">
+				<!-- <input ng-model="aSelectedAccounts.length" type="number" ng-show="false" name="selectedAccounts" min="1">
 				<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.selectedAccounts.$error" ng-if="(oForms.activityDetailsForm.selectedAccounts.$dirty && !oForms.activityDetailsForm.selectedAccounts.$valid) || submitted">
 					<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-				</div>
+				</div> -->
 			</div>
 			<div class="cnpSubSection" flex>
 				<div class="cnpSubSectionLabel">
@@ -144,12 +144,13 @@
 					tick-property="ticked"
 					on-item-click="onDataModified()"	
 					output-model="aSelectedContacts"
-					helper-elements="filter">
+					helper-elements="filter"
+					>
 				</div>	
-				<input ng-model="aSelectedContacts.length" type="number" ng-show="false" name="selectedContacts" min="1">
+				<!-- <input ng-model="aSelectedContacts.length" type="number" ng-show="false" name="selectedContacts" min="1">
 				<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.selectedContacts.$error" ng-if="(oForms.activityDetailsForm.selectedContacts.$dirty && !oForms.activityDetailsForm.selectedContacts.$valid) || submitted">
 					<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-				</div>
+				</div> -->
 			</div>
 			</div>
 			<div layout="row" style="width: 100%" flex>

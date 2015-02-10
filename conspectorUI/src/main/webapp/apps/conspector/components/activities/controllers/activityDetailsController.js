@@ -351,6 +351,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			var aLinks = [];
 			var aUri = [];
 			var sUri = "";
+
 			for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
 				if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
 					sUri = "Phases('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
@@ -364,44 +365,32 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 					aUri: aUri
 				});
 			}
+
 			var aUri = [];
-			for (var i = 0; i < $scope.aSelectedAccounts.length; i++) {
-				sUri = "Accounts('" + $scope.aSelectedAccounts[i].Guid + "')";
-				aUri.push(sUri);
+			if ($scope.aSelectedAccounts && $scope.aSelectedAccounts.length) {
+				for (var i = 0; i < $scope.aSelectedAccounts.length; i++) {
+					sUri = "Accounts('" + $scope.aSelectedAccounts[i].Guid + "')";
+					aUri.push(sUri);
+				}
 			}
-			if (aUri.length) {
-				aLinks.push({
-					sRelationName: "AccountDetails",
-					bKeepCompanyDependentLinks: true,
-					aUri: aUri
-				});
-			}
+			aLinks.push({
+				sRelationName: "AccountDetails",
+				bKeepCompanyDependentLinks: true,
+				aUri: aUri
+			});
+
 			var aUri = [];
-			for (var i = 0; i < $scope.aSelectedContacts.length; i++) {
-				sUri = "Contacts('" + $scope.aSelectedContacts[i].Guid + "')";
-				aUri.push(sUri);
+			if ($scope.aSelectedContacts && $scope.aSelectedContacts.length) {
+				for (var i = 0; i < $scope.aSelectedContacts.length; i++) {
+					sUri = "Contacts('" + $scope.aSelectedContacts[i].Guid + "')";
+					aUri.push(sUri);
+				}
 			}
-			if (aUri.length) {
-				aLinks.push({
-					sRelationName: "ContactDetails",
-					bKeepCompanyDependentLinks: true,
-					aUri: aUri
-				});
-			}
-			// var aUri = [];
-			// for (var i = 0; i < $scope.aUserProjectsPhasesForMultiselect.length; i++) {
-			// 	if ($scope.aUserProjectsPhasesForMultiselect[i].ticked) {
-			// 		sUri = "ActivityType('" + $scope.aUserProjectsPhasesForMultiselect[i].Guid + "')";
-			// 		aUri.push(sUri);
-			// 	}
-			// }
-			// if (aUri.length) {
-			// 	aLinks.push({
-			// 		sRelationName: "ActivityTypeDetails",
-			// 		bKeepCompanyDependentLinks: true,
-			// 		aUri: aUri
-			// 	});
-			// }
+			aLinks.push({
+				sRelationName: "ContactDetails",
+				bKeepCompanyDependentLinks: true,
+				aUri: aUri
+			});
 			return aLinks;
 		};
 
@@ -432,9 +421,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if($scope.oForms.activityDetailsForm.activityObject){
 				$scope.oForms.activityDetailsForm.selectedActivityType.$setDirty();//to display validation messages on submit press
 			}
-			if($scope.oForms.activityDetailsForm.selectedUser){
-				$scope.oForms.activityDetailsForm.selectedUser.$setDirty();//to display validation messages on submit press
-			}
+			// if($scope.oForms.activityDetailsForm.selectedUser){
+			// 	$scope.oForms.activityDetailsForm.selectedUser.$setDirty();//to display validation messages on submit press
+			// }
 			if($scope.oForms.activityDetailsForm.activityObject){
 				$scope.oForms.activityDetailsForm.activityObject.$setDirty();//to display validation messages on submit press
 			}			
@@ -469,28 +458,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 					$scope.oActivity.sObject = "";
 					$scope.oForms.activityDetailsForm.activityObject.$setPristine();
 					$scope.oActivity.dDueDate = "";
-					// $scope.oActivity.sPhone = "";
-					// $scope.oActivity.sPhoneExtension = "";
-					// $scope.oActivity.sSecondaryPhone = "";
-					// $scope.oActivity.sSecondaryPhoneExtension = "";
-					// $scope.oActivity.sWebsite = "";
-					// $scope.oActivity.sEmail = "";
-					// $scope.oActivity.sFax = "";
-					// $scope.oActivity.aTags = [];
-
-					// $scope.oActivity.sBillingStreet = "";
-					// $scope.oActivity.sBillingCity = "";
-					// $scope.oActivity.sBillingPostalCode = "";
-					// $scope.oActivity.sShippingStreet = "";
-					// $scope.oActivity.sShippingCity = "";
-					// $scope.oActivity.sShippingPostalCode = "";					
-
-					// 
-					// oDataForSave.BillingAddress = {};
-					// oDataForSave.ShippingAddress = {};
-					// $scope.oActivity._aPhases = [];
 				}
 			};
+
 			var onSuccessUpdate = function(oData) {
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
@@ -512,7 +482,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if ($scope.aSelectedActivityType.length) {
 				oDataForSave.ActivityTypeGuid = $scope.aSelectedActivityType[0].Guid;
 			}
-			
+
 			if($scope.oActivity.dDueDate){
             	oDataForSave.DueDate = "/Date(" + $scope.oActivity.dDueDate.getTime() + ")/";	
         	}else{
