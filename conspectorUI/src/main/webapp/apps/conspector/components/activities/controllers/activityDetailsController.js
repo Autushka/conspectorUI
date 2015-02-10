@@ -76,7 +76,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			constructPhasesMultiSelect(aActivityPhasesGuids);
 			
 			$scope.oActivity._activityTypeGuid = oActivity.ActivityTypeGuid;
-			$scope.oActivity._assignedUserName = oActivity.AssignedUser;
+			$scope.oActivity._assignedUserName = oActivity.UserName;
 			
 			$scope.oActivity._accountsGuids = [];
 			if (oActivity.AccountDetails) {
@@ -153,18 +153,21 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 
 		var onUsersWithCompaniesLoaded = function(aData) {
 			var aFilteredUser = [{}];
-		
-			for(var i = 0; i < aData.length; i++){
+			var bMatchFound = false;
+			for (var i = 0; i < aData.length; i++) {
 				for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
-						if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
-							bMatchFound = true;
-							aFilteredUser[i] = aData[i];
-							break;
+					if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
+						bMatchFound = true;
+						aFilteredUser[i] = aData[i];
+						if ($scope.sMode === 'create') {
+							oActivityWrapper.aData[0]._assignedUserName = $scope.sCurrentUser;
 						}
+						break;
 					}
-					if (!bMatchFound) {
-						continue;
-					} 
+				}
+				if (!bMatchFound) {
+					continue;
+				} 
 			}
 
 			aData = [{}];
@@ -509,11 +512,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if ($scope.aSelectedActivityType.length) {
 				oDataForSave.ActivityTypeGuid = $scope.aSelectedActivityType[0].Guid;
 			}
-
-			if ($scope.aSelectedUser.length) {
-				oDataForSave.AssignedUser = $scope.aSelectedUser[0].UserName;
-			}
-
+			
 			if($scope.oActivity.dDueDate){
             	oDataForSave.DueDate = "/Date(" + $scope.oActivity.dDueDate.getTime() + ")/";	
         	}else{

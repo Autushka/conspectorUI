@@ -159,20 +159,23 @@
 							{{'activityDetails_assignedUser' | translate}}
 						</label>
 					</div>
-					<div
-						multi-select
-						input-model="aUsers"
-						button-label="name"
-						default-label="{{'global_assignedUser' | translate }}"
-						item-label="name"
-						selection-mode="single"
-						tick-property="ticked"
-						group-property="multiSelectGroup"
-						is-disabled="sMode == 'display'"
-						on-item-click="onDataModified()"
-						output-model="aSelectedUser"
-						helper-elements=""
-						>
+					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oActivity._assignedUserName}}</div>
+					<div ng-show="sMode != 'display'">
+						<div
+							multi-select
+							input-model="aUsers"
+							button-label="name"
+							default-label="{{'global_assignedUser' | translate }}"
+							item-label="name"
+							selection-mode="single"
+							tick-property="ticked"
+							group-property="multiSelectGroup"
+							is-disabled="sMode == 'display'"
+							on-item-click="onDataModified()"
+							output-model="aSelectedUser"
+							helper-elements=""
+							>
+						</div>
 					</div>
 					<input ng-model="aSelectedUser.length" type="number" ng-show="false" name="selectedUser" min="1">
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.selectedUser.$error" ng-if="(oForms.activityDetailsForm.selectedUser.$dirty && !oForms.activityDetailsForm.selectedUser.$valid) || submitted">
