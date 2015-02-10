@@ -10,6 +10,10 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 
 		var sParentEntityGuid = "";
 
+		$scope.clickUploadButton = function(){
+			angular.element('#uploadFilesToDeficiency').trigger('click');
+		}
+
 		if ($stateParams.sDeficiencyGuid) {
 			sParentEntityGuid = $stateParams.sDeficiencyGuid;
 			//sParentEntityFileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
