@@ -33,21 +33,24 @@
 							{{'unitDetails_associatedProjectsAndPhases' | translate}}
 						</label>
 					</div>
-					<div
-						multi-select
-						input-model="aUserProjectsPhasesForMultiselect"
-						button-label="fullName"
-						default-label="{{'global_selectedProjectsAndPhases' | translate }}"
-						item-label="name"
-						tick-property="ticked"
-						group-property="multiSelectGroup"
-						is-disabled="sMode == 'display'"
-						on-item-click="onSelectedPhasesModified()"
-						selection-mode="single"
-						helper-elements=""
-						output-model="aSelectedPhases"
-						on-close="onCloseCheckSelectedPhasesLength()"
-						>
+					<div class="cnpSubSectionData" ng-if="sMode != 'create'">{{oUnit._ProjectAndPhaseName}}</div>
+					<div ng-show="sMode == 'create'">
+						<div
+							multi-select
+							input-model="aUserProjectsPhasesForMultiselect"
+							button-label="fullName"
+							default-label="{{'global_selectedProjectsAndPhases' | translate }}"
+							item-label="name"
+							tick-property="ticked"
+							group-property="multiSelectGroup"
+							is-disabled="sMode == 'display'"
+							on-item-click="onSelectedPhasesModified()"
+							selection-mode="single"
+							helper-elements=""
+							output-model="aSelectedPhases"
+							on-close="onCloseCheckSelectedPhasesLength()"
+							>
+						</div>
 					</div>
 					<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.selectedPhases.$error" ng-if="(oForms.unitDetailsForm.selectedPhases.$dirty && !oForms.unitDetailsForm.selectedPhases.$valid) || submitted">
@@ -61,11 +64,11 @@
 						</label>
 					</div>
 					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oUnit.sName}}</div>
-					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()" name="unitName" required>
+					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sName" placeholder="{{'unitDetails_unitNamePlaceholder' | translate}}" ng-if="sMode != 'display'"  ng-change="onDataModified()" name="unitName" required>
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.unitName.$error" ng-if="(oForms.unitDetailsForm.unitName.$dirty || submitted) && sMode != 'display'">
-							<div class="cnpErrorMessageValidationMessage" ng-message="required">
-								{{'global_emptyFieldError' | translate}}
-							</div>
+						<div class="cnpErrorMessageValidationMessage" ng-message="required">
+							{{'global_emptyFieldError' | translate}}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -82,51 +85,18 @@
 						default-label="{{'unitDetails_unitClientsDefaultLabel' | translate }}"
 						button-label="name"
 						item-label="name"
-						is-disabled="sMode == 'display'"					
+						is-disabled="sMode == 'display'"
 						tick-property="ticked"
-						on-item-click="onSelectedClientsModified()"					
+						on-item-click="onSelectedClientsModified()"
 						output-model="aSelectedClients"
-						on-close="onCloseCheckSelectedClientsLength()"										
 						helper-elements="filter"
 						>
-					</div>	
-					<input ng-model="aSelectedClients.length" type="number" ng-show="false" name="selectedClients" min="1">
+					</div>
+					<!-- <input ng-model="aSelectedClients.length" type="number" ng-show="false" name="selectedClients" min="1">
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.selectedClients.$error" ng-if="(oForms.unitDetailsForm.selectedClients.$dirty && !oForms.unitDetailsForm.selectedClients.$valid) || submitted">
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-					</div>
+					</div> -->
 				</div>
-			</div>
-			<div layout="row" style="width: 100%" flex>
-				<div class="cnpSubSection" flex>
-					<div ng-repeat="optionSet in aUnitOptionsArrays">
-
-						<div class="cnpSubSectionLabel">
-							<label>
-								{{optionSet.sOptionSetName}}:
-							</label>
-						</div>
-						<div
-							multi-select
-							input-model="optionSet.aOptions"
-							default-label="{{'unitDetails_optionSet' | translate }}"
-							button-label="name"
-							item-label="name"
-							selection-mode="single"
-							is-disabled="sMode == 'display'"					
-							tick-property="ticked"
-							on-item-click="onDataModified()"					
-							output-model="optionSet.aSelectedOption"	
-							helper-elements="filter">
-						</div>	
-					</div>	
-				</div>
-			</div>
-
-
-
-
-
-			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
 					<div class="cnpSubSectionLabel">
 						<label>
@@ -150,319 +120,50 @@
 					</div>
 				</div>
 			</div>
-			
-<!-- 			<div layout="row" style="width: 100%" flex>
-				<div class="cnpSubSection" flex layout="column">
-					<div flex class="cnpSubSectionTitleWrapper">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_name' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oUnit.sFirstName}}&nbsp;{{oUnit.sLastName}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sFirstName" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'unitDetails_namePlaceholder' | translate}}" name="firstName" required>
-						<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.firstName.$error" ng-if="(oForms.unitDetailsForm.firstName.$dirty || submitted) && sMode != 'display'">
-							<div class="cnpErrorMessageValidationMessage" ng-message="required">
-								{{'global_emptyFieldError' | translate}}
-							</div>
-						</div>
-						<div  class="cnpSubSectionLabel" ng-if="sMode != 'display'">
-							<label>
-								{{'unitDetails_lastName' | translate}}
-							</label>
-						</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sLastName" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'unitDetails_lastNamePlaceholder' | translate}}" name="lastName" required>
-						<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.lastName.$error" ng-if="(oForms.unitDetailsForm.lastName.$dirty || submitted) && sMode != 'display'">
-							<div class="cnpErrorMessageValidationMessage" ng-message="required">
-								{{'global_emptyFieldError' | translate}}
-							</div>
-						</div>
-					</div>
-					<div flex>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_personTitle' | translate}}
-							</label>
-						</div>
-						<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit.sTitle}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sTitle" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'unitDetails_personTitlePlaceholder' | translate}}">
-					</div>
-					
-				</div>
+			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
-					<div  class="cnpSubSectionLabel">
+					<div style="width: 50%;" class="cnpSubSectionLabel cnpSubSectionLabelMarginBottomAndBigger">
 						<label>
-							{{'unitDetails_associatedProjectsAndPhases' | translate}}
+							{{'unitDetails_unitOptions' | translate}}
 						</label>
 					</div>
-					<div
-						multi-select
-						input-model="aUserProjectsPhasesForMultiselect"
-						button-label="fullName"
-						default-label="{{'global_selectedProjectsAndPhases' | translate }}"
-						item-label="name"
-						tick-property="ticked"
-						group-property="multiSelectGroup"
-						is-disabled="sMode == 'display' || bIsChangePhasesAssignmentAllowed == false"
-						on-item-click="onSelectedPhasesModified()"
-						output-model ="aSelectedPhases"
-						on-close="onCloseCheckSelectedPhasesLength()"
-						>
+					<div style="width: 50%;" ng-show="sMode == 'create'" class="cnpWarningMessageForUnitOptionSets">
+						<div class="cnpErrorMessageValidationMessage">
+							{{'unitDetails_pleaseSaveFirstToSpecifyUnitOptions' | translate}}
+						</div>
 					</div>
-					
-					<input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.selectedPhases.$error" ng-if="(oForms.unitDetailsForm.selectedPhases.$dirty && !oForms.unitDetailsForm.selectedPhases.$valid) || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+						
+				<!-- 	<div class="cnpSubSectionLabel cnpSubSectionLabelMarginBottomAndBigger">
+						<label ng-show="sMode == 'create'">		(							{{'unitDetails_pleaseSaveFirstToSpecifyUnitOptions' | translate}})
+						</label>
+					</div> -->
+					<div class="cnpSubSectionDataNgRepeat" ng-repeat="optionSet in aUnitOptionsArrays">
+						
+							<div class="cnpSubSectionLabel">
+								<label>
+									{{optionSet.sOptionSetName}}:
+								</label>
+							</div>
+							<div
+								multi-select
+								input-model="optionSet.aOptions"
+								default-label="{{'unitDetails_optionSet' | translate }}"
+								button-label="name"
+								item-label="name"
+								selection-mode="single"
+								is-disabled="sMode == 'display'"
+								tick-property="ticked"
+								on-item-click="onDataModified()"
+								output-model="optionSet.aSelectedOption"
+								helper-elements="filter">
+							</div>
+						
 					</div>
 				</div>
 			</div>
-			<div layout="row" ng-if="bShowParentAccountAndUnitType" style="width: 100%" flex>
-				<div class="cnpSubSection" layout="row" flex>
-					<div flex>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_associatedParentAccount' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'" >
-							<a ng-click="onNavigateToAccountDetails()">{{oUnit._sAccountName}}</a>
-						</div>
-						<div ng-show="sMode != 'display'"
-							multi-select
-							input-model="aAccounts"
-							button-label="name"
-							default-label="{{'unitDetails_selectParentAccount' | translate }}"
-							item-label="name"
-							selection-mode="single"
-							tick-property="ticked"
-							group-property="multiSelectGroup"
-							is-disabled="sMode == 'display'"
-							on-item-click="onParentAccountModified()"
-							helper-elements="filter"
-							output-model = "aSelectedParentAccount"
-							>
-						</div>
-						<input ng-model="aSelectedParentAccount.length" type="number" ng-show="false" name="selectedParentAccount" min="1">
-						<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.selectedParentAccount.$error" ng-if="(oForms.unitDetailsForm.selectedParentAccount.$dirty && !oForms.unitDetailsForm.selectedParentAccount.$valid) || submitted">
-							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-						</div>
-					</div>
-					<div flex style="margin-left: 36px;">
-					</div>
-				</div>
+			<div layout="row" style="width: 100%" flex>
+				
 			</div>
-			<div layout="column" layout-gt-md="row" style="width: 100%" flex>
-				<div layout="row" style="width: 100%" flex>
-					<div class="cnpSubSection" flex>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_mobilePhone' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oUnit.sMobilePhone | phoneFormatter}}">{{oUnit.sMobilePhone | phoneFormatter}}</a></div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sMobilePhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
-						<div layout="row">
-							<div flex="70">
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'unitDetails_homePhone' | translate}}
-									</label>
-								</div>
-								<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oUnit.sHomePhone | phoneFormatter}}">{{oUnit.sHomePhone | phoneFormatter}}</a></div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sHomePhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
-							</div>
-							<div flex="30">
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'global_phoneExtension' | translate}}
-									</label>
-								</div>
-								<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit.sHomePhoneExtension}}</div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sHomePhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
-							</div>
-						</div>
-						<div layout="row">
-							<div flex="70">
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'unitDetails_workPhone' | translate}}
-									</label>
-								</div>
-								<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="tel:+{{oUnit.sWorkPhone | phoneFormatter}}">{{oUnit.sWorkPhone | phoneFormatter}}</a></div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sWorkPhone" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phonePlaceholder' | translate}}">
-							</div>
-							<div flex="30">
-								<div  class="cnpSubSectionLabel">
-									<label>
-										{{'global_phoneExtension' | translate}}
-									</label>
-								</div>
-								<div layout="row" layout-style="start center" class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit.sWorkPhoneExtension}}</div>
-								<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sWorkPhoneExtension" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_phoneExtensionPlaceholder' | translate}}">
-							</div>
-						</div>
-						<div class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_email' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'"><a href="mailto:{{oUnit.sEmail}}">{{oUnit.sEmail}}</a></div>
-						<input type="email" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sEmail" ng-if="sMode != 'display'" ng-change="onDataModified()" placeholder="{{'global_emailPlaceholder' | translate}}">
-					</div>
-					<div class="cnpSubSection" flex ng-if="bShowDescriptionTags">
-						<div class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_descriptionTags' | translate}}
-							</label>
-						</div>
-						<tags-input
-						ng-model="oUnit.aTags"
-						ng-hide="sMode == 'display'"
-						replace-spaces-with-dashes="false"
-						placeholder="{{'global_addTag' | translate}}"
-						on-tag-added="onDataModified()"
-						on-tag-removed="onDataModified()">
-						</tags-input>
-						<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
-							<ul class="tags-list">
-								<li class="tag-item" ng-repeat="tag in oUnit.aTags">
-									<span style="padding: 2px;">{{tag.text}}</span>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div layout="row" flex style="width: 100%">
-					<div class="cnpSubSection" flex>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_billingStreet' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit.sBillingStreet}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sBillingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingStreetPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_billingCity' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit.sBillingCity}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sBillingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingCityPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_billingPostalCode' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit.sBillingPostalCode}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sBillingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_billingPostalCodePlaceholder' | translate}}">
-						
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_billingCountry' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit._billingCountryCode}}</div>
-						<div
-							ng-if="sMode == 'edit' || sMode == 'create'"
-							multi-select
-							input-model="aBillingCountries"
-							button-label="name"
-							default-label="{{'global_selectCountry' | translate }}"
-							item-label="name"
-							tick-property="ticked"
-							selection-mode="single"
-							is-disabled="sMode == 'display'"
-							on-item-click="onBillingCountryChanged()"
-							helper-elements="filter"
-							>
-						</div>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_billingProvince' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit._billingProvinceCode}}</div>
-						<div
-							ng-if="sMode == 'edit' || sMode == 'create'"
-							multi-select
-							input-model="aBillingProvinces"
-							button-label="name"
-							default-label="{{'global_selectState' | translate }}"
-							item-label="name"
-							tick-property="ticked"
-							selection-mode="single"
-							is-disabled="sMode == 'display'"
-							on-item-click="onDataModified()"
-							helper-elements="filter"
-							>
-						</div>
-					</div>
-					<div class="cnpSubSection" flex>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_shippingStreet' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit.sShippingStreet}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sShippingStreet" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingStreetPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_shippingCity' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit.sShippingCity}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sShippingCity" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingCityPlaceholder' | translate}}">
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_shippingPostalCode' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit.sShippingPostalCode}}</div>
-						<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oUnit.sShippingPostalCode" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'global_shippingPostalCodePlaceholder' | translate}}">
-						
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_shippingCountry' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit._shippingCountryCode}}</div>
-						<div
-							ng-if="sMode == 'edit' || sMode == 'create'"
-							multi-select
-							input-model="aShippingCountries"
-							button-label="name"
-							default-label="{{'global_selectCountry' | translate }}"
-							item-label="name"
-							tick-property="ticked"
-							selection-mode="single"
-							is-disabled="sMode == 'display'"
-							on-item-click="onShippingCountryChanged()"
-							helper-elements="filter"
-							>
-						</div>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'unitDetails_shippingProvince' | translate}}
-							</label>
-						</div>
-						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oUnit._shippingProvinceCode}}</div>
-						<div
-							ng-if="sMode == 'edit' || sMode == 'create'"
-							multi-select
-							input-model="aShippingProvinces"
-							button-label="name"
-							default-label="{{'global_selectState' | translate }}"
-							item-label="name"
-							tick-property="ticked"
-							selection-mode="single"
-							is-disabled="sMode == 'display'"
-							on-item-click="onDataModified()"
-							helper-elements="filter"
-							>
-						</div>
-					</div>
-				</div>
-			</div> -->
 		</div>
 	</form>
 </div>

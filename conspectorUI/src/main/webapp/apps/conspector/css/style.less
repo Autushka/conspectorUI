@@ -141,6 +141,26 @@ body {
 		border-width: 5px;
 	}
 }
+.cnpWarningMessageForUnitOptionSets{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 8px;
+	padding-right: 8px;
+	position: relative;
+	margin-top: 0px;
+	margin-bottom: 12px;
+	background-color: #EC8910;
+	border-radius: @borderRadius*4;
+	&:after {
+		position: absolute;
+		top: -10px;
+		content: "";
+		left: 20px;
+		border-style: solid;
+		border-color: transparent transparent #EC8910;
+		border-width: 5px;
+	}
+}
 
 .cnpErrorMessageValidationMessage{
 color: @whiteColor;
@@ -1945,7 +1965,9 @@ DETAILS VIEW
 	color: #8F8F90;
 	margin-bottom: 4px;
 
-	&.cnpSubSectionLabelMarginTop{
+	&.cnpSubSectionLabelMarginBottomAndBigger{
+		font-size: 20px;
+		margin-bottom: 16px;
 
 	}
 }
@@ -1981,6 +2003,13 @@ DETAILS VIEW
 		margin-bottom: 0px;
 	}
 }
+
+.cnpSubSectionDataNgRepeat{
+	width: 50%;
+	float: left;
+	padding-bottom: 6px;
+}
+
 .cnpSubSectionText{
 	margin-top: 12px;
 	background-color: @whiteColor;

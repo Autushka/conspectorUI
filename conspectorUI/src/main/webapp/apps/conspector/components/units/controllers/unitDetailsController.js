@@ -40,24 +40,53 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 
 		$scope.aUnitOptionsArrays = [];
 
-		var onUnitOptionSetsLoaded = function(aData) {
-			aData = $filter('orderBy')(aData, ["Name"]);
-
-			servicesProvider.constructDependentMultiSelectArray({
-				oDependentArrayWrapper: {
-					aData: aData
-				},
-				oParentArrayWrapper: oUnitWrapper,
-				sNameEN: "Name",
-				sNameFR: "Name",
-				sDependentKey: "Guid",
-				sParentKey: "_clientGuid",
-				sTargetArrayNameInParent: "aClients"
-			});
-			if (oUnitWrapper.aData[0]) {
-				$scope.aUnits = angular.copy(oUnitWrapper.aData[0].aUnits);
+		var onUnitOptionSetsLoaded = function(oData) {
+			//var bMatchFound = false;
+			//aData = $filter('orderBy')(aData, ["Name"]);
+			for (var i = 0; i < oData.UnitOptionSetDetails.results.length; i++) {
+				oData.UnitOptionSetDetails.results[i]._sortingSequence = oData.UnitOptionSetDetails.results[i].GeneralAttributes.SortingSequence;
+				for (var j = 0; j < oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results.length; j++) {
+					oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results[j]._sortingSequence = oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results[j].GeneralAttributes.SortingSequence;
+				}
+				oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results = $filter('orderBy')(oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results, ["_sortingSequence"]);
 			}
-		}
+
+			oData.UnitOptionSetDetails.results = $filter('orderBy')(oData.UnitOptionSetDetails.results, ["_sortingSequence"]);
+
+			for (var i = 0; i < oData.UnitOptionSetDetails.results.length; i++) {
+				//bMatchFound = false;
+				$scope.oUnit._unitOptionGuid = "";
+				for (var j = 0; j < oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results.length; j++) {
+					for (var k = 0; k < $scope.oUnit._unitOptions.length; k++) {
+						if (oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results[j].Guid === $scope.oUnit._unitOptions[k].Guid) {
+							//bMatchFound = true;
+							$scope.oUnit._unitOptionGuid = $scope.oUnit._unitOptions[k].Guid;
+							break;
+						}
+					}
+				}
+
+				oUnitWrapper.aData[0] = angular.copy($scope.oUnit);
+				
+				servicesProvider.constructDependentMultiSelectArray({
+					oDependentArrayWrapper: {
+						aData: oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results
+					},
+					oParentArrayWrapper: oUnitWrapper,
+					sNameEN: "NameEN",
+					sNameFR: "NameFR",
+					sDependentKey: "Guid",
+					sParentKey: "_unitOptionGuid",
+					sTargetArrayNameInParent: "aUnitOptions"
+				});
+				if (oUnitWrapper.aData[0]) {
+					$scope.aUnitOptionsArrays.push({
+						sOptionSetName: $translate.use() === "en" ? oData.UnitOptionSetDetails.results[i].NameEN : oData.UnitOptionSetDetails.results[i].NameFR,
+						aOptions: oUnitWrapper.aData[0].aUnitOptions
+					});
+				}
+			}
+		};
 
 		var getUnitOptionSets = function(sPhaseGuid) {
 			apiProvider.getPhase({
@@ -80,10 +109,33 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 
 		var setDisplayedUnitDetails = function(oUnit) {
 			$scope.oUnit._guid = oUnit.Guid;
-
+			var sProject = "";
+			var sPhase = "";
 			$scope.oUnit._lastModifiedAt = oUnit.LastModifiedAt;
 
 			$scope.oUnit.sName = oUnit.Name;
+
+			if (oUnit.PhaseDetails && oUnit.PhaseDetails.ProjectDetails){
+				if(oUnit.PhaseDetails.NameFR && $translate.use() === "fr"){
+					sPhase = oUnit.PhaseDetails.NameFR;
+				}else{
+					sPhase = oUnit.PhaseDetails.NameEN;
+				}
+				if(oUnit.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr"){
+					sProject = oUnit.PhaseDetails.ProjectDetails.NameFR;
+				}else{
+					sProject = oUnit.PhaseDetails.ProjectDetails.NameEN;
+				}
+			}	
+			$scope.oUnit._ProjectAndPhaseName = sProject + " - " + sPhase;
+
+			$scope.oUnit._clientsGuids = [];
+			if (oUnit.AccountDetails) {
+				
+				for (var i = 0; i < oUnit.AccountDetails.results.length; i++) {
+					$scope.oUnit._clientsGuids.push(oUnit.AccountDetails.results[i].Guid);
+				}
+			}
 
 			$scope.oUnit.aDescriptionTags = utilsProvider.tagsStringToTagsArray(oUnit.DescriptionTags);
 
@@ -105,6 +157,13 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 
 		var onUnitDetailsLoaded = function(oData) {
 			setDisplayedUnitDetails(oData);
+
+			apiProvider.getClients({
+				sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
+				bShowSpinner: false,
+				onSuccess: onClientsLoaded
+			});
+
 		};
 
 		var getUnitDetails = function() {
@@ -118,8 +177,11 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 
 		var onClientsLoaded = function(aData) {
 			//Sort aData by accountType sorting sequence and then by AccountName
-			aData = $filter('orderBy')(aData, ["Name"]);
+			
 
+
+			aData = $filter('orderBy')(aData, ["Name"]);
+			
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
@@ -142,7 +204,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 				getUnitDetails();
 			} else { //in case when data is retrieved from the cash
 				setDisplayedUnitDetails(oUnit);
-
+				
 				apiProvider.getClients({
 					sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
 					bShowSpinner: false,
@@ -247,10 +309,10 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			$scope.oForms.unitDetailsForm.selectedPhases.$setDirty();
 		};
 
-		$scope.onCloseCheckSelectedClientsLength = function() {
-			if ($scope.aSelectedClients.length == 0)
-				$scope.onSelectedClientsModified();
-		};
+		// $scope.onCloseCheckSelectedClientsLength = function() {
+		// 	if ($scope.aSelectedClients.length == 0)
+		// 		$scope.onSelectedClientsModified();
+		// };
 
 		$scope.onSelectedClientsModified = function() {
 			$scope.onDataModified();
@@ -270,6 +332,9 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 				$scope.oForms.unitDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
 			}
 
+			if ($scope.oForms.unitDetailsForm.unitName) {
+				$scope.oForms.unitDetailsForm.unitName.$setDirty(); //to display validation messages on submit press
+			}
 			if (!$scope.oForms.unitDetailsForm.$valid) {
 				return;
 			}
