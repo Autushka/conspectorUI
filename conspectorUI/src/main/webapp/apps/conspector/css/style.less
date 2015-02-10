@@ -558,6 +558,22 @@ USER MANAGEMENT
 	    margin-left: 4px;
 	    cursor: pointer;
 	}
+	&.cnpImagesIcon{
+		background-position: 50%;
+		background-size: 36px;
+		background-image: url('../../../apps/conspector/img/imagesIcon.svg');
+		height: 38px;
+		margin-right: 15px;
+		margin-left: -6px;
+		font-weight: 500;
+		font-size: 16px;
+		padding-left: 63px;
+		padding-bottom: 0px;
+		cursor: pointer;
+		&.cnpImagesIconWithOpacity{
+			opacity: 0.3;
+		}
+	}
   
 }
 
@@ -569,9 +585,15 @@ USER MANAGEMENT
 	outline: 0;
 	font-size: 16px;
 	font-weight: 500;
+	&.md-checkboxForList{
+		min-width: 0px;
+	}
 }
 md-switch .md-label{
 	border-width: 0px;
+}
+md-switch .md-container{
+	min-width: 36px;
 }
 .md-label{
 	// margin-top: 2px;
@@ -1810,7 +1832,37 @@ NG TABLE
 }
 
 
-#deficienciesList th:nth-of-type(7), #clientsList td:nth-of-type(7){
+#deficienciesList th:nth-of-type(7), #deficienciesList td:nth-of-type(7){
+	// width: 18%;
+	// &.>div{
+	// 	width: 0%;
+	// 	visibility: hidden;
+	// }
+	@media
+	only screen and (max-width: 1020px){
+	width: 0%;
+	visibility: hidden;
+	&>div{
+		display: none;
+	}
+		
+	}
+}
+
+#deficienciesList td:nth-of-type(7){
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+#deficienciesList th:nth-of-type(8) {
+	width: 105px;
+}
+#deficienciesList th:nth-of-type(8)>div>div>div>input {
+	width: 60%; 
+}
+
+
+#deficienciesList th:nth-of-type(8), #deficienciesList td:nth-of-type(8){
 	// width: 18%;
 	// &.>div{
 	// 	width: 0%;

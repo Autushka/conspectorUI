@@ -16,9 +16,9 @@
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
 			<!-- <div>
-					<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-					Open Sidenav
-					</md-button>
+						<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+						Open Sidenav
+						</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -34,9 +34,19 @@
 	</div>
 	<!-- ACTION BAR -->
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
-		<div>
-			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
-			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'contactsList_addNew' | translate}}</md-button>
+		<div flex layout="row" layout-align="start center">
+			<div flex-order="1">
+				<md-button  ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">
+				{{'contactsList_addNew' | translate}}
+				</md-button>
+			</div>
+			<div flex flex-order="2" layout="row" layout-align="start center">
+				<md-switch  class="md-checkbox md-checkboxForList" ng-model="oListSettings.bGroupListByProjectAndPhase" ng-change="onGroupingChange()" style="margin-left: 24px;">
+				<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
+					{{'global_groupByProjectAndPhase' | translate}}
+				</div>
+				</md-switch>
+			</div>
 		</div>
 		<div layout="row" layout-align="end start">
 			<label class="cnpContentTitle notSelectable">
@@ -71,7 +81,7 @@
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>
-									{{contact.sName}}
+								{{contact.sName}}
 								</span>
 							</div>
 						</div>
@@ -80,7 +90,7 @@
 						<div layout="row" layout-align="start center">
 							<div>
 								<span><a ng-click="onNavigateToAccountDetails(contact)">
-									{{contact.sAccountName}}</a>
+								{{contact.sAccountName}}</a>
 								</span>
 							</div>
 						</div>
@@ -90,7 +100,7 @@
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>
-									{{contact.sTitle}}
+								{{contact.sTitle}}
 								</span>
 							</div>
 						</div>
@@ -99,31 +109,31 @@
 						<div layout="row" layout-align="center center">
 							<div><a href="tel:+{{contact.sPhone | phoneFormatter}}">
 								<span>
-									{{contact.sPhone | phoneFormatter}}</span></a>
-							</div>
+							{{contact.sPhone | phoneFormatter}}</span></a>
 						</div>
-					</td>
-					<td data-title="'global_email' | translate" sortable="'sEmail'" filter="{'sEmail': 'text'}">
-						<div layout="row" layout-align="start center">
-							<div>
-								<span><a href="mailto:{{contact.sEmail}}">{{contact.sEmail}}
-								</a></span>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-			<tr ng-if="$groups.length == 0">
-				<td colspan="{{$columns.length}}">
+					</div>
+				</td>
+				<td data-title="'global_email' | translate" sortable="'sEmail'" filter="{'sEmail': 'text'}">
 					<div layout="row" layout-align="start center">
 						<div>
-							{{'global_noTableData' | translate}}
+							<span><a href="mailto:{{contact.sEmail}}">{{contact.sEmail}}
+							</a></span>
 						</div>
 					</div>
 				</td>
 			</tr>
-		</table>
-	</div>
-	<!-- END OF NG TABLE -->
-	<!-- END OF CONTENT VIEW -->
-	</md-content>
+		</tbody>
+		<tr ng-if="$groups.length == 0">
+			<td colspan="{{$columns.length}}">
+				<div layout="row" layout-align="start center">
+					<div>
+						{{'global_noTableData' | translate}}
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- END OF NG TABLE -->
+<!-- END OF CONTENT VIEW -->
+</md-content>

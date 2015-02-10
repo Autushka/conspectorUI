@@ -29,9 +29,20 @@
 	</div>
 	<!-- ACTION BAR -->
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
-		<div>
-			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
-			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'clientsList_addNew' | translate}}</md-button>
+		<div flex layout="row" layout-align="start center">
+			<div flex-order="1">
+				<md-button  ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">
+				{{'clientsList_addNew' | translate}}
+				</md-button>
+			</div>
+			<div flex flex-order="2" layout="row" layout-align="start center">
+				<md-switch  class="md-checkbox md-checkboxForList" ng-model="oListSettings.bGroupListByProjectAndPhase" ng-change="onGroupingChange()" style="margin-left: 24px;">
+				<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
+					{{'global_groupByProjectAndPhase' | translate}}
+				</div>
+				</md-switch>
+			</div>
+			
 		</div>
 		<div layout="row" layout-align="end start">
 			<label class="cnpContentTitle notSelectable">

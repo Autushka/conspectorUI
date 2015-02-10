@@ -99,6 +99,9 @@ app.config(['$translateProvider',
                   global_locationTags: 'Location Tags',
                   global_contractors: 'Contractors',
                   global_dueIn: 'Due In',
+                  global_groupByProjectAndPhase: 'Group List by Projects and Phases',
+                  global_images: 'Images',
+                  global_fileName: 'Filename',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -256,12 +259,16 @@ app.config(['$translateProvider',
                   deficiencyDetails_deficiencyAssignedUserDefaultLabel: 'Select User',
                   deficiencyDetails_deletionConfirmationHeader: 'You are about to delete a deficiency.',
                   deficiencyDetails_deletionConfirmationContent: 'Are you sure you want to proceed ?',
+                  //attachmentsList
+                  attachmentsList_title: 'Images and Documents',
                   //activitiesList
                   activitiesList_title: 'Logbook Entries',
                   activitiesList_addNew: 'Add a Log',
                   //contractorsList
                   contractorsList_title: 'Contractors List',
                   contractorsList_addNew: 'Add Contractor',
+                  contractorsList_groupAll: 'All Contractors, including unassigned',
+
                   //contractorDetails
                   contractorDetails_title: 'Contractor Details',
                   contractorDetails_deletionConfirmationHeader: 'You are about to delete a contractor account.',
@@ -287,8 +294,8 @@ app.config(['$translateProvider',
                   contractorDetails_shippingProvince: 'Shipping State/Province:',
                   //contactsList
                   contactsList_title: 'Contacts List',
-                  contactDetails_title: 'Contact Details',
                   contactsList_addNew: 'Add Contact',
+                  contactsList_groupAll: 'All Contacts, including unassigned',
                   //contactDetails
                   contactDetails_title: 'Contact Details',
                   contactDetails_deletionConfirmationHeader: 'You are about to delete a contact.',
@@ -323,6 +330,7 @@ app.config(['$translateProvider',
                   //clientsList
                   clientsList_title: 'Clients List',
                   clientsList_addNew: 'Add Client Account',
+                  clientsList_groupAll: 'All Clients, including unassigned',
                   //clientDetails
                   clientDetails_title: 'Client Details',
                   clientDetails_deletionConfirmationHeader: 'You are about to delete a client account.',
@@ -447,6 +455,9 @@ app.config(['$translateProvider',
                   global_locationTags: 'Tags emplacement',
                   global_contractors: 'Sous-traitants',
                   global_dueIn: 'D\u00FB dans',
+                  global_groupByProjectAndPhase: 'Grouper la liste par projets et phases',
+                  global_images: 'Images',
+                  global_fileName: 'Nom du fichier',
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',
                   m101: 'Un email contenant les instructions pour votre mot de passe vous a \u00E9t\u00E9 envoy\u00E9.',
@@ -604,12 +615,17 @@ app.config(['$translateProvider',
                   deficiencyDetails_deficiencyAssignedUserDefaultLabel: 'S\u00E9lectionner l\u0027utilisateur',
                   deficiencyDetails_deletionConfirmationHeader: 'Vous \u00EAtes sur le point d\u0027effacer une d\u00E9ficience.',
                   deficiencyDetails_deletionConfirmationContent: '\u00CAtes-vous s\u00FBr de vouloir effacer cette d\u00E9ficience ?',
+                  //attachmentsList
+                  attachmentsList_title: 'Images et documents',
+
                   //activitiesList
                   activitiesList_title: 'Entr\u00E9es du Logbook',
                   activitiesList_addNew: 'Ajouter une entr\u00E9e',
                   //contractorsList
                   contractorsList_title: 'Liste des sous-traitants',
                   contractorsList_addNew: 'Ajouter un sous-traitant',
+                  contractorsList_groupAll: 'Tous les sous-traitants, incluant ceux non-assign\u00E9s',
+
                   //contractorDetails
                   contractorDetails_title: 'D\u00E9tails du sous-traitant',
                   contractorDetails_deletionConfirmationHeader: 'Vous \u00EAtes sur le point d\u0027effacer un compte sous-traitant.',
@@ -636,6 +652,7 @@ app.config(['$translateProvider',
                   //contactsList
                   contactsList_title: 'Liste des contacts',
                   contactsList_addNew: 'Ajouter contact',
+                  contactsList_groupAll: 'Tous les contacts, incluant ceux non-assign\u00E9s',
                   //contactDetails
                   contactDetails_title: 'D\u00E9tail du contact',
                   contactDetails_deletionConfirmationHeader: 'Vous \u00EAtes sur le point d\u0027effacer un contact.',
@@ -670,6 +687,7 @@ app.config(['$translateProvider',
                   //clientsList
                   clientsList_title: 'Liste de clients',
                   clientsList_addNew: 'Ajouter un compte client',
+                  clientsList_groupAll: 'Tous les clients, incluant ceux non-assign\u00E9s',
                   //clientDetails
                   clientDetails_title: 'Client Details',
                   clientDetails_deletionConfirmationHeader: 'Vous \u00EAtes sur le point d\u0027effacer un compte client.',

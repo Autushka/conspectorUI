@@ -42,19 +42,28 @@ app.factory('cacheProvider', ['TYPES',
 					sStateName: "app.contactsList",
 					aGroups: [],
 					oFilter: {},
-					oSorting: {}
+					oSorting: {},
+					oListSettings: {
+						bGroupListByProjectAndPhase: true
+					}
 				}],
 				clientsList: [{
 					sStateName: "app.clientsList",
 					aGroups: [],
 					oFilter: {},
-					oSorting: {}
+					oSorting: {},
+					oListSettings: {
+						bGroupListByProjectAndPhase: true
+					}
 				}],
 				contractorsList: [{
 					sStateName: "app.contractorsList",
 					aGroups: [],
 					oFilter: {},
-					oSorting: {}
+					oSorting: {},
+					oListSettings: {
+						bGroupListByProjectAndPhase: true
+					}
 				}],
 				activitiesList: [{
 					sStateName: "app.activitiesList",
@@ -77,6 +86,7 @@ app.factory('cacheProvider', ['TYPES',
 							aGroups: angular.copy(this.oTableStatus[oParameters.sTableName][i].aGroups),
 							oSorting: angular.copy(this.oTableStatus[oParameters.sTableName][i].oSorting),
 							oFilter: angular.copy(this.oTableStatus[oParameters.sTableName][i].oFilter),
+							oListSettings: angular.copy(this.oTableStatus[oParameters.sTableName][i].oListSettings),
 						}
 					}
 				}
@@ -89,6 +99,7 @@ app.factory('cacheProvider', ['TYPES',
 					if (this.oTableStatus[oParameters.sTableName][i].sStateName === oParameters.sStateName) {
 						this.oTableStatus[oParameters.sTableName][i].oFilter = angular.copy(oParameters.oFilter);
 						this.oTableStatus[oParameters.sTableName][i].oSorting = angular.copy(oParameters.oSorting);
+						this.oTableStatus[oParameters.sTableName][i].oListSettings = angular.copy(oParameters.oListSettings);
 
 						this.oTableStatus[oParameters.sTableName][i].aGroups = angular.copy([]);
 						for (var j = 0; j < oParameters.aGroups.length; j++) {

@@ -83,18 +83,20 @@
 							</span>
 						</div>
 					</td>
-					<td data-title="'global_images' | translate" sortable="'iImagesNumber'" filter="{'iImagesNumber': 'text'}">
-						<div layout="row" layout-align="start center">
-							<span ng-click="onDisplayPhotoGallery(deficiency, $event)">
-							{{deficiency.iImagesNumber}}
-							</span>
-						</div>
-					</td>					
 					<td data-title="'global_dueIn' | translate" sortable="'sDueIn'" filter="{'sDueIn': 'text'}">
 						<div layout="row" layout-align="center center">
 							<span>
 							{{deficiency.sDueIn}}
 							</span>
+						</div>
+					</td>
+					<td data-title="'global_images' | translate" sortable="'iImagesNumber'" filter="{'iImagesNumber': 'text'}">
+						<div layout="row" layout-align="center center" 
+
+						ng-class="{ 'cnpInputIcon cnpImagesIcon': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity': deficiency.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery(deficiency, $event)">
+							<a>
+							({{deficiency.iImagesNumber}})
+							</a>
 						</div>
 					</td>
 					<!-- 					<td data-title="'global_account' | translate" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">

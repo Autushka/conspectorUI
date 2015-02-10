@@ -36,6 +36,10 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             sStateName: $rootScope.sCurrentStateName,
         });
 
+        $scope.oListSettings = {
+            bGroupListByProjectAndPhase: oTableStatusFromCache.oListSettings.bGroupListByProjectAndPhase
+        };
+
         var oInitialSortingForContactList = {
             sName: 'asc'
         };
@@ -66,6 +70,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             var sProjectName = "";
             var sPhaseName = "";
             var bMatchFound = false;
+            if ($scope.oListSettings.bGroupListByProjectAndPhase) {
             for (var i = 0; i < aData.length; i++) {
                 for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
                     aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
@@ -118,14 +123,29 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                             _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting                       
                         });
                     }
-                } else {
+                } 
+            }
+        } else {
+            for (var i = 0; i < aData.length; i++) {
+
+                sName = ""; //TO DO improve logic to get rid of duplicate logic for sName...
+                if (aData[i].FirstName) {
+                    sName = aData[i].FirstName;
+                }
+                if (aData[i].LastName) {
+                    if (aData[i].FirstName) {
+                        sName = sName + " ";
+                    }
+                    sName = sName + aData[i].LastName;
+                }
+
                     oContactsListData.aData.push({
                         sName: sName,
                         sTitle: aData[i].Title,
                         sPhone: aData[i].MobilePhone,
                         sEmail: aData[i].Email,
                         _guid: aData[i].Guid,
-                        sProjectPhase: "Not Assigned",// TODO should be translatable...
+                        sProjectPhase: $translate.instant('contactsList_groupAll'),// TODO should be translatable...
                         _accountGuid: aData[i].AccountGuid,
                         _accountTypeName: aData[i].AccountDetails.AccountTypeDetails.NameEN,
                         sAccountName: aData[i].AccountDetails.Name,
@@ -166,6 +186,10 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                 sContactGuid: oContact._guid,
             });
         };
+
+        $scope.onGroupingChange = function() {
+            loadContacts();
+        }
 
         $scope.onEdit = function(oContact) {
             if (!sAccountGuid) {
@@ -231,6 +255,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                 aGroups: $scope.tableParams.settings().$scope.$groups,
                 oFilter: $scope.tableParams.$params.filter,
                 oSorting: $scope.tableParams.$params.sorting,
+                oListSettings: $scope.oListSettings,
             });
         });
     }
