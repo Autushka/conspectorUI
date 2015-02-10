@@ -46,6 +46,22 @@ app.factory('cacheProvider', ['TYPES',
 					oListSettings: {
 						bGroupListByProjectAndPhase: true
 					}
+				},{
+					sStateName: "app.clientDetailsWrapper.clientDetails",
+					aGroups: [],
+					oFilter: {},
+					oSorting: {},
+					oListSettings: {
+						bGroupListByProjectAndPhase: true
+					}
+				},{
+					sStateName: "app.contractorDetailsWrapper.contractorDetails",
+					aGroups: [],
+					oFilter: {},
+					oSorting: {},
+					oListSettings: {
+						bGroupListByProjectAndPhase: true
+					}
 				}],
 				clientsList: [{
 					sStateName: "app.clientsList",

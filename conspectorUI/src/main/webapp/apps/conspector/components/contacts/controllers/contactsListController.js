@@ -40,6 +40,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             bGroupListByProjectAndPhase: oTableStatusFromCache.oListSettings.bGroupListByProjectAndPhase
         };
 
+
         var oInitialSortingForContactList = {
             sName: 'asc'
         };
@@ -71,73 +72,73 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             var sPhaseName = "";
             var bMatchFound = false;
             if ($scope.oListSettings.bGroupListByProjectAndPhase) {
-            for (var i = 0; i < aData.length; i++) {
-                for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-                    aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
-                }
-                aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
-
-                sName = "";
-                if (aData[i].FirstName) {
-                    sName = aData[i].FirstName;
-                }
-                if (aData[i].LastName) {
-                    if (aData[i].FirstName) {
-                        sName = sName + " ";
-                    }
-                    sName = sName + aData[i].LastName;
-                }
-
-                if (aData[i].PhaseDetails.results.length) {
+                for (var i = 0; i < aData.length; i++) {
                     for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-                        bMatchFound = false;
-                        for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-                            if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-                                bMatchFound = true;
-                                break;
-                            }
-                        }
-                        if (!bMatchFound) {
-                            continue;
-                        }
-
-                        sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-                        if (!sProjectName) {
-                            sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
-                        }
-                        sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-                        if (!sPhaseName) {
-                            sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-                        }
-
-                        oContactsListData.aData.push({
-                            sName: sName,
-                            sTitle: aData[i].Title,
-                            sPhone: aData[i].MobilePhone,
-                            sEmail: aData[i].Email,
-                            _guid: aData[i].Guid,
-                            sProjectPhase: sProjectName + ' - ' + sPhaseName,
-                            _accountGuid: aData[i].AccountGuid,
-                            _accountTypeName: aData[i].AccountDetails.AccountTypeDetails.NameEN,
-                            sAccountName: aData[i].AccountDetails.Name,
-                            _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting                       
-                        });
+                        aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
                     }
-                } 
-            }
-        } else {
-            for (var i = 0; i < aData.length; i++) {
+                    aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
 
-                sName = ""; //TO DO improve logic to get rid of duplicate logic for sName...
-                if (aData[i].FirstName) {
-                    sName = aData[i].FirstName;
-                }
-                if (aData[i].LastName) {
+                    sName = "";
                     if (aData[i].FirstName) {
-                        sName = sName + " ";
+                        sName = aData[i].FirstName;
                     }
-                    sName = sName + aData[i].LastName;
+                    if (aData[i].LastName) {
+                        if (aData[i].FirstName) {
+                            sName = sName + " ";
+                        }
+                        sName = sName + aData[i].LastName;
+                    }
+
+                    if (aData[i].PhaseDetails.results.length) {
+                        for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
+                            bMatchFound = false;
+                            for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+                                if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
+                                    bMatchFound = true;
+                                    break;
+                                }
+                            }
+                            if (!bMatchFound) {
+                                continue;
+                            }
+
+                            sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
+                            if (!sProjectName) {
+                                sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
+                            }
+                            sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
+                            if (!sPhaseName) {
+                                sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
+                            }
+
+                            oContactsListData.aData.push({
+                                sName: sName,
+                                sTitle: aData[i].Title,
+                                sPhone: aData[i].MobilePhone,
+                                sEmail: aData[i].Email,
+                                _guid: aData[i].Guid,
+                                sProjectPhase: sProjectName + ' - ' + sPhaseName,
+                                _accountGuid: aData[i].AccountGuid,
+                                _accountTypeName: aData[i].AccountDetails.AccountTypeDetails.NameEN,
+                                sAccountName: aData[i].AccountDetails.Name,
+                                _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting                       
+                            });
+                        }
+                    }
                 }
+            } else {
+                for (var i = 0; i < aData.length; i++) {
+
+                    sName = ""; //TO DO improve logic to get rid of duplicate logic for sName...
+                    if (aData[i].FirstName) {
+                        sName = aData[i].FirstName;
+                    }
+                    if (aData[i].LastName) {
+                        if (aData[i].FirstName) {
+                            sName = sName + " ";
+                        }
+                        sName = sName + aData[i].LastName;
+                    }
 
                     oContactsListData.aData.push({
                         sName: sName,
@@ -145,7 +146,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                         sPhone: aData[i].MobilePhone,
                         sEmail: aData[i].Email,
                         _guid: aData[i].Guid,
-                        sProjectPhase: $translate.instant('contactsList_groupAll'),// TODO should be translatable...
+                        sProjectPhase: $translate.instant('contactsList_groupAll'), // TODO should be translatable...
                         _accountGuid: aData[i].AccountGuid,
                         _accountTypeName: aData[i].AccountDetails.AccountTypeDetails.NameEN,
                         sAccountName: aData[i].AccountDetails.Name,
@@ -248,7 +249,6 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                     oStateParams: $rootScope.oStateParams
                 });
             }
-
             cacheProvider.putTableStatusToCache({
                 sTableName: "contactsList",
                 sStateName: $rootScope.sCurrentStateName,
