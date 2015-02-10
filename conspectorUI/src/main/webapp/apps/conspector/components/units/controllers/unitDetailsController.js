@@ -316,7 +316,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 
 		$scope.onSelectedClientsModified = function() {
 			$scope.onDataModified();
-			$scope.oForms.unitDetailsForm.selectedClients.$setDirty();
+			// $scope.oForms.unitDetailsForm.selectedClients.$setDirty();
 
 			if ($scope.aSelectedPhases[0]) {
 				getUnitOptionSets($scope.aSelectedPhases[0].Guid);
