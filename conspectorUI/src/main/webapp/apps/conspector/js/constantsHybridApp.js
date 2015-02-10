@@ -6,7 +6,7 @@ app.factory('CONSTANTS', [function() {
 		appPathname: "",
 		sServicePath: "odata.svc/",
 		sDefaultRoleNameForNewCompany: "systemAdministrator",
-		sAppAbsolutePath: "",
+		sAppAbsolutePath: "app.conspector.com",
 	}
 }]);
 

@@ -9,21 +9,16 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-        '../webapp/apps/conspector/js/app.js',
-        '../webapp/apps/conspector/js/constants.js',
-        '../webapp/apps/conspector/js/types.js',
-
+        '../webapp/apps/conspector/js/common/controlsProvider.js',  
 
         '../webapp/apps/conspector/js/common/cacheProvider.js', 
-        '../webapp/apps/conspector/js/common/utilsProvider.js', 
-        '../webapp/apps/conspector/js/common/translateProvider.js', 
         '../webapp/apps/conspector/js/common/dataProvider.js', 
         '../webapp/apps/conspector/js/common/apiProvider.js',
 
         '../webapp/apps/conspector/js/rolesSettings.js',
         '../webapp/apps/conspector/js/common/servicesProvider.js',     
         '../webapp/apps/conspector/js/common/historyProvider.js',   
-        '../webapp/apps/conspector/js/common/filtersProvider.js',                  
+        '../webapp/apps/conspector/js/common/filtersProvider.js', 
 
         '../webapp/apps/conspector/js/mainController.js',
 
@@ -34,10 +29,14 @@ module.exports = function(grunt) {
 
         '../webapp/apps/conspector/components/contractors/controllers/*.js',
         '../webapp/apps/conspector/components/contacts/controllers/*.js',    
-        '../webapp/apps/conspector/components/clients/controllers/*.js',                      
+        '../webapp/apps/conspector/components/clients/controllers/*.js',   
+
+        '../webapp/apps/conspector/components/activities/controllers/*.js',                           
 
         '../webapp/apps/conspector/components/profileSettings/controllers/*.js',
-        '../webapp/apps/conspector/components/adminPanel/controllers/*.js'                  
+        '../webapp/apps/conspector/components/adminPanel/controllers/*.js',   
+
+        '../webapp/apps/conspector/components/attachments/controllers/*.js'                       
         ],
         dest: '../webapp/dist/conspector.js'
       }

@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload',
-	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload) {
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS',
+	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -19,7 +19,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var SHA512 = new Hashes.SHA512;
 				oParameters.password = SHA512.hex(oParameters.password);
 
-				var sPath = "rest/account/login/" + oParameters.userName + "/" + oParameters.password;
+				var sPath = CONSTANTS.sAppAbsolutePath + "rest/account/login/" + oParameters.userName + "/" + oParameters.password;
 				var onSuccess = $.proxy(function(oData) {
 					var bNoErrorMessages = this.messagesHandler(oData.messages);
 					if (bNoErrorMessages) {
@@ -46,7 +46,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			logOut: function() {
-				var sPath = "rest/system/initializeSessionVariables";
+				var sPath = CONSTANTS.sAppAbsolutePath + "rest/system/initializeSessionVariables";
 				var onSuccess = $.proxy(function() {
 					if (cacheProvider.oUserProfile.sUserName) {
 						this.logLogOut(); // log logout operation
@@ -287,7 +287,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					for (var i = 0; i < oParameters.aFiles.length; i++) {
 						var file = oParameters.aFiles[i];
 						var sPath = this.costructUploadUrl({
-							sPath: "rest/file/createUploadUrlWithFileMetadataSetGuid/Deficiency/" + oParameters.sParentEntityGuid + "/_attachments_/" + sFileMetadataSetGuid,
+							sPath: CONSTANTS.sAppAbsolutePath + "rest/file/createUploadUrlWithFileMetadataSetGuid/Deficiency/" + oParameters.sParentEntityGuid + "/_attachments_/" + sFileMetadataSetGuid,
 						});
 						var oUpload = $upload.upload({
 							url: sPath,

@@ -1,9 +1,9 @@
 angular.module('controlsProvider', [])
-	.directive('cnpPhotoGallery', function() {
+	.directive('cnpPhotoGallery', [function() {
 		return {
 			restrict: 'E',
 			scope: true,
-			controller: function($scope, $rootScope) {
+			controller: ['$scope', '$rootScope', function($scope, $rootScope) {
 				var IMAGE_WIDTH = 400;
 				$scope.stopPropagation = function($event) {
 					$event.stopPropagation();
@@ -15,7 +15,7 @@ angular.module('controlsProvider', [])
 					$rootScope.sSelectedPhotoID = image.sGuid;
 					$rootScope.oSelectedPhoto = image;
 				};
-			},
+			}],
 			templateUrl: 'apps/conspector/js/templates/photoGallery.html',
 		};
-});
+}]);
