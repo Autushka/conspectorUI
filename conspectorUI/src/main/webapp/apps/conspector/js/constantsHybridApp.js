@@ -4,9 +4,10 @@ app.factory('CONSTANTS', [function() {
 		messageDisplayLayout: 'topCenter',
 		currentProject: 'conspector',
 		appPathname: "",
-		sServicePath: "odata.svc/",
+		sServicePath: "http://app.conspector.com/odata.svc/",
 		sDefaultRoleNameForNewCompany: "systemAdministrator",
-		sAppAbsolutePath: "app.conspector.com",
+		sAppAbsolutePath: "http://app.conspector.com/",
+		bIsHybridApplication: true
 	}
 }]);
 

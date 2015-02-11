@@ -6,7 +6,9 @@
 		<link rel="icon" type="image/x-icon" href="favicon.ico">
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 		<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
-
+<!-- 		<link rel="stylesheet" href="bower_components/angular-material/themes/orange-theme.css">
+		<link rel="stylesheet" href="bower_components/angular-material/themes/blue-theme.css">
+		<link rel="stylesheet" href="bower_components/angular-material/themes/light-blue-dark-theme.css"> -->
 		<link rel="stylesheet" href="apps/conspector/js/thirdParty/ng-table.min.css">
 		<link rel="stylesheet" href="bower_components/isteven-angular-multiselect/angular-multi-select.css">
 		<link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.min.css">
@@ -15,7 +17,8 @@
 		<link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date-default-theme.css">
 		<link rel='stylesheet' href='bower_components/textAngular/src/textAngular.css'>		
 		<link rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css'>
-							
+
+<!--     <link data-require="bootstrap@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" /> -->								
 		
 		<link rel="stylesheet" href="apps/conspector/css/style.css">
 		<link rel="stylesheet" type="text/css" href="apps/conspector/css/photoGallery.css" />
@@ -47,23 +50,26 @@
 		<script src='bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
 		<script src='bower_components/textAngular/dist/textAngular.min.js'></script>				
 		
-		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> 
-		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script> 
-		<script src="apps/conspector/js/thirdParty/angular-file-upload.min.js"></script> 
-		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> 
-		<script src="apps/conspector/js/thirdParty/jQuery.download.js"></script> 
+		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->
+		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
+		<script src="apps/conspector/js/thirdParty/angular-file-upload.min.js"></script> <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
+		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> <!-- was not able to find it as a bower component-->	
+		<script src="apps/conspector/js/thirdParty/jQuery.download.js"></script> <!-- small function that needed to allow ajax requests that return files (needed for dynamic reports...)-->			
 
 	    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
 	    <script type="text/javascript" src="cordova.js"></script>
-	    <script type="text/javascript" src="js/index.js"></script>		
+	    <script type="text/javascript" src="js/index.js"></script>	
 
 		<script src="apps/conspector/js/app.js"></script>
-		<script src="apps/conspector/js/constantsHybrid.js"></script>
+		<script src="apps/conspector/js/constantsHybridApp.js"></script>
 		<script src="apps/conspector/js/types.js"></script>
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 
-		<!--<script src="apps/conspector/js/common/cacheProvider.js"></script>
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddRightSideNavController.js"></script>	
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddController.js"></script>		
+
+		<script src="apps/conspector/js/common/cacheProvider.js"></script>
 		
 		<script src="apps/conspector/js/common/dataProvider.js"></script>
 		<script src="apps/conspector/js/common/apiProvider.js"></script>
@@ -128,8 +134,10 @@
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionSetListController.js"></script>  	
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValueListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/taskTypeListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/activityTypesListController.js"></script> -->
-		<script src="dist/conspector.min.js>"></script> 
+		<script src="apps/conspector/components/adminPanel/controllers/activityTypesListController.js"></script> 
+
+		<!--<script src="dist/conspector.min.js"></script> -->
+
 
 	</head>
 	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;">

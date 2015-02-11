@@ -1,0 +1,57 @@
+<div class="cnpContent" layout="column">
+	<label ng-click="onLogOut()" class="cnpLink cnpLinkHeader notSelectable">
+		{{'app_logOut' | translate}}
+	</label>
+  <section layout="row" flex>
+    <md-content flex class="md-padding">
+		<div class="cnpContent" layout="column">
+			<md-list>
+				<md-item ng-repeat="attribute in aDeficiencyAttributes">
+					<md-item-content>
+						 <div>{{attribute.sDescription}}</div>
+						 <div>{{attribute.sValue}}</div>
+						  <img ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);" ng-click="onOpenSideNav(attribute)">
+					</md-item-content>
+				</md-item>
+			</md-list>
+		</div>
+    </md-content>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="deficiencyQuickAddRigthSideNav">
+      <md-toolbar>
+        <h1 class="md-toolbar-tools">{{sSideNavHeader}}</h1>
+      </md-toolbar>
+      <md-content class="md-padding">
+		<div layout="row" layout-align="start start" >
+			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
+				<div ng-click="onCloseRightSideNav()" class="notSelectable cnpLink cnpLinkBackButton">
+					{{'global_back' | translate}}
+				</div>
+			</div>
+		</div> 
+
+		<div layout="row" layout-align="start start" ng-if="sSideNavHeader === 'Phases'">
+			<div layout="column">
+			    <section ng-repeat="project in aProjectsWithPhases">
+			      <md-subheader class="md-primary">{{project.sProjectName}}</md-subheader>
+			      <md-list layout="column">
+			        <md-item ng-repeat="phase in project.aPhases" ng-click="onSelectPhase(phase)">
+			          <md-item-content>
+							<img ng-if="phase.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">					
+							<div>{{phase.sPhaseName}}</div>
+			          </md-item-content>
+			        </md-item>
+			      </md-list>
+			    </section>
+			</div>
+		</div> 
+      </md-content>
+    </md-sidenav>
+  </section>
+  <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
+</div>
+
+
+
+
+

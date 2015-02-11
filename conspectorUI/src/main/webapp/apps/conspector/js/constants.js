@@ -7,6 +7,7 @@ app.factory('CONSTANTS', [function() {
 		sServicePath: "odata.svc/",
 		sDefaultRoleNameForNewCompany: "systemAdministrator",
 		sAppAbsolutePath: "",
+		bIsHybridApplication: false
 	}
 }]);
 

@@ -1,5 +1,5 @@
-app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '$translate',
-	function(cacheProvider, utilsProvider, apiProvider, $translate) {
+app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '$translate', 'CONSTANTS',
+	function(cacheProvider, utilsProvider, apiProvider, $translate, CONSTANTS) {
 		return {
 			setCurrentRole: function(sCurrentRole) {
 				if (!this[sCurrentRole] || !this[sCurrentRole].sInitialState) {
@@ -17,7 +17,12 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 
 			getRolesInitialState: function(sRole) {
-				return this[sRole].sInitialState;
+				if(!CONSTANTS.bIsHybridApplication){
+					return this[sRole].sInitialState;
+				}else{
+					return this[sRole].sInitialStateHybrid;
+				}
+				
 			},
 
 			getRolesMainMenuItemSettings: function(oParameters) {
@@ -37,7 +42,9 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 
 			globalAdministrator: {
+				//sInitialState: "app.deficienciesList",
 				sInitialState: "app.deficienciesList",
+				sInitialStateHybrid: "deficiencyQuickAdd",
 				bIsGlobalUserAdministrator: true,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -119,6 +126,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			systemAdministrator: {
 				sInitialState: "app.deficienciesList",
+				sInitialStateHybrid: "deficiencyQuickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -201,6 +209,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 
 			contactManagementUser: {
 				sInitialState: "app.contactsList",
+				sInitialStateHybrid: "deficiencyQuickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,
@@ -282,6 +291,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			contactViewerUser: {
 				sInitialState: "app.contactsList",
+				sInitialStateHybrid: "deficiencyQuickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,

@@ -549,7 +549,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				if (oParameters.bShowSpinner) {
 					$rootScope.$emit('LOAD');
 				}
-
+				console.log(oParameters.sPath);
 				oHttp = $http({
 					url: oParameters.sPath,
 					method: oParameters.sRequestType,
