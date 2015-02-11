@@ -76,7 +76,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			constructPhasesMultiSelect(aActivityPhasesGuids);
 			
 			$scope.oActivity._activityTypeGuid = oActivity.ActivityTypeGuid;
-
+			
 			$scope.oActivity._assignedUserName = oActivity.AssignedUser;
 			
 			$scope.oActivity._accountsGuids = [];
@@ -153,13 +153,17 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 		};
 
 		var onUsersWithCompaniesLoaded = function(aData) {
-			var aFilteredUser = [{}];
+			var aFilteredUser = [];
+			var iFilteredUserIndex = 0;
 			var bMatchFound = false;
 			for (var i = 0; i < aData.length; i++) {
 				for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
 					if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
 						bMatchFound = true;
-						aFilteredUser[i] = aData[i];
+						if(bMatchFound){
+							aFilteredUser[iFilteredUserIndex] = aData[i];
+							iFilteredUserIndex = iFilteredUserIndex + 1;
+						}
 						if ($scope.sMode === 'create') {
 							oActivityWrapper.aData[0]._assignedUserName = $scope.sCurrentUser;
 						}
@@ -168,7 +172,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				}
 				if (!bMatchFound) {
 					continue;
-				} 
+				}
 			}
 
 			aData = [{}];
@@ -183,7 +187,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				oParentArrayWrapper: oActivityWrapper,
 				sNameEN: "UserName",
 				sNameFR: "UserName",
-				sDependentKey: "UserName",
+				sDependentKey: "AssignedUser",
 				sParentKey: "_assignedUserName",
 				sTargetArrayNameInParent: "aUsers"
 			});
@@ -191,6 +195,62 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				$scope.aUsers = angular.copy(oActivityWrapper.aData[0].aUsers);
 			}
 		};
+
+		if ($scope.sMode !== "create") {
+			if (angular.equals(oActivity, {})) { //in case of F5
+				getActivityDetails();
+			} else { //in case when data is retrieved from the cash
+				setDisplayedActivityDetails(oActivity);
+
+				apiProvider.getActivityTypes({
+					bShowSpinner: false,
+					onSuccess: onActivityTypesLoaded
+				});
+
+				apiProvider.getUsers({
+					sExpand: "CompanyDetails",
+					bShowSpinner: false,
+					onSuccess: onUsersWithCompaniesLoaded
+				});
+
+				apiProvider.getAccounts({
+					bShowSpinner: false,
+					onSuccess: onAccountsLoaded
+				});
+
+				apiProvider.getContacts({
+					sExpand: "AccountDetails/AccountTypeDetails",
+					bShowSpinner: false,
+					onSuccess: onContactsLoaded
+				});
+			}
+		} else {
+			constructPhasesMultiSelect({
+				aSelectedPhases: []
+			});
+
+			apiProvider.getActivityTypes({
+				bShowSpinner: false,
+				onSuccess: onActivityTypesLoaded
+			});
+
+			apiProvider.getUsers({
+				sExpand: "CompanyDetails",
+				bShowSpinner: false,
+				onSuccess: onUsersWithCompaniesLoaded
+			});
+
+			apiProvider.getAccounts({
+				bShowSpinner: false,
+				onSuccess: onAccountsLoaded
+			});
+
+			apiProvider.getContacts({
+				sExpand: "AccountDetails/AccountTypeDetails",
+				bShowSpinner: false,
+				onSuccess: onContactsLoaded
+			});
+		}
 
 		var onAccountsLoaded = function(aData) {
 			//Sort aData by accountType sorting sequence and then by AccountName
@@ -249,62 +309,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				onSuccess: onActivityDetailsLoaded,
 			});
 		};
-
-		if ($scope.sMode !== "create") {
-			if (angular.equals(oActivity, {})) { //in case of F5
-				getActivityDetails();
-			} else { //in case when data is retrieved from the cash
-				setDisplayedActivityDetails(oActivity);
-
-				apiProvider.getActivityTypes({
-					bShowSpinner: false,
-					onSuccess: onActivityTypesLoaded
-				});
-
-				apiProvider.getUsers({
-					sExpand: "CompanyDetails",
-					bShowSpinner: false,
-					onSuccess: onUsersWithCompaniesLoaded
-				});
-
-				apiProvider.getAccounts({
-					bShowSpinner: false,
-					onSuccess: onAccountsLoaded
-				});
-
-				apiProvider.getContacts({
-					sExpand: "AccountDetails/AccountTypeDetails",
-					bShowSpinner: false,
-					onSuccess: onContactsLoaded
-				});
-			}
-		} else {
-			constructPhasesMultiSelect({
-				aSelectedPhases: []
-			});
-
-			apiProvider.getActivityTypes({
-				bShowSpinner: false,
-				onSuccess: onActivityTypesLoaded
-			});
-
-			apiProvider.getUsers({
-				sExpand: "CompanyDetails",
-				bShowSpinner: false,
-				onSuccess: onUsersWithCompaniesLoaded
-			});
-
-			apiProvider.getAccounts({
-				bShowSpinner: false,
-				onSuccess: onAccountsLoaded
-			});
-
-			apiProvider.getContacts({
-				sExpand: "AccountDetails/AccountTypeDetails",
-				bShowSpinner: false,
-				onSuccess: onContactsLoaded
-			});
-		}
 
 		$scope.onEdit = function() {
 			$state.go('app.activityDetailsWrapper.activityDetails', {
@@ -422,22 +426,22 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if($scope.oForms.activityDetailsForm.activityObject){
 				$scope.oForms.activityDetailsForm.selectedActivityType.$setDirty();//to display validation messages on submit press
 			}
-			// if($scope.oForms.activityDetailsForm.selectedUser){
-			// 	$scope.oForms.activityDetailsForm.selectedUser.$setDirty();//to display validation messages on submit press
-			// }
+			if($scope.oForms.activityDetailsForm.selectedUser){
+				$scope.oForms.activityDetailsForm.selectedUser.$setDirty();//to display validation messages on submit press
+			}
 			if($scope.oForms.activityDetailsForm.activityObject){
 				$scope.oForms.activityDetailsForm.activityObject.$setDirty();//to display validation messages on submit press
-			}			
-
+			}	
 			if(!$scope.oForms.activityDetailsForm.$valid){
 				return;
 			}	
-
+			
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
 			var aLinks = [];
 
+			oDataForSave.Guid = $scope.oActivity._guid;
 			var onSuccessCreation = function(oData) {
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
@@ -454,20 +458,20 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 					$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oActivity.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
 					$scope.oActivity._guid = oData.Guid;
-					
 				} else {
 					$scope.oActivity.sObject = "";
 					$scope.oForms.activityDetailsForm.activityObject.$setPristine();
-					$scope.oActivity.dDueDate = "";
+					$scope.oActivity.dDueDate = "/Date(0)/";
+
 				}
 			};
-
 			var onSuccessUpdate = function(oData) {
 				bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
-					return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
+					return; // to prevent switch to display mode otherwise navigation will be to display state and not away...
 				}
+
 				$scope.oActivity._lastModifiedAt = oData.LastModifiedAt;
 				$scope.oActivity.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 				
@@ -477,16 +481,16 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				});
 			};
 
-			oDataForSave.Guid = $scope.oActivity._guid;
+			//oDataForSave.Guid = $scope.oActivity._guid;
 			oDataForSave.Object = $scope.oActivity.sObject;
 			
 			if ($scope.aSelectedActivityType.length) {
 				oDataForSave.ActivityTypeGuid = $scope.aSelectedActivityType[0].Guid;
 			}
 
-			// if ($scope.aSelectedUser.length) {
-			// 	oDataForSave.UserName = $scope.aSelectedUser[0].UserName;
-			// }
+			if ($scope.aSelectedUser.length) {
+				oDataForSave.AssignedUser = $scope.aSelectedUser[0].AssignedUser;
+			}
 
 			if($scope.oActivity.dDueDate){
             	oDataForSave.DueDate = "/Date(" + $scope.oActivity.dDueDate.getTime() + ")/";	

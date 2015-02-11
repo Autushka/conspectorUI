@@ -9,6 +9,9 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 
 		var oDeficiencyStatusesListData = {
 			aData: []
 		};
+		var oActivityTypesListData = {
+			aData: []
+		};
 
 		$scope.logosTableParams = servicesProvider.createNgTable({
 			oInitialDataArrayWrapper: oLogosListData,
@@ -19,6 +22,12 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 
 			oInitialDataArrayWrapper: oDeficiencyStatusesListData,
 			sDisplayedDataArrayName: "aDisplayedDeficiencyStatuses",
 		});
+
+		$scope.activityTypesTableParams = servicesProvider.createNgTable({
+			oInitialDataArrayWrapper: oActivityTypesListData,
+			sDisplayedDataArrayName: "aDisplayedActivityTypes",
+		});
+
 
 		var onImgsLoaded = function(aData, aAppendTo, oTableToReload) {
 			for (var i = 0; i < aData.length; i++) {
@@ -88,6 +97,10 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 
 			onImgsLoaded(aData, oDeficiencyStatusesListData.aData, $scope.deficiencyStatusesTableParams)
 		};		
 
+		onActivitiesTypesImgsLoaded = function(aData) {
+			onImgsLoaded(aData, oActivityTypesListData.aData, $scope.activityTypesTableParams)
+		};
+
 		apiProvider.getAttachments({
 			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_",
 			onSuccess: onLogoImgsLoaded
@@ -97,6 +110,11 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 
 			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_", 
 			onSuccess: onDeficienciesStatusesImgsLoaded
 		});		
+
+		apiProvider.getAttachments({
+			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_", 
+			onSuccess: onActivitiesTypesImgsLoaded
+		});	
 
 		$scope.onAddNewLogo = function() {
 			onAddNewImg(oLogosListData.aData, $scope.logosTableParams);
@@ -128,6 +146,22 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 
 
 		$scope.onDeficiencyStatusSelected = function(aFiles, $event, iIndex) {
 			onImgSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_", oDeficiencyStatusesListData.aData,  $event, iIndex);
-		};		
+		};
+
+		$scope.onAddNewActivityType = function() {
+			onAddNewImg(oActivityTypesListData.aData, $scope.activityTypesTableParams);
+		};
+
+		$scope.onDeleteActivityType = function(oLogo, iIndex) {
+			onDeleteImg(oActivityTypesListData.aData, $scope.activityTypesTableParams, oLogo, iIndex);
+		};
+
+		$scope.onCancelActivityType = function(oLogo, iIndex) {
+			onCancelImg(oActivityTypesListData.aData, $scope.activityTypesTableParams, oLogo, iIndex);
+		};
+
+		$scope.onActivityTypeSelected = function(aFiles, $event, iIndex) {
+			onImgSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_", oActivityTypesListData.aData,  $event, iIndex);
+		};			
 	}
 ]);

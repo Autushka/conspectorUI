@@ -37,6 +37,23 @@
 						</div>
 					</div>
 				</td>
+				<!-- TO DO STYLE PROPERLY -->
+				<td data-title="'global_icon' | translate" style="width: 60px;">
+					<div layout="row" layout-align="center center">
+						<img ng-if="!activityType._editMode" ng-src="{{activityType.sUrl}}" style="width:24px; height:24px;"/>
+						<div ng-if="activityType._editMode"
+							multi-select
+							input-model="activityType.aTypeIcons"
+							default-label="{{'adminPanel_activityTypeIconDefaultLabel' | translate }}"
+							button-label="icon"
+							item-label="icon"
+							tick-property="ticked"
+							selection-mode="single"
+							helper-elements=""
+							>
+						</div>
+					</div>
+				</td>
 				<td data-title="'global_descriptionEN' | translate" sortable="'nameEN'">
 					<div layout="row" layout-align="start center">
 						<span ng-if="!activityType._editMode">{{activityType.nameEN}}</span>

@@ -18,18 +18,39 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 			}
 		});
 
+		var onIconsLoaded = function(aData) {
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oActivityTypesListData,
+				oNewParentItemArrayWrapper: oStatusIconArrayWrapper,
+				sDependentKey: "guid",
+				sParentKey: "_associatedIconFileGuid",
+				sDependentIconKey: "guid",
+				sTargetArrayNameInParent: "aTypeIcons"
+			});
+		};
+
 		var onActivityTypesLoaded = function(aData) {
 			for (var i = 0; i < aData.length; i++) {
 				oActivityTypesListData.aData.push({
 					_editMode: false, //symbol _ here meens that this attribute is not displayed in the table and is used for the logic only
 					_guid: aData[i].Guid,
 					_lastModifiedAt: aData[i].LastModifiedAt,
+					_associatedIconFileGuid: aData[i].AssociatedIconFileGuid,
+					sUrl: $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
 					nameEN: aData[i].NameEN,
 					nameFR: aData[i].NameFR,
 					sortingSequence: aData[i].GeneralAttributes.SortingSequence
 				});
 			}
 			$scope.tableParams.reload();
+
+			apiProvider.getAttachments({
+				sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_",
+				onSuccess: onIconsLoaded
+			});
 		}
 
 		apiProvider.getActivityTypes({
@@ -44,6 +65,7 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 				nameEN: "",
 				nameFR: "",
 				_counter: iNewItemsCounter
+				aTypeIcons: angular.copy(oTypeIconArrayWrapper.aData)
 			});
 			iNewItemsCounter++;
 			$scope.tableParams.reload();
@@ -82,7 +104,7 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 				});
 			} else {
 				for (var i = 0; i < oActivityTypesListData.aData.length; i++) {
-					if(oActivityTypesListData.aData[i]._counter === oActivityType._counter){
+					if (oActivityTypesListData.aData[i]._counter === oActivityType._counter){
 						oActivityTypesListData.aData.splice(i, 1);
 						$scope.tableParams.reload();	
 						break;					
@@ -99,17 +121,27 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 				oActivityType._guid = oData.Guid;
 				oActivityType._lastModifiedAt = oData.LastModifiedAt;
 				oActivityType._editMode = false;
-
+				oActivityType._associatedIconFileGuid = oData.AssociatedIconFileGuid;
+				oActivityType.sUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oData.AssociatedIconFileGuid;
 			};
 			var onSuccessUpdate = function(oData) {
 				oActivityType._editMode = false;
 				oActivityType._lastModifiedAt = oData.LastModifiedAt;
+				oActivityType._associatedIconFileGuid = oData.AssociatedIconFileGuid;
+				oActivityType.sUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oData.AssociatedIconFileGuid;
 			};
 
 			oDataForSave.NameEN = oActivityType.nameEN;
 			oDataForSave.NameFR = oActivityType.nameFR;
 			oDataForSave.GeneralAttributes.SortingSequence = oActivityType.sortingSequence;
 			oDataForSave.LastModifiedAt = oActivityType._lastModifiedAt;
+
+			for (var i = 0; i < oActivityType.aTypeIcons.length; i++) {
+				if (oActivityType.aTypeIcons[i].ticked) {
+					oDataForSave.AssociatedIconFileGuid = oActivityType.aTypeIcons[i].guid;
+					break;
+				}
+			}
 
 			if (oActivityType._guid) {
 				oDataForSave.Guid = oActivityType._guid;

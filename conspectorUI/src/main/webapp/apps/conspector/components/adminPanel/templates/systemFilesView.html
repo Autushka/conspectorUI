@@ -118,6 +118,54 @@
 	<!-- END OF NG TABLE -->
 </div>
 <!-- END OF CONTENT VIEW -->
+<div class="cnpContent" layout="column">
+	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
+		<div>
+			<!-- <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'global_addNew' | translate}}</md-button> -->
+				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNewActivityType()">
+				{{'global_addNew' | translate}}
+				</md-button>
+		</div>
+		<div layout="row" layout-align="end start">
+			<label class="cnpContentTitle notSelectable">
+				{{'systemFiles_activityTypeIcon' | translate}}
+			</label>
+		</div>
+	</div>
+	<!-- END OF ACTION BAR -->
+	<!-- NG TABLE -->
+	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+		<table ng-table="activityTypesTableParams" class="cnpNgTable" id="activityTypeIconsList">
+			<tr ng-repeat="activityType in aDisplayedActivityTypes">
+				<td data-title="'global_actions' | translate">
+					<div layout="row" layout-align="center center">
+						<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="activityType._editMode == false"  ng-click="onEditImg(activityType)">
+						</div>
+						<div class="cnpInputIcon cnpSaveIcon" ng-if="activityType._editMode" ng-click="onCancelActivityType(activityType, $index)">
+						</div>
+						<div class="cnpInputIcon cnpDeleteIcon" ng-if="activityType._editMode" ng-click="onDeleteActivityType(activityType, $index)">
+						</div>
+					</div>
+				</td>
+				<td data-title="'systemFiles_Icon' | translate">
+					<img ng-if="!activityType._createMode" ng-src="{{activityType.sUrl}}" style="width:24px; height:24px;"/>
+					<button ng-if="activityType._createMode" ng-file-select accept="image/*,*.svg" ng-file-change="onActivityTypeSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
+				</td>
+			</tr>
+			<tr ng-hide="aDisplayedActivityTypes.length > 0">
+				<td td colspan="2">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- END OF NG TABLE -->
+</div>
+<!-- END OF CONTENT VIEW -->
 
 <!-- <div class="cnpContent" layout="column">
 		<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
