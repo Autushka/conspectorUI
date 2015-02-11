@@ -295,13 +295,17 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		};
 
 		var onUsersWithCompaniesLoaded = function(aData) {
-			var aFilteredUser = [{}];
+			var aFilteredUser = [];
+			var iFilteredUserIndex = 0;
 			var bMatchFound = false;
 			for (var i = 0; i < aData.length; i++) {
 				for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
 					if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
 						bMatchFound = true;
-						aFilteredUser[i] = aData[i];
+						if(bMatchFound){
+							aFilteredUser[iFilteredUserIndex] = aData[i];
+							iFilteredUserIndex = iFilteredUserIndex + 1;
+						}
 						if ($scope.sMode === 'create') {
 							oDeficiencyWrapper.aData[0]._assignedUserName = $scope.sCurrentUser;
 						}
