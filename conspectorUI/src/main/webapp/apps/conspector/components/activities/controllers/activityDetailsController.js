@@ -76,7 +76,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			constructPhasesMultiSelect(aActivityPhasesGuids);
 			
 			$scope.oActivity._activityTypeGuid = oActivity.ActivityTypeGuid;
-			$scope.oActivity._assignedUserName = oActivity.UserName;
+
+			$scope.oActivity._assignedUserName = oActivity.AssignedUser;
 			
 			$scope.oActivity._accountsGuids = [];
 			if (oActivity.AccountDetails) {
@@ -256,14 +257,14 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				setDisplayedActivityDetails(oActivity);
 
 				apiProvider.getActivityTypes({
-				bShowSpinner: false,
-				onSuccess: onActivityTypesLoaded
+					bShowSpinner: false,
+					onSuccess: onActivityTypesLoaded
 				});
 
 				apiProvider.getUsers({
-				sExpand: "CompanyDetails",
-				bShowSpinner: false,
-				onSuccess: onUsersWithCompaniesLoaded
+					sExpand: "CompanyDetails",
+					bShowSpinner: false,
+					onSuccess: onUsersWithCompaniesLoaded
 				});
 
 				apiProvider.getAccounts({
@@ -482,6 +483,10 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if ($scope.aSelectedActivityType.length) {
 				oDataForSave.ActivityTypeGuid = $scope.aSelectedActivityType[0].Guid;
 			}
+
+			// if ($scope.aSelectedUser.length) {
+			// 	oDataForSave.UserName = $scope.aSelectedUser[0].UserName;
+			// }
 
 			if($scope.oActivity.dDueDate){
             	oDataForSave.DueDate = "/Date(" + $scope.oActivity.dDueDate.getTime() + ")/";	
