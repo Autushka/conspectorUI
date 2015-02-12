@@ -1,5 +1,5 @@
-viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings', '$timeout', '$mdSidenav',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav) {
+viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings', '$timeout', '$mdSidenav', '$window',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window) {
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		var bCanContinue = rolesSettings.getRolesSettingsForEntityAndOperation({
 			sRole: sCurrentRole,
@@ -19,32 +19,138 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			servicesProvider.logOut();
 		};
 
+		$scope.iCurrentAttibuteIndex = 0;
+
 		$scope.aProjectsWithPhases = [];
 		var bPhaseWasSelected = false;
+		$scope.aUnits = [];
+		var bUnitWasSelected = false;
+		$scope.aStatuses = [];
+		var bStatusWasSelected = false;	
+		$scope.aDescriptionTags = [];
+		$scope.aLocationTags = [];	
+		$scope.aContractors = [];
+		var bContractorWasSelected = false;				
 
 		$scope.aDeficiencyAttributes = [];
 		$scope.aDeficiencyAttributes.push({
 			sDescription: "Phase",
-			sValue: "Not specifies..."
+			sValue: "Not specifies...",
+			bIsSelectionUnabled: true,
 		});
 		$scope.aDeficiencyAttributes.push({
 			sDescription: "Unit",
-			sValue: "Not specifies..."
+			sValue: "Not specifies...",
+			bIsSelectionUnabled: false,
 		});
 		$scope.aDeficiencyAttributes.push({
 			sDescription: "Status",
-			sValue: "Not specifies..."
+			sValue: "Not specifies...",
+			bIsSelectionUnabled: true,
 		});
+		$scope.aDeficiencyAttributes.push({
+			sDescription: "DescriptionTags",
+			sValue: "Not specifies...",
+			bIsSelectionUnabled: true,
+		});
+		$scope.aDeficiencyAttributes.push({
+			sDescription: "LocationTags",
+			sValue: "Not specifies...",
+			bIsSelectionUnabled: true,
+		});	
+		$scope.aDeficiencyAttributes.push({
+			sDescription: "Contractors",
+			sValue: "Not specifies...",
+			bIsSelectionUnabled: true,
+		});						
+
+		var onUnitsLoaded = function(oData) {
+			oData.UnitDetails.result = $filter('filter')(oData.UnitDetails.result, function(oItem, iIndex) {
+				return !oItem.GeneralAttributes.IsDeleted
+			});
+
+			oData.UnitDetails.results = $filter('orderBy')(oData.UnitDetails.results, ["Name"]);
+			for (var i = 0; i < oData.UnitDetails.results.length; i++) {
+				$scope.aUnits.push({
+					sGuid: oData.UnitDetails.results[i].Guid,
+					sName: oData.UnitDetails.results[i].Name,
+					bTicked: false
+				})
+			}
+		};
+
+		var onStatusesLoaded = function(aData) {
+			var sDesciption = "";
+			for (var i = 0; i < aData.length; i++) {
+				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+			}
+
+			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+			for (var i = 0; i < aData.length; i++) {
+				sDescription = "";
+
+				if (aData[i].NameFR && $translate.use() === "fr") {
+					sDescription = aData[i].NameFR;
+				} else {
+					sDescription = aData[i].NameEN;
+				}
+
+				$scope.aStatuses.push({
+					sGuid: aData[i].Guid,
+					sName: sDescription,
+					bTicked: false,
+					sIconUrl: $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
+				})
+			}
+		};
+
+		var onContractorsLoaded = function(aData) {
+			aData = $filter('orderBy')(aData, ["Name"]);
+			for (var i = 0; i < aData.length; i++) {
+				$scope.aContractors.push({
+					sGuid: aData[i].Guid,
+					sName: aData[i].Name,
+					bTicked: false,
+				})
+			}
+		};		
 
 		$scope.onOpenSideNav = function(oAttribute) {
-			if (oAttribute.sDescription === "Phase") {
-				$scope.sSideNavHeader = "Phases";
+			if (!oAttribute.bIsSelectionUnabled) {
+				return;
+			}
+
+			switch (oAttribute.sDescription) {
+				case "Phase":
+					$scope.sSideNavHeader = "Phases";
+					$scope.iCurrentAttibuteIndex = 0;
+					break;
+				case "Unit":
+					$scope.sSideNavHeader = "Units";
+					$scope.iCurrentAttibuteIndex = 1;
+					break;
+				case "Status":
+					$scope.sSideNavHeader = "Statuses";
+					$scope.iCurrentAttibuteIndex = 2;
+					break;
+				case "DescriptionTags":
+					$scope.sSideNavHeader = "Description Tags";
+					$scope.iCurrentAttibuteIndex = 3;
+					break;
+				case "LocationTags":
+					$scope.sSideNavHeader = "Location Tags";
+					$scope.iCurrentAttibuteIndex = 4;
+					break;		
+				case "Contractors":
+					$scope.sSideNavHeader = "Contractors";
+					$scope.iCurrentAttibuteIndex = 5;
+					break;														
 			}
 			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
 			oSideNav.then(function() {
-				switch ($scope.sSideNavHeader) {
-					case "Phases":
+				switch ($scope.iCurrentAttibuteIndex) {
+					case 0:
 						var aPhases = [];
 						if (!$scope.aProjectsWithPhases.length) {
 							var aProjectsWithPhases = servicesProvider.constructUserProjectsPhases();
@@ -75,6 +181,36 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 							}
 							break;
 						}
+					case 1:
+						//$scope.aUnits = [];
+						if (!$scope.aUnits.length) {
+							apiProvider.getPhase({
+								sExpand: "UnitDetails",
+								sKey: $scope.aDeficiencyAttributes[0].sSelectedItemGuid,
+								onSuccess: onUnitsLoaded
+							});
+						}
+						break;
+					case 2:
+						if (!$scope.aStatuses.length) {
+							apiProvider.getDeficiencyStatuses({
+								onSuccess: onStatusesLoaded
+							});
+						}
+						break;
+					case 3:
+						break;
+					case 4:
+						break;		
+					case 5:
+						if (!$scope.aContractors.length) {
+							apiProvider.getContractors({
+								sExpand: "AccountTypeDetails",
+								onSuccess: onContractorsLoaded,
+							});
+						}					
+						break;																	
+
 				}
 			});
 		};
@@ -82,20 +218,68 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		$scope.onCloseRightSideNav = function() {
 			var oSvc = $mdSidenav('deficiencyQuickAddRigthSideNav').close();
 			oSvc.then(function() {
-				switch ($scope.sSideNavHeader) {
-					case "Phases":
-						if(bPhaseWasSelected){
+				switch ($scope.iCurrentAttibuteIndex) {
+					case 0:
+						if (bPhaseWasSelected) {
+							$scope.aDeficiencyAttributes[1].bIsSelectionUnabled = true;
 							$scope.aDeficiencyAttributes[0].sValue = "";
 							for (var i = 0; i < $scope.aProjectsWithPhases.length; i++) {
 								for (var j = 0; j < $scope.aProjectsWithPhases[i].aPhases.length; j++) {
 									if ($scope.aProjectsWithPhases[i].aPhases[j].bTicked) {
 										$scope.aDeficiencyAttributes[0].sValue = $scope.aDeficiencyAttributes[0].sValue + $scope.aProjectsWithPhases[i].sProjectName + " - " + $scope.aProjectsWithPhases[i].aPhases[j].sPhaseName;
+										$scope.aDeficiencyAttributes[0].sSelectedItemGuid = $scope.aProjectsWithPhases[i].aPhases[j].Guid;
 										break;
 									}
 								}
 							}
-							break;							
+							break;
 						}
+					case 1:
+						if (bUnitWasSelected) {
+							$scope.aDeficiencyAttributes[1].sValue = "";
+							for (var i = 0; i < $scope.aUnits.length; i++) {
+								if ($scope.aUnits[i].bTicked) {
+									$scope.aDeficiencyAttributes[1].sValue = $scope.aUnits[i].sName;
+									$scope.aDeficiencyAttributes[1].sSelectedItemGuid = $scope.aUnits[i].sGuid;
+									break;
+								}
+							}
+							break;
+						}
+					case 2:
+						if (bStatusWasSelected) {
+							$scope.aDeficiencyAttributes[2].sValue = "";
+							for (var i = 0; i < $scope.aStatuses.length; i++) {
+								if ($scope.aStatuses[i].bTicked) {
+									$scope.aDeficiencyAttributes[2].sValue = $scope.aStatuses[i].sName;
+									$scope.aDeficiencyAttributes[2].sSelectedItemGuid = $scope.aStatuses[i].sGuid;
+									break;
+								}
+							}
+							break;
+						}	
+					case 3:
+						$scope.aDeficiencyAttributes[3].sValue = utilsProvider.tagsArrayToTagsString($scope.aDescriptionTags);
+						break;
+					case 4:
+						$scope.aDeficiencyAttributes[4].sValue = utilsProvider.tagsArrayToTagsString($scope.aLocationTags);	
+						break;
+					case 5:
+						if (bContractorWasSelected) {
+							$scope.aDeficiencyAttributes[5].sValue = "";
+							$scope.aDeficiencyAttributes[5].aSelectedItemsGuids = [];
+							for (var i = 0; i < $scope.aContractors.length; i++) {
+								if ($scope.aContractors[i].bTicked) {
+									$scope.aDeficiencyAttributes[5].sValue = $scope.aDeficiencyAttributes[5].sValue + $scope.aContractors[i].sName + "; ";
+									$scope.aDeficiencyAttributes[5].aSelectedItemsGuids.push($scope.aContractors[i].sGuid);
+								}
+							}
+							break;	
+						}else{
+							$scope.aDeficiencyAttributes[5].sValue = "Not specifies...";
+							$scope.aDeficiencyAttributes[5].aSelectedItemsGuids = [];
+						}
+						break;																							
 				}
 			});
 		};
@@ -109,8 +293,66 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					}
 				}
 				oPhase.bTicked = true;
+				$scope.aUnits = [];
 			}
 		};
+
+		$scope.onSelectUnit = function(oUnit) {
+			bUnitWasSelected = true;
+			if (!oUnit.bTicked) {
+				for (var i = 0; i < $scope.aUnits.length; i++) {
+					$scope.aUnits[i].bTicked = false;
+				}
+				oUnit.bTicked = true;
+			}
+		};
+
+		$scope.onSelectStatus = function(oStatus) {
+			bStatusWasSelected = true;
+			if (!oStatus.bTicked) {
+				for (var i = 0; i < $scope.aStatuses.length; i++) {
+					$scope.aStatuses[i].bTicked = false;
+				}
+				oStatus.bTicked = true;
+			}
+		};	
+
+		$scope.onSelectContractor = function(oContractor) {
+			oContractor.bTicked = !oContractor.bTicked;
+
+			if(!oContractor.bTicked){
+				for (var i = 0; i < $scope.aContractors.length; i++) {
+					if($scope.aContractors[i].bTicked){
+						bContractorWasSelected = true;
+						break;
+					}
+				}				
+			}else{
+				bContractorWasSelected = true;
+			}
+		};	
+
+		var prepareLinksForSave = function() { // link contact to phases
+			var aLinks = [];
+			var aUri = [];
+			var sUri = "";
+
+			if ($scope.aDeficiencyAttributes[5].aSelectedItemsGuids && $scope.aDeficiencyAttributes[5].aSelectedItemsGuids.length) {
+				for (var i = 0; i < $scope.aDeficiencyAttributes[5].aSelectedItemsGuids.length; i++) {
+					sUri = "Accounts('" + $scope.aDeficiencyAttributes[5].aSelectedItemsGuids[i] + "')";
+					aUri.push(sUri);
+				}
+			}
+
+			aLinks.push({
+				sRelationName: "AccountDetails",
+				bKeepCompanyDependentLinks: true,
+				aUri: aUri
+			});
+
+			return aLinks;
+		};
+
 
 		$scope.onSave = function() {
 			var onSuccessCreation = function() {
@@ -118,18 +360,16 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			};
 
 			var oDataForSave = {};
-			for (var i = 0; i < $scope.aProjectsWithPhases.length; i++) {
-				for (var j = 0; j < $scope.aProjectsWithPhases[i].aPhases.length; j++) {
-					if ($scope.aProjectsWithPhases[i].aPhases[j].bTicked) {
-						oDataForSave.PhaseGuid = $scope.aProjectsWithPhases[i].aPhases[j].Guid;
-						break;
-					}
-				}
-			}			
+			oDataForSave.PhaseGuid = $scope.aDeficiencyAttributes[0].sSelectedItemGuid;
+			oDataForSave.UnitGuid = $scope.aDeficiencyAttributes[1].sSelectedItemGuid;
+			oDataForSave.TaskStatusGuid = $scope.aDeficiencyAttributes[2].sSelectedItemGuid;
+			oDataForSave.DescriptionTags = $scope.aDeficiencyAttributes[3].sValue;
+			oDataForSave.LocationTags = $scope.aDeficiencyAttributes[4].sValue;
 
+			var aLinks = prepareLinksForSave();
 			apiProvider.createDeficiency({
 				bShowSpinner: true,
-				//aLinks: aLinks,
+				aLinks: aLinks,
 				oData: oDataForSave,
 				bShowSuccessMessage: true,
 				bShowErrorMessage: true,
