@@ -41,7 +41,7 @@
 				<div class="cnpSubSection" flex>
 					<div  class="cnpSubSectionLabel">
 						<label>
-							{{'activityDetails_name' | translate}}
+							{{'activityDetails_object' | translate}}
 						</label>
 					</div>
 					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oActivity.sObject}}</div>
@@ -69,6 +69,7 @@
 						is-disabled="sMode == 'display'"
 						on-item-click="onDataModified()"
 						output-model="aSelectedPhases"
+						max-labels="4"
 						on-close="onCloseCheckSelectedPhasesLength()"
 						>
 					</div>
@@ -94,6 +95,7 @@
 						is-disabled="sMode == 'display'"
 						on-item-click="onDataModified()"
 						output-model="aSelectedUnits"
+						max-labels="4"
 						>
 					</div>
 					<!-- <input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
@@ -143,7 +145,8 @@
 						item-label="name"
 						is-disabled="sMode == 'display'"					
 						tick-property="ticked"
-						on-item-click="onDataModified()"	
+						on-item-click="onDataModified()"
+						max-labels="4"
 						output-model="aSelectedAccounts"
 						helper-elements="filter">
 					</div>	
@@ -162,7 +165,8 @@
 						item-label="name"
 						is-disabled="sMode == 'display'"					
 						tick-property="ticked"
-						on-item-click="onDataModified()"	
+						on-item-click="onDataModified()"
+						max-labels="4"
 						output-model="aSelectedContacts"
 						helper-elements="filter"
 						>
