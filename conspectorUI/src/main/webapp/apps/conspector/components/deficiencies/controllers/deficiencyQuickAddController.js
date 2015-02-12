@@ -114,7 +114,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
 		$scope.onSave = function() {
 			var onSuccessCreation = function() {
-				alert("yo");
+
 			};
 
 			var oDataForSave = {};

@@ -251,6 +251,15 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			}
 		};
 
+		var getActivityDetails = function() {
+			apiProvider.getActivity({
+				sKey: sActivityGuid,
+				sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
+				bShowSpinner: true,
+				onSuccess: onActivityDetailsLoaded,
+			});
+		};		
+
 		if ($scope.sMode !== "create") {
 			if (angular.equals(oActivity, {})) { //in case of F5
 				getActivityDetails();
@@ -308,17 +317,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				onSuccess: onContactsWithAccountLoaded
 			});
 		}
-
-		
-
-		var getActivityDetails = function() {
-			apiProvider.getActivity({
-				sKey: sActivityGuid,
-				sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
-				bShowSpinner: true,
-				onSuccess: onActivityDetailsLoaded,
-			});
-		};
 
 		$scope.onEdit = function() {
 			$state.go('app.activityDetailsWrapper.activityDetails', {
