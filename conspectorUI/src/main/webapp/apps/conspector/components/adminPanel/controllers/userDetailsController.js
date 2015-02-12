@@ -198,28 +198,25 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 			}
 		};
 
-		var onContactsLoaded = function(aData) {
+		var onContactsWithAccountLoaded = function(aData) {
+			var sFullName = "";
 			//Sort aData by role sorting sequence 
-			for (var i = 0; i < aData.length; i++) {
-				if (aData[i].FirstName) {
-					aData[i].sName = aData[i].FirstName;
-				}
-				if (aData[i].LastName) {
-					if (aData[i].FirstName) {
-						aData[i].sName = aData[i].sName + " ";
-					}
-					aData[i].sName = aData[i].sName + aData[i].LastName + ", " + aData[i].AccountDetails.Name;
+			aData = $filter('orderBy')(aData, ["FirstName"]);
+			
+			for(var i = 0; i < aData.length; i++){
+				if(aData[i].LastName){
+					aData[i].sFullName = aData[i].FirstName + " " + aData[i].LastName + ",  " + aData[i].AccountDetails.Name;
+				} else {
+					aData[i].sFullName = aData[i].FirstName + ",  " + aData[i].AccountDetails.Name;
 				}
 			}
-			aData = $filter('orderBy')(aData, ["sName"]);
-
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
 				},
 				oParentArrayWrapper: oUserWrapper,
-				sNameEN: "sName",
-				sNameFR: "sName",
+				sNameEN: "sFullName",
+				sNameFR: "sFullName",
 				sDependentKey: "Guid",
 				sParentKey: "_contactGuid",
 				sTargetArrayNameInParent: "aContacts"
@@ -246,9 +243,9 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 				onSuccess: onRolesLoaded
 			});
 			apiProvider.getContacts({
-                sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+                sExpand: "AccountDetails",
                 bShowSpinner: true,
-                onSuccess: onContactsLoaded,
+                onSuccess: onContactsWithAccountLoaded,
             });
 			constructLanguageMultiSelect();
 		};
@@ -279,9 +276,9 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 					onSuccess: onRolesLoaded
 				});
 				apiProvider.getContacts({
-	                sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+	                sExpand: "AccountDetails",
 	                bShowSpinner: true,
-	                onSuccess: onContactsLoaded,
+	                onSuccess: onContactsWithAccountLoaded,
             	});
 				constructLanguageMultiSelect();
 			}
@@ -300,9 +297,9 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 				onSuccess: onRolesLoaded
 			});
 			apiProvider.getContacts({
-                sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+                sExpand: "AccountDetails",
                 bShowSpinner: true,
-                onSuccess: onContactsLoaded,
+                onSuccess: onContactsWithAccountLoaded,
             });
 			constructLanguageMultiSelect();
 		}

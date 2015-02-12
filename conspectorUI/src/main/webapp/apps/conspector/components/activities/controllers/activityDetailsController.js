@@ -118,15 +118,70 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			});
 
 			apiProvider.getAccounts({
-				bShowSpinner: false,
-				onSuccess: onAccountsLoaded
-			});
+					sExpand: "AccountTypeDetails",
+					bShowSpinner: false,
+					onSuccess: onAccountsLoaded
+				});
 
 			apiProvider.getContacts({
 				sExpand: "AccountDetails/AccountTypeDetails",
 				bShowSpinner: false,
-				onSuccess: onContactsLoaded
+				onSuccess: onContactsWithAccountLoaded
 			});
+		};
+
+		var onAccountsLoaded = function(aData) {
+			//Sort aData by accountType sorting sequence and then by AccountName
+			aData = $filter('orderBy')(aData, ["Name"]);
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				// sSecondLevelAttribute: "AccountDetails",
+				// sSecondLevelNameEN: "Name",
+				// sSecondLevelNameFR: "Name",
+				oParentArrayWrapper: oActivityWrapper,
+				sNameEN: "Name",
+				sNameFR: "Name",
+				sDependentKey: "Guid",
+				sParentKeys: "_accountsGuids",
+				sTargetArrayNameInParent: "aAccounts"
+			});
+
+			if (oActivityWrapper.aData[0]) {
+				$scope.aAccounts = angular.copy(oActivityWrapper.aData[0].aAccounts);
+			}
+		};
+
+
+		var onContactsWithAccountLoaded = function(aData) {
+			var sFullName = "";
+			//Sort aData by accountType sorting sequence and then by AccountName
+			aData = $filter('orderBy')(aData, ["FirstName"]);
+
+			for(var i = 0; i < aData.length; i++){
+				if(aData[i].LastName){
+					aData[i].sFullName = aData[i].FirstName + " " + aData[i].LastName + ",  " + aData[i].AccountDetails.Name;
+				} else {
+					aData[i].sFullName = aData[i].FirstName + ",  " + aData[i].AccountDetails.Name;
+				}
+			}
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				oParentArrayWrapper: oActivityWrapper,
+				sNameEN: "sFullName",
+				sNameFR: "sFullName",
+				sDependentKey: "Guid",
+				sParentKeys: "_contactsGuids",
+				sTargetArrayNameInParent: "aContacts"
+			});
+
+			if (oActivityWrapper.aData[0]) {
+				$scope.aContacts = angular.copy(oActivityWrapper.aData[0].aContacts);
+			}
 		};
 
 		var onActivityTypesLoaded = function(aData) {
@@ -187,7 +242,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				oParentArrayWrapper: oActivityWrapper,
 				sNameEN: "UserName",
 				sNameFR: "UserName",
-				sDependentKey: "AssignedUser",
+				sDependentKey: "UserName",
 				sParentKey: "_assignedUserName",
 				sTargetArrayNameInParent: "aUsers"
 			});
@@ -214,15 +269,16 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				});
 
 				apiProvider.getAccounts({
+					sExpand: "AccountTypeDetails",
 					bShowSpinner: false,
 					onSuccess: onAccountsLoaded
 				});
 
 				apiProvider.getContacts({
-					sExpand: "AccountDetails/AccountTypeDetails",
-					bShowSpinner: false,
-					onSuccess: onContactsLoaded
-				});
+				sExpand: "AccountDetails/AccountTypeDetails",
+				bShowSpinner: false,
+				onSuccess: onContactsWithAccountLoaded
+			});
 			}
 		} else {
 			constructPhasesMultiSelect({
@@ -241,65 +297,19 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			});
 
 			apiProvider.getAccounts({
-				bShowSpinner: false,
-				onSuccess: onAccountsLoaded
-			});
+					sExpand: "AccountTypeDetails",
+					bShowSpinner: false,
+					onSuccess: onAccountsLoaded
+				});
 
 			apiProvider.getContacts({
 				sExpand: "AccountDetails/AccountTypeDetails",
 				bShowSpinner: false,
-				onSuccess: onContactsLoaded
+				onSuccess: onContactsWithAccountLoaded
 			});
 		}
 
-		var onAccountsLoaded = function(aData) {
-			//Sort aData by accountType sorting sequence and then by AccountName
-			aData = $filter('orderBy')(aData, ["Name"]);
-
-			servicesProvider.constructDependentMultiSelectArray({
-				oDependentArrayWrapper: {
-					aData: aData
-				},
-				// sSecondLevelAttribute: "AccountDetails",
-				// sSecondLevelNameEN: "Name",
-				// sSecondLevelNameFR: "Name",
-				oParentArrayWrapper: oActivityWrapper,
-				sNameEN: "Name",
-				sNameFR: "Name",
-				sDependentKey: "Guid",
-				sParentKeys: "_accountsGuids",
-				sTargetArrayNameInParent: "aAccounts"
-			});
-
-			if (oActivityWrapper.aData[0]) {
-				$scope.aAccounts = angular.copy(oActivityWrapper.aData[0].aAccounts);
-			}
-		};
-
-
-		var onContactsLoaded = function(aData) {
-			//Sort aData by accountType sorting sequence and then by AccountName
-			aData = $filter('orderBy')(aData, ["FirstName"]);
-
-			servicesProvider.constructDependentMultiSelectArray({
-				oDependentArrayWrapper: {
-					aData: aData
-				},
-				// sSecondLevelAttribute: "AccountDetails",
-				// sSecondLevelNameEN: "Name",
-				// sSecondLevelNameFR: "Name",
-				oParentArrayWrapper: oActivityWrapper,
-				sNameEN: "FirstName",
-				sNameFR: "FirstName",
-				sDependentKey: "Guid",
-				sParentKeys: "_contactsGuids",
-				sTargetArrayNameInParent: "aContacts"
-			});
-
-			if (oActivityWrapper.aData[0]) {
-				$scope.aContacts = angular.copy(oActivityWrapper.aData[0].aContacts);
-			}
-		};
+		
 
 		var getActivityDetails = function() {
 			apiProvider.getActivity({

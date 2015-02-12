@@ -223,6 +223,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			});
 		};
 		$scope.onNavigateToUnitDetails = function(oDeficiency) {
+
             var sUnitGuid = oDeficiency._unitGuid;
            	$state.go('app.unitDetailsWrapper.unitDetails', {
                         sMode: "display",
@@ -253,7 +254,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				sStateName: $rootScope.sCurrentStateName,
 				oStateParams: $rootScope.oStateParams
 			});
-
+			
 			cacheProvider.putTableStatusToCache({
 				sTableName: "deficienciesList",
 				sStateName: $rootScope.sCurrentStateName,

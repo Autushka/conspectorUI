@@ -426,6 +426,14 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			});
 		};
 
+		$scope.onNavigateToUnitDetails = function() {
+			
+           	$state.go('app.unitDetailsWrapper.unitDetails', {
+                        sMode: "display",
+                        sUnitGuid: $scope.oDeficiency._unitGuid,
+                    });
+        };
+
 		var deleteDeficiency = function() {
 			var oDataForSave = {
 				GeneralAttributes: {
