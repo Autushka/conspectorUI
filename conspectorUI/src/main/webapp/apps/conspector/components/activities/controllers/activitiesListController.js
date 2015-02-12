@@ -58,8 +58,12 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             var sAccounts = "";
             var sContacts = "";
             var _sortingSequence = "";
+            var sTypeSortingSequence = "";
+            var sTypeIconUrl = "";
             var bMatchFound = false;
             for (var i = 0; i < aData.length; i++) {
+                sTypeSortingSequence = "";
+                sTypeIconUrl = "";
 
             	sActivityType = $translate.use() === "en" ? aData[i].ActivityTypeDetails.NameEN : aData[i].ActivityTypeDetails.NameFR;
 
@@ -95,6 +99,11 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 	                    }
 	                }
 
+                    if (aData[i].ActivityTypeDetails) {
+                        sTypeIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].ActivityTypeDetails.AssociatedIconFileGuid;
+                        sTypeSortingSequence = aData[i].ActivityTypeDetails.GeneralAttributes.SortingSequence;
+                    }
+
                     for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
                         bMatchFound = false;
                         for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
@@ -124,6 +133,8 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 		                    _guid: aData[i].Guid,
 		                    sProjectPhase: sProjectName + " - " + sPhaseName,
 		                    _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence,
+                            sTypeSortingSequence: sTypeSortingSequence,
+                            sTypeIconUrl: sTypeIconUrl,
 		                });
                     }
                 }

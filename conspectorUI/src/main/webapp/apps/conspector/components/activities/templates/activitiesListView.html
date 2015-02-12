@@ -45,7 +45,11 @@
 					</td>
 					<td data-title="'activitiesList_activityType' | translate" sortable="'sActivityType'" filter="{'sActivityType': 'text'}">
 						<div layout="row" layout-align="start center">
-							<div>
+							<div layout="column">
+								<img ng-src="{{activity.sTypeIconUrl}}" style="width:24px; height:24px;"/>
+							</div>
+							<div layout="column">&nbsp;&nbsp;&nbsp;</div>
+							<div layout="column">
 								<span>
 								{{activity.sActivityType}}
 								</span>
