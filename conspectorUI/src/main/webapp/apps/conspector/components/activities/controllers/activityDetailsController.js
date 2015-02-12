@@ -93,6 +93,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				}
 			}
 
+			$scope.oActivity.sDescription = oActivity.Description;
+
 			oActivityWrapper.aData[0] = angular.copy($scope.oActivity);
 		};
 
@@ -469,6 +471,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				} else {
 					$scope.oActivity.sObject = "";
 					$scope.oForms.activityDetailsForm.activityObject.$setPristine();
+					$scope.oActivity.sDescription = "";
 					$scope.oActivity.dDueDate = "/Date(0)/";
 
 				}
@@ -491,6 +494,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 
 			//oDataForSave.Guid = $scope.oActivity._guid;
 			oDataForSave.Object = $scope.oActivity.sObject;
+			oDataForSave.Description = $scope.oActivity.sDescription;
 			
 			if ($scope.aSelectedActivityType.length) {
 				oDataForSave.ActivityTypeGuid = $scope.aSelectedActivityType[0].Guid;

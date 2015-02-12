@@ -105,45 +105,45 @@
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>
-			<div class="cnpSubSection" flex>
-				<div class="cnpSubSectionLabel">
-					<label>
-						{{'activityDetails_accounts' | translate}}
-					</label>
+				<div class="cnpSubSection" flex>
+					<div class="cnpSubSectionLabel">
+						<label>
+							{{'activityDetails_accounts' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aAccounts"
+						default-label="{{'activityDetails_activityAccountsDefaultLabel' | translate }}"
+						button-label="name"
+						item-label="name"
+						is-disabled="sMode == 'display'"					
+						tick-property="ticked"
+						on-item-click="onDataModified()"	
+						output-model="aSelectedAccounts"
+						helper-elements="filter">
+					</div>	
 				</div>
-				<div
-					multi-select
-					input-model="aAccounts"
-					default-label="{{'activityDetails_activityAccountsDefaultLabel' | translate }}"
-					button-label="name"
-					item-label="name"
-					is-disabled="sMode == 'display'"					
-					tick-property="ticked"
-					on-item-click="onDataModified()"	
-					output-model="aSelectedAccounts"
-					helper-elements="filter">
-				</div>	
-			</div>
-			<div class="cnpSubSection" flex>
-				<div class="cnpSubSectionLabel">
-					<label>
-						{{'activityDetails_contacts' | translate}}
-					</label>
+				<div class="cnpSubSection" flex>
+					<div class="cnpSubSectionLabel">
+						<label>
+							{{'activityDetails_contacts' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aContacts"
+						default-label="{{'activityDetails_activityContactsDefaultLabel' | translate }}"
+						button-label="name"
+						item-label="name"
+						is-disabled="sMode == 'display'"					
+						tick-property="ticked"
+						on-item-click="onDataModified()"	
+						output-model="aSelectedContacts"
+						helper-elements="filter"
+						>
+					</div>	
 				</div>
-				<div
-					multi-select
-					input-model="aContacts"
-					default-label="{{'activityDetails_activityContactsDefaultLabel' | translate }}"
-					button-label="name"
-					item-label="name"
-					is-disabled="sMode == 'display'"					
-					tick-property="ticked"
-					on-item-click="onDataModified()"	
-					output-model="aSelectedContacts"
-					helper-elements="filter"
-					>
-				</div>	
-			</div>
 			</div>
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
@@ -175,41 +175,46 @@
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>
-				<div class="cnpSubSection" flex>
-					<div class="cnpSubSectionLabel">
-						<label>
-							{{'activityDetails_dueDate' | translate}}
-						</label>
-					</div>
-					<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oActivity.sDueDate}}</div>			
-					<quick-datepicker ng-if="sMode != 'display'" ng-model='oActivity.dDueDate' width="100%"></quick-datepicker>
-				</div>
 			</div>
-
 			<div layout="row" style="width: 100%" flex>
-				<!-- <div class="cnpSubSection" flex>
+				<div class="cnpSubSection" flex>
 					<div  class="cnpSubSectionLabel">
 						<label>
-							{{'activityDetails_accounts' | translate}}
+							{{'activityDetails_description' | translate}}
 						</label>
 					</div>
-					<div
-						multi-select
-						input-model="aAccounts"
-						button-label="name"
-						default-label="{{'global_accounts' | translate }}"
-						item-label="name"
-						tick-property="ticked"
-						is-disabled="sMode == 'display'"
-						on-item-click="onDataModified()"
-						output-model="aSelectedAccounts"
-						>
+					<div class="cnpSubSectionText" ng-if="sMode == 'display'" ng-bind-html="oActivity.sDescription"></div>
+					<div text-angular ng-model="oActivity.sDescription" ng-if="sMode != 'display'"></div>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" layout="row" layout-align="space-between start" flex>
+					<div>
+						<div class="cnpSubSectionLabel">
+							<label>
+								{{'activityDetails_dueDate' | translate}}
+							</label>
+						</div>
+						<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oActivity.sDueDate}}</div>			
+						<quick-datepicker ng-if="sMode != 'display'" ng-model='oActivity.dDueDate' width="100%"></quick-datepicker>
 					</div>
-					<input ng-model="aSelectedAccounts.length" type="number" ng-show="false" name="selectedAccounts" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.aSelectedAccounts.$error" ng-if="(oForms.activityDetailsForm.aSelectedAccounts.$dirty && !oForms.activityDetailsForm.aSelectedAccounts.$valid) || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					<div>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'activityDetails_creationDate' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData cnpSubSectionDataNoBottomMargin" ng-if="sMode == 'display' || sMode == 'edit'">{{oActivity.sCreatedAt}}</div>
 					</div>
-				</div> -->
+					<div>
+						<div  class="cnpSubSectionLabel">
+							<label>
+								{{'activityDetails_lastModificationDate' | translate}}
+							</label>
+						</div>
+						<div layout="row" layout-style="start center" class="cnpSubSectionData cnpSubSectionDataNoBottomMargin" ng-if="sMode == 'display' || sMode == 'edit'">{{oActivity.sLastModifiedAt}}</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</form>
