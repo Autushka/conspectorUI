@@ -267,6 +267,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				sNameFR: "NameFR",
 				sDependentKey: "Guid",
 				sParentKey: "_activityTypeGuid",
+				sDependentIconKey: "AssociatedIconFileGuid",
 				sTargetArrayNameInParent: "aActivityTypes"
 			});
 			if (oActivityWrapper.aData[0]) {
