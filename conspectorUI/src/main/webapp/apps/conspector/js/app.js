@@ -260,8 +260,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
 					templateUrl: 'apps/conspector/components/activities/templates/activityDetailsView.html',
 					controller: 'activityDetailsView'
 				},
+				'attachmentsList': {
+					templateUrl: 'apps/conspector/components/attachments/templates/attachmentsListView.html',
+					controller: 'attachmentsListView'
+				},
 			}
-		});				
+		});
 
 		$stateProvider.state('app.adminPanel', {
 			url: '/adminPanel',

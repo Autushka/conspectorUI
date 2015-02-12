@@ -306,6 +306,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				}, this);
 
 				if (!oParameters.sParentEntityFileMetadataSetGuid) {
+					debugger
 					sFileMetadataSetGuid = utilsProvider.generateGUID();
 					oData = {
 						requestUri: "FileMetadataSets",
@@ -322,7 +323,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					aData.push(oData);
 
 					oData = {
-						requestUri: "Tasks('" + oParameters.sParentEntityGuid + "')",
+						requestUri: oParameters.sPath + "('" + oParameters.sParentEntityGuid + "')",
 						method: "PUT",
 						data: {
 							FileMetadataSetGuid: sFileMetadataSetGuid

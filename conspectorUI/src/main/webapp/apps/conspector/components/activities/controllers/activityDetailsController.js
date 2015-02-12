@@ -39,6 +39,12 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
+		$scope.sMode = $stateParams.sMode;
+
+		if ($scope.sMode === "display" || $scope.sMode === "edit") {
+			$scope.$parent.bDisplayAttachmentsList = true;
+		}
+
 		$scope.oActivity = {
 			_aPhases: [],
 		};
@@ -123,6 +129,14 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 
 		var setDisplayedActivityDetails = function(oActivity) {
 			var aActivityPhasesGuids = [];
+
+			$rootScope.sFileMetadataSetGuid = oActivity.FileMetadataSetGuid;
+			if(oActivity.FileMetadataSetDetails){
+				$rootScope.sFileMetadataSetLastModifiedAt = oActivity.FileMetadataSetDetails.LastModifiedAt;
+			}			
+			$rootScope.$broadcast("FileAttachemntsCanBeLoaded");
+
+
 			$scope.oActivity._guid = oActivity.Guid;
 			$scope.oActivity.sObject =  oActivity.Object;
 			$scope.oActivity._lastModifiedAt = oActivity.LastModifiedAt;
@@ -577,9 +591,10 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			if ($scope.aSelectedActivityType.length) {
 				oDataForSave.ActivityTypeGuid = $scope.aSelectedActivityType[0].Guid;
 			}
-
+			
 			if ($scope.aSelectedUser.length) {
-				oDataForSave.AssignedUser = $scope.aSelectedUser[0].AssignedUser;
+
+				oDataForSave.AssignedUser = $scope.aSelectedUser[0].UserName;
 			}
 
 			if($scope.oActivity.dDueDate){

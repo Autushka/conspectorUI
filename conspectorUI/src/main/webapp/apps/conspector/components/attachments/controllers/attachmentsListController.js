@@ -3,6 +3,22 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		// $rootScope.oStateParams = {}; 
 		// for backNavigation	
+		var sEntityType = "";
+		var sEntitySPath = "";
+		var oEntity = "";
+		switch($rootScope.sCurrentStateName){
+					case "app.deficiencyDetailsWrapper.deficiencyDetails":
+						sEntityType = "Deficiency";
+						sEntitySPath = "Tasks";
+						oEntity = "oDeficiencyEntity";
+						break;
+					case "app.activityDetailsWrapper.activityDetails":
+						sEntityType = "Activity";
+						sEntitySPath = "Activitys";
+						oEntity = "oActivityEntity";
+						break;
+				}
+
 		var bUpdateImagesNumber = false;
 
 		var oAttachmentsListData = {
@@ -17,6 +33,11 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 
 		if ($stateParams.sDeficiencyGuid) {
 			sParentEntityGuid = $stateParams.sDeficiencyGuid;
+			//sParentEntityFileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
+		}
+		
+		if ($stateParams.sActivityGuid) {
+			sParentEntityGuid = $stateParams.sActivityGuid;
 			//sParentEntityFileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
 		}
 
@@ -35,8 +56,8 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		var updateAttachmentsNumber = function(iImagesNumber) {
 			var onSuccessUpdate = function(oData) {
 				$rootScope.sFileMetadataSetLastModifiedAt = oData.LastModifiedAt;
-				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
-			};
+				cacheProvider.cleanEntitiesCache(oEntity);
+		};
 
 			apiProvider.updateFileMetadataSet({
 				sKey: $rootScope.sFileMetadataSetGuid,
@@ -102,9 +123,9 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				bUpdateImagesNumber = true;
 				loadAttachments();
 			};
-
+			debugger
 			servicesProvider.uploadAttachmentsForEntity({
-				sPath: "Tasks",
+				sPath: sEntitySPath,
 				aFiles: aFiles,
 				sParentEntityGuid: sParentEntityGuid,
 				sParentEntityFileMetadataSetGuid: $rootScope.sFileMetadataSetGuid,
