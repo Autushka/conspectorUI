@@ -1,5 +1,5 @@
-viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'historyProvider',
-	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, historyProvider) {
+viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'historyProvider', '$window',
+	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, historyProvider, $window) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button		
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = {}; // for backNavigation	
@@ -64,7 +64,7 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 				sortingSequence: 0,
 				nameEN: "",
 				nameFR: "",
-				_counter: iNewItemsCounter
+				_counter: iNewItemsCounter,
 				aTypeIcons: angular.copy(oTypeIconArrayWrapper.aData)
 			});
 			iNewItemsCounter++;
