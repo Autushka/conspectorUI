@@ -46,14 +46,79 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 		var oActivityWrapper = {
 			aData: [{
 				_accountsGuids: [],
-				_contactsGuids: []
+				_contactsGuids: [],
+				_phaseGuid: [], //todo
 			}]
+		};
+
+		var onPhasesWithProjectsWithUnitsLoaded = function(aData) {
+
+			var aProjectPhase = [];
+			for(var i = 0; i < aData.length; i++){
+				
+				aProjectPhase[i] = aData[i].ProjectDetails.NameEN + " - " + aData[i].NameEN ;
+				aData[i].NameEN = aProjectPhase[i];
+			}
+			
+
+			servicesProvider.constructDependentMultiSelectArray({
+				oDependentArrayWrapper: {
+					aData: aData
+				},
+				sSecondLevelAttribute: "UnitDetails",
+				sSecondLevelNameEN: "Name",
+				sSecondLevelNameFR: "Name",
+				oParentArrayWrapper: oActivityWrapper,
+				sNameEN: "NameEN",
+				sNameFR: "NameEN",
+				sDependentKey: "Guid",
+				sParentKey: "_phaseGuid",
+				sTargetArrayNameInParent: "aUnits"
+			});
+
+
+			//working for units no grouping
+			// servicesProvider.constructDependentMultiSelectArray({
+			// 	oDependentArrayWrapper: {
+			// 		aData: aData
+			// 	},
+			// 	oParentArrayWrapper: oActivityWrapper,
+			// 	sNameEN: "Name",
+			// 	sNameFR: "Name",
+			// 	sDependentKey: "Guid",
+			// 	sParentKey: "_unitGuid",
+			// 	sTargetArrayNameInParent: "aUnits"
+			// });
+			if (oActivityWrapper.aData[0]) {
+				$scope.aUnits = angular.copy(oActivityWrapper.aData[0].aUnits);
+			}
+		};
+
+		var getPhasesWithUnits = function(aSelectedPhases) {
+			var sFilterByPhases = "";
+			for(var i = 0; i < aSelectedPhases.length; i++){
+				sFilterByPhases = sFilterByPhases + "Guid eq '" + aSelectedPhases[i].Guid + "'";
+				if(i < aSelectedPhases.length - 1){
+				sFilterByPhases = sFilterByPhases + " or ";
+				}
+			}
+			
+			apiProvider.getPhases({
+				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false and (" + sFilterByPhases + ")",
+				sExpand: "UnitDetails,ProjectDetails",
+				bShowSpinner: false,
+				onSuccess: onPhasesWithProjectsWithUnitsLoaded
+			});
 		};
 
 		var constructPhasesMultiSelect = function(aSelectedPhases) {
 			$scope.aUserProjectsPhasesForMultiselect = servicesProvider.constructUserProjectsPhasesForMultiSelect({
 				aSelectedPhases: aSelectedPhases
 			});
+			
+			if ($scope.aSelectedPhases) {
+				getPhasesWithUnits($scope.aSelectedPhases);
+			}
 		};
 
 		var setDisplayedActivityDetails = function(oActivity) {
@@ -410,13 +475,25 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 		};
 
 		$scope.onCloseCheckSelectedPhasesLength = function(){
-			if ($scope.aSelectedPhases.length == 0)
+			if ($scope.aSelectedPhases.length != 0){
+				var oActivityWrapper = {
+			aData: [{
+				_accountsGuids: [],
+				_contactsGuids: [],
+				_phaseGuid: [], //todo
+			}]
+		};
 			$scope.onSelectedPhasesModified();
+		}
 		};
 
 		$scope.onSelectedPhasesModified = function() {
 			$scope.onDataModified();
 			$scope.oForms.activityDetailsForm.selectedPhases.$setDirty();
+			
+			if ($scope.aSelectedPhases) {
+				getPhasesWithUnits($scope.aSelectedPhases);
+			}
 		};
 
 		$scope.onDataModified = function() {

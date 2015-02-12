@@ -77,6 +77,30 @@
 						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div>
 				</div>
+				<div class="cnpSubSection" flex>
+					<div  class="cnpSubSectionLabel">
+						<label>
+							{{'activityDetails_associatedUnits' | translate}}
+						</label>
+					</div>
+					<div
+						multi-select
+						input-model="aUnits"
+						button-label="fullName"
+						default-label="{{'global_selectedUnits' | translate }}"
+						item-label="name"
+						tick-property="ticked"
+						group-property="multiSelectGroup"
+						is-disabled="sMode == 'display'"
+						on-item-click="onDataModified()"
+						output-model="aSelectedUnits"
+						>
+					</div>
+					<!-- <input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.selectedPhases.$error" ng-if="(oForms.activityDetailsForm.selectedPhases.$dirty && !oForms.activityDetailsForm.selectedPhases.$valid) || submitted">
+						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					</div> -->
+				</div>
 			</div>
 			<div layout="row" style="width: 100%" flex>
 				<div class="cnpSubSection" flex>
