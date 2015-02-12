@@ -63,7 +63,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			getCurrentUserName: function() {
-				var sPath = "rest/account/getCurrentUserName";
+				var sPath = CONSTANTS.sAppAbsolutePath + "rest/account/getCurrentUserName";
 				var sCurrentUserName;
 
 				var onSuccess = function(sData) {
@@ -83,7 +83,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			getCurrentCompany: function() {
-				var sPath = "rest/account/getCurrentCompany";
+				var sPath = CONSTANTS.sAppAbsolutePath + "rest/account/getCurrentCompany";
 				var sCurrentCompany;
 
 				var onSuccess = function(sData) {
@@ -104,14 +104,14 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			setCurrentCompany: function(sCompany) {
 				dataProvider.ajaxRequest({
-					sPath: "rest/account/setCurrentCompany/" + sCompany,
+					sPath: CONSTANTS.sAppAbsolutePath + "rest/account/setCurrentCompany/" + sCompany,
 					bAsync: false,
 					sRequestType: "GET",
 				});
 			},
 
 			getCurrentRole: function() {
-				var sPath = "rest/account/getCurrentRole";
+				var sPath = CONSTANTS.sAppAbsolutePath + "rest/account/getCurrentRole";
 				var sCurrentRole;
 
 				var onSuccess = function(sData) {
@@ -132,7 +132,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			setCurrentRole: function(sRole) {
 				dataProvider.ajaxRequest({
-					sPath: "rest/account/setCurrentRole/" + sRole,
+					sPath: CONSTANTS.sAppAbsolutePath + "rest/account/setCurrentRole/" + sRole,
 					bAsync: false,
 					sRequestType: "GET",
 				});
@@ -140,7 +140,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			resetPasswordWithPRCode: function(oParameters) {
 				var oSrv = dataProvider.httpRequest({
-					sPath: "rest/account/passwordRecovery/PRCode/" + oParameters.oData.passwordRecoveryCode + "/newPassword/" + oParameters.oData.newPassword,
+					sPath: CONSTANTS.sAppAbsolutePath + "rest/account/passwordRecovery/PRCode/" + oParameters.oData.passwordRecoveryCode + "/newPassword/" + oParameters.oData.newPassword,
 					sRequestType: "GET",
 					bShowSpinner: true,
 				});
@@ -155,9 +155,9 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var sPath = "";
 
 				if (oParameters.oData.userName) {
-					sPath = "rest/account/passwordRecovery/userName/" + oParameters.oData.userName;
+					sPath = CONSTANTS.sAppAbsolutePath + "rest/account/passwordRecovery/userName/" + oParameters.oData.userName;
 				} else {
-					sPath = "rest/account/passwordRecovery/email/" + oParameters.oData.email;
+					sPath = CONSTANTS.sAppAbsolutePath + "rest/account/passwordRecovery/email/" + oParameters.oData.email;
 				}
 
 				oSrv = dataProvider.httpRequest({
@@ -173,7 +173,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 
 			hashPassword: function(sPassword) {
 				var sHashedPassword = "";
-				var sPath = "rest/account/hashPassword/" + sPassword;
+				var sPath = CONSTANTS.sAppAbsolutePath + "rest/account/hashPassword/" + sPassword;
 				var onSuccess = function(sData) {
 					sHashedPassword = sData;
 				}

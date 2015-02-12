@@ -61,11 +61,11 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		$scope.aDeficiencyAttributes.push({
 			sDescription: "Contractors",
 			sValue: "Not specifies...",
-			bIsSelectionUnabled: true,
+			bIsSelectionUnabled: false,
 		});						
 
 		var onUnitsLoaded = function(oData) {
-			oData.UnitDetails.result = $filter('filter')(oData.UnitDetails.result, function(oItem, iIndex) {
+			oData.UnitDetails.results = $filter('filter')(oData.UnitDetails.results, function(oItem, iIndex) {
 				return !oItem.GeneralAttributes.IsDeleted
 			});
 
@@ -99,17 +99,20 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					sGuid: aData[i].Guid,
 					sName: sDescription,
 					bTicked: false,
-					sIconUrl: $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
+					sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
 				})
 			}
 		};
 
-		var onContractorsLoaded = function(aData) {
-			aData = $filter('orderBy')(aData, ["Name"]);
-			for (var i = 0; i < aData.length; i++) {
+		var onContractorsLoaded = function(oData) {
+			oData.AccountDetails.results = $filter('filter')(oData.AccountDetails.results, function(oItem, iIndex) {
+				return !oItem.GeneralAttributes.IsDeleted && oItem.AccountTypeDetails.NameEN === "Contractor";
+			});			
+			oData.AccountDetails.results = $filter('orderBy')(oData.AccountDetails.results, ["Name"]);
+			for (var i = 0; i < oData.AccountDetails.results.length; i++) {
 				$scope.aContractors.push({
-					sGuid: aData[i].Guid,
-					sName: aData[i].Name,
+					sGuid: oData.AccountDetails.results[i].Guid,
+					sName: oData.AccountDetails.results[i].Name,
 					bTicked: false,
 				})
 			}
@@ -119,7 +122,6 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			if (!oAttribute.bIsSelectionUnabled) {
 				return;
 			}
-
 			switch (oAttribute.sDescription) {
 				case "Phase":
 					$scope.sSideNavHeader = "Phases";
@@ -204,8 +206,9 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 						break;		
 					case 5:
 						if (!$scope.aContractors.length) {
-							apiProvider.getContractors({
-								sExpand: "AccountTypeDetails",
+							apiProvider.getPhase({
+								sKey: $scope.aDeficiencyAttributes[0].sSelectedItemGuid,
+								sExpand: "AccountDetails/AccountTypeDetails",
 								onSuccess: onContractorsLoaded,
 							});
 						}					
@@ -222,6 +225,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					case 0:
 						if (bPhaseWasSelected) {
 							$scope.aDeficiencyAttributes[1].bIsSelectionUnabled = true;
+							$scope.aDeficiencyAttributes[5].bIsSelectionUnabled = true;
 							$scope.aDeficiencyAttributes[0].sValue = "";
 							for (var i = 0; i < $scope.aProjectsWithPhases.length; i++) {
 								for (var j = 0; j < $scope.aProjectsWithPhases[i].aPhases.length; j++) {
@@ -265,7 +269,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 						$scope.aDeficiencyAttributes[4].sValue = utilsProvider.tagsArrayToTagsString($scope.aLocationTags);	
 						break;
 					case 5:
-						if (bContractorWasSelected) {
+						if (bContractorWasSelected) {							
 							$scope.aDeficiencyAttributes[5].sValue = "";
 							$scope.aDeficiencyAttributes[5].aSelectedItemsGuids = [];
 							for (var i = 0; i < $scope.aContractors.length; i++) {

@@ -595,7 +595,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						$rootScope.$emit('LOAD');
 					}
 					OData.request({
-						requestUri: $window.location.origin + $window.location.pathname + "odata.svc/$batch",
+						requestUri: CONSTANTS.sServicePath + "$batch",
 						method: "POST",
 						data: oParameters.oRequestData
 					}, $.proxy(function(oData) {
