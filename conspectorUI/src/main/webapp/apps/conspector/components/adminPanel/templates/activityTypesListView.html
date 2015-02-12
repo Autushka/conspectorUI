@@ -8,11 +8,16 @@
 			</div>
 		</div>
 		<div layout="row" layout-align="end start">
+
+
+
 		</div>
 	</div>
-
+	<!-- ACTION BAR -->
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 		<div>
+
+
 			<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon" ng-click="onAddNew()">
 				{{'global_addNew' | translate}}
 				</md-button>
@@ -23,7 +28,8 @@
 			</label>
 		</div>
 	</div>
-
+	<!-- END OF ACTION BAR -->
+	<!-- NG TABLE -->
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 		<table ng-table="tableParams" class="cnpNgTable" id="activityTypesList">
 			<tr ng-repeat="activityType in aDisplayedActivityTypes">
@@ -64,6 +70,12 @@
 					<div layout="row" layout-align="start center">
 						<span ng-if="!activityType._editMode">{{activityType.nameFR}}</span>
 						<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="activityType._editMode" type="text" ng-model="activityType.nameFR"/>
+					</div>
+				</td>
+				<td data-title="'global_associatedColor' | translate" sortable="'associatedColor'">
+					<div layout="row" layout-align="start center">
+						<span ng-if="!activityType._editMode">{{activityType.associatedColor}}</span>
+						<input class="cnpTextInputField cnpTextInputFieldInline" colorpicker ng-if="activityType._editMode" type="text" ng-model="activityType.associatedColor"/>
 					</div>
 				</td>
 				<td data-title="'global_sortingSequence' | translate" sortable="'sortingSequence'">

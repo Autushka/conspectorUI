@@ -1,8 +1,11 @@
-viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'historyProvider', '$window',
-	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, historyProvider, $window) {
+viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', 'cacheProvider', 'historyProvider', '$window',
+	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, cacheProvider, historyProvider, $window) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button		
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = {}; // for backNavigation	
+		var oTypeIconArrayWrapper = {
+			aData: []
+		};
 
 		var iNewItemsCounter = 0; //used to identify list item for new item deletion after sorting/filtering
 
@@ -24,7 +27,7 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 					aData: aData
 				},
 				oParentArrayWrapper: oActivityTypesListData,
-				oNewParentItemArrayWrapper: oStatusIconArrayWrapper,
+				oNewParentItemArrayWrapper: oTypeIconArrayWrapper,
 				sDependentKey: "guid",
 				sParentKey: "_associatedIconFileGuid",
 				sDependentIconKey: "guid",
@@ -42,6 +45,7 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 					sUrl: $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
 					nameEN: aData[i].NameEN,
 					nameFR: aData[i].NameFR,
+					associatedColor: aData[i].AssociatedColor,
 					sortingSequence: aData[i].GeneralAttributes.SortingSequence
 				});
 			}
@@ -133,6 +137,7 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 
 			oDataForSave.NameEN = oActivityType.nameEN;
 			oDataForSave.NameFR = oActivityType.nameFR;
+			oDataForSave.AssociatedColor = oActivityType.associatedColor;
 			oDataForSave.GeneralAttributes.SortingSequence = oActivityType.sortingSequence;
 			oDataForSave.LastModifiedAt = oActivityType._lastModifiedAt;
 
