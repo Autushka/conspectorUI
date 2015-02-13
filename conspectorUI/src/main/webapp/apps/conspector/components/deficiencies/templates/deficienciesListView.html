@@ -1,16 +1,39 @@
 <md-content layout="row" layout="center start" class="cnpContentWrapper">
 <div class="cnpContent" layout="column">
-	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
-		<div layout="row" layout-align="start start" >
-			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
-				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
-					{{'global_back' | translate}}
-				</div>
-			</div>
-		</div>
-		<div layout="row" layout-align="end start">
-		</div>
-	</div>
+	<!-- <div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader"> -->
+		<!-- <div layout="row" layout-align="start start" > -->
+			<!-- <div class="cnpSubSection" flex>
+				<div> -->
+					<!-- <div class="cnpSubSectionLabel">
+											<label>
+																	{{'deficiencyDetails_status' | translate}}
+											</label>
+					</div>
+					<div
+											multi-select
+											input-model="aDeficiencyStatuses"
+											default-label="{{'deficiencyDetails_deficiencyStatusDefaultLabel' | translate }}"
+											button-label="icon name"
+											item-label="icon name"
+											is-disabled="sMode == 'display'"
+											tick-property="ticked"
+											selection-mode="single"
+											on-item-click="onSelectedStatusesModified()"
+											output-model="aSelectedStatuses"
+											on-close="onCloseCheckSelectedStatusesLength()"
+											helper-elements=""
+											>
+					</div> -->
+					<!-- <input ng-model="aSelectedStatuses.length" type="number" ng-show="false" name="selectedStatuses" min="1">
+					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedStatuses.$error" ng-if="(oForms.deficiencyDetailsForm.selectedStatuses.$dirty && !oForms.deficiencyDetailsForm.selectedStatuses.$valid) || submitted">
+											<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+					</div> -->
+				<!-- 	</div>
+			</div> -->
+		<!-- </div> -->
+		<!-- <div layout="row" layout-align="end start">
+		</div> -->
+	<!-- </div> -->
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 		<div>
 			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onAddNew()">{{'deficienciesList_addNew' | translate}}</md-button>
@@ -45,9 +68,9 @@
 						<div layout="row" layout-align="center center">
 							<div>
 								<span>
-									<a ng-click="onNavigateToUnitDetails(deficiency)">
-										{{deficiency.sUnit}}
-									</a>
+								<a ng-click="onNavigateToUnitDetails(deficiency)">
+									{{deficiency.sUnit}}
+								</a>
 								</span>
 							</div>
 						</div>
@@ -61,7 +84,7 @@
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>
-									{{deficiency.sTags}}
+								{{deficiency.sTags}}
 								</span>
 							</div>
 						</div>
@@ -70,7 +93,7 @@
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>
-									{{deficiency.sLocationTags}}
+								{{deficiency.sLocationTags}}
 								</span>
 							</div>
 						</div>
@@ -91,58 +114,25 @@
 						</div>
 					</td>
 					<td data-title="'global_images' | translate" sortable="'iImagesNumber'" filter="{'iImagesNumber': 'text'}">
-						<div layout="row" layout-align="center center" 
-
-						ng-class="{ 'cnpInputIcon cnpImagesIcon': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity': deficiency.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery(deficiency, $event)">
+						<div layout="row" layout-align="center center"
+							ng-class="{ 'cnpInputIcon cnpImagesIcon': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity': deficiency.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery(deficiency, $event)">
 							<a>
-							({{deficiency.iImagesNumber}})
+								({{deficiency.iImagesNumber}})
 							</a>
 						</div>
 					</td>
-					<!-- 					<td data-title="'global_account' | translate" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">
-							<div layout="row" layout-align="start center">
-									<div>
-											<span><a ng-click="onNavigateToAccountDetails(deficiency)">
-											{{deficiency.sAccountName}}</a>
-											</span>
-									</div>
-							</div>
-					</td>
-					
-					<td data-title="'global_title' | translate" sortable="'sTitle'" filter="{'sTitle': 'text'}">
-							<div layout="row" layout-align="start center">
-									<div>
-											<span>{{deficiency.sTitle}}</span>
-									</div>
-							</div>
-					</td>
-					<td data-title="'global_mobile' | translate" sortable="'sPhone'" filter="{'sPhone': 'text'}">
-							<div layout="row" layout-align="start center">
-									<div><a href="tel:+{{deficiency.sPhone | phoneFormatter}}">
-											<span>
-											{{deficiency.sPhone | phoneFormatter}}</span></a>
-								</div>
+				</tr>
+			</tbody>
+			<tr ng-if="$groups.length == 0">
+				<td colspan="{{$columns.length}}">
+					<div layout="row" layout-align="start center">
+						<div>
+							{{'global_noTableData' | translate}}
 						</div>
-				</td> -->
-				<!-- 					<td data-title="'global_email' | translate" sortable="'sEmail'" filter="{'sEmail': 'text'}">
-						<div layout="row" layout-align="start center">
-								<div>
-										<span><a href="mailto:{{deficiency.sEmail}}">{{deficiency.sEmail}}
-										</a></span>
-								</div>
-						</div>
-				</td> -->
-			</tr>
-		</tbody>
-		<tr ng-if="$groups.length == 0">
-			<td colspan="{{$columns.length}}">
-				<div layout="row" layout-align="start center">
-					<div>
-						{{'global_noTableData' | translate}}
 					</div>
-				</div>
-			</td>
-		</tr>
-	</table>
+				</td>
+			</tr>
+		</table>
+	</div>
 </div>
 </md-content>

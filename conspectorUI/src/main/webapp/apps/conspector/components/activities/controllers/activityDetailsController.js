@@ -53,7 +53,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			aData: [{
 				_accountsGuids: [],
 				_contactsGuids: [],
-				_phaseGuid: [], //todo
+				_unitsGuids: [],
+				_aPhases: [],
 			}]
 		};
 
@@ -61,12 +62,12 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 
 			var aProjectPhase = [];
 			for(var i = 0; i < aData.length; i++){
-				
+				aProjectPhase[i] = [];
 				aProjectPhase[i] = aData[i].ProjectDetails.NameEN + " - " + aData[i].NameEN ;
 				aData[i].NameEN = aProjectPhase[i];
 			}
 			
-
+			
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
@@ -78,7 +79,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				sNameEN: "NameEN",
 				sNameFR: "NameEN",
 				sDependentKey: "Guid",
-				sParentKey: "_phaseGuid",
+				sParentKey: "_unitsGuids",
 				sTargetArrayNameInParent: "aUnits"
 			});
 
@@ -152,7 +153,17 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			for (var i = 0; i < $scope.oActivity._aPhases.length; i++) {
 				aActivityPhasesGuids.push($scope.oActivity._aPhases[i].Guid);
 			}
+		
 			constructPhasesMultiSelect(aActivityPhasesGuids);
+
+			// getPhasesWithUnits($scope.oActivity._aPhases);
+
+			// $scope.oActivity._unitsGuids = [];
+			// if (oActivity.UnitDetails) {
+			// 	for (var i = 0; i < oActivity.UnitDetails.results.length; i++) {
+			// 		$scope.oActivity._unitsGuids.push(oActivity.UnitDetails.results[i].Guid);
+			// 	}
+			// }
 			
 			$scope.oActivity._activityTypeGuid = oActivity.ActivityTypeGuid;
 			
@@ -366,10 +377,10 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				});
 
 				apiProvider.getContacts({
-				sExpand: "AccountDetails/AccountTypeDetails",
-				bShowSpinner: false,
-				onSuccess: onContactsWithAccountLoaded
-			});
+					sExpand: "AccountDetails/AccountTypeDetails",
+					bShowSpinner: false,
+					onSuccess: onContactsWithAccountLoaded
+				});
 			}
 		} else {
 			constructPhasesMultiSelect({
@@ -486,19 +497,28 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				bKeepCompanyDependentLinks: true,
 				aUri: aUri
 			});
+
+			var aUri = [];
+			
+			if ($scope.aSelectedUnits && $scope.aSelectedUnits.length) {
+				for (var i = 0; i < $scope.aSelectedUnits.length; i++) {
+					sUri = "Units('" + $scope.aSelectedUnits[i].Guid + "')";
+					aUri.push(sUri);
+				}
+			}
+			aLinks.push({
+				sRelationName: "UnitDetails",
+				bKeepCompanyDependentLinks: true,
+				aUri: aUri
+			});
 			return aLinks;
 		};
 
 		$scope.onCloseCheckSelectedPhasesLength = function(){
 			if ($scope.aSelectedPhases.length != 0){
-				var oActivityWrapper = {
-			aData: [{
-				_accountsGuids: [],
-				_contactsGuids: [],
-				_phaseGuid: [], //todo
-			}]
-		};
-			$scope.onSelectedPhasesModified();
+				// cacheProvider.cleanEntitiesCache("oPhaseEntity");
+	
+			// $scope.onSelectedPhasesModified();
 		}
 		};
 
@@ -506,9 +526,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 			$scope.onDataModified();
 			$scope.oForms.activityDetailsForm.selectedPhases.$setDirty();
 			
-			if ($scope.aSelectedPhases) {
-				getPhasesWithUnits($scope.aSelectedPhases);
-			}
+			// if ($scope.aSelectedPhases) {
+			// 	getPhasesWithUnits($scope.aSelectedPhases);
+			// }
 		};
 
 		$scope.onDataModified = function() {

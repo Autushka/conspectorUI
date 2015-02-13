@@ -22,9 +22,10 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 		}
 
 		cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aSelectedPhases;
-
+		$scope.globalSelectedPhases = aSelectedPhases;
 		$scope.globalProjectsWithPhases = servicesProvider.constructUserProjectsPhasesForMultiSelect({
 			aSelectedPhases: aSelectedPhases
+
 		});
 
 		$scope.onGlobalUserPhasesChanged = function() {
@@ -38,7 +39,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 				aPhasesGuids: aSelectedPhases,
 			});
 			cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aSelectedPhases;
-
+			$scope.globalSelectedPhases = aSelectedPhases;
 			$scope.$broadcast('globalUserPhasesHaveBeenChanged');
 		};
 

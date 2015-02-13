@@ -306,7 +306,6 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				}, this);
 
 				if (!oParameters.sParentEntityFileMetadataSetGuid) {
-					debugger
 					sFileMetadataSetGuid = utilsProvider.generateGUID();
 					oData = {
 						requestUri: "FileMetadataSets",
@@ -561,7 +560,6 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						if (aArrayItem.multiSelectGroup === undefined) {
 							aArrayItem.ticked = false;
 						}
-
 						if (oParameters.sParentKey) {
 							if (oParameters.oParentArrayWrapper.aData[i][oParameters.sParentKey] === aMultiSelectArray[j][oParameters.sDependentKey]) {
 								aArrayItem.ticked = true;

@@ -118,14 +118,28 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 
         var loadUnits = function() {
             oUnitsListData.aData = [];
+            var sFilterByPhases = "";
+            var sFilterStart = " and (";
+            var sFilterEnd = ")";
+            if ($scope.globalSelectedPhases.length > 0) {
+                sFilterByPhases = sFilterStart;
+                for (var i = 0; i < $scope.globalSelectedPhases.length; i++) {
+                    sFilterByPhases = sFilterByPhases + "PhaseGuid eq '" + $scope.globalSelectedPhases[i] + "'";
+                    if (i < $scope.globalSelectedPhases.length - 1) {
+                        sFilterByPhases = sFilterByPhases + " or ";
+                    }             
+                }
+                sFilterByPhases = sFilterByPhases + sFilterEnd;
+            }
+
             apiProvider.getUnits({
                 sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails,AccountDetails",
-                sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+                sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhases,
                 bShowSpinner: true,
                 onSuccess: onUnitsLoaded
             });
         };
-
+        
         loadUnits(); //load Units
 
         $scope.onDisplay = function(oUnit) {
