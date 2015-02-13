@@ -1,4 +1,4 @@
-var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ngCordova']);
+var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ngCordova', 'ui.bootstrap']);
 var viewControllers = angular.module('viewControllers', []);
 
 app.config(['$mdThemingProvider', function($mdThemingProvider) {

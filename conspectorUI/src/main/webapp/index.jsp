@@ -39,12 +39,15 @@
 		<script src="bower_components/angular-aria/angular-aria.min.js"></script>
 		<script src="bower_components/angular-material/angular-material.min.js"></script>
 		<script src="bower_components/angular-messages/angular-messages.min.js"></script>
+		<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+		
 		<script src="bower_components/jshashes/hashes.min.js"></script>
 		<script src="bower_components/isteven-angular-multiselect/angular-multi-select.js"></script>
 		<script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>
 		<script src="bower_components/datajs/datajs-1.1.2.min.js"></script>
 		<script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>	
 		<script src="bower_components/ngQuickDate/dist/ng-quick-date.min.js"></script>	
+		
 
 		<script src='bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
 		<script src='bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
