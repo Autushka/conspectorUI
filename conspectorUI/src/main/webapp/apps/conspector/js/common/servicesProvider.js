@@ -294,7 +294,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 							file: file,
 						});
 
-						oUpload.success(function(){
+						oUpload.success(function() {
 							iCounter++;
 							if (iCounter === (oParameters.aFiles.length)) {
 								// console.log("Total images: " + oParameters.aFiles.length);
@@ -321,15 +321,18 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 					aData.push(oData);
 
-					oData = {
-						requestUri: oParameters.sPath + "('" + oParameters.sParentEntityGuid + "')",
-						method: "PUT",
-						data: {
-							FileMetadataSetGuid: sFileMetadataSetGuid
-						}
-					};
+					if (oParameters.sParentEntityGuid) {
+						oData = {
+							requestUri: oParameters.sPath + "('" + oParameters.sParentEntityGuid + "')",
+							method: "PUT",
+							data: {
+								FileMetadataSetGuid: sFileMetadataSetGuid
+							}
+						};
 
-					aData.push(oData);
+						aData.push(oData);
+					}
+
 
 					dataProvider.constructChangeBlockForBatch({
 						oRequestData: oRequestData,

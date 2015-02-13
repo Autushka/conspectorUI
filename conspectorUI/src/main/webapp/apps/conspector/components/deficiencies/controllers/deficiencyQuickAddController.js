@@ -75,11 +75,11 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			oContractors: {
 				sDescription: $translate.instant('global_contractors'), //"Contractors",
 				sValue: "...",
-				bIsSelectionUnabled: true,
+				bIsSelectionUnabled: false,
 			},
 			oImages: {
 				sDescription: $translate.instant('global_images'), //"Photos",
-				sValue: "...",
+				iValue: 0,
 				bIsSelectionUnabled: true,
 			},
 		};
@@ -198,6 +198,18 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			};
 
 			$cordovaCamera.getPicture(options).then(function(imageData) {
+				var onSuccessUpload = function(){
+					$scope.oDeficiencyAttributes.oImages.iValue++;
+					alert("Yo!");
+				}
+
+				servicesProvider.uploadAttachmentsForEntity({
+					sPath: "Tasks",
+					aFiles: [imageData],
+					sParentEntityGuid: "",
+					sParentEntityFileMetadataSetGuid: "",
+					onSuccess: onSuccessUpload
+				});
 				// var image = document.getElementById('myImage');
 				// image.src = "data:image/jpeg;base64," + imageData;
 				//alert("Yo!");
@@ -244,7 +256,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		};
 
 		$scope.onUnitAttribute = function() {
-			if(!$scope.oDeficiencyAttributes.oUnit.bIsSelectionUnabled){
+			if (!$scope.oDeficiencyAttributes.oUnit.bIsSelectionUnabled) {
 				return;
 			}
 			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oUnit.sDescription;
@@ -312,9 +324,9 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		};
 
 		$scope.onContractorsAttribute = function() {
-			if(!$scope.oDeficiencyAttributes.oContractors.bIsSelectionUnabled){
+			if (!$scope.oDeficiencyAttributes.oContractors.bIsSelectionUnabled) {
 				return;
-			}			
+			}
 			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oContractors.sDescription;
 			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
@@ -332,7 +344,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		$scope.onImagesAttribute = function() {
 			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oImages.sDescription;
 			onAddImage();
-		};		
+		};
 
 		$scope.onCloseRightSideNav = function() {
 			var oSvc = $mdSidenav('deficiencyQuickAddRigthSideNav').close();
@@ -537,24 +549,26 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			var onSuccessCreation = function() {};
 
 			var oDataForSave = {};
-			if($scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid){
+			if ($scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid) {
 				oDataForSave.PhaseGuid = $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid;
 			}
-			if($scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid){
+			if ($scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid) {
 				oDataForSave.UnitGuid = $scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid;
 			}
-			if($scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid){
+			if ($scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid) {
 				oDataForSave.TaskStatusGuid = $scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid;
 			}
-			if($scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid){
+			if ($scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid) {
 				oDataForSave.UserName = $scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid;
-			}				
+			}
 			if ($scope.oDeficiencyAttributes["oDescriptionTags"].sValue !== "...") {
 				oDataForSave.DescriptionTags = $scope.oDeficiencyAttributes["oDescriptionTags"].sValue;
 			}
 			if ($scope.oDeficiencyAttributes["oLocationTags"].sValue !== "...") {
 				oDataForSave.LocationTags = $scope.oDeficiencyAttributes["oLocationTags"].sValue;
 			}
+
+			oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
 
 			var aLinks = prepareLinksForSave();
 			apiProvider.createDeficiency({
