@@ -34,33 +34,33 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
 		$scope.aDeficiencyAttributes = [];
 		$scope.aDeficiencyAttributes.push({
-			sDescription: "Phase",
-			sValue: "Not specifies...",
+			sDescription: "Project - Phase",
+			sValue: "...",
 			bIsSelectionUnabled: true,
 		});
 		$scope.aDeficiencyAttributes.push({
 			sDescription: "Unit",
-			sValue: "Not specifies...",
+			sValue: "...",
 			bIsSelectionUnabled: false,
 		});
 		$scope.aDeficiencyAttributes.push({
 			sDescription: "Status",
-			sValue: "Not specifies...",
+			sValue: "...",
 			bIsSelectionUnabled: true,
 		});
 		$scope.aDeficiencyAttributes.push({
-			sDescription: "DescriptionTags",
-			sValue: "Not specifies...",
+			sDescription: "Description Tags",
+			sValue: "...",
 			bIsSelectionUnabled: true,
 		});
 		$scope.aDeficiencyAttributes.push({
-			sDescription: "LocationTags",
-			sValue: "Not specifies...",
+			sDescription: "Location Tags",
+			sValue: "...",
 			bIsSelectionUnabled: true,
 		});	
 		$scope.aDeficiencyAttributes.push({
 			sDescription: "Contractors",
-			sValue: "Not specifies...",
+			sValue: "...",
 			bIsSelectionUnabled: false,
 		});						
 
@@ -123,7 +123,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 				return;
 			}
 			switch (oAttribute.sDescription) {
-				case "Phase":
+				case "Project - Phase":
 					$scope.sSideNavHeader = "Phases";
 					$scope.iCurrentAttibuteIndex = 0;
 					break;
@@ -280,7 +280,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 							}
 							break;	
 						}else{
-							$scope.aDeficiencyAttributes[5].sValue = "Not specifies...";
+							$scope.aDeficiencyAttributes[5].sValue = "...";
 							$scope.aDeficiencyAttributes[5].aSelectedItemsGuids = [];
 						}
 						break;																							

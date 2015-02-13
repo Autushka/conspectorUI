@@ -105,6 +105,7 @@ app.config(['$translateProvider',
                   global_fileName: 'Filename',
                   global_selectedUnits: 'S\u00E9lectionner les unit\u00E9s',
                   global_activityType: 'Select Type',
+                  global_mobileSave: 'Save Deficiency',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',

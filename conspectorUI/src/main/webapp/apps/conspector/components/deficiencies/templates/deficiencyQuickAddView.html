@@ -1,119 +1,117 @@
-<div class="cnpContent" layout="column">
-	<label ng-click="onLogOut()" class="cnpLink cnpLinkHeader notSelectable">
-		{{'app_logOut' | translate}}
-	</label>
-  <section layout="row" flex>
-    <md-content flex class="md-padding">
-		<div class="cnpContent" layout="column">
-			<md-list>
-				<md-item ng-repeat="attribute in aDeficiencyAttributes">
-					<md-item-content>
-						 <div>{{attribute.sDescription}}</div>
-						 <div>{{attribute.sValue}}</div>
-						  <img ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);" ng-click="onOpenSideNav(attribute)">
-					</md-item-content>
+<section layout="column" class="cnpMobileContentWrapper">
+	<div layout="row" class="cnpMobileHeader" layout-align="space-between start">
+		<!-- TO replace with sLogoUrl, was not working so I put our logo for the moment -->
+		<div layout="row" layout-align="start center">
+			<img class="cnpMobileCompanyLogo" ng-src="apps/conspector/img/conspectorSymbol.svg"/>
+		</div>
+		<div>
+			<label ng-click="onLogOut()" class="cnpLink cnpLinkHeader cnpMobileTopLinks notSelectable">
+				{{'app_logOut' | translate}}
+			</label>
+		</div>
+	</div>
+	
+	<div class="cnpMobileListWrapper">
+		<div ng-repeat="attribute in aDeficiencyAttributes">
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onOpenSideNav(attribute)">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{attribute.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{attribute.sValue}}
+				</label>
+			</div>
+			</button>
+		</div>
+		<div layout="column" layout-align="start center">
+			<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton cnpInputIcon cnpSaveIconWhiteMobile notSelectable" ng-click="onSave()">
+			{{'global_mobileSave' | translate}}
+			</button>
+		</div>
+	</div>
+	
+	<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="deficiencyQuickAddRigthSideNav">
+	<md-toolbar>
+	<h1 class="md-toolbar-tools">{{sSideNavHeader}}</h1>
+	</md-toolbar>
+	<div layout="row" layout-align="start start" >
+		<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
+			<div ng-click="onCloseRightSideNav()" class="notSelectable cnpLink cnpLinkBackButton">
+				{{'global_back' | translate}}
+			</div>
+		</div>
+	</div>
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 0">
+		<div layout="column">
+			<section ng-repeat="project in aProjectsWithPhases">
+				<md-subheader class="md-primary">{{project.sProjectName}}</md-subheader>
+				<md-list layout="column">
+				<md-item ng-repeat="phase in project.aPhases" ng-click="onSelectPhase(phase)">
+				<md-item-content>
+				<img ng-if="phase.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">
+				<div>{{phase.sPhaseName}}</div>
+				</md-item-content>
 				</md-item>
+				</md-list>
+			</section>
+		</div>
+	</div>
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 1">
+		<div layout="column">
+			<md-list layout="column">
+			<md-item ng-repeat="unit in aUnits" ng-click="onSelectUnit(unit)">
+			<md-item-content>
+			<img ng-if="unit.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">
+			<div>{{unit.sName}}</div>
+			</md-item-content>
+			</md-item>
 			</md-list>
 		</div>
-    </md-content>
-
-    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="deficiencyQuickAddRigthSideNav">
-      <md-toolbar>
-        <h1 class="md-toolbar-tools">{{sSideNavHeader}}</h1>
-      </md-toolbar>
-      <md-content class="md-padding">
-		<div layout="row" layout-align="start start" >
-			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
-				<div ng-click="onCloseRightSideNav()" class="notSelectable cnpLink cnpLinkBackButton">
-					{{'global_back' | translate}}
-				</div>
-			</div>
-		</div> 
-
-		<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 0">
-			<div layout="column">
-			    <section ng-repeat="project in aProjectsWithPhases">
-			      <md-subheader class="md-primary">{{project.sProjectName}}</md-subheader>
-			      <md-list layout="column">
-			        <md-item ng-repeat="phase in project.aPhases" ng-click="onSelectPhase(phase)">
-			          <md-item-content>
-							<img ng-if="phase.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">					
-							<div>{{phase.sPhaseName}}</div>
-			          </md-item-content>
-			        </md-item>
-			      </md-list>
-			    </section>
-			</div>
-		</div> 
-
-		<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 1">
-			<div layout="column">
-			      <md-list layout="column">
-			        <md-item ng-repeat="unit in aUnits" ng-click="onSelectUnit(unit)">
-			          <md-item-content>
-							<img ng-if="unit.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">				
-							<div>{{unit.sName}}</div>
-			          </md-item-content>
-			        </md-item>
-			      </md-list>
-			</div>
-		</div> 
-
-		<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 2">
-			<div layout="column">
-			      <md-list layout="column">
-			        <md-item ng-repeat="status in aStatuses" ng-click="onSelectStatus(status)">
-			          <md-item-content>
-			          		<img ng-if="status.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">			
-							<img  ng-src="{{status.sIconUrl}}" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">				
-							<div>{{status.sName}}</div>
-			          </md-item-content>
-			        </md-item>
-			      </md-list>
-			</div>
-		</div> 		
-
-		<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 3">
-			<div layout="column">
-				<tags-input
-				ng-model="aDescriptionTags"
-				replace-spaces-with-dashes="false"
-				placeholder="{{'global_addTag' | translate}}">
-				</tags-input>
-			</div>
-		</div> 	
-
-		<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 4">
-			<div layout="column">
-				<tags-input
-				ng-model="aLocationTags"
-				replace-spaces-with-dashes="false"
-				placeholder="{{'global_addTag' | translate}}">
-				</tags-input>
-			</div>
-		</div> 	
-
-		<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 5">
-			<div layout="column">
-			      <md-list layout="column">
-			        <md-item ng-repeat="contractor in aContractors" ng-click="onSelectContractor(contractor)">
-			          <md-item-content>
-							<img ng-if="contractor.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">				
-							<div>{{contractor.sName}}</div>
-			          </md-item-content>
-			        </md-item>
-			      </md-list>
-			</div>
-		</div> 					
-
-
-      </md-content>
-    </md-sidenav>
-  </section>
-  <md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
-</div>
-
-
-
-
-
+	</div>
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 2">
+		<div layout="column">
+			<md-list layout="column">
+			<md-item ng-repeat="status in aStatuses" ng-click="onSelectStatus(status)">
+			<md-item-content>
+			<img ng-if="status.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">
+			<img  ng-src="{{status.sIconUrl}}" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">
+			<div>{{status.sName}}</div>
+			</md-item-content>
+			</md-item>
+			</md-list>
+		</div>
+	</div>
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 3">
+		<div layout="column">
+			<tags-input
+			ng-model="aDescriptionTags"
+			replace-spaces-with-dashes="false"
+			placeholder="{{'global_addTag' | translate}}">
+			</tags-input>
+		</div>
+	</div>
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 4">
+		<div layout="column">
+			<tags-input
+			ng-model="aLocationTags"
+			replace-spaces-with-dashes="false"
+			placeholder="{{'global_addTag' | translate}}">
+			</tags-input>
+		</div>
+	</div>
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 5">
+		<div layout="column">
+			<md-list layout="column">
+			<md-item ng-repeat="contractor in aContractors" ng-click="onSelectContractor(contractor)">
+			<md-item-content>
+			<img ng-if="contractor.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">
+			<div>{{contractor.sName}}</div>
+			</md-item-content>
+			</md-item>
+			</md-list>
+		</div>
+	</div>
+	</md-sidenav>
+	
+</section>
