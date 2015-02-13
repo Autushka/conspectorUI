@@ -58,6 +58,9 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
             var iSortingSequence = 0;
             var sClients = "";
             var sProjectPhase = "";
+            var iImagesNumber = 0;
+            var sFileMetadataSetLastModifiedAt = "";
+            var aImages = [];
             for (var i = 0; i < aData.length; i++) {
                 sProjectName = "";
                 sPhaseName = "";
@@ -65,6 +68,8 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
                 iSortingSequence = 0;
                 sClients = "";
                 sProjectPhase = "";
+                iImagesNumber = 0;
+                aImages = [];
 
                 if (aData[i].PhaseDetails) {
                     iSortingSequence = aData[i].PhaseDetails.GeneralAttributes.SortingSequence;
@@ -92,11 +97,20 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
                     sProjectPhase = "Not Assigned";
                 }
 
-
-                //
-
-
-
+                if(aData[i].FileMetadataSetDetails){
+                    if(aData[i].FileMetadataSetDetails.AttachmentsNumber){// to display default 0
+                        iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
+                    }                   
+                    sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
+                    if(aData[i].FileMetadataSetDetails.FileMetadataDetails){
+                        for (var j = 0; j < aData[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
+                            //Things[i]
+                            if(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false){
+                                aImages.push(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
+                            }
+                        }
+                    }
+                }
 
                 if (aData[i].AccountDetails) {
                     for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
@@ -110,7 +124,11 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
                     sTags: aData[i].DescriptionTags,
                     sProjectPhase: sProjectName + " - " + sPhaseName,
                     sClients: sClients,
-                    _sortingSequence: iSortingSequence
+                    _sortingSequence: iSortingSequence,
+                    _fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
+                    _fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,
+                    iImagesNumber: iImagesNumber,
+                    _aImages: aImages,
                 });
             }
             $scope.tableParams.reload();
@@ -133,7 +151,7 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
             }
 
             apiProvider.getUnits({
-                sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails,AccountDetails",
+                sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails,AccountDetails,FileMetadataSetDetails/FileMetadataDetails",
                 sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhases,
                 bShowSpinner: true,
                 onSuccess: onUnitsLoaded
@@ -143,6 +161,8 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         loadUnits(); //load Units
 
         $scope.onDisplay = function(oUnit) {
+            $rootScope.sFileMetadataSetGuid = oUnit._fileMetadataSetGuid;
+            $rootScope.sFileMetadataSetLastModifiedAt = oUnit._fileMetadataSetLastModifiedAt;
             $state.go('app.unitDetailsWrapper.unitDetails', {
                 sMode: "display",
                 sUnitGuid: oUnit._guid,
@@ -150,6 +170,8 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         };
 
         $scope.onEdit = function(oUnit) {
+            $rootScope.sFileMetadataSetGuid = oUnit._fileMetadataSetGuid;
+            $rootScope.sFileMetadataSetLastModifiedAt = oUnit._fileMetadataSetLastModifiedAt; 
             $state.go('app.unitDetailsWrapper.unitDetails', {
                 sMode: "edit",
                 sUnitGuid: oUnit._guid,
@@ -169,6 +191,13 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         $scope.$on('accountsShouldBeRefreshed', function(oParameters) {
             loadUnits();
         });
+
+        $scope.onDisplayPhotoGallery = function(oUnit, oEvent){
+            oEvent.stopPropagation();
+            if(oUnit._aImages.length){
+                servicesProvider.setUpPhotoGallery(oUnit._aImages);
+            }           
+        };
 
         $scope.$on("$destroy", function() {
             if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views

@@ -17,6 +17,11 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 						sEntitySPath = "Activitys";
 						oEntity = "oActivityEntity";
 						break;
+					case "app.unitDetailsWrapper.unitDetails":
+						sEntityType = "Unit";
+						sEntitySPath = "Units";
+						oEntity = "oUnitEntity";
+						break;
 				}
 
 		var bUpdateImagesNumber = false;
@@ -38,6 +43,11 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		
 		if ($stateParams.sActivityGuid) {
 			sParentEntityGuid = $stateParams.sActivityGuid;
+			//sParentEntityFileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
+		}
+		
+		if ($stateParams.sUnitGuid) {
+			sParentEntityGuid = $stateParams.sUnitGuid;
 			//sParentEntityFileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
 		}
 
@@ -123,7 +133,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				bUpdateImagesNumber = true;
 				loadAttachments();
 			};
-			debugger
+			
 			servicesProvider.uploadAttachmentsForEntity({
 				sPath: sEntitySPath,
 				aFiles: aFiles,

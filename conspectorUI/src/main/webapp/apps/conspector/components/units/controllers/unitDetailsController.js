@@ -28,6 +28,11 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
 		$scope.sMode = $stateParams.sMode;
+
+		if ($scope.sMode === "display" || $scope.sMode === "edit") {
+			$scope.$parent.bDisplayAttachmentsList = true;
+		}
+
 		$scope.oUnit = {
 			aDescriptionTags: [],
 		};
@@ -111,6 +116,13 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			$scope.oUnit._guid = oUnit.Guid;
 			var sProject = "";
 			var sPhase = "";
+
+			$rootScope.sFileMetadataSetGuid = oUnit.FileMetadataSetGuid;
+			if(oUnit.FileMetadataSetDetails){
+				$rootScope.sFileMetadataSetLastModifiedAt = oUnit.FileMetadataSetDetails.LastModifiedAt;
+			}			
+			$rootScope.$broadcast("FileAttachemntsCanBeLoaded");
+
 			$scope.oUnit._lastModifiedAt = oUnit.LastModifiedAt;
 
 			$scope.oUnit.sName = oUnit.Name;
@@ -147,7 +159,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 
 		var sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + "PhaseDetails/ProjectDetails,UnitOptionDetails";
 
-		sRequestSettings = sRequestSettings + "";
+		sRequestSettings = sRequestSettings + "FileMetadataSetDetails/FileMetadataDetails";
 		var oUnit = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oUnitEntity",
 			sRequestSettings: sRequestSettings, //filter + expand
@@ -169,7 +181,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 		var getUnitDetails = function() {
 			apiProvider.getUnit({
 				sKey: sUnitGuid,
-				sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails,AccountDetails",
+				sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails,AccountDetails,FileMetadataSetDetails",
 				bShowSpinner: true,
 				onSuccess: onUnitDetailsLoaded,
 			});
@@ -177,9 +189,6 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 
 		var onClientsLoaded = function(aData) {
 			//Sort aData by accountType sorting sequence and then by AccountName
-			
-
-
 			aData = $filter('orderBy')(aData, ["Name"]);
 			
 			servicesProvider.constructDependentMultiSelectArray({
