@@ -184,7 +184,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			}
 			switch (oAttribute.sDescription) {
 				case "Project - Phase":
-					$scope.sSideNavHeader = "Phases";
+					$scope.sSideNavHeader = "Project - Phases";
 					$scope.iCurrentAttibuteIndex = 0;
 					break;
 				case "Unit":

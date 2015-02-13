@@ -32,16 +32,17 @@
 	</div>
 	
 	<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="deficiencyQuickAddRigthSideNav">
-	<md-toolbar>
-	<h1 class="md-toolbar-tools">{{sSideNavHeader}}</h1>
-	</md-toolbar>
-	<div layout="row" layout-align="start start" >
-		<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
-			<div ng-click="onCloseRightSideNav()" class="notSelectable cnpLink cnpLinkBackButton">
+	<div layout="row" layout-align="start start" ng-click="onCloseRightSideNav()">
+		<div class="notSelectable cnpInputIcon cnpBackIcon" layout-margin layout="column" layout-align="center start">
+			<div class="notSelectable cnpLink cnpLinkBackButton">
 				{{'global_back' | translate}}
 			</div>
 		</div>
 	</div>
+	<md-toolbar>
+	<h1 class="md-toolbar-tools">{{sSideNavHeader}}</h1>
+	</md-toolbar>
+	
 	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 0">
 		<div layout="column">
 			<section ng-repeat="project in aProjectsWithPhases">
