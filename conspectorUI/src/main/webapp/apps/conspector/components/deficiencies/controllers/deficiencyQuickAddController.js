@@ -405,8 +405,10 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 				$scope.aContractors = [];
 				$scope.aDeficiencyAttributes[1].sValue = "...";
 				$scope.aDeficiencyAttributes[1].sSelectedItemGuid = "";
+				bUnitWasSelected = false;
 				$scope.aDeficiencyAttributes[7].sValue = "...";
 				$scope.aDeficiencyAttributes[7].aSelectedItemsGuids = [];
+				bContractorWasSelected = false;
 			}
 
 		};
