@@ -82,7 +82,34 @@
 			</md-list>
 		</div>
 	</div>
+
 	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 3">
+		<div layout="column">
+			<md-list layout="column">
+			<md-item ng-repeat="priority in aPriorities" ng-click="onSelectPriority(priority)">
+			<md-item-content>
+			<img ng-if="priority.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">
+			<div>{{priority.sName}}</div>
+			</md-item-content>
+			</md-item>
+			</md-list>
+		</div>
+	</div>
+
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 4">
+		<div layout="column">
+			<md-list layout="column">
+			<md-item ng-repeat="user in aUsers" ng-click="onSelectUser(user)">
+			<md-item-content>
+			<img ng-if="user.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">
+			<div>{{user.sName}}</div>
+			</md-item-content>
+			</md-item>
+			</md-list>
+		</div>
+	</div>
+
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 5">
 		<div layout="column">
 			<tags-input
 			ng-model="aDescriptionTags"
@@ -91,7 +118,7 @@
 			</tags-input>
 		</div>
 	</div>
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 4">
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 6">
 		<div layout="column">
 			<tags-input
 			ng-model="aLocationTags"
@@ -100,7 +127,7 @@
 			</tags-input>
 		</div>
 	</div>
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 5">
+	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 7">
 		<div layout="column">
 			<md-list layout="column">
 			<md-item ng-repeat="contractor in aContractors" ng-click="onSelectContractor(contractor)">
