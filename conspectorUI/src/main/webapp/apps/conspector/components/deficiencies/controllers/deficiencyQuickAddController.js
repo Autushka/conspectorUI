@@ -537,11 +537,18 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			var onSuccessCreation = function() {};
 
 			var oDataForSave = {};
-			oDataForSave.PhaseGuid = $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid;
-			oDataForSave.UnitGuid = $scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid;
-			oDataForSave.TaskStatusGuid = $scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid;
-			oDataForSave.TaskPriorityGuid = $scope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid;
-			oDataForSave.UserName = $scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid;
+			if($scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid){
+				oDataForSave.PhaseGuid = $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid;
+			}
+			if($scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid){
+				oDataForSave.UnitGuid = $scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid;
+			}
+			if($scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid){
+				oDataForSave.TaskStatusGuid = $scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid;
+			}
+			if($scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid){
+				oDataForSave.UserName = $scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid;
+			}				
 			if ($scope.oDeficiencyAttributes["oDescriptionTags"].sValue !== "...") {
 				oDataForSave.DescriptionTags = $scope.oDeficiencyAttributes["oDescriptionTags"].sValue;
 			}
