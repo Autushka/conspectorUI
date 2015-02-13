@@ -48,7 +48,8 @@
 
 		<script src='bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
 		<script src='bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
-		<script src='bower_components/textAngular/dist/textAngular.min.js'></script>				
+		<script src='bower_components/textAngular/dist/textAngular.min.js'></script>	
+		<script src="bower_components/ngCordova/dist/ng-cordova.js"></script>			
 		
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->
 		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->

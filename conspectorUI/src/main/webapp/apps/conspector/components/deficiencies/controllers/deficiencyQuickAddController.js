@@ -1,5 +1,5 @@
-viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings', '$timeout', '$mdSidenav', '$window',
-	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window) {
+viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings', '$timeout', '$mdSidenav', '$window', '$cordovaCamera',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window, $cordovaCamera) {
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		var bCanContinue = rolesSettings.getRolesSettingsForEntityAndOperation({
 			sRole: sCurrentRole,
@@ -26,57 +26,63 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		$scope.aUnits = [];
 		var bUnitWasSelected = false;
 		$scope.aStatuses = [];
-		var bStatusWasSelected = false;	
+		var bStatusWasSelected = false;
 		$scope.aPriorities = [];
 		var bPriorityWasSelected = false;
 		$scope.aUsers = [];
-		var bUserWasSelected = false;					
+		var bUserWasSelected = false;
 		$scope.aDescriptionTags = [];
-		$scope.aLocationTags = [];	
+		$scope.aLocationTags = [];
 		$scope.aContractors = [];
-		var bContractorWasSelected = false;				
+		var bContractorWasSelected = false;
 
-		$scope.aDeficiencyAttributes = [];
-		$scope.aDeficiencyAttributes.push({
-			sDescription: "Project - Phase",
-			sValue: "...",
-			bIsSelectionUnabled: true,
-		});
-		$scope.aDeficiencyAttributes.push({
-			sDescription: "Unit",
-			sValue: "...",
-			bIsSelectionUnabled: false,
-		});
-		$scope.aDeficiencyAttributes.push({
-			sDescription: "Status",
-			sValue: "...",
-			bIsSelectionUnabled: true,
-		});
-		$scope.aDeficiencyAttributes.push({
-			sDescription: "Priority",
-			sValue: "...",
-			bIsSelectionUnabled: true,
-		});
-		$scope.aDeficiencyAttributes.push({
-			sDescription: "User",
-			sValue: "...",
-			bIsSelectionUnabled: true,
-		});				
-		$scope.aDeficiencyAttributes.push({
-			sDescription: "Description Tags",
-			sValue: "...",
-			bIsSelectionUnabled: true,
-		});
-		$scope.aDeficiencyAttributes.push({
-			sDescription: "Location Tags",
-			sValue: "...",
-			bIsSelectionUnabled: true,
-		});	
-		$scope.aDeficiencyAttributes.push({
-			sDescription: "Contractors",
-			sValue: "...",
-			bIsSelectionUnabled: false,
-		});						
+		$scope.oDeficiencyAttributes = {
+			oPhase: {
+				sDescription: $translate.instant('global_projectPhase'), //"Project - Phase",
+				sValue: "...",
+				bIsSelectionUnabled: true,
+			},
+			oUnit: {
+				sDescription: $translate.instant('global_unit'), //"Unit",
+				sValue: "...",
+				bIsSelectionUnabled: false,
+			},
+			oStatus: {
+				sDescription: $translate.instant('global_status'), //"Status",
+				sValue: "...",
+				bIsSelectionUnabled: true,
+			},
+			oPriority: {
+				sDescription: $translate.instant('global_priority'), //"Priority",
+				sValue: "...",
+				bIsSelectionUnabled: true,
+			},
+			oUser: {
+				sDescription: $translate.instant('global_user'), //"User",
+				sValue: "...",
+				bIsSelectionUnabled: true,
+			},
+			oDescriptionTags: {
+				sDescription: $translate.instant('global_descriptionTags'), //"Description Tags",
+				sValue: "...",
+				bIsSelectionUnabled: true,
+			},
+			oLocationTags: {
+				sDescription: $translate.instant('global_locationTags'), //"Location Tags",
+				sValue: "...",
+				bIsSelectionUnabled: true,
+			},
+			oContractors: {
+				sDescription: $translate.instant('global_contractors'), //"Contractors",
+				sValue: "...",
+				bIsSelectionUnabled: true,
+			},
+			oImages: {
+				sDescription: $translate.instant('global_images'), //"Photos",
+				sValue: "...",
+				bIsSelectionUnabled: true,
+			},
+		};
 
 		var onUnitsLoaded = function(oData) {
 			oData.UnitDetails.results = $filter('filter')(oData.UnitDetails.results, function(oItem, iIndex) {
@@ -94,7 +100,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		};
 
 		var onStatusesLoaded = function(aData) {
-			var sDesciption = "";
+			var sDescription = "";
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
 			}
@@ -119,7 +125,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		};
 
 		var onPrioritiesLoaded = function(aData) {
-			var sDesciption = "";
+			var sDescription = "";
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
 			}
@@ -140,7 +146,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					bTicked: false,
 				});
 			}
-		};	
+		};
 
 		var onUsersLoaded = function(aData) {
 			aData = $filter('filter')(aData, function(oItem, iIndex) {
@@ -152,7 +158,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					}
 				}
 				return bMatchFound;
-			});	
+			});
 
 			aData = $filter('orderBy')(aData, ["UserName"]);
 			for (var i = 0; i < aData.length; i++) {
@@ -162,12 +168,12 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					bTicked: false,
 				});
 			}
-		};				
+		};
 
 		var onContractorsLoaded = function(oData) {
 			oData.AccountDetails.results = $filter('filter')(oData.AccountDetails.results, function(oItem, iIndex) {
 				return !oItem.GeneralAttributes.IsDeleted && oItem.AccountTypeDetails.NameEN === "Contractor";
-			});			
+			});
 			oData.AccountDetails.results = $filter('orderBy')(oData.AccountDetails.results, ["Name"]);
 			for (var i = 0; i < oData.AccountDetails.results.length; i++) {
 				$scope.aContractors.push({
@@ -176,218 +182,255 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					bTicked: false,
 				})
 			}
-		};		
+		};
 
-		$scope.onOpenSideNav = function(oAttribute) {
-			if (!oAttribute.bIsSelectionUnabled) {
-				return;
-			}
-			switch (oAttribute.sDescription) {
-				case "Project - Phase":
-					$scope.sSideNavHeader = "Project - Phases";
-					$scope.iCurrentAttibuteIndex = 0;
-					break;
-				case "Unit":
-					$scope.sSideNavHeader = "Units";
-					$scope.iCurrentAttibuteIndex = 1;
-					break;
-				case "Status":
-					$scope.sSideNavHeader = "Statuses";
-					$scope.iCurrentAttibuteIndex = 2;
-					break;
-				case "Priority":
-					$scope.sSideNavHeader = "Priorities";
-					$scope.iCurrentAttibuteIndex = 3;
-					break;	
-				case "User":
-					$scope.sSideNavHeader = "Users";
-					$scope.iCurrentAttibuteIndex = 4;
-					break;									
-				case "Description Tags":
-					$scope.sSideNavHeader = "Description Tags";
-					$scope.iCurrentAttibuteIndex = 5;
-					break;
-				case "Location Tags":
-					$scope.sSideNavHeader = "Location Tags";
-					$scope.iCurrentAttibuteIndex = 6;
-					break;		
-				case "Contractors":
-					$scope.sSideNavHeader = "Contractors";
-					$scope.iCurrentAttibuteIndex = 7;
-					break;														
-			}
+		var onAddImage = function() {
+			var options = {
+				quality: 50,
+				destinationType: Camera.DestinationType.DATA_URL,
+				sourceType: Camera.PictureSourceType.CAMERA,
+				allowEdit: true,
+				encodingType: Camera.EncodingType.JPEG,
+				targetWidth: 100,
+				targetHeight: 100,
+				popoverOptions: CameraPopoverOptions,
+				saveToPhotoAlbum: false
+			};
+
+			$cordovaCamera.getPicture(options).then(function(imageData) {
+				// var image = document.getElementById('myImage');
+				// image.src = "data:image/jpeg;base64," + imageData;
+				//alert("Yo!");
+			}, function(err) {
+				// error
+			});
+		};
+
+		$scope.onPhaseAttribute = function() {
+			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oPhase.sDescription;
 			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
 			oSideNav.then(function() {
-				switch ($scope.iCurrentAttibuteIndex) {
-					case 0:
+				var aPhases = [];
+				if (!$scope.aProjectsWithPhases.length) {
+					var aProjectsWithPhases = servicesProvider.constructUserProjectsPhases();
+					for (var i = 0; i < aProjectsWithPhases.length; i++) {
 						var aPhases = [];
-						if (!$scope.aProjectsWithPhases.length) {
-							var aProjectsWithPhases = servicesProvider.constructUserProjectsPhases();
-							for (var i = 0; i < aProjectsWithPhases.length; i++) {
-								var aPhases = [];
-								if (aProjectsWithPhases[i].NameFR && $translate.use() === "fr") {
-									aProjectsWithPhases[i].sDescription = aProjectsWithPhases[i].NameFR;
-								} else {
-									aProjectsWithPhases[i].sDescription = aProjectsWithPhases[i].NameEN;
-								}
-								for (var j = 0; j < aProjectsWithPhases[i].PhaseDetails.results.length; j++) {
-									if (aProjectsWithPhases[i].PhaseDetails.results[j].NameFR && $translate.use() === "fr") {
-										aProjectsWithPhases[i].PhaseDetails.results[j].sDescription = aProjectsWithPhases[i].PhaseDetails.results[j].NameFR;
-									} else {
-										aProjectsWithPhases[i].PhaseDetails.results[j].sDescription = aProjectsWithPhases[i].PhaseDetails.results[j].NameEN;
-									}
-
-									aPhases.push({
-										sPhaseName: aProjectsWithPhases[i].PhaseDetails.results[j].sDescription,
-										Guid: aProjectsWithPhases[i].PhaseDetails.results[j].Guid,
-										bTicked: false,
-									});
-								}
-								$scope.aProjectsWithPhases.push({
-									sProjectName: aProjectsWithPhases[i].sDescription,
-									aPhases: aPhases
-								});
+						if (aProjectsWithPhases[i].NameFR && $translate.use() === "fr") {
+							aProjectsWithPhases[i].sDescription = aProjectsWithPhases[i].NameFR;
+						} else {
+							aProjectsWithPhases[i].sDescription = aProjectsWithPhases[i].NameEN;
+						}
+						for (var j = 0; j < aProjectsWithPhases[i].PhaseDetails.results.length; j++) {
+							if (aProjectsWithPhases[i].PhaseDetails.results[j].NameFR && $translate.use() === "fr") {
+								aProjectsWithPhases[i].PhaseDetails.results[j].sDescription = aProjectsWithPhases[i].PhaseDetails.results[j].NameFR;
+							} else {
+								aProjectsWithPhases[i].PhaseDetails.results[j].sDescription = aProjectsWithPhases[i].PhaseDetails.results[j].NameEN;
 							}
-							break;
-						}
-					case 1:
-						if (!$scope.aUnits.length) {
-							apiProvider.getPhase({
-								sExpand: "UnitDetails",
-								sKey: $scope.aDeficiencyAttributes[0].sSelectedItemGuid,
-								onSuccess: onUnitsLoaded
+
+							aPhases.push({
+								sPhaseName: aProjectsWithPhases[i].PhaseDetails.results[j].sDescription,
+								Guid: aProjectsWithPhases[i].PhaseDetails.results[j].Guid,
+								bTicked: false,
 							});
 						}
-						break;
-					case 2:
-						if (!$scope.aStatuses.length) {
-							apiProvider.getDeficiencyStatuses({
-								onSuccess: onStatusesLoaded
-							});
-						}
-						break;
-					case 3:
-						if (!$scope.aPriorities.length) {
-							apiProvider.getDeficiencyPriorities({
-								onSuccess: onPrioritiesLoaded
-							});
-						}					
-						break;
-					case 4:
-						if (!$scope.aUsers.length) {
-							apiProvider.getUsers({
-								sExpand: "CompanyDetails",
-								onSuccess: onUsersLoaded
-							});
-						}					
-						break;											
-					case 5:
-						break;
-					case 6:
-						break;		
-					case 7:
-						if (!$scope.aContractors.length) {
-							apiProvider.getPhase({
-								sKey: $scope.aDeficiencyAttributes[0].sSelectedItemGuid,
-								sExpand: "AccountDetails/AccountTypeDetails",
-								onSuccess: onContractorsLoaded,
-							});
-						}					
-						break;	
+						$scope.aProjectsWithPhases.push({
+							sProjectName: aProjectsWithPhases[i].sDescription,
+							aPhases: aPhases
+						});
+					}
 				}
 			});
 		};
 
+		$scope.onUnitAttribute = function() {
+			if(!$scope.oDeficiencyAttributes.oUnit.bIsSelectionUnabled){
+				return;
+			}
+			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oUnit.sDescription;
+			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
+
+			oSideNav.then(function() {
+				if (!$scope.aUnits.length) {
+					apiProvider.getPhase({
+						sExpand: "UnitDetails",
+						sKey: $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid,
+						onSuccess: onUnitsLoaded
+					});
+				}
+			});
+		};
+
+		$scope.onStatusAttribute = function() {
+			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oStatus.sDescription;
+			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
+
+			oSideNav.then(function() {
+				if (!$scope.aStatuses.length) {
+					apiProvider.getDeficiencyStatuses({
+						onSuccess: onStatusesLoaded
+					});
+				}
+			});
+		};
+
+		$scope.onPriorityAttribute = function() {
+			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oPriority.sDescription;
+			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
+
+			oSideNav.then(function() {
+				if (!$scope.aPriorities.length) {
+					apiProvider.getDeficiencyPriorities({
+						onSuccess: onPrioritiesLoaded
+					});
+				}
+			});
+		};
+
+		$scope.onUserAttribute = function() {
+			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oUser.sDescription;
+			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
+
+			oSideNav.then(function() {
+				if (!$scope.aUsers.length) {
+					apiProvider.getUsers({
+						sExpand: "CompanyDetails",
+						onSuccess: onUsersLoaded
+					});
+				}
+			});
+		};
+
+		$scope.onDescriptionTagsAttribute = function() {
+			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oDescriptionTags.sDescription;
+			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
+		};
+
+		$scope.onLocationTagsAttribute = function() {
+			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oLocationTags.sDescription;
+			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
+		};
+
+		$scope.onContractorsAttribute = function() {
+			if(!$scope.oDeficiencyAttributes.oContractors.bIsSelectionUnabled){
+				return;
+			}			
+			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oContractors.sDescription;
+			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
+
+			oSideNav.then(function() {
+				if (!$scope.aContractors.length) {
+					apiProvider.getPhase({
+						sKey: $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid,
+						sExpand: "AccountDetails/AccountTypeDetails",
+						onSuccess: onContractorsLoaded,
+					});
+				}
+			});
+		};
+
+		$scope.onImagesAttribute = function() {
+			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oImages.sDescription;
+			onAddImage();
+		};		
+
 		$scope.onCloseRightSideNav = function() {
 			var oSvc = $mdSidenav('deficiencyQuickAddRigthSideNav').close();
 			oSvc.then(function() {
-				switch ($scope.iCurrentAttibuteIndex) {
-					case 0:
+				switch ($scope.sSideNavHeader) {
+					case $scope.oDeficiencyAttributes.oPhase.sDescription:
 						if (bPhaseWasSelected) {
-							$scope.aDeficiencyAttributes[1].bIsSelectionUnabled = true;
-							$scope.aDeficiencyAttributes[7].bIsSelectionUnabled = true;
-							$scope.aDeficiencyAttributes[0].sValue = "";
+							$scope.oDeficiencyAttributes["oUnit"].bIsSelectionUnabled = true;
+							$scope.oDeficiencyAttributes["oContractors"].bIsSelectionUnabled = true;
+							$scope.oDeficiencyAttributes["oPhase"].sValue = "";
 							for (var i = 0; i < $scope.aProjectsWithPhases.length; i++) {
 								for (var j = 0; j < $scope.aProjectsWithPhases[i].aPhases.length; j++) {
 									if ($scope.aProjectsWithPhases[i].aPhases[j].bTicked) {
-										$scope.aDeficiencyAttributes[0].sValue = $scope.aDeficiencyAttributes[0].sValue + $scope.aProjectsWithPhases[i].sProjectName + " - " + $scope.aProjectsWithPhases[i].aPhases[j].sPhaseName;
-										$scope.aDeficiencyAttributes[0].sSelectedItemGuid = $scope.aProjectsWithPhases[i].aPhases[j].Guid;
+										$scope.oDeficiencyAttributes["oPhase"].sValue = $scope.oDeficiencyAttributes["oPhase"].sValue + $scope.aProjectsWithPhases[i].sProjectName + " - " + $scope.aProjectsWithPhases[i].aPhases[j].sPhaseName;
+										$scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid = $scope.aProjectsWithPhases[i].aPhases[j].Guid;
 										break;
 									}
 								}
-							}							
+							}
 						}
 						break;
-					case 1:
+					case $scope.oDeficiencyAttributes.oUnit.sDescription:
 						if (bUnitWasSelected) {
-							$scope.aDeficiencyAttributes[1].sValue = "";
+							$scope.oDeficiencyAttributes["oUnit"].sValue = "";
 							for (var i = 0; i < $scope.aUnits.length; i++) {
 								if ($scope.aUnits[i].bTicked) {
-									$scope.aDeficiencyAttributes[1].sValue = $scope.aUnits[i].sName;
-									$scope.aDeficiencyAttributes[1].sSelectedItemGuid = $scope.aUnits[i].sGuid;
+									$scope.oDeficiencyAttributes["oUnit"].sValue = $scope.aUnits[i].sName;
+									$scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid = $scope.aUnits[i].sGuid;
 									break;
 								}
-							}							
+							}
 						}
 						break;
-					case 2:
+					case $scope.oDeficiencyAttributes.oStatus.sDescription:
 						if (bStatusWasSelected) {
-							$scope.aDeficiencyAttributes[2].sValue = "";
+							$scope.oDeficiencyAttributes["oStatus"].sValue = "";
 							for (var i = 0; i < $scope.aStatuses.length; i++) {
 								if ($scope.aStatuses[i].bTicked) {
-									$scope.aDeficiencyAttributes[2].sValue = $scope.aStatuses[i].sName;
-									$scope.aDeficiencyAttributes[2].sSelectedItemGuid = $scope.aStatuses[i].sGuid;
+									$scope.oDeficiencyAttributes["oStatus"].sValue = $scope.aStatuses[i].sName;
+									$scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid = $scope.aStatuses[i].sGuid;
 									break;
 								}
-							}							
+							}
 						}
-						break;	
-					case 3:
+						break;
+					case $scope.oDeficiencyAttributes.oPriority.sDescription:
 						if (bPriorityWasSelected) {
-							$scope.aDeficiencyAttributes[3].sValue = "";
+							$scope.oDeficiencyAttributes["oPriority"].sValue = "";
 							for (var i = 0; i < $scope.aPriorities.length; i++) {
 								if ($scope.aPriorities[i].bTicked) {
-									$scope.aDeficiencyAttributes[3].sValue = $scope.aPriorities[i].sName;
-									$scope.aDeficiencyAttributes[3].sSelectedItemGuid = $scope.aPriorities[i].sGuid;
+									$scope.oDeficiencyAttributes["oPriority"].sValue = $scope.aPriorities[i].sName;
+									$scope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid = $scope.aPriorities[i].sGuid;
 									break;
 								}
 							}
-						}						
+						}
 						break;
-					case 4:
+					case $scope.oDeficiencyAttributes.oUser.sDescription:
 						if (bUserWasSelected) {
-							$scope.aDeficiencyAttributes[4].sValue = "";
+							$scope.oDeficiencyAttributes["oUser"].sValue = "";
 							for (var i = 0; i < $scope.aUsers.length; i++) {
 								if ($scope.aUsers[i].bTicked) {
-									$scope.aDeficiencyAttributes[4].sValue = $scope.aUsers[i].sName;
-									$scope.aDeficiencyAttributes[4].sSelectedItemGuid = $scope.aUsers[i].sGuid;
+									$scope.oDeficiencyAttributes["oUser"].sValue = $scope.aUsers[i].sName;
+									$scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid = $scope.aUsers[i].sGuid;
 									break;
 								}
 							}
-						}						
-						break;																	
-					case 5:
-						$scope.aDeficiencyAttributes[5].sValue = utilsProvider.tagsArrayToTagsString($scope.aDescriptionTags);
+						}
 						break;
-					case 6:
-						$scope.aDeficiencyAttributes[6].sValue = utilsProvider.tagsArrayToTagsString($scope.aLocationTags);	
+					case $scope.oDeficiencyAttributes.oDescriptionTags.sDescription:
+						if ($scope.aDescriptionTags.length) {
+							$scope.oDeficiencyAttributes["oDescriptionTags"].sValue = utilsProvider.tagsArrayToTagsString($scope.aDescriptionTags);
+						} else {
+							$scope.oDeficiencyAttributes["oDescriptionTags"].sValue = "...";
+						}
 						break;
-					case 7:
-						if (bContractorWasSelected) {							
-							$scope.aDeficiencyAttributes[7].sValue = "";
-							$scope.aDeficiencyAttributes[7].aSelectedItemsGuids = [];
+					case $scope.oDeficiencyAttributes.oLocationTags.sDescription:
+						if ($scope.aLocationTags.length) {
+							$scope.oDeficiencyAttributes["oLocationTags"].sValue = utilsProvider.tagsArrayToTagsString($scope.aLocationTags);
+						} else {
+							$scope.oDeficiencyAttributes["oLocationTags"].sValue = "...";
+						}
+						break;
+					case $scope.oDeficiencyAttributes.oContractors.sDescription:
+						if (bContractorWasSelected) {
+							$scope.oDeficiencyAttributes["oContractors"].sValue = "";
+							$scope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids = [];
 							for (var i = 0; i < $scope.aContractors.length; i++) {
 								if ($scope.aContractors[i].bTicked) {
-									$scope.aDeficiencyAttributes[7].sValue = $scope.aDeficiencyAttributes[7].sValue + $scope.aContractors[i].sName + "; ";
-									$scope.aDeficiencyAttributes[7].aSelectedItemsGuids.push($scope.aContractors[i].sGuid);
+									$scope.oDeficiencyAttributes["oContractors"].sValue = $scope.oDeficiencyAttributes["oContractors"].sValue + $scope.aContractors[i].sName + "; ";
+									$scope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.push($scope.aContractors[i].sGuid);
 								}
 							}
-						}else{
-							$scope.aDeficiencyAttributes[7].sValue = "...";
-							$scope.aDeficiencyAttributes[7].aSelectedItemsGuids = [];
+						} else {
+							$scope.oDeficiencyAttributes["oContractors"].sValue = "...";
+							$scope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids = [];
 						}
-						break;																							
+						break;
 				}
 			});
 		};
@@ -403,11 +446,11 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 				oPhase.bTicked = true;
 				$scope.aUnits = [];
 				$scope.aContractors = [];
-				$scope.aDeficiencyAttributes[1].sValue = "...";
-				$scope.aDeficiencyAttributes[1].sSelectedItemGuid = "";
+				$scope.oDeficiencyAttributes["oUnit"].sValue = "...";
+				$scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid = "";
 				bUnitWasSelected = false;
-				$scope.aDeficiencyAttributes[7].sValue = "...";
-				$scope.aDeficiencyAttributes[7].aSelectedItemsGuids = [];
+				$scope.oDeficiencyAttributes["oContractors"].sValue = "...";
+				$scope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids = [];
 				bContractorWasSelected = false;
 			}
 
@@ -431,7 +474,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 				}
 				oStatus.bTicked = true;
 			}
-		};	
+		};
 
 		$scope.onSelectPriority = function(oPriority) {
 			bPriorityWasSelected = true;
@@ -441,7 +484,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 				}
 				oPriority.bTicked = true;
 			}
-		};	
+		};
 
 		$scope.onSelectUser = function(oUser) {
 			bUserWasSelected = true;
@@ -451,32 +494,32 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 				}
 				oUser.bTicked = true;
 			}
-		};					
+		};
 
 		$scope.onSelectContractor = function(oContractor) {
 			bContractorWasSelected = false;
 			oContractor.bTicked = !oContractor.bTicked;
 
-			if(!oContractor.bTicked){
+			if (!oContractor.bTicked) {
 				for (var i = 0; i < $scope.aContractors.length; i++) {
-					if($scope.aContractors[i].bTicked){
+					if ($scope.aContractors[i].bTicked) {
 						bContractorWasSelected = true;
 						break;
 					}
-				}				
-			}else{
+				}
+			} else {
 				bContractorWasSelected = true;
 			}
-		};	
+		};
 
 		var prepareLinksForSave = function() { // link contact to phases
 			var aLinks = [];
 			var aUri = [];
 			var sUri = "";
 
-			if ($scope.aDeficiencyAttributes[7].aSelectedItemsGuids && $scope.aDeficiencyAttributes[7].aSelectedItemsGuids.length) {
-				for (var i = 0; i < $scope.aDeficiencyAttributes[7].aSelectedItemsGuids.length; i++) {
-					sUri = "Accounts('" + $scope.aDeficiencyAttributes[7].aSelectedItemsGuids[i] + "')";
+			if ($scope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids && $scope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.length) {
+				for (var i = 0; i < $scope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.length; i++) {
+					sUri = "Accounts('" + $scope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids[i] + "')";
 					aUri.push(sUri);
 				}
 			}
@@ -491,22 +534,20 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		};
 
 		$scope.onSave = function() {
-			var onSuccessCreation = function() {
-
-			};
+			var onSuccessCreation = function() {};
 
 			var oDataForSave = {};
-			oDataForSave.PhaseGuid = $scope.aDeficiencyAttributes[0].sSelectedItemGuid;
-			oDataForSave.UnitGuid = $scope.aDeficiencyAttributes[1].sSelectedItemGuid;
-			oDataForSave.TaskStatusGuid = $scope.aDeficiencyAttributes[2].sSelectedItemGuid;
-			oDataForSave.TaskPriorityGuid = $scope.aDeficiencyAttributes[3].sSelectedItemGuid;
-			oDataForSave.UserName = $scope.aDeficiencyAttributes[4].sSelectedItemGuid;
-			if($scope.aDeficiencyAttributes[5].sValue !== "..."){
-				oDataForSave.DescriptionTags = $scope.aDeficiencyAttributes[5].sValue;
+			oDataForSave.PhaseGuid = $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid;
+			oDataForSave.UnitGuid = $scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid;
+			oDataForSave.TaskStatusGuid = $scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid;
+			oDataForSave.TaskPriorityGuid = $scope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid;
+			oDataForSave.UserName = $scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid;
+			if ($scope.oDeficiencyAttributes["oDescriptionTags"].sValue !== "...") {
+				oDataForSave.DescriptionTags = $scope.oDeficiencyAttributes["oDescriptionTags"].sValue;
 			}
-			if($scope.aDeficiencyAttributes[6].sValue !== "..."){
-				oDataForSave.LocationTags = $scope.aDeficiencyAttributes[6].sValue;
-			}			
+			if ($scope.oDeficiencyAttributes["oLocationTags"].sValue !== "...") {
+				oDataForSave.LocationTags = $scope.oDeficiencyAttributes["oLocationTags"].sValue;
+			}
 
 			var aLinks = prepareLinksForSave();
 			apiProvider.createDeficiency({
@@ -518,6 +559,5 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 				onSuccess: onSuccessCreation,
 			});
 		};
-
 	}
 ]);

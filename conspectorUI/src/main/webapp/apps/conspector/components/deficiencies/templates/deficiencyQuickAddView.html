@@ -12,7 +12,106 @@
 	</div>
 	
 	<div class="cnpMobileListWrapper">
-		<div ng-repeat="attribute in aDeficiencyAttributes">
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onPhaseAttribute()">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{oDeficiencyAttributes.oPhase.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{oDeficiencyAttributes.oPhase.sValue}}
+				</label>
+			</div>
+			</button>
+
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onUnitAttribute()">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{oDeficiencyAttributes.oUnit.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{oDeficiencyAttributes.oUnit.sValue}}
+				</label>
+			</div>
+			</button>	
+
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onStatusAttribute()">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{oDeficiencyAttributes.oStatus.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{oDeficiencyAttributes.oStatus.sValue}}
+				</label>
+			</div>
+			</button>						
+
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onPriorityAttribute()">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{oDeficiencyAttributes.oPriority.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{oDeficiencyAttributes.oPriority.sValue}}
+				</label>
+			</div>
+			</button>	
+
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onUserAttribute()">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{oDeficiencyAttributes.oUser.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{oDeficiencyAttributes.oUser.sValue}}
+				</label>
+			</div>
+			</button>	
+
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onDescriptionTagsAttribute()">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{oDeficiencyAttributes.oDescriptionTags.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{oDeficiencyAttributes.oDescriptionTags.sValue}}
+				</label>
+			</div>
+			</button>	
+
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onLocationTagsAttribute()">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{oDeficiencyAttributes.oLocationTags.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{oDeficiencyAttributes.oLocationTags.sValue}}
+				</label>
+			</div>
+			</button>	
+
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onContractorsAttribute()">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{oDeficiencyAttributes.oContractors.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{oDeficiencyAttributes.oContractors.sValue}}
+				</label>
+			</div>
+			</button>	
+
+			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onImagesAttribute()">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription">
+					{{oDeficiencyAttributes.oImages.sDescription}}:
+				</div>
+				<label class="cnpMobileItemValue">
+					{{oDeficiencyAttributes.oImages.sValue}}
+				</label>
+			</div>
+			</button>														
+
+<!-- 		<div ng-repeat="attribute in aDeficiencyAttributes">
 			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onOpenSideNav(attribute)">
 			<div layout="column" layout-align="center start">
 				<div class="cnpMobileItemDescription">
@@ -23,7 +122,7 @@
 				</label>
 			</div>
 			</button>
-		</div>
+		</div> -->
 		<div layout="column" layout-align="start center">
 			<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton cnpInputIcon cnpSaveIconWhiteMobile notSelectable" ng-click="onSave()">
 			{{'global_mobileSave' | translate}}
@@ -43,7 +142,7 @@
 	<h1 class="md-toolbar-tools">{{sSideNavHeader}}</h1>
 	</md-toolbar>
 	
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 0">
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oPhase.sDescription">
 		<div layout="column">
 			<section ng-repeat="project in aProjectsWithPhases">
 				<md-subheader class="md-primary">{{project.sProjectName}}</md-subheader>
@@ -58,7 +157,7 @@
 			</section>
 		</div>
 	</div>
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 1">
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oUnit.sDescription">
 		<div layout="column">
 			<md-list layout="column">
 			<md-item ng-repeat="unit in aUnits" ng-click="onSelectUnit(unit)">
@@ -70,7 +169,7 @@
 			</md-list>
 		</div>
 	</div>
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 2">
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oStatus.sDescription">
 		<div layout="column">
 			<md-list layout="column">
 			<md-item ng-repeat="status in aStatuses" ng-click="onSelectStatus(status)">
@@ -84,7 +183,7 @@
 		</div>
 	</div>
 
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 3">
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oPriority.sDescription">
 		<div layout="column">
 			<md-list layout="column">
 			<md-item ng-repeat="priority in aPriorities" ng-click="onSelectPriority(priority)">
@@ -97,7 +196,7 @@
 		</div>
 	</div>
 
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 4">
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oUser.sDescription">
 		<div layout="column">
 			<md-list layout="column">
 			<md-item ng-repeat="user in aUsers" ng-click="onSelectUser(user)">
@@ -110,7 +209,7 @@
 		</div>
 	</div>
 
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 5">
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oDescriptionTags.sDescription">
 		<div layout="column">
 			<tags-input
 			ng-model="aDescriptionTags"
@@ -119,7 +218,7 @@
 			</tags-input>
 		</div>
 	</div>
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 6">
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oLocationTags.sDescription">
 		<div layout="column">
 			<tags-input
 			ng-model="aLocationTags"
@@ -128,7 +227,7 @@
 			</tags-input>
 		</div>
 	</div>
-	<div layout="row" layout-align="start start" ng-if="iCurrentAttibuteIndex === 7">
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oContractors.sDescription">
 		<div layout="column">
 			<md-list layout="column">
 			<md-item ng-repeat="contractor in aContractors" ng-click="onSelectContractor(contractor)">
