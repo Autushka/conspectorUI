@@ -284,24 +284,49 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 				var uploadFiles = $.proxy(function(sFileMetadataSetGuid) {
 					var iCounter = 0; //needed because files are sent async
+					if (!oParameters.sParentEntityGuid) {
+						oParameters.sParentEntityGuid = "quickAddApp";
+					}
+
+
 					for (var i = 0; i < oParameters.aFiles.length; i++) {
 						var file = oParameters.aFiles[i];
 						var sPath = this.costructUploadUrl({
 							sPath: CONSTANTS.sAppAbsolutePath + "rest/file/createUploadUrlWithFileMetadataSetGuid/Deficiency/" + oParameters.sParentEntityGuid + "/_attachments_/" + sFileMetadataSetGuid,
 						});
-						var oUpload = $upload.upload({
-							url: sPath,
-							file: file,
-						});
 
-						oUpload.success(function() {
-							iCounter++;
-							if (iCounter === (oParameters.aFiles.length)) {
-								// console.log("Total images: " + oParameters.aFiles.length);
-								// console.log("Updated for Index: " + iCounter);
-								oUpload.success(oParameters.onSuccess);
-							}
-						});
+						var oUpload = {};
+						if (oParameters.sParentEntityGuid === "quickAddApp") {
+							//$rootScope.$emit('LOAD');
+
+							$.ajax({
+								url: sPath,
+								data: file,
+								cache: false,
+								contentType: false,
+								processData: false,
+								type: 'POST',
+								success: function(data) {
+									//$rootScope.$emit('UNLOAD');		        
+									iCounter++;
+									if (iCounter === (oParameters.aFiles.length)) {
+										oParameters.onSuccess();
+									}
+								}
+							});
+						} else {
+							oUpload = $upload.upload({
+								url: sPath,
+								file: file,
+							});
+
+							oUpload.success(function() {
+								iCounter++;
+								if (iCounter === (oParameters.aFiles.length)) {
+									oParameters.onSuccess();
+								}
+							});
+						}
 					}
 				}, this);
 

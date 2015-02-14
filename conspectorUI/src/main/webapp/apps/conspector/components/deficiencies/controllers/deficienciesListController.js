@@ -125,9 +125,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				}
 
 				if(aData[i].FileMetadataSetDetails){
-					if(aData[i].FileMetadataSetDetails.AttachmentsNumber){// to display default 0
-						iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
-					}					
+					// if(aData[i].FileMetadataSetDetails.AttachmentsNumber){// to display default 0
+					// 	iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
+					// }					
 					sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
 					if(aData[i].FileMetadataSetDetails.FileMetadataDetails){
 						for (var j = 0; j < aData[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
@@ -137,6 +137,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 							}
 						}
 					}
+					iImagesNumber = aImages.length;
 				}
 				
 				if (aData[i].DueDate && aData[i].DueDate != "/Date(0)/") {

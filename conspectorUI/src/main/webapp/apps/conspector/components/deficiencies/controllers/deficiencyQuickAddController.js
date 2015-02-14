@@ -19,6 +19,8 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			servicesProvider.logOut();
 		};
 
+		$scope.iImagesValue = 0;
+
 		$scope.iCurrentAttibuteIndex = 0;
 
 		$scope.aProjectsWithPhases = [];
@@ -79,7 +81,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			},
 			oImages: {
 				sDescription: $translate.instant('global_images'), //"Photos",
-				iValue: 0,
+				//iValue: 0,
 				bIsSelectionUnabled: true,
 			},
 		};
@@ -186,33 +188,46 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
 		var onAddImage = function() {
 			var options = {
-				quality: 50,
+				quality: 80,
 				destinationType: Camera.DestinationType.DATA_URL,
 				sourceType: Camera.PictureSourceType.CAMERA,
 				allowEdit: true,
 				encodingType: Camera.EncodingType.JPEG,
-				targetWidth: 100,
-				targetHeight: 100,
+				targetWidth: 500,
+				targetHeight: 500,
 				popoverOptions: CameraPopoverOptions,
 				saveToPhotoAlbum: false
 			};
 
 			$cordovaCamera.getPicture(options).then(function(imageData) {
-				var onSuccessUpload = function(){
-					$scope.oDeficiencyAttributes.oImages.iValue++;
-					alert("Yo!");
+				var onSuccessUpload = function() {
+					//$rootScope.$emit('UNLOAD');				
+					//$scope.oDeficiencyAttributes.oImages.iValue++;
+					$scope.iImagesValue++;
+					alert("2*Yo!");
+
 				}
+				imageData = "data:image/jpeg;base64," + imageData; //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
+
+			    var byteString = atob(imageData.split(',')[1]);
+			    var ab = new ArrayBuffer(byteString.length);
+			    var ia = new Uint8Array(ab);
+			    for (var i = 0; i < byteString.length; i++) {
+			        ia[i] = byteString.charCodeAt(i);
+			    }
+
+				var oBlob = new Blob([ab], { type: 'image/jpeg' });
+
+				var formData = new FormData();
+     			formData.append('blob', oBlob, "quickAddAttachment");
 
 				servicesProvider.uploadAttachmentsForEntity({
 					sPath: "Tasks",
-					aFiles: [imageData],
+					aFiles: [formData],
 					sParentEntityGuid: "",
-					sParentEntityFileMetadataSetGuid: "",
+					sParentEntityFileMetadataSetGuid: $rootScope.sFileMetadataSetGuid,
 					onSuccess: onSuccessUpload
 				});
-				// var image = document.getElementById('myImage');
-				// image.src = "data:image/jpeg;base64," + imageData;
-				//alert("Yo!");
 			}, function(err) {
 				// error
 			});
@@ -546,7 +561,22 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 		};
 
 		$scope.onSave = function() {
-			var onSuccessCreation = function() {};
+			var onSuccessCreation = function() {
+				$rootScope.sFileMetadataSetGuid = "";
+
+				$scope.oDeficiencyAttributes.oDescriptionTags.sValue = "...";
+				$scope.aDescriptionTags = [];
+
+				$scope.oDeficiencyAttributes.oLocationTags.sValue = "...";
+				$scope.aLocationTags = [];
+
+				$scope.oDeficiencyAttributes.oContractors.sValue = "...";
+				$scope.aContractors = [];
+
+				$scope.iImagesValue = 0;
+
+				//$scope.oDeficiencyAttributes.oImages.iValue = 0;
+			};
 
 			var oDataForSave = {};
 			if ($scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid) {
