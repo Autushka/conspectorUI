@@ -1709,7 +1709,43 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},			
+			},
+
+			getFileMetadatas: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "FileMetadatas",
+					sExpand: oParameters.sExpand,
+					sFilter: oParameters.sFilter,
+					bShowSpinner: oParameters.bShowSpinner,
+					// oCacheProvider: cacheProvider,
+					// sCacheProviderAttribute: "oFileMetadataEntity"
+				});
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc); // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},					
+
+			updateFileMetadata: function(oParameters) {
+				var onSuccess = function(oData) {
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "FileMetadatas",
+					sKeyAttribute: "Guid", 
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bIgnoreLastModifiedAtValidation: true
+				});
+
+				oSvc.then(onSuccess);
+			},					
 
 			getEntityAttachments: function(oParameters) {
 				var svc = dataProvider.getEntity({
@@ -1751,15 +1787,15 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			generateReport: function(oParameters) {
-				var oData = {
-					reportId: "DocxProjectWithVelocityList.docx",
-					fileGuid: "d38da805-e027-464a-b098-7926c86209cd",
-					converter: "",
-					processState: "generated",
-					dispatch: "download",
-					entryName: ""
-				};
-				$.download('/conspector/xdocReportsService', oData, "post");
+				// var oData = {
+				// 	reportId: "DocxProjectWithVelocityList.docx",
+				// 	fileGuid: "d38da805-e027-464a-b098-7926c86209cd",
+				// 	converter: "",
+				// 	processState: "generated",
+				// 	dispatch: "download",
+				// 	entryName: ""
+				// };
+				$.download('/conspector/xdocReportsService', oParameters.oReportParameters, "post");
 			}
 		}
 	}

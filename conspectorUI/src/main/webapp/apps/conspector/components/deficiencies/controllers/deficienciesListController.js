@@ -120,28 +120,28 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					}
 				}
 
-				if(aData[i].UnitDetails){
+				if (aData[i].UnitDetails) {
 					aData[i].sUnitName = aData[i].UnitDetails.Name;
 				}
 
-				if(aData[i].FileMetadataSetDetails){					
+				if (aData[i].FileMetadataSetDetails) {
 					sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
-					if(aData[i].FileMetadataSetDetails.FileMetadataDetails){
+					if (aData[i].FileMetadataSetDetails.FileMetadataDetails) {
 						for (var j = 0; j < aData[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
-							if(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false){
+							if (aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false) {
 								aImages.push(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
 							}
 						}
 					}
 					iImagesNumber = aImages.length;
 				}
-				
+
 				if (aData[i].DueDate && aData[i].DueDate != "/Date(0)/") {
 					sDueDate = utilsProvider.dBDateToSting(aData[i].DueDate);
 					dDueDate = new Date(parseInt(aData[i].DueDate.substring(6, aData[i].DueDate.length - 2)));
 					var timeDiff = Math.abs(dCurrentDate.getTime() - dDueDate.getTime());
 					durationNumber = Math.ceil(timeDiff / (1000 * 3600 * 24)) - 1;
-					sDueIn  = $translate.use() === "en" ? durationNumber + "d" : durationNumber + "j";;
+					sDueIn = $translate.use() === "en" ? durationNumber + "d" : durationNumber + "j";;
 					// sDueIn = durationNumber + " d";					
 				}
 
@@ -188,7 +188,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
 		$scope.onEdit = function(oDeficiency) {
 			$rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
-			$rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;			
+			$rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
 			$state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
 				sMode: "edit",
 				sDeficiencyGuid: oDeficiency._guid,
@@ -203,12 +203,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		};
 		$scope.onNavigateToUnitDetails = function(oDeficiency) {
 
-            var sUnitGuid = oDeficiency._unitGuid;
-           	$state.go('app.unitDetailsWrapper.unitDetails', {
-                        sMode: "display",
-                        sUnitGuid: sUnitGuid,
-                    });
-        };
+			var sUnitGuid = oDeficiency._unitGuid;
+			$state.go('app.unitDetailsWrapper.unitDetails', {
+				sMode: "display",
+				sUnitGuid: sUnitGuid,
+			});
+		};
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
 			loadDeficiencies();
 		});
@@ -217,11 +217,35 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			loadDeficiencies();
 		});
 
-		$scope.onDisplayPhotoGallery = function(oDeficiency, oEvent){
+		$scope.onDisplayPhotoGallery = function(oDeficiency, oEvent) {
 			oEvent.stopPropagation();
-			if(oDeficiency._aImages.length){
+			if (oDeficiency._aImages.length) {
 				servicesProvider.setUpPhotoGallery(oDeficiency._aImages);
-			}			
+			}
+		};
+
+		var onReportTemplateLoaded = function(aData) {
+			if (aData.length === 1) {
+				//alert(aData[0].Guid);
+				alert(aData[0].Guid);
+				apiProvider.generateReport({
+					oReportParameters: {
+						reportId: "deficienciesList",
+						fileGuid: aData[0].Guid,
+						converter: "",
+						processState: "generated",
+						dispatch: "download",
+						entryName: ""
+					}
+				});
+			}
+		};
+
+		$scope.onReports = function() {
+			apiProvider.getFileMetadatas({
+				sFilter: "CatalogId eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and DescriptionEN eq 'deficienciesList'",
+				onSuccess: onReportTemplateLoaded
+			});
 		};
 
 		$scope.$on("$destroy", function() {
@@ -233,7 +257,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				sStateName: $rootScope.sCurrentStateName,
 				oStateParams: $rootScope.oStateParams
 			});
-			
+
 			cacheProvider.putTableStatusToCache({
 				sTableName: "deficienciesList",
 				sStateName: $rootScope.sCurrentStateName,

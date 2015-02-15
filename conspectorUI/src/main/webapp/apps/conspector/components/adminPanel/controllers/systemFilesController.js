@@ -1,4 +1,4 @@
-viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$upload', '$window', 'cacheProvider', 'historyProvider',
+viewControllers.controller('systemFilesView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'ngTableParams', '$filter', 'apiProvider', '$translate', '$upload', '$window', 'cacheProvider', 'historyProvider',
 	function($scope, $rootScope, $state, servicesProvider, ngTableParams, $filter, apiProvider, $translate, $upload, $window, cacheProvider, historyProvider) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button				
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
@@ -10,6 +10,10 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 
 			aData: []
 		};
 		var oActivityTypesListData = {
+			aData: []
+		};
+
+		var oReportsTemplatesListData = {
 			aData: []
 		};
 
@@ -28,51 +32,57 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 
 			sDisplayedDataArrayName: "aDisplayedActivityTypes",
 		});
 
+		$scope.reportsTemplatesTableParams = servicesProvider.createNgTable({
+			oInitialDataArrayWrapper: oReportsTemplatesListData,
+			sDisplayedDataArrayName: "aDisplayedReportsTemplates",
+		});
 
-		var onImgsLoaded = function(aData, aAppendTo, oTableToReload) {
+		var onFilesLoaded = function(aData, aAppendTo, oTableToReload) {
 			for (var i = 0; i < aData.length; i++) {
-				var oImg = {};
-				oImg.sUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].guid;
-				oImg._createMode = false;
-				oImg._editMode = false;
-				oImg._guid = aData[i].guid;
-				aAppendTo.push(oImg);
+				var oFile = {};
+				oFile.sUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].guid;
+				oFile.sDescriptionEN = aData[i].descriptionEN;
+				oFile.sDescriptionFR = aData[i].descriptionFR;
+				oFile._createMode = false;
+				oFile._editMode = false;
+				oFile._guid = aData[i].guid;
+				aAppendTo.push(oFile);
 			}
 			oTableToReload.reload();
 		};
 
-		var onAddNewImg = function(aAppendTo, oTableToReload) {
-			var oImg = {};
-			oImg._createMode = true;
-			oImg._editMode = true;
-			aAppendTo.push(oImg);
+		var onAddNewFile = function(aAppendTo, oTableToReload) {
+			var oFile = {};
+			oFile._createMode = true;
+			oFile._editMode = false;
+			aAppendTo.push(oFile);
 			oTableToReload.reload();
 		};
 
-		$scope.onEditImg = function(oImg) {
-			oImg._editMode = true;
+		$scope.onEdit = function(oItem) {
+			oItem._editMode = true;
 		};
 
-		var onDeleteImg = function(aRemoveFrom, oTableToReload, oImg, iIndex) {
-			if (oImg._guid) {
-				servicesProvider.deleteFileAttachment(oImg._guid);
+		var onDeleteFile = function(aRemoveFrom, oTableToReload, oFile, iIndex) {
+			if (oFile._guid) {
+				servicesProvider.deleteFileAttachment(oFile._guid);
 			}
 
 			aRemoveFrom.splice(iIndex, 1);
 			oTableToReload.reload();
 		};
 
-		var onCancelImg = function(aRemoveFrom, oTableToReload, oImg, iIndex) {
-			if (!oImg._guid) {
-				onDeleteImg(aRemoveFrom, oTableToReload, oImg, iIndex);
+		var onSave = function(aRemoveFrom, oTableToReload, oFile, iIndex) {
+			if (!oFile._guid) {
+				onDeleteFile(aRemoveFrom, oTableToReload, oFile, iIndex);
 			}
-			oImg._editMode = false;
-			oImg._createMode = false;
+			oFile._editMode = false;
+			oFile._createMode = false;
 		};
 
-		var onImgSelected = function(aImgFiles, sPath, aUpdateAt, $event, iIndex) {
-			for (var i = 0; i < aImgFiles.length; i++) {
-				var file = aImgFiles[i];
+		var onFileSelected = function(aFiles, sPath, aUpdateAt, $event, iIndex) {
+			for (var i = 0; i < aFiles.length; i++) {
+				var file = aFiles[i];
 				var sPath = servicesProvider.costructUploadUrl({
 					sPath: sPath
 				});
@@ -87,18 +97,22 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 
 					aUpdateAt[iIndex]._guid = sData;
 				});
 			}
-		};		
+		};
 
 		onLogoImgsLoaded = function(aData) {
-			onImgsLoaded(aData, oLogosListData.aData, $scope.logosTableParams)
+			onFilesLoaded(aData, oLogosListData.aData, $scope.logosTableParams);
 		};
 
 		onDeficienciesStatusesImgsLoaded = function(aData) {
-			onImgsLoaded(aData, oDeficiencyStatusesListData.aData, $scope.deficiencyStatusesTableParams)
-		};		
+			onFilesLoaded(aData, oDeficiencyStatusesListData.aData, $scope.deficiencyStatusesTableParams);
+		};
 
 		onActivitiesTypesImgsLoaded = function(aData) {
-			onImgsLoaded(aData, oActivityTypesListData.aData, $scope.activityTypesTableParams)
+			onFilesLoaded(aData, oActivityTypesListData.aData, $scope.activityTypesTableParams);
+		};
+
+		onReportsTemplatesLoaded = function(aData) {
+			onFilesLoaded(aData, oReportsTemplatesListData.aData, $scope.reportsTemplatesTableParams);
 		};
 
 		apiProvider.getAttachments({
@@ -107,61 +121,96 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope','$state', 
 		});
 
 		apiProvider.getAttachments({
-			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_", 
+			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_",
 			onSuccess: onDeficienciesStatusesImgsLoaded
-		});		
+		});
 
 		apiProvider.getAttachments({
-			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_", 
+			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_",
 			onSuccess: onActivitiesTypesImgsLoaded
-		});	
+		});
+
+		apiProvider.getAttachments({
+			sPath: "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_reportsTemplates_",
+			onSuccess: onReportsTemplatesLoaded
+		});
 
 		$scope.onAddNewLogo = function() {
-			onAddNewImg(oLogosListData.aData, $scope.logosTableParams);
+			onAddNewFile(oLogosListData.aData, $scope.logosTableParams);
 		};
 
-		$scope.onDeleteLogo = function(oLogo, iIndex) {
-			onDeleteImg(oLogosListData.aData, $scope.logosTableParams, oLogo, iIndex);
+		$scope.onDeleteLogo = function(oItem, iIndex) {
+			onDeleteFile(oLogosListData.aData, $scope.logosTableParams, oItem, iIndex);
 		};
 
-		$scope.onCancelLogo = function(oLogo, iIndex) {
-			onCancelImg(oLogosListData.aData, $scope.logosTableParams, oLogo, iIndex);
+		$scope.onSaveLogo = function(oItem, iIndex) {
+			onSave(oLogosListData.aData, $scope.logosTableParams, oItem, iIndex);
 		};
 
 		$scope.onLogoSelected = function(aFiles, $event, iIndex) {
-			onImgSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_", oLogosListData.aData,  $event, iIndex);
+			onFileSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_", oLogosListData.aData, $event, iIndex);
 		};
 
 		$scope.onAddNewDeficiencyStatus = function() {
-			onAddNewImg(oDeficiencyStatusesListData.aData, $scope.deficiencyStatusesTableParams);
+			onAddNewFile(oDeficiencyStatusesListData.aData, $scope.deficiencyStatusesTableParams);
 		};
 
-		$scope.onDeleteDeficiencyStatus = function(oLogo, iIndex) {
-			onDeleteImg(oDeficiencyStatusesListData.aData, $scope.deficiencyStatusesTableParams, oLogo, iIndex);
+		$scope.onDeleteDeficiencyStatus = function(oItem, iIndex) {
+			onDeleteFile(oDeficiencyStatusesListData.aData, $scope.deficiencyStatusesTableParams, oItem, iIndex);
 		};
 
-		$scope.onCancelDeficiencyStatus = function(oLogo, iIndex) {
-			onCancelImg(oDeficiencyStatusesListData.aData, $scope.deficiencyStatusesTableParams, oLogo, iIndex);
+		$scope.onSaveDeficiencyStatus = function(oItem, iIndex) {
+			onSave(oDeficiencyStatusesListData.aData, $scope.deficiencyStatusesTableParams, oItem, iIndex);
 		};
 
 		$scope.onDeficiencyStatusSelected = function(aFiles, $event, iIndex) {
-			onImgSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_", oDeficiencyStatusesListData.aData,  $event, iIndex);
+			onFileSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_", oDeficiencyStatusesListData.aData, $event, iIndex);
 		};
 
 		$scope.onAddNewActivityType = function() {
-			onAddNewImg(oActivityTypesListData.aData, $scope.activityTypesTableParams);
+			onAddNewFile(oActivityTypesListData.aData, $scope.activityTypesTableParams);
 		};
 
-		$scope.onDeleteActivityType = function(oLogo, iIndex) {
-			onDeleteImg(oActivityTypesListData.aData, $scope.activityTypesTableParams, oLogo, iIndex);
+		$scope.onDeleteActivityType = function(oItem, iIndex) {
+			onDeleteFile(oActivityTypesListData.aData, $scope.activityTypesTableParams, oItem, iIndex);
 		};
 
-		$scope.onCancelActivityType = function(oLogo, iIndex) {
-			onCancelImg(oActivityTypesListData.aData, $scope.activityTypesTableParams, oLogo, iIndex);
+		$scope.onSaveActivityType = function(oItem, iIndex) {
+			onSave(oActivityTypesListData.aData, $scope.activityTypesTableParams, oItem, iIndex);
 		};
 
 		$scope.onActivityTypeSelected = function(aFiles, $event, iIndex) {
-			onImgSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_", oActivityTypesListData.aData,  $event, iIndex);
-		};			
+			onFileSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_", oActivityTypesListData.aData, $event, iIndex);
+		};
+
+		$scope.onAddNewReportTemplate = function() {
+			onAddNewFile(oReportsTemplatesListData.aData, $scope.reportsTemplatesTableParams);
+		};
+
+		$scope.onDeleteReportTemplate = function(oItem, iIndex) {
+			onDeleteFile(oReportsTemplatesListData.aData, $scope.reportsTemplatesTableParams, oItem, iIndex);
+		};
+
+		$scope.onSaveReportTemplate = function(oItem, iIndex) {
+			onSave(oReportsTemplatesListData.aData, $scope.reportsTemplatesTableParams, oItem, iIndex);
+
+			if (oItem._guid) {
+				apiProvider.updateFileMetadata({
+					sKey: oItem._guid,
+					oData: {
+						Guid: oItem._guid,
+						DescriptionEN: oItem.sDescriptionEN,
+						DescriptionFR: oItem.sDescriptionFR
+					},
+					bShowSpinner: true,
+					bShowSuccessMessage: true,
+					bShowErrorMessage: true
+				});
+			}
+		};
+
+		$scope.onReportTemplateSelected = function(aFiles, $event, iIndex) {
+			onFileSelected(aFiles, "rest/file/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_reportsTemplates_", oReportsTemplatesListData.aData, $event, iIndex);
+		};
 	}
 ]);

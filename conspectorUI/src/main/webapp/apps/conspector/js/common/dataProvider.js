@@ -347,6 +347,10 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					var oDataForUpdate = {};
 					oDataForUpdate = angular.copy(oParameters.oData);
 
+					if(oParameters.bIgnoreLastModifiedAtValidation){// needed i.e. for fileMetadata (when rest api are used to create an item...)
+						oDataForUpdate.LastModifiedAt = oData.LastModifiedAt;
+					}
+
 					if (oData.LastModifiedAt === oDataForUpdate.LastModifiedAt) {
 						oDataForUpdate.LastModifiedAt = utilsProvider.dateToDBDate(new Date());
 
