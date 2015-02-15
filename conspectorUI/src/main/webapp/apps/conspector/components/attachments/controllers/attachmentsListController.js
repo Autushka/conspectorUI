@@ -1,30 +1,27 @@
 viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$upload', 'utilsProvider',
 	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload, utilsProvider) {
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
-		// $rootScope.oStateParams = {}; 
-		// for backNavigation	
+
 		var sEntityType = "";
 		var sEntitySPath = "";
 		var oEntity = "";
-		switch($rootScope.sCurrentStateName){
-					case "app.deficiencyDetailsWrapper.deficiencyDetails":
-						sEntityType = "Deficiency";
-						sEntitySPath = "Tasks";
-						oEntity = "oDeficiencyEntity";
-						break;
-					case "app.activityDetailsWrapper.activityDetails":
-						sEntityType = "Activity";
-						sEntitySPath = "Activitys";
-						oEntity = "oActivityEntity";
-						break;
-					case "app.unitDetailsWrapper.unitDetails":
-						sEntityType = "Unit";
-						sEntitySPath = "Units";
-						oEntity = "oUnitEntity";
-						break;
-				}
-
-		var bUpdateImagesNumber = false;
+		switch ($rootScope.sCurrentStateName) {
+			case "app.deficiencyDetailsWrapper.deficiencyDetails":
+				sEntityType = "Deficiency";
+				sEntitySPath = "Tasks";
+				oEntity = "oDeficiencyEntity";
+				break;
+			case "app.activityDetailsWrapper.activityDetails":
+				sEntityType = "Activity";
+				sEntitySPath = "Activitys";
+				oEntity = "oActivityEntity";
+				break;
+			case "app.unitDetailsWrapper.unitDetails":
+				sEntityType = "Unit";
+				sEntitySPath = "Units";
+				oEntity = "oUnitEntity";
+				break;
+		}
 
 		var oAttachmentsListData = {
 			aData: []
@@ -32,23 +29,20 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 
 		var sParentEntityGuid = "";
 
-		$scope.clickUploadButton = function(){
+		$scope.clickUploadButton = function() {
 			angular.element('#uploadFilesToDeficiency').trigger('click');
 		}
 
 		if ($stateParams.sDeficiencyGuid) {
 			sParentEntityGuid = $stateParams.sDeficiencyGuid;
-			//sParentEntityFileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
 		}
-		
+
 		if ($stateParams.sActivityGuid) {
 			sParentEntityGuid = $stateParams.sActivityGuid;
-			//sParentEntityFileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
 		}
-		
+
 		if ($stateParams.sUnitGuid) {
 			sParentEntityGuid = $stateParams.sUnitGuid;
-			//sParentEntityFileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
 		}
 
 		$scope.tableParams = servicesProvider.createNgTable({
@@ -62,23 +56,6 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			sGroupBy: "sMediaType",
 			sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
 		});
-
-		var updateAttachmentsNumber = function(iImagesNumber) {
-			var onSuccessUpdate = function(oData) {
-				$rootScope.sFileMetadataSetLastModifiedAt = oData.LastModifiedAt;
-				cacheProvider.cleanEntitiesCache(oEntity);
-		};
-
-			apiProvider.updateFileMetadataSet({
-				sKey: $rootScope.sFileMetadataSetGuid,
-				oData: {
-					Guid: $rootScope.sFileMetadataSetGuid,
-					AttachmentsNumber: iImagesNumber,
-					LastModifiedAt: $rootScope.sFileMetadataSetLastModifiedAt,
-				},
-				onSuccess: onSuccessUpdate
-			});
-		};
 
 		var onAttachmentsLoaded = function(oData) {
 			var sMediaType = "";
@@ -107,9 +84,6 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				});
 			}
 			$scope.tableParams.reload();
-			if (bUpdateImagesNumber) {
-				updateAttachmentsNumber(iImagesNumber);
-			}
 		};
 
 		var loadAttachments = function() {
@@ -130,10 +104,10 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 
 		$scope.onFilesSelected = function(aFiles, $event) {
 			var onSuccessUpload = function() { //called once for the last uploaded file
-				bUpdateImagesNumber = true;
+				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
 				loadAttachments();
 			};
-			
+
 			servicesProvider.uploadAttachmentsForEntity({
 				sPath: sEntitySPath,
 				aFiles: aFiles,
@@ -152,10 +126,9 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				GeneralAttributes: {
 					IsDeleted: true
 				},
-				//LastModifiedAt
 			};
 			var onSuccessDelete = function() {
-				bUpdateImagesNumber = true;
+				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
 				loadAttachments();
 			}
 

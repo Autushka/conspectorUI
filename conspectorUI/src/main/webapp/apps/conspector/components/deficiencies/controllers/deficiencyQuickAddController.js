@@ -19,10 +19,6 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			servicesProvider.logOut();
 		};
 
-		$scope.iImagesValue = 0;
-
-		$scope.iCurrentAttibuteIndex = 0;
-
 		$scope.aProjectsWithPhases = [];
 		var bPhaseWasSelected = false;
 		$scope.aUnits = [];
@@ -81,7 +77,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			},
 			oImages: {
 				sDescription: $translate.instant('global_images'), //"Photos",
-				//iValue: 0,
+				iValue: 0,
 				bIsSelectionUnabled: true,
 			},
 		};
@@ -201,11 +197,10 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
 			$cordovaCamera.getPicture(options).then(function(imageData) {
 				var onSuccessUpload = function() {
-					//$rootScope.$emit('UNLOAD');				
-					//$scope.oDeficiencyAttributes.oImages.iValue++;
-					$scope.iImagesValue++;
-					alert("2*Yo!");
-
+					$scope.$apply(function(){
+						$rootScope.$emit('UNLOAD');				
+						$scope.oDeficiencyAttributes.oImages.iValue++;				
+					});
 				}
 				imageData = "data:image/jpeg;base64," + imageData; //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
 
@@ -572,10 +567,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
 				$scope.oDeficiencyAttributes.oContractors.sValue = "...";
 				$scope.aContractors = [];
-
-				$scope.iImagesValue = 0;
-
-				//$scope.oDeficiencyAttributes.oImages.iValue = 0;
+				$scope.oDeficiencyAttributes.oImages.iValue = 0;
 			};
 
 			var oDataForSave = {};

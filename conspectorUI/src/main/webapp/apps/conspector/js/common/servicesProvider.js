@@ -297,7 +297,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 						var oUpload = {};
 						if (oParameters.sParentEntityGuid === "quickAddApp") {
-							//$rootScope.$emit('LOAD');
+							$rootScope.$emit('LOAD');
 
 							$.ajax({
 								url: sPath,
@@ -306,8 +306,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 								contentType: false,
 								processData: false,
 								type: 'POST',
-								success: function(data) {
-									//$rootScope.$emit('UNLOAD');		        
+								success: function(data) {		        
 									iCounter++;
 									if (iCounter === (oParameters.aFiles.length)) {
 										oParameters.onSuccess();

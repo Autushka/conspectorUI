@@ -41,10 +41,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			$scope.$parent.bDisplayAttachmentsList = true;
 		}
 		
-		$scope.oDeficiency = {
-			//aDescriptionTags: [],
-			//_aPhases: [],
-		};
+		$scope.oDeficiency = {};
 
 		var oDeficiencyWrapper = {
 			aData: [{

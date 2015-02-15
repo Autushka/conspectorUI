@@ -124,14 +124,10 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					aData[i].sUnitName = aData[i].UnitDetails.Name;
 				}
 
-				if(aData[i].FileMetadataSetDetails){
-					// if(aData[i].FileMetadataSetDetails.AttachmentsNumber){// to display default 0
-					// 	iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
-					// }					
+				if(aData[i].FileMetadataSetDetails){					
 					sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
 					if(aData[i].FileMetadataSetDetails.FileMetadataDetails){
 						for (var j = 0; j < aData[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
-							//Things[i]
 							if(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false){
 								aImages.push(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
 							}
@@ -148,21 +144,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					sDueIn  = $translate.use() === "en" ? durationNumber + "d" : durationNumber + "j";;
 					// sDueIn = durationNumber + " d";					
 				}
-				//$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].guid;
-
-				// if (!bMatchFound) {
-				// 	continue;
-				// }
-				//aData[i].PhaseDetails._sortingSequence = 
-
-				// sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
-				// if (!sProjectName) {
-				// 	sProjectName = aData[i].PhaseDetails.results[j].ProjectDetails.NameEN;
-				// }
-				// sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].NameEN : aData[i].PhaseDetails.results[j].NameFR;
-				// if (!sPhaseName) {
-				// 	sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
-				// }
 
 				oDeficienciesListData.aData.push({
 					_guid: aData[i].Guid,
@@ -181,9 +162,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					iImagesNumber: iImagesNumber,
 					_aImages: aImages,
 				});
-				// }
-
-
 			}
 			$scope.tableParams.reload();
 		};
