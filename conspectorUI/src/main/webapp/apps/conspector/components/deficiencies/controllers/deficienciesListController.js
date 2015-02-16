@@ -1,5 +1,5 @@
-viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
-	function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
+viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
+	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
@@ -17,6 +17,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = {}; // for backNavigation	
+
+		// var sUnitGuid = "";
+
+  //       if ($stateParams.sUnitsGuid) {
+  //           sUnitGuid = $stateParams.sUnitsGuid;
+  //       }
 
 		var oDeficienciesListData = {
 			aData: []
@@ -209,12 +215,22 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		};	
 
 		$scope.onNavigateToUnitDetails = function(oDeficiency) {
-
-			var sUnitGuid = oDeficiency._unitGuid;
 			$state.go('app.unitDetailsWrapper.unitDetails', {
 				sMode: "display",
 				sUnitGuid: sUnitGuid,
 			});
+
+			// var sUnitGuid = oDeficiency._accountGuid;
+   //          var sUnitName = oDeficiency._accountTypeName;
+
+   //          switch (sUnitName) {
+   //              case "Unit":
+   //                  $state.go('app.unitDetailsWrapper.unitDetails', {
+			// 			sMode: "display",
+			// 			sUnitGuid: sUnitGuid,
+			// 		});
+   //                  break;
+   //          }
 		};
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
 			loadDeficiencies();
@@ -256,15 +272,15 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		};
 
 		$scope.$on("$destroy", function() {
-			if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
-				return;
-			}
-
-			historyProvider.addStateToHistory({
-				sStateName: $rootScope.sCurrentStateName,
-				oStateParams: $rootScope.oStateParams
-			});
-
+			//if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
+				if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
+					return;
+				}
+				historyProvider.addStateToHistory({
+					sStateName: $rootScope.sCurrentStateName,
+					oStateParams: $rootScope.oStateParams
+				});
+			//}
 			cacheProvider.putTableStatusToCache({
 				sTableName: "deficienciesList",
 				sStateName: $rootScope.sCurrentStateName,

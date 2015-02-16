@@ -163,7 +163,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 				'attachmentsList': {
 					templateUrl: 'apps/conspector/components/attachments/templates/attachmentsListView.html',
 					controller: 'attachmentsListView'
-				},					
+				},	
+				'unitDeficiencies': {
+					templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListView.html',
+					controller: 'deficienciesListView'
+				},				
 			}
 		});	
 
