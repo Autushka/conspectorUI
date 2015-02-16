@@ -617,7 +617,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 				oDataForSave.AssignedUser = $scope.aSelectedUser[0].UserName;
 			}
 
-			if($scope.oActivity.dDueDate){
+			if($scope.oActivity.dDueDate == false && $scope.oActivity.dDueDate != "/Date(0)/"){
             	oDataForSave.DueDate = "/Date(" + $scope.oActivity.dDueDate.getTime() + ")/";	
         	}else{
         		oDataForSave.DueDate = "/Date(0)/";
