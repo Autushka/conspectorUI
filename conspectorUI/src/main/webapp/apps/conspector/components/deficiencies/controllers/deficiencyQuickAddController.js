@@ -14,7 +14,8 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 				sType: "error"
 			});
 		}
-
+		$scope.sUnitFilter = "";
+		$scope.sContractorsFilter = "";		
 		servicesProvider.constructLogoUrl();
 
 		$scope.onLogOut = function() {
@@ -97,6 +98,9 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					bTicked: false
 				})
 			}
+			$scope.aFilteredUnits = $filter('filter')($scope.aUnits, {
+				sName: $scope.sUnitFilter
+			});
 		};
 
 		var onStatusesLoaded = function(aData) {
@@ -159,7 +163,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			$scope.aPriorities[0].bTicked = true;
 			$scope.oDeficiencyAttributes["oPriority"].sValue = $scope.aPriorities[0].sName;
 			$scope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid = $scope.aPriorities[0].sGuid;
-			bPriorityWasSelected = true;			
+			bPriorityWasSelected = true;
 		};
 
 		apiProvider.getDeficiencyPriorities({
@@ -182,11 +186,11 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			aData = $filter('orderBy')(aData, ["UserName"]);
 			for (var i = 0; i < aData.length; i++) {
 				bIsTicked = false;
-				if(aData[i].UserName === cacheProvider.oUserProfile.sUserName){
+				if (aData[i].UserName === cacheProvider.oUserProfile.sUserName) {
 					bIsTicked = true;
 					$scope.oDeficiencyAttributes["oUser"].sValue = aData[i].UserName;
-					$scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid = aData[i].UserName;					
-					bUserWasSelected = true;	
+					$scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid = aData[i].UserName;
+					bUserWasSelected = true;
 				}
 
 				$scope.aUsers.push({
@@ -214,6 +218,10 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					bTicked: false,
 				})
 			}
+
+			$scope.aFilteredContractors = $filter('filter')($scope.aContractors, {
+				sName: $scope.sContractorsFilter
+			});			
 		};
 
 		var onAddImage = function() {
@@ -315,6 +323,10 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 						sKey: $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid,
 						onSuccess: onUnitsLoaded
 					});
+				} else {
+					$scope.aFilteredUnits = $filter('filter')($scope.aUnits, {
+						sName: $scope.sUnitFilter
+					});
 				}
 			});
 		};
@@ -382,6 +394,10 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 						sKey: $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid,
 						sExpand: "AccountDetails/AccountTypeDetails",
 						onSuccess: onContractorsLoaded,
+					});
+				}else {
+					$scope.aFilteredContractors = $filter('filter')($scope.aContractors, {
+						sName: $scope.sContractorsFilter
 					});
 				}
 			});
@@ -652,5 +668,19 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 				onSuccess: onSuccessCreation,
 			});
 		};
+
+		$scope.onChangeUnitFilter = function(sFilter) {
+			$scope.sUnitFilter = sFilter;
+			$scope.aFilteredUnits = $filter('filter')($scope.aUnits, {
+				sName: sFilter
+			});
+		};
+
+		$scope.onChangeContractorsFilter = function(sFilter) {
+			$scope.sContractorsFilter = sFilter;
+			$scope.aFilteredContractors = $filter('filter')($scope.aContractors, {
+				sName: sFilter
+			});
+		};		
 	}
 ]);

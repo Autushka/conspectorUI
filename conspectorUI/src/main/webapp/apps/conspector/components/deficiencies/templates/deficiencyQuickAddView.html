@@ -153,8 +153,9 @@
 	</div>
 	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oUnit.sDescription">
 		<div layout="column">
+			<input class="cnpTextInputField cnpTextInputFieldInline" type="text" ng-model="sUnitFilter" ng-change="onChangeUnitFilter(sUnitFilter)"/>			
 			<md-list layout="column">
-			<md-item ng-repeat="unit in aUnits" ng-click="onSelectUnit(unit)">
+			<md-item ng-repeat="unit in aFilteredUnits" ng-click="onSelectUnit(unit)">
 			<md-item-content>
 			<img ng-if="unit.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">
 			<div>{{unit.sName}}</div>
@@ -220,8 +221,9 @@
 	</div>
 	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oContractors.sDescription">
 		<div layout="column">
+			<input class="cnpTextInputField cnpTextInputFieldInline" type="text" ng-model="sContractorsFilter" ng-change="onChangeContractorsFilter(sContractorsFilter)"/>					
 			<md-list layout="column">
-			<md-item ng-repeat="contractor in aContractors" ng-click="onSelectContractor(contractor)">
+			<md-item ng-repeat="contractor in aFilteredContractors" ng-click="onSelectContractor(contractor)">
 			<md-item-content>
 			<img ng-if="contractor.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);">
 			<div>{{contractor.sName}}</div>
