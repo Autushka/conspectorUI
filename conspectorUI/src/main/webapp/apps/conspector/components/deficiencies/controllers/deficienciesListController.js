@@ -16,7 +16,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 		});
 
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
-		$rootScope.oStateParams = {}; // for backNavigation			
+		$rootScope.oStateParams = {}; // for backNavigation	
 
 		var oDeficienciesListData = {
 			aData: []
@@ -201,6 +201,13 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 				sDeficiencyGuid: "",
 			});
 		};
+
+		$scope.onClearFiltering = function() {
+			$scope.tableParams.$params.sorting = {};
+			$scope.tableParams.$params.filter = {};
+			$scope.tableParams.reload();
+		};	
+
 		$scope.onNavigateToUnitDetails = function(oDeficiency) {
 
 			var sUnitGuid = oDeficiency._unitGuid;

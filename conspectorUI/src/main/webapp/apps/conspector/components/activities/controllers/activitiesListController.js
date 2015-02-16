@@ -173,6 +173,13 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                 sActivityGuid: "",
             });
         };
+
+        $scope.onClearFiltering = function() {
+            $scope.tableParams.$params.sorting = {};
+            $scope.tableParams.$params.filter = {};
+            $scope.tableParams.reload();
+        };
+
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
             loadActivities();
         });

@@ -155,6 +155,13 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
                 sClientGuid: "",
             });
         };
+
+        $scope.onClearFiltering = function() {
+            $scope.tableParams.$params.sorting = {};
+            $scope.tableParams.$params.filter = {};
+            $scope.tableParams.reload();
+        };
+
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
             loadClients();
         });
