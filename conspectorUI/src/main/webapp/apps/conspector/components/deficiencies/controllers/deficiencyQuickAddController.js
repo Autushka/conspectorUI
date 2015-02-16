@@ -15,6 +15,8 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			});
 		}
 
+		servicesProvider.constructLogoUrl();
+
 		$scope.onLogOut = function() {
 			servicesProvider.logOut();
 		};
