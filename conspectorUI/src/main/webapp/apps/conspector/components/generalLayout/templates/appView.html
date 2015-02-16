@@ -1,4 +1,4 @@
-<div class="cnpAppView" layout="column" layout-align="start center">
+<section class="cnpAppView" layout="column" layout-align="start center">
 	<div class="cnpHeaderBackground" layout="column" layout-align="start center">
 		<div class="cnpHeader" layout="row"  layout-align="space-between center">
 			<div layout="row" layout-align="start center">
@@ -49,7 +49,7 @@
 	</div>
 	<div class="cnpNavBarBackground" layout="column" layout-align="start center">
 		<div class="cnpNavBar">
-			<md-tabs md-selected="selectedTabIndex" md-stretch-tabs='no' md-theme="conspectorColorPaletteNavbar">
+			<md-tabs md-selected="selectedTabIndex" md-no-ink md-stretch-tabs='no' md-theme="conspectorColorPaletteNavbar">
 			<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle | translate}}">
 			</md-tab>
 			</md-tabs>
@@ -62,4 +62,4 @@
 		<!-- Place to put global right sidebar -->
 	</div>
 	
-</div>
+</section>
