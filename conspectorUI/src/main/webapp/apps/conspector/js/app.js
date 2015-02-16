@@ -160,6 +160,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
 					templateUrl: 'apps/conspector/components/units/templates/unitDetailsView.html',
 					controller: 'unitDetailsView'
 				},
+				'attachmentsList': {
+					templateUrl: 'apps/conspector/components/attachments/templates/attachmentsListView.html',
+					controller: 'attachmentsListView'
+				},					
 			}
 		});	
 
