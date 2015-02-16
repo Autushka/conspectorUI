@@ -1,6 +1,9 @@
-app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider', 'servicesProvider', 'PubNub', 'cacheProvider',
-	function($scope, $rootScope, $state, apiProvider, servicesProvider, PubNub, cacheProvider) {
+app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider', 'servicesProvider', 'PubNub', 'cacheProvider', 'CONSTANTS',
+	function($scope, $rootScope, $state, apiProvider, servicesProvider, PubNub, cacheProvider, CONSTANTS) {
 		var sUserName = apiProvider.getCurrentUserName();
+		// if(CONSTANTS.bIsHybridApplication){
+ 	// 		$cordovaStatusbar.overlaysWebView(false);			
+		// }
 
 		if (sUserName) {
 			servicesProvider.onF5WithCurrentUserHandler(sUserName);

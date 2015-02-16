@@ -120,7 +120,16 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
 				})
 			}
+			//initial value
+			$scope.aStatuses[0].bTicked = true;
+			$scope.oDeficiencyAttributes["oStatus"].sValue = $scope.aStatuses[0].sName;
+			$scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid = $scope.aStatuses[0].sGuid;
+			bStatusWasSelected = true;
 		};
+
+		apiProvider.getDeficiencyStatuses({
+			onSuccess: onStatusesLoaded
+		});
 
 		var onPrioritiesLoaded = function(aData) {
 			var sDescription = "";
@@ -144,9 +153,19 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 					bTicked: false,
 				});
 			}
+
+			$scope.aPriorities[0].bTicked = true;
+			$scope.oDeficiencyAttributes["oPriority"].sValue = $scope.aPriorities[0].sName;
+			$scope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid = $scope.aPriorities[0].sGuid;
+			bPriorityWasSelected = true;			
 		};
 
+		apiProvider.getDeficiencyPriorities({
+			onSuccess: onPrioritiesLoaded
+		});
+
 		var onUsersLoaded = function(aData) {
+			var bIsTicked = false;
 			aData = $filter('filter')(aData, function(oItem, iIndex) {
 				var bMatchFound = false;
 				for (var i = 0; i < oItem.CompanyDetails.results.length; i++) {
@@ -160,13 +179,26 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
 			aData = $filter('orderBy')(aData, ["UserName"]);
 			for (var i = 0; i < aData.length; i++) {
+				bIsTicked = false;
+				if(aData[i].UserName === cacheProvider.oUserProfile.sUserName){
+					bIsTicked = true;
+					$scope.oDeficiencyAttributes["oUser"].sValue = aData[i].UserName;
+					$scope.oDeficiencyAttributes["oUser"].sSelectedItemGuid = aData[i].UserName;					
+					bUserWasSelected = true;	
+				}
+
 				$scope.aUsers.push({
 					sGuid: aData[i].UserName,
 					sName: aData[i].UserName,
-					bTicked: false,
+					bTicked: bIsTicked,
 				});
 			}
 		};
+
+		apiProvider.getUsers({
+			sExpand: "CompanyDetails",
+			onSuccess: onUsersLoaded
+		});
 
 		var onContractorsLoaded = function(oData) {
 			oData.AccountDetails.results = $filter('filter')(oData.AccountDetails.results, function(oItem, iIndex) {
@@ -197,24 +229,26 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
 			$cordovaCamera.getPicture(options).then(function(imageData) {
 				var onSuccessUpload = function() {
-					$scope.$apply(function(){
-						$rootScope.$emit('UNLOAD');				
-						$scope.oDeficiencyAttributes.oImages.iValue++;				
+					$scope.$apply(function() {
+						$rootScope.$emit('UNLOAD');
+						$scope.oDeficiencyAttributes.oImages.iValue++;
 					});
 				}
 				imageData = "data:image/jpeg;base64," + imageData; //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
 
-			    var byteString = atob(imageData.split(',')[1]);
-			    var ab = new ArrayBuffer(byteString.length);
-			    var ia = new Uint8Array(ab);
-			    for (var i = 0; i < byteString.length; i++) {
-			        ia[i] = byteString.charCodeAt(i);
-			    }
+				var byteString = atob(imageData.split(',')[1]);
+				var ab = new ArrayBuffer(byteString.length);
+				var ia = new Uint8Array(ab);
+				for (var i = 0; i < byteString.length; i++) {
+					ia[i] = byteString.charCodeAt(i);
+				}
 
-				var oBlob = new Blob([ab], { type: 'image/jpeg' });
+				var oBlob = new Blob([ab], {
+					type: 'image/jpeg'
+				});
 
 				var formData = new FormData();
-     			formData.append('blob', oBlob, "quickAddAttachment");
+				formData.append('blob', oBlob, "quickAddAttachment");
 
 				servicesProvider.uploadAttachmentsForEntity({
 					sPath: "Tasks",
@@ -287,40 +321,40 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oStatus.sDescription;
 			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
-			oSideNav.then(function() {
-				if (!$scope.aStatuses.length) {
-					apiProvider.getDeficiencyStatuses({
-						onSuccess: onStatusesLoaded
-					});
-				}
-			});
+			// oSideNav.then(function() {
+			// 	if (!$scope.aStatuses.length) {
+			// 		apiProvider.getDeficiencyStatuses({
+			// 			onSuccess: onStatusesLoaded
+			// 		});
+			// 	}
+			// });
 		};
 
 		$scope.onPriorityAttribute = function() {
 			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oPriority.sDescription;
 			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
-			oSideNav.then(function() {
-				if (!$scope.aPriorities.length) {
-					apiProvider.getDeficiencyPriorities({
-						onSuccess: onPrioritiesLoaded
-					});
-				}
-			});
+			// oSideNav.then(function() {
+			// 	if (!$scope.aPriorities.length) {
+			// 		apiProvider.getDeficiencyPriorities({
+			// 			onSuccess: onPrioritiesLoaded
+			// 		});
+			// 	}
+			// });
 		};
 
 		$scope.onUserAttribute = function() {
 			$scope.sSideNavHeader = $scope.oDeficiencyAttributes.oUser.sDescription;
 			var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
-			oSideNav.then(function() {
-				if (!$scope.aUsers.length) {
-					apiProvider.getUsers({
-						sExpand: "CompanyDetails",
-						onSuccess: onUsersLoaded
-					});
-				}
-			});
+			// oSideNav.then(function() {
+			// 	if (!$scope.aUsers.length) {
+			// 		apiProvider.getUsers({
+			// 			sExpand: "CompanyDetails",
+			// 			onSuccess: onUsersLoaded
+			// 		});
+			// 	}
+			// });
 		};
 
 		$scope.onDescriptionTagsAttribute = function() {
@@ -561,12 +595,12 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			$scope.oDeficiencyAttributes.oUnit.sDescription = $translate.instant('deficiencyDetails_unit'); //"Unit",
 			$scope.oDeficiencyAttributes.oStatus.sDescription = $translate.instant('deficiencyDetails_status'); //"Status",
 			$scope.oDeficiencyAttributes.oPriority.sDescription = $translate.instant('deficiencyDetails_deficiencyPriority'); //"Priority",
-			$scope.oDeficiencyAttributes.oUser.sDescription =  $translate.instant('deficiencyDetails_assignedUser'); //"User",
-			$scope.oDeficiencyAttributes.oDescriptionTags.sDescription =  $translate.instant('deficiencyDetails_descriptionTags'); //"Description Tags",
-			$scope.oDeficiencyAttributes.oLocationTags.sDescription =  $translate.instant('deficiencyDetails_locationTags'); //"Location Tags",
-			$scope.oDeficiencyAttributes.oContractors.sDescription =  $translate.instant('deficiencyDetails_contractors'); //"Contractors",
-			$scope.oDeficiencyAttributes.oImages.sDescription =  $translate.instant('global_images'); //"Photos",
-		
+			$scope.oDeficiencyAttributes.oUser.sDescription = $translate.instant('deficiencyDetails_assignedUser'); //"User",
+			$scope.oDeficiencyAttributes.oDescriptionTags.sDescription = $translate.instant('deficiencyDetails_descriptionTags'); //"Description Tags",
+			$scope.oDeficiencyAttributes.oLocationTags.sDescription = $translate.instant('deficiencyDetails_locationTags'); //"Location Tags",
+			$scope.oDeficiencyAttributes.oContractors.sDescription = $translate.instant('deficiencyDetails_contractors'); //"Contractors",
+			$scope.oDeficiencyAttributes.oImages.sDescription = $translate.instant('global_images'); //"Photos",
+
 		};
 
 		$scope.onSave = function() {
