@@ -278,8 +278,16 @@ END OF GLOBAL
 /*
 USER MANAGEMENT
 */
-.cnpUserManagementWrapper{
+.cnpUserGlobalManagementWrapper{
 	width: 100%;
+}
+
+
+.cnpUserManagementWrapper{
+	
+	overflow-y: scroll;
+	height: 100vh;
+	
 	.cnpUserManagementForm{
 		//For iPhone 3GS
 		min-width: @sd-width;
@@ -291,7 +299,7 @@ USER MANAGEMENT
 		padding-right: @userManagementFormPadding*0.8;
 		@media
 		only screen and (min-height: @sd-height) and (max-width: @sd-width){
-		min-height: @sd-height;
+		// min-height: @sd-height;
 		// max-height: @sd-height;
 		padding-left: @userManagementFormPadding*0.6;
 		padding-right: @userManagementFormPadding*0.6;
@@ -303,7 +311,7 @@ USER MANAGEMENT
 				//For iPhone 5 (Retina Display)
 		@media
 		only screen and (min-height: @md-height) and (max-width: @sd-width){
-		min-height: @md-height;
+		// min-height: @md-height;
 		// max-height: @md-height;
 		}
 		//For iPhone 6 (Retina Display)
@@ -312,16 +320,27 @@ USER MANAGEMENT
 		// max-height: @md-height;
 		min-width: @md-width;
 		max-width: @md-width;
+
 		margin-top: 25px;
-			//For iPhone 6 Plus (1.5 Retina Display)
-			@media
-			only screen and (-webkit-min-device-pixel-ratio: 3){
-			}
+			
+		}
+		//For iPhone 6 Plus (1.5 Retina Display)
+		@media
+		only screen and (min-width: 375px) and (-webkit-min-device-pixel-ratio: 3){
+			margin-left: 15px;
+			margin-right: 15px;
+
+			min-width: @md-width;
+			max-width: @md-width;
+
+			margin-top: 25px;
 		}
 		//For iPad 1/2
 		@media
 		only screen and (min-width: 600px) and (max-width: 1024px){
 		margin-top: 6vh;
+		margin-left: 15px;
+		margin-right: 15px;
 		//For iPad 3/4 (Retina Display)
 			@media
 			only screen and (-webkit-min-device-pixel-ratio: 2){
@@ -331,6 +350,8 @@ USER MANAGEMENT
 		@media
 		only screen and (min-width: 1025px){
 		margin-top: 6vh;
+		margin-left: 15px;
+		margin-right: 15px;
 		}
 		@media
 		only screen and (max-height: 700px){
@@ -635,6 +656,7 @@ USER MANAGEMENT
 	outline: 0;
 	font-size: 16px;
 	font-weight: 500;
+	margin: 0;
 	&.md-checkboxForList{
 		min-width: 0px;
 	}
@@ -777,6 +799,7 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
  */
 
 /* ! vertical layout */
+.multiSelect{}
 .multiSelect .vertical {
     float: none;
 }
@@ -1213,6 +1236,7 @@ APP VIEW CONTENT
 	padding-bottom: 30px;
 	margin-bottom: 0px;
 	background-color: @lightGreyBackgroundColor;
+	position: relative;
 }
 .cnpContentWrapper{
 	min-height: 550px;
