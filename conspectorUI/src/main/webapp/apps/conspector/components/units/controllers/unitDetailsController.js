@@ -72,11 +72,13 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 				//bMatchFound = false;
 				$scope.oUnit._unitOptionGuid = "";
 				for (var j = 0; j < oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results.length; j++) {
-					for (var k = 0; k < $scope.oUnit._unitOptions.length; k++) {
-						if (oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results[j].Guid === $scope.oUnit._unitOptions[k].Guid) {
-							//bMatchFound = true;
-							$scope.oUnit._unitOptionGuid = $scope.oUnit._unitOptions[k].Guid;
-							break;
+					if ($scope.oUnit._unitOptions) {
+						for (var k = 0; k < $scope.oUnit._unitOptions.length; k++) {
+							if (oData.UnitOptionSetDetails.results[i].UnitOptionDetails.results[j].Guid === $scope.oUnit._unitOptions[k].Guid) {
+								//bMatchFound = true;
+								$scope.oUnit._unitOptionGuid = $scope.oUnit._unitOptions[k].Guid;
+								break;
+							}
 						}
 					}
 				}

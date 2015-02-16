@@ -486,15 +486,15 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			constructLogoUrl: function() {
-				var sUrl = "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_";
+				var sUrl = CONSTANTS.sAppAbsolutePath + "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_";
 				var oSvc = dataProvider.httpRequest({
 					sPath: sUrl
 				});
 				oSvc.then(function(aData) {
 					if (aData[0]) {
-						$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[0].guid;
+						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[0].guid;
 					} else {
-						$rootScope.sLogoUrl = $window.location.origin + $window.location.pathname + "img/logo_conspector.png";
+						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath +  "apps/conspector/img/logo_conspector.png";
 					}
 				});
 			},

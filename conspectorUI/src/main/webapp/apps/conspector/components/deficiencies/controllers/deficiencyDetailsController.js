@@ -32,7 +32,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		if ($rootScope.sCurrentStateName === "app.deficiencyDetailsWrapper.deficiencyDetails") {
 			$scope.sTaskType = "Deficiency";
-			$scope.sTaskPriority = "Normal";
+			//$scope.sTaskPriority = "Normal";
 		}
 
 		$scope.sMode = $stateParams.sMode;
@@ -40,7 +40,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		if ($scope.sMode === "display" || $scope.sMode === "edit") {
 			$scope.$parent.bDisplayAttachmentsList = true;
 		}
-		
+
 		$scope.oDeficiency = {};
 
 		var oDeficiencyWrapper = {
@@ -93,9 +93,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			var sPhase = "";
 
 			$rootScope.sFileMetadataSetGuid = oDeficiency.FileMetadataSetGuid;
-			if(oDeficiency.FileMetadataSetDetails){
+			if (oDeficiency.FileMetadataSetDetails) {
 				$rootScope.sFileMetadataSetLastModifiedAt = oDeficiency.FileMetadataSetDetails.LastModifiedAt;
-			}			
+			}
 			$rootScope.$broadcast("FileAttachemntsCanBeLoaded");
 
 
@@ -103,24 +103,24 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				$scope.oDeficiency._unitName = oDeficiency.UnitDetails.Name;
 			}
 
-			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.ProjectDetails){
-				if(oDeficiency.PhaseDetails.NameFR && $translate.use() === "fr"){
+			if (oDeficiency.PhaseDetails && oDeficiency.PhaseDetails.ProjectDetails) {
+				if (oDeficiency.PhaseDetails.NameFR && $translate.use() === "fr") {
 					sPhase = oDeficiency.PhaseDetails.NameFR;
-				}else{
+				} else {
 					sPhase = oDeficiency.PhaseDetails.NameEN;
 				}
-				if(oDeficiency.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr"){
+				if (oDeficiency.PhaseDetails.ProjectDetails.NameFR && $translate.use() === "fr") {
 					sProject = oDeficiency.PhaseDetails.ProjectDetails.NameFR;
-				}else{
+				} else {
 					sProject = oDeficiency.PhaseDetails.ProjectDetails.NameEN;
 				}
-			}	
+			}
 			$scope.oDeficiency._ProjectAndPhaseName = sProject + " - " + sPhase;
 
-			if (oDeficiency.TaskPriorityDetails){
-				if(oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr"){
+			if (oDeficiency.TaskPriorityDetails) {
+				if (oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr") {
 					$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameFR;
-				}else{
+				} else {
 					$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
 				}
 			}
@@ -176,14 +176,14 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					$scope.sTaskTypeGuid = aData[i].Guid;
 					break;
 				}
-			}			
+			}
 		};
 
 		var onTaskPrioritiesLoaded = function(aData) {
 
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-				if ($scope.sMode === 'create' && aData[i].NameEN === $scope.sTaskPriority) {
+				if ($scope.sMode === 'create' && i === 0) {
 					oDeficiencyWrapper.aData[0]._taskPriorityGuid = aData[i].Guid;
 					break;
 				}
@@ -211,6 +211,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		var onDeficiencyStatusesLoaded = function(aData) {
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+				if ($scope.sMode === 'create' && i === 0) {
+					oDeficiencyWrapper.aData[0]._deficiencyStatusGuid = aData[i].Guid;
+					break;
+				}
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
 
@@ -293,18 +297,14 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		var onUsersWithCompaniesLoaded = function(aData) {
 			var aFilteredUser = [];
-			var iFilteredUserIndex = 0;
+			//var iFilteredUserIndex = 0;
 			var bMatchFound = false;
 			for (var i = 0; i < aData.length; i++) {
 				for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
 					if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
 						bMatchFound = true;
-						if(bMatchFound){
-							aFilteredUser[iFilteredUserIndex] = aData[i];
-							iFilteredUserIndex = iFilteredUserIndex + 1;
-						}
-						if ($scope.sMode === 'create') {
-							oDeficiencyWrapper.aData[0]._assignedUserName = $scope.sCurrentUser;
+						if (bMatchFound) {
+							aFilteredUser.push(aData[i]);
 						}
 						break;
 					}
@@ -319,6 +319,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 			aData = $filter('orderBy')(aData, ["UserName"]);
 
+			if ($scope.sMode === 'create') {
+				oDeficiencyWrapper.aData[0]._assignedUserName = cacheProvider.oUserProfile.sUserName;
+			}
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
 					aData: aData
@@ -424,12 +427,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		};
 
 		$scope.onNavigateToUnitDetails = function() {
-			
-           	$state.go('app.unitDetailsWrapper.unitDetails', {
-                        sMode: "display",
-                        sUnitGuid: $scope.oDeficiency._unitGuid,
-                    });
-        };
+
+			$state.go('app.unitDetailsWrapper.unitDetails', {
+				sMode: "display",
+				sUnitGuid: $scope.oDeficiency._unitGuid,
+			});
+		};
 
 		var deleteDeficiency = function() {
 			var oDataForSave = {
@@ -597,11 +600,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			oDataForSave.Description = $scope.oDeficiency.sDescription;
 
 
-			if ($scope.oDeficiency.dDueDate == false && $scope.oDeficiency.DueDate != "/Date(0)/") {
-				oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";
-			} else {
-				oDataForSave.DueDate = "/Date(0)/";
-			}
+			// if ($scope.oDeficiency.dDueDate == false && $scope.oDeficiency.DueDate != "/Date(0)/") {
+			// 	oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";
+			// } else {
+			// 	oDataForSave.DueDate = "/Date(0)/";
+			// }
 
 			oDataForSave.TaskTypeGuid = $scope.sTaskTypeGuid;
 
