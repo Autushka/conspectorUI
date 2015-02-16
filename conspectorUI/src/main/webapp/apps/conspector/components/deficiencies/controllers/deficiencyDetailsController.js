@@ -600,11 +600,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			oDataForSave.Description = $scope.oDeficiency.sDescription;
 
 
-			// if ($scope.oDeficiency.dDueDate == false && $scope.oDeficiency.DueDate != "/Date(0)/") {
-			// 	oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";
-			// } else {
-			// 	oDataForSave.DueDate = "/Date(0)/";
-			// }
+			if ($scope.oDeficiency.dDueDate && $scope.oDeficiency.DueDate != "/Date(0)/") {
+				oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";
+			} else {
+				oDataForSave.DueDate = "/Date(0)/";
+			}
 
 			oDataForSave.TaskTypeGuid = $scope.sTaskTypeGuid;
 
