@@ -36,47 +36,47 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
 		$scope.oDeficiencyAttributes = {
 			oPhase: {
-				sDescription: $translate.instant('global_projectPhase'), //"Project - Phase",
+				sDescription: $translate.instant('deficiencyDetails_associatedProjectsAndPhases'), //"Project - Phase",
 				sValue: "...",
 				bIsSelectionUnabled: true,
 			},
 			oUnit: {
-				sDescription: $translate.instant('global_unit'), //"Unit",
+				sDescription: $translate.instant('deficiencyDetails_unit'), //"Unit",
 				sValue: "...",
 				bIsSelectionUnabled: false,
 			},
 			oStatus: {
-				sDescription: $translate.instant('global_status'), //"Status",
+				sDescription: $translate.instant('deficiencyDetails_status'), //"Status",
 				sValue: "...",
 				bIsSelectionUnabled: true,
 			},
 			oPriority: {
-				sDescription: $translate.instant('global_priority'), //"Priority",
+				sDescription: $translate.instant('deficiencyDetails_deficiencyPriority'), //"Priority",
 				sValue: "...",
 				bIsSelectionUnabled: true,
 			},
 			oUser: {
-				sDescription: $translate.instant('global_user'), //"User",
+				sDescription: $translate.instant('deficiencyDetails_assignedUser'), //"User",
 				sValue: "...",
 				bIsSelectionUnabled: true,
 			},
 			oDescriptionTags: {
-				sDescription: $translate.instant('global_descriptionTags'), //"Description Tags",
+				sDescription: $translate.instant('deficiencyDetails_descriptionTags'), //"Description Tags",
 				sValue: "...",
 				bIsSelectionUnabled: true,
 			},
 			oLocationTags: {
-				sDescription: $translate.instant('global_locationTags'), //"Location Tags",
+				sDescription: $translate.instant('deficiencyDetails_locationTags'), //"Location Tags",
 				sValue: "...",
 				bIsSelectionUnabled: true,
 			},
 			oContractors: {
-				sDescription: $translate.instant('global_contractors'), //"Contractors",
+				sDescription: $translate.instant('deficiencyDetails_contractors'), //"Contractors",
 				sValue: "...",
 				bIsSelectionUnabled: false,
 			},
 			oImages: {
-				sDescription: $translate.instant('global_images'), //"Photos",
+				sDescription: $translate.instant('global_imagesMobile'), //"Photos",
 				iValue: 0,
 				bIsSelectionUnabled: true,
 			},
@@ -553,6 +553,20 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 			});
 
 			return aLinks;
+		};
+
+		$scope.onChangeLanguage = function() {
+			servicesProvider.changeLanguage();
+			$scope.oDeficiencyAttributes.oPhase.sDescription = $translate.instant('deficiencyDetails_associatedProjectsAndPhases'); //"Project - Phase",
+			$scope.oDeficiencyAttributes.oUnit.sDescription = $translate.instant('deficiencyDetails_unit'); //"Unit",
+			$scope.oDeficiencyAttributes.oStatus.sDescription = $translate.instant('deficiencyDetails_status'); //"Status",
+			$scope.oDeficiencyAttributes.oPriority.sDescription = $translate.instant('deficiencyDetails_deficiencyPriority'); //"Priority",
+			$scope.oDeficiencyAttributes.oUser.sDescription =  $translate.instant('deficiencyDetails_assignedUser'); //"User",
+			$scope.oDeficiencyAttributes.oDescriptionTags.sDescription =  $translate.instant('deficiencyDetails_descriptionTags'); //"Description Tags",
+			$scope.oDeficiencyAttributes.oLocationTags.sDescription =  $translate.instant('deficiencyDetails_locationTags'); //"Location Tags",
+			$scope.oDeficiencyAttributes.oContractors.sDescription =  $translate.instant('deficiencyDetails_contractors'); //"Contractors",
+			$scope.oDeficiencyAttributes.oImages.sDescription =  $translate.instant('global_images'); //"Photos",
+		
 		};
 
 		$scope.onSave = function() {

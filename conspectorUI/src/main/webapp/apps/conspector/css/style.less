@@ -244,6 +244,10 @@ font-weight: 500;
 		}
 	}
 }
+.md-button.md-default-theme.md-primary.md-raised, .md-button.md-default-theme.md-primary.md-fab{
+	color: white;
+	font-weight: 400;
+}
 //Animation
 .cnpWithAnimation {
 	-webkit-transition: all 0.15s ease-in-out;
@@ -626,6 +630,7 @@ md-switch .md-label{
 }
 md-switch .md-container{
 	min-width: 36px;
+	cursor: pointer;
 }
 .md-label{
 	// margin-top: 2px;
@@ -714,14 +719,20 @@ APP VIEW
 	font-weight: 500;
 	font-size: 16px;
 }
+md-tabs.md-conspectorColorPaletteNavbar-theme md-tab.active{
+	color: white !important;
+}
+
 md-tabs.md-conspectorColorPaletteNavbar-theme md-tab:focus {
 	// color: @navbarTextColor;
 	// font-size: 14pt;
+	color: white !important;
 	background-color: @darkerGreyBackgroundColor;
 }
 md-tabs.md-conspectorColorPaletteNavbar-theme md-tab:active {
 	// color: @navbarTextColor;
 	// font-size: 14pt;
+	color: white !important;
 	background-color: @darkerGreyBackgroundColor;
 }
 md-tabs.md-conspectorColorPaletteNavbar-theme md-tab{
@@ -1232,6 +1243,10 @@ ADMIN PANEL
 	max-width: 100%;
     overflow-x: hidden;
 }
+.cnpContentHeader{
+	
+	height: 56px;
+}
 .cnpMobileContentWrapper{
 	padding-top: 15px;
 	padding-left: 0px;
@@ -1278,8 +1293,9 @@ ADMIN PANEL
 	margin-bottom: 4px;
 
 }
-.cnpContentHeader{
-	height: 56px;
+.cnpMobileHeader{
+
+	min-height: 56px;
 }
 .cnpContentTitle{
 	font-size: 35px;
