@@ -107,6 +107,7 @@ app.config(['$translateProvider',
                   global_activityType: 'Select Type',
                   global_mobileSave: 'Save Deficiency',
                   global_imagesMobile: 'Images:',
+                  global_clearFiltering: 'Clear Filters',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -509,6 +510,8 @@ app.config(['$translateProvider',
                   global_activityType: 'S\u00E9lectionner le type',
                   global_mobileSave: 'Sauvegarder',
                   global_imagesMobile: 'Images :',
+                  global_clearFiltering: 'Effacer filtres',
+
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',
                   m101: 'Un email contenant les instructions pour votre mot de passe vous a \u00E9t\u00E9 envoy\u00E9.',
