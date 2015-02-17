@@ -1,5 +1,9 @@
 viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter', 'rolesSettings',
     function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter, rolesSettings) {
+        if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
+            historyProvider.removeHistory(); // because current view doesn't have a back button
+        }
+
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         $scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
             sRole: sCurrentRole,
