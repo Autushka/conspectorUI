@@ -1,7 +1,6 @@
 viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
 	function($scope, $rootScope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
 		var sUnitGuid = $stateParams.sUnitGuid;
-		$scope.sUnit = "";	//added
 
 		$scope.oForms = {};
 
@@ -24,15 +23,11 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 		});
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-		//added
-		 if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails") {
+		if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails") {
             if ($scope.sMode === "display" || $scope.sMode === "edit") {
                 $scope.$parent.bDisplayDeficienciesList = true;
             }
-            $scope.sUnit = "Unit";
         }
-        $scope.sUnitGuid = "";
-		//end- added
 
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
@@ -375,7 +370,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 				if (!bSaveAndNew) {
 					$state.go('app.unitDetailsWrapper.unitDetails', {
 						sMode: "display",
-						sUnitGuid: oData.Guid
+						sUnitGuid: Guid
 					});
 
 					$scope.oUnit._lastModifiedAt = oData.LastModifiedAt;
