@@ -211,12 +211,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		var onDeficiencyStatusesLoaded = function(aData) {
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-				if ($scope.sMode === 'create' && i === 0) {
-					oDeficiencyWrapper.aData[0]._deficiencyStatusGuid = aData[i].Guid;
-					break;
-				}
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+			if ($scope.sMode === 'create') {
+				oDeficiencyWrapper.aData[0]._deficiencyStatusGuid = aData[0].Guid;
+			}
 
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
