@@ -124,7 +124,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
 				}
 			}
-
+		
 			if (oDeficiency.DueDate && oDeficiency.DueDate != "/Date(0)/") {
 				$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oDeficiency.DueDate);
 				$scope.oDeficiency.dDueDate = new Date(parseInt(oDeficiency.DueDate.substring(6, oDeficiency.DueDate.length - 2)));
@@ -571,6 +571,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					$scope.oDeficiency._lastModifiedAt = oData.LastModifiedAt;
 					$scope.oDeficiency.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oDeficiency.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
+					if(oData.DueDate){
+						$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oData.DueDate);
+					}
 					$scope.oDeficiency._guid = oData.Guid;
 				} else {
 					$scope.oDeficiency.aDescriptionTags = [];
@@ -599,8 +602,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			oDataForSave.LocationTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aLocationTags);
 			oDataForSave.Description = $scope.oDeficiency.sDescription;
 
-
-			if ($scope.oDeficiency.dDueDate && $scope.oDeficiency.DueDate != "/Date(0)/") {
+			
+			if ($scope.oDeficiency.dDueDate && $scope.oDeficiency.dDueDate != "/Date(0)/") {
 				oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";
 			} else {
 				oDataForSave.DueDate = "/Date(0)/";

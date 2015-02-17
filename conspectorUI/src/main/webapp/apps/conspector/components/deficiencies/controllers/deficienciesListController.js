@@ -214,24 +214,20 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			$scope.tableParams.reload();
 		};	
 
+		// $scope.onNavigateToUnitDetails = function(oDeficiency) {
+		// 	$state.go('app.unitDetailsWrapper.unitDetails', {
+		// 		sMode: "display",
+		// 		sUnitGuid: sUnitGuid,
+		// 	});
+		// };
 		$scope.onNavigateToUnitDetails = function(oDeficiency) {
-			$state.go('app.unitDetailsWrapper.unitDetails', {
-				sMode: "display",
-				sUnitGuid: sUnitGuid,
-			});
 
-			// var sUnitGuid = oDeficiency._accountGuid;
-   //          var sUnitName = oDeficiency._accountTypeName;
-
-   //          switch (sUnitName) {
-   //              case "Unit":
-   //                  $state.go('app.unitDetailsWrapper.unitDetails', {
-			// 			sMode: "display",
-			// 			sUnitGuid: sUnitGuid,
-			// 		});
-   //                  break;
-   //          }
-		};
+            var sUnitGuid = oDeficiency._unitGuid;
+           	$state.go('app.unitDetailsWrapper.unitDetails', {
+                        sMode: "display",
+                        sUnitGuid: sUnitGuid,
+                    });
+        };
 		$scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
 			loadDeficiencies();
 		});
