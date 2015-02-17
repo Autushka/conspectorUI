@@ -287,6 +287,11 @@ USER MANAGEMENT
 	
 	overflow-y: scroll;
 	height: 100vh;
+	@media
+	only screen and (min-width: 665px){
+		overflow-y: visible;
+			
+	}
 	
 	.cnpUserManagementForm{
 		//For iPhone 3GS
@@ -299,10 +304,13 @@ USER MANAGEMENT
 		padding-right: @userManagementFormPadding*0.8;
 		@media
 		only screen and (min-height: @sd-height) and (max-width: @sd-width){
-		// min-height: @sd-height;
-		// max-height: @sd-height;
-		padding-left: @userManagementFormPadding*0.6;
-		padding-right: @userManagementFormPadding*0.6;
+			// min-height: @sd-height;
+			// max-height: @sd-height;
+			padding: 15px;
+			padding-left: @userManagementFormPadding*0.6;
+			padding-right: @userManagementFormPadding*0.6;
+
+
 			//For iPhone 4 (Retina Display)
 			@media
 			only screen and (-webkit-min-device-pixel-ratio: 2){
@@ -311,6 +319,7 @@ USER MANAGEMENT
 				//For iPhone 5 (Retina Display)
 		@media
 		only screen and (min-height: @md-height) and (max-width: @sd-width){
+			min-height: 568px;
 		// min-height: @md-height;
 		// max-height: @md-height;
 		}

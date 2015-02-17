@@ -1,38 +1,40 @@
-<div class="cnpUserManagementWrapper" layout="column" layout-align="center center">
-	<form name="forgotPasswordForm" class="cnpUserManagementForm md-whiteframe-z1">
-		<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
-			<div layout="row" layout-align="space-between end" style="width: 100%">
-				<div ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
-					{{'global_back' | translate}}
-				</div>
-				<label ng-click="onChangeLanguage()" class="cnpLink">
-					<div class="notSelectable">
-						{{'signIn_languageCode' | translate}}
+<div class="cnpUserGlobalManagementWrapper" layout="column" layout-align="start center">
+	<section class="cnpUserManagementWrapper">
+		<form name="forgotPasswordForm" class="cnpUserManagementForm md-whiteframe-z1">
+			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
+				<div layout="row" layout-align="space-between end" style="width: 100%">
+					<div ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
+						{{'global_back' | translate}}
 					</div>
-				</label>
+					<label ng-click="onChangeLanguage()" class="cnpLink">
+						<div class="notSelectable">
+							{{'signIn_languageCode' | translate}}
+						</div>
+					</label>
+				</div>
 			</div>
-		</div>
-		<!-- No log for now, takes too much space -->
-		<!-- <div layout="row" layout-align="center center">
-					<img src="apps/conspector/img/conspectorLogo.svg" class="cnpConspectorLogo cnpConspectorLogoSmaller">
-		</div> -->
-		<div layout="column" layout-align="center center" >
-			<div class="cnpInstructionsWrapper notSelectable">
-				<label>
-					{{'roleSelection_heagerLabel' | translate}}
-				</label>
+			<!-- No log for now, takes too much space -->
+			<!-- <div layout="row" layout-align="center center">
+							<img src="apps/conspector/img/conspectorLogo.svg" class="cnpConspectorLogo cnpConspectorLogoSmaller">
+			</div> -->
+			<div layout="column" layout-align="center center" >
+				<div class="cnpInstructionsWrapper notSelectable">
+					<label>
+						{{'roleSelection_heagerLabel' | translate}}
+					</label>
+				</div>
+				<md-radio-group ng-model="sSelectedRoleName" class="cnpInputWrapper cnpInputWrapperNoMargin notSelectable">
+				<md-radio-button ng-repeat="role in aUserRoles" ng-value="role.RoleName">
+				{{sLanguage === "en" ? role.DescriptionEN : role.DescriptionFR}}
+				</md-radio-button>
+				</md-radio-group>
+				
+				<div class="cnpInputWrapper">
+					<md-button class="md-button cnpLargeButton md-primary md-raised" ng-click="onContinue()">
+					{{'global_continue' | translate}}
+					</md-button>
+				</div>
 			</div>
-			<md-radio-group ng-model="sSelectedRoleName" class="cnpInputWrapper cnpInputWrapperNoMargin notSelectable">
-			<md-radio-button ng-repeat="role in aUserRoles" ng-value="role.RoleName">
-			{{sLanguage === "en" ? role.DescriptionEN : role.DescriptionFR}}
-			</md-radio-button>
-			</md-radio-group>
-			
-			<div class="cnpInputWrapper">
-				<md-button class="md-button cnpLargeButton md-primary md-raised" ng-click="onContinue()">
-				{{'global_continue' | translate}}
-				</md-button>
-			</div>
-		</div>
-	</form>
+		</form>
+	</section>
 </div>

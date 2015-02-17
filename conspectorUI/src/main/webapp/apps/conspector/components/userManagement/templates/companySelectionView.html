@@ -1,30 +1,32 @@
-<div class="cnpUserManagementWrapper" layout="column" layout-align="center center">
-	<form name="companySelectionForm" class="cnpUserManagementForm md-whiteframe-z1">
-		<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
-			<div layout="row" layout-align="space-between end" style="width: 100%">
-				<div ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
-					{{'global_back' | translate}}
-				</div>
-				<label ng-click="onChangeLanguage()" class="cnpLink">
-					<div class="notSelectable">
-						{{'signIn_languageCode' | translate}}
+<div class="cnpUserGlobalManagementWrapper" layout="column" layout-align="start center">
+	<section class="cnpUserManagementWrapper">
+		<form name="companySelectionForm" class="cnpUserManagementForm md-whiteframe-z1">
+			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
+				<div layout="row" layout-align="space-between end" style="width: 100%">
+					<div ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
+						{{'global_back' | translate}}
 					</div>
-				</label>
+					<label ng-click="onChangeLanguage()" class="cnpLink">
+						<div class="notSelectable">
+							{{'signIn_languageCode' | translate}}
+						</div>
+					</label>
+				</div>
 			</div>
-		</div>
-		<div layout="column" layout-align="center center" >
-			<div class="cnpInstructionsWrapper notSelectable">
-				<label>
-					{{'companySelection_heagerLabel' | translate}}
-				</label>
+			<div layout="column" layout-align="center center" >
+				<div class="cnpInstructionsWrapper notSelectable">
+					<label>
+						{{'companySelection_heagerLabel' | translate}}
+					</label>
+				</div>
+				<md-radio-group ng-model="sSelectedCompanyName" class="cnpInputWrapper cnpInputWrapperNoMargin notSelectable">
+				<md-radio-button ng-repeat="company in aUserCompanies" ng-value="company.CompanyName">{{sLanguage === "en" ? company.DescriptionEN : company.DescriptionFR}}
+				</md-radio-button>
+				</md-radio-group>
+				<div class="cnpInputWrapper">
+					<md-button class="md-button cnpLargeButton md-primary md-raised" ng-click="onContinue()">{{'global_continue' | translate}}</md-button>
+				</div>
 			</div>
-			<md-radio-group ng-model="sSelectedCompanyName" class="cnpInputWrapper cnpInputWrapperNoMargin notSelectable">
-			<md-radio-button ng-repeat="company in aUserCompanies" ng-value="company.CompanyName">{{sLanguage === "en" ? company.DescriptionEN : company.DescriptionFR}}
-			</md-radio-button>
-			</md-radio-group>
-			<div class="cnpInputWrapper">
-				<md-button class="md-button cnpLargeButton md-primary md-raised" ng-click="onContinue()">{{'global_continue' | translate}}</md-button>
-			</div>
-		</div>
-	</form>
+		</form>
+	</section>
 </div>
