@@ -286,6 +286,7 @@ USER MANAGEMENT
 .cnpUserManagementWrapper{
 	
 	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 	height: 100vh;
 	@media
 	only screen and (min-width: 665px){
@@ -552,6 +553,12 @@ USER MANAGEMENT
     	background-size: 14px;
 	    background-image:url('../../../apps/conspector/img/backIcon.svg');
 	    height: 26px;
+	}
+	&.cnpMobileBackIcon{
+		background-position: 0px;
+		background-size: 14px;
+	    background-image:url('../../../apps/conspector/img/backIcon.svg');
+	    height: 39px;
 	}
 	&.cnpBackIconMobile{
     	background-position: 0px;
@@ -1304,11 +1311,37 @@ ADMIN PANEL
     overflow-x: hidden;
     overflow-y: scroll;
 	height: 100vh;
+	-webkit-overflow-scrolling: touch;
 
+}
+.cnpMobileSideNav{
+	overflow-y: scroll;
+	height: 100vh;
+	-webkit-overflow-scrolling: touch;
+}
+.cnpMobileSideNavHeader{
+	background-color: white !important;
+	// height: 72px !important;
 }
 .cnpMobileListWrapper{
 	margin-top: 26px;
 	margin-bottom: 26px;
+}
+.cnpMobileFilterWrapper{
+	background-color: @mediumGreyBackgroundColor;
+	width: 100%;
+	margin-bottom: 8px;
+}
+.cnpMobileFilter{
+	width: 80%;
+	margin-bottom: 12px;
+	margin-top: 12px;
+	padding-left: 12px;
+}
+.cnpMobileStatusIcon{
+	height: 26px;
+	width: 26px;
+	margin-right: 8px;
 }
 .cnpMobileTopLinks{
 	padding-right: 16px;
@@ -1332,6 +1365,13 @@ ADMIN PANEL
 	color: @blueColor;
 	white-space: normal;
 	text-align: left;
+	&.cnpMobileItemValueStatus{
+		color: @textColor;
+		margin-top: 0px;
+	}
+	&.cnpMobileItemValueTags{
+		line-height: 34px;
+	}
 }
 .cnpMobileCompanyLogo{
 	height: 55px;
@@ -1351,8 +1391,42 @@ ADMIN PANEL
 	color: @greyTitleTextColor;
 	// text-transform: uppercase;
 	text-align: right;
-
 }
+.cnpSidePanelWrapper{
+	padding-bottom: 16px;
+	background-color: white;
+}
+.cnpMobileH1{
+	font-size: 20px;
+	font-weight: 500;
+	height: 52px;
+	margin-top: 8px;
+	padding-left: 16px;
+	position: relative;
+}
+.cnpMobileH1Selected{
+	background-color: @greyButtonColor;
+}
+.cnpMobileH2{
+
+	font-size: 20px;
+	font-weight: 500;
+	height: 52px;
+	padding-left: 40px;
+	position: relative;
+}
+.cnpMobileH2Selected{
+	background-color: @greyButtonColor;
+}
+.cnpMobileTickMark{
+	display: inline-block;
+	position: absolute;
+	right: 29px;
+	top: 11px;
+	font-size: 23px;
+}
+
+
 
 .md-toolbar-tools{
 	height: 56px;
@@ -2063,6 +2137,10 @@ DETAILS VIEW
 	border-style: solid;
 	background-color: @lightGreyBackgroundColor;
 	// box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
+	&.cnpSubSectionMobile{
+		margin: 0;
+		min-height: ~"calc(100vh - 56px)";
+	}
 }
 .cnpSubSectionTitleWrapper{
 	margin-right: 0px;
@@ -2153,6 +2231,19 @@ DETAILS VIEW
 	padding: 2px !important;
 	margin-top: 8px !important;	
 	margin-bottom: 12px;
+
+	@media
+	only screen and (max-width: 415px){
+	min-height: 50vh;
+	height: auto !important;
+	overflow-x: auto !important;
+	}
+
+}
+
+.cnpMobileTags{
+	height: 55px;
+	
 }
 
 .tags input{
@@ -2163,14 +2254,27 @@ tags-input .tags .input,
 tags-input .tags .tag-item,
 .tag-item {
 	height: 32px;
-
 	font-family: 'Ubuntu', sans-serif;
 	font-size: 14px;
 	color: @textColor;
+
+	@media
+	only screen and (max-width: 415px){
+		height: 48px;
+		font-size: 20px;
+	}
+
 }
 
 tags-input .tags .tag-item{
 	line-height: 31px;
+
+	@media
+	only screen and (max-width: 415px){
+	line-height: 45px;
+	padding-left: 8px;
+	padding-right: 8px;
+	}
 }
 
 tags-input .tags.focused{
@@ -2214,11 +2318,22 @@ tags-input[ng-model="oDeficiency.aLocationTags"]>div>div>ul>li[class*="tag-item"
 
 .tag-item>span {
 	font-size: 14px;
+
+	@media
+	only screen and (max-width: 415px){
+	font-size: 20px !important;
+	}
 }
 tags-input .tags .tag-item .remove-button {
 	color: @textColor;
 	font-size: 14px; /* 14px */
 	font-weight: normal;
+
+	@media
+	only screen and (max-width: 415px){
+		height: 32px;
+		font-size: 35px;
+	}
 }
 tags-input .tags .tag-item.selected{
 	background: none;

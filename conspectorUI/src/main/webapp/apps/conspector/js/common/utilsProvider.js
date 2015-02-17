@@ -20,6 +20,14 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 				return guid;
 			},
 
+			convertStringToInt: function(sValue) {
+				var bIsNum = /^\d+$/.test(sValue);
+				if (bIsNum) {
+					sValue = parseInt(sValue);
+				}
+				return sValue;
+			},
+
 			dateToDBDate: function(dDate) {
 
 				var iDate = dDate.getTime() - dDate.getTime() % 1000; // db rounds the value till seconds
