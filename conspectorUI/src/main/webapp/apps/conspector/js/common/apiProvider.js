@@ -1264,6 +1264,22 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				}
 			},
 
+			// getUnitDeficiencies: function(oParameters) {
+			// 	var svc = dataProvider.getEntitySet({
+			// 		sPath: "Units",
+			// 		sFilter: "UnitGuid eq '" + oParameters.sUnitGuid + "' and GeneralAttributes/IsDeleted eq false",
+			// 		sExpand: "PhaseDetails/ProjectDetails",
+			// 		bShowSpinner: oParameters.bShowSpinner,
+			// 		oCacheProvider: cacheProvider,
+			// 		sCacheProviderAttribute: "oUnitEntity"
+			// 	});
+			// 	if (svc instanceof Array) {
+			// 		oParameters.onSuccess(svc); // data retrived from cache
+			// 	} else {
+			// 		svc.then(oParameters.onSuccess);
+			// 	}
+			// },
+
 			getUnitOptionSets: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "UnitOptionSets",
@@ -1541,7 +1557,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sPath: "Tasks",
 					sKey: oParameters.sKey,
 					sExpand: oParameters.sExpand, //"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
-					sFilter: "GeneralAttributes/IsDeleted eq false",
+					sFilter: "GeneralAttributes/IsDeleted eq false and UnitGuid eq '" + oParameters.UnitGuid + "'",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
 				svc.then(oParameters.onSuccess);

@@ -242,12 +242,12 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
                     onSuccess: onAccountTypeLoaded
                 });
             }
-            if ($scope.sAccountType === "Client") {
-                apiProvider.getClientAccountType({
-                    bShowSpinner: false,
-                    onSuccess: onAccountTypeLoaded
-                });
-            }
+            // if ($scope.sAccountType === "Client") {
+            //     apiProvider.getClientAccountType({
+            //         bShowSpinner: false,
+            //         onSuccess: onAccountTypeLoaded
+            //     });
+            // }
         }
 
         $scope.onEdit = function() {
