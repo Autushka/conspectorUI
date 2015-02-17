@@ -23,19 +23,20 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 		});
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
+		var bDataHasBeenModified = false;
+		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
+
+		$scope.sMode = $stateParams.sMode;
+
 		if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails") {
             if ($scope.sMode === "display" || $scope.sMode === "edit") {
                 $scope.$parent.bDisplayDeficienciesList = true;
             }
         }
 
-		var bDataHasBeenModified = false;
-		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
-
-		$scope.sMode = $stateParams.sMode;
-
 		if ($scope.sMode === "display" || $scope.sMode === "edit") {
 			$scope.$parent.bDisplayAttachmentsList = true;
+			//$scope.$parent.bDisplayDeficienciesList = true;
 		}
 
 		$scope.oUnit = {

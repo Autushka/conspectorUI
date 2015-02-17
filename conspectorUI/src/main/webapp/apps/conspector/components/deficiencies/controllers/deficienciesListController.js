@@ -1,6 +1,8 @@
 viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
 	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
-		historyProvider.removeHistory(); // because current view doesn't have a back button
+		if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails") {
+			historyProvider.removeHistory(); // because current view doesn't have a back button
+		}
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
@@ -267,8 +269,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			});
 		};
 
-		$scope.$on("$destroy", function() {
-			//if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
+		$scope.$on("$destroy",function() {
+			if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
 				if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
 					return;
 				}
@@ -276,7 +278,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 					sStateName: $rootScope.sCurrentStateName,
 					oStateParams: $rootScope.oStateParams
 				});
-			//}
+			}
 			cacheProvider.putTableStatusToCache({
 				sTableName: "deficienciesList",
 				sStateName: $rootScope.sCurrentStateName,
