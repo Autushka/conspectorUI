@@ -155,7 +155,6 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
         };
 
         $scope.onClearFiltering = function() {
-            $scope.tableParams.$params.sorting = {};
             $scope.tableParams.$params.filter = {};
             $scope.tableParams.reload();
         };

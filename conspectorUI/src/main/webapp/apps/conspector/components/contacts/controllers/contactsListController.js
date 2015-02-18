@@ -216,9 +216,8 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         };
 
         $scope.onClearFiltering = function() {
-            $scope.tableParams.$params.sorting = {};
             $scope.tableParams.$params.filter = {};
-            //$scope.tableParams.reload();
+            $scope.tableParams.reload();
         };
 
         $scope.onNavigateToAccountDetails = function(oContact) {
