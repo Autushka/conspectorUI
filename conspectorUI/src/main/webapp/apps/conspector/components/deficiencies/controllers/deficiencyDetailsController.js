@@ -50,6 +50,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 		};
 
 		var onUnitsLoaded = function(aData) {
+			
+			for (var i = 0; i < aData.length; i++) {
+				aData[i].Name = utilsProvider.convertStringToInt(aData[i].Name);
+            }
+
 			aData = $filter('orderBy')(aData, ["Name"]);
 
 			servicesProvider.constructDependentMultiSelectArray({

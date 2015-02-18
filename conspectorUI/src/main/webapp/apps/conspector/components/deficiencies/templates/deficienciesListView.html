@@ -94,6 +94,13 @@
 							<img ng-src="{{deficiency.sStatuseIconUrl}}" style="width:24px; height:24px;"/>
 						</div>
 					</td>
+					<td data-title="'global_contractors' | translate" sortable="'sContractors'" filter="{'sContractors': 'text'}">
+						<div layout="row" layout-align="start center">
+							<span>
+							{{deficiency.sContractors}}
+							</span>
+						</div>
+					</td>
 					<td data-title="'global_tags' | translate" filter="{'sTags': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
@@ -113,13 +120,7 @@
 						</div>
 					</td>
 					
-					<td data-title="'global_contractors' | translate" sortable="'sContractors'" filter="{'sContractors': 'text'}">
-						<div layout="row" layout-align="start center">
-							<span>
-							{{deficiency.sContractors}}
-							</span>
-						</div>
-					</td>
+					
 					<td data-title="'global_dueIn' | translate" sortable="'sDueIn'" filter="{'sDueIn': 'text'}">
 						<div layout="row" layout-align="center center">
 							<span>

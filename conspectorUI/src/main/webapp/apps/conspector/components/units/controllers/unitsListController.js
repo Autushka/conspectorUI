@@ -1,5 +1,5 @@
-viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
-    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
+viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
+    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
         historyProvider.removeHistory(); // because current view doesn't have a back button
 
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
@@ -27,7 +27,9 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
             sStateName: $rootScope.sCurrentStateName,
         });
 
-        var oInitialSortingForUnitsList = {};
+        var oInitialSortingForUnitsList = {
+            sUnitName: 'asc'
+        };
         if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
             oInitialSortingForUnitsList = angular.copy(oTableStatusFromCache.oSorting);
         }
@@ -119,7 +121,7 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
                 }
 
                 oUnitsListData.aData.push({
-                    sUnitName: aData[i].Name,
+                    sUnitName: utilsProvider.convertStringToInt(aData[i].Name),
                     _guid: aData[i].Guid,
                     sTags: aData[i].DescriptionTags,
                     sProjectPhase: sProjectName + " - " + sPhaseName,

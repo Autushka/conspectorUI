@@ -35,7 +35,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 			sStateName: $rootScope.sCurrentStateName,
 		});
 
-		var oInitialSortingForDeficienciesList = {};
+		var oInitialSortingForDeficienciesList = {
+			sUnit: 'asc'
+		};
 		if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
 			oInitialSortingForDeficienciesList = angular.copy(oTableStatusFromCache.oSorting);
 		}
@@ -155,7 +157,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
 				oDeficienciesListData.aData.push({
 					_guid: aData[i].Guid,
-					sUnit: aData[i].sUnitName,
+					sUnit: utilsProvider.convertStringToInt(aData[i].sUnitName),
 					sTags: aData[i].DescriptionTags,
 					sLocationTags: aData[i].LocationTags,
 					sDueIn: sDueIn,
