@@ -1264,14 +1264,14 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				}
 			},
 
-			// getUnitDeficiencies: function(oParameters) {
+			// getDeficienciesForUnit: function(oParameters) {
 			// 	var svc = dataProvider.getEntitySet({
-			// 		sPath: "Units",
-			// 		sFilter: "UnitGuid eq '" + oParameters.sUnitGuid + "' and GeneralAttributes/IsDeleted eq false",
-			// 		sExpand: "PhaseDetails/ProjectDetails",
+			// 		sPath: "Deficiencies",
+			// 		sFilter: "GeneralAttributes/IsDeleted eq false and UnitGuid eq '" + oParameters.sUnitGuid + "'",
+			// 		sExpand: "PhaseDetails/ProjectDetails,UnitDetails",
 			// 		bShowSpinner: oParameters.bShowSpinner,
 			// 		oCacheProvider: cacheProvider,
-			// 		sCacheProviderAttribute: "oUnitEntity"
+			// 		sCacheProviderAttribute: "oDeficiencyEntity"
 			// 	});
 			// 	if (svc instanceof Array) {
 			// 		oParameters.onSuccess(svc); // data retrived from cache
@@ -1557,7 +1557,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					sPath: "Tasks",
 					sKey: oParameters.sKey,
 					sExpand: oParameters.sExpand, //"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
-					sFilter: "GeneralAttributes/IsDeleted eq false and UnitGuid eq '" + oParameters.UnitGuid + "'",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});
 				svc.then(oParameters.onSuccess);

@@ -216,29 +216,6 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 			}
 		};
 
-//added
-		var onUnitDeficienciesLoaded = function(aData) {
-			// Sort aData by accountType sorting sequence and then by AccountName
-			// aData = $filter('orderBy')(aData, ["Name"]);
-			
-			// servicesProvider.constructDependentMultiSelectArray({
-			// 	oDependentArrayWrapper: {
-			// 		aData: aData
-			// 	},
-			// 	oParentArrayWrapper: oUnitWrapper,
-			// 	sNameEN: "Name",
-			// 	sNameFR: "Name",
-			// 	sDependentKey: "Guid",
-			// 	sParentKeys: "_unitsGuids",
-			// 	sTargetArrayNameInParent: "aUnits"
-			// });
-
-			// if (oUnitWrapper.aData[0]) {
-			// 	$scope.aUnits = angular.copy(oUnitWrapper.aData[0].aUnits);
-			// }
-		};
-//-end added
-
 		if ($scope.sMode !== "create") {
 			if (angular.equals(oUnit, {})) { //in case of F5
 				getUnitDetails();

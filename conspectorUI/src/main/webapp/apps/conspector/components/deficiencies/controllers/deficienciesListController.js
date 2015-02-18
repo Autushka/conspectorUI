@@ -20,11 +20,11 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
         $rootScope.oStateParams = {}; // for backNavigation	
 
-        // var sUnitGuid = "";
+        var sUnitGuid = "";
 
-        //       if ($stateParams.sUnitsGuid) {
-        //           sUnitGuid = $stateParams.sUnitsGuid;
-        //       }
+        if ($stateParams.sUnitGuid) {
+            sUnitGuid = $stateParams.sUnitGuid;
+        }
 
         var oDeficienciesListData = {
             aData: []
@@ -259,12 +259,20 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 }
             }
 
-            apiProvider.getDeficiencies({
-                sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
-                sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
-                bShowSpinner: true,
-                onSuccess: onDeficienciesLoaded
-            });
+            // if(sUnitGuid) {
+            //     apiProvider.getDeficienciesForUnit({
+            //         bShowSpinner: true,
+            //         onSuccess: onDeficienciesLoaded,
+            //         sUnitGuid: sUnitGuid
+            //     });
+            // } else {
+                apiProvider.getDeficiencies({
+                    sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
+                    sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
+                    bShowSpinner: true,
+                    onSuccess: onDeficienciesLoaded
+                });
+            // }
         };
 
         var loadDeficiencyStatuses = function() {
@@ -277,6 +285,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         loadDeficiencies();
 
         $scope.onDisplay = function(oDeficiency) {
+            // if(!sUnitGuid) {
+            //     sUnitGuid = oDeficiency._unitGuid;
+            // }
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
             $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
@@ -286,6 +297,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onEdit = function(oDeficiency) {
+            // if(!sUnitGuid) {
+            //     sUnitGuid = oDeficiency._unitGuid;
+            // }
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
             $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
@@ -315,14 +329,10 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $scope.onCloseCheckSelectedStatusesLength();
         };
 
-        // $scope.onNavigateToUnitDetails = function(oDeficiency) {
-        // 	$state.go('app.unitDetailsWrapper.unitDetails', {
-        // 		sMode: "display",
-        // 		sUnitGuid: sUnitGuid,
-        // 	});
-        // };
         $scope.onNavigateToUnitDetails = function(oDeficiency) {
-
+            // if(!sUnitGuid) {
+            //     sUnitGuid = oDeficiency._unitGuid;
+            // }
             var sUnitGuid = oDeficiency._unitGuid;
             $state.go('app.unitDetailsWrapper.unitDetails', {
                 sMode: "display",
