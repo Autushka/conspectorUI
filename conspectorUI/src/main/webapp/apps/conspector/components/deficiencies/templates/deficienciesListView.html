@@ -1,41 +1,30 @@
 <md-content layout="row" layout="center start" class="cnpContentWrapper">
 <div class="cnpContent" layout="column">
-	<!-- <div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader"> -->
-		<!-- <div layout="row" layout-align="start start" > -->
-			<!-- <div class="cnpSubSection" flex>
-				<div> -->
-					<!-- <div class="cnpSubSectionLabel">
-											<label>
-																	{{'deficiencyDetails_status' | translate}}
-											</label>
-					</div>
-					<div
-											multi-select
-											input-model="aDeficiencyStatuses"
-											default-label="{{'deficiencyDetails_deficiencyStatusDefaultLabel' | translate }}"
-											button-label="icon name"
-											item-label="icon name"
-											is-disabled="sMode == 'display'"
-											tick-property="ticked"
-											selection-mode="single"
-											on-item-click="onSelectedStatusesModified()"
-											output-model="aSelectedStatuses"
-											on-close="onCloseCheckSelectedStatusesLength()"
-											helper-elements=""
-											>
-					</div> -->
-					<!-- <input ng-model="aSelectedStatuses.length" type="number" ng-show="false" name="selectedStatuses" min="1">
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedStatuses.$error" ng-if="(oForms.deficiencyDetailsForm.selectedStatuses.$dirty && !oForms.deficiencyDetailsForm.selectedStatuses.$valid) || submitted">
-											<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-					</div> -->
-				<!-- 	</div>
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpDeficienciesListContentHeader">
+		<div layout="row" layout-align="start center" >
+<!-- 			<div class="cnpSubSectionLabel">
+				<label>
+					{{'deficienciesList_statuses' | translate}}
+				</label>
 			</div> -->
-		<!-- </div> -->
-		<!-- <div layout="row" layout-align="end start">
-		</div> -->
-	<!-- </div> -->
+			<div class="cnpDeficienciesListStatusesWrapper">
+				<div
+					multi-select
+					input-model="aDeficiencyStatuses"
+					default-label="{{'deficienciesList_deficiencyStatusesDefaultLabel' | translate }}"
+					button-label="icon name"
+					item-label="icon name"
+					is-disabled="sMode == 'display'"
+					tick-property="ticked"
+					output-model="aSelectedStatuses"
+					on-close="onCloseCheckSelectedStatusesLength()"
+					helper-elements=""
+					>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
-
 		<div flex layout="row" layout-align="start center">
 			<div flex-order="1">
 				<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon cnpButtonMarginRight notSelectable" ng-click="onAddNew()">
@@ -44,11 +33,11 @@
 				<md-button class="md-button md-primary md-raised cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpEraseIcon cnpButtonMarginRight notSelectable" ng-click="onClearFiltering()">{{'global_clearFiltering' | translate}}</md-button>
 			</div>
 			<!-- <div flex flex-order="2" layout="row" layout-align="start center">
-				<md-switch  class="md-checkbox md-checkboxForList" ng-model="oListSettings.bGroupListByProjectAndPhase" ng-change="onGroupingChange()" style="margin-left: 24px;">
-				<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
-					{{'global_groupByProjectAndPhase' | translate}}
-				</div>
-				</md-switch>
+								<md-switch  class="md-checkbox md-checkboxForList" ng-model="oListSettings.bGroupListByProjectAndPhase" ng-change="onGroupingChange()" style="margin-left: 24px;">
+								<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
+													{{'global_groupByProjectAndPhase' | translate}}
+								</div>
+								</md-switch>
 			</div> -->
 			
 		</div>

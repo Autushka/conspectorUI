@@ -248,6 +248,8 @@ app.config(['$translateProvider',
                   //deficienciesList
                   deficienciesList_title: 'Deficiencies List',
                   deficienciesList_addNew: 'Add Deficiency',
+                  deficienciesList_statuses: 'Statuses:',
+                  deficienciesList_deficiencyStatusesDefaultLabel: ' Select Statuses',
                   //deficiencyDetails
                   deficiencyDetails_title: 'Deficiency Details',
                   deficiencyDetails_associatedProjectsAndPhases: 'Project and Phase:',
@@ -655,6 +657,8 @@ app.config(['$translateProvider',
                   //deficienciesList
                   deficienciesList_title: 'Liste des d\u00E9ficiences',
                   deficienciesList_addNew: 'Ajouter d\u00E9ficience',
+                  deficienciesList_statuses: 'Statuts:',
+                  deficienciesList_deficiencyStatusesDefaultLabel: ' S\u00E9lectionner les statuts',
                   //activityDetails
                   deficiencyDetails_title: 'D\u00E9tails de la d\u00E9ficience',
                   deficiencyDetails_associatedProjectsAndPhases: 'Projet et phase :',
