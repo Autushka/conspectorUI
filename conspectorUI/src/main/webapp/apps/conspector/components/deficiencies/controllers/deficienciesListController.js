@@ -201,7 +201,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     dDueDate = new Date(parseInt(aData[i].DueDate.substring(6, aData[i].DueDate.length - 2)));
                     var timeDiff = Math.abs(dCurrentDate.getTime() - dDueDate.getTime());
                     durationNumber = Math.ceil(timeDiff / (1000 * 3600 * 24)) - 1;
-                    sDueIn = $translate.use() === "en" ? durationNumber + "d" : durationNumber + "j";;
+                    sDueInLetter = $translate.use() === "en" ? "d" : "j";
                     // sDueIn = durationNumber + " d";					
                 }
 
@@ -210,7 +210,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sUnit: utilsProvider.convertStringToInt(aData[i].sUnitName),
                     sTags: aData[i].DescriptionTags,
                     sLocationTags: aData[i].LocationTags,
-                    sDueIn: sDueIn,
+                    sDueIn: durationNumber,
+                    sDueInLetter : sDueInLetter,
                     sProjectPhase: sProjectPhase,
                     sContractors: sContractors,
                     sStatusSortingSequence: sStatusSortingSequence,
