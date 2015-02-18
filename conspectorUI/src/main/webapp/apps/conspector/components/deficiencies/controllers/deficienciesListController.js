@@ -316,7 +316,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onClearFiltering = function() {
-            $scope.tableParams.$params.sorting = {};
             $scope.tableParams.$params.filter = {};
             $scope.tableParams.reload();
         };
