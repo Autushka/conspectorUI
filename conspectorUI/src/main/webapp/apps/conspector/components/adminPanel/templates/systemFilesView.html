@@ -196,12 +196,12 @@
 						</div>
 					</div>
 				</td>
-				<td data-title="'systemFiles_descriptionEN' | translate">
+				<td data-title="'global_descriptionEN' | translate">
 					<div ng-if="!reportTemplate._editMode">{{reportTemplate.sDescriptionEN}}</div>
 					<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="reportTemplate._editMode" type="text" ng-model="reportTemplate.sDescriptionEN"/>
 					<button ng-if="reportTemplate._createMode" ng-file-select accept="*.docx" ng-file-change="onReportTemplateSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
 				</td>				
-				<td data-title="'systemFiles_descriptionFR' | translate">
+				<td data-title="'global_descriptionFR' | translate">
 					<div ng-if="!reportTemplate._editMode">{{reportTemplate.sDescriptionFR}}</div>
 					<input class="cnpTextInputField cnpTextInputFieldInline" ng-if="reportTemplate._editMode" type="text" ng-model="reportTemplate.sDescriptionFR"/>
 				</td>				

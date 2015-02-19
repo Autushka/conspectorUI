@@ -215,7 +215,9 @@ app.config(['$translateProvider',
                   systemFiles_title: 'System Files',
                   systemFiles_logos: 'Logos',
                   systemFiles_logo: 'Logo',
-                  systemFiles_activityStatusIcon: 'Deficiency Status Icons',
+                  systemFiles_deficiencyStatusIcon: 'Deficiency Status Icons',
+                  systemFiles_activityTypeIcon: 'Logbook Icons',
+                  systemFiles_reportsTemplates: 'Report Templates',
                   systemFiles_Icon: 'Icon',
                   //signIn
                   signIn_userName: 'Username',
@@ -268,7 +270,7 @@ app.config(['$translateProvider',
                   deficiencyDetails_deficiencyContractorsDefaultLabel: 'Select Contractors',
                   deficiencyDetails_deficiencyPriorityDefaultLabel: 'Select Priority',
                   deficiencyDetails_deficiencyAssignedUserDefaultLabel: 'Select User',
-                  deficiencyDetails_deletionConfirmationHeader: 'You are about to delete a activity.',
+                  deficiencyDetails_deletionConfirmationHeader: 'You are about to delete a deficiency.',
                   deficiencyDetails_deletionConfirmationContent: 'Are you sure you want to proceed ?',
 
                   //unitList
@@ -580,6 +582,7 @@ app.config(['$translateProvider',
                   unitOptionValuesList_title: 'Unit Option Values',
                   //taskTypesList_title
                   taskTypesList_title: 'Task Types',
+
                   //activityTypesList_title
                   activityTypesList_title: 'Types d\u0027entr\u00E9ees du Journal',
                   //companiesList
@@ -624,7 +627,9 @@ app.config(['$translateProvider',
                   systemFiles_title: 'Fichiers syst\u00E8mes',
                   systemFiles_logos: 'Logos',
                   systemFiles_logo: 'Logo',
-                  systemFiles_activityStatusIcon: 'Ic\u00F4nes des statuts des d\u00E9ficiences',
+                  systemFiles_deficiencyStatusIcon: 'Ic\u00F4nes des statuts des d\u00E9ficiences',
+                  systemFiles_activityTypeIcon: 'Ic\u00F4nes du Logbook',
+                  systemFiles_reportsTemplates: 'Mod\u00E8les de rapports',
                   systemFiles_Icon: 'Ic\u00F4ne',
                   //signIn
                   signIn_userName: 'Nom d\u0027utilisateur',
