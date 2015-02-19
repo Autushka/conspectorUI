@@ -1,10 +1,12 @@
-viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
-    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
+viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings',
+    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings) {
         if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails") {
             historyProvider.removeHistory(); // because current view doesn't have a back button
             $rootScope.oStateParams = {}; // for backNavigation	
         }
 
+        var sCurrentUser = cacheProvider.oUserProfile.sUserName;
+        var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         $scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
             sRole: sCurrentRole,
@@ -20,11 +22,14 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 
-
         var sUnitGuid = "";
 
         if ($stateParams.sUnitGuid) {
             sUnitGuid = $stateParams.sUnitGuid;
+        }
+
+        if ($cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany) && $cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany).aSelectedStatuses) {
+            $scope.aSelectedStatuses = angular.copy($cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany).aSelectedStatuses);
         }
 
         var oDeficienciesListData = {
@@ -79,16 +84,17 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             // if ($scope.sMode === 'create') {
             //     oDeficiencyWrapper.aData[0]._deficiencyStatusGuid = aData[0].Guid;
             // }
-
-            if (oStatuses._statusesGuids.length) {
-
+            oStatuses._statusesGuids = [];
+            if ($scope.aSelectedStatuses) {
+                for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
+                    oStatuses._statusesGuids.push($scope.aSelectedStatuses[i].Guid);
+                }
             } else {
-                oStatuses._statusesGuids = [];
                 for (var i = 0; i < aData.length; i++) {
                     oStatuses._statusesGuids.push(aData[i].Guid);
                 }
-                oDeficiencyStatusesWrapper.aData[0] = angular.copy(oStatuses);
             }
+            oDeficiencyStatusesWrapper.aData[0] = angular.copy(oStatuses);
             // oStatuses._statusesGuids.push(aData[0].Guid);
             // oDeficiencyStatusesWrapper.aData[0] = angular.copy(oStatuses);
 
@@ -261,6 +267,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sFilter = sFilter + sFilterEnd;
 
 
+                } else {
+                	$scope.tableParams.reload();
+                	return;
                 }
             }
 
@@ -325,6 +334,15 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onCloseCheckSelectedStatusesLength = function() {
+            $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
+                aSelectedStatuses: $scope.aSelectedStatuses,
+            });
+           
+            if($scope.aSelectedStatuses && $scope.aSelectedStatuses.length === 0){
+            	// cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
+            	// cacheProvider.cleanEntitiesCache("oTaskStatusEntity");
+            }
+            
             loadDeficiencies();
         };
 
