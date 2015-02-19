@@ -280,10 +280,12 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
         $scope.onScrollingInSideNav = function(oEvent) {
             // console.log("scrolling propagation was stopped");
-            oEvent.stopPropagation();
+            // oEvent.stopPropagation();
+            $scope.bIsSideNaveOpen = true;
         };
 
         $scope.onPhaseAttribute = function() {
+            $scope.bIsSideNaveOpen = true;
             $scope.sSideNavHeader = $scope.oDeficiencyAttributes.oPhase.sDescription;
             var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
@@ -321,6 +323,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         };
 
         $scope.onUnitAttribute = function() {
+            $scope.bIsSideNaveOpen = true;
             if (!$scope.oDeficiencyAttributes.oUnit.bIsSelectionUnabled) {
                 return;
             }
@@ -343,6 +346,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         };
 
         $scope.onStatusAttribute = function() {
+            $scope.bIsSideNaveOpen = true;
             $scope.sSideNavHeader = $scope.oDeficiencyAttributes.oStatus.sDescription;
             var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
@@ -369,6 +373,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         };
 
         $scope.onUserAttribute = function() {
+            $scope.bIsSideNaveOpen = true;
             $scope.sSideNavHeader = $scope.oDeficiencyAttributes.oUser.sDescription;
             var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
@@ -383,16 +388,19 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         };
 
         $scope.onDescriptionTagsAttribute = function() {
+            $scope.bIsSideNaveOpen = true;
             $scope.sSideNavHeader = $scope.oDeficiencyAttributes.oDescriptionTags.sDescription;
             var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
         };
 
         $scope.onLocationTagsAttribute = function() {
+            $scope.bIsSideNaveOpen = true;
             $scope.sSideNavHeader = $scope.oDeficiencyAttributes.oLocationTags.sDescription;
             var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
         };
 
         $scope.onContractorsAttribute = function() {
+            $scope.bIsSideNaveOpen = true;
             if (!$scope.oDeficiencyAttributes.oContractors.bIsSelectionUnabled) {
                 return;
             }
@@ -415,6 +423,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         };
 
         $scope.onImagesAttribute = function() {
+            $scope.bIsSideNaveOpen = true;
             $scope.sSideNavHeader = $scope.oDeficiencyAttributes.oImages.sDescription;
             onAddImage();
         };
@@ -422,23 +431,26 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
         //find event related to md sidenav being closed
 
-        $scope.$watch(function() {
-                return $mdSidenav('deficiencyQuickAddRigthSideNav').isOpen();
-            },
-            function() {
-                // if ($scope.bIsSideNaveOpen) {
-                //     $scope.onCloseRightSideNav();
-                // }
-                $scope.bIsSideNaveOpen = ($scope.bIsSideNaveOpen) ? false : true;
-            }
-        );
+        // $scope.$watch(function() {
+        //         return $mdSidenav('deficiencyQuickAddRigthSideNav').isOpen();
+        //     },
+        //     function() {
+        //         // if ($scope.bIsSideNaveOpen) {
+        //         //     $scope.onCloseRightSideNav();
+        //         // }
+        //         $scope.bIsSideNaveOpen = ($scope.bIsSideNaveOpen) ? false : true;
+        //     }
+        // );
 
         $scope.onCloseRightSideNavWithDelay = function() {
+            $scope.bIsSideNaveOpen = false;
             $timeout($scope.onCloseRightSideNav, 250);
+            
             // $scope.bIsSideNaveOpen = false;
         };
 
         $scope.onCloseRightSideNav = function() {
+            $scope.bIsSideNaveOpen = false;
             var oSvc = $mdSidenav('deficiencyQuickAddRigthSideNav').close();
             oSvc.then(function() {
                 switch ($scope.sSideNavHeader) {
