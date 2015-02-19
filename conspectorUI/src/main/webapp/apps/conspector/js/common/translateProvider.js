@@ -293,7 +293,7 @@ app.config(['$translateProvider',
                   attachmentsList_title: 'Images and Documents',
                   //activitiesList
                   activitiesList_title: 'Logbook Entries',
-                  activitiesList_addNew: 'Add a Log',
+                  activitiesList_addNew: 'Add an Entry',
                   activitiesList_activityType: 'Type',
                   activitiesList_object: 'Object',
                   activitiesList_accounts: 'Accounts',
