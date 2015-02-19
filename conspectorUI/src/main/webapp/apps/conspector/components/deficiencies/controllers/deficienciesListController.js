@@ -129,6 +129,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             var iSortingSequence = 0;
             var sStatusSortingSequence = "";
             var sStatuseIconUrl = "";
+            var sStatusDescription = "";
             var sContractors = "";
             var iImagesNumber = 0;
             var sFileMetadataSetLastModifiedAt = "";
@@ -144,6 +145,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 sStatusSortingSequence = "";
                 iSortingSequence = 0;
                 sStatuseIconUrl = "";
+                sStatusDescription = "";
                 sContractors = "";
                 iImagesNumber = 0;
                 aImages = [];
@@ -177,8 +179,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 }
 
                 if (aData[i].TaskStatusDetails) {
-                    sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
                     sStatusSortingSequence = aData[i].TaskStatusDetails.GeneralAttributes.SortingSequence;
+                    sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
+                    sStatusDescription = $translate.use() === "en" ? aData[i].TaskStatusDetails.NameEN : aData[i].TaskStatusDetails.NameFR;
+                    if (!sStatusDescription) {
+                        sStatusDescription = aData[i].TaskStatusDetails.NameEN;
+                    }
                 }
 
                 if (aData[i].AccountDetails) {
@@ -212,22 +218,23 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     var timeDiff = Math.abs(dCurrentDate.getTime() - dDueDate.getTime());
                     durationNumber = Math.ceil(timeDiff / (1000 * 3600 * 24)) - 1;
                     sDueInLetter = $translate.use() === "en" ? "d" : "j";
-                    // sDueIn = durationNumber + " d";					
+                    // sDueIn = durationNumber + " d";                  
                 }
 
                 oDeficienciesListData.aData.push({
                     _guid: aData[i].Guid,
                     sUnit: utilsProvider.convertStringToInt(aData[i].sUnitName),
-                    sTags: aData[i].DescriptionTags,
-                    sLocationTags: aData[i].LocationTags,
+                    sTags: aData[i].DescriptionTags !== null && aData[i].DescriptionTags !== undefined ? aData[i].DescriptionTags : "",
+                    sLocationTags: aData[i].LocationTags !== null && aData[i].LocationTags !== undefined ? aData[i].LocationTags : "",
                     sDueIn: utilsProvider.convertStringToInt(durationNumber),
                     sDueInLetter: sDueInLetter,
                     sProjectPhase: sProjectPhase,
                     sContractors: sContractors,
                     sStatusSortingSequence: sStatusSortingSequence,
+                    sStatuseIconUrl: sStatuseIconUrl,
+                    sStatusDescription: sStatusDescription,
                     _unitGuid: aData[i].UnitGuid,
                     _sortingSequence: iSortingSequence,
-                    sStatuseIconUrl: sStatuseIconUrl,
                     _fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
                     _fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,
                     iImagesNumber: iImagesNumber,
@@ -268,8 +275,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
 
                 } else {
-                	$scope.tableParams.reload();
-                	return;
+                    $scope.tableParams.reload();
+                    return;
                 }
             }
 
@@ -331,12 +338,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
                 aSelectedStatuses: $scope.aSelectedStatuses,
             });
-           
-            if($scope.aSelectedStatuses && $scope.aSelectedStatuses.length === 0){
-            	// cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
-            	// cacheProvider.cleanEntitiesCache("oTaskStatusEntity");
+
+            if ($scope.aSelectedStatuses && $scope.aSelectedStatuses.length === 0) {
+                // cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
+                // cacheProvider.cleanEntitiesCache("oTaskStatusEntity");
             }
-            
+
             loadDeficiencies();
         };
 
@@ -368,7 +375,34 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
         var onReportTemplateLoaded = function(aData) {
             if (aData.length === 1) {
-                //alert(aData[0].Guid);
+                var oTasks = {
+                    tasks: [],
+                };
+                var aImagesGuids = [];
+
+                for (var i = 0; i < $scope.tableParams.data.length; i++) {
+                    for (var j = 0; j < $scope.tableParams.data[i].data.length; j++) {
+                        aImagesGuids = [];
+                        for (var k = 0; k < $scope.tableParams.data[i].data[j]._aImages.length; k++) {
+                            aImagesGuids.push({
+                                guid: $scope.tableParams.data[i].data[j]._aImages[k].Guid
+                            });
+                        }
+                        oTasks.tasks.push({
+                            unit: $scope.tableParams.data[i].data[j].sUnit != null && $scope.tableParams.data[i].data[j].sUnit != undefined ? $scope.tableParams.data[i].data[j].sUnit : "",
+                            status: $scope.tableParams.data[i].data[j].sStatusDescription != null && $scope.tableParams.data[i].data[j].sStatusDescription != undefined ? $scope.tableParams.data[i].data[j].sStatusDescription : "",
+                            contractors: $scope.tableParams.data[i].data[j].sContractors != null && $scope.tableParams.data[i].data[j].sContractors != undefined ? $scope.tableParams.data[i].data[j].sContractors : "",
+                            descriptionTags: $scope.tableParams.data[i].data[j].sTags,
+                            locationTags: $scope.tableParams.data[i].data[j].sLocationTags,
+                            dueIn: $scope.tableParams.data[i].data[j].sDueIn + $scope.tableParams.data[i].data[j].sDueInLetter,
+                            fls: aImagesGuids
+                        });
+                    }
+                }
+
+
+                var sTasks = JSON.stringify(oTasks);
+
                 alert(aData[0].Guid);
                 apiProvider.generateReport({
                     oReportParameters: {
@@ -377,7 +411,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                         converter: "",
                         processState: "generated",
                         dispatch: "download",
-                        entryName: ""
+                        entryName: "",
+                        data: sTasks
                     }
                 });
             }
