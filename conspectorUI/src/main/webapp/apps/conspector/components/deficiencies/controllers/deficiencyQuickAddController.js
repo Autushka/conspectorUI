@@ -37,6 +37,8 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         $scope.aContractors = [];
         var bContractorWasSelected = false;
 
+        $scope.bIsSideNaveOpen = false;
+
         $scope.oDeficiencyAttributes = {
             oPhase: {
                 sDescription: $translate.instant('deficiencyDetails_associatedProjectsAndPhases'), //"Project - Phase",
@@ -133,7 +135,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             $scope.oDeficiencyAttributes["oStatus"].sValue = $scope.aStatuses[0].sName;
             $scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid = $scope.aStatuses[0].sGuid;
             $scope.oDeficiencyAttributes["oStatus"].sIconUrl = $scope.aStatuses[0].sIconUrl;
-            
+
             bStatusWasSelected = true;
         };
 
@@ -345,11 +347,11 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
             // oSideNav.then(function() {
-            // 	if (!$scope.aStatuses.length) {
-            // 		apiProvider.getDeficiencyStatuses({
-            // 			onSuccess: onStatusesLoaded
-            // 		});
-            // 	}
+            //  if (!$scope.aStatuses.length) {
+            //      apiProvider.getDeficiencyStatuses({
+            //          onSuccess: onStatusesLoaded
+            //      });
+            //  }
             // });
         };
 
@@ -358,11 +360,11 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
             // oSideNav.then(function() {
-            // 	if (!$scope.aPriorities.length) {
-            // 		apiProvider.getDeficiencyPriorities({
-            // 			onSuccess: onPrioritiesLoaded
-            // 		});
-            // 	}
+            //  if (!$scope.aPriorities.length) {
+            //      apiProvider.getDeficiencyPriorities({
+            //          onSuccess: onPrioritiesLoaded
+            //      });
+            //  }
             // });
         };
 
@@ -371,12 +373,12 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
 
             // oSideNav.then(function() {
-            // 	if (!$scope.aUsers.length) {
-            // 		apiProvider.getUsers({
-            // 			sExpand: "CompanyDetails",
-            // 			onSuccess: onUsersLoaded
-            // 		});
-            // 	}
+            //  if (!$scope.aUsers.length) {
+            //      apiProvider.getUsers({
+            //          sExpand: "CompanyDetails",
+            //          onSuccess: onUsersLoaded
+            //      });
+            //  }
             // });
         };
 
@@ -417,12 +419,27 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             onAddImage();
         };
 
+
+        //find event related to md sidenav being closed
+
+        $scope.$watch(function() {
+                return $mdSidenav('deficiencyQuickAddRigthSideNav').isOpen();
+            },
+            function() {
+                // if ($scope.bIsSideNaveOpen) {
+                //     $scope.onCloseRightSideNav();
+                // }
+                $scope.bIsSideNaveOpen = ($scope.bIsSideNaveOpen) ? false : true;
+            }
+        );
+
         $scope.onCloseRightSideNavWithDelay = function() {
             $timeout($scope.onCloseRightSideNav, 250);
+            // $scope.bIsSideNaveOpen = false;
         };
 
         $scope.onCloseRightSideNav = function() {
-        	var oSvc = $mdSidenav('deficiencyQuickAddRigthSideNav').close();
+            var oSvc = $mdSidenav('deficiencyQuickAddRigthSideNav').close();
             oSvc.then(function() {
                 switch ($scope.sSideNavHeader) {
                     case $scope.oDeficiencyAttributes.oPhase.sDescription:
@@ -656,20 +673,20 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             if ($scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid) {
                 oDataForSave.PhaseGuid = $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid;
             } else {
-            	bIsDataValid = false;
+                bIsDataValid = false;
             }
             if ($scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid) {
                 oDataForSave.UnitGuid = $scope.oDeficiencyAttributes["oUnit"].sSelectedItemGuid;
             } else {
-            	bIsDataValid = false;
+                bIsDataValid = false;
             }
-			if(!bIsDataValid){
-				utilsProvider.displayMessage({
-						sText: $translate.instant("global_projectAndUnitMandatory"),
-						sType: 'error'
-					});
-				return;
-			}
+            if (!bIsDataValid) {
+                utilsProvider.displayMessage({
+                    sText: $translate.instant("global_projectAndUnitMandatory"),
+                    sType: 'error'
+                });
+                return;
+            }
 
 
             if ($scope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid) {

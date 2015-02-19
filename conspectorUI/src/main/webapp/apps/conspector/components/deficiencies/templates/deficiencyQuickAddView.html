@@ -1,4 +1,4 @@
-<section layout="column" class="cnpMobileContentWrapper">
+<section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': bIsSideNaveOpen, 'cnpMobileContentWrapper': !bIsSideNaveOpen }">
 	<div layout="row" class="cnpMobileHeader" layout-align="space-between start">
 		<!-- TO replace with sLogoUrl, was not working so I put our logo for the moment -->
 		<div layout="row" layout-align="start center">
@@ -126,8 +126,8 @@
 			</button>
 		</div>
 	</div>
-	
-	<md-sidenav ng-scroll-event="onScrollingInSideNav($event)" class="md-sidenav-right md-whiteframe-z2 cnpMobileSideNav" md-component-id="deficiencyQuickAddRigthSideNav">
+	<!-- not used right now ng-scroll-event="onScrollingInSideNav($event)" -->
+	<md-sidenav  class="md-sidenav-right md-whiteframe-z2 cnpMobileSideNav" md-component-id="deficiencyQuickAddRigthSideNav">
 	
 	<md-toolbar class="cnpMobileSideNavHeader">
 	<div layout="row" layout-align="start start" ng-click="onCloseRightSideNav()">
@@ -155,13 +155,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="cnpSidePanelWrapper cnpMobileSideNavContent cnpMobileSideNavContent" layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oUnit.sDescription">
+	<div class="cnpSidePanelWrapper" layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oUnit.sDescription">
 		<div layout="column" layout-align="start start" flex>
 			<div class="cnpMobileFilterWrapper" layout="row" layout-align="center center">
 				<input class="cnpTextInputField cnpMobileFilter" type="text" placeholder="{{'global_mobileSearchUnits' | translate}}" ng-model="sUnitFilter" ng-change="onChangeUnitFilter(sUnitFilter)"/>
 			</div>
-			<div layout="column" flex style="width: 100%;">
-				<div ng-repeat="unit in aFilteredUnits" ng-click="onSelectUnit(unit)" flex style="width: 100%;">
+			<div layout="column" flex style="width: 100%;" class="cnpMobileSideNavContentWithFilter">
+				<div ng-repeat="unit in aFilteredUnits" ng-click="onSelectUnit(unit)" style="width: 100%; min-height: 52px;">
 					<div>
 						<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': unit.bTicked, 'cnpMobileH2': !unit.bTicked }" ng-click="onCloseRightSideNavWithDelay()">{{unit.sName}}<span class="cnpMobileTickMark" ng-if="unit.bTicked">✔</span></div>
 					</div>
@@ -180,13 +180,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="cnpSidePanelWrapper cnpMobileSideNavContent cnpMobileSideNavContent" layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oContractors.sDescription">
+	<div class="cnpSidePanelWrapper" layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oContractors.sDescription">
 		<div layout="column" layout-align="start start" flex>
 			<div class="cnpMobileFilterWrapper" layout="row" layout-align="center center">
 				<input class="cnpTextInputField cnpMobileFilter" type="text" placeholder="{{'global_mobileContractors' | translate}}" ng-model="sContractorsFilter" ng-change="onChangeContractorsFilter(sContractorsFilter)"/>
 			</div>
-			<div layout="column" flex style="width: 100%;">
-				<div ng-repeat="contractor in aFilteredContractors" ng-click="onSelectContractor(contractor)" flex style="width: 100%;">
+			<div layout="column" flex style="width: 100%;" class="cnpMobileSideNavContentWithFilter">
+				<div ng-repeat="contractor in aFilteredContractors" ng-click="onSelectContractor(contractor)" style="width: 100%; min-height: 52px;">
 					<div>
 						<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': contractor.bTicked, 'cnpMobileH2': !contractor.bTicked }">{{contractor.sName}}<span class="cnpMobileTickMark" ng-if="contractor.bTicked">✔</span></div>
 					</div>
@@ -194,7 +194,7 @@
 			</div>
 		</div>
 	</div>
-	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oDescriptionTags.sDescription" class="cnpSubSection cnpMobileSideNavContent cnpMobileSideNavContentTags" flex>
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oDescriptionTags.sDescription" class="cnpSubSection cnpMobileSideNavContentTags" flex>
 		<div layout="column" flex style="width: 100%;">
 			<tags-input
 			class="cnpMobileTags"
@@ -204,7 +204,7 @@
 			</tags-input>
 		</div>
 	</div>
-	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oLocationTags.sDescription" class="cnpSubSection cnpMobileSideNavContent cnpMobileSideNavContentTags" flex>
+	<div layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oLocationTags.sDescription" class="cnpSubSection cnpMobileSideNavContentTags" flex>
 		<div layout="column" flex style="width: 100%;">
 			<tags-input
 			class="cnpMobileTags"
@@ -214,7 +214,7 @@
 			</tags-input>
 		</div>
 	</div>
-	<div class="cnpSidePanelWrapper cnpMobileSideNavContent cnpMobileSideNavContent" layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oPriority.sDescription">
+	<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-if="sSideNavHeader === oDeficiencyAttributes.oPriority.sDescription">
 		<div layout="column" layout-align="start start" flex>
 			<div layout="column" flex style="width: 100%;">
 				<div ng-repeat="priority in aPriorities" ng-click="onSelectPriority(priority)" flex style="width: 100%;">

@@ -292,7 +292,7 @@ USER MANAGEMENT
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 	// height: 100vh;
-	height: ~"calc(100vh - 40px)";
+	height: ~"calc(100vh)";
 	@media
 	only screen and (min-width: 665px){
 		overflow-y: visible;
@@ -1333,25 +1333,41 @@ ADMIN PANEL
 	background-color: @lightGreyBackgroundColor;
 	max-width: 100%;
     overflow-x: hidden;
-    overflow-y: scroll;
-	height: ~"calc(100vh - 40px)";
-	-webkit-overflow-scrolling: touch;
-
+    overflow-y: hidden;
+	height: ~"calc(100vh)";
+	// -webkit-overflow-scrolling: touch;
 }
+.cnpMobileContentWrapperWithTouch{
+	padding-top: 15px;
+	padding-left: 0px;
+	padding-right: 0px;
+	background-color: @lightGreyBackgroundColor;
+	max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+	height: ~"calc(100vh)";
+	-webkit-overflow-scrolling: touch;
+}
+
 .cnpMobileSideNav{
-	height: ~"calc(100vh - 39px)";
+	height: ~"calc(100vh)";
 }
 .cnpMobileSideNavContent{
 	overflow-y: scroll;
-	height: ~"calc(100vh - 55px - 40px)";
+	height: ~"calc(100vh - 56px)";
 	-webkit-overflow-scrolling: touch;
-	&.cnpMobileSideNavContentTags{
+}
+.cnpMobileSideNavContentWithFilter{
+	overflow-y: scroll;
+	height: ~"calc(100vh - 56px - 96px)";
+	-webkit-overflow-scrolling: touch;
+}
+.cnpMobileSideNavContentTags{
 		overflow-y: scroll;
-		height: ~"calc(100vh - 55px - 40px)";
+		height: ~"calc(100vh - 56px)";
 		-webkit-overflow-scrolling: touch;
-		margin: 0;
+		margin: 0 !important;
 		border: 0;
-	}
 }
 .cnpMobileSideNavHeader{
 	background-color: white !important;
