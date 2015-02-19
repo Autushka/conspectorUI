@@ -185,6 +185,10 @@ font-weight: 500;
 	&.cnpLinkHeaderCompany{
 		padding-left: 30px;
 	}
+	&.cnpLinkMobileLanguage{
+		padding-left: 10px;
+		padding-bottom: 10px;
+	}
 }
 .cnpLinkProjectsAndPhases{
 		color: @clickableTextColor;
@@ -287,7 +291,8 @@ USER MANAGEMENT
 	
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
-	height: 100vh;
+	// height: 100vh;
+	height: ~"calc(100vh - 40px)";
 	@media
 	only screen and (min-width: 665px){
 		overflow-y: visible;
@@ -320,7 +325,7 @@ USER MANAGEMENT
 				//For iPhone 5 (Retina Display)
 		@media
 		only screen and (min-height: @md-height) and (max-width: @sd-width){
-			min-height: 568px;
+			// min-height: 568px;
 		// min-height: @md-height;
 		// max-height: @md-height;
 		}
@@ -1329,14 +1334,24 @@ ADMIN PANEL
 	max-width: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
-	height: 100vh;
+	height: ~"calc(100vh - 40px)";
 	-webkit-overflow-scrolling: touch;
 
 }
 .cnpMobileSideNav{
+	height: ~"calc(100vh - 39px)";
+}
+.cnpMobileSideNavContent{
 	overflow-y: scroll;
-	height: 100vh;
+	height: ~"calc(100vh - 55px - 40px)";
 	-webkit-overflow-scrolling: touch;
+	&.cnpMobileSideNavContentTags{
+		overflow-y: scroll;
+		height: ~"calc(100vh - 55px - 40px)";
+		-webkit-overflow-scrolling: touch;
+		margin: 0;
+		border: 0;
+	}
 }
 .cnpMobileSideNavHeader{
 	background-color: white !important;
@@ -1370,7 +1385,13 @@ ADMIN PANEL
 	height: auto !important;
 	padding-top: 8px;
 	padding-bottom: 8px;
-	background-color: @whiteColor;
+	background-color: #fff;
+	box-shadow: none;
+	border-style: solid;
+	border-bottom-width: 2px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	border-color: @mediumGreyBackgroundColor;
 }
 .cnpMobileSaveButton{
 	width: 80% !important;

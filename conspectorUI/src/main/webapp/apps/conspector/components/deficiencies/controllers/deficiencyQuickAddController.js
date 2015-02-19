@@ -276,6 +276,11 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             });
         };
 
+        $scope.onScrollingInSideNav = function(oEvent) {
+            // console.log("scrolling propagation was stopped");
+            oEvent.stopPropagation();
+        };
+
         $scope.onPhaseAttribute = function() {
             $scope.sSideNavHeader = $scope.oDeficiencyAttributes.oPhase.sDescription;
             var oSideNav = $mdSidenav('deficiencyQuickAddRigthSideNav').toggle();
