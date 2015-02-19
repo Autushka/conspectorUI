@@ -1,18 +1,29 @@
 <md-content layout="row" layout="center start" class="cnpContentWrapper">
-<div class="cnpContent" layout="column">
-	<!-- <div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" hide-gt-md>
-		<div layout="row" layout-align="start start" >
-			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
-				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
-					{{'global_back' | translate}}
+<div class="cnpContent cnpContentActivitiesList" layout="column">
+	<div layout="row" layout-align="space-between start" class="md-default-theme cnpActivitiesListContentHeader">
+		<div layout="row" layout-align="start center" >
+<!-- 			<div class="cnpSubSectionLabel">
+				<label>
+					{{'deficienciesList_statuses' | translate}}
+				</label>
+			</div> -->
+			<div class="cnpActivitiesListTypesWrapper">
+				<div
+					multi-select
+					input-model="aActivityTypes"
+					default-label="{{'activitiesList_activityTypesDefaultLabel' | translate }}"
+					button-label="icon name"
+					item-label="icon name"
+					is-disabled="sMode == 'display'"
+					tick-property="ticked"
+					output-model="aSelectedActivityType"
+					on-close="onCloseCheckSelectedTypesLength()"
+					helper-elements=""
+					>
 				</div>
 			</div>
 		</div>
-		<div layout="row" layout-align="end start">
-
-		</div>
-	</div> -->
-	<!-- ACTION BAR -->
+	</div>
 	<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 		<div>
 			<md-button ng-if="bDisplayAddButton" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon cnpButtonMarginRight notSelectable" ng-click="onAddNew()">{{'activitiesList_addNew' | translate}}</md-button>

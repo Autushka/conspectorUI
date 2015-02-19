@@ -1,7 +1,9 @@
-viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
-    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
+viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings',
+    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings) {
         historyProvider.removeHistory(); // because current view doesn't have a back button
 
+        var sCurrentUser = cacheProvider.oUserProfile.sUserName;
+        var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         $scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
             sRole: sCurrentRole,
@@ -18,8 +20,22 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
         $rootScope.oStateParams = {}; // for backNavigation
 
+        if ($cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany) && $cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany).aSelectedActivityType) {
+            $scope.aSelectedActivityType = angular.copy($cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany).aSelectedActivityType);
+        }
+
         var oActivitiesListData = {
             aData: []
+        };
+
+        var oActivityTypesWrapper = {
+            aData: [{
+                _typesGuids: []
+            }]
+        };
+
+        var oTypes = {
+            _typesGuids: []
         };
 
         var oTableStatusFromCache = cacheProvider.getTableStatusFromCache({
@@ -51,6 +67,47 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             sGroupBy: "sProjectPhase",
             sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
         });
+
+        var onActivityTypesLoaded = function(aData) {
+            for (var i = 0; i < aData.length; i++) {
+                aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
+            }
+            aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+            // if ($scope.sMode === 'create') {
+            //     oActivityWrapper.aData[0]._activityTypeGuid = aData[0].Guid;
+            // }
+            oTypes._typesGuids = [];
+            if ($scope.aSelectedActivityType) {
+                for (var i = 0; i < $scope.aSelectedActivityType.length; i++) {
+                    oTypes._typesGuids.push($scope.aSelectedActivityType[i].Guid);
+                }
+            } else {
+                for (var i = 0; i < aData.length; i++) {
+                    oTypes._typesGuids.push(aData[i].Guid);
+                }
+            }
+            oActivityTypesWrapper.aData[0] = angular.copy(oTypes);
+            // oTypes._typesGuids.push(aData[0].Guid);
+            // oActivityTypesWrapper.aData[0] = angular.copy(oTypes);
+
+            servicesProvider.constructDependentMultiSelectArray({
+                oDependentArrayWrapper: {
+                    aData: aData
+                },
+                oParentArrayWrapper: oActivityTypesWrapper,
+                sNameEN: "NameEN",
+                sNameFR: "NameFR",
+                sDependentKey: "Guid",
+                sParentKeys: "_typesGuids",
+                sDependentIconKey: "AssociatedIconFileGuid",
+                sTargetArrayNameInParent: "aActivityTypes"
+            });
+            if (oActivityTypesWrapper.aData[0]) {
+                $scope.aActivityTypes = angular.copy(oActivityTypesWrapper.aData[0].aActivityTypes);
+            }
+
+
+        };
 
         var onActivitiesLoaded = function(aData) {
             var sProjectName = "";
@@ -144,13 +201,45 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 
         var loadActivities = function() {
             oActivitiesListData.aData = [];
+
+            var sFilter = "";
+            var sFilterStart = " and (";
+            var sFilterEnd = ")";
+
+            //need to remove this if
+            if ($scope.aSelectedActivityType) {
+                if ($scope.aSelectedActivityType.length > 0) {
+                    sFilter = sFilter + sFilterStart;
+                    for (var i = 0; i < $scope.aSelectedActivityType.length; i++) {
+                        sFilter = sFilter + "ActivityTypeGuid eq '" + $scope.aSelectedActivityType[i].Guid + "'";
+                        if (i < $scope.aSelectedActivityType.length - 1) {
+                            sFilter = sFilter + " or ";
+                        }
+                    }
+                    sFilter = sFilter + sFilterEnd;
+
+
+                } else {
+                    $scope.tableParams.reload();
+                    return;
+                }
+            }
+
             apiProvider.getActivities({
                 sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails",
+                sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
                 bShowSpinner: true,
                 onSuccess: onActivitiesLoaded
             });
         };
 
+        var loadActivityTypes = function() {
+            apiProvider.getActivityTypes({
+                bShowSpinner: false,
+                onSuccess: onActivityTypesLoaded
+            });
+        };
+        loadActivityTypes();
         loadActivities(); //load Activities
 
         $scope.onDisplay = function(oActivity) {
@@ -177,6 +266,23 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         $scope.onClearFiltering = function() {
             $scope.tableParams.$params.filter = {};
             $scope.tableParams.reload();
+        };
+
+        $scope.onCloseCheckSelectedTypesLength = function() {
+            $cookieStore.put("selectedActivityTypes" + sCurrentUser + sCompany, {
+                aSelectedActivityType: $scope.aSelectedActivityType,
+            });
+           
+            if($scope.aSelectedActivityType && $scope.aSelectedActivityType.length === 0){
+                // cacheProvider.cleanEntitiesCache("oActivityEntity");
+                // cacheProvider.cleanEntitiesCache("oTaskStatusEntity");
+            }
+            
+            loadActivities();
+        };
+
+        $scope.onSelectedTypesModified = function() {
+            $scope.onCloseCheckSelectedTypesLength();
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {

@@ -298,9 +298,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         loadDeficiencies();
 
         $scope.onDisplay = function(oDeficiency) {
-            // if(!sUnitGuid) {
-            //     sUnitGuid = oDeficiency._unitGuid;
-            // }
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
             $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
@@ -310,9 +307,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onEdit = function(oDeficiency) {
-            // if(!sUnitGuid) {
-            //     sUnitGuid = oDeficiency._unitGuid;
-            // }
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
             $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
@@ -351,9 +345,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onNavigateToUnitDetails = function(oDeficiency) {
-            // if(!sUnitGuid) {
-            //     sUnitGuid = oDeficiency._unitGuid;
-            // }
             var sUnitGuid = oDeficiency._unitGuid;
             $state.go('app.unitDetailsWrapper.unitDetails', {
                 sMode: "display",

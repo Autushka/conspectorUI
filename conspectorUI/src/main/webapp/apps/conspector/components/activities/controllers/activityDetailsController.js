@@ -537,6 +537,18 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
             }
         };
 
+        //--added
+        $scope.onCloseCheckSelectedTypesLength = function() {
+            if ($scope.aSelectedActivityType.length == 0)
+                $scope.onSelectedTypesModified();
+        };
+
+        $scope.onSelectedTypesModified = function() {
+            $scope.onDataModified();
+            $scope.oForms.activityDetailsForm.selectedActivityType.$setDirty();
+        };
+        //--end
+
         $scope.onDataModified = function() {
             bDataHasBeenModified = true;
         };
