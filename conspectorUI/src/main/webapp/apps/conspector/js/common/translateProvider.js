@@ -111,6 +111,7 @@ app.config(['$translateProvider',
                   global_mobileSearchUnits: 'Search e.g. 201',
                   global_mobileContractors: 'e.g. ABC inc.',
                   global_projectAndUnitMandatory: 'Please Provide Project, Phase and Unit',
+                  global_reporting: 'Report',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -522,6 +523,7 @@ app.config(['$translateProvider',
                   global_mobileSearchUnits: 'Recherche e.g. 201',
                   global_mobileContractors: 'e.g. ABC inc.',
                   global_projectAndUnitMandatory: 'SVP choisir projet, phase et unit\u00E9',
+                  global_reporting: 'Rapport',
 
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',
