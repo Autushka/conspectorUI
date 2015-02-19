@@ -196,6 +196,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     iImagesNumber = aImages.length;
                 }
 
+                var durationNumber = "";
+                var sDueInLetter = "";
+
                 if (aData[i].DueDate && aData[i].DueDate != "/Date(0)/") {
                     sDueDate = utilsProvider.dBDateToSting(aData[i].DueDate);
                     dDueDate = new Date(parseInt(aData[i].DueDate.substring(6, aData[i].DueDate.length - 2)));
@@ -210,8 +213,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sUnit: utilsProvider.convertStringToInt(aData[i].sUnitName),
                     sTags: aData[i].DescriptionTags,
                     sLocationTags: aData[i].LocationTags,
-                    sDueIn: durationNumber,
-                    sDueInLetter : sDueInLetter,
+                    sDueIn: utilsProvider.convertStringToInt(durationNumber),
+                    sDueInLetter: sDueInLetter,
                     sProjectPhase: sProjectPhase,
                     sContractors: sContractors,
                     sStatusSortingSequence: sStatusSortingSequence,
@@ -256,24 +259,23 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     }
                     sFilter = sFilter + sFilterEnd;
 
-                    
+
                 }
             }
 
-            // if(sUnitGuid) {
-            //     apiProvider.getDeficienciesForUnit({
-            //         bShowSpinner: true,
-            //         onSuccess: onDeficienciesLoaded,
-            //         sUnitGuid: sUnitGuid
-            //     });
-            // } else {
-                apiProvider.getDeficiencies({
-                    sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
-                    sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
-                    bShowSpinner: true,
-                    onSuccess: onDeficienciesLoaded
-                });
-            // }
+            if (sUnitGuid) {
+                sFilter = sFilter + sFilterStart;
+                sFilter = sFilter + "UnitGuid eq '" + sUnitGuid + "'";
+                sFilter = sFilter + sFilterEnd;
+            }
+
+            apiProvider.getDeficiencies({
+                sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
+                sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
+                bShowSpinner: true,
+                onSuccess: onDeficienciesLoaded
+            });
+
         };
 
         var loadDeficiencyStatuses = function() {
