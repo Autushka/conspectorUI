@@ -379,7 +379,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 				if (!bSaveAndNew) {
 					$state.go('app.unitDetailsWrapper.unitDetails', {
 						sMode: "display",
-						sUnitGuid: Guid
+						sUnitGuid: oData.Guid
 					});
 
 					$scope.oUnit._lastModifiedAt = oData.LastModifiedAt;
