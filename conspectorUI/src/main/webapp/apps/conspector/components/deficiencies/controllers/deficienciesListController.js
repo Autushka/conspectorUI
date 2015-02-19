@@ -2,6 +2,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
     function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
         if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails") {
             historyProvider.removeHistory(); // because current view doesn't have a back button
+            $rootScope.oStateParams = {}; // for backNavigation	
         }
 
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
@@ -18,7 +19,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         });
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
-        $rootScope.oStateParams = {}; // for backNavigation	
+
 
         var sUnitGuid = "";
 
