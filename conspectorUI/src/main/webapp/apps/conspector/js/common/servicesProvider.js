@@ -285,7 +285,11 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var uploadFiles = $.proxy(function(sFileMetadataSetGuid) {
 					var iCounter = 0; //needed because files are sent async
 					if (!oParameters.sParentEntityGuid) {
-						oParameters.sParentEntityGuid = "quickAddApp";
+						if(CONSTANTS.bIsHybridApplication){
+							oParameters.sParentEntityGuid = "quickAddApp";
+						}else{
+							oParameters.sParentEntityGuid = "attachmentsBeforeSave";
+						}						
 					}
 
 

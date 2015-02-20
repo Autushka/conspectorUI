@@ -37,8 +37,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 
 		$scope.sMode = $stateParams.sMode;
 
-		if ($scope.sMode === "display" || $scope.sMode === "edit") {
-			$scope.$parent.bDisplayAttachmentsList = true;
+		if ($scope.sMode === "create") {
+			$rootScope.sFileMetadataSetGuid = "";
+			$rootScope.sFileMetadataSetLastModifiedAt = "";
 		}
 
 		$scope.oDeficiency = {};
@@ -647,6 +648,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					});
 					break;
 				case "create":
+					oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
 					apiProvider.createDeficiency({
 						bShowSpinner: true,
 						aLinks: aLinks,
