@@ -31,7 +31,15 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			$scope.bIsChangePhasesAssignmentAllowed = false;
 		}
 
+		$scope.sMode = $stateParams.sMode;
+
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
+		if ($rootScope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
+            if ($scope.sMode === "display" || $scope.sMode === "edit") {
+                $scope.$parent.bDisplayActivitiesList = true;
+            }
+        }
+
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
