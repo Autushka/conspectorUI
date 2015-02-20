@@ -167,6 +167,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
 				'unitDeficiencies': {
 					templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListView.html',
 					controller: 'deficienciesListView'
+				},
+				'unitActivities': {
+					templateUrl: 'apps/conspector/components/activities/templates/activitiesListView.html',
+					controller: 'activitiesListView'
 				},				
 			}
 		});	
