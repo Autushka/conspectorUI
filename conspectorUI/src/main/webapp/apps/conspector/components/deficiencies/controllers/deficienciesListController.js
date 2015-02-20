@@ -28,6 +28,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             sUnitGuid = $stateParams.sUnitGuid;
         }
 
+        var sContractorGuid = "";
+
+        if ($stateParams.sContractorGuid) {
+            sContractorGuid = $stateParams.sContractorGuid;
+        }
+
         if ($cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany) && $cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany).aSelectedStatuses) {
             $scope.aSelectedStatuses = angular.copy($cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany).aSelectedStatuses);
         }
@@ -286,6 +292,30 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 sFilter = sFilter + sFilterEnd;
             }
 
+            // if ($scope.aSelectedStatuses) {
+            //     if ($scope.aSelectedStatuses.length > 0) {
+            //         sFilter = sFilter + sFilterStart;
+            //         for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
+            //             sFilter = sFilter + "TaskStatusGuid eq '" + $scope.aSelectedStatuses[i].Guid + "'";
+            //             if (i < $scope.aSelectedStatuses.length - 1) {
+            //                 sFilter = sFilter + " or ";
+            //             }
+            //         }
+            //         sFilter = sFilter + sFilterEnd;
+
+
+            //     } else {
+            //         $scope.tableParams.reload();
+            //         return;
+            //     }
+            // }
+
+            // if (sContractorGuid) {
+            //     sFilter = sFilter + sFilterStart;
+            //     sFilter = sFilter + "sContractorGuid eq '" + sContractorGuid + "'";
+            //     sFilter = sFilter + sFilterEnd;
+            // }
+
             apiProvider.getDeficiencies({
                 sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
                 sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
@@ -356,6 +386,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $state.go('app.unitDetailsWrapper.unitDetails', {
                 sMode: "display",
                 sUnitGuid: sUnitGuid,
+            });
+
+            var sContractorGuid = oDeficiency._unitGuid;
+            $state.go('app.unitDetailsWrapper.unitDetails', {
+                sMode: "display",
+                sContractorGuid: sContractorGuid,
             });
         };
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {

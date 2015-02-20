@@ -36,7 +36,6 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 
 		if ($scope.sMode === "display" || $scope.sMode === "edit") {
 			$scope.$parent.bDisplayAttachmentsList = true;
-			//$scope.$parent.bDisplayDeficienciesList = true;
 		}
 
 		$scope.oUnit = {
@@ -238,14 +237,6 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 				bShowSpinner: false,
 				onSuccess: onClientsLoaded
 			});
-
-			// if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails") {
-			// 	apiProvider.getUnitDeficiencies({
-			// 		sExpand: "PhaseDetails/ProjectDetails",
-			// 		bShowSpinner: false,
-			// 		onSuccess: onUnitDeficienciesLoaded
-			// 	});
-			// }
 		}
 
 		$scope.onEdit = function() {

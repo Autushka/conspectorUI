@@ -193,6 +193,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
 					templateUrl: 'apps/conspector/components/contacts/templates/contactsListView.html',
 					controller: 'contactsListView'
 				},
+				'contractorDeficiencies': {
+					templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListView.html',
+					controller: 'deficienciesListView'
+				},
 				'contractorActivities': {
 					templateUrl: 'apps/conspector/components/activities/templates/activitiesListView.html',
 					controller: 'activitiesListView'
