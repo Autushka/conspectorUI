@@ -41,8 +41,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
 
         $scope.sMode = $stateParams.sMode;
 
-        if ($scope.sMode === "display" || $scope.sMode === "edit") {
-            $scope.$parent.bDisplayAttachmentsList = true;
+        if ($scope.sMode === "create") {
+            $rootScope.sFileMetadataSetGuid = "";
+            $rootScope.sFileMetadataSetLastModifiedAt = "";
         }
 
         $scope.oActivity = {
@@ -660,6 +661,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
                     });
                     break;
                 case "create":
+                    oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;                
                     apiProvider.createActivity({
                         bShowSpinner: true,
                         oData: oDataForSave,
