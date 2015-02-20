@@ -242,13 +242,7 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
                     onSuccess: onAccountTypeLoaded
                 });
             }
-            // if ($scope.sAccountType === "Client") {
-            //     apiProvider.getClientAccountType({
-            //         bShowSpinner: false,
-            //         onSuccess: onAccountTypeLoaded
-            //     });
-            // }
-        }
+        };
 
         $scope.onEdit = function() {
             $state.go('app.clientDetailsWrapper.clientDetails', {
@@ -313,16 +307,6 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
             return aLinks;
         };
 
-        // $scope.onCloseCheckSelectedPhasesLength = function(){
-        // 	if ($scope.aSelectedPhases.length == 0)
-        // 	$scope.onSelectedPhasesModified();
-        // };
-
-        // $scope.onSelectedPhasesModified = function() {
-        // 	$scope.onDataModified();
-        // 	$scope.oForms.clientDetailsForm.selectedPhases.$setDirty();
-        // };
-
         $scope.onDataModified = function() {
             bDataHasBeenModified = true;
         };
@@ -352,9 +336,6 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
         };
 
         $scope.onSave = function(bSaveAndNew, oNavigateTo) {
-            // if ($scope.oForms.clientDetailsForm.selectedPhases) {
-            //     $scope.oForms.clientDetailsForm.selectedPhases.$setDirty(); //to display validation messages on submit press
-            // }
             if ($scope.oForms.clientDetailsForm.clientName) {
                 $scope.oForms.clientDetailsForm.clientName.$setDirty(); //to display validation messages on submit press
             }

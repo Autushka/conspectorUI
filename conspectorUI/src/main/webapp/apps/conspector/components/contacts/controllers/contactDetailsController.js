@@ -1,14 +1,15 @@
-viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
-	function($scope, $rootScope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
-		var sAccountGuid = $stateParams.sAccountGuid;
-		var sContactGuid = $stateParams.sContactGuid;
-
-		$scope.oForms = {};
-
+viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
+	function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
 		$scope.bShowParentAccountAndContactType = true;
 		$scope.bShowDescriptionTags = true;
 		$scope.bIsChangePhasesAssignmentAllowed = true;
 
+		$scope.oForms = {};
+
+		var sAccountGuid = $stateParams.sAccountGuid;
+		var sContactGuid = $stateParams.sContactGuid;
+		$scope.sMode = $stateParams.sMode;
+		
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation
 
@@ -24,14 +25,6 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
 			sEntityName: "oContact",
 			sOperation: "bDelete"
 		});
-		if ($rootScope.sCurrentStateName === "app.profileSettings.contactDetails") {
-			$scope.bDisplayDeleteButton = false;
-			$scope.bShowParentAccountAndContactType = false;
-			$scope.bShowDescriptionTags = false;
-			$scope.bIsChangePhasesAssignmentAllowed = false;
-		}
-
-		$scope.sMode = $stateParams.sMode;
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		if ($rootScope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
@@ -40,10 +33,16 @@ viewControllers.controller('contactDetailsView', ['$scope', '$rootScope', '$stat
             }
         }
 
+		if ($rootScope.sCurrentStateName === "app.profileSettings.contactDetails") {
+			$scope.bDisplayDeleteButton = false;
+			$scope.bShowParentAccountAndContactType = false;
+			$scope.bShowDescriptionTags = false;
+			$scope.bIsChangePhasesAssignmentAllowed = false;
+		}
+
 		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
-		$scope.sMode = $stateParams.sMode;
 		$scope.oContact = {
 			_aPhases: [],
 		};
