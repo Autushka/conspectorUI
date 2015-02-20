@@ -23,15 +23,18 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 
         var sUnitGuid = "";
-
         if ($stateParams.sUnitGuid) {
             sUnitGuid = $stateParams.sUnitGuid;
         }
 
         var sContractorGuid = "";
-
         if ($stateParams.sContractorGuid) {
             sContractorGuid = $stateParams.sContractorGuid;
+        }
+
+        var sActivityGuid = "";
+        if ($stateParams.sActivityGuid) {
+            sActivityGuid = $stateParams.sActivityGuid;
         }
 
         if ($cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany) && $cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany).aSelectedStatuses) {
@@ -286,11 +289,23 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 }
             }
 
-            if (sUnitGuid) {
-                sFilter = sFilter + sFilterStart;
-                sFilter = sFilter + "UnitGuid eq '" + sUnitGuid + "'";
-                sFilter = sFilter + sFilterEnd;
-            }
+            // if ($scope.aSelectedStatuses) {
+            //     if ($scope.aSelectedStatuses.length > 0) {
+            //         sFilter = sFilter + sFilterStart;
+            //         for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
+            //             sFilter = sFilter + "TaskStatusGuid eq '" + $scope.aSelectedStatuses[i].Guid + "'";
+            //             if (i < $scope.aSelectedStatuses.length - 1) {
+            //                 sFilter = sFilter + " or ";
+            //             }
+            //         }
+            //         sFilter = sFilter + sFilterEnd;
+
+
+            //     } else {
+            //         $scope.tableParams.reload();
+            //         return;
+            //     }
+            // }
 
             // if ($scope.aSelectedStatuses) {
             //     if ($scope.aSelectedStatuses.length > 0) {
@@ -310,9 +325,21 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             //     }
             // }
 
+            if (sUnitGuid) {
+                sFilter = sFilter + sFilterStart;
+                sFilter = sFilter + "UnitGuid eq '" + sUnitGuid + "'";
+                sFilter = sFilter + sFilterEnd;
+            }
+
             // if (sContractorGuid) {
             //     sFilter = sFilter + sFilterStart;
             //     sFilter = sFilter + "sContractorGuid eq '" + sContractorGuid + "'";
+            //     sFilter = sFilter + sFilterEnd;
+            // }
+
+            // if (sActivityGuid) {
+            //     sFilter = sFilter + sFilterStart;
+            //     sFilter = sFilter + "sActivityGuid eq '" + sActivityGuid + "'";
             //     sFilter = sFilter + sFilterEnd;
             // }
 
@@ -386,12 +413,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $state.go('app.unitDetailsWrapper.unitDetails', {
                 sMode: "display",
                 sUnitGuid: sUnitGuid,
-            });
-
-            var sContractorGuid = oDeficiency._unitGuid;
-            $state.go('app.unitDetailsWrapper.unitDetails', {
-                sMode: "display",
-                sContractorGuid: sContractorGuid,
             });
         };
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {

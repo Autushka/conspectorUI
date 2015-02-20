@@ -27,6 +27,8 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
         if ($rootScope.sCurrentStateName === "app.contractorDetailsWrapper.contractorDetails") {
             if ($scope.sMode === "display" || $scope.sMode === "edit") {
                 $scope.$parent.bDisplayContactsList = true;
+                $scope.$parent.bDisplayDeficienciesList = true;
+                $scope.$parent.bDisplayActivitiesList = true;
             }
             $scope.sAccountType = "Contractor";
         }
@@ -35,12 +37,6 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$s
 
         var bDataHasBeenModified = false;
         var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
-        
-        if ($rootScope.sCurrentStateName === "app.contractorDetailsWrapper.contractorDetails") {
-            if ($scope.sMode === "display" || $scope.sMode === "edit") {
-                $scope.$parent.bDisplayDeficienciesList = true;
-            }
-        }
 
         $scope.oContractor = {
             _aPhases: [],
