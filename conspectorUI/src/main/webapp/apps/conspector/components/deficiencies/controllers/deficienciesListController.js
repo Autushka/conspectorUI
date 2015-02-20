@@ -138,6 +138,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             var iSortingSequence = 0;
             var sStatusSortingSequence = "";
             var sStatuseIconUrl = "";
+            var sStatuseIconGuid = "";
             var sStatusDescription = "";
             var sContractors = "";
             var iImagesNumber = 0;
@@ -154,6 +155,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 sStatusSortingSequence = "";
                 iSortingSequence = 0;
                 sStatuseIconUrl = "";
+                sStatusIconGuid = "";
                 sStatusDescription = "";
                 sContractors = "";
                 iImagesNumber = 0;
@@ -194,6 +196,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     if (!sStatusDescription) {
                         sStatusDescription = aData[i].TaskStatusDetails.NameEN;
                     }
+                    sStatusIconGuid = aData[i].TaskStatusDetails.AssociatedIconFileGuid;
                 }
 
                 if (aData[i].AccountDetails) {
@@ -241,6 +244,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sContractors: sContractors,
                     sStatusSortingSequence: sStatusSortingSequence,
                     sStatuseIconUrl: sStatuseIconUrl,
+                    sStatusIconGuid: sStatusIconGuid,
                     sStatusDescription: sStatusDescription,
                     _unitGuid: aData[i].UnitGuid,
                     _sortingSequence: iSortingSequence,
@@ -448,6 +452,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                         oTasks.tasks.push({
                             unit: $scope.tableParams.data[i].data[j].sUnit != null && $scope.tableParams.data[i].data[j].sUnit != undefined ? $scope.tableParams.data[i].data[j].sUnit : "",
                             status: $scope.tableParams.data[i].data[j].sStatusDescription != null && $scope.tableParams.data[i].data[j].sStatusDescription != undefined ? $scope.tableParams.data[i].data[j].sStatusDescription : "",
+                            statusIconGuid: $scope.tableParams.data[i].data[j].sStatusIconGuid,
                             contractors: $scope.tableParams.data[i].data[j].sContractors != null && $scope.tableParams.data[i].data[j].sContractors != undefined ? $scope.tableParams.data[i].data[j].sContractors : "",
                             descriptionTags: $scope.tableParams.data[i].data[j].sTags,
                             locationTags: $scope.tableParams.data[i].data[j].sLocationTags,
@@ -457,10 +462,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     }
                 }
 
-
                 var sTasks = JSON.stringify(oTasks);
 
-                alert(aData[0].Guid);
                 apiProvider.generateReport({
                     oReportParameters: {
                         reportId: "deficienciesList",
