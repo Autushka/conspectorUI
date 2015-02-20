@@ -648,7 +648,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					});
 					break;
 				case "create":
-					oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
+					if($rootScope.sFileMetadataSetGuid){
+                    	oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;  				
+					}
 					apiProvider.createDeficiency({
 						bShowSpinner: true,
 						aLinks: aLinks,

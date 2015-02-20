@@ -35,9 +35,10 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
             }
         }
 
-		if ($scope.sMode === "display" || $scope.sMode === "edit") {
-			$scope.$parent.bDisplayAttachmentsList = true;
-		}
+        if ($scope.sMode === "create") {
+            $rootScope.sFileMetadataSetGuid = "";
+            $rootScope.sFileMetadataSetLastModifiedAt = "";
+        }
 
 		$scope.oUnit = {
 			aDescriptionTags: [],
@@ -422,6 +423,10 @@ viewControllers.controller('unitDetailsView', ['$scope', '$rootScope', '$state',
 					});
 					break;
 				case "create":
+					if($rootScope.sFileMetadataSetGuid){
+                    	oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;  				
+					}
+                    oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;                				
 					apiProvider.createUnit({
 						bShowSpinner: true,
 						aLinks: aLinks,

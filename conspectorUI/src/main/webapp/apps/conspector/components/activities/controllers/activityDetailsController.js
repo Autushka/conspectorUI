@@ -661,7 +661,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
                     });
                     break;
                 case "create":
-                    oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;                
+                    if($rootScope.sFileMetadataSetGuid){
+                        oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;                 
+                    }              
                     apiProvider.createActivity({
                         bShowSpinner: true,
                         oData: oDataForSave,
