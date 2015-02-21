@@ -13,8 +13,8 @@ app.config(['$mdThemingProvider', function($mdThemingProvider) {
 		'700': '00729b',
 		'800': '00678c',
 		'900': '005c7d',
-		'A100': '0088b8',
-		'A200': '0088b8',
+		'A100': '44a8cb',
+		'A200': '33a0c6',
 		'A400': '0088b8',
 		'A700': '0088b8',
 		'contrastDefaultColor': 'light', // whether, by default, text (contrast)
