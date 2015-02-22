@@ -308,53 +308,17 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 }
             }
 
-            // if ($scope.aSelectedStatuses) {
-            //     if ($scope.aSelectedStatuses.length > 0) {
-            //         sFilter = sFilter + sFilterStart;
-            //         for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
-            //             sFilter = sFilter + "TaskStatusGuid eq '" + $scope.aSelectedStatuses[i].Guid + "'";
-            //             if (i < $scope.aSelectedStatuses.length - 1) {
-            //                 sFilter = sFilter + " or ";
-            //             }
-            //         }
-            //         sFilter = sFilter + sFilterEnd;
-
-
-            //     } else {
-            //         $scope.tableParams.reload();
-            //         return;
-            //     }
-            // }
-
-            // if ($scope.aSelectedStatuses) {
-            //     if ($scope.aSelectedStatuses.length > 0) {
-            //         sFilter = sFilter + sFilterStart;
-            //         for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
-            //             sFilter = sFilter + "TaskStatusGuid eq '" + $scope.aSelectedStatuses[i].Guid + "'";
-            //             if (i < $scope.aSelectedStatuses.length - 1) {
-            //                 sFilter = sFilter + " or ";
-            //             }
-            //         }
-            //         sFilter = sFilter + sFilterEnd;
-
-
-            //     } else {
-            //         $scope.tableParams.reload();
-            //         return;
-            //     }
-            // }
-
             if (sUnitGuid) {
                 sFilter = sFilter + sFilterStart;
                 sFilter = sFilter + "UnitGuid eq '" + sUnitGuid + "'";
                 sFilter = sFilter + sFilterEnd;
             }
 
-            // if (sContractorGuid) {
-            //     sFilter = sFilter + sFilterStart;
-            //     sFilter = sFilter + "sContractorGuid eq '" + sContractorGuid + "'";
-            //     sFilter = sFilter + sFilterEnd;
-            // }
+            if (sContractorGuid) {
+                sFilter = sFilter + sFilterStart;
+                sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids)";
+                sFilter = sFilter + sFilterEnd;
+            }
 
             // if (sActivityGuid) {
             //     sFilter = sFilter + sFilterStart;

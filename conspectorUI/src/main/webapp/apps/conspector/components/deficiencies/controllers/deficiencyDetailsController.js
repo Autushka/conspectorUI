@@ -97,6 +97,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			$scope.oDeficiency._lastModifiedAt = oDeficiency.LastModifiedAt;
 			var sProject = "";
 			var sPhase = "";
+			
 
 			$rootScope.sFileMetadataSetGuid = oDeficiency.FileMetadataSetGuid;
 			if (oDeficiency.FileMetadataSetDetails) {
@@ -482,7 +483,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				for (var i = 0; i < $scope.aSelectedContractors.length; i++) {
 					sUri = "Accounts('" + $scope.aSelectedContractors[i].Guid + "')";
 					aUri.push(sUri);
+					$scope.sAccountValues = $scope.sAccountValues + $scope.aSelectedContractors[i].name + "; ";
+					$scope.sAccountGuids = $scope.sAccountGuids + $scope.aSelectedContractors[i].Guid + "; ";
 				}
+			} else {
+				$scope.sAccountValues = "";
+				$scope.sAccountGuids = "";
 			}
 
 			aLinks.push({
@@ -608,6 +614,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 			oDataForSave.Description = $scope.oDeficiency.sDescription;
 
 			
+
+			
 			if ($scope.oDeficiency.dDueDate && $scope.oDeficiency.dDueDate != "/Date(0)/") {
 				oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";
 			} else {
@@ -632,7 +640,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 				oDataForSave.UnitGuid = $scope.aSelectedUnits[0].Guid;
 			}
 
+			$scope.sAccountValues = "";
+			$scope.sAccountGuids = "";
 			aLinks = prepareLinksForSave();
+			oDataForSave.AccountValues = $scope.sAccountValues;
+			oDataForSave.AccountGuids = $scope.sAccountGuids;
 			oDataForSave.LastModifiedAt = $scope.oDeficiency._lastModifiedAt;
 
 			switch ($scope.sMode) {
