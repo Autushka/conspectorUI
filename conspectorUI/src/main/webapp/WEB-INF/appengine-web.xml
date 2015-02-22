@@ -18,17 +18,19 @@
   #L%
   -->
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-<!-- 	<application>conspector-app</application> -->
-<!-- 	<version>app-1</version> -->
+	<application>conspector-app</application>
+	<version>app-3</version>
 	
-	<application>regal-elf-770</application>
-	<version>demo-1</version>
 
-  <!--
+	
+<!-- 	<application>regal-elf-770</application> -->
+<!-- 	<version>demo-1</version> -->
+
+    <!--
     Allows App Engine to send multiple requests to one instance in parallel:
   -->
   <threadsafe>true</threadsafe>
-
+  
   <!-- Configure java.util.logging -->
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
@@ -51,4 +53,18 @@
     http://code.google.com/appengine/docs/java/config/appconfig.html#Enabling_Sessions
   -->
   <use-google-connector-j>true</use-google-connector-j>
+  
+  
+  
+<instance-class>B4</instance-class>
+
+<basic-scaling>
+    <max-instances>1</max-instances>
+    <idle-timeout>15m</idle-timeout>
+ </basic-scaling>
+  
+<!--   <manual-scaling> -->
+<!--     <instances>1</instances> -->
+<!--   </manual-scaling> -->
+  
 </appengine-web-app>
