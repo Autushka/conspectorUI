@@ -1,6 +1,9 @@
 viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings',
     function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings) {
-        historyProvider.removeHistory(); // because current view doesn't have a back button
+        if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") {
+            historyProvider.removeHistory(); // because current view doesn't have a back button
+            $rootScope.oStateParams = {}; // for backNavigation 
+        }       
 
         var sCurrentUser = cacheProvider.oUserProfile.sUserName;
         var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
@@ -18,7 +21,6 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         });
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
-        $rootScope.oStateParams = {}; // for backNavigation
 
         if ($cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany) && $cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany).aSelectedActivityType) {
             $scope.aSelectedActivityType = angular.copy($cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany).aSelectedActivityType);
@@ -294,14 +296,15 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         });
 
         $scope.$on("$destroy", function() {
-            if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
-                return;
-            }
-
-            historyProvider.addStateToHistory({
-                sStateName: $rootScope.sCurrentStateName,
-                oStateParams: $rootScope.oStateParams
-            });
+            if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
+                if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
+                    return;
+                }
+                historyProvider.addStateToHistory({
+                    sStateName: $rootScope.sCurrentStateName,
+                    oStateParams: $rootScope.oStateParams
+                });
+            }            
 
             cacheProvider.putTableStatusToCache({
                 sTableName: "activitiesList",

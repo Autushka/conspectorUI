@@ -1,6 +1,6 @@
 viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings',
     function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings) {
-        if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails") {
+        if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") {
             historyProvider.removeHistory(); // because current view doesn't have a back button
             $rootScope.oStateParams = {}; // for backNavigation	
         }
@@ -144,6 +144,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             var iImagesNumber = 0;
             var sFileMetadataSetLastModifiedAt = "";
             var aImages = [];
+            var sDescription = "";
 
             for (var i = 0; i < aData.length; i++) {
                 sProjectName = "";
@@ -160,6 +161,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 sContractors = "";
                 iImagesNumber = 0;
                 aImages = [];
+                sDescription = "";
 
                 bMatchFound = false;
 
@@ -233,6 +235,18 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     // sDueIn = durationNumber + " d";                  
                 }
 
+                if(aData[i].Description){
+                    sDescription = aData[i].Description.replace(/<style([\s\S]*?)<\/style>/gi, '');
+                    sDescription = sDescription.replace(/<script([\s\S]*?)<\/script>/gi, '');
+                    sDescription = sDescription.replace(/<\/div>/ig, '\n');
+                    sDescription = sDescription.replace(/<\/li>/ig, '\n');
+                    sDescription = sDescription.replace(/<li>/ig, '  *  ');
+                    sDescription = sDescription.replace(/<\/ul>/ig, '\n');
+                    sDescription = sDescription.replace(/<\/p>/ig, '\n');
+                    sDescription = sDescription.replace(/<br\s*[\/]?>/gi, "\n");
+                    sDescription = sDescription.replace(/<[^>]+>/ig, ''); 
+                }
+
                 oDeficienciesListData.aData.push({
                     _guid: aData[i].Guid,
                     sUnit: utilsProvider.convertStringToInt(aData[i].sUnitName),
@@ -246,6 +260,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sStatuseIconUrl: sStatuseIconUrl,
                     sStatusIconGuid: sStatusIconGuid,
                     sStatusDescription: sStatusDescription,
+                    sDescription: sDescription,
                     _unitGuid: aData[i].UnitGuid,
                     _sortingSequence: iSortingSequence,
                     _fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
@@ -457,6 +472,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                             descriptionTags: $scope.tableParams.data[i].data[j].sTags,
                             locationTags: $scope.tableParams.data[i].data[j].sLocationTags,
                             dueIn: $scope.tableParams.data[i].data[j].sDueIn + $scope.tableParams.data[i].data[j].sDueInLetter,
+                            description: $scope.tableParams.data[i].data[j].sDescription,
                             fls: aImagesGuids
                         });
                     }
@@ -486,7 +502,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.$on("$destroy", function() {
-            if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
+            if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
                 if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
                     return;
                 }

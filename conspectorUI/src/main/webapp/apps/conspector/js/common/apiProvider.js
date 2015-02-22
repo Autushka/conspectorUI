@@ -1812,7 +1812,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				// 	dispatch: "download",
 				// 	entryName: ""
 				// };
-				$.download('/conspector/xdocReportsService', oParameters.oReportParameters, "post");
+				$.download('xdocReportsService', oParameters.oReportParameters, "post");
 			}
 		}
 	}
