@@ -27,6 +27,7 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$state
         if ($rootScope.sCurrentStateName === "app.clientDetailsWrapper.clientDetails") {
             if ($scope.sMode === "display" || $scope.sMode === "edit") {
                 $scope.$parent.bDisplayContactsList = true;
+                $scope.$parent.bDisplayActivitiesList = true;
             }
             $scope.sAccountType = "Client";
         }
