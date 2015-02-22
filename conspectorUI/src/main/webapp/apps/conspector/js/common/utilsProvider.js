@@ -234,7 +234,7 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 					return aTags;
 				}
 				sTags = sTags.substring(0, sTags.length - 1); // remove last ';'
-				aTexts = sTags.split(";");
+				aTexts = sTags.split("; ");
 				for (var i = 0; i < aTexts.length; i++) {
 					aTags.push({
 						text: aTexts[i]
