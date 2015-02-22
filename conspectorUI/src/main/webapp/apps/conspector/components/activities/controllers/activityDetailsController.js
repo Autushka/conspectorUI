@@ -485,6 +485,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
                 for (var i = 0; i < $scope.aSelectedAccounts.length; i++) {
                     sUri = "Accounts('" + $scope.aSelectedAccounts[i].Guid + "')";
                     aUri.push(sUri);
+                    $scope.sAccountValues = $scope.sAccountValues + $scope.aSelectedAccounts[i].name + "; ";
+                    $scope.sAccountGuids = $scope.sAccountGuids + $scope.aSelectedAccounts[i].Guid + "; ";                
                 }
             }
             aLinks.push({
@@ -498,6 +500,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
                 for (var i = 0; i < $scope.aSelectedContacts.length; i++) {
                     sUri = "Contacts('" + $scope.aSelectedContacts[i].Guid + "')";
                     aUri.push(sUri);
+                    //storing name plus , account for now... must improve this
+                    $scope.sContactValues = $scope.sContactValues + $scope.aSelectedContacts[i].name + "; ";
+                    $scope.sContactGuids = $scope.sContactGuids + $scope.aSelectedContacts[i].Guid + "; ";
                 }
             }
             aLinks.push({
@@ -512,6 +517,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
                 for (var i = 0; i < $scope.aSelectedUnits.length; i++) {
                     sUri = "Units('" + $scope.aSelectedUnits[i].Guid + "')";
                     aUri.push(sUri);
+                    $scope.sUnitValues = $scope.sUnitValues + $scope.aSelectedUnits[i].name + "; ";
+                    $scope.sUnitGuids = $scope.sUnitGuids + $scope.aSelectedUnits[i].Guid + "; ";
                 }
             }
             aLinks.push({
@@ -645,9 +652,23 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$sta
                 oDataForSave.DueDate = "/Date(0)/";
             }
 
+           
+            $scope.sAccountValues = "";
+            $scope.sAccountGuids = "";
+            $scope.sContactValues = "";
+            $scope.sContactGuids = "";
+            $scope.sUnitValues = "";
+            $scope.sUnitGuids = "";
+            aLinks = prepareLinksForSave();
+            oDataForSave.AccountValues = $scope.sAccountValues;
+            oDataForSave.AccountGuids = $scope.sAccountGuids;
+            oDataForSave.ContactValues = $scope.sContactValues;
+            oDataForSave.ContactGuids = $scope.sContactGuids;
+            oDataForSave.UnitValues = $scope.sUnitValues;
+            oDataForSave.UnitGuids = $scope.sUnitGuids;
+
             oDataForSave.LastModifiedAt = $scope.oActivity._lastModifiedAt;
 
-            aLinks = prepareLinksForSave();
             switch ($scope.sMode) {
                 case "edit":
                     apiProvider.updateActivity({

@@ -1,5 +1,5 @@
-viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings',
-    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings) {
+viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings',
+    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings) {
         if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contactDetailsWrapper.contactDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") {
             historyProvider.removeHistory(); // because current view doesn't have a back button
             $rootScope.oStateParams = {}; // for backNavigation 
@@ -21,6 +21,27 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         });
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+
+        var sUnitGuid = "";
+        if ($stateParams.sUnitGuid) {
+            sUnitGuid = $stateParams.sUnitGuid;
+        }
+
+        var sContractorGuid = "";
+        if ($stateParams.sContractorGuid) {
+            sContractorGuid = $stateParams.sContractorGuid;
+        }
+
+        var sClientGuid = "";
+        if ($stateParams.sClientGuid) {
+            sClientGuid = $stateParams.sClientGuid;
+        }
+
+        var sContactGuid = "";
+        if ($stateParams.sContactGuid) {
+            sContactGuid = $stateParams.sContactGuid;
+        }
+       
 
         if ($cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany) && $cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany).aSelectedActivityType) {
             $scope.aSelectedActivityType = angular.copy($cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany).aSelectedActivityType);
@@ -226,6 +247,31 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                     return;
                 }
             }
+
+            if (sUnitGuid) {
+                sFilter = sFilter + sFilterStart;
+                sFilter = sFilter + "substringof('" + sUnitGuid + "', UnitGuids)";
+                sFilter = sFilter + sFilterEnd;
+            }
+
+            if (sContractorGuid) {
+                sFilter = sFilter + sFilterStart;
+                sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids)";
+                sFilter = sFilter + sFilterEnd;
+            }
+
+            if (sClientGuid) {
+                sFilter = sFilter + sFilterStart;
+                sFilter = sFilter + "substringof('" + sClientGuid + "', AccountGuids)";
+                sFilter = sFilter + sFilterEnd;
+            }
+
+            if (sContactGuid) {
+                sFilter = sFilter + sFilterStart;
+                sFilter = sFilter + "substringof('" + sContactGuid + "', ContactGuids)";
+                sFilter = sFilter + sFilterEnd;
+            }
+           
 
             apiProvider.getActivities({
                 sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails",

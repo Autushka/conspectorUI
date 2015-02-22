@@ -32,11 +32,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             sContractorGuid = $stateParams.sContractorGuid;
         }
 
-        var sActivityGuid = "";
-        if ($stateParams.sActivityGuid) {
-            sActivityGuid = $stateParams.sActivityGuid;
-        }
-
         if ($cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany) && $cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany).aSelectedStatuses) {
             $scope.aSelectedStatuses = angular.copy($cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany).aSelectedStatuses);
         }
@@ -319,12 +314,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids)";
                 sFilter = sFilter + sFilterEnd;
             }
-
-            // if (sActivityGuid) {
-            //     sFilter = sFilter + sFilterStart;
-            //     sFilter = sFilter + "sActivityGuid eq '" + sActivityGuid + "'";
-            //     sFilter = sFilter + sFilterEnd;
-            // }
 
             apiProvider.getDeficiencies({
                 sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",

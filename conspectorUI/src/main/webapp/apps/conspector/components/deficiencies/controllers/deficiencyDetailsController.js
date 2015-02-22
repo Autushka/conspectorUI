@@ -486,9 +486,6 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$rootScope', '$s
 					$scope.sAccountValues = $scope.sAccountValues + $scope.aSelectedContractors[i].name + "; ";
 					$scope.sAccountGuids = $scope.sAccountGuids + $scope.aSelectedContractors[i].Guid + "; ";
 				}
-			} else {
-				$scope.sAccountValues = "";
-				$scope.sAccountGuids = "";
 			}
 
 			aLinks.push({
