@@ -1,5 +1,5 @@
-viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings',
-    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings) {
+viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', 'utilsProvider',
+    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, utilsProvider) {
         if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contactDetailsWrapper.contactDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") {
             historyProvider.removeHistory(); // because current view doesn't have a back button
             $rootScope.oStateParams = {}; // for backNavigation 
@@ -207,9 +207,13 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 						
 						oActivitiesListData.aData.push({
 		                    sActivityType: sActivityType, 
+                            sCleanedActivityType: utilsProvider.replaceSpecialChars(sActivityType),
 		                    sObject: aData[i].Object,
+                            sCleanedObject: utilsProvider.replaceSpecialChars(aData[i].Object),
 		                    sAccounts: sAccounts,
+                            sCleanedAccounts: utilsProvider.replaceSpecialChars(sAccounts),
 		                    sContacts: sContacts,
+                            sCleanedContacts: utilsProvider.replaceSpecialChars(sContacts),
 		                    _guid: aData[i].Guid,
 		                    sProjectPhase: sProjectName + " - " + sPhaseName,
 		                    _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence,

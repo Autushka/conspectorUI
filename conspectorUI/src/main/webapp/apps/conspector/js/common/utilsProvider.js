@@ -257,7 +257,7 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 
 			replaceSpecialChars: function(sString) {//for filtering we don't care about upper/lower case....
 				var dict = {
-					'\u00e1': "a", //à
+					'\u00e0': "a", //à
 					'\u00e2': "a", //â
 					'\u00e4': "a", //ä
 					'\u00e9': "e", //é
@@ -266,11 +266,14 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 					'\u00eb': "e", //ë
 					'\u00ee': "i", //î
 					'\u00ef': "i", //ï
+					'\u00f2': "o", //ò
 					'\u00f4': "o", //ô
+					'\u00f6': "o", //ö
 					'\u00f9': "u", //ù
 					'\u00fb': "u", //û
 					'\u00fc': "u", //ü
-					'\u00e7': "c" //ç
+					'\u00e7': "c", //ç
+					'\u00f1': "n" //ñ
 				};
 				sString = sString.toString();
 

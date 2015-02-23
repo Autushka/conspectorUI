@@ -78,7 +78,7 @@
 							</div>
 						</div>
 					</td>
-					<td data-title="'global_name' | translate" sortable="'sName'" filter="{'sName': 'text'}">
+					<td data-title="'global_name' | translate" sortable="'sName'" filter="{'sCleanedName': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>
@@ -87,7 +87,7 @@
 							</div>
 						</div>
 					</td>
-					<td data-title="'global_account' | translate" sortable="'sAccountName'" filter="{'sAccountName': 'text'}" style="width: 20%;">
+					<td data-title="'global_account' | translate" sortable="'sAccountName'" filter="{'sCleanedAccountName': 'text'}" style="width: 20%;">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span><a ng-click="onNavigateToAccountDetails(contact)">

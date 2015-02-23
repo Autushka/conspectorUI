@@ -4,6 +4,8 @@ viewControllers.controller('unitDetailsWrapperView', ['$scope', '$rootScope', '$
 		$scope.bDisplayDeficienciesList = false;
 		$scope.bDisplayActivitiesList = false;
 
+		$rootScope.bDataHasBeenModified = false;
+
 		$scope.onDisplayDeficienciesList = function(){
 			$scope.bDisplayDeficienciesList === false ? $scope.bDisplayDeficienciesList = true : $scope.bDisplayDeficienciesList = false;
 		}

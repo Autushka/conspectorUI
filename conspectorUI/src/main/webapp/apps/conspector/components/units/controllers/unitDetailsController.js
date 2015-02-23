@@ -29,7 +29,6 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 		});
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-		var bDataHasBeenModified = false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
 		$scope.sMode = $stateParams.sMode;
@@ -348,7 +347,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 		};
 
 		$scope.onDataModified = function() {
-			bDataHasBeenModified = true;
+			$rootScope.bDataHasBeenModified = true;
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
@@ -370,7 +369,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 
 			oDataForSave.Guid = $scope.oUnit._guid;
 			var onSuccessCreation = function(oData) {
-				bDataHasBeenModified = false;
+				$rootScope.bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 					return;
@@ -390,7 +389,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 				}
 			};
 			var onSuccessUpdate = function(oData) {
-				bDataHasBeenModified = false;
+				$rootScope.bDataHasBeenModified = false;
 				if (oNavigateTo) {
 					$state.go(oNavigateTo.toState, oNavigateTo.toParams);
 					return;
@@ -460,12 +459,12 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 		};
 
 		var leaveView = function() {
-			bDataHasBeenModified = false;
+			$rootScope.bDataHasBeenModified = false;
 			$state.go(oNavigateToInfo.toState, oNavigateToInfo.toParams);
 		};
 
 		$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-			if (bDataHasBeenModified) {
+			if ($rootScope.bDataHasBeenModified) {
 				event.preventDefault();
 
 				oNavigateToInfo = {

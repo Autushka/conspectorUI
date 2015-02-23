@@ -122,10 +122,13 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 
                 oUnitsListData.aData.push({
                     sUnitName: utilsProvider.convertStringToInt(aData[i].Name),
+                    sCleanedUnitName: utilsProvider.replaceSpecialChars(aData[i].Name),
                     _guid: aData[i].Guid,
                     sTags: aData[i].DescriptionTags,
+                    sCleanedTags: utilsProvider.replaceSpecialChars(aData[i].DescriptionTags),
                     sProjectPhase: sProjectName + " - " + sPhaseName,
                     sClients: sClients,
+                    sCleanedClients: utilsProvider.replaceSpecialChars(sClients),
                     _sortingSequence: iSortingSequence,
                     _fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
                     _fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,

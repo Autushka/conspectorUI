@@ -41,7 +41,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         // $scope.sActivityTypeGuid = ""; 
         //for new activity creation flow
 
-        var bDataHasBeenModified = false;
         var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
         $scope.sMode = $stateParams.sMode;
@@ -563,7 +562,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         //--end
 
         $scope.onDataModified = function() {
-            bDataHasBeenModified = true;
+            $rootScope.bDataHasBeenModified = true;
         };
 
         $scope.onBack = function() {
@@ -596,7 +595,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
 
             oDataForSave.Guid = $scope.oActivity._guid;
             var onSuccessCreation = function(oData) {
-                bDataHasBeenModified = false;
+                $rootScope.bDataHasBeenModified = false;
                 if (oNavigateTo) {
                     $state.go(oNavigateTo.toState, oNavigateTo.toParams);
                     return; // to prevent switch to displaly mode otherwise navigation will be to display state and not away...
@@ -623,7 +622,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                 }
             };
             var onSuccessUpdate = function(oData) {
-                bDataHasBeenModified = false;
+                $rootScope.bDataHasBeenModified = false;
                 if (oNavigateTo) {
                     $state.go(oNavigateTo.toState, oNavigateTo.toParams);
                     return; // to prevent switch to display mode otherwise navigation will be to display state and not away...
@@ -711,12 +710,12 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         };
 
         var leaveView = function() {
-            bDataHasBeenModified = false;
+            $rootScope.bDataHasBeenModified = false;
             $state.go(oNavigateToInfo.toState, oNavigateToInfo.toParams);
         };
 
         $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-            if (bDataHasBeenModified) {
+            if ($rootScope.bDataHasBeenModified) {
                 event.preventDefault();
 
                 oNavigateToInfo = {

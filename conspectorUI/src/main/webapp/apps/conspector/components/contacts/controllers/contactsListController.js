@@ -1,5 +1,5 @@
-viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter', 'rolesSettings',
-    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter, rolesSettings) {
+viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter', 'rolesSettings', 'utilsProvider',
+    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter, rolesSettings, utilsProvider) {
         if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
             historyProvider.removeHistory(); // because current view doesn't have a back button
         }
@@ -117,6 +117,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
 
                             oContactsListData.aData.push({
                                 sName: sName,
+                                sCleanedName: utilsProvider.replaceSpecialChars(sName),
                                 sTitle: aData[i].Title,
                                 sPhone: aData[i].MobilePhone,
                                 sEmail: aData[i].Email,
@@ -125,6 +126,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                                 _accountGuid: aData[i].AccountGuid,
                                 _accountTypeName: aData[i].AccountDetails.AccountTypeDetails.NameEN,
                                 sAccountName: aData[i].AccountDetails.Name,
+                                sCleanedAccountName: utilsProvider.replaceSpecialChars(aData[i].AccountDetails.Name),
                                 _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence, //for default groups sorting                       
                             });
                         }
