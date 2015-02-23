@@ -1,85 +1,47 @@
-<div class="cnpUserGlobalManagementWrapper" layout="column" layout-align="start center">
-	<section class="cnpUserManagementWrapper">
-		<form name="oForms.signInForm" class="cnpUserManagementForm md-whiteframe-z1" novalidate ng-submit="login()" >
-			<div ng-init="setForm(signInForm)"></div>
-			<input type="password" style="display:none"/>	<!-- needed to bypass autocomplit-->
-			<div layout="row" layout-align="end start">
-				<label ng-click="onChangeLanguage()" class="cnpLink cnpLinkMobileLanguage"><div class="notSelectable">{{'signIn_languageCode' | translate}}</div></label>
-			</div>
-			<div layout="row" layout-align="center center" >
-				<img src="apps/conspector/img/conspectorLogo.svg" class="cnpConspectorLogo">
-			</div>
-			<div layout="column" layout-align="center center" >
-				<div class="cnpInputWrapper cnpInputWrapperLessMargin">
-					<input type="text" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpUsernameTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" name="userName" required>
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.signInForm.userName.$error" ng-if="oForms.signInForm.userName.$dirty || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="required">
-							{{'global_emptyFieldError' | translate}}
-						</div>
+<section layout="column" style="padding: 1rem;">
+	<form name="oForms.signInForm" novalidate ng-submit="login()" >
+		<div ng-init="setForm(signInForm)"></div>
+		<input type="password" style="display:none"/>	<!-- needed to bypass autocomplit-->
+		<div layout="row" layout-align="end start">
+			<label ng-click="onChangeLanguage()" class="cnpLink cnpLinkMobileLanguage"><div class="notSelectable">{{'signIn_languageCode' | translate}}</div></label>
+		</div>
+		<div layout="row" layout-align="center center" >
+			<img src="apps/conspector/img/conspectorLogo.svg" class="cnpConspectorLogo">
+		</div>
+		<div layout="column" layout-align="center center" >
+			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
+				<input type="text" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpUsernameTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sUserName" placeholder="{{'signIn_userName' | translate}}" name="userName" required>
+				<div class="cnpErrorMessageValidation" ng-messages="oForms.signInForm.userName.$error" ng-if="oForms.signInForm.userName.$dirty || submitted">
+					<div class="cnpErrorMessageValidationMessage" ng-message="required">
+						{{'global_emptyFieldError' | translate}}
 					</div>
 				</div>
-				<div class="cnpInputWrapper cnpInputWrapperLessMargin">
-					<input type="password" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpPasswordTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" name="password" required>
-					<div class="cnpErrorMessageValidation" ng-messages="oForms.signInForm.password.$error" ng-if="oForms.signInForm.password.$dirty || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="required">
-							{{'global_emptyFieldError' | translate}}
-						</div>
+			</div>
+			<div class="cnpInputWrapper cnpInputWrapperLessMargin">
+				<input type="password" class="md-whiteframe-z1 cnpTextInputField cnpWithAnimation cnpInputIcon cnpPasswordTextInputIcon" autocapitalize="off" autocorrect="off" ng-model="logInData.sPassword" placeholder="{{'signIn_password' | translate}}" name="password" required>
+				<div class="cnpErrorMessageValidation" ng-messages="oForms.signInForm.password.$error" ng-if="oForms.signInForm.password.$dirty || submitted">
+					<div class="cnpErrorMessageValidationMessage" ng-message="required">
+						{{'global_emptyFieldError' | translate}}
 					</div>
-				</div>
-				<div class="cnpInputWrapper">
-					<md-button type="submit" class="md-button cnpLargeButton md-primary md-raised">{{'signIn_logIn' | translate}}</md-button>
-				</div>
-				<div class="cnpInputWrapper">
-					<md-switch class="md-checkbox" ng-model="logInData.bRememberUserName">
-					<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
-						{{'signIn_rememberUserName' | translate}}
-					</div>
-					</md-switch>
-				</div>
-				<div class="cnpInputWrapper cnpInputWrapperNoMargin">
-					<label class="cnpUserManagementBottomLabel cnpLink" ng-click="onForgotPassword()">
-						<div class="notSelectable">
-							{{'signIn_forgotPassword' | translate}}
-						</div>
-					</label>
 				</div>
 			</div>
-		</form>
+			<div class="cnpInputWrapper">
+				<md-button type="submit" class="md-button cnpLargeButton md-primary md-raised">{{'signIn_logIn' | translate}}</md-button>
+			</div>
+			<div class="cnpInputWrapper">
+				<md-switch class="md-checkbox" ng-model="logInData.bRememberUserName">
+				<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
+					{{'signIn_rememberUserName' | translate}}
+				</div>
+				</md-switch>
+			</div>
+			<div class="cnpInputWrapper cnpInputWrapperNoMargin">
+				<label class="cnpUserManagementBottomLabel cnpLink" ng-click="onForgotPassword()">
+					<div class="notSelectable">
+						{{'signIn_forgotPassword' | translate}}
+					</div>
+				</label>
+			</div>
+		</div>
+	</form>
 </section>
-</div>
-<!--    <form name="userForm" novalidate>
-					<div>
-										<input type="text" ng-pattern="/^[a-zA-Z0-9]$/" ng-model="user.username" name="username" placeholder="Username" ng-required="true" />
-										<div ng-messages="userForm.username.$error">
-															<div ng-message="required" ng-if="!userForm.$pristine">
-																				username is required
-															</div>
-															<div ng-message="pattern">
-																				username must contain only letters or number
-															</div>
-										</div>
-					</div>
-					<div>
-										<input type="email" ng-model="user.email" name="email" placeholder="Email" ng-required="true" />
-										<div ng-messages="userForm.email.$error">
-															<div ng-message="required" ng-if="!userForm.$pristine">
-																				email is required
-															</div>
-															<div ng-message="email">
-																				enter a valid email
-															</div>
-										</div>
-					</div>
-					<div>
-										<input type="url" ng-model="user.url" name="url" placeholder="Url"/>
-										<div ng-messages="userForm.url.$error">
-															<div ng-message="url">
-																				enter a valid url
-															</div>
-										</div>
-					</div>
-					<div>
-										<button type="reset" ng-disabled="userForm.$pristine">Reset</button>
-										<button type="submit" ng-disabled="!userForm.$valid">Register</button>
-					</div>
-</form> -->

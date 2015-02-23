@@ -44,7 +44,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			globalAdministrator: {
 				//sInitialState: "app.deficienciesList",
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "deficiencyQuickAdd",
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",
 				bIsGlobalUserAdministrator: true,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -126,7 +126,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			systemAdministrator: {
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "deficiencyQuickAdd",				
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -209,7 +209,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 
 			contactManagementUser: {
 				sInitialState: "app.contactsList",
-				sInitialStateHybrid: "deficiencyQuickAdd",				
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,
@@ -291,7 +291,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			contactViewerUser: {
 				sInitialState: "app.contactsList",
-				sInitialStateHybrid: "deficiencyQuickAdd",				
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,

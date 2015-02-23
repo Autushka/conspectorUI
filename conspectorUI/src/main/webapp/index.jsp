@@ -60,9 +60,6 @@
 		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> <!-- was not able to find it as a bower component-->	
 		<script src="apps/conspector/js/thirdParty/jQuery.download.js"></script> <!-- small function that needed to allow ajax requests that return files (needed for dynamic reports...)-->	
 		<script src="apps/conspector/js/thirdParty/angular-scrollevents.js"></script> 
-
-
-
 			
 		<script src="apps/conspector/js/app.js"></script>
 		<script src="apps/conspector/js/constants.js"></script>
@@ -70,7 +67,9 @@
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 
-		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddController.js"></script>		
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddWrapperController.js"></script>	
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddController.js"></script>	
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddItemsListsController.js"></script>				
 
 		<script src="apps/conspector/js/common/cacheProvider.js"></script>		
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>

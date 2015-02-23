@@ -2,7 +2,7 @@
 	<div layout="row" class="cnpMobileHeader" layout-align="space-between start">
 		<!-- TO replace with sLogoUrl, was not working so I put our logo for the moment -->
 		<div layout="row" layout-align="start center">
-			<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}"/>
+			<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}" ng-cloak/>
 		</div>
 		<div layout="column" layout-align="start start">
 			<label ng-click="onLogOut()" class="cnpLink cnpLinkHeader cnpMobileTopLinks notSelectable">
@@ -17,117 +17,114 @@
 	<div class="cnpMobileListWrapper">
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onPhaseAttribute()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription">
-				{{oDeficiencyAttributes.oPhase.sDescription}}
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{$root.oDeficiencyAttributes.oPhase.sDescription}}
 			</div>
-			<label class="cnpMobileItemValue">
-				{{oDeficiencyAttributes.oPhase.sValue}}
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oDeficiencyAttributes.oPhase.sValue}}
 			</label>
 		</div>
 		</button>
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onUnitAttribute()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription">
-				{{oDeficiencyAttributes.oUnit.sDescription}}
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{$root.oDeficiencyAttributes.oUnit.sDescription}}
 			</div>
-			<label class="cnpMobileItemValue">
-				{{oDeficiencyAttributes.oUnit.sValue}}
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oDeficiencyAttributes.oUnit.sValue}}
 			</label>
 		</div>
 		</button>
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onStatusAttribute()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription">
-				{{oDeficiencyAttributes.oStatus.sDescription}}
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{$root.oDeficiencyAttributes.oStatus.sDescription}}
 			</div>
 			<div layout="row" layout-align="start center" style="margin-top: 12px;">
 				<img ng-src="{{oDeficiencyAttributes.oStatus.sIconUrl}}" class="cnpMobileStatusIcon">
-				<label class="cnpMobileItemValue cnpMobileItemValueStatus">
-					{{oDeficiencyAttributes.oStatus.sValue}}
+				<label class="cnpMobileItemValue cnpMobileItemValueStatus" ng-cloak>
+					{{$root.oDeficiencyAttributes.oStatus.sValue}}
 				</label>
 			</div>
 		</div>
 		</button>
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onContractorsAttribute()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription">
-				{{oDeficiencyAttributes.oContractors.sDescription}}
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{$root.oDeficiencyAttributes.oContractors.sDescription}}
 			</div>
-			<label class="cnpMobileItemValue">
-				{{oDeficiencyAttributes.oContractors.sValue}}
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oDeficiencyAttributes.oContractors.sValue}}
 			</label>
 		</div>
 		</button>
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onDescriptionTagsAttribute()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription">
-				{{oDeficiencyAttributes.oDescriptionTags.sDescription}}
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{$root.oDeficiencyAttributes.oDescriptionTags.sDescription}}
 			</div>
-			<label class="cnpMobileItemValue cnpMobileItemValueTags">
-				{{oDeficiencyAttributes.oDescriptionTags.sValue}}
+			<label class="cnpMobileItemValue cnpMobileItemValueTags" ng-cloak>
+				{{$root.oDeficiencyAttributes.oDescriptionTags.sValue}}
 			</label>
 		</div>
 		</button>
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onLocationTagsAttribute()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription">
-				{{oDeficiencyAttributes.oLocationTags.sDescription}}
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{$root.oDeficiencyAttributes.oLocationTags.sDescription}}
 			</div>
-			<label class="cnpMobileItemValue cnpMobileItemValueTags">
-				{{oDeficiencyAttributes.oLocationTags.sValue}}
+			<label class="cnpMobileItemValue cnpMobileItemValueTags" ng-cloak>
+				{{$root.oDeficiencyAttributes.oLocationTags.sValue}}
 			</label>
 		</div>
 		</button>
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onPriorityAttribute()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription">
-				{{oDeficiencyAttributes.oPriority.sDescription}}
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{$root.oDeficiencyAttributes.oPriority.sDescription}}
 			</div>
-			<label class="cnpMobileItemValue">
-				{{oDeficiencyAttributes.oPriority.sValue}}
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oDeficiencyAttributes.oPriority.sValue}}
 			</label>
 		</div>
 		</button>
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onUserAttribute()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription">
-				{{oDeficiencyAttributes.oUser.sDescription}}
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{$root.oDeficiencyAttributes.oUser.sDescription}}
 			</div>
-			<label class="cnpMobileItemValue">
-				{{oDeficiencyAttributes.oUser.sValue}}
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oDeficiencyAttributes.oUser.sValue}}
 			</label>
 		</div>
 		</button>
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onImagesAttribute()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription">
-				{{oDeficiencyAttributes.oImages.sDescription}}
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{$root.oDeficiencyAttributes.oImages.sDescription}}
 			</div>
-			<label class="cnpMobileItemValue">
-				{{oDeficiencyAttributes.oImages.iValue}}
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oDeficiencyAttributes.oImages.iValue}}
 			</label>
 		</div>
 		</button>
-		<!-- 		<div ng-repeat="attribute in aDeficiencyAttributes">
-			<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onOpenSideNav(attribute)">
-			<div layout="column" layout-align="center start">
-						<div class="cnpMobileItemDescription">
-															{{attribute.sDescription}}:
-						</div>
-						<label class="cnpMobileItemValue">
-															{{attribute.sValue}}
-						</label>
-			</div>
-			</button>
-		</div> -->
 		<div layout="column" layout-align="start center">
-			<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton cnpInputIcon cnpSaveIconWhiteMobile notSelectable" ng-click="onSave()">
+			<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton cnpInputIcon cnpSaveIconWhiteMobile notSelectable" ng-click="onSave()" ng-cloak>
 			{{'global_mobileSave' | translate}}
 			</button>
 		</div>
 	</div>
-	<!-- not used right now ng-scroll-event="onScrollingInSideNav($event)" -->
-	<md-sidenav ng-scroll-event="onScrollingInSideNav($event)" class="md-sidenav-right md-whiteframe-z2 cnpMobileSideNav" md-component-id="deficiencyQuickAddRigthSideNav">
+
+
+
+	
+
+
+
+
+
+
+<!-- 	<md-sidenav ng-scroll-event="onScrollingInSideNav($event)" class="md-sidenav-right md-whiteframe-z2 cnpMobileSideNav" md-component-id="deficiencyQuickAddRigthSideNav">
 	
 	<md-toolbar class="cnpMobileSideNavHeader">
 	<div layout="row" layout-align="start start" ng-click="onCloseRightSideNav()">
@@ -137,7 +134,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- <h1 class="md-toolbar-tools">{{sSideNavHeader}}</h1> -->
+
 	</md-toolbar>
 	
 	<div class="cnpSidePanelWrapper cnpMobileSideNavContent cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="sSideNavHeader === oDeficiencyAttributes.oPhase.sDescription">
@@ -147,7 +144,7 @@
 				<div layout="column" flex>
 					<div ng-repeat="phase in project.aPhases" ng-click="onSelectPhase(phase)">
 						<div>
-							<!-- <img ng-if="phase.bTicked" ng-src="apps/conspector/img/backIcon.svg" style="width:20px; height: 20px; -webkit-transform: rotate(180deg);"> -->
+
 							<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': phase.bTicked, 'cnpMobileH2': !phase.bTicked }" class="cnpMobileH2" ng-click="onCloseRightSideNavWithDelay()">{{phase.sPhaseName}}<span class="cnpMobileTickMark" ng-if="phase.bTicked">✔</span></div>
 						</div>
 					</div>
@@ -236,6 +233,6 @@
 			</div>
 		</div>
 	</div>
-	</md-sidenav>
+	</md-sidenav> -->
 	
 </section>

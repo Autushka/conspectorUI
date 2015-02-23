@@ -112,10 +112,34 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			controller: 'passwordResetView'
 		});
 
-		$stateProvider.state('deficiencyQuickAdd', {
-			url: '/deficiencyQuickAdd',
-			templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddView.html',
-			controller: 'deficiencyQuickAddView'
-		});	
+		$stateProvider.state('deficiencyQuickAddWrapper', {//abstract view without controller that contains only ngView holders
+			templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddWrapperView.html',
+			controller: 'deficiencyQuickAddWrapperView'
+		});		
+
+		$stateProvider.state('deficiencyQuickAddWrapper.quickAdd', {//state that contains subviews
+			url: '/deficiencyQuickAddWrapper',
+			views: {
+				'deficiencyQuickAdd': {
+					templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddView.html',
+					controller: 'deficiencyQuickAddView'
+				},
+				'deficiencyQuickAddItemsLists': {
+					templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddItemsListsView.html',
+					controller: 'deficiencyQuickAddItemsListsView'
+				},
+			}
+		});			
+
+		// $stateProvider.state('deficiencyQuickAdd', {
+		// 	url: '/deficiencyQuickAdd',
+		// 	templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddView.html',
+		// 	controller: 'deficiencyQuickAddView'
+		// });	
+		// $stateProvider.state('deficiencyQuickAddItemsLists', {
+		// 	url: '/deficiencyQuickAddItemsLists',
+		// 	templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddItemsListsView.html',
+		// 	controller: 'deficiencyQuickAddItemsListsView'
+		// });			
 	}
 ]);
