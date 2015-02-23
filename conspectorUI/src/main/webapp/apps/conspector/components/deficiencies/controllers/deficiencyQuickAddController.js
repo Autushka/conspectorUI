@@ -157,8 +157,6 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             }
         }
 
-
-
         var onUnitsLoaded = function(oData) {
             oData.UnitDetails.results = $filter('filter')(oData.UnitDetails.results, function(oItem, iIndex) {
                 return !oItem.GeneralAttributes.IsDeleted
@@ -168,6 +166,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 $rootScope.aUnits.push({
                     sGuid: oData.UnitDetails.results[i].Guid,
                     sName: utilsProvider.convertStringToInt(oData.UnitDetails.results[i].Name),
+                    sCleanedName: utilsProvider.replaceSpecialChars(utilsProvider.convertStringToInt(oData.UnitDetails.results[i].Name)),
                     bTicked: false
                 })
             }
@@ -186,6 +185,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 $rootScope.aContractors.push({
                     sGuid: oData.AccountDetails.results[i].Guid,
                     sName: oData.AccountDetails.results[i].Name,
+                    sCleanedName: utilsProvider.replaceSpecialChars(oData.AccountDetails.results[i].Name),
                     bTicked: false,
                 })
             }

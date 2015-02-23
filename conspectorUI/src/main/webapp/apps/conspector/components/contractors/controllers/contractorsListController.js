@@ -1,5 +1,5 @@
-viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
-    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
+viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', 'utilsProvider',
+    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, utilsProvider) {
         historyProvider.removeHistory(); // because current view doesn't have a back button
 
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
@@ -92,6 +92,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
 
                             oContractorsListData.aData.push({
                                 sContractorName: aData[i].Name,
+                                sCleanedContractorName: utilsProvider.replaceSpecialChars(aData[i].Name),
                                 sPhone: aData[i].MainPhone,
                                 sEmail: aData[i].Email,
                                 _guid: aData[i].Guid,

@@ -193,16 +193,17 @@ viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$
         };        
 
         $scope.onChangeUnitFilter = function(sFilter) {
+
             $rootScope.sUnitFilter = sFilter;
             $rootScope.aFilteredUnits = $filter('filter')($rootScope.aUnits, {
-                sName: sFilter
+                sCleanedName: sFilter
             });
         };
 
         $scope.onChangeContractorsFilter = function(sFilter) {
             $rootScope.sContractorsFilter = sFilter;
             $rootScope.aFilteredContractors = $filter('filter')($rootScope.aContractors, {
-                sName: sFilter
+                sCleanedName: sFilter
             });
         };   
     }

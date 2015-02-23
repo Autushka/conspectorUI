@@ -34,12 +34,12 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 				return "/Date(" + iDate.toString() + ")/";
 			},
 
-			dateToString: function(date,bNoTime) { // always fixed ISO date format
+			dateToString: function(date, bNoTime) { // always fixed ISO date format
 
-				if(bNoTime){
+				if (bNoTime) {
 
 				}
-				
+
 				var sFullDate = "";
 				var sDate = date.getDate().toString();
 				var sMonth = (date.getMonth() + 1).toString();
@@ -62,92 +62,92 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 				}
 				if (sMonth.length === 1) {
 					sMonth = '0' + sMonth;
-					if($translate.use() === "en") {
-						switch(sMonth) {
+					if ($translate.use() === "en") {
+						switch (sMonth) {
 							case '01':
-							sMonth = "January";
-							break;
+								sMonth = "January";
+								break;
 							case '02':
-							sMonth = "February";
-							break;
+								sMonth = "February";
+								break;
 							case '03':
-							sMonth = "March";
-							break;
+								sMonth = "March";
+								break;
 							case '04':
-							sMonth = "April";
-							break;
+								sMonth = "April";
+								break;
 							case '05':
-							sMonth = "May";
-							break;
+								sMonth = "May";
+								break;
 							case '06':
-							sMonth = "June";
-							break;
+								sMonth = "June";
+								break;
 							case '07':
-							sMonth = "July";
-							break;
+								sMonth = "July";
+								break;
 							case '08':
-							sMonth = "August";
-							break;
+								sMonth = "August";
+								break;
 							case '09':
-							sMonth = "September";
-							break;
+								sMonth = "September";
+								break;
 							case '10':
-							sMonth = "October";
-							break;
+								sMonth = "October";
+								break;
 							case '11':
-							sMonth = "November";
-							break;
+								sMonth = "November";
+								break;
 							case '12':
-							sMonth = "December";
-							break;
+								sMonth = "December";
+								break;
 						}
 					}
-					if($translate.use() === "fr") {
-						switch(sMonth) {
+					if ($translate.use() === "fr") {
+						switch (sMonth) {
 							case '01':
-							sMonth = "janvier";
-							break;
+								sMonth = "janvier";
+								break;
 							case '02':
-							sMonth = "f\u00E9vrier";
-							break;
+								sMonth = "f\u00E9vrier";
+								break;
 							case '03':
-							sMonth = "mars";
-							break;
+								sMonth = "mars";
+								break;
 							case '04':
-							sMonth = "avril";
-							break;
+								sMonth = "avril";
+								break;
 							case '05':
-							sMonth = "mai";
-							break;
+								sMonth = "mai";
+								break;
 							case '06':
-							sMonth = "juin";
-							break;
+								sMonth = "juin";
+								break;
 							case '07':
-							sMonth = "juillet";
-							break;
+								sMonth = "juillet";
+								break;
 							case '08':
-							sMonth = "ao\u00D4t";
-							break;
+								sMonth = "ao\u00D4t";
+								break;
 							case '09':
-							sMonth = "septembre";
-							break;
+								sMonth = "septembre";
+								break;
 							case '10':
-							sMonth = "octobre";
-							break;
+								sMonth = "octobre";
+								break;
 							case '11':
-							sMonth = "novembre";
-							break;
+								sMonth = "novembre";
+								break;
 							case '12':
-							sMonth = "d\u00E9cembre";
-							break;
+								sMonth = "d\u00E9cembre";
+								break;
 						}
 					}
 				}
-				if($translate.use() === "en"){
-					sFullDate =  sMonth + " " + sDate + "th " + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
+				if ($translate.use() === "en") {
+					sFullDate = sMonth + " " + sDate + "th " + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
 				}
-				if($translate.use() === "fr"){
-					sFullDate =   sDate + " " + sMonth + " " + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
+				if ($translate.use() === "fr") {
+					sFullDate = sDate + " " + sMonth + " " + sYear + " " + sHours + ":" + sMinutes + ":" + sSeconds;
 				}
 				return sFullDate;
 			},
@@ -254,6 +254,31 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 				}
 				return sTags;
 			},
+
+			replaceSpecialChars: function(sString) {//for filtering we don't care about upper/lower case....
+				var dict = {
+					'\u00e1': "a", //à
+					'\u00e2': "a", //â
+					'\u00e4': "a", //ä
+					'\u00e9': "e", //é
+					'\u00E8': "e", //è
+					'\u00ea': "e", //ê
+					'\u00eb': "e", //ë
+					'\u00ee': "i", //î
+					'\u00ef': "i", //ï
+					'\u00f4': "o", //ô
+					'\u00f9': "u", //ù
+					'\u00fb': "u", //û
+					'\u00fc': "u", //ü
+					'\u00e7': "c" //ç
+				};
+				sString = sString.toString();
+
+				sString = sString.replace(/[^A-Za-z0-9]/g, function(char) {///[^\w ]/g
+					return dict[char.toLowerCase()] || char;
+				});
+				return sString;
+			}
 		}
 	}
 ]);
