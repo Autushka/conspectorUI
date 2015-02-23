@@ -105,6 +105,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		$scope.onFilesSelected = function(aFiles, $event) {
 			var onSuccessUpload = function() { //called once for the last uploaded file
 				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
+				$rootScope.bDataHasBeenModified = true;
 				loadAttachments();
 			};
 
