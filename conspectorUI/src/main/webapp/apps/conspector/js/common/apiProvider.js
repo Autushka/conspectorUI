@@ -1804,14 +1804,6 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			generateReport: function(oParameters) {
-				// var oData = {
-				// 	reportId: "DocxProjectWithVelocityList.docx",
-				// 	fileGuid: "d38da805-e027-464a-b098-7926c86209cd",
-				// 	converter: "",
-				// 	processState: "generated",
-				// 	dispatch: "download",
-				// 	entryName: ""
-				// };
 				$.download('xdocReportsService', oParameters.oReportParameters, "post");
 			}
 		}

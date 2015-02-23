@@ -435,7 +435,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
                 apiProvider.generateReport({
                     oReportParameters: {
-                        reportId: "deficienciesList",
+                        reportId: "deficienciesList" + Math.random(),
                         fileGuid: aData[0].Guid,
                         converter: "",
                         processState: "generated",

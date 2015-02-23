@@ -40,13 +40,6 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             $rootScope.oDeficiencyAttributes = undefined;
             servicesProvider.logOut();
         };
-
-        // if (!$rootScope.aProjectsWithPhases) {
-        //     $rootScope.aProjectsWithPhases = [];
-        // }
-        // if (!$rootScope.bPhaseWasSelected) {
-        //     $rootScope.bPhaseWasSelected = false;
-        // }        
         if (!$rootScope.aUnits) {
             $rootScope.aUnits = [];
         }
@@ -391,38 +384,31 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             }
 
             $rootScope.bIsItemsListsOpen = true;
-
-            //$state.go("deficiencyQuickAddItemsLists");
         };
 
         $scope.onStatusAttribute = function() {
             $rootScope.sSideNavHeader = $rootScope.oDeficiencyAttributes.oStatus.sDescription;
             $rootScope.bIsItemsListsOpen = true;
-            //$state.go("deficiencyQuickAddItemsLists");
         };
 
         $scope.onPriorityAttribute = function() {
             $rootScope.sSideNavHeader = $rootScope.oDeficiencyAttributes.oPriority.sDescription;
             $rootScope.bIsItemsListsOpen = true;
-            //$state.go("deficiencyQuickAddItemsLists");
         };
 
         $scope.onUserAttribute = function() {
             $rootScope.sSideNavHeader = $rootScope.oDeficiencyAttributes.oUser.sDescription;
             $rootScope.bIsItemsListsOpen = true;
-            //$state.go("deficiencyQuickAddItemsLists");
         };
 
         $scope.onDescriptionTagsAttribute = function() {
             $rootScope.sSideNavHeader = $rootScope.oDeficiencyAttributes.oDescriptionTags.sDescription;
             $rootScope.bIsItemsListsOpen = true;
-            //$state.go("deficiencyQuickAddItemsLists");
         };
 
         $scope.onLocationTagsAttribute = function() {
             $rootScope.sSideNavHeader = $rootScope.oDeficiencyAttributes.oLocationTags.sDescription;
             $rootScope.bIsItemsListsOpen = true;
-            //$state.go("deficiencyQuickAddItemsLists");
         };
 
         $scope.onContractorsAttribute = function() {
@@ -436,7 +422,6 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 onSuccess: onContractorsLoaded,
             });
             $rootScope.bIsItemsListsOpen = true;
-            //$state.go("deficiencyQuickAddItemsLists");
         };
 
         $scope.onImagesAttribute = function() {

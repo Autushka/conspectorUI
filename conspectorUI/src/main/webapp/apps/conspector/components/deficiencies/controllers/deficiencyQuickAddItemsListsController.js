@@ -1,28 +1,6 @@
 viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings', '$timeout', '$mdSidenav', '$window', '$cordovaCamera',
     function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window, $cordovaCamera) {
 
-        switch ($rootScope.sSideNavHeader) {
-                // case $rootScope.oDeficiencyAttributes.oUnit.sDescription:
-                //     if (!$rootScope.aUnits.length) {
-                //         apiProvider.getPhase({
-                //             sExpand: "UnitDetails",
-                //             sKey: $rootScope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid,
-                //             onSuccess: onUnitsLoaded
-                //         });
-
-                //     }  
-                //     break;
-                // case $rootScope.oDeficiencyAttributes.oContractors.sDescription:
-                //     if (!$rootScope.aContractors.length) {
-                //         apiProvider.getPhase({
-                //             sKey: $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid,
-                //             sExpand: "AccountDetails/AccountTypeDetails",
-                //             onSuccess: onContractorsLoaded,
-                //         });  
-                //     }                  
-                //     break;
-        }
-
         $scope.onClose = function() {
             switch ($rootScope.sSideNavHeader) {
                 case $rootScope.oDeficiencyAttributes.oPhase.sDescription:
@@ -120,7 +98,6 @@ viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$
                     }
                     break;
             }
-            //$state.go("deficiencyQuickAdd");
             $rootScope.bIsItemsListsOpen = false;
         };
 
@@ -213,8 +190,6 @@ viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$
             } else {
                 $rootScope.bContractorWasSelected = true;
             }
-
-            //$timeout($scope.onClose, 300);
         };        
 
         $scope.onChangeUnitFilter = function(sFilter) {
@@ -230,9 +205,5 @@ viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$
                 sName: sFilter
             });
         };   
-
-        // $scope.onBack = function() {
-        //     $state.go("deficiencyQuickAdd");
-        // };
     }
 ]);
