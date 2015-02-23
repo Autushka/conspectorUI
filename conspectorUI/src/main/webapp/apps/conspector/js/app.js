@@ -1,6 +1,11 @@
 var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ngCordova', 'ui.bootstrap', 'ngScrollEvent']);
 var viewControllers = angular.module('viewControllers', []);
 
+app.config(['$anchorScrollProvider', function($anchorScrollProvider) {
+	$anchorScrollProvider.disableAutoScrolling();
+
+}]);
+
 app.config(['$mdThemingProvider', function($mdThemingProvider) {
 	$mdThemingProvider.definePalette('conspectorColorPalette', {
 		'50': '55b0d0',
