@@ -275,11 +275,14 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 					'\u00e7': "c", //ç
 					'\u00f1': "n" //ñ
 				};
-				sString = sString.toString();
+				if(sString !== null && sString !== undefined) {
+					sString = sString.toString();
 
-				sString = sString.replace(/[^A-Za-z0-9]/g, function(char) {///[^\w ]/g
-					return dict[char.toLowerCase()] || char;
-				});
+					sString = sString.replace(/[^A-Za-z0-9]/g, function(char) {///[^\w ]/g
+						return dict[char.toLowerCase()] || char;
+					});
+				}
+
 				return sString;
 			}
 		}
