@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS',
-	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS) {
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard',
+	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -223,6 +223,10 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 			messagesHandler: function(aMessages) {
 				var bNoErrorMessages = true;
+
+				if (CONSTANTS.bIsHybridApplication) {
+					$cordovaKeyboard.close();
+				}
 
 				for (var i = 0; i < aMessages.length; i++) {
 					var sMessageCode = aMessages[i].messageCode.toString();
@@ -647,9 +651,9 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					getData: function($defer, params) {
 						var aInitialData = oParameters.oInitialDataArrayWrapper.aData; // need a wrapper for the array here to be able to pass values by reference
 
-						var oFilters = angular.copy(params.filter());// making sure that filtering happens ignoring special chars
+						var oFilters = angular.copy(params.filter()); // making sure that filtering happens ignoring special chars
 						for (var sFilter in oFilters) {
-							if(oFilters.hasOwnProperty(sFilter)){
+							if (oFilters.hasOwnProperty(sFilter)) {
 								oFilters[sFilter] = utilsProvider.replaceSpecialChars(oFilters[sFilter]);
 							}
 						}
