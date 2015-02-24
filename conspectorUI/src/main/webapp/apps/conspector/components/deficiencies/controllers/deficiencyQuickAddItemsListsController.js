@@ -193,17 +193,16 @@ viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$
         };        
 
         $scope.onChangeUnitFilter = function(sFilter) {
-
-            $rootScope.sUnitFilter = sFilter;
+            $rootScope.sUnitFilter = utilsProvider.replaceSpecialChars(sFilter);
             $rootScope.aFilteredUnits = $filter('filter')($rootScope.aUnits, {
-                sCleanedName: sFilter
+                sCleanedName: $rootScope.sUnitFilter
             });
         };
 
         $scope.onChangeContractorsFilter = function(sFilter) {
-            $rootScope.sContractorsFilter = sFilter;
+            $rootScope.sContractorsFilter = utilsProvider.replaceSpecialChars(sFilter);
             $rootScope.aFilteredContractors = $filter('filter')($rootScope.aContractors, {
-                sCleanedName: sFilter
+                sCleanedName: $rootScope.sContractorsFilter
             });
         };   
     }

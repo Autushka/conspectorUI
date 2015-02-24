@@ -122,6 +122,22 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             };
         }
 
+        var onTaskTypesLoaded = function(aData) {
+            for (var i = 0; i < aData.length; i++) {
+                if (aData[i].NameEN === 'Deficiency') {
+                    $rootScope.sTaskTypeGuid = aData[i].Guid;
+                    break;
+                }
+            }
+        };
+
+        if (!$rootScope.sTaskTypeGuid) {
+            apiProvider.getTaskTypes({
+                bShowSpinner: false,
+                onSuccess: onTaskTypesLoaded
+            });
+        }
+
         if (!$rootScope.aProjectsWithPhases) {
             $rootScope.aProjectsWithPhases = [];
             $rootScope.bPhaseWasSelected = false;
@@ -416,11 +432,14 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 return;
             }
             $rootScope.sSideNavHeader = $rootScope.oDeficiencyAttributes.oContractors.sDescription;
-            apiProvider.getPhase({
-                sKey: $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid,
-                sExpand: "AccountDetails/AccountTypeDetails",
-                onSuccess: onContractorsLoaded,
-            });
+            if (!$rootScope.aContractors.length) {
+                apiProvider.getPhase({
+                    sKey: $scope.oDeficiencyAttributes["oPhase"].sSelectedItemGuid,
+                    sExpand: "AccountDetails/AccountTypeDetails",
+                    onSuccess: onContractorsLoaded,
+                });
+            }
+
             $rootScope.bIsItemsListsOpen = true;
         };
 
@@ -437,6 +456,8 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 for (var i = 0; i < $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.length; i++) {
                     sUri = "Accounts('" + $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids[i] + "')";
                     aUri.push(sUri);
+                    $scope.sAccountValues = $scope.sAccountValues + $scope.aSelectedContractors[i].name + "; ";
+                    $scope.sAccountGuids = $scope.sAccountGuids + $scope.aSelectedContractors[i].Guid + "; ";
                 }
             }
 
@@ -497,8 +518,15 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 });
                 return;
             }
+
+            if ($rootScope.sTaskTypeGuid) {
+                oDataForSave.TaskTypeGuid = $rootScope.sTaskTypeGuid;
+            }
             if ($rootScope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid) {
                 oDataForSave.TaskStatusGuid = $rootScope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid;
+            }
+            if ($rootScope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid) {
+                oDataForSave.PriorityGuid = $rootScope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid;
             }
             if ($rootScope.oDeficiencyAttributes["oUser"].sSelectedItemGuid) {
                 oDataForSave.UserName = $rootScope.oDeficiencyAttributes["oUser"].sSelectedItemGuid;
@@ -512,7 +540,14 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
             oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
 
+            $scope.sAccountValues = "";
+            $scope.sAccountGuids = "";
+
             var aLinks = prepareLinksForSave();
+
+            oDataForSave.AccountValues = $scope.sAccountValues;
+            oDataForSave.AccountGuids = $scope.sAccountGuids;
+
             apiProvider.createDeficiency({
                 bShowSpinner: true,
                 aLinks: aLinks,

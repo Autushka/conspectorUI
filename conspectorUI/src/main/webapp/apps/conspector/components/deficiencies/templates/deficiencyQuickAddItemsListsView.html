@@ -52,7 +52,7 @@
 	<div class="cnpSidePanelWrapper" layout="row" layout-align="start start" ng-show="$root.sSideNavHeader === $root.oDeficiencyAttributes.oContractors.sDescription">
 		<div layout="column" layout-align="start start" flex>
 			<div class="cnpMobileFilterWrapper" layout="row" layout-align="center center">
-				<input class="cnpTextInputField cnpMobileFilter" type="text" placeholder="{{'global_mobileContractors' | translate}}" ng-model="sContractorsFilter" ng-change="onChangeContractorsFilter(sContractorsFilter)"/>
+				<input class="cnpTextInputField cnpMobileFilter" type="text" placeholder="{{'global_mobileContractors' | translate}}" ng-model="$root.sContractorsFilter" ng-change="onChangeContractorsFilter($root.sContractorsFilter)"/>
 			</div>
 			<div layout="column" flex style="width: 100%;" class="cnpMobileSideNavContentWithFilter">
 				<div ng-repeat="contractor in $root.aFilteredContractors" ng-click="onSelectContractor(contractor)" style="width: 100%; min-height: 52px;">
