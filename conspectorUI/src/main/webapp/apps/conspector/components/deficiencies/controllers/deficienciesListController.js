@@ -210,10 +210,10 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
                     if (aData[i].FileMetadataSetDetails.FileMetadataDetails) {
                         for (var j = 0; j < aData[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
-                            if(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType){
+                            if (aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType) {
                                 if (aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false) {
                                     aImages.push(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
-                                }                                
+                                }
                             }
                         }
                     }
@@ -232,7 +232,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     // sDueIn = durationNumber + " d";                  
                 }
 
-                if(aData[i].Description){
+                if (aData[i].Description) {
                     sDescription = aData[i].Description.replace(/<style([\s\S]*?)<\/style>/gi, '');
                     sDescription = sDescription.replace(/<script([\s\S]*?)<\/script>/gi, '');
                     sDescription = sDescription.replace(/<\/div>/ig, '\n');
@@ -241,7 +241,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sDescription = sDescription.replace(/<\/ul>/ig, '\n');
                     sDescription = sDescription.replace(/<\/p>/ig, '\n');
                     sDescription = sDescription.replace(/<br\s*[\/]?>/gi, "\n");
-                    sDescription = sDescription.replace(/<[^>]+>/ig, ''); 
+                    sDescription = sDescription.replace(/<[^>]+>/ig, '');
                 }
 
                 oDeficienciesListData.aData.push({
@@ -368,6 +368,13 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $scope.tableParams.reload();
         };
 
+        // $scope.onDisplayDeficienciesList = function() {
+        //     if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails" || $rootScope.sCurrentStateName === "app.contractorDetailsWrapper.contractorDetails") {
+        //         $scope.$parent.onDisplayDeficienciesList();
+        //     }
+        // };
+
+
         $scope.onCloseCheckSelectedStatusesLength = function() {
             $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
                 aSelectedStatuses: $scope.aSelectedStatuses,
@@ -442,7 +449,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
                 apiProvider.generateReport({
                     oReportParameters: {
-                        reportId: sCompany + "-" + $scope.sReportName + "-" + Math.round(1000000*Math.random()),
+                        reportId: sCompany + "-" + $scope.sReportName + "-" + Math.round(1000000 * Math.random()),
                         fileGuid: aData[0].Guid,
                         converter: "",
                         processState: "generated",
@@ -456,9 +463,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
         $scope.onReports = function() {
             $scope.sReportName = $translate.use() === "en" ? "DeficienciesList" : "ListeDeDeficiences";
-            debugger
             apiProvider.getFileMetadatas({
-                sFilter: "CatalogId eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and DescriptionEN eq '" + $scope.sReportName +"'",
+                sFilter: "CatalogId eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and DescriptionEN eq '" + $scope.sReportName + "'",
                 onSuccess: onReportTemplateLoaded
             });
         };

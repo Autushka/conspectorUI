@@ -34,7 +34,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 		$rootScope.sMode = $stateParams.sMode;
 
 		if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails") {
-            if ($rootScope.sMode === "display" || $rootScope.sMode === "edit") {
+            if ($scope.sMode === "display" || $scope.sMode === "edit") {
                 $scope.$parent.bDisplayDeficienciesList = true;
                 $scope.$parent.bDisplayActivitiesList = true;
             }
