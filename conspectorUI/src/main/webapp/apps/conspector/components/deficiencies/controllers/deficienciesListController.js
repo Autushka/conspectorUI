@@ -436,9 +436,11 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
                 var sTasks = JSON.stringify(oTasks);
 
+
+
                 apiProvider.generateReport({
                     oReportParameters: {
-                        reportId: "deficienciesList" + Math.random(),
+                        reportId: sCompany + "-" + $scope.sReportName + "-" + Math.round(1000000*Math.random()),
                         fileGuid: aData[0].Guid,
                         converter: "",
                         processState: "generated",
@@ -451,8 +453,10 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onReports = function() {
+            $scope.sReportName = $translate.use() === "en" ? "DeficienciesList" : "ListeDeDeficiences";
+            debugger
             apiProvider.getFileMetadatas({
-                sFilter: "CatalogId eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and DescriptionEN eq 'deficienciesList'",
+                sFilter: "CatalogId eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and DescriptionEN eq '" + $scope.sReportName +"'",
                 onSuccess: onReportTemplateLoaded
             });
         };
