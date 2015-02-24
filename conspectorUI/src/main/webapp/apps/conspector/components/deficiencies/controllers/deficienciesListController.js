@@ -210,8 +210,10 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
                     if (aData[i].FileMetadataSetDetails.FileMetadataDetails) {
                         for (var j = 0; j < aData[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
-                            if (aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false) {
-                                aImages.push(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
+                            if(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType){
+                                if (aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false) {
+                                    aImages.push(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
+                                }                                
                             }
                         }
                     }

@@ -3,7 +3,7 @@
 		<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 			<div>
 				<md-button class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="clickUploadButton()">{{'global_upload' | translate}}</md-button>
-				<button style="display: none;" id="uploadFilesToDeficiency" ng-file-select accept="image/*,.pdf" ng-multiple="true" ng-file-change="onFilesSelected($files, $event)">{{'global_upload' | translate}}</button>
+				<button style="display: none;" id="uploadFilesToDeficiency" ng-file-select accept="image/*,.pdf,.docx,.doc,.xls" ng-multiple="true" ng-file-change="onFilesSelected($files, $event)">{{'global_upload' | translate}}</button>
 			</div>
 			<div layout="row" layout-align="end start">
 				<label class="cnpContentTitle notSelectable">
