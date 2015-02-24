@@ -329,54 +329,6 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             });
         }
 
-        var onAddImage = function() {
-            var options = {
-                quality: 80,
-                destinationType: Camera.DestinationType.DATA_URL,
-                sourceType: Camera.PictureSourceType.CAMERA,
-                allowEdit: true,
-                encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 500,
-                targetHeight: 500,
-                popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: false
-            };
-
-            $cordovaCamera.getPicture(options).then(function(imageData) {
-                var onSuccessUpload = function() {
-                    $scope.$apply(function() {
-                        $rootScope.$emit('UNLOAD');
-                        $rootScope.oDeficiencyAttributes.oImages.iValue++;
-                    });
-                }
-                imageData = "data:image/jpeg;base64," + imageData; //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
-
-                var byteString = atob(imageData.split(',')[1]);
-                var ab = new ArrayBuffer(byteString.length);
-                var ia = new Uint8Array(ab);
-                for (var i = 0; i < byteString.length; i++) {
-                    ia[i] = byteString.charCodeAt(i);
-                }
-
-                var oBlob = new Blob([ab], {
-                    type: 'image/jpeg'
-                });
-
-                var formData = new FormData();
-                formData.append('blob', oBlob, "quickAddAttachment");
-
-                servicesProvider.uploadAttachmentsForEntity({
-                    sPath: "Tasks",
-                    aFiles: [formData],
-                    sParentEntityGuid: "",
-                    sParentEntityFileMetadataSetGuid: $rootScope.sFileMetadataSetGuid,
-                    onSuccess: onSuccessUpload
-                });
-            }, function(err) {
-
-            });
-        };
-
         $scope.onPhaseAttribute = function() {
             $rootScope.sSideNavHeader = $rootScope.oDeficiencyAttributes.oPhase.sDescription;
 
@@ -444,7 +396,10 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         };
 
         $scope.onImagesAttribute = function() {
-            onAddImage();
+           // onAddImage();
+            $rootScope.sSideNavHeader = $rootScope.oDeficiencyAttributes.oImages.sDescription;
+
+            $rootScope.bIsItemsListsOpen = true;           
         };
 
         var prepareLinksForSave = function() { // link contact to phases

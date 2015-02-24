@@ -105,3 +105,20 @@
 			</div>
 		</div>
 	</div>	
+	<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="$root.sSideNavHeader === $root.oDeficiencyAttributes.oImages.sDescription">
+		<div layout="column" layout-align="start start" flex>
+			<div layout="column" flex style="width: 100%;">
+				<div ng-click="onUseCamera()" flex style="width: 100%;">
+					<div>
+						<div layout="row" layout-align="start center"  ng-class="{'cnpMobileH2'}" ng-click="onCloseRightSideNavWithDelay()">{{'global_useCamera' | translate}}</div>
+					</div>					
+					
+				</div>
+				<div ng-click="onUseLibrary()" flex style="width: 100%;">
+					<div>
+						<div layout="row" layout-align="start center"  ng-class="{'cnpMobileH2'}" ng-click="onCloseRightSideNavWithDelay()">{{'global_useLibrary' | translate}}</div>
+					</div>						
+				</div>				
+			</div>
+		</div>
+	</div>		

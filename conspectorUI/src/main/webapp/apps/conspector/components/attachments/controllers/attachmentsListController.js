@@ -73,6 +73,10 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 					sMediaType = "PDF";
 					iSortingSequence = 2;
 				}
+				if(!sMediaType){
+					sMediaType = "Other";
+					iSortingSequence = 3;					
+				}
 				oAttachmentsListData.aData.push({
 					_guid: oData.FileMetadataDetails.results[i].Guid,
 					sMediaType: sMediaType,
@@ -103,9 +107,15 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		});
 
 		$scope.onFilesSelected = function(aFiles, $event) {
+			var onProgress = function($event) {
+				$scope.iUploadProgress = parseInt(100.0 * $event.loaded / $event.total);
+				$scope.iUploadProgress = $scope.iUploadProgress + "%";
+				//console.log('progress: ' + progressPercentage + '% ' + $event.config.file.name);
+			};
 			var onSuccessUpload = function() { //called once for the last uploaded file
+				$scope.iUploadProgress = "";
 				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
-				if($rootScope.sMode === "create") {
+				if ($rootScope.sMode === "create") {
 					$rootScope.bDataHasBeenModified = true;
 				}
 				loadAttachments();
@@ -116,7 +126,8 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				aFiles: aFiles,
 				sParentEntityGuid: sParentEntityGuid,
 				sParentEntityFileMetadataSetGuid: $rootScope.sFileMetadataSetGuid,
-				onSuccess: onSuccessUpload
+				onSuccess: onSuccessUpload,
+				onProgress: onProgress,
 			});
 		};
 

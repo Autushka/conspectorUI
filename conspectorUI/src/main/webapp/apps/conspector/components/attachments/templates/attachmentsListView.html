@@ -1,9 +1,11 @@
 <div layout="row" layout="center start" class="cnpContentWrapper">
 	<div class="cnpContent" layout="column">
 		<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
-			<div>
+			<div layout="row">
 				<md-button class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="clickUploadButton()">{{'global_upload' | translate}}</md-button>
+
 				<button style="display: none;" id="uploadFilesToDeficiency" ng-file-select accept="image/*,.pdf,.docx,.doc,.xls" ng-multiple="true" ng-file-change="onFilesSelected($files, $event)">{{'global_upload' | translate}}</button>
+				<div style="margin-left: 2rem;">{{iUploadProgress}}</div>
 			</div>
 			<div layout="row" layout-align="end start">
 				<label class="cnpContentTitle notSelectable">
@@ -12,6 +14,11 @@
 			</div>
 		</div>
 		<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+<!-- 			<div style="width: 100%; position: fixed;"> 
+				<md-progress-linear class="md-accent" md-mode="determinate" value="30"></md-progress-linear>
+			</div>	
+ -->
+
 			<table ng-table="tableParams" class="cnpNgTable" id="attachmentsList" show-filter="true">
 				<tbody ng-repeat="group in $groups">
 					<tr class="ng-table-group notSelectable" >

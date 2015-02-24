@@ -207,6 +207,65 @@ viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$
             $rootScope.aFilteredContractors = $filter('filter')($rootScope.aContractors, {
                 sCleanedName: $rootScope.sContractorsFilter
             });
-        };   
+        }; 
+
+        $scope.onAddImage = function(sImageSource) {
+            $rootScope.bIsItemsListsOpen = false;
+            var options = {
+                quality: 80,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: sImageSource, //Camera.PictureSourceType.CAMERA, //SAVEDPHOTOALBUM
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 500,
+                targetHeight: 500,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false
+            };
+
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                var onSuccessUpload = function() {
+                    $scope.$apply(function() {
+                        $rootScope.$emit('UNLOAD');
+                        $rootScope.oDeficiencyAttributes.oImages.iValue++;
+
+
+                    });
+                }
+                imageData = "data:image/jpeg;base64," + imageData; //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
+
+                var byteString = atob(imageData.split(',')[1]);
+                var ab = new ArrayBuffer(byteString.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                }
+
+                var oBlob = new Blob([ab], {
+                    type: 'image/jpeg'
+                });
+
+                var formData = new FormData();
+                formData.append('blob', oBlob, "quickAddAttachment");
+
+                servicesProvider.uploadAttachmentsForEntity({
+                    sPath: "Tasks",
+                    aFiles: [formData],
+                    sParentEntityGuid: "",
+                    sParentEntityFileMetadataSetGuid: $rootScope.sFileMetadataSetGuid,
+                    onSuccess: onSuccessUpload
+                });
+            }, function(err) {
+
+            });
+        };        
+
+        $scope.onUseCamera  = function(){
+             $scope.onAddImage(Camera.PictureSourceType.CAMERA);
+        };
+
+        $scope.onUseLibrary  = function(){
+            $scope.onAddImage(Camera.PictureSourceType.SAVEDPHOTOALBUM);
+        };        
     }
 ]);

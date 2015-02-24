@@ -24,9 +24,14 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					var bNoErrorMessages = this.messagesHandler(oData.messages);
 					if (bNoErrorMessages) {
 						if (bRememberUserName) {
-							$cookieStore.put("userName", {
+							var oObjToStore = {
 								sUserName: oParameters.userName
-							});
+							};
+
+							if(CONSTANTS.bIsHybridApplication){
+								oObjToStore.sPassword: oParameters.password
+							}
+							$cookieStore.put("userName", oObjToStore);
 						} else {
 							$cookieStore.remove("userName");
 						}
@@ -325,6 +330,12 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 							oUpload = $upload.upload({
 								url: sPath,
 								file: file,
+							});
+
+							oUpload.progress(function($event) {
+								if (oParameters.onProgress) {
+									oParameters.onProgress($event);
+								}
 							});
 
 							oUpload.success(function() {
