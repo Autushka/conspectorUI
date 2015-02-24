@@ -1,7 +1,10 @@
-viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings', '$timeout', '$mdSidenav', '$window', '$cordovaCamera',
-    function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window, $cordovaCamera) {
+viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings', '$timeout', '$mdSidenav', '$window', '$cordovaCamera', '$cordovaKeyboard',
+    function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window, $cordovaCamera, $cordovaKeyboard) {
 
         $scope.onClose = function() {
+            if(CONSTANTS.bIsHybridApplication){
+                $cordovaKeyboard.close();
+            }
             switch ($rootScope.sSideNavHeader) {
                 case $rootScope.oDeficiencyAttributes.oPhase.sDescription:
                     if ($rootScope.bPhaseWasSelected) {
