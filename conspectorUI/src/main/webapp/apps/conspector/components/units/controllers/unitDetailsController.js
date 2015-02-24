@@ -31,16 +31,16 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
-		$scope.sMode = $stateParams.sMode;
+		$rootScope.sMode = $stateParams.sMode;
 
 		if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails") {
-            if ($scope.sMode === "display" || $scope.sMode === "edit") {
+            if ($rootScope.sMode === "display" || $rootScope.sMode === "edit") {
                 $scope.$parent.bDisplayDeficienciesList = true;
                 $scope.$parent.bDisplayActivitiesList = true;
             }
         }
 
-        if ($scope.sMode === "create") {
+        if ($rootScope.sMode === "create") {
             $rootScope.sFileMetadataSetGuid = "";
             $rootScope.sFileMetadataSetLastModifiedAt = "";
         }
@@ -222,7 +222,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 			}
 		};
 
-		if ($scope.sMode !== "create") {
+		if ($rootScope.sMode !== "create") {
 			if (angular.equals(oUnit, {})) { //in case of F5
 				getUnitDetails();
 			} else { //in case when data is retrieved from the cash
@@ -415,7 +415,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 			aLinks = prepareLinksForSave();
 			oDataForSave.LastModifiedAt = $scope.oUnit._lastModifiedAt;
 
-			switch ($scope.sMode) {
+			switch ($rootScope.sMode) {
 				case "edit":
 					apiProvider.updateUnit({
 						bShowSpinner: true,

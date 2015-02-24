@@ -9,7 +9,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         $scope.oForms = {};
 
         var sActivityGuid = $stateParams.sActivityGuid;
-        $scope.sMode = $stateParams.sMode;
+        $rootScope.sMode = $stateParams.sMode;
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation
@@ -32,7 +32,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         //to delete
         // $scope.sActivityType = "";
         // if ($rootScope.sCurrentStateName === "app.activityDetailsWrapper.activityDetails") { 
-        // 	if($scope.sMode === "display" || $scope.sMode === "edit"){
+        // 	if($rootScope.sMode === "display" || $rootScope.sMode === "edit"){
         // 		$scope.$parent.bDisplayContactsList = true;
         // 	}
         // 	$scope.sActivityType = "Activity";
@@ -43,9 +43,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
 
         var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
-        $scope.sMode = $stateParams.sMode;
+        $rootScope.sMode = $stateParams.sMode;
 
-        if ($scope.sMode === "create") {
+        if ($rootScope.sMode === "create") {
             $rootScope.sFileMetadataSetGuid = "";
             $rootScope.sFileMetadataSetLastModifiedAt = "";
         }
@@ -322,7 +322,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                             aFilteredUser[iFilteredUserIndex] = aData[i];
                             iFilteredUserIndex = iFilteredUserIndex + 1;
                         }
-                        if ($scope.sMode === 'create') {
+                        if ($rootScope.sMode === 'create') {
                             oActivityWrapper.aData[0]._assignedUserName = $scope.sCurrentUser;
                         }
                         break;
@@ -363,7 +363,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
             });
         };
 
-        if ($scope.sMode !== "create") {
+        if ($rootScope.sMode !== "create") {
             if (angular.equals(oActivity, {})) { //in case of F5
                 getActivityDetails();
             } else { //in case when data is retrieved from the cash
@@ -534,7 +534,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         };
 
         $scope.onCloseCheckSelectedPhasesLength = function() {
-            if ($scope.aSelectedPhases.length != 0 && $scope.sMode !== "display") {
+            if ($scope.aSelectedPhases.length != 0 && $rootScope.sMode !== "display") {
                 // cacheProvider.cleanEntitiesCache("oPhaseEntity");
                 $scope.onSelectedPhasesModified();
             }
@@ -673,7 +673,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
 
             oDataForSave.LastModifiedAt = $scope.oActivity._lastModifiedAt;
 
-            switch ($scope.sMode) {
+            switch ($rootScope.sMode) {
                 case "edit":
                     apiProvider.updateActivity({
                         bShowSpinner: true,

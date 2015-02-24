@@ -41,9 +41,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			//$scope.sTaskPriority = "Normal";
 		}
 
-		$scope.sMode = $stateParams.sMode;
+		$rootScope.sMode = $stateParams.sMode;
 
-		if ($scope.sMode === "create") {
+		if ($rootScope.sMode === "create") {
 			$rootScope.sFileMetadataSetGuid = "";
 			$rootScope.sFileMetadataSetLastModifiedAt = "";
 		}
@@ -196,7 +196,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-				if ($scope.sMode === 'create' && i === 0) {
+				if ($rootScope.sMode === 'create' && i === 0) {
 					oDeficiencyWrapper.aData[0]._taskPriorityGuid = aData[i].Guid;
 					break;
 				}
@@ -226,7 +226,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-			if ($scope.sMode === 'create') {
+			if ($rootScope.sMode === 'create') {
 				oDeficiencyWrapper.aData[0]._deficiencyStatusGuid = aData[0].Guid;
 			}
 
@@ -331,7 +331,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 			aData = $filter('orderBy')(aData, ["UserName"]);
 
-			if ($scope.sMode === 'create') {
+			if ($rootScope.sMode === 'create') {
 				oDeficiencyWrapper.aData[0]._assignedUserName = cacheProvider.oUserProfile.sUserName;
 			}
 			servicesProvider.constructDependentMultiSelectArray({
@@ -350,7 +350,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			}
 		};
 
-		if ($scope.sMode !== "create") {
+		if ($rootScope.sMode !== "create") {
 			if (angular.equals(oDeficiency, {})) { //in case of F5
 				getDeficiencyDetails();
 			} else { //in case when data is retrieved from the cash
@@ -650,7 +650,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			oDataForSave.AccountGuids = $scope.sAccountGuids;
 			oDataForSave.LastModifiedAt = $scope.oDeficiency._lastModifiedAt;
 
-			switch ($scope.sMode) {
+			switch ($rootScope.sMode) {
 				case "edit":
 					apiProvider.updateDeficiency({
 						bShowSpinner: true,
