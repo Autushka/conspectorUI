@@ -1,11 +1,11 @@
 <div ui-view="unitDetails" style="width: 100%; height: 100%;"></div>
 <div ui-view="attachmentsList"></div>
-<div flex class="cnpCollapseControl" layout="row" layout-align="end start" ng-click="onDisplayDeficienciesList()" ng-show="!bDisplayDeficienciesList">
+<!-- <div flex class="cnpCollapseControl" layout="row" layout-align="end start" ng-click="onDisplayDeficienciesList()" ng-show="!bDisplayDeficienciesList">
 	<div layout="row" layout-align="end start">
 		<label class="cnpContentTitle notSelectable">
 			{{'deficienciesList_title' | translate}}
 		</label>
 	</div>
-</div>
+</div> -->
 <div ng-if="bDisplayDeficienciesList" ui-view="unitDeficiencies" id="embeddedDeficienciesList"></div>
 <div ng-if="bDisplayActivitiesList" ui-view="unitActivities"></div>
