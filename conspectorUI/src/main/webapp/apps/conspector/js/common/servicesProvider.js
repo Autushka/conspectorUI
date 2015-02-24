@@ -285,11 +285,11 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var uploadFiles = $.proxy(function(sFileMetadataSetGuid) {
 					var iCounter = 0; //needed because files are sent async
 					if (!oParameters.sParentEntityGuid) {
-						if(CONSTANTS.bIsHybridApplication){
+						if (CONSTANTS.bIsHybridApplication) {
 							oParameters.sParentEntityGuid = "quickAddApp";
-						}else{
+						} else {
 							oParameters.sParentEntityGuid = "attachmentsBeforeSave";
-						}						
+						}
 					}
 
 
@@ -310,7 +310,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 								contentType: false,
 								processData: false,
 								type: 'POST',
-								success: function(data) {		        
+								success: function(data) {
 									iCounter++;
 									if (iCounter === (oParameters.aFiles.length)) {
 										oParameters.onSuccess();
@@ -498,7 +498,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					if (aData[0]) {
 						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[0].guid;
 					} else {
-						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath +  "apps/conspector/img/logo_conspector.png";
+						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "apps/conspector/img/logo_conspector.png";
 					}
 				});
 			},
@@ -647,7 +647,14 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					getData: function($defer, params) {
 						var aInitialData = oParameters.oInitialDataArrayWrapper.aData; // need a wrapper for the array here to be able to pass values by reference
 
-						var aFilteredData = params.filter() ? $filter('filter')(aInitialData, params.filter()) : aInitialData;
+						var oFilters = angular.copy(params.filter());// making sure that filtering happens ignoring special chars
+						for (var sFilter in oFilters) {
+							if(oFilters.hasOwnProperty(sFilter)){
+								oFilters[sFilter] = utilsProvider.replaceSpecialChars(oFilters[sFilter]);
+							}
+						}
+
+						var aFilteredData = oFilters ? $filter('filter')(aInitialData, oFilters) : aInitialData;
 
 						var aSortedData = [];
 
