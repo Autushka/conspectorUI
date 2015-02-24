@@ -29,7 +29,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 							};
 
 							if(CONSTANTS.bIsHybridApplication){
-								oObjToStore.sPassword: oParameters.password
+								oObjToStore.sPassword = oParameters.password
 							}
 							$cookieStore.put("userName", oObjToStore);
 						} else {

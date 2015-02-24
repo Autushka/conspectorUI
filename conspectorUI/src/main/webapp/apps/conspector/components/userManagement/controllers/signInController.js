@@ -1,5 +1,5 @@
-viewControllers.controller('signInView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'dataProvider', '$cookieStore', 'utilsProvider', '$translate', 'historyProvider',
-	function($scope, $rootScope, $state, servicesProvider, dataProvider, $cookieStore, utilsProvider, $translate, historyProvider) {
+viewControllers.controller('signInView', ['$scope', '$rootScope', '$state', 'servicesProvider', 'dataProvider', '$cookieStore', 'utilsProvider', '$translate', 'historyProvider', 'CONSTANTS',
+	function($scope, $rootScope, $state, servicesProvider, dataProvider, $cookieStore, utilsProvider, $translate, historyProvider, CONSTANTS) {
 		$rootScope.sCurrentStateName = $state.current.name;
 
 		//servicesProvider.logOut();
@@ -8,13 +8,18 @@ viewControllers.controller('signInView', ['$scope', '$rootScope', '$state', 'ser
 
 		var oSignInFormController = {};
 		var sUserName = "";
+		var sPassword = "";
 		if ($cookieStore.get("userName")) {
 			sUserName = $cookieStore.get("userName").sUserName;
+
+			if(CONSTANTS.bIsHybridApplication){
+				sPassword = $cookieStore.get("userName").sPassword;
+			}
 		}
 
 		$scope.logInData = {
 			sUserName: sUserName,
-			sPassword: "",
+			sPassword: sPassword,
 			bRememberUserName: true
 		};
 
