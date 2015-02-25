@@ -18,7 +18,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			aSelectedPhases = angular.copy($cookieStore.get("globallySelectedPhasesGuids" + sCurrentUser + sCompany).aPhasesGuids);
 
 		} else {
-			aSelectedPhases = servicesProvider.getUserPhasesGuids();
+			// aSelectedPhases = servicesProvider.getUserPhasesGuids();
+			aSelectedPhases = [];
 		}
 
 		cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aSelectedPhases;
