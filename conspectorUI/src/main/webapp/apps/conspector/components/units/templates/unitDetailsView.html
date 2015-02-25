@@ -94,7 +94,7 @@
 					</div>
 					<!-- <input ng-model="aSelectedClients.length" type="number" ng-show="false" name="selectedClients" min="1">
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.unitDetailsForm.selectedClients.$error" ng-if="(oForms.unitDetailsForm.selectedClients.$dirty && !oForms.unitDetailsForm.selectedClients.$valid) || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div> -->
 				</div>
 				<div class="cnpSubSection" flex>
@@ -104,13 +104,18 @@
 						</label>
 					</div>
 					<tags-input
+					name="unitDescriptionTags"
 					ng-model="oUnit.aDescriptionTags"
 					ng-hide="sMode == 'display'"
 					replace-spaces-with-dashes="false"
 					placeholder="{{'global_addTag' | translate}}"
+					max-length="17"
 					on-tag-added="onDataModified()"
 					on-tag-removed="onDataModified()">
 					</tags-input>
+					<div class="cnpWarningMessageForTagsLength" ng-if="oForms.unitDetailsForm.unitDescriptionTags.$invalid">
+						<div class="cnpErrorMessageValidationMessage">{{'global_minimunTagsLength' | translate}}</div>
+					</div>
 					<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
 						<ul class="tags-list">
 							<li class="tag-item" ng-repeat="tag in oUnit.aDescriptionTags">
@@ -132,31 +137,31 @@
 							{{'unitDetails_pleaseSaveFirstToSpecifyUnitOptions' | translate}}
 						</div>
 					</div>
-						
-				<!-- 	<div class="cnpSubSectionLabel cnpSubSectionLabelMarginBottomAndBigger">
-						<label ng-show="sMode == 'create'">		(							{{'unitDetails_pleaseSaveFirstToSpecifyUnitOptions' | translate}})
-						</label>
+					
+					<!-- 	<div class="cnpSubSectionLabel cnpSubSectionLabelMarginBottomAndBigger">
+																<label ng-show="sMode == 'create'">		(							{{'unitDetails_pleaseSaveFirstToSpecifyUnitOptions' | translate}})
+							</label>
 					</div> -->
 					<div class="cnpSubSectionDataNgRepeat" ng-repeat="optionSet in aUnitOptionsArrays">
 						
-							<div class="cnpSubSectionLabel">
-								<label>
-									{{optionSet.sOptionSetName}}:
-								</label>
-							</div>
-							<div
-								multi-select
-								input-model="optionSet.aOptions"
-								default-label="{{'unitDetails_optionSet' | translate }}"
-								button-label="name"
-								item-label="name"
-								selection-mode="single"
-								is-disabled="sMode == 'display'"
-								tick-property="ticked"
-								on-item-click="onDataModified()"
-								output-model="optionSet.aSelectedOption"
-								helper-elements="filter">
-							</div>
+						<div class="cnpSubSectionLabel">
+							<label>
+								{{optionSet.sOptionSetName}}:
+							</label>
+						</div>
+						<div
+							multi-select
+							input-model="optionSet.aOptions"
+							default-label="{{'unitDetails_optionSet' | translate }}"
+							button-label="name"
+							item-label="name"
+							selection-mode="single"
+							is-disabled="sMode == 'display'"
+							tick-property="ticked"
+							on-item-click="onDataModified()"
+							output-model="optionSet.aSelectedOption"
+							helper-elements="filter">
+						</div>
 						
 					</div>
 				</div>

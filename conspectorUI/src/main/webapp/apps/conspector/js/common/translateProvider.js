@@ -114,6 +114,7 @@ app.config(['$translateProvider',
                   global_reporting: 'Report',
                   global_useCamera: 'Use Camera',
                   global_useLibrary: 'Choose from camera roll',
+                  global_minimunTagsLength: 'Tag should be 17 characters or less.',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -529,6 +530,7 @@ app.config(['$translateProvider',
                   global_reporting: 'Rapport',
                   global_useCamera: 'Utiliser la cam\u00E9ra',
                   global_useLibrary: 'Choisir images',
+                  global_minimunTagsLength: 'Les tag doivent avoir moins de 17 charact\u00E8res.',
 
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',

@@ -36,9 +36,9 @@
 					<div class="cnpSubSectionData cnpSubSectionDataBigger" ng-if="sMode == 'display'">{{oContractor.sName}}</div>
 					<input type="text" class="cnpTextInputField cnpTextInputFieldSubSection cnpWithAnimation" ng-model="oContractor.sName" ng-if="sMode != 'display'"  ng-change="onDataModified()" placeholder="{{'contractorDetails_namePlaceholder' | translate}}" name="contractorName" required>
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.contractorDetailsForm.contractorName.$error" ng-if="(oForms.contractorDetailsForm.contractorName.$dirty || submitted) && sMode != 'display'">
-							<div class="cnpErrorMessageValidationMessage" ng-message="required">
-								{{'global_emptyFieldError' | translate}}
-							</div>
+						<div class="cnpErrorMessageValidationMessage" ng-message="required">
+							{{'global_emptyFieldError' | translate}}
+						</div>
 					</div>
 				</div>
 				<div class="cnpSubSection" flex>
@@ -63,7 +63,7 @@
 					</div>
 					<!-- <input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.contractorDetailsForm.selectedPhases.$error" ng-if="(oForms.contractorDetailsForm.selectedPhases.$dirty && !oForms.contractorDetailsForm.selectedPhases.$valid) || submitted">
-						<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div> -->
 				</div>
 			</div>
@@ -145,13 +145,18 @@
 						</div>
 						<!-- TO DO -->
 						<tags-input
+						name="contractorDescriptionTags"
 						ng-model="oContractor.aTags"
 						ng-hide="sMode == 'display'"
 						replace-spaces-with-dashes="false"
 						placeholder="{{'global_addTag' | translate}}"
+						max-length="17"
 						on-tag-added="onDataModified()"
 						on-tag-removed="onDataModified()">
 						</tags-input>
+						<div class="cnpWarningMessageForTagsLength" ng-if="oForms.contractorDetailsForm.contractorDescriptionTags.$invalid">
+							<div class="cnpErrorMessageValidationMessage">{{'global_minimunTagsLength' | translate}}</div>
+						</div>
 						<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
 							<ul class="tags-list">
 								<li class="tag-item" ng-repeat="tag in oContractor.aTags">
@@ -161,9 +166,9 @@
 						</div>
 						<!-- 	<div class="tags-wrapper" ng-hide="!bDeficiencyDisplayMode || !oDeficiency.aTags.length" class="form-control">
 									<ul class="tags-list">
-															<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
-																					<span style="padding: 2px;">{{tag.text}}</span>
-															</li>
+																<li class="tag-item" ng-repeat="tag in oDeficiency.aTags">
+																							<span style="padding: 2px;">{{tag.text}}</span>
+																</li>
 									</ul>
 						</div>	 -->
 					</div>

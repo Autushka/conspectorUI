@@ -133,13 +133,18 @@
 								</label>
 							</div>
 							<tags-input
+							name="deficiencyDescriptionTags"
 							ng-model="oDeficiency.aDescriptionTags"
 							ng-hide="sMode == 'display'"
 							replace-spaces-with-dashes="false"
 							placeholder="{{'global_addTag' | translate}}"
+							max-length="17"
 							on-tag-added="onDataModified()"
 							on-tag-removed="onDataModified()">
 							</tags-input>
+							<div class="cnpWarningMessageForTagsLength" ng-if="oForms.deficiencyDetailsForm.deficiencyDescriptionTags.$invalid">
+								<div class="cnpErrorMessageValidationMessage">{{'global_minimunTagsLength' | translate}}</div>
+							</div>
 							<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
 								<ul class="tags-list">
 									<li class="tag-item" ng-repeat="tag in oDeficiency.aDescriptionTags">
@@ -155,13 +160,18 @@
 								</label>
 							</div>
 							<tags-input
+							name="deficiencyLocationTags"
 							ng-model="oDeficiency.aLocationTags"
 							ng-hide="sMode == 'display'"
 							replace-spaces-with-dashes="false"
 							placeholder="{{'global_addTag' | translate}}"
+							max-length="17"
 							on-tag-added="onDataModified()"
 							on-tag-removed="onDataModified()">
 							</tags-input>
+							<div class="cnpWarningMessageForTagsLength" ng-if="oForms.deficiencyDetailsForm.deficiencyLocationTags.$invalid">
+								<div class="cnpErrorMessageValidationMessage">{{'global_minimunTagsLength' | translate}}</div>
+							</div>
 							<div class="tags-wrapper form-control"  ng-show="sMode == 'display'">
 								<ul class="tags-list">
 									<li class="tag-item" ng-repeat="tag in oDeficiency.aLocationTags">
@@ -196,7 +206,7 @@
 							</div>
 							<!-- <input ng-model="aSelectedContractors.length" type="number" ng-show="false" name="selectedContractors" min="1">
 							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedContractors.$error" ng-if="(oForms.deficiencyDetailsForm.selectedContractors.$dirty && !oForms.deficiencyDetailsForm.selectedContractors.$valid) || submitted">
-								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+										<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 							</div> -->
 						</div>
 						<div style="margin-top: 12px; margin-bottom: 12px;">
@@ -302,33 +312,33 @@
 			</div>
 		</div>
 	</div>
-<!-- 	<div layout="row" style="width: 100%" flex>
-		<div class="cnpSubSection" flex>
-			<div  class="cnpSubSectionLabel">
-				<label>
-					{{'deficiencyDetails_deficiencyType' | translate}}
-				</label>
+	<!-- 	<div layout="row" style="width: 100%" flex>
+			<div class="cnpSubSection" flex>
+						<div  class="cnpSubSectionLabel">
+									<label>
+												{{'deficiencyDetails_deficiencyType' | translate}}
+									</label>
+						</div>
+						<div
+									multi-select
+									input-model="aTaskTypes"
+									button-label="name"
+									default-label="{{'global_deficiencyType' | translate }}"
+									item-label="name"
+									selection-mode="single"
+									tick-property="ticked"
+									group-property="multiSelectGroup"
+									is-disabled="sMode == 'display'"
+									on-item-click="onDataModified()"
+									output-model="aSelectedTaskTypes"
+									helper-elements=""
+									>
+						</div>
+						<input ng-model="aSelectedTaskTypes.length" type="number" ng-show="false" name="selectedTaskTypes" min="1">
+						<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskTypes.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskTypes.$dirty && !oForms.deficiencyDetailsForm.selectedTaskTypes.$valid) || submitted">
+									<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+						</div>
 			</div>
-			<div
-				multi-select
-				input-model="aTaskTypes"
-				button-label="name"
-				default-label="{{'global_deficiencyType' | translate }}"
-				item-label="name"
-				selection-mode="single"
-				tick-property="ticked"
-				group-property="multiSelectGroup"
-				is-disabled="sMode == 'display'"
-				on-item-click="onDataModified()"
-				output-model="aSelectedTaskTypes"
-				helper-elements=""
-				>
-			</div>
-			<input ng-model="aSelectedTaskTypes.length" type="number" ng-show="false" name="selectedTaskTypes" min="1">
-			<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskTypes.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskTypes.$dirty && !oForms.deficiencyDetailsForm.selectedTaskTypes.$valid) || submitted">
-				<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-			</div>
-		</div>
 	</div> -->
 	
 </div>

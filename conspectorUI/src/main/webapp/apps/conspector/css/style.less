@@ -162,6 +162,27 @@ body {
 	}
 }
 
+.cnpWarningMessageForTagsLength{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 8px;
+	padding-right: 8px;
+	position: relative;
+	margin-top: 0px;
+	margin-bottom: 12px;
+	background-color: #EC8910;
+	border-radius: @borderRadius*4;
+	&:after {
+		position: absolute;
+		top: -10px;
+		content: "";
+		left: 20px;
+		border-style: solid;
+		border-color: transparent transparent #EC8910;
+		border-width: 5px;
+	}
+}
+
 .cnpErrorMessageValidationMessage{
 color: @whiteColor;
 text-align: center;
@@ -2316,6 +2337,11 @@ DETAILS VIEW
 	overflow-x: auto !important;
 	}
 
+}
+tags-input.ng-invalid .tags{
+	-webkit-box-shadow: none;
+    -moz-box-shadow: none;
+	box-shadow: none;
 }
 
 .cnpMobileTags{
