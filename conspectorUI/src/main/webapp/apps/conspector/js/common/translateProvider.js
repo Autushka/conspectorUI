@@ -112,6 +112,8 @@ app.config(['$translateProvider',
                   global_mobileContractors: 'e.g. ABC inc.',
                   global_projectAndUnitMandatory: 'Please Provide Project, Phase and Unit',
                   global_reporting: 'Report',
+                  global_useCamera: 'Use Camera',
+                  global_useLibrary: 'Choose from camera roll',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -524,6 +526,8 @@ app.config(['$translateProvider',
                   global_mobileContractors: 'e.g. ABC inc.',
                   global_projectAndUnitMandatory: 'SVP choisir projet, phase et unit\u00E9',
                   global_reporting: 'Rapport',
+                  global_useCamera: 'Utiliser la cam\u00E9ra',
+                  global_useLibrary: 'Choisir images',
 
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',
