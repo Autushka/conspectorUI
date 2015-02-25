@@ -17,9 +17,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			logIn: function(oParameters, bRememberUserName) {
 				var oSrv = {};
 				var SHA512 = new Hashes.SHA512;
-				oParameters.password = SHA512.hex(oParameters.password);
 
-				var sPath = CONSTANTS.sAppAbsolutePath + "rest/account/login/" + oParameters.userName + "/" + oParameters.password;
+				var sPath = CONSTANTS.sAppAbsolutePath + "rest/account/login/" + oParameters.userName + "/" + SHA512.hex(oParameters.password);
 				var onSuccess = $.proxy(function(oData) {
 					var bNoErrorMessages = this.messagesHandler(oData.messages);
 					if (bNoErrorMessages) {
@@ -28,8 +27,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 								sUserName: oParameters.userName
 							};
 
-							if(CONSTANTS.bIsHybridApplication){
-								oObjToStore.sPassword = oParameters.password
+							if (CONSTANTS.bIsHybridApplication) {
+								oObjToStore.sPassword = oParameters.password;
 							}
 							$cookieStore.put("userName", oObjToStore);
 						} else {
@@ -282,6 +281,84 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				return sReturnUrl;
 			},
 
+			addCommentForEntity: function(oParameters) {
+				var oRequestData = {
+					__batchRequests: []
+				};
+				var aData = [];
+				var oData = {};
+				var sCommentSetGuid = "";
+				var oSrv = {};
+
+				var addComment = function(oData) {
+					onSuccess = function(){
+						oParameters.onSuccess();
+					};
+
+					apiProvider.createComment({
+						oData: oData,
+						bShowSpinner: true,
+						bShowSuccessMessage: true,
+						bShowErrorMessage: true,
+						onSuccess: onSuccess
+					});
+				};
+
+				if (!oParameters.sParentEntityCommentSetGuid) {
+					sCommentSetGuid = utilsProvider.generateGUID();
+					oData = {
+						requestUri: "CommentSets",
+						method: "POST",
+						data: {
+							Guid: sCommentSetGuid,
+							GeneralAttributes: {
+								IsDeleted: false
+							},
+							LastModifiedAt: utilsProvider.dateToDBDate(new Date())
+						}
+					};
+
+					aData.push(oData);
+
+					if (oParameters.sParentEntityGuid) {
+						oData = {
+							requestUri: oParameters.sPath + "('" + oParameters.sParentEntityGuid + "')",
+							method: "PUT",
+							data: {
+
+								CommentSetGuid: sCommentSetGuid
+							}
+						};
+
+						aData.push(oData);
+					}
+
+					dataProvider.constructChangeBlockForBatch({
+						oRequestData: oRequestData,
+						aData: aData
+					});
+
+					oSrv = dataProvider.batchRequest({
+						oRequestData: oRequestData,
+					});
+
+					var onCommentSetCreated = function(oData) {
+						$rootScope.sCommentSetGuid = oData.Guid;
+						$rootScope.sCommentSetLastModifiedAt = oData.LastModifiedAt;
+
+						oParameters.oData.CommentSetGuid = oData.Guid;
+						addComment(oParameters.oData);
+					}
+
+					oSrv.then(function(aData) {
+						onCommentSetCreated(aData[0].__changeResponses[0].data)
+					});
+				} else {
+					oParameters.oData.CommentSetGuid = oParameters.sParentEntityCommentSetGuid;
+					addComment(oParameters.oData);
+				}
+			},
+
 			uploadAttachmentsForEntity: function(oParameters) {
 				var oRequestData = {
 					__batchRequests: []
@@ -502,6 +579,10 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				} else {
 					return [];
 				}
+			},
+
+			constructImageUrl: function(sFileMetadataGuid){
+				return CONSTANTS.sAppAbsolutePath + "rest/file/get/" + sFileMetadataGuid;
 			},
 
 			constructLogoUrl: function() {

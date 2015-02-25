@@ -1,0 +1,69 @@
+<div layout="row" layout="center start" class="cnpContentWrapper">
+	<div class="cnpContent" layout="column">
+		<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
+			<div layout="row" layout-align="end start">
+				<label class="cnpContentTitle notSelectable">
+					{{'commentsList_title' | translate}}
+				</label>
+			</div>
+		</div>
+		<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+			<table ng-table="tableParams" class="cnpNgTable" id="commentsList" show-filter="true">
+				<tr ng-repeat="comment in aDisplayedComments">
+					<td data-title="'global_actions' | translate">
+						<div layout="row" layout-align="center center">
+							<div class="cnpInputIcon cnpEditDetailsIcon cnpEditDetailsIcon" ng-if="!comment._editMode" ng-click="onEdit(comment)">
+							</div>
+							<div class="cnpInputIcon cnpSaveIcon" ng-if="comment._editMode" ng-click="onSaveUpdate(comment)">
+							</div>
+							<div class="cnpInputIcon cnpDeleteIcon" ng-if="comment._editMode" ng-click="onDelete(comment)">
+							</div>
+						</div>
+					</td>
+					<td data-title="'global_avatar' | translate">
+						<div layout="row" layout-align="center center">
+							<img ng-src="{{comment.sAvatarUrl}}" style="width:34px; height:34px;"/>
+						</div>
+					</td>
+					<td data-title="'global_createdBy' | translate">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>
+								{{comment.sAuthor}}
+								</span>
+							</div>
+						</div>
+					</td>
+					<td data-title="'global_createdAt' | translate">
+						<div layout="row" layout-align="start center">
+							<div>
+								<span>
+								{{comment.sCreatedAt}}
+								</span>
+							</div>
+						</div>
+					</td>
+					<td data-title="'global_text' | translate">
+						<div layout="row" layout-align="start center">
+							<div ng-if="!comment._editMode">{{comment.sText}}</div>
+							<textarea ng-if="comment._editMode" ng-model="comment.sText" style="width: 100%;"></textarea>
+						</div>
+					</td>
+				</tr>
+				<tr ng-hide="aDisplayedComments.length > 0">
+					<td colspan="{{$columns.length}}">
+						<div layout="row" layout-align="start center">
+							<div>
+								{{'global_noTableData' | translate}}
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<textarea ng-model="oComment.sText" style="width: 100%;"></textarea>
+<div layout="row">
+	<md-button class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
+</div>

@@ -118,7 +118,8 @@
 		<script src="apps/conspector/components/profileSettings/controllers/profileDetailsController.js"></script>
 		<script src="apps/conspector/components/profileSettings/controllers/changePasswordController.js"></script>
 		
-		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>			
+		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>		
+		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>				
 
 		<script src="apps/conspector/components/adminPanel/controllers/adminPanelController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/companiesListController.js"></script>

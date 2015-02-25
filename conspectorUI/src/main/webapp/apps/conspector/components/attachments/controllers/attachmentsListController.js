@@ -64,18 +64,21 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			for (var i = 0; i < oData.FileMetadataDetails.results.length; i++) {
 				sMediaType = "";
 				iSortingSequence = 0;
-				if (oData.FileMetadataDetails.results[i].MediaType.indexOf("image") > -1) {
-					sMediaType = "Image";
-					iImagesNumber++;
-					iSortingSequence = 1;
+				if (oData.FileMetadataDetails.results[i].MediaType) {
+					if (oData.FileMetadataDetails.results[i].MediaType.indexOf("image") > -1) {
+						sMediaType = "Image";
+						iImagesNumber++;
+						iSortingSequence = 1;
+					}
+					if (oData.FileMetadataDetails.results[i].MediaType.indexOf("pdf") > -1) {
+						sMediaType = "PDF";
+						iSortingSequence = 2;
+					}
 				}
-				if (oData.FileMetadataDetails.results[i].MediaType.indexOf("pdf") > -1) {
-					sMediaType = "PDF";
-					iSortingSequence = 2;
-				}
-				if(!sMediaType){
+
+				if (!sMediaType) {
 					sMediaType = "Other";
-					iSortingSequence = 3;					
+					iSortingSequence = 3;
 				}
 				oAttachmentsListData.aData.push({
 					_guid: oData.FileMetadataDetails.results[i].Guid,

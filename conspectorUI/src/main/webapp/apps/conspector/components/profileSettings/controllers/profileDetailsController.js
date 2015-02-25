@@ -140,7 +140,7 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 					oDataForSave.Language = $scope.aLanguages[i].languageCode;
 					break;
 				}
-			}				
+			}						
 
 			apiProvider.updateUser({
 				bShowSpinner: true,

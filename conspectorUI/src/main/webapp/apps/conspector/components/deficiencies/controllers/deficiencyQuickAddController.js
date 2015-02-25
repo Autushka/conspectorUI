@@ -408,11 +408,13 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             var sUri = "";
 
             if ($rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids && $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.length) {
+                $scope.sAccountValues = $rootScope.oDeficiencyAttributes["oContractors"].sValue;
+                $scope.sAccountGuids = "";
                 for (var i = 0; i < $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.length; i++) {
                     sUri = "Accounts('" + $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids[i] + "')";
                     aUri.push(sUri);
-                    $scope.sAccountValues = $scope.sAccountValues + $scope.aSelectedContractors[i].name + "; ";
-                    $scope.sAccountGuids = $scope.sAccountGuids + $scope.aSelectedContractors[i].Guid + "; ";
+                    
+                    $scope.sAccountGuids = $scope.sAccountGuids + $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids[i] + "; ";
                 }
             }
 
@@ -481,7 +483,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 oDataForSave.TaskStatusGuid = $rootScope.oDeficiencyAttributes["oStatus"].sSelectedItemGuid;
             }
             if ($rootScope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid) {
-                oDataForSave.PriorityGuid = $rootScope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid;
+                oDataForSave.TaskPriorityGuid = $rootScope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid;
             }
             if ($rootScope.oDeficiencyAttributes["oUser"].sSelectedItemGuid) {
                 oDataForSave.UserName = $rootScope.oDeficiencyAttributes["oUser"].sSelectedItemGuid;
@@ -499,9 +501,12 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             $scope.sAccountGuids = "";
 
             var aLinks = prepareLinksForSave();
-
-            oDataForSave.AccountValues = $scope.sAccountValues;
-            oDataForSave.AccountGuids = $scope.sAccountGuids;
+            if(!$scope.sAccountValues){
+                oDataForSave.AccountValues = $scope.sAccountValues;
+            }
+            if(!$scope.sAccountGuids){
+                oDataForSave.AccountGuids = $scope.sAccountGuids;
+            }
 
             apiProvider.createDeficiency({
                 bShowSpinner: true,

@@ -228,12 +228,20 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			createUser: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
+					this.updateContact({
+						sKey: oParameters.oData.ContactGuid,
+						oData: {
+							UserName: oParameters.oData.UserName
+						},
+						bIgnoreLastModifiedAtValidation: true
+					});
+
 					cacheProvider.cleanEntitiesCache("oUserEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-				};
+				}, this);
 				var oSvc = dataProvider.createEntity({
 					sPath: "Users",
 					sKeyAttribute: "UserName", //needed for links creation
@@ -249,12 +257,19 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			},
 
 			updateUser: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
+					this.updateContact({
+						sKey: oParameters.oData.ContactGuid,
+						oData: {
+							UserName: oParameters.oData.UserName
+						},
+						bIgnoreLastModifiedAtValidation: true
+					});					
 					cacheProvider.cleanEntitiesCache("oUserEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-				};
+				}, this);
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "Users",
@@ -1213,6 +1228,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					aLinks: oParameters.aLinks,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bIgnoreLastModifiedAtValidation: true
 				});
 
 				oSvc.then(onSuccess);
@@ -1720,7 +1736,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "FileMetadataSets",
-					sKeyAttribute: "Guid", 
+					sKeyAttribute: "Guid",
 					sKey: oParameters.sKey,
 					oData: oParameters.oData,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
@@ -1744,7 +1760,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				} else {
 					svc.then(oParameters.onSuccess);
 				}
-			},					
+			},
 
 			updateFileMetadata: function(oParameters) {
 				var onSuccess = function(oData) {
@@ -1755,7 +1771,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "FileMetadatas",
-					sKeyAttribute: "Guid", 
+					sKeyAttribute: "Guid",
 					sKey: oParameters.sKey,
 					oData: oParameters.oData,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
@@ -1764,7 +1780,27 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 				});
 
 				oSvc.then(onSuccess);
-			},					
+			},
+
+			getEntityComments: function(oParameters) {
+				var svc = dataProvider.getEntity({
+					sPath: "CommentSets",
+					sKey: oParameters.sKey,
+					sExpand: oParameters.sExpand, //"UserDetails,ContactTypeDetails,AccountDetails,PhaseDetails/ProjectDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(function(oData) {
+					var aComments = [];
+					for (var i = 0; i < oData.CommentDetails.results.length; i++) { // filtering here needed only untill bug 414 in Olingo will be resolved (UI filtering will be replaced by oData filtering)
+						if (!oData.CommentDetails.results[i].GeneralAttributes.IsDeleted) {
+							aComments.push(oData.CommentDetails.results[i]);
+						}
+					}
+					oData.CommentDetails.results = angular.copy(aComments);
+					oParameters.onSuccess(oData);
+				});
+			},
 
 			getEntityAttachments: function(oParameters) {
 				var svc = dataProvider.getEntity({
@@ -1800,6 +1836,46 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					oData: oParameters.oData,
 					bShowSuccessMessage: oParameters.bShowSuccessMessage,
 					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			updateComment: function(oParameters) {
+				var onSuccess = function(oData) {
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "Comments",
+					sKeyAttribute: "Guid",
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bIgnoreLastModifiedAtValidation: true
+				});
+
+				oSvc.then(onSuccess);
+			},
+
+			createComment: function(oParameters) {
+				var onSuccess = function(oData) {
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "Comments",
+					sKeyAttribute: "Guid", //needed for links creation
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true,
+					bCompanyNeeded: false
 				});
 
 				oSvc.then(onSuccess);

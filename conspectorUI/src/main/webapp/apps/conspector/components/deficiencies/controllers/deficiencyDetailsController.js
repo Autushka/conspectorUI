@@ -46,6 +46,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		if ($rootScope.sMode === "create") {
 			$rootScope.sFileMetadataSetGuid = "";
 			$rootScope.sFileMetadataSetLastModifiedAt = "";
+			$rootScope.sCommentSetGuid = "";
+			$rootScope.sCommentSetLastModifiedAt = "";			
 		}
 
 		$scope.oDeficiency = {};
@@ -111,6 +113,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			}
 			$rootScope.$broadcast("FileAttachemntsCanBeLoaded");
 
+			$rootScope.sCommentSetGuid = oDeficiency.CommentSetGuid;
+			if (oDeficiency.CommentSetDetails) {
+				$rootScope.sCommentSetLastModifiedAt = oDeficiency.CommentSetDetails.LastModifiedAt;
+			}
+			$rootScope.$broadcast("CommentsCanBeLoaded");
 
 			if (oDeficiency.UnitDetails && oDeficiency.UnitDetails.Name) {
 				$scope.oDeficiency._unitName = oDeficiency.UnitDetails.Name;
@@ -666,6 +673,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					if($rootScope.sFileMetadataSetGuid){
                     	oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;  				
 					}
+					if($rootScope.sCommentSetGuid){
+                    	oDataForSave.CommentSetGuid = $rootScope.sCommentSetGuid;  				
+					}					
 					apiProvider.createDeficiency({
 						bShowSpinner: true,
 						aLinks: aLinks,
