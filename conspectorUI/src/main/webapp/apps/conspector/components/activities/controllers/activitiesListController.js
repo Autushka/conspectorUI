@@ -3,7 +3,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contactDetailsWrapper.contactDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") {
             historyProvider.removeHistory(); // because current view doesn't have a back button
             $rootScope.oStateParams = {}; // for backNavigation 
-        }       
+        }
 
         var sCurrentUser = cacheProvider.oUserProfile.sUserName;
         var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
@@ -41,7 +41,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         if ($stateParams.sContactGuid) {
             sContactGuid = $stateParams.sContactGuid;
         }
-       
+
 
         if ($cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany) && $cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany).aSelectedActivityType) {
             $scope.aSelectedActivityType = angular.copy($cookieStore.get("selectedActivityTypes" + sCurrentUser + sCompany).aSelectedActivityType);
@@ -67,7 +67,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         });
 
         var oInitialSortingForActivitiesList = {
-            sActivityName: 'asc'
+            sDbCreatedAt: 'dsc'
         };
         if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
             oInitialSortingForActivitiesList = angular.copy(oTableStatusFromCache.oSorting);
@@ -140,49 +140,60 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             var _sortingSequence = "";
             var sTypeSortingSequence = "";
             var sTypeIconUrl = "";
+            var sCreatedAt = "";
+            var sDbCreatedAt = "";
+            var sLastModifiedAt = "";
+            var sLastModifiedAt = "";
             var bMatchFound = false;
             for (var i = 0; i < aData.length; i++) {
+                sCreatedAt = "";
+                sLastModifiedAt = "";
                 sTypeSortingSequence = "";
                 sTypeIconUrl = "";
 
-            	sActivityType = $translate.use() === "en" ? aData[i].ActivityTypeDetails.NameEN : aData[i].ActivityTypeDetails.NameFR;
+                sDbCreatedAt = aData[i].CreatedAt;
+                sCreatedAt = utilsProvider.dBDateToSting(aData[i].CreatedAt);
+                sDbModifiedAt = aData[i].LastModifiedAt;
+                sLastModifiedAt = utilsProvider.dBDateToSting(aData[i].LastModifiedAt);
+
+                sActivityType = $translate.use() === "en" ? aData[i].ActivityTypeDetails.NameEN : aData[i].ActivityTypeDetails.NameFR;
 
                 if (aData[i].PhaseDetails.results.length) {
-                	sAccounts = "";
-                	sContacts = "";
+                    sAccounts = "";
+                    sContacts = "";
                     for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
                         aData[i].PhaseDetails.results[j]._sortingSequence = aData[i].PhaseDetails.results[j].GeneralAttributes.SortingSequence;
                     }
                     aData[i].PhaseDetails.results = $filter('orderBy')(aData[i].PhaseDetails.results, ["_sortingSequence"]);
 
                     if (aData[i].AccountDetails.results.length == 0) {
-                        
-	                } else {
-	                for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
-	                                        
-	                        if (!aData[i].AccountDetails.results[j].GeneralAttributes.IsDeleted) {
-	                            // _aAccounts.push(oData.AccountDetails.results[i]);
-	                            sAccounts = sAccounts + aData[i].AccountDetails.results[j].Name + ", ";
-	                        }
-	                    }
-	                }
 
-	                if (aData[i].ContactDetails.results.length == 0) {
-	                        
-	                } else {
-	                for (var j = 0; j < aData[i].ContactDetails.results.length; j++) {
-	                    
-	                        if (!aData[i].ContactDetails.results[j].GeneralAttributes.IsDeleted) {
-	                            // _aContacts.push(oData.ContactDetails.results[i]);
-                                if(aData[i].ContactDetails.results[j].LastName) {
+                    } else {
+                        for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
+
+                            if (!aData[i].AccountDetails.results[j].GeneralAttributes.IsDeleted) {
+                                // _aAccounts.push(oData.AccountDetails.results[i]);
+                                sAccounts = sAccounts + aData[i].AccountDetails.results[j].Name + ", ";
+                            }
+                        }
+                    }
+
+                    if (aData[i].ContactDetails.results.length == 0) {
+
+                    } else {
+                        for (var j = 0; j < aData[i].ContactDetails.results.length; j++) {
+
+                            if (!aData[i].ContactDetails.results[j].GeneralAttributes.IsDeleted) {
+                                // _aContacts.push(oData.ContactDetails.results[i]);
+                                if (aData[i].ContactDetails.results[j].LastName) {
                                     sContacts = sContacts + aData[i].ContactDetails.results[j].FirstName + " " + aData[i].ContactDetails.results[j].LastName + ", ";
                                 } else {
                                     sContacts = sContacts + aData[i].ContactDetails.results[j].FirstName + ", ";
                                 }
-	                            
-	                        }
-	                    }
-	                }
+
+                            }
+                        }
+                    }
 
                     if (aData[i].ActivityTypeDetails) {
                         sTypeIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].ActivityTypeDetails.AssociatedIconFileGuid;
@@ -209,22 +220,26 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                         if (!sPhaseName) {
                             sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
                         }
-						
-						oActivitiesListData.aData.push({
-		                    sActivityType: sActivityType, 
+
+                        oActivitiesListData.aData.push({
+                            sActivityType: sActivityType,
                             sCleanedActivityType: utilsProvider.replaceSpecialChars(sActivityType),
-		                    sObject: aData[i].Object,
+                            sObject: aData[i].Object,
                             sCleanedObject: utilsProvider.replaceSpecialChars(aData[i].Object),
-		                    sAccounts: sAccounts,
+                            sAccounts: sAccounts,
                             sCleanedAccounts: utilsProvider.replaceSpecialChars(sAccounts),
-		                    sContacts: sContacts,
+                            sContacts: sContacts,
                             sCleanedContacts: utilsProvider.replaceSpecialChars(sContacts),
-		                    _guid: aData[i].Guid,
-		                    sProjectPhase: sProjectName + " - " + sPhaseName,
-		                    _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence,
+                            sDbCreatedAt: sDbCreatedAt,
+                            sCreatedAt: sCreatedAt,
+                            sDbModifiedAt: sDbModifiedAt,
+                            sLastModifiedAt: sLastModifiedAt,
+                            _guid: aData[i].Guid,
+                            sProjectPhase: sProjectName + " - " + sPhaseName,
+                            _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence,
                             sTypeSortingSequence: sTypeSortingSequence,
                             sTypeIconUrl: sTypeIconUrl,
-		                });
+                        });
                     }
                 }
             }
@@ -280,7 +295,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                 sFilter = sFilter + "substringof('" + sContactGuid + "', ContactGuids)";
                 sFilter = sFilter + sFilterEnd;
             }
-           
+
 
             apiProvider.getActivities({
                 sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails",
@@ -329,12 +344,12 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             $cookieStore.put("selectedActivityTypes" + sCurrentUser + sCompany, {
                 aSelectedActivityType: $scope.aSelectedActivityType,
             });
-           
-            if($scope.aSelectedActivityType && $scope.aSelectedActivityType.length === 0){
+
+            if ($scope.aSelectedActivityType && $scope.aSelectedActivityType.length === 0) {
                 // cacheProvider.cleanEntitiesCache("oActivityEntity");
                 // cacheProvider.cleanEntitiesCache("oTaskStatusEntity");
             }
-            
+
             loadActivities();
         };
 
@@ -359,7 +374,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                     sStateName: $rootScope.sCurrentStateName,
                     oStateParams: $rootScope.oStateParams
                 });
-            }            
+            }
 
             cacheProvider.putTableStatusToCache({
                 sTableName: "activitiesList",
