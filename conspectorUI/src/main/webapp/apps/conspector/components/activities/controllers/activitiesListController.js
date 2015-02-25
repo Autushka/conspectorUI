@@ -174,7 +174,12 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 	                    
 	                        if (!aData[i].ContactDetails.results[j].GeneralAttributes.IsDeleted) {
 	                            // _aContacts.push(oData.ContactDetails.results[i]);
-	                            sContacts = sContacts + aData[i].ContactDetails.results[j].FirstName + " " + aData[i].ContactDetails.results[j].LastName + ", ";
+                                if(aData[i].ContactDetails.results[j].LastName) {
+                                    sContacts = sContacts + aData[i].ContactDetails.results[j].FirstName + " " + aData[i].ContactDetails.results[j].LastName + ", ";
+                                } else {
+                                    sContacts = sContacts + aData[i].ContactDetails.results[j].FirstName + ", ";
+                                }
+	                            
 	                        }
 	                    }
 	                }
