@@ -5,7 +5,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         $location.hash('top');
         // call $anchorScroll()
         $anchorScroll();
-        
+
         $scope.oForms = {};
 
         var sActivityGuid = $stateParams.sActivityGuid;
@@ -71,7 +71,11 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                 for (var j = 0; j < aData[i].UnitDetails.results.length; j++) {
                     aData[i].UnitDetails.results[j].Name = utilsProvider.convertStringToInt(aData[i].UnitDetails.results[j].Name);
                 }
+                aData[i].UnitDetails.results = $filter('filter')(aData[i].UnitDetails.results, function(oItem, iIndex) {
+                    return !oItem.GeneralAttributes.IsDeleted
+                });
                 aData[i].UnitDetails.results = $filter('orderBy')(aData[i].UnitDetails.results, ["Name"]);
+
             }
 
             aData = $filter('orderBy')(aData, ["_sortingSequenceProject", "_sortingSequencePhase"]);
@@ -490,7 +494,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                     sUri = "Accounts('" + $scope.aSelectedAccounts[i].Guid + "')";
                     aUri.push(sUri);
                     $scope.sAccountValues = $scope.sAccountValues + $scope.aSelectedAccounts[i].name + "; ";
-                    $scope.sAccountGuids = $scope.sAccountGuids + $scope.aSelectedAccounts[i].Guid + "; ";                
+                    $scope.sAccountGuids = $scope.sAccountGuids + $scope.aSelectedAccounts[i].Guid + "; ";
                 }
             }
             aLinks.push({
@@ -656,7 +660,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                 oDataForSave.DueDate = "/Date(0)/";
             }
 
-           
+
             $scope.sAccountValues = "";
             $scope.sAccountGuids = "";
             $scope.sContactValues = "";
@@ -686,9 +690,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                     });
                     break;
                 case "create":
-                    if($rootScope.sFileMetadataSetGuid){
-                        oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;                 
-                    }              
+                    if ($rootScope.sFileMetadataSetGuid) {
+                        oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
+                    }
                     apiProvider.createActivity({
                         bShowSpinner: true,
                         oData: oDataForSave,

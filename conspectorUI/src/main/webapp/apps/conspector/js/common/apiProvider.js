@@ -1653,6 +1653,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updateUnit: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oUnitEntity");
+					cacheProvider.cleanEntitiesCache("oPhaseEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
