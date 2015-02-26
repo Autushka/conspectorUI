@@ -134,7 +134,11 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			});
 		};
 
-		$scope.onDisplay = function(oAttachment) {
+		$scope.onDisplay = function(oAttachment, $event) {
+			if(oAttachment.sMediaType === "Other"){
+				$event.target.nextElementSibling.click();
+				return;
+			}
 			$window.open("rest/file/get/" + oAttachment._guid);
 		};
 

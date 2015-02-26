@@ -1,5 +1,5 @@
-app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 'cacheProvider', 'PubNub',
-	function(dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider, PubNub) {
+app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 'cacheProvider', 'PubNub',
+	function($rootScope, dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider, PubNub) {
 		return {
 			getUserProfile: function(sUserName) {
 				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=CompanyDetails,RoleDetails,PhaseDetails/ProjectDetails,ContactDetails/AccountDetails&$format=json";
@@ -1114,6 +1114,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oAccountEntity",
 							sText: "Account has been created...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};
@@ -1145,6 +1146,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oAccountEntity",
 							sText: "Account has been updated...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};
@@ -1217,6 +1219,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oContactEntity",
 							sText: "Contact has been updated...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};
@@ -1247,6 +1250,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oContactEntity",
 							sText: "Contact has been created...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};
@@ -1280,22 +1284,6 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 					svc.then(oParameters.onSuccess);
 				}
 			},
-
-			// getDeficienciesForUnit: function(oParameters) {
-			// 	var svc = dataProvider.getEntitySet({
-			// 		sPath: "Deficiencies",
-			// 		sFilter: "GeneralAttributes/IsDeleted eq false and UnitGuid eq '" + oParameters.sUnitGuid + "'",
-			// 		sExpand: "PhaseDetails/ProjectDetails,UnitDetails",
-			// 		bShowSpinner: oParameters.bShowSpinner,
-			// 		oCacheProvider: cacheProvider,
-			// 		sCacheProviderAttribute: "oDeficiencyEntity"
-			// 	});
-			// 	if (svc instanceof Array) {
-			// 		oParameters.onSuccess(svc); // data retrived from cache
-			// 	} else {
-			// 		svc.then(oParameters.onSuccess);
-			// 	}
-			// },
 
 			getUnitOptionSets: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
@@ -1506,6 +1494,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oActivityEntity",
 							sText: "Activity has been updated...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};
@@ -1535,6 +1524,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oActivityEntity",
 							sText: "Activity has been created...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};
@@ -1593,6 +1583,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oDeficiencyEntity",
 							sText: "Deficiency has been updated...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};
@@ -1622,6 +1613,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oDeficiencyEntity",
 							sText: "Deficiency has been created...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};
@@ -1680,6 +1672,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oUnitEntity",
 							sText: "Unit has been updated...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};
@@ -1710,6 +1703,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 							sEntityName: "oUnitEntity",
 							sText: "Unit has been created...",
 							sUserName: cacheProvider.oUserProfile.sUserName,
+							sSessionGuid: $rootScope.sSessionGuid,
 						}
 					});
 				};

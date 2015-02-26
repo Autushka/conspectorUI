@@ -1,11 +1,11 @@
 viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$anchorScroll', '$rootScope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings', '$timeout',
 	function($scope, $location, $anchorScroll, $rootScope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout) {
-		
+
 		// the element you wish to scroll to.
-      	$location.hash('top');
-      	// call $anchorScroll()
-      	$anchorScroll();
-    	
+		$location.hash('top');
+		// call $anchorScroll()
+		$anchorScroll();
+
 		var sDeficiencyGuid = $stateParams.sDeficiencyGuid;
 
 		$scope.oForms = {};
@@ -33,7 +33,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		$scope.aUnits = [];
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-		
+
 		var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
 		if ($rootScope.sCurrentStateName === "app.deficiencyDetailsWrapper.deficiencyDetails") {
@@ -47,7 +47,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			$rootScope.sFileMetadataSetGuid = "";
 			$rootScope.sFileMetadataSetLastModifiedAt = "";
 			$rootScope.sCommentSetGuid = "";
-			$rootScope.sCommentSetLastModifiedAt = "";			
+			$rootScope.sCommentSetLastModifiedAt = "";
 		}
 
 		$scope.oDeficiency = {};
@@ -59,10 +59,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		};
 
 		var onUnitsLoaded = function(aData) {
-			
+
 			for (var i = 0; i < aData.length; i++) {
 				aData[i].Name = utilsProvider.convertStringToInt(aData[i].Name);
-            }
+			}
 
 			aData = $filter('orderBy')(aData, ["Name"]);
 
@@ -105,7 +105,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			$scope.oDeficiency._lastModifiedAt = oDeficiency.LastModifiedAt;
 			var sProject = "";
 			var sPhase = "";
-			
+
 
 			$rootScope.sFileMetadataSetGuid = oDeficiency.FileMetadataSetGuid;
 			if (oDeficiency.FileMetadataSetDetails) {
@@ -144,7 +144,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
 				}
 			}
-		
+
 			if (oDeficiency.DueDate && oDeficiency.DueDate != "/Date(0)/") {
 				$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oDeficiency.DueDate);
 				$scope.oDeficiency.dDueDate = new Date(parseInt(oDeficiency.DueDate.substring(6, oDeficiency.DueDate.length - 2)));
@@ -200,15 +200,14 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		};
 
 		var onTaskPrioritiesLoaded = function(aData) {
-
 			for (var i = 0; i < aData.length; i++) {
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-				if ($rootScope.sMode === 'create' && i === 0) {
-					oDeficiencyWrapper.aData[0]._taskPriorityGuid = aData[i].Guid;
-					break;
-				}
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+
+			if ($rootScope.sMode === 'create' && aData.length) {
+				oDeficiencyWrapper.aData[0]._taskPriorityGuid = aData[0].Guid;
+			}
 
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
@@ -233,7 +232,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-			if ($rootScope.sMode === 'create') {
+			if ($rootScope.sMode === 'create' && aData.length) {
 				oDeficiencyWrapper.aData[0]._deficiencyStatusGuid = aData[0].Guid;
 			}
 
@@ -592,7 +591,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					$scope.oDeficiency._lastModifiedAt = oData.LastModifiedAt;
 					$scope.oDeficiency.sLastModifiedAt = utilsProvider.dBDateToSting(oData.LastModifiedAt);
 					$scope.oDeficiency.sCreatedAt = utilsProvider.dBDateToSting(oData.CreatedAt);
-					if(oData.DueDate){
+					if (oData.DueDate) {
 						$scope.oDeficiency.sDueDate = utilsProvider.dBDateToSting(oData.DueDate);
 					}
 					$scope.oDeficiency._guid = oData.Guid;
@@ -623,9 +622,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			oDataForSave.LocationTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aLocationTags);
 			oDataForSave.Description = $scope.oDeficiency.sDescription;
 
-			
 
-			
+
 			if ($scope.oDeficiency.dDueDate && $scope.oDeficiency.dDueDate != "/Date(0)/") {
 				oDataForSave.DueDate = "/Date(" + $scope.oDeficiency.dDueDate.getTime() + ")/";
 			} else {
@@ -670,12 +668,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					});
 					break;
 				case "create":
-					if($rootScope.sFileMetadataSetGuid){
-                    	oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;  				
+					if ($rootScope.sFileMetadataSetGuid) {
+						oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;
 					}
-					if($rootScope.sCommentSetGuid){
-                    	oDataForSave.CommentSetGuid = $rootScope.sCommentSetGuid;  				
-					}					
+					if ($rootScope.sCommentSetGuid) {
+						oDataForSave.CommentSetGuid = $rootScope.sCommentSetGuid;
+					}
 					apiProvider.createDeficiency({
 						bShowSpinner: true,
 						aLinks: aLinks,

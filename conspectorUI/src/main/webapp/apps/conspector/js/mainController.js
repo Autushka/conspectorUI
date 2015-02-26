@@ -1,11 +1,12 @@
-app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider', 'servicesProvider', 'PubNub', 'cacheProvider', 'CONSTANTS',
-	function($scope, $rootScope, $state, apiProvider, servicesProvider, PubNub, cacheProvider, CONSTANTS) {
+app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider', 'servicesProvider', 'PubNub', 'cacheProvider', 'CONSTANTS', 'utilsProvider',
+	function($scope, $rootScope, $state, apiProvider, servicesProvider, PubNub, cacheProvider, CONSTANTS, utilsProvider) {
 		var sUserName = apiProvider.getCurrentUserName();
 		// if(CONSTANTS.bIsHybridApplication){
- 	// 		$cordovaStatusbar.overlaysWebView(false);			
+		// 		$cordovaStatusbar.overlaysWebView(false);			
 		// }
 
 		if (sUserName) {
+			$rootScope.sSessionGuid = utilsProvider.generateGUID();
 			servicesProvider.onF5WithCurrentUserHandler(sUserName);
 
 			var sChannel = "";
@@ -19,30 +20,31 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 				channel: sChannel
 			});
 
-			//to do add activities
 			$rootScope.$on(PubNub.ngMsgEv(sChannel), function(event, payload) {
-				if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
-					cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
-					if(payload.message.sEntityName === "oAccountEntity"){
-						cacheProvider.cleanEntitiesCache("oAccountTypeEntity");//for cases when accountTypes are readed with Accounts;
-					}
+				if (payload.message.sSessionGuid === $rootScope.sSessionGuid) {
+					return;
 				}
+				cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
+				if (payload.message.sEntityName === "oAccountEntity") {
+					cacheProvider.cleanEntitiesCache("oAccountTypeEntity"); //for cases when accountTypes are readed with Accounts;
+				}
+
 				switch (payload.message.sEntityName) {
 					case "oAccountEntity":
-						if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
-							$rootScope.$broadcast('accountsShouldBeRefreshed');
-						}
+						$rootScope.$broadcast('accountsShouldBeRefreshed');
 						break;
 					case "oContactEntity":
-						if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
-							$rootScope.$broadcast('contactsShouldBeRefreshed');
-						}
+						$rootScope.$broadcast('contactsShouldBeRefreshed');
 						break;
 					case "oDeficiencyEntity":
-						if (payload.message.sUserName !== cacheProvider.oUserProfile.sUserName) {
-							$rootScope.$broadcast('deficienciesShouldBeRefreshed');
-						}
-						break;						
+						$rootScope.$broadcast('deficienciesShouldBeRefreshed');
+						break;
+					case "oUnitEntity":
+						$rootScope.$broadcast('unitsShouldBeRefreshed');
+						break;	
+					case "oActivityEntity":
+						$rootScope.$broadcast('unitsShouldBeRefreshed');
+						break;												
 				}
 			});
 		} else {
@@ -58,7 +60,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 
 		$rootScope.bIsGalleryHidden = true;
 
-		$rootScope.hideGallery = function(){
+		$rootScope.hideGallery = function() {
 			$rootScope.bIsGalleryHidden = true;
 		};
 	}
