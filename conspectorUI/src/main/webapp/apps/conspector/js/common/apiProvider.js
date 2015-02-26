@@ -440,6 +440,7 @@ app.factory('apiProvider', ['dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 
 			updatePhase: function(oParameters) {
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oPhaseEntity");
+					// oUserProfile.aUserPhases
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
