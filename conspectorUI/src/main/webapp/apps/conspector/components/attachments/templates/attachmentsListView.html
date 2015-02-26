@@ -35,7 +35,7 @@
 								<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(attachment, $event)">
 								</div>
 								<a ng-attr-id="{{'download' + attachment._guid}" href="{{'rest/file/get/' + attachment._guid}}" download="{{attachment.sOriginalFileName}}" style="display: none"></a>
-								<div class="cnpInputIcon cnpDeleteIcon" ng-click="onDelete(attachment)">
+								<div class="cnpInputIcon cnpDeleteIcon" ng-if="sCurrentRole != 'contractor'" ng-click="onDelete(attachment)">
 								</div>
 							</div>
 						</td>

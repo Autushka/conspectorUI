@@ -18,15 +18,14 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation
 
-		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
-			sRole: sCurrentRole,
+			sRole: $scope.sCurrentRole,
 			sEntityName: "oDeficiency",
 			sOperation: "bUpdate"
 		});
 
 		$scope.bDisplayDeleteButton = rolesSettings.getRolesSettingsForEntityAndOperation({
-			sRole: sCurrentRole,
+			sRole: $scope.sCurrentRole,
 			sEntityName: "oDeficiency",
 			sOperation: "bDelete"
 		});
@@ -446,11 +445,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		};
 
 		$scope.onNavigateToUnitDetails = function() {
-
-			$state.go('app.unitDetailsWrapper.unitDetails', {
-				sMode: "display",
-				sUnitGuid: $scope.oDeficiency._unitGuid,
-			});
+			if($scope.sCurrentRole != 'contractor'){
+				$state.go('app.unitDetailsWrapper.unitDetails', {
+					sMode: "display",
+					sUnitGuid: $scope.oDeficiency._unitGuid,
+				});				
+			}
 		};
 
 		var deleteDeficiency = function() {
