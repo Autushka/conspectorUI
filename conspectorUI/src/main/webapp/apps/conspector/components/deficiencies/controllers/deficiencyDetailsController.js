@@ -13,6 +13,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		$scope.sTaskType = "";
 		$scope.sTaskPriority = "";
 		$scope.sTaskPriorityGuid = "";
+		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation

@@ -85,9 +85,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
             }
             aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-            // if ($scope.sMode === 'create') {
-            //     oDeficiencyWrapper.aData[0]._deficiencyStatusGuid = aData[0].Guid;
-            // }
             oStatuses._statusesGuids = [];
             if ($scope.aSelectedStatuses) {
                 for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
@@ -102,10 +99,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 });
             }
             oDeficiencyStatusesWrapper.aData[0] = angular.copy(oStatuses);
-            // oStatuses._statusesGuids.push(aData[0].Guid);
-            // oDeficiencyStatusesWrapper.aData[0] = angular.copy(oStatuses);
-
-
 
             servicesProvider.constructDependentMultiSelectArray({
                 oDependentArrayWrapper: {
@@ -122,8 +115,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             if (oDeficiencyStatusesWrapper.aData[0]) {
                 $scope.aDeficiencyStatuses = angular.copy(oDeficiencyStatusesWrapper.aData[0].aDeficiencyStatuses);
             }
-
-
         };
 
         var onDeficienciesLoaded = function(aData) {
@@ -279,10 +270,15 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
         var loadDeficiencies = function() {
             oDeficienciesListData.aData = [];
-
             var sFilter = "";
             var sFilterStart = " and (";
             var sFilterEnd = ")";
+            var sFilterByCompanyGuid = "";
+
+            if(cacheProvider.oUserProfile.sCurrentRole === "contractor"){
+                sFilterByCompanyGuid = " and substringof('" + cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid + "', AccountGuids) eq true";
+            }
+
             if ($scope.globalSelectedPhases.length > 0) {
                 sFilter = sFilterStart;
                 for (var i = 0; i < $scope.globalSelectedPhases.length; i++) {
@@ -317,7 +313,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
                         apiProvider.getDeficiencies({
                             sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
-                            sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
+                            sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false"+ sFilterByCompanyGuid + sFilter,
                             bShowSpinner: true,
                             onSuccess: onDeficienciesLoaded
                         });
@@ -369,22 +365,10 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $scope.tableParams.reload();
         };
 
-        // $scope.onDisplayDeficienciesList = function() {
-        //     if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails" || $rootScope.sCurrentStateName === "app.contractorDetailsWrapper.contractorDetails") {
-        //         $scope.$parent.onDisplayDeficienciesList();
-        //     }
-        // };
-
-
         $scope.onCloseCheckSelectedStatusesLength = function() {
             $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
                 aSelectedStatuses: $scope.aSelectedStatuses,
             });
-
-            if ($scope.aSelectedStatuses && $scope.aSelectedStatuses.length === 0) {
-                // cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
-                // cacheProvider.cleanEntitiesCache("oTaskStatusEntity");
-            }
 
             loadDeficiencies();
         };
@@ -445,8 +429,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 }
 
                 var sTasks = JSON.stringify(oTasks);
-
-
 
                 apiProvider.generateReport({
                     oReportParameters: {

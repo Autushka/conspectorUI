@@ -42,7 +42,6 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 
 			globalAdministrator: {
-				//sInitialState: "app.deficienciesList",
 				sInitialState: "app.deficienciesList",
 				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",
 				bIsGlobalUserAdministrator: true,
@@ -352,7 +351,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					},
 					oContact: {
 						bDisplay: true,
-						bUpdate: false,
+						bUpdate: true,
 						bCreate: false,
 						bDelete: false
 					},
@@ -370,7 +369,90 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					},
 
 				}
-			}			
+			},
+			contractor: {
+				//sInitialState: "app.deficienciesList",
+				sInitialState: "app.deficienciesList",
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",
+				bIsGlobalUserAdministrator: false,
+				oMainMenu: {
+					bShowDeficiencies: true,
+					bShowUnits: false,
+					bShowContractors: false,
+					bShowClients: false,
+					bShowContacts: false,
+					bShowActivities: false,
+					bShowAdminPanel: false,
+					bShowProfileSettings: true
+				},
+				oAdminPanelMenu: {
+					bShowCompaniesManagement: false,
+					bShowUsersManagement: false,
+					bShowRolesManagement: false,
+					bShowProjectsManagement: false,
+					bShowPhasesManagement: false,
+					bShowDeficiencyStatusesManagement: false,
+					bShowDeficiencyPrioritiesManagement: false,
+					bShowSystemFilesManagement: false,
+					bShowOperationLogs: false,
+					bShowAccountTypesManagement: false,
+					bShowContactTypesManagement: false,
+					bShowUnitOptionSetManagement: false,
+					bShowUnitOptionValueManagement: false,
+					bShowTaskTypeManagement: false,
+					bShowActivityTypesManagement: false
+				},
+				oProfileMenu: {
+					bShowContactDetails: true,
+					bShowProfileDetails: true,
+					bShowChangePassword: true
+				},
+				oAuthorizationsPerEntity: {
+					oDeficiency: {
+						bDisplay: true,
+						bUpdate: true,
+						bCreate: false,
+						bDelete: false
+					},
+					oUnit: {
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oContractor: {
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oClient: {
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oContact: {
+						bDisplay: true,
+						bUpdate: true,
+						bCreate: false,
+						bDelete: false
+					},
+					oActivity: {
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+					oUser: {
+						bDisplay: false,
+						bUpdate: false,
+						bCreate: false,
+						bDelete: false
+					},
+
+				}
+			},						
 		}
 	}
 ]);
