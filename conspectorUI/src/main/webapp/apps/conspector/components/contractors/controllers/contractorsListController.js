@@ -15,7 +15,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
             sOperation: "bUpdate"
         });
 
-        
+
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
         $rootScope.oStateParams = {}; // for backNavigation
@@ -58,6 +58,8 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
         });
 
         var onContractorsLoaded = function(aData) {
+
+
             var sProjectName = "";
             var sPhaseName = "";
             var bMatchFound = false;
@@ -107,11 +109,12 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
                 for (var i = 0; i < aData.length; i++) {
                     oContractorsListData.aData.push({
                         sContractorName: aData[i].Name,
+                        sCleanedContractorName: utilsProvider.replaceSpecialChars(aData[i].Name),
                         sPhone: aData[i].MainPhone,
                         sEmail: aData[i].Email,
                         _guid: aData[i].Guid,
                         sTags: aData[i].DescriptionTags,
-                        sProjectPhase: $translate.instant('contractorsList_groupAll'), 
+                        sProjectPhase: $translate.instant('contractorsList_groupAll'),
                         _sortingSequence: -1, //for default groups sorting
                     });
                 }
@@ -121,11 +124,17 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
 
         var loadContractors = function() {
             oContractorsListData.aData = [];
-            apiProvider.getContractors({
-                sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
-                bShowSpinner: true,
-                onSuccess: onContractorsLoaded,
-            });
+            if ($scope.globalSelectedPhases.length > 0) {
+                apiProvider.getContractors({
+                    sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
+                    bShowSpinner: true,
+                    onSuccess: onContractorsLoaded,
+                });
+            } else {
+                oContractorsListData.aData = [];
+                onContractorsLoaded([]);
+                return;
+            }
         };
 
         loadContractors(); //load Contractors
@@ -137,8 +146,8 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
             });
         };
 
-        $scope.onGroupingChange = function(){
-        	loadContractors();
+        $scope.onGroupingChange = function() {
+            loadContractors();
         }
 
         $scope.onEdit = function(oContractor) {

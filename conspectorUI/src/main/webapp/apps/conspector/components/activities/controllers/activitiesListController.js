@@ -254,55 +254,56 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             var sFilterEnd = ")";
 
             //need to remove this if
-            if ($scope.aSelectedActivityType) {
-                if ($scope.aSelectedActivityType.length > 0) {
-                    sFilter = sFilter + sFilterStart;
-                    for (var i = 0; i < $scope.aSelectedActivityType.length; i++) {
-                        sFilter = sFilter + "ActivityTypeGuid eq '" + $scope.aSelectedActivityType[i].Guid + "'";
-                        if (i < $scope.aSelectedActivityType.length - 1) {
-                            sFilter = sFilter + " or ";
+            if ($scope.globalSelectedPhases.length > 0) {
+                if ($scope.aSelectedActivityType) {
+                    if ($scope.aSelectedActivityType.length > 0) {
+                        sFilter = sFilter + sFilterStart;
+                        for (var i = 0; i < $scope.aSelectedActivityType.length; i++) {
+                            sFilter = sFilter + "ActivityTypeGuid eq '" + $scope.aSelectedActivityType[i].Guid + "'";
+                            if (i < $scope.aSelectedActivityType.length - 1) {
+                                sFilter = sFilter + " or ";
+                            }
                         }
+                        sFilter = sFilter + sFilterEnd;
+
+                        if (sUnitGuid) {
+                            sFilter = sFilter + sFilterStart;
+                            sFilter = sFilter + "substringof('" + sUnitGuid + "', UnitGuids)";
+                            sFilter = sFilter + sFilterEnd;
+                        }
+
+                        if (sContractorGuid) {
+                            sFilter = sFilter + sFilterStart;
+                            sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids)";
+                            sFilter = sFilter + sFilterEnd;
+                        }
+
+                        if (sClientGuid) {
+                            sFilter = sFilter + sFilterStart;
+                            sFilter = sFilter + "substringof('" + sClientGuid + "', AccountGuids)";
+                            sFilter = sFilter + sFilterEnd;
+                        }
+
+                        if (sContactGuid) {
+                            sFilter = sFilter + sFilterStart;
+                            sFilter = sFilter + "substringof('" + sContactGuid + "', ContactGuids)";
+                            sFilter = sFilter + sFilterEnd;
+                        }
+
+
+                        apiProvider.getActivities({
+                            sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails",
+                            sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
+                            bShowSpinner: true,
+                            onSuccess: onActivitiesLoaded
+                        });
                     }
-                    sFilter = sFilter + sFilterEnd;
-
-
-                } else {
-                    $scope.tableParams.reload();
-                    return;
                 }
+            } else {
+                oActivitiesListData.aData = [];
+                onActivitiesLoaded([]);
+                return;
             }
-
-            if (sUnitGuid) {
-                sFilter = sFilter + sFilterStart;
-                sFilter = sFilter + "substringof('" + sUnitGuid + "', UnitGuids)";
-                sFilter = sFilter + sFilterEnd;
-            }
-
-            if (sContractorGuid) {
-                sFilter = sFilter + sFilterStart;
-                sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids)";
-                sFilter = sFilter + sFilterEnd;
-            }
-
-            if (sClientGuid) {
-                sFilter = sFilter + sFilterStart;
-                sFilter = sFilter + "substringof('" + sClientGuid + "', AccountGuids)";
-                sFilter = sFilter + sFilterEnd;
-            }
-
-            if (sContactGuid) {
-                sFilter = sFilter + sFilterStart;
-                sFilter = sFilter + "substringof('" + sContactGuid + "', ContactGuids)";
-                sFilter = sFilter + sFilterEnd;
-            }
-
-
-            apiProvider.getActivities({
-                sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails",
-                sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
-                bShowSpinner: true,
-                onSuccess: onActivitiesLoaded
-            });
         };
 
         var loadActivityTypes = function() {

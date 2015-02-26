@@ -99,15 +99,15 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
                     sProjectPhase = "Not Assigned";
                 }
 
-                if(aData[i].FileMetadataSetDetails){
-                    if(aData[i].FileMetadataSetDetails.AttachmentsNumber){// to display default 0
+                if (aData[i].FileMetadataSetDetails) {
+                    if (aData[i].FileMetadataSetDetails.AttachmentsNumber) { // to display default 0
                         iImagesNumber = aData[i].FileMetadataSetDetails.AttachmentsNumber;
-                    }                   
+                    }
                     sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
-                    if(aData[i].FileMetadataSetDetails.FileMetadataDetails){
+                    if (aData[i].FileMetadataSetDetails.FileMetadataDetails) {
                         for (var j = 0; j < aData[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
                             //Things[i]
-                            if(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false){
+                            if (aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false) {
                                 aImages.push(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
                             }
                         }
@@ -150,19 +150,23 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
                     sFilterByPhases = sFilterByPhases + "PhaseGuid eq '" + $scope.globalSelectedPhases[i] + "'";
                     if (i < $scope.globalSelectedPhases.length - 1) {
                         sFilterByPhases = sFilterByPhases + " or ";
-                    }             
+                    }
                 }
                 sFilterByPhases = sFilterByPhases + sFilterEnd;
-            }
 
-            apiProvider.getUnits({
-                sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails,AccountDetails,FileMetadataSetDetails/FileMetadataDetails",
-                sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhases,
-                bShowSpinner: true,
-                onSuccess: onUnitsLoaded
-            });
+                apiProvider.getUnits({
+                    sExpand: "PhaseDetails/ProjectDetails,UnitOptionDetails,AccountDetails,FileMetadataSetDetails/FileMetadataDetails",
+                    sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhases,
+                    bShowSpinner: true,
+                    onSuccess: onUnitsLoaded
+                });
+            } else {
+                oUnitsListData.aData = [];
+                onUnitsLoaded([]);
+                return;
+            }
         };
-        
+
         loadUnits(); //load Units
 
         $scope.onDisplay = function(oUnit) {
@@ -176,7 +180,7 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
 
         $scope.onEdit = function(oUnit) {
             $rootScope.sFileMetadataSetGuid = oUnit._fileMetadataSetGuid;
-            $rootScope.sFileMetadataSetLastModifiedAt = oUnit._fileMetadataSetLastModifiedAt; 
+            $rootScope.sFileMetadataSetLastModifiedAt = oUnit._fileMetadataSetLastModifiedAt;
             $state.go('app.unitDetailsWrapper.unitDetails', {
                 sMode: "edit",
                 sUnitGuid: oUnit._guid,
@@ -203,11 +207,11 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
             loadUnits();
         });
 
-        $scope.onDisplayPhotoGallery = function(oUnit, oEvent){
+        $scope.onDisplayPhotoGallery = function(oUnit, oEvent) {
             oEvent.stopPropagation();
-            if(oUnit._aImages.length){
+            if (oUnit._aImages.length) {
                 servicesProvider.setUpPhotoGallery(oUnit._aImages);
-            }           
+            }
         };
 
         $scope.$on("$destroy", function() {

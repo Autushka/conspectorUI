@@ -287,46 +287,42 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     }
                 }
                 sFilter = sFilter + sFilterEnd;
-            }
-
-            //need to remove this if
-            if ($scope.aSelectedStatuses) {
-                if ($scope.aSelectedStatuses.length > 0) {
-                    sFilter = sFilter + sFilterStart;
-                    for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
-                        sFilter = sFilter + "TaskStatusGuid eq '" + $scope.aSelectedStatuses[i].Guid + "'";
-                        if (i < $scope.aSelectedStatuses.length - 1) {
-                            sFilter = sFilter + " or ";
+                if ($scope.aSelectedStatuses) {
+                    if ($scope.aSelectedStatuses.length > 0) {
+                        sFilter = sFilter + sFilterStart;
+                        for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
+                            sFilter = sFilter + "TaskStatusGuid eq '" + $scope.aSelectedStatuses[i].Guid + "'";
+                            if (i < $scope.aSelectedStatuses.length - 1) {
+                                sFilter = sFilter + " or ";
+                            }
                         }
+                        sFilter = sFilter + sFilterEnd;
+
+                        if (sUnitGuid) {
+                            sFilter = sFilter + sFilterStart;
+                            sFilter = sFilter + "UnitGuid eq '" + sUnitGuid + "'";
+                            sFilter = sFilter + sFilterEnd;
+                        }
+
+                        if (sContractorGuid) {
+                            sFilter = sFilter + sFilterStart;
+                            sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids)";
+                            sFilter = sFilter + sFilterEnd;
+                        }
+
+                        apiProvider.getDeficiencies({
+                            sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
+                            sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
+                            bShowSpinner: true,
+                            onSuccess: onDeficienciesLoaded
+                        });
                     }
-                    sFilter = sFilter + sFilterEnd;
-
-
-                } else {
-                    $scope.tableParams.reload();
-                    return;
                 }
+            } else {
+                oDeficienciesListData.aData = [];
+                onDeficienciesLoaded([]);
+                return;
             }
-
-            if (sUnitGuid) {
-                sFilter = sFilter + sFilterStart;
-                sFilter = sFilter + "UnitGuid eq '" + sUnitGuid + "'";
-                sFilter = sFilter + sFilterEnd;
-            }
-
-            if (sContractorGuid) {
-                sFilter = sFilter + sFilterStart;
-                sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids)";
-                sFilter = sFilter + sFilterEnd;
-            }
-
-            apiProvider.getDeficiencies({
-                sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
-                sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
-                bShowSpinner: true,
-                onSuccess: onDeficienciesLoaded
-            });
-
         };
 
         var loadDeficiencyStatuses = function() {

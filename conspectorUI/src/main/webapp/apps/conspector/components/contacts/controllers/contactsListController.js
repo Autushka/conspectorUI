@@ -95,15 +95,18 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
 
                     if (aData[i].PhaseDetails.results.length) {
                         for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-                            bMatchFound = false;
-                            for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-                                if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-                                    bMatchFound = true;
-                                    break;
+                            if (cacheProvider.oUserProfile.aGloballySelectedPhasesGuids > 0) {
+                                bMatchFound = false;
+
+                                for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+                                    if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
+                                        bMatchFound = true;
+                                        break;
+                                    }
                                 }
-                            }
-                            if (!bMatchFound) {
-                                continue;
+                                if (!bMatchFound) {
+                                    continue;
+                                }
                             }
 
                             sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
@@ -148,6 +151,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
 
                     oContactsListData.aData.push({
                         sName: sName,
+                        sCleanedName: utilsProvider.replaceSpecialChars(sName),
                         sTitle: aData[i].Title,
                         sPhone: aData[i].MobilePhone,
                         sEmail: aData[i].Email,
@@ -156,6 +160,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                         _accountGuid: aData[i].AccountGuid,
                         _accountTypeName: aData[i].AccountDetails.AccountTypeDetails.NameEN,
                         sAccountName: aData[i].AccountDetails.Name,
+                        sCleanedAccountName: utilsProvider.replaceSpecialChars(aData[i].AccountDetails.Name),
                         _sortingSequence: -1, //for default groups sorting                       
                     });
                 }
@@ -165,19 +170,28 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         };
 
         var loadContacts = function() {
-            oContactsListData.aData = [];
+
             if (sAccountGuid) {
+                oContactsListData.aData = [];
                 apiProvider.getContactsForAccount({
                     bShowSpinner: true,
                     onSuccess: onContactsLoaded,
                     sAccountGuid: sAccountGuid
                 });
             } else {
-                apiProvider.getContacts({
-                    sExpand: "UserDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
-                    bShowSpinner: true,
-                    onSuccess: onContactsLoaded,
-                });
+                if ($scope.globalSelectedPhases.length > 0) {
+                    oContactsListData.aData = [];
+                    apiProvider.getContacts({
+                        sExpand: "UserDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+                        bShowSpinner: true,
+                        onSuccess: onContactsLoaded,
+                    });
+                } else {
+                    oContactsListData.aData = [];
+                    onContactsLoaded([]);
+                    return;
+                }
+
             }
         };
 

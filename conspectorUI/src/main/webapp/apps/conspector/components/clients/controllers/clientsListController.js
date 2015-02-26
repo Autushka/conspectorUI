@@ -106,6 +106,7 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
                 for (var i = 0; i < aData.length; i++) {
                     oClientsListData.aData.push({
                         sClientName: aData[i].Name,
+                        sCleanedClientName: utilsProvider.replaceSpecialChars(aData[i].Name),
                         sPhone: aData[i].MainPhone,
                         sEmail: aData[i].Email,
                         _guid: aData[i].Guid,
@@ -123,11 +124,17 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
 
         var loadClients = function() {
             oClientsListData.aData = [];
+            if ($scope.globalSelectedPhases.length > 0) {
             apiProvider.getClients({
                 sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
                 bShowSpinner: true,
                 onSuccess: onClientsLoaded
             });
+            } else {
+                oClientsListData.aData = [];
+                onClientsLoaded([]);
+                return;
+            }
         };
 
         loadClients(); //load Clients
