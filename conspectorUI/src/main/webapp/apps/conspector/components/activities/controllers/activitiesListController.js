@@ -108,10 +108,15 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                 for (var i = 0; i < aData.length; i++) {
                     oTypes._typesGuids.push(aData[i].Guid);
                 }
+                $cookieStore.put("selectedActivityTypes" + sCurrentUser + sCompany, {
+                    aSelectedActivityType: aData,
+                });
             }
             oActivityTypesWrapper.aData[0] = angular.copy(oTypes);
             // oTypes._typesGuids.push(aData[0].Guid);
             // oActivityTypesWrapper.aData[0] = angular.copy(oTypes);
+
+
 
             servicesProvider.constructDependentMultiSelectArray({
                 oDependentArrayWrapper: {

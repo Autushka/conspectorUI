@@ -97,10 +97,15 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 for (var i = 0; i < aData.length; i++) {
                     oStatuses._statusesGuids.push(aData[i].Guid);
                 }
+                $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
+                    aSelectedStatuses: aData,
+                });
             }
             oDeficiencyStatusesWrapper.aData[0] = angular.copy(oStatuses);
             // oStatuses._statusesGuids.push(aData[0].Guid);
             // oDeficiencyStatusesWrapper.aData[0] = angular.copy(oStatuses);
+
+
 
             servicesProvider.constructDependentMultiSelectArray({
                 oDependentArrayWrapper: {
