@@ -95,18 +95,15 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
 
                     if (aData[i].PhaseDetails.results.length) {
                         for (var j = 0; j < aData[i].PhaseDetails.results.length; j++) {
-                            if (cacheProvider.oUserProfile.aGloballySelectedPhasesGuids > 0) {
-                                bMatchFound = false;
-
-                                for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-                                    if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-                                        bMatchFound = true;
-                                        break;
-                                    }
+                            bMatchFound = false;
+                            for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
+                                if (aData[i].PhaseDetails.results[j].Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
+                                    bMatchFound = true;
+                                    break;
                                 }
-                                if (!bMatchFound) {
-                                    continue;
-                                }
+                            }
+                            if (!bMatchFound) {
+                                continue;
                             }
 
                             sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.results[j].ProjectDetails.NameEN : aData[i].PhaseDetails.results[j].ProjectDetails.NameFR;
@@ -117,7 +114,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                             if (!sPhaseName) {
                                 sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
                             }
-
+                            
                             oContactsListData.aData.push({
                                 sName: sName,
                                 sCleanedName: utilsProvider.replaceSpecialChars(sName),
@@ -170,7 +167,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         };
 
         var loadContacts = function() {
-
+            
             if (sAccountGuid) {
                 oContactsListData.aData = [];
                 apiProvider.getContactsForAccount({
