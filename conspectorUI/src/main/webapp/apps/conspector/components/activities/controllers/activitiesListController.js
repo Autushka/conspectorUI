@@ -109,7 +109,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                     oTypes._typesGuids.push(aData[i].Guid);
                 }
                 $cookieStore.put("selectedActivityTypes" + sCurrentUser + sCompany, {
-                    aSelectedActivityType: aData,
+                    aSelectedActivityType: oTypes._typesGuids,
                 });
             }
             oActivityTypesWrapper.aData[0] = angular.copy(oTypes);

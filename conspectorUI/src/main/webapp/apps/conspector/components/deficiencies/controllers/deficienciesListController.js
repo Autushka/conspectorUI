@@ -98,7 +98,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     oStatuses._statusesGuids.push(aData[i].Guid);
                 }
                 $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
-                    aSelectedStatuses: aData,
+                    aSelectedStatuses: oStatuses._statusesGuids,
                 });
             }
             oDeficiencyStatusesWrapper.aData[0] = angular.copy(oStatuses);
