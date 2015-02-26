@@ -71,6 +71,7 @@ viewControllers.controller('phasesListView', ['$scope', '$rootScope','$state', '
 		}
 
 		apiProvider.getPhases({
+			sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 			sExpand: "ProjectDetails",
 			bShowSpinner: true,
 			onSuccess: onPhasesLoaded
