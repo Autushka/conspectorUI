@@ -80,7 +80,16 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 			$scope.oUser._aCompanies = angular.copy(oUser.CompanyDetails.results)
 			$scope.oUser._aPhases = angular.copy(oUser.PhaseDetails.results);
 			$scope.oUser._aRoles = angular.copy(oUser.RoleDetails.results);
-			$scope.oUser._contactGuid = oUser.ContactGuid;
+
+			if(oUser.ContactDetails && oUser.ContactDetails.results && oUser.ContactDetails.results.length){
+				for (var i = 0; i < oUser.ContactDetails.results.length; i++) {
+					if(oUser.ContactDetails.results[i].CompanyName === cacheProvider.oUserProfile.sCurrentCompany){
+						$scope.oUser._contactGuid = oUser.ContactDetails.results[i].Guid;
+						break;
+					}
+				}
+			}
+			
 			$scope.oUser._sLanguage = oUser.Language;
 			if (oUser.AvatarFileGuid) {
 				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oUser.AvatarFileGuid;
@@ -396,6 +405,21 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
                 bKeepCompanyDependentLinks: true,
                 aUri: aUri
             });
+            aUri = [];
+
+			if ($scope.aSelectedContacts && $scope.aSelectedContacts.length) {
+                for (var i = 0; i < $scope.aSelectedContacts.length; i++) {
+                    sUri = "Contacts('" + $scope.aSelectedContacts[i].Guid + "')";
+                    aUri.push(sUri);
+                }
+            }
+
+            aLinks.push({
+                sRelationName: "ContactDetails",
+                bKeepCompanyDependentLinks: true,
+                aUri: aUri
+            }); 
+            aUri = [];           
 
 			return aLinks;
 		};
@@ -497,12 +521,12 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 				return;
 			}
 
-			for (var i = 0; i < $scope.aContacts.length; i++) {
-				if ($scope.aContacts[i].ticked) {
-					oDataForSave.ContactGuid = $scope.aContacts[i].Guid;
-					break;
-				}
-			}
+			// for (var i = 0; i < $scope.aContacts.length; i++) {
+			// 	if ($scope.aContacts[i].ticked) {
+			// 		oDataForSave.ContactGuid = $scope.aContacts[i].Guid;
+			// 		break;
+			// 	}
+			// }
 			for (var i = 0; i < $scope.aLanguages.length; i++) {
 				if ($scope.aLanguages[i].ticked) {
 					oDataForSave.Language = $scope.aLanguages[i].languageCode;

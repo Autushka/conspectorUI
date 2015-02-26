@@ -114,7 +114,7 @@ viewControllers.controller('usersListView', ['$scope', '$rootScope', '$state', '
 		}
 
 		apiProvider.getUsers({
-			sExpand: "CompanyDetails,PhaseDetails,RoleDetails",
+			sExpand: "CompanyDetails,PhaseDetails,RoleDetails,ContactDetails",
 			bShowSpinner: true,
 			onSuccess: onUsersLoaded
 		});

@@ -67,9 +67,14 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 					}
 				}
 				sAvatarUrl = "apps/conspector/img/noAvatar.jpg";
-				if (oData.CommentDetails.results[i].ContactDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails.AvatarFileGuid) {
-					sAvatarUrl = servicesProvider.constructImageUrl(oData.CommentDetails.results[i].ContactDetails.UserDetails.AvatarFileGuid);
-					sUserName = oData.CommentDetails.results[i].ContactDetails.UserDetails.UserName;
+				//here assumption is made that only one user can be assigned to contact...
+				if (oData.CommentDetails.results[i].ContactDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails.results) {
+					if(oData.CommentDetails.results[i].ContactDetails.UserDetails.results.length){
+						if(oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].AvatarFileGuid){
+							sAvatarUrl = servicesProvider.constructImageUrl(oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].AvatarFileGuid);
+						}
+						sUserName = oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].UserName;
+					}					
 				}
 				oCommentsListData.aData.push({
 					_guid: oData.CommentDetails.results[i].Guid,
@@ -160,8 +165,8 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
-
-			oDataForSave.ContactGuid = cacheProvider.oUserProfile.sUserContactGuid;
+			
+			oDataForSave.ContactGuid = cacheProvider.oUserProfile.oUserContact.Guid;
 			oDataForSave.Text = $scope.oComment.sText;
 
 			servicesProvider.addCommentForEntity({

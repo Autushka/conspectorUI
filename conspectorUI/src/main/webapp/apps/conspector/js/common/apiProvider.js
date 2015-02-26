@@ -6,6 +6,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				var aUserCompanies = [];
 				var aUserRoles = [];
 				var aUserPhases = [];
+				var aUserContacts = [];				
 				var sCreatedAt = "";
 				var sLastModifiedAt = "";
 				var bIsInitialPassword = false;
@@ -31,12 +32,11 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 							aUserPhases.push(oData.d.PhaseDetails.results[i]);
 						}
 					}
-					if (oData.d.ContactDetails) {
-						sUserContactGuid = oData.d.ContactDetails.Guid;
-						if (oData.d.ContactDetails.AccountDetails) {
-							sUserAccountGuid = oData.d.ContactDetails.AccountDetails.Guid;
+					for (var i = 0; i < oData.d.ContactDetails.results.length; i++) {
+						if (!oData.d.ContactDetails.results[i].GeneralAttributes.IsDeleted) {
+							aUserContacts.push(oData.d.ContactDetails.results[i]);
 						}
-					}
+					}					
 				}
 
 				dataProvider.ajaxRequest({ //TODO: add busy indicator here as well if needed
@@ -57,8 +57,9 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 					bIsInitialPassword: bIsInitialPassword,
 					sLastModifiedAt: sLastModifiedAt,
 					aGloballySelectedPhasesGuids: [], //will be bopupated in appController
-					sUserContactGuid: sUserContactGuid,
-					sUserAccountGuid: sUserAccountGuid
+					aAllUserContacts: aUserContacts,
+					// sUserContactGuid: sUserContactGuid,
+					// sUserAccountGuid: sUserAccountGuid
 				};
 			},
 
@@ -220,7 +221,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				var svc = dataProvider.getEntity({
 					sPath: "Users",
 					sKey: oParameters.sKey,
-					sExpand: "CompanyDetails,PhaseDetails/ProjectDetails,RoleDetails",
+					sExpand: "CompanyDetails,PhaseDetails/ProjectDetails,RoleDetails,ContactDetails",
 					sFilter: "GeneralAttributes/IsDeleted eq false",
 					bShowSpinner: oParameters.bShowSpinner,
 				});

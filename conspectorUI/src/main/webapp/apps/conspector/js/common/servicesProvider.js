@@ -118,6 +118,18 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				cacheProvider.oUserProfile.aUserPhases = angular.copy(aUserPhasesForCurrentCompany);
 			},
 
+			setUserContactForCurrentCompany: function(sCurrentCompany) {
+				var oUserContactForCurrentCompany = [];
+				//cacheProvider.oUserProfile.aAllUserPhases = angular.copy(cacheProvider.oUserProfile.aAllUserPhases);
+				for (var i = 0; i < cacheProvider.oUserProfile.aAllUserContacts.length; i++) {
+					if (cacheProvider.oUserProfile.aAllUserContacts[i].CompanyName === sCurrentCompany) {
+						oUserContactForCurrentCompany = cacheProvider.oUserProfile.aAllUserContacts[i];
+					}
+				}
+
+				cacheProvider.oUserProfile.oUserContact = angular.copy(oUserContactForCurrentCompany);
+			},			
+
 			checkUserRolesAssignment: function(sCurrentCompany) {
 				var aUserRolesForCurrentCompany = [];
 				var bCanContinue = false;
@@ -179,6 +191,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
 					apiProvider.setCurrentCompany(sCurrentCompany);
 					this.setUserPhasesForCurrentCompany(sCurrentCompany);
+					this.setUserContactForCurrentCompany(sCurrentCompany);
 					this.checkUserRolesAssignment(sCurrentCompany);
 				} else {
 					$state.go("companySelection");
@@ -213,6 +226,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				} else {
 					cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
 					this.setUserPhasesForCurrentCompany(sCurrentCompany);
+					this.setUserContactForCurrentCompany(sCurrentCompany);
 				}
 				sCurrentRole = apiProvider.getCurrentRole();
 				if (!sCurrentRole) {

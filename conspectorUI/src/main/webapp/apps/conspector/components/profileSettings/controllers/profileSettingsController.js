@@ -33,8 +33,8 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 			sMenuLabel: "profileSettings_contactDetails",
 			oStateParams: {
 				sMode: "display",
-				sAccountGuid: cacheProvider.oUserProfile.sUserAccountGuid,
-				sContactGuid: cacheProvider.oUserProfile.sUserContactGuid,
+				sAccountGuid: cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid,
+				sContactGuid: cacheProvider.oUserProfile.oUserContact.Guid,
 			}
 		});
 
