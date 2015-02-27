@@ -6,7 +6,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				var aUserCompanies = [];
 				var aUserRoles = [];
 				var aUserPhases = [];
-				var aUserContacts = [];				
+				var aUserContacts = [];
 				var sCreatedAt = "";
 				var sLastModifiedAt = "";
 				var bIsInitialPassword = false;
@@ -36,7 +36,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 						if (!oData.d.ContactDetails.results[i].GeneralAttributes.IsDeleted) {
 							aUserContacts.push(oData.d.ContactDetails.results[i]);
 						}
-					}					
+					}
 				}
 
 				dataProvider.ajaxRequest({ //TODO: add busy indicator here as well if needed
@@ -265,7 +265,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 							UserName: oParameters.oData.UserName
 						},
 						bIgnoreLastModifiedAtValidation: true
-					});					
+					});
 					cacheProvider.cleanEntitiesCache("oUserEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
@@ -549,8 +549,6 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				};
 
 				aData.push(oData);
-
-
 
 				dataProvider.constructChangeBlockForBatch({
 					oRequestData: oRequestData,
@@ -1572,22 +1570,26 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				svc.then(oParameters.onSuccess);
 			},
 
-			updateDeficiency: function(oParameters) {
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
+			onSuccessUpdateDeficiency: function(oParameters) {
+				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
+				if (oParameters.onSuccess) {
+					oParameters.onSuccess(oData);
+				}
+				PubNub.ngPublish({
+					channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+					message: {
+						sEntityName: "oDeficiencyEntity",
+						sText: "Deficiency has been updated...",
+						sUserName: cacheProvider.oUserProfile.sUserName,
+						sSessionGuid: $rootScope.sSessionGuid,
 					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oDeficiencyEntity",
-							sText: "Deficiency has been updated...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
-				};
+				});
+			},
+
+			updateDeficiency: function(oParameters) {
+				var onSuccess = $.proxy(function(oData) {
+					this.onSuccessUpdateDeficiency(oParameters);
+				}, this);
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "Tasks",
@@ -1602,22 +1604,45 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				oSvc.then(onSuccess);
 			},
 
-			createDeficiency: function(oParameters) {
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
-					if (oParameters.onSuccess) {
-						oParameters.onSuccess(oData);
-					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oDeficiencyEntity",
-							sText: "Deficiency has been created...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
+			updateDeficiencies: function(oParameters) {
+				var oSrv = {};
+				var oRequestData = {
+					__batchRequests: []
 				};
+				var aData = [];
+				var oData = {};
+
+				for (var i = 0; i < oParameters.aData.length; i++) {
+					oData = {
+						requestUri: "Tasks('" + oParameters.aData[i].Guid + "')",
+						method: "PUT",
+						data: oParameters.aData[i]
+					};
+
+					aData.push(oData);
+				}
+
+				dataProvider.constructChangeBlockForBatch({
+					oRequestData: oRequestData,
+					aData: aData
+				});
+
+				oSrv = dataProvider.batchRequest({
+					oRequestData: oRequestData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSrv.then($.proxy(function(aData) {
+					this.onSuccessUpdateDeficiency(oParameters);
+				}, this));
+			},
+
+			createDeficiency: function(oParameters) {
+				var onSuccess = $.proxy(function(oData) {
+					this.onSuccessUpdateDeficiency(oParameters);
+				}, this);
 				var oSvc = dataProvider.createEntity({
 					sPath: "Tasks",
 					sKeyAttribute: "Guid", //needed for links creation

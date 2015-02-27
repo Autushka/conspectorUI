@@ -36,6 +36,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $scope.aSelectedStatuses = angular.copy($cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany).aSelectedStatuses);
         }
 
+        $scope.aDataForMassChanges = [];
+
         var oDeficienciesListData = {
             aData: []
         };
@@ -49,6 +51,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         var oStatuses = {
             _statusesGuids: []
         };
+        var aTaskStatuses = [];
 
         var oTableStatusFromCache = cacheProvider.getTableStatusFromCache({
             sTableName: "deficienciesList",
@@ -85,6 +88,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
             }
             aData = $filter('orderBy')(aData, ["_sortingSequence"]);
+            aTaskStatuses = angular.copy(aData);
             oStatuses._statusesGuids = [];
             if ($scope.aSelectedStatuses) {
                 for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
@@ -275,7 +279,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             var sFilterEnd = ")";
             var sFilterByCompanyGuid = "";
 
-            if(cacheProvider.oUserProfile.sCurrentRole === "contractor"){
+            if (cacheProvider.oUserProfile.sCurrentRole === "contractor") {
                 sFilterByCompanyGuid = " and substringof('" + cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid + "', AccountGuids) eq true";
             }
 
@@ -313,7 +317,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
                         apiProvider.getDeficiencies({
                             sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
-                            sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false"+ sFilterByCompanyGuid + sFilter,
+                            sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByCompanyGuid + sFilter,
                             bShowSpinner: true,
                             onSuccess: onDeficienciesLoaded
                         });
@@ -450,6 +454,39 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 sFilter: "CatalogId eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and DescriptionEN eq '" + $scope.sReportName + "'",
                 onSuccess: onReportTemplateLoaded
             });
+        };
+
+        $scope.onStatusChange = function(oDeficiency) {
+            if (!$scope.bDisplayEditButtons) {
+                return;
+            }
+            oDeficiency.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
+
+            $scope.aDataForMassChanges.push({
+                Guid: oDeficiency._guid,
+                TaskStatusGuid: aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].Guid,
+            });
+            oDeficiency.sStatusSortingSequence = (oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length;
+            // alert(oDeficiency._guid);
+            // oDeficiency._guid = "!!!";
+        };
+
+        $scope.onMassSave = function() {
+            var onSuccess = function() {
+                $scope.aDataForMassChanges = [];
+                loadDeficiencies();
+            };
+
+            apiProvider.updateDeficiencies({
+                aData: $scope.aDataForMassChanges,
+                bShowSpinner: true,
+                bShowSuccessMessage: true,
+                bShowErrorMessage: true,
+                onSuccess: onSuccess
+            });
+
+
+
         };
 
         $scope.$on("$destroy", function() {
