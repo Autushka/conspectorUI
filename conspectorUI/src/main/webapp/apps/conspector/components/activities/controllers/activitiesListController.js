@@ -253,6 +253,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
                     $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("activitiesList");
+                    cacheProvider.putListViewScrollPosition("activitiesList", 0); 
                 }
             }, 0);
         };
@@ -325,11 +326,6 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         };
         loadActivityTypes();
         loadActivities(); //load Activities
-        $timeout(function() {
-            if ($(".cnpAppView")[0]) {
-                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("activitiesList");
-            }
-        }, 0);
 
         $scope.onDisplay = function(oActivity) {
             cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...             

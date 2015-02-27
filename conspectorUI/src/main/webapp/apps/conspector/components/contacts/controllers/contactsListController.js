@@ -168,6 +168,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
                     $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contactsList");
+                    cacheProvider.putListViewScrollPosition("contactsList", 0);                    
                 }
             }, 0);
         };
@@ -199,11 +200,6 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         };
 
         loadContacts();
-        $timeout(function() {
-            if ($(".cnpAppView")[0]) {
-                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contactsList");
-            }
-        }, 0);
 
         $scope.onDisplay = function(oContact) {
             cacheProvider.putListViewScrollPosition("contactsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 

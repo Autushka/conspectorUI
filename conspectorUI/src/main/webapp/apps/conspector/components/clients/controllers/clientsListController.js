@@ -121,6 +121,7 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
                     $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("clientsList");
+                    cacheProvider.putListViewScrollPosition("clientsList", 0);                      
                 }
             }, 0);
         };
@@ -141,11 +142,6 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
         };
 
         loadClients(); //load Clients
-        $timeout(function() {
-            if ($(".cnpAppView")[0]) {
-                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("clientsList");
-            }
-        }, 0);
 
         $scope.onDisplay = function(oClient) {
             cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 

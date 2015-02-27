@@ -276,6 +276,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
                     $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
+                    cacheProvider.putListViewScrollPosition("deficienciesList", 0);
                 }
             }, 0);
         };
@@ -346,12 +347,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
         loadDeficiencyStatuses();
         loadDeficiencies();
-
-        $timeout(function() {
-            if ($(".cnpAppView")[0]) {
-                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
-            }
-        }, 0);
 
         $scope.onDisplay = function(oDeficiency, oEvent) {
             cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...

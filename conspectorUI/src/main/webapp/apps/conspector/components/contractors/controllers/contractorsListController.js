@@ -123,6 +123,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
                     $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contractorsList");
+                    cacheProvider.putListViewScrollPosition("contractorsList", 0);
                 }
             }, 0);
         };
@@ -143,11 +144,6 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
         };
 
         loadContractors(); //load Contractors
-        $timeout(function() {
-            if ($(".cnpAppView")[0]) {
-                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contractorsList");
-            }
-        }, 0);
 
         $scope.onDisplay = function(oContractor) {
             cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            

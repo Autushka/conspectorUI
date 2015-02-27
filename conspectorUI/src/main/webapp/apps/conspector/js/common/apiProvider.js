@@ -1570,10 +1570,10 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				svc.then(oParameters.onSuccess);
 			},
 
-			onSuccessUpdateDeficiency: function(oParameters) {
+			onSuccessUpdateDeficiency: function(oParameters, oData) {
 				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
 				if (oParameters.onSuccess) {
-					oParameters.onSuccess();
+					oParameters.onSuccess(oData);
 				}
 				PubNub.ngPublish({
 					channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
@@ -1588,7 +1588,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 			updateDeficiency: function(oParameters) {
 				var onSuccess = $.proxy(function(oData) {
-					this.onSuccessUpdateDeficiency(oParameters);
+					this.onSuccessUpdateDeficiency(oParameters, oData);
 				}, this);
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
@@ -1641,7 +1641,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 			createDeficiency: function(oParameters) {
 				var onSuccess = $.proxy(function(oData) {
-					this.onSuccessUpdateDeficiency(oParameters);
+					this.onSuccessUpdateDeficiency(oParameters, oData);
 				}, this);
 				var oSvc = dataProvider.createEntity({
 					sPath: "Tasks",

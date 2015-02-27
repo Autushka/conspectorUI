@@ -141,6 +141,7 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
                     $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("unitsList");
+                    cacheProvider.putListViewScrollPosition("unitsList", 0);
                 }
             }, 0);
         };
@@ -174,11 +175,6 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         };
 
         loadUnits(); //load Units
-        $timeout(function() {
-            if ($(".cnpAppView")[0]) {
-                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("unitsList");
-            }
-        }, 0);
 
         $scope.onDisplay = function(oUnit) {
             cacheProvider.putListViewScrollPosition("unitsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
