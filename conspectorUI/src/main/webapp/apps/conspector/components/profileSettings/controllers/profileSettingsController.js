@@ -25,6 +25,14 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 		};
 
 		$scope.aMenuItems = [];
+
+		var sAccountGuid = "";
+		var sContactGuid = "";
+		if(cacheProvider.oUserProfile.oUserContact && cacheProvider.oUserProfile.oUserContact.AccountDetails){
+			sAccountGuid = cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid;
+			sContactGuid = cacheProvider.oUserProfile.oUserContact.Guid;
+		}
+
 		$scope.aMenuItems.push({
 			bShouldBeDisplayed: rolesSettings.getRolesProfileMenuItemSettings({
 				sRole: sCurrentRole,
@@ -34,8 +42,8 @@ viewControllers.controller('profileSettingsView', ['$scope', '$state', 'services
 			sMenuLabel: "profileSettings_contactDetails",
 			oStateParams: {
 				sMode: "display",
-				sAccountGuid: cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid,
-				sContactGuid: cacheProvider.oUserProfile.oUserContact.Guid,
+				sAccountGuid: sAccountGuid,
+				sContactGuid: sContactGuid,
 			}
 		});
 
