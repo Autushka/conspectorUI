@@ -1,8 +1,9 @@
-viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings',
-    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings) {
+viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout',
+    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
         if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") {
             historyProvider.removeHistory(); // because current view doesn't have a back button
             $rootScope.oStateParams = {}; // for backNavigation	
+            cacheProvider.clearOtherViewsScrollPosition("deficienciesList");
         }
 
         var sCurrentUser = cacheProvider.oUserProfile.sUserName;
@@ -141,6 +142,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             var aImages = [];
             var sDescription = "";
 
+            oDeficienciesListData.aData = [];
+
             for (var i = 0; i < aData.length; i++) {
                 sProjectName = "";
                 sPhaseName = "";
@@ -270,6 +273,11 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 });
             }
             $scope.tableParams.reload();
+            $timeout(function() {
+                if ($(".cnpAppView")[0]) {
+                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
+                }
+            }, 0);
         };
 
         var loadDeficiencies = function() {
@@ -339,7 +347,15 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         loadDeficiencyStatuses();
         loadDeficiencies();
 
-        $scope.onDisplay = function(oDeficiency) {
+        $timeout(function() {
+            if ($(".cnpAppView")[0]) {
+                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
+            }
+        }, 0);
+
+        $scope.onDisplay = function(oDeficiency, oEvent) {
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
             $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
@@ -349,6 +365,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onEdit = function(oDeficiency) {
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
             $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {

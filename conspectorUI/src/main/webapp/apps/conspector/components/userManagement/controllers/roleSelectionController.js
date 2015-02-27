@@ -1,6 +1,7 @@
 viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state', '$translate', 'utilsProvider', 'dataProvider', 'cacheProvider', '$filter', 'rolesSettings', 'servicesProvider', 'apiProvider', 'historyProvider',
 	function($scope, $rootScope, $state, $translate, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider, historyProvider) {
 		var aRoles = [];
+        cacheProvider.clearOtherViewsScrollPosition("");		
 		$rootScope.sCurrentStateName = $state.current.name;	
  		$rootScope.oStateParams = {};// for backNavigation			
 		$scope.sLanguage = $translate.use();

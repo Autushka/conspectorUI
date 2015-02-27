@@ -1,7 +1,8 @@
-viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter', 'rolesSettings', 'utilsProvider',
-    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter, rolesSettings, utilsProvider) {
+viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$filter', 'rolesSettings', 'utilsProvider', '$timeout',
+    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $filter, rolesSettings, utilsProvider, $timeout) {
         if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
             historyProvider.removeHistory(); // because current view doesn't have a back button
+            cacheProvider.clearOtherViewsScrollPosition("contactsList");
         }
 
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
@@ -114,7 +115,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
                             if (!sPhaseName) {
                                 sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
                             }
-                            
+
                             oContactsListData.aData.push({
                                 sName: sName,
                                 sCleanedName: utilsProvider.replaceSpecialChars(sName),
@@ -164,10 +165,15 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             }
 
             $scope.tableParams.reload();
+            $timeout(function() {
+                if ($(".cnpAppView")[0]) {
+                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contactsList");
+                }
+            }, 0);
         };
 
         var loadContacts = function() {
-            
+
             if (sAccountGuid) {
                 oContactsListData.aData = [];
                 apiProvider.getContactsForAccount({
@@ -193,8 +199,15 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         };
 
         loadContacts();
+        $timeout(function() {
+            if ($(".cnpAppView")[0]) {
+                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contactsList");
+            }
+        }, 0);
 
         $scope.onDisplay = function(oContact) {
+            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+
             if (!sAccountGuid) {
                 sAccountGuid = oContact._accountGuid;
             }
@@ -210,6 +223,8 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         }
 
         $scope.onEdit = function(oContact) {
+            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+
             if (!sAccountGuid) {
                 sAccountGuid = oContact._accountGuid;
             }

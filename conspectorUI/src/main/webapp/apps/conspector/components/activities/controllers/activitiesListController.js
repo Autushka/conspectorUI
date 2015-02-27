@@ -1,8 +1,9 @@
-viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', 'utilsProvider',
-    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, utilsProvider) {
+viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', 'utilsProvider', '$timeout',
+    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, utilsProvider, $timeout) {
         if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contactDetailsWrapper.contactDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") {
             historyProvider.removeHistory(); // because current view doesn't have a back button
             $rootScope.oStateParams = {}; // for backNavigation 
+            cacheProvider.clearOtherViewsScrollPosition("activitiesList");
         }
 
         var sCurrentUser = cacheProvider.oUserProfile.sUserName;
@@ -249,6 +250,11 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                 }
             }
             $scope.tableParams.reload();
+            $timeout(function() {
+                if ($(".cnpAppView")[0]) {
+                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("activitiesList");
+                }
+            }, 0);
         };
 
         var loadActivities = function() {
@@ -319,8 +325,14 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         };
         loadActivityTypes();
         loadActivities(); //load Activities
+        $timeout(function() {
+            if ($(".cnpAppView")[0]) {
+                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("activitiesList");
+            }
+        }, 0);
 
         $scope.onDisplay = function(oActivity) {
+            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...             
             $state.go('app.activityDetailsWrapper.activityDetails', {
                 sMode: "display",
                 sActivityGuid: oActivity._guid,
@@ -328,6 +340,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         };
 
         $scope.onEdit = function(oActivity) {
+            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...              
             $state.go('app.activityDetailsWrapper.activityDetails', {
                 sMode: "edit",
                 sActivityGuid: oActivity._guid,

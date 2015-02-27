@@ -1,7 +1,7 @@
-viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', 'utilsProvider',
-    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, utilsProvider) {
+viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', 'utilsProvider', '$timeout',
+    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, utilsProvider, $timeout) {
         historyProvider.removeHistory(); // because current view doesn't have a back button
-
+        cacheProvider.clearOtherViewsScrollPosition("clientsList");
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         $scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
             sRole: sCurrentRole,
@@ -117,19 +117,22 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
                 }
 
             }
-
-
             $scope.tableParams.reload();
+            $timeout(function() {
+                if ($(".cnpAppView")[0]) {
+                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("clientsList");
+                }
+            }, 0);
         };
 
         var loadClients = function() {
             oClientsListData.aData = [];
             if ($scope.globalSelectedPhases.length > 0) {
-            apiProvider.getClients({
-                sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
-                bShowSpinner: true,
-                onSuccess: onClientsLoaded
-            });
+                apiProvider.getClients({
+                    sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
+                    bShowSpinner: true,
+                    onSuccess: onClientsLoaded
+                });
             } else {
                 oClientsListData.aData = [];
                 onClientsLoaded([]);
@@ -138,8 +141,14 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
         };
 
         loadClients(); //load Clients
+        $timeout(function() {
+            if ($(".cnpAppView")[0]) {
+                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("clientsList");
+            }
+        }, 0);
 
         $scope.onDisplay = function(oClient) {
+            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
             $state.go('app.clientDetailsWrapper.clientDetails', {
                 sMode: "display",
                 sClientGuid: oClient._guid,
@@ -151,6 +160,7 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
         }
 
         $scope.onEdit = function(oClient) {
+            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
             $state.go('app.clientDetailsWrapper.clientDetails', {
                 sMode: "edit",
                 sClientGuid: oClient._guid,

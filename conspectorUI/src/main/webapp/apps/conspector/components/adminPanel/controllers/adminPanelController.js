@@ -1,6 +1,7 @@
 viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider', '$mdSidenav', '$window', 'historyProvider', 'rolesSettings', '$translate',
 	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider, $mdSidenav, $window, historyProvider, rolesSettings, $translate) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button		
+		cacheProvider.clearOtherViewsScrollPosition("");
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 
 		$scope.toggleLeftSidenav = function() {

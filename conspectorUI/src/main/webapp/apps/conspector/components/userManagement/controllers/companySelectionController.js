@@ -2,6 +2,7 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 	function($scope, $rootScope, $state, $translate, utilsProvider, dataProvider, cacheProvider, $filter, rolesSettings, servicesProvider, apiProvider, historyProvider) {
 		var aCompanies = [];
 		$rootScope.sCurrentStateName = $state.current.name;	
+		cacheProvider.clearOtherViewsScrollPosition("");
  		$rootScope.oStateParams = {};// for backNavigation			
 		$scope.sLanguage = $translate.use();
 

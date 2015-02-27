@@ -32,13 +32,38 @@ app.factory('cacheProvider', ['TYPES',
 
 			oUserProfile: {},
 
+			oListViewScrollPosition: {
+				deficienciesList: 0,
+				contactsList: 0,
+				unitsList: 0,
+				clientsList: 0,
+				contractorsList: 0,
+				activitiesList: 0
+			},
+
+			putListViewScrollPosition: function(sView, iValue) {
+				this.oListViewScrollPosition[sView] = iValue;
+			},
+
+			getListViewScrollPosition: function(sView){
+				return this.oListViewScrollPosition[sView];
+			},
+
+			clearOtherViewsScrollPosition: function(sView) {
+				for (var sProperty in this.oListViewScrollPosition) {
+					if (this.oListViewScrollPosition.hasOwnProperty(sProperty) && sProperty !== sView) {
+						this.oListViewScrollPosition[sProperty] = 0;
+					}
+				}
+			},
+
 			oTableStatus: {
 				deficienciesList: [{
 					sStateName: "app.deficienciesList",
 					aGroups: [],
 					oFilter: {},
 					oSorting: {}
-				}],				
+				}],
 				contactsList: [{
 					sStateName: "app.contactsList",
 					aGroups: [],
@@ -47,7 +72,7 @@ app.factory('cacheProvider', ['TYPES',
 					oListSettings: {
 						bGroupListByProjectAndPhase: true
 					}
-				},{
+				}, {
 					sStateName: "app.clientDetailsWrapper.clientDetails",
 					aGroups: [],
 					oFilter: {},
@@ -55,7 +80,7 @@ app.factory('cacheProvider', ['TYPES',
 					oListSettings: {
 						bGroupListByProjectAndPhase: true
 					}
-				},{
+				}, {
 					sStateName: "app.contractorDetailsWrapper.contractorDetails",
 					aGroups: [],
 					oFilter: {},
@@ -93,7 +118,7 @@ app.factory('cacheProvider', ['TYPES',
 					aGroups: [],
 					oFilter: {},
 					oSorting: {}
-				}],	
+				}],
 			},
 
 			getTableStatusFromCache: function(oParameters) {
@@ -173,6 +198,7 @@ app.factory('cacheProvider', ['TYPES',
 			cleanAllCache: function() {
 				this.cleanEntitiesCache();
 				this.cleanProfileCache();
+				this.clearOtherViewsScrollPosition("");
 			},
 
 			getEntityDetails: function(oParameters) {

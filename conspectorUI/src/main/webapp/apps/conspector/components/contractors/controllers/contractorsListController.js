@@ -1,7 +1,7 @@
-viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', 'utilsProvider',
-    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, utilsProvider) {
+viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', 'utilsProvider', '$timeout',
+    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, utilsProvider, $timeout) {
         historyProvider.removeHistory(); // because current view doesn't have a back button
-
+        cacheProvider.clearOtherViewsScrollPosition("contractorsList");
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         $scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
             sRole: sCurrentRole,
@@ -120,6 +120,11 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
                 }
             }
             $scope.tableParams.reload();
+            $timeout(function() {
+                if ($(".cnpAppView")[0]) {
+                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contractorsList");
+                }
+            }, 0);
         };
 
         var loadContractors = function() {
@@ -138,8 +143,14 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
         };
 
         loadContractors(); //load Contractors
+        $timeout(function() {
+            if ($(".cnpAppView")[0]) {
+                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contractorsList");
+            }
+        }, 0);
 
         $scope.onDisplay = function(oContractor) {
+            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
             $state.go('app.contractorDetailsWrapper.contractorDetails', {
                 sMode: "display",
                 sContractorGuid: oContractor._guid,
@@ -151,6 +162,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
         }
 
         $scope.onEdit = function(oContractor) {
+            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
             $state.go('app.contractorDetailsWrapper.contractorDetails', {
                 sMode: "edit",
                 sContractorGuid: oContractor._guid,

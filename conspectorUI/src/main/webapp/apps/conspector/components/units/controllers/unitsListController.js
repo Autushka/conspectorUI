@@ -1,6 +1,7 @@
-viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings',
-    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings) {
+viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$timeout',
+    function($scope, $rootScope, $state, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $timeout) {
         historyProvider.removeHistory(); // because current view doesn't have a back button
+        cacheProvider.clearOtherViewsScrollPosition("unitsList");
 
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         $scope.bDisplayAddButton = rolesSettings.getRolesSettingsForEntityAndOperation({
@@ -137,6 +138,11 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
                 });
             }
             $scope.tableParams.reload();
+            $timeout(function() {
+                if ($(".cnpAppView")[0]) {
+                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("unitsList");
+                }
+            }, 0);
         };
 
         var loadUnits = function() {
@@ -168,8 +174,15 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         };
 
         loadUnits(); //load Units
+        $timeout(function() {
+            if ($(".cnpAppView")[0]) {
+                $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("unitsList");
+            }
+        }, 0);
 
         $scope.onDisplay = function(oUnit) {
+            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+
             $rootScope.sFileMetadataSetGuid = oUnit._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oUnit._fileMetadataSetLastModifiedAt;
             $state.go('app.unitDetailsWrapper.unitDetails', {
@@ -179,6 +192,8 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         };
 
         $scope.onEdit = function(oUnit) {
+            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+
             $rootScope.sFileMetadataSetGuid = oUnit._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oUnit._fileMetadataSetLastModifiedAt;
             $state.go('app.unitDetailsWrapper.unitDetails', {

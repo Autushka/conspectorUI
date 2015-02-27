@@ -1573,7 +1573,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			onSuccessUpdateDeficiency: function(oParameters) {
 				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
 				if (oParameters.onSuccess) {
-					oParameters.onSuccess(oData);
+					oParameters.onSuccess();
 				}
 				PubNub.ngPublish({
 					channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,

@@ -1,6 +1,7 @@
 viewControllers.controller('profileSettingsView', ['$scope', '$state', 'servicesProvider', '$cookieStore', 'cacheProvider', '$window', '$mdSidenav', 'historyProvider', '$translate', 'rolesSettings',
 	function($scope, $state, servicesProvider, $cookieStore, cacheProvider, $window, $mdSidenav, historyProvider, $translate, rolesSettings) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button				
+		cacheProvider.clearOtherViewsScrollPosition("");
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 
 		$scope.toggleLeftSidenav = function() {
