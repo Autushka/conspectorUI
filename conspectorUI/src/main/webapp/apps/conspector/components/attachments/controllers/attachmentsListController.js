@@ -112,12 +112,12 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		$scope.onFilesSelected = function(aFiles, $event) {
 			var onProgress = function($event) {
 				// $scope.iUploadProgress = 100 * parseInt($event.loaded / $event.total, 10);
-				$scope.iUploadProgress = 50;
+				// $scope.iUploadProgress = 50;
 				// $scope.iUploadProgress = $scope.iUploadProgress + "%";
 				//console.log('progress: ' + progressPercentage + '% ' + $event.config.file.name);
 			};
 			var onSuccessUpload = function() { //called once for the last uploaded file
-				$scope.iUploadProgress = 50;
+				// $scope.iUploadProgress = 50;
 				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
 				if ($rootScope.sMode === "create") {
 					$rootScope.bDataHasBeenModified = true;
