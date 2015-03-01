@@ -485,6 +485,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onMassSave = function() {
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
             var onSuccess = function() {
                 $scope.aDataForMassChanges = [];
                 loadDeficiencies();

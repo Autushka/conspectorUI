@@ -1297,6 +1297,7 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 
 
 
+
 /*
 END OF APP VIEW
 */
@@ -2196,6 +2197,32 @@ NG TABLE
 	}
 		
 	}
+}
+
+.cnpDeficiencyStatusIcon{
+	width: 25px;
+	height: 25px;
+	border-radius: 17px;
+	cursor: pointer;
+	/* border-color: rgb(0, 103, 140); */
+	border-style: none;
+	border-width: 0px;
+	background-color: transparent;
+	&:hover{
+	-webkit-transform: translate3d(0,-1px,0);
+	transform: translate3d(0,-1px,0);
+	box-shadow: 0px 0px 6px 0px rgba(0, 136, 184, 1);
+	background-color: rgb(167, 214, 230);
+	}
+	transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1),transform .4s cubic-bezier(.25,.8,.25,1);
+
+}
+.cnpDeficienciesMassSaveButton{
+	position: fixed;
+	bottom: 12px;
+	left: 66%;
+	z-index: 999;
+	box-shadow: 0 27px 24px 0 rgba(0,0,0,.2) !important;
 }
 
 #activitiesList th:nth-of-type(2) {

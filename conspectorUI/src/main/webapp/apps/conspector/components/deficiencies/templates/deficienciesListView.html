@@ -30,8 +30,9 @@
 					{{'deficienciesList_addNew' | translate}}
 					</md-button>
 					<md-button class="md-button md-primary md-hue-2 md-raised cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpEraseIcon cnpButtonMarginRight notSelectable" ng-click="onClearFiltering()">{{'global_clearFiltering' | translate}}</md-button>
-					<md-button class="md-button md-primary md-hue-2 md-raised cnpButtonWithIcon cnpInputIcon cnpWordReportIcon cnpButtonMoreMorePadding notSelectable" ng-click="onReports()">{{'global_reporting' | translate}}</md-button>  
-					<md-button ng-if="aDataForMassChanges.length" class="md-button md-primary md-hue-2 md-raised cnpButtonWithIcon cnpInputIcon cnpWordReportIcon cnpButtonMoreMorePadding notSelectable" ng-click="onMassSave()">{{'global_massSave' | translate}}</md-button>  					
+					<md-button class="md-button md-primary md-hue-2 md-raised cnpButtonWithIcon cnpInputIcon cnpWordReportIcon cnpButtonMarginRight cnpButtonMoreMorePadding notSelectable" ng-click="onReports()">{{'global_reporting' | translate}}</md-button>
+					<md-button ng-show="aDataForMassChanges.length" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onMassSave()">{{'global_massSave' | translate}}</md-button> 
+					<md-button ng-show="aDataForMassChanges.length" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable cnpDeficienciesMassSaveButton" ng-click="onMassSave()">{{'global_massSave' | translate}}</md-button>				
 				</div>
 				<!-- <div flex flex-order="2" layout="row" layout-align="start center">
 										<md-switch  class="md-checkbox md-checkboxForList" ng-model="oListSettings.bGroupListByProjectAndPhase" ng-change="onGroupingChange()" style="margin-left: 24px;">
@@ -81,7 +82,7 @@
 						</td>
 						<td data-title="'global_status' | translate" sortable="'sStatusSortingSequence'">
 							<div layout="row" layout-align="center center" ng-click="onStatusChange(deficiency)">
-								<img ng-src="{{deficiency.sStatuseIconUrl}}" style="width:24px; height:24px;"/>
+								<img class="cnpDeficiencyStatusIcon" ng-src="{{deficiency.sStatuseIconUrl}}"/>
 							</div>
 						</td>
 						<td data-title="'global_contractors' | translate" sortable="'sContractors'" filter="{'sCleanedContractors': 'text'}">
