@@ -65,7 +65,7 @@
 			</div>
 			<div layout="row" flex style="width: 100%">
 				<div class="cnpSubSection" layout="row" flex>
-					<textarea class="cnpCommentTextArea" ng-model="oComment.sText">
+					<textarea flex placeholder="{{'global_postPlaceholder' | translate}}" class="cnpCommentTextArea" ng-model="oComment.sText">
 					</textarea>
 					<div class="cnpCommentPostArea">
 						<md-button class="md-button md-primary md-raised cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_post' | translate}}</md-button>

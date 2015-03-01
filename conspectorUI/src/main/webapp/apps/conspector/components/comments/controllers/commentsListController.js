@@ -164,6 +164,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 
 		$scope.onSave = function() {
 			var onSuccess = function() {
+				$scope.oComment.sText = "";
 				loadComments();
 			};
 			var oDataForSave = {

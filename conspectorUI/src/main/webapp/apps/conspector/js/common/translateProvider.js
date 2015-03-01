@@ -117,6 +117,7 @@ app.config(['$translateProvider',
                   global_minimunTagsLength: 'Tag should be 25 characters or less.',
                   global_massSave: 'Save',
                   global_post: 'Post',
+                  global_postPlaceholder: 'Any Comments?',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -537,6 +538,7 @@ app.config(['$translateProvider',
                   global_minimunTagsLength: 'Les tag doivent avoir moins de 25 charact\u00E8res.',
                   global_massSave: 'Sauvegarder',
                   global_post: 'Publier',
+                  global_postPlaceholder: 'Des commentaires?',
 
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',
