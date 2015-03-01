@@ -1,7 +1,7 @@
 viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$upload', 'utilsProvider',
 	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload, utilsProvider) {
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
-
+		
 		var sEntityType = "";
 		var sEntityPath = "";
 		var oEntity = "";
@@ -43,7 +43,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 			oInitialDataArrayWrapper: oCommentsListData,
 			sDisplayedDataArrayName: "aDisplayedComments",
 			oInitialSorting: {
-				_createdAt: 'desc'
+				_createdAt: 'asc'
 			},
 			oInitialFilter: {},
 			aInitialGroupsSettings: {},
@@ -53,6 +53,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 			var sAuthor = "";
 			var sAvatarUrl = "";
 			var sUserName = "";
+			var bAllowedEditMode = false;
 
 			for (var i = 0; i < oData.CommentDetails.results.length; i++) {
 				sAuthor = "";
@@ -76,6 +77,8 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 						sUserName = oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].UserName;
 					}					
 				}
+				bAllowedEditMode = (sUserName === cacheProvider.oUserProfile.sUserName) ? true : false;
+
 				oCommentsListData.aData.push({
 					_guid: oData.CommentDetails.results[i].Guid,
 					_lastModifiedAt: oData.CommentDetails.results[i].LastModifiedAt,
@@ -85,6 +88,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 					sAuthor: sAuthor,
 					sAvatarUrl: sAvatarUrl,
 					_editMode: false,
+					_allowEditMode: bAllowedEditMode,
 					_userName: sUserName,
 				});
 			}

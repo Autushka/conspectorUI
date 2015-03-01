@@ -116,6 +116,7 @@ app.config(['$translateProvider',
                   global_useLibrary: 'Choose from camera roll',
                   global_minimunTagsLength: 'Tag should be 25 characters or less.',
                   global_massSave: 'Save',
+                  global_post: 'Post',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -278,6 +279,8 @@ app.config(['$translateProvider',
                   deficiencyDetails_deletionConfirmationHeader: 'You are about to delete a deficiency.',
                   deficiencyDetails_deletionConfirmationContent: 'Are you sure you want to proceed ?',
 
+                  //commentsList
+                  commentsList_title: 'Comments',
                   //unitList
                   unitsList_addNew: 'Add Unit',
                   unitsList_title: 'Units List',
@@ -533,6 +536,7 @@ app.config(['$translateProvider',
                   global_useLibrary: 'Choisir images',
                   global_minimunTagsLength: 'Les tag doivent avoir moins de 25 charact\u00E8res.',
                   global_massSave: 'Sauvegarder',
+                  global_post: 'Publier',
 
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',
@@ -696,6 +700,9 @@ app.config(['$translateProvider',
                   deficiencyDetails_deficiencyAssignedUserDefaultLabel: 'S\u00E9lectionner l\u0027utilisateur',
                   deficiencyDetails_deletionConfirmationHeader: 'Vous \u00EAtes sur le point d\u0027effacer une d\u00E9ficience.',
                   deficiencyDetails_deletionConfirmationContent: '\u00CAtes-vous s\u00FBr de vouloir effacer cette d\u00E9ficience ?',
+                  
+                  //commentsList
+                  commentsList_title: 'Commentaires',
                   //unitList
                   unitsList_addNew: 'Ajouter unit\u00E9',
                   unitsList_title: 'Liste des unit\u00E9s',
