@@ -106,12 +106,12 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                     oTypes._typesGuids.push($scope.aSelectedActivityType[i].Guid);
                 }
             } else {
-                for (var i = 0; i < aData.length; i++) {
-                    oTypes._typesGuids.push(aData[i].Guid);
-                }
-                $cookieStore.put("selectedActivityTypes" + sCurrentUser + sCompany, {
-                    aSelectedActivityType: oTypes._typesGuids,
-                });
+                // for (var i = 0; i < aData.length; i++) {
+                //     oTypes._typesGuids.push(aData[i].Guid);
+                // }
+                // $cookieStore.put("selectedActivityTypes" + sCurrentUser + sCompany, {
+                //     aSelectedActivityType: oTypes._typesGuids,
+                // });
             }
             oActivityTypesWrapper.aData[0] = angular.copy(oTypes);
             // oTypes._typesGuids.push(aData[0].Guid);

@@ -96,12 +96,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     oStatuses._statusesGuids.push($scope.aSelectedStatuses[i].Guid);
                 }
             } else {
-                for (var i = 0; i < aData.length; i++) {
-                    oStatuses._statusesGuids.push(aData[i].Guid);
-                }
-                $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
-                    aSelectedStatuses: oStatuses._statusesGuids,
-                });
+                // for (var i = 0; i < aData.length; i++) {
+                //     oStatuses._statusesGuids.push(aData[i].Guid);
+                // }
+                // $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
+                //     aSelectedStatuses: oStatuses._statusesGuids,
+                // });
             }
             oDeficiencyStatusesWrapper.aData[0] = angular.copy(oStatuses);
 
