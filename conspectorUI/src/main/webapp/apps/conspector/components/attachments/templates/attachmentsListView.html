@@ -5,7 +5,8 @@
 				<md-button class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="clickUploadButton()">{{'global_upload' | translate}}</md-button>
 
 				<button style="display: none;" id="uploadFilesToDeficiency" ng-file-select accept="image/*,.pdf,.docx,.doc,.xls" ng-multiple="true" ng-file-change="onFilesSelected($files, $event)">{{'global_upload' | translate}}</button>
-				<div style="margin-left: 2rem;">{{iUploadProgress}}</div>
+				<!-- <div style="margin-left: 2rem;">{{iUploadProgress}}</div> -->
+
 			</div>
 			<div layout="row" layout-align="end start">
 				<label class="cnpContentTitle notSelectable">
@@ -13,6 +14,8 @@
 				</label>
 			</div>
 		</div>
+		<!-- <md-progress-linear md-theme="green" md-mode="determinate" ng-value="50"></md-progress-linear> -->
+		<!-- <md-progress-linear md-theme="green" md-mode="indeterminate"></md-progress-linear> -->
 		<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
 <!-- 			<div style="width: 100%; position: fixed;"> 
 				<md-progress-linear class="md-accent" md-mode="determinate" value="30"></md-progress-linear>

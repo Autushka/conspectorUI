@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date-default-theme.css">
 		<link rel='stylesheet' href='bower_components/textAngular/src/textAngular.css'>		
 		<link rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css'>
-
+		<link rel='stylesheet' href='bower_components/angular-loading-bar/build/loading-bar.min.css'>
 <!--     <link data-require="bootstrap@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" /> -->								
 		
 		<link rel="stylesheet" href="apps/conspector/css/style.css">
@@ -52,7 +52,8 @@
 		<script src='bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
 		<script src='bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
 		<script src='bower_components/textAngular/dist/textAngular.min.js'></script>	
-		<script src="bower_components/ngCordova/dist/ng-cordova.js"></script>			
+		<script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+		<script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>						
 		
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->
 		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
@@ -147,9 +148,9 @@
 
 	</head>
 	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;" ng-click="$root.hideGallery()">
-		<div ng-show="$root.showSpinner" layout="row" layout-align="center center" style="position: absolute; z-index: 2; height: 100%; width: 100%;">
+		<!-- <div ng-show="$root.showSpinner" layout="row" layout-align="center center" style="position: absolute; z-index: 2; height: 100%; width: 100%;">
 			<md-progress-circular md-mode="indeterminate"> </md-progress-circular>
-		</div>
+		</div> -->
 		<cnp-photo-gallery></cnp-photo-gallery>			
 		<div ui-view></div>
 	</body>
