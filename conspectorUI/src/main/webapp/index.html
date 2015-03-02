@@ -44,13 +44,15 @@
 
 		<script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>				
 	
-		
+		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->	
+		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
+		<script src="apps/conspector/js/thirdParty/angular-file-upload.min.js"></script> <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->			
 		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> <!-- was not able to find it as a bower component-->	
 		<script src="apps/conspector/js/thirdParty/jQuery.download.js"></script> <!-- small function that needed to allow ajax requests that return files (needed for dynamic reports...)-->	
 
 	    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
 	    <script type="text/javascript" src="cordova.js"></script>
-	    <script type="text/javascript" src="js/index.js"></script>	
+	   <!-- <script type="text/javascript" src="apps/conspector/js/index.js"></script>	-->
 
 		<script src="apps/conspector/js/appHybrid.js"></script>
 		<script src="apps/conspector/js/constantsHybridApp.js"></script>
@@ -68,8 +70,14 @@
 		<script src="apps/conspector/js/common/filtersProvider.js"></script>
 		<script src="apps/conspector/js/common/controlsProvider.js"></script>						
 		<script src="apps/conspector/js/mainController.js"></script>
+
+		<script src="apps/conspector/components/userManagement/controllers/signInController.js"></script>
+		<script src="apps/conspector/components/userManagement/controllers/forgotPasswordController.js"></script>
+		<script src="apps/conspector/components/userManagement/controllers/companySelectionController.js"></script>
+		<script src="apps/conspector/components/userManagement/controllers/roleSelectionController.js"></script>
+		<script src="apps/conspector/components/userManagement/controllers/initialPasswordResetController.js"></script>
+		<script src="apps/conspector/components/userManagement/controllers/passwordResetController.js"></script>		
 		
-		<script src="apps/conspector/components/generalLayout/controllers/appHybridController.js"></script>	
 		<script src="apps/conspector/components/generalLayout/controllers/mainMenuHybridController.js"></script>		
 
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListHybridController.js"></script>	

@@ -47,7 +47,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 
 			globalAdministrator: {
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",
 				bIsGlobalUserAdministrator: true,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -133,7 +133,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			systemAdministrator: {
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",				
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -220,7 +220,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 
 			contactManagementUser: {
 				sInitialState: "app.contactsList",
-				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",				
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,
@@ -306,7 +306,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			contactViewerUser: {
 				sInitialState: "app.contactsList",
-				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",				
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,
@@ -393,7 +393,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			contractor: {
 				//sInitialState: "app.deficienciesList",
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",
+				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,

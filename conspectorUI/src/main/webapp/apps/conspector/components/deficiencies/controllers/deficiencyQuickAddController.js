@@ -2,6 +2,8 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
     function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window, $cordovaCamera) {
         historyProvider.removeHistory();
 
+        servicesProvider.constructLogoUrl();
+
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         var bCanContinue = rolesSettings.getRolesSettingsForEntityAndOperation({
             sRole: sCurrentRole,
@@ -21,7 +23,9 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation        
 
         
-
+        $scope.onMainMenu = function(){
+            $state.go("mainMenuHybrid");
+        };  
 
 
         // $scope.onLogOut = function() {

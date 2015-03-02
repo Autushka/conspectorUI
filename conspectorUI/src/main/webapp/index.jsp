@@ -60,8 +60,8 @@
 		<script src="apps/conspector/js/thirdParty/jQuery.download.js"></script> <!-- small function that needed to allow ajax requests that return files (needed for dynamic reports...)-->		
 		
 	    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
-	    <script type="text/javascript" src="cordova.js"></script>
-	    <script type="text/javascript" src="js/index.js"></script>			
+	    <!-- <script type="text/javascript" src="cordova.js"></script>
+	    // <script type="text/javascript" src="js/index.js"></script>	-->		
 			
 		<script src="apps/conspector/js/app.js"></script>
 		<script src="apps/conspector/js/constants.js"></script>
@@ -69,7 +69,6 @@
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 		
-		<script src="apps/conspector/components/generalLayout/controllers/appHybridController.js"></script>	
 		<script src="apps/conspector/components/generalLayout/controllers/mainMenuHybridController.js"></script>			
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListHybridController.js"></script>	
 

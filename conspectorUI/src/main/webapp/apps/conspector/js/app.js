@@ -420,31 +420,24 @@ app.config(['$stateProvider', '$urlRouterProvider',
         });        
 
         //Hybrid App
-        $stateProvider.state('appHybrid', {
-            url: '/appHybrid',
-            templateUrl: 'apps/conspector/components/generalLayout/templates/appHybridView.html',
-            controller: 'appHybridView'
-        });
-
-
         $stateProvider.state('mainMenuHybrid', {
             url: '/mainMenuHybrid',
             templateUrl: 'apps/conspector/components/generalLayout/templates/mainMenuHybridView.html',
             controller: 'mainMenuHybridView'
         });
 
-        $stateProvider.state('appHybrid.deficienciesListHybrid', {
+        $stateProvider.state('deficienciesListHybrid', {
             url: '/deficienciesListHybrid',
             templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridView.html',
             controller: 'deficienciesListHybridView'
         });        
 
-        $stateProvider.state('appHybrid.deficiencyQuickAddWrapper', { //abstract view without controller that contains only ngView holders
+        $stateProvider.state('deficiencyQuickAddWrapper', { //abstract view without controller that contains only ngView holders
             templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddWrapperView.html',
             controller: 'deficiencyQuickAddWrapperView'
         });
 
-        $stateProvider.state('appHybrid.deficiencyQuickAddWrapper.quickAdd', { //state that contains subviews
+        $stateProvider.state('deficiencyQuickAddWrapper.quickAdd', { //state that contains subviews
             url: '/deficiencyQuickAddWrapper',
             views: {
                 'deficiencyQuickAdd': {

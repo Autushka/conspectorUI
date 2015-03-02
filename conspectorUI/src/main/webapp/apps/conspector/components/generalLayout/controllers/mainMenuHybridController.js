@@ -11,7 +11,7 @@ viewControllers.controller('mainMenuHybridView', ['$scope', '$rootScope', '$stat
 				sRole: sCurrentRole,
 				sMenuItem: "bShowQuickAdd",
 			}),
-			sStateName: "appHybrid.deficiencyQuickAddWrapper.quickAdd",
+			sStateName: "deficiencyQuickAddWrapper.quickAdd",
 			sMenuLabel: "hybrid_quickAddMenuItem",
 		});		
 		$scope.aMenuItems.push({
@@ -19,7 +19,7 @@ viewControllers.controller('mainMenuHybridView', ['$scope', '$rootScope', '$stat
 				sRole: sCurrentRole,
 				sMenuItem: "bShowDeficienciesList",
 			}),
-			sStateName: "appHybrid.deficienciesListHybrid",
+			sStateName: "deficienciesListHybrid",
 			sMenuLabel: "hybrid_deficienciesListItem",
 		});			
 
