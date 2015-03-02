@@ -280,25 +280,25 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 
                         if (sUnitGuid) {
                             sFilter = sFilter + sFilterStart;
-                            sFilter = sFilter + "substringof('" + sUnitGuid + "', UnitGuids)";
+                            sFilter = sFilter + "substringof('" + sUnitGuid + "', UnitGuids) eq true";
                             sFilter = sFilter + sFilterEnd;
                         }
 
                         if (sContractorGuid) {
                             sFilter = sFilter + sFilterStart;
-                            sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids)";
+                            sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids) eq true";
                             sFilter = sFilter + sFilterEnd;
                         }
 
                         if (sClientGuid) {
                             sFilter = sFilter + sFilterStart;
-                            sFilter = sFilter + "substringof('" + sClientGuid + "', AccountGuids)";
+                            sFilter = sFilter + "substringof('" + sClientGuid + "', AccountGuids) eq true";
                             sFilter = sFilter + sFilterEnd;
                         }
 
                         if (sContactGuid) {
                             sFilter = sFilter + sFilterStart;
-                            sFilter = sFilter + "substringof('" + sContactGuid + "', ContactGuids)";
+                            sFilter = sFilter + "substringof('" + sContactGuid + "', ContactGuids) eq true";
                             sFilter = sFilter + sFilterEnd;
                         }
 

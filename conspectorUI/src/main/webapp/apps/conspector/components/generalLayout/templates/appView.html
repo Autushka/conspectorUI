@@ -8,15 +8,17 @@
 				</label>
 			</div>
 			<div>
+				<label ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeader notSelectable">
+					{{'app_switchRoles' | translate}}
+				</label>
 				<label ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeader notSelectable">
 					{{'app_adminPanel' | translate}}
 				</label>
 				<label ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="cnpLink cnpLinkHeader notSelectable">
 					{{sCurrentUser}}
 				</label>
-				
-				<label ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeader notSelectable">
-					{{'app_switchRoles' | translate}}
+				<label ng-click="onNotificationsList()" class="cnpLink cnpLinkHeader notSelectable">
+					{{'global_notificationsList' | translate}}
 				</label>
 				<label ng-click="onLogOut()" class="cnpLink cnpLinkHeader notSelectable">
 					{{'app_logOut' | translate}}

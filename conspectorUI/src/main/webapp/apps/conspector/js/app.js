@@ -413,6 +413,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
             controller: 'changePasswordView'
         });
 
+        $stateProvider.state('app.notificationsList', {
+            url: '/notificationsList',
+            templateUrl: 'apps/conspector/components/notifications/templates/notificationsListView.html',
+            controller: 'notificationsListView'
+        });
+
         //Hybrid App
         $stateProvider.state('deficiencyQuickAddWrapper', { //abstract view without controller that contains only ngView holders
             templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddWrapperView.html',

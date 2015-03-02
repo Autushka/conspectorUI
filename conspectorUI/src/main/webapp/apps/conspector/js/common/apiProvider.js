@@ -290,7 +290,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			getOperationLogs: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "OperationLogs",
-					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					sFilter: oParameters.sFilter,
 					bShowSpinner: oParameters.bShowSpinner,
 					oCacheProvider: cacheProvider,
 					sCacheProviderAttribute: "oOperationLogEntity"

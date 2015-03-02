@@ -320,7 +320,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
                         if (sContractorGuid) {
                             sFilter = sFilter + sFilterStart;
-                            sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids)";
+                            sFilter = sFilter + "substringof('" + sContractorGuid + "', AccountGuids) eq true";
                             sFilter = sFilter + sFilterEnd;
                         }
 

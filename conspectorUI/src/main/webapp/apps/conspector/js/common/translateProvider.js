@@ -118,6 +118,7 @@ app.config(['$translateProvider',
                   global_massSave: 'Save',
                   global_post: 'Post',
                   global_postPlaceholder: 'Add a comment...',
+                  global_noComments: 'No comments yet...',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -539,6 +540,7 @@ app.config(['$translateProvider',
                   global_massSave: 'Sauvegarder',
                   global_post: 'Publier',
                   global_postPlaceholder: 'Ajouter un commentaire...',
+                  global_noComments: 'Pas de commentaires...',
 
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',

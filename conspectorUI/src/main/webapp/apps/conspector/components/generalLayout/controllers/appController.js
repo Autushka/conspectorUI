@@ -231,6 +231,12 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			$state.go('app.profileSettings.profileDetails');
 		};
 
+		$scope.onNotificationsList = function() {
+			$scope.selectedTabIndex = -1;
+			$scope.$broadcast("$mdTabsPaginationChanged");
+			$state.go('app.notificationsList');
+		};
+
 		$scope.onChangeLanguage = function() {
 			servicesProvider.changeLanguage();
 		};

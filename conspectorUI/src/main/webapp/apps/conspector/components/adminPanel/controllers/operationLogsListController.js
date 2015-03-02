@@ -37,6 +37,7 @@ viewControllers.controller('operationLogsListView', ['$scope', '$rootScope','$st
 
 		apiProvider.getOperationLogs({
 			sPath: "OperationLogs",
+			sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
 			bShowSpinner: true,
 			onSuccess: onOperationLogsLoaded
 		});
