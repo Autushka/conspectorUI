@@ -230,14 +230,6 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 			createUser: function(oParameters) {
 				var onSuccess = $.proxy(function(oData) {
-					this.updateContact({
-						sKey: oParameters.oData.ContactGuid,
-						oData: {
-							UserName: oParameters.oData.UserName
-						},
-						bIgnoreLastModifiedAtValidation: true
-					});
-
 					cacheProvider.cleanEntitiesCache("oUserEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
@@ -259,13 +251,6 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 			updateUser: function(oParameters) {
 				var onSuccess = $.proxy(function(oData) {
-					this.updateContact({
-						sKey: oParameters.oData.ContactGuid,
-						oData: {
-							UserName: oParameters.oData.UserName
-						},
-						bIgnoreLastModifiedAtValidation: true
-					});
 					cacheProvider.cleanEntitiesCache("oUserEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);

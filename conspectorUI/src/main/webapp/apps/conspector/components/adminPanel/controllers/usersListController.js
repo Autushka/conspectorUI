@@ -34,20 +34,6 @@ viewControllers.controller('usersListView', ['$scope', '$rootScope', '$state', '
 			}
 		});
 
-		// var onCompaniesLoaded = function(aData) {
-		// 	for (var i = 0; i < oUsersListData.aData.length; i++) {
-		// 		oUsersListData.aData[i].sCompanies = "";
-		// 		for (var j = 0; j < oUsersListData.aData[i]._companyDetails.results.length; j++) {
-		// 			for (var k = 0; k < aData.length; k++) {
-		// 				if (oUsersListData.aData[i]._companyDetails.results[j].CompanyName === aData[k].CompanyName) {
-		// 					oUsersListData.aData[i].sCompanies = oUsersListData.aData[i].sCompanies + aData[k].CompanyName + "; ";
-		// 					break;
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// };
-
 		var onRolesLoaded = function(aData) {
 			for (var i = 0; i < oUsersListData.aData.length; i++) {
 				oUsersListData.aData[i].sRoles = "";
@@ -123,56 +109,7 @@ viewControllers.controller('usersListView', ['$scope', '$rootScope', '$state', '
 					_sortingSequence: aUsersForDisplay[i]._sortingSequence,
 				});
 			}
-
-
-
-			// var bMatchFound = false;
-			// var sCompany = "";
-
-			// for (var i = 0; i < aData.length; i++) {
-			// 	if (!rolesSettings[cacheProvider.oUserProfile.sCurrentRole].bIsGlobalUserAdministrator) { 
-			// 		bMatchFound = false;
-			// 		for (var j = 0; j < aData[i].CompanyDetails.results.length; j++) {
-			// 			if (aData[i].CompanyDetails.results[j].CompanyName === cacheProvider.oUserProfile.sCurrentCompany) {
-			// 				bMatchFound = true;
-			// 				break;
-			// 			}
-			// 		}
-
-			// 		if (!bMatchFound) {
-			// 			continue;
-			// 		} 
-			// 		else {
-			// 			bMatchFound = false;
-			// 			for (var j = 0; j < aData[i].RoleDetails.results.length; j++) {
-			// 				if (rolesSettings[aData[i].RoleDetails.results[j].RoleName] && rolesSettings[aData[i].RoleDetails.results[j].RoleName].bIsGlobalUserAdministrator && aData[i].UserName !== cacheProvider.oUserProfile.sUserName) {
-			// 					bMatchFound = true;
-			// 					break;
-			// 				}
-			// 			}
-
-			// 			if(bMatchFound){
-			// 				continue;
-			// 			}
-			// 		}
-			// 	}
-
-			// 	oUsersListData.aData.push({
-			// 		userName: aData[i].UserName,
-			// 		email: aData[i].EMail,
-			// 		_roleDetails: aData[i].RoleDetails,
-			// 		_companyDetails: aData[i].CompanyDetails,
-			// 		_lastModifiedAt: aData[i].LastModifiedAt,
-			// 		roles: ""
-			// 	});
-			//}
 			$scope.tableParams.reload();
-
-			// apiProvider.getCompanies({
-			// 	bShowSpinner: false,
-			// 	onSuccess: onCompaniesLoaded
-			// });
-
 			apiProvider.getRoles({
 				bShowSpinner: false,
 				onSuccess: onRolesLoaded

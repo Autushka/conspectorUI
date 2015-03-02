@@ -433,9 +433,6 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
-			// if($scope.oForms.userDetailsForm.selectedCompanies){
-			// 	$scope.oForms.userDetailsForm.selectedCompanies.$setDirty();//to display validation messages on submit press
-			// }
 			if($scope.oForms.userDetailsForm.username){
 				$scope.oForms.userDetailsForm.username.$setDirty();
 			}
@@ -525,12 +522,6 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 				return;
 			}
 
-			// for (var i = 0; i < $scope.aContacts.length; i++) {
-			// 	if ($scope.aContacts[i].ticked) {
-			// 		oDataForSave.ContactGuid = $scope.aContacts[i].Guid;
-			// 		break;
-			// 	}
-			// }
 			for (var i = 0; i < $scope.aLanguages.length; i++) {
 				if ($scope.aLanguages[i].ticked) {
 					oDataForSave.Language = $scope.aLanguages[i].languageCode;
