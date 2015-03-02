@@ -1,4 +1,4 @@
-var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ngCordova', 'ui.bootstrap', 'ngScrollEvent']);
+var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngResource', 'ngMaterial', "pubnub.angular.service", "ngTagsInput", 'angular-loading-bar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ui.bootstrap']);
 var viewControllers = angular.module('viewControllers', []);
 
 app.config(['$mdThemingProvider', function($mdThemingProvider) {
@@ -112,12 +112,31 @@ app.config(['$stateProvider', '$urlRouterProvider',
 			controller: 'passwordResetView'
 		});
 
-		$stateProvider.state('deficiencyQuickAddWrapper', {//abstract view without controller that contains only ngView holders
+
+        $stateProvider.state('appHybrid', {
+            url: '/appHybrid',
+            templateUrl: 'apps/conspector/components/generalLayout/templates/appHybridView.html',
+            controller: 'appHybridView'
+        });		
+
+        $stateProvider.state('mainMenuHybrid', {
+            url: '/mainMenuHybrid',
+            templateUrl: 'apps/conspector/components/generalLayout/templates/mainMenuHybridView.html',
+            controller: 'mainMenuHybridView'
+        });		
+
+        $stateProvider.state('appHybrid.deficienciesListHybrid', {
+            url: '/deficienciesListHybrid',
+            templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridView.html',
+            controller: 'deficienciesListHybridView'
+        });         
+
+		$stateProvider.state('appHybrid.deficiencyQuickAddWrapper', {//abstract view without controller that contains only ngView holders
 			templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddWrapperView.html',
 			controller: 'deficiencyQuickAddWrapperView'
 		});		
 
-		$stateProvider.state('deficiencyQuickAddWrapper.quickAdd', {//state that contains subviews
+		$stateProvider.state('appHybrid.deficiencyQuickAddWrapper.quickAdd', {//state that contains subviews
 			url: '/deficiencyQuickAddWrapper',
 			views: {
 				'deficiencyQuickAdd': {
@@ -130,16 +149,5 @@ app.config(['$stateProvider', '$urlRouterProvider',
 				},
 			}
 		});			
-
-		// $stateProvider.state('deficiencyQuickAdd', {
-		// 	url: '/deficiencyQuickAdd',
-		// 	templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddView.html',
-		// 	controller: 'deficiencyQuickAddView'
-		// });	
-		// $stateProvider.state('deficiencyQuickAddItemsLists', {
-		// 	url: '/deficiencyQuickAddItemsLists',
-		// 	templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddItemsListsView.html',
-		// 	controller: 'deficiencyQuickAddItemsListsView'
-		// });			
 	}
 ]);

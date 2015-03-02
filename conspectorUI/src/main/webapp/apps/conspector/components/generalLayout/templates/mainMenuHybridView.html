@@ -1,0 +1,40 @@
+<md-toolbar class="cnpMobileSideNavHeader">
+<div layout="row" layout-align="start start" ng-click="onBack()">
+	<div class="notSelectable cnpInputIcon cnpMobileBackIcon" layout-margin layout="column" layout-align="center start">
+		<div class="notSelectable cnpLink cnpLinkBackButton">
+			{{'global_back' | translate}}
+		</div>
+	</div>
+</div>
+</md-toolbar>
+<section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }">
+	<div class="cnpMobileListWrapper">
+		<button ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}" class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton" ng-click="onMenuItemSelected(menuItem)">
+			<div layout="column" layout-align="center start">
+				<div style="padding-bottom: 8px; padding-top: 8px;">
+					<label  class="cnpLink cnpLinkHeader cnpMobileTopLinks notSelectable">
+						{{menuItem.sMenuLabel | translate}}
+					</label>
+				</div>
+			</div>		
+		</button>		
+		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onChangeLanguage()">
+			<div layout="column" layout-align="center start">
+				<div style="padding-bottom: 8px; padding-top: 8px; margin-top: 4px; padding-left: 8px;">
+					<label  class="cnpLink cnpLinkHeader" >
+						{{'signIn_languageCode' | translate}}
+					</label>
+				</div>
+			</div>
+		</button>
+		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton "ng-click="onLogOut()">
+			<div layout="column" layout-align="center start">
+				<div style="padding-bottom: 8px; padding-top: 8px;">
+					<label  class="cnpLink cnpLinkHeader cnpMobileTopLinks notSelectable">
+						{{'app_logOut' | translate}}
+					</label>
+				</div>
+			</div>
+		</button>
+	</div>
+</section>

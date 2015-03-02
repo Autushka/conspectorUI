@@ -41,9 +41,13 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 				return this[oParameters.sRole].oProfileMenu[oParameters.sMenuItem];
 			},
 
+			getRolesHybridMainMenuItemSettings: function(oParameters) {
+				return this[oParameters.sRole].oHybridMainMenu[oParameters.sMenuItem];
+			},			
+
 			globalAdministrator: {
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",
+				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",
 				bIsGlobalUserAdministrator: true,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -76,6 +80,10 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContactDetails: true,
 					bShowProfileDetails: true,
 					bShowChangePassword: true
+				},
+				oHybridMainMenu: {
+					bShowQuickAdd: true,
+					bShowDeficienciesList: true,
 				},
 				oAuthorizationsPerEntity: {
 					oDeficiency: {
@@ -125,7 +133,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			systemAdministrator: {
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
+				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -159,6 +167,10 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowProfileDetails: true,
 					bShowChangePassword: true
 				},
+				oHybridMainMenu: {
+					bShowQuickAdd: true,
+					bShowDeficienciesList: true,					
+				},				
 				oAuthorizationsPerEntity: {
 					oDeficiency: {
 						bDisplay: true,
@@ -208,7 +220,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 
 			contactManagementUser: {
 				sInitialState: "app.contactsList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
+				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,
@@ -242,6 +254,10 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowProfileDetails: true,
 					bShowChangePassword: true
 				},
+				oHybridMainMenu: {
+					bShowQuickAdd: true,
+					bShowDeficienciesList: true,					
+				},				
 				oAuthorizationsPerEntity: {
 					oDeficiency: {
 						bDisplay: false,
@@ -290,7 +306,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			contactViewerUser: {
 				sInitialState: "app.contactsList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
+				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,
@@ -324,6 +340,10 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowProfileDetails: true,
 					bShowChangePassword: true
 				},
+				oHybridMainMenu: {
+					bShowQuickAdd: true,
+					bShowDeficienciesList: true,					
+				},				
 				oAuthorizationsPerEntity: {
 					oDeficiency: {
 						bDisplay: false,
@@ -373,7 +393,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			contractor: {
 				//sInitialState: "app.deficienciesList",
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",
+				sInitialStateHybrid: "appHybrid.deficiencyQuickAddWrapper.quickAdd",
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -407,6 +427,10 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowProfileDetails: true,
 					bShowChangePassword: true
 				},
+				oHybridMainMenu: {
+					bShowQuickAdd: true,
+					bShowDeficienciesList: true,					
+				},				
 				oAuthorizationsPerEntity: {
 					oDeficiency: {
 						bDisplay: true,

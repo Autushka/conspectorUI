@@ -1,4 +1,4 @@
-var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'angular-loading-bar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ngCordova', 'ui.bootstrap']);
+var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'angular-loading-bar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ui.bootstrap']);
 var viewControllers = angular.module('viewControllers', []);
 
 app.config(['cfpLoadingBarProvider',
@@ -412,20 +412,39 @@ app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'apps/conspector/components/profileSettings/templates/changePasswordView.html',
             controller: 'changePasswordView'
         });
-
+        
         $stateProvider.state('app.notificationsList', {
             url: '/notificationsList',
             templateUrl: 'apps/conspector/components/notifications/templates/notificationsListView.html',
             controller: 'notificationsListView'
-        });
+        });        
 
         //Hybrid App
-        $stateProvider.state('deficiencyQuickAddWrapper', { //abstract view without controller that contains only ngView holders
+        $stateProvider.state('appHybrid', {
+            url: '/appHybrid',
+            templateUrl: 'apps/conspector/components/generalLayout/templates/appHybridView.html',
+            controller: 'appHybridView'
+        });
+
+
+        $stateProvider.state('mainMenuHybrid', {
+            url: '/mainMenuHybrid',
+            templateUrl: 'apps/conspector/components/generalLayout/templates/mainMenuHybridView.html',
+            controller: 'mainMenuHybridView'
+        });
+
+        $stateProvider.state('appHybrid.deficienciesListHybrid', {
+            url: '/deficienciesListHybrid',
+            templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridView.html',
+            controller: 'deficienciesListHybridView'
+        });        
+
+        $stateProvider.state('appHybrid.deficiencyQuickAddWrapper', { //abstract view without controller that contains only ngView holders
             templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddWrapperView.html',
             controller: 'deficiencyQuickAddWrapperView'
         });
 
-        $stateProvider.state('deficiencyQuickAddWrapper.quickAdd', { //state that contains subviews
+        $stateProvider.state('appHybrid.deficiencyQuickAddWrapper.quickAdd', { //state that contains subviews
             url: '/deficiencyQuickAddWrapper',
             views: {
                 'deficiencyQuickAdd': {

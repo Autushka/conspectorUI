@@ -17,8 +17,7 @@
 		<link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date-default-theme.css">
 		<link rel='stylesheet' href='bower_components/textAngular/src/textAngular.css'>		
 		<link rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css'>
-		<link rel='stylesheet' href='bower_components/angular-loading-bar/build/loading-bar.min.css'>
-<!--     <link data-require="bootstrap@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" /> -->								
+		<link rel='stylesheet' href='bower_components/angular-loading-bar/build/loading-bar.min.css'>							
 		
 		<link rel="stylesheet" href="apps/conspector/css/style.css">
 		<link rel="stylesheet" type="text/css" href="apps/conspector/css/photoGallery.css" />
@@ -52,7 +51,6 @@
 		<script src='bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
 		<script src='bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
 		<script src='bower_components/textAngular/dist/textAngular.min.js'></script>	
-		<script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
 		<script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>						
 		
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->
@@ -61,16 +59,24 @@
 		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> <!-- was not able to find it as a bower component-->	
 		<script src="apps/conspector/js/thirdParty/jQuery.download.js"></script> <!-- small function that needed to allow ajax requests that return files (needed for dynamic reports...)-->		
 		
+	    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+	    <script type="text/javascript" src="cordova.js"></script>
+	    <script type="text/javascript" src="js/index.js"></script>			
 			
 		<script src="apps/conspector/js/app.js"></script>
 		<script src="apps/conspector/js/constants.js"></script>
 		<script src="apps/conspector/js/types.js"></script>
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>
-		<!--
+		
+		<script src="apps/conspector/components/generalLayout/controllers/appHybridController.js"></script>	
+		<script src="apps/conspector/components/generalLayout/controllers/mainMenuHybridController.js"></script>			
+		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListHybridController.js"></script>	
+
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddWrapperController.js"></script>	
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddController.js"></script>	
-		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddItemsListsController.js"></script>	-->			
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddItemsListsController.js"></script>	
+			
 		<!--Minification starts here-->
 		
 		<script src="apps/conspector/js/common/cacheProvider.js"></script>		
@@ -140,17 +146,14 @@
 
 		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>	
 
-		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>
-
-		<script src="apps/conspector/components/notifications/controllers/notificationsListController.js"></script>
+		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	
 	
 
-		<%@page import="java.util.*" %>
+		<!--<%@page import="java.util.*" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file
 			int n = rand.nextInt(1000);
-		%>
-		<!--	
+		%>		
  		<script src="dist/conspector.min.js?number=<%=n%>"></script> -->
 
 	</head>

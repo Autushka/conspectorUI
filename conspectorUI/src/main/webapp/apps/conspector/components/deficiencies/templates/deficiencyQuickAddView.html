@@ -1,28 +1,19 @@
 <section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }">
-	<div layout="row" class="cnpMobileHeader" layout-align="space-between start">
-		<!-- TO replace with sLogoUrl, was not working so I put our logo for the moment -->
+<!-- 	<div layout="row" class="cnpMobileHeader" layout-align="space-between start">
+
 		<div layout="row" layout-align="start center">
 			<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}" ng-cloak/>
 		</div>
-		<div layout="column" layout-align="start start">
-			<div style="padding-bottom: 8px; padding-top: 8px;" ng-click="onLogOut()">
-				<label  class="cnpLink cnpLinkHeader cnpMobileTopLinks notSelectable">
-					{{'app_logOut' | translate}}
-				</label>
-			</div>
-			<div ng-click="onChangeLanguage()" style="padding-bottom: 8px; padding-top: 8px; margin-top: 4px; padding-left: 8px;">
-				<label  class="cnpLink cnpLinkHeader" >
-					{{'signIn_languageCode' | translate}}
-				</label>
-			</div>
-		</div>
-	</div>
+
+		<div ng-click="onMainMenu()">Menu</div>
+
+	</div> -->
 	
 	<div class="cnpMobileListWrapper">
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onPhaseAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{$root.oDeficiencyAttributes.oPhase.sDescription}}
+				{{'deficiencyDetails_associatedProjectsAndPhases' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" ng-cloak>
 				{{$root.oDeficiencyAttributes.oPhase.sValue}}
@@ -32,7 +23,7 @@
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onUnitAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{$root.oDeficiencyAttributes.oUnit.sDescription}}
+				{{'deficiencyDetails_unit' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" ng-cloak>
 				{{$root.oDeficiencyAttributes.oUnit.sValue}}
@@ -42,7 +33,7 @@
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onStatusAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{$root.oDeficiencyAttributes.oStatus.sDescription}}
+				{{'deficiencyDetails_status' | translate}}
 			</div>
 			<div layout="row" layout-align="start center" style="margin-top: 12px;">
 				<img ng-src="{{oDeficiencyAttributes.oStatus.sIconUrl}}" class="cnpMobileStatusIcon">
@@ -55,7 +46,7 @@
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onContractorsAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{$root.oDeficiencyAttributes.oContractors.sDescription}}
+				{{'deficiencyDetails_contractors' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" ng-cloak>
 				{{$root.oDeficiencyAttributes.oContractors.sValue}}
@@ -65,7 +56,7 @@
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onDescriptionTagsAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{$root.oDeficiencyAttributes.oDescriptionTags.sDescription}}
+				{{'deficiencyDetails_descriptionTags' | translate}}
 			</div>
 			<label class="cnpMobileItemValue cnpMobileItemValueTags" ng-cloak>
 				{{$root.oDeficiencyAttributes.oDescriptionTags.sValue}}
@@ -75,7 +66,7 @@
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onLocationTagsAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{$root.oDeficiencyAttributes.oLocationTags.sDescription}}
+				{{'deficiencyDetails_locationTags' | translate}}
 			</div>
 			<label class="cnpMobileItemValue cnpMobileItemValueTags" ng-cloak>
 				{{$root.oDeficiencyAttributes.oLocationTags.sValue}}
@@ -85,7 +76,7 @@
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onPriorityAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{$root.oDeficiencyAttributes.oPriority.sDescription}}
+				{{'deficiencyDetails_deficiencyPriority' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" ng-cloak>
 				{{$root.oDeficiencyAttributes.oPriority.sValue}}
@@ -95,7 +86,7 @@
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onUserAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{$root.oDeficiencyAttributes.oUser.sDescription}}
+				{{'deficiencyDetails_assignedUser' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" ng-cloak>
 				{{$root.oDeficiencyAttributes.oUser.sValue}}
@@ -105,7 +96,7 @@
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onImagesAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{$root.oDeficiencyAttributes.oImages.sDescription}}
+				{{'global_images' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" ng-cloak>
 				{{$root.oDeficiencyAttributes.oImages.iValue}}
@@ -117,115 +108,5 @@
 			{{'global_mobileSave' | translate}}
 			</button>
 		</div>
-	</div>
-	
-	<!-- 	<md-sidenav ng-scroll-event="onScrollingInSideNav($event)" class="md-sidenav-right md-whiteframe-z2 cnpMobileSideNav" md-component-id="deficiencyQuickAddRigthSideNav">
-	
-	<md-toolbar class="cnpMobileSideNavHeader">
-	<div layout="row" layout-align="start start" ng-click="onCloseRightSideNav()">
-			<div class="notSelectable cnpInputIcon cnpMobileBackIcon" layout-margin layout="column" layout-align="center start">
-						<div class="notSelectable cnpLink cnpLinkBackButton">
-									{{'global_back' | translate}}
-						</div>
-			</div>
-	</div>
-	</md-toolbar>
-	
-	<div class="cnpSidePanelWrapper cnpMobileSideNavContent cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="sSideNavHeader === oDeficiencyAttributes.oPhase.sDescription">
-			<div layout="column" layout-align="start start" flex>
-						<div ng-repeat="project in aProjectsWithPhases" flex style="width: 100%;">
-									<div layout="row" layout-align="start center" class="cnpMobileH1">{{project.sProjectName}}</div>
-									<div layout="column" flex>
-												<div ng-repeat="phase in project.aPhases" ng-click="onSelectPhase(phase)">
-															<div>
-																		<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': phase.bTicked, 'cnpMobileH2': !phase.bTicked }" class="cnpMobileH2" ng-click="onCloseRightSideNavWithDelay()">{{phase.sPhaseName}}<span class="cnpMobileTickMark" ng-if="phase.bTicked">✔</span></div>
-															</div>
-												</div>
-									</div>
-						</div>
-			</div>
-	</div>
-	<div class="cnpSidePanelWrapper" layout="row" layout-align="start start" ng-show="sSideNavHeader === oDeficiencyAttributes.oUnit.sDescription">
-			<div layout="column" layout-align="start start" flex>
-						<div class="cnpMobileFilterWrapper" layout="row" layout-align="center center">
-									<input class="cnpTextInputField cnpMobileFilter" type="text" placeholder="{{'global_mobileSearchUnits' | translate}}" ng-model="sUnitFilter" ng-change="onChangeUnitFilter(sUnitFilter)"/>
-						</div>
-						<div layout="column" flex style="width: 100%;" class="cnpMobileSideNavContentWithFilter">
-									<div ng-repeat="unit in aFilteredUnits" ng-click="onSelectUnit(unit)" style="width: 100%; min-height: 52px;">
-												<div>
-															<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': unit.bTicked, 'cnpMobileH2': !unit.bTicked }" ng-click="onCloseRightSideNavWithDelay()">{{unit.sName}}<span class="cnpMobileTickMark" ng-if="unit.bTicked">✔</span></div>
-												</div>
-									</div>
-						</div>
-			</div>
-	</div>
-	<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="sSideNavHeader === oDeficiencyAttributes.oStatus.sDescription">
-			<div layout="column" layout-align="start start" flex>
-						<div layout="column" flex style="width: 100%;">
-									<div ng-repeat="status in aStatuses" ng-click="onSelectStatus(status)" flex style="width: 100%;">
-												<div>
-															<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH1 cnpMobileH1Selected': status.bTicked, 'cnpMobileH1': !status.bTicked }" ng-click="onCloseRightSideNavWithDelay()"><img ng-src="{{status.sIconUrl}}" class="cnpMobileStatusIcon">{{status.sName}}<span class="cnpMobileTickMark" ng-if="status.bTicked">✔</span></div>
-												</div>
-									</div>
-						</div>
-			</div>
-	</div>
-	<div class="cnpSidePanelWrapper" layout="row" layout-align="start start" ng-show="sSideNavHeader === oDeficiencyAttributes.oContractors.sDescription">
-			<div layout="column" layout-align="start start" flex>
-						<div class="cnpMobileFilterWrapper" layout="row" layout-align="center center">
-									<input class="cnpTextInputField cnpMobileFilter" type="text" placeholder="{{'global_mobileContractors' | translate}}" ng-model="sContractorsFilter" ng-change="onChangeContractorsFilter(sContractorsFilter)"/>
-						</div>
-						<div layout="column" flex style="width: 100%;" class="cnpMobileSideNavContentWithFilter">
-									<div ng-repeat="contractor in aFilteredContractors" ng-click="onSelectContractor(contractor)" style="width: 100%; min-height: 52px;">
-												<div>
-															<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': contractor.bTicked, 'cnpMobileH2': !contractor.bTicked }">{{contractor.sName}}<span class="cnpMobileTickMark" ng-if="contractor.bTicked">✔</span></div>
-												</div>
-									</div>
-						</div>
-			</div>
-	</div>
-	<div layout="row" layout-align="start start" ng-show="sSideNavHeader === oDeficiencyAttributes.oDescriptionTags.sDescription" class="cnpSubSection cnpMobileSideNavContentTags" flex>
-			<div layout="column" flex style="width: 100%;">
-						<tags-input
-						class="cnpMobileTags"
-						ng-model="aDescriptionTags"
-						replace-spaces-with-dashes="false"
-						placeholder="{{'global_addTag' | translate}}">
-						</tags-input>
-			</div>
-	</div>
-	<div layout="row" layout-align="start start" ng-show="sSideNavHeader === oDeficiencyAttributes.oLocationTags.sDescription" class="cnpSubSection cnpMobileSideNavContentTags" flex>
-			<div layout="column" flex style="width: 100%;">
-						<tags-input
-						class="cnpMobileTags"
-						ng-model="aLocationTags"
-						replace-spaces-with-dashes="false"
-						placeholder="{{'global_addTag' | translate}}">
-						</tags-input>
-			</div>
-	</div>
-	<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="sSideNavHeader === oDeficiencyAttributes.oPriority.sDescription">
-			<div layout="column" layout-align="start start" flex>
-						<div layout="column" flex style="width: 100%;">
-									<div ng-repeat="priority in aPriorities" ng-click="onSelectPriority(priority)" flex style="width: 100%;">
-												<div>
-															<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': priority.bTicked, 'cnpMobileH2': !priority.bTicked }" ng-click="onCloseRightSideNavWithDelay()">{{priority.sName}}<span class="cnpMobileTickMark" ng-if="priority.bTicked">✔</span></div>
-												</div>
-									</div>
-						</div>
-			</div>
-	</div>
-	<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="sSideNavHeader === oDeficiencyAttributes.oUser.sDescription">
-			<div layout="column" layout-align="start start" flex>
-						<div layout="column" flex style="width: 100%;">
-									<div ng-repeat="user in aUsers" ng-click="onSelectUser(user)" flex style="width: 100%;">
-												<div>
-															<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': user.bTicked, 'cnpMobileH2': !user.bTicked }" ng-click="onCloseRightSideNavWithDelay()">{{user.sName}}<span class="cnpMobileTickMark" ng-if="user.bTicked">✔</span></div>
-												</div>
-									</div>
-						</div>
-			</div>
-	</div>
-	</md-sidenav> -->
-	
+	</div>	
 </section>

@@ -1,5 +1,7 @@
 viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings', '$timeout', '$mdSidenav', '$window', '$cordovaCamera',
     function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window, $cordovaCamera) {
+        historyProvider.removeHistory();
+
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         var bCanContinue = rolesSettings.getRolesSettingsForEntityAndOperation({
             sRole: sCurrentRole,
@@ -15,31 +17,36 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             });
         }
 
-        servicesProvider.constructLogoUrl();
+        $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
+        $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation        
 
-        $scope.onLogOut = function() {
-            $rootScope.aProjectsWithPhases = undefined;
-            $rootScope.bPhaseWasSelected = undefined;
-            $rootScope.aUnits = undefined;
-            $rootScope.sUnitFilter = undefined;
-            $rootScope.aFilteredUnits = undefined;
-            $rootScope.bUnitWasSelected = undefined;
-            $rootScope.aStatuses = undefined;
-            $rootScope.bStatusWasSelected = undefined;
-            $rootScope.aPriorities = undefined;
-            $rootScope.bPriorityWasSelected = undefined;
-            $rootScope.aUsers = undefined;
-            $rootScope.bUserWasSelected = undefined;
+        
 
-            $rootScope.aDescriptionTags = undefined;
-            $rootScope.aLocationTags = undefined;
-            $rootScope.aContractors = undefined;
-            $rootScope.sContractorsFilter = undefined;
-            $rootScope.aFilteredContractors = undefined;
-            $rootScope.bContractorWasSelected = undefined;
-            $rootScope.oDeficiencyAttributes = undefined;
-            servicesProvider.logOut();
-        };
+
+
+        // $scope.onLogOut = function() {
+        //     $rootScope.aProjectsWithPhases = undefined;
+        //     $rootScope.bPhaseWasSelected = undefined;
+        //     $rootScope.aUnits = undefined;
+        //     $rootScope.sUnitFilter = undefined;
+        //     $rootScope.aFilteredUnits = undefined;
+        //     $rootScope.bUnitWasSelected = undefined;
+        //     $rootScope.aStatuses = undefined;
+        //     $rootScope.bStatusWasSelected = undefined;
+        //     $rootScope.aPriorities = undefined;
+        //     $rootScope.bPriorityWasSelected = undefined;
+        //     $rootScope.aUsers = undefined;
+        //     $rootScope.bUserWasSelected = undefined;
+
+        //     $rootScope.aDescriptionTags = undefined;
+        //     $rootScope.aLocationTags = undefined;
+        //     $rootScope.aContractors = undefined;
+        //     $rootScope.sContractorsFilter = undefined;
+        //     $rootScope.aFilteredContractors = undefined;
+        //     $rootScope.bContractorWasSelected = undefined;
+        //     $rootScope.oDeficiencyAttributes = undefined;
+        //     servicesProvider.logOut();
+        // };
         if (!$rootScope.aUnits) {
             $rootScope.aUnits = [];
         }
@@ -427,18 +434,18 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             return aLinks;
         };
 
-        $scope.onChangeLanguage = function() {
-            servicesProvider.changeLanguage();
-            $rootScope.oDeficiencyAttributes.oPhase.sDescription = $translate.instant('deficiencyDetails_associatedProjectsAndPhases'); //"Project - Phase",
-            $rootScope.oDeficiencyAttributes.oUnit.sDescription = $translate.instant('deficiencyDetails_unit'); //"Unit",
-            $rootScope.oDeficiencyAttributes.oStatus.sDescription = $translate.instant('deficiencyDetails_status'); //"Status",
-            $rootScope.oDeficiencyAttributes.oPriority.sDescription = $translate.instant('deficiencyDetails_deficiencyPriority'); //"Priority",
-            $rootScope.oDeficiencyAttributes.oUser.sDescription = $translate.instant('deficiencyDetails_assignedUser'); //"User",
-            $rootScope.oDeficiencyAttributes.oDescriptionTags.sDescription = $translate.instant('deficiencyDetails_descriptionTags'); //"Description Tags",
-            $rootScope.oDeficiencyAttributes.oLocationTags.sDescription = $translate.instant('deficiencyDetails_locationTags'); //"Location Tags",
-            $rootScope.oDeficiencyAttributes.oContractors.sDescription = $translate.instant('deficiencyDetails_contractors'); //"Contractors",
-            $rootScope.oDeficiencyAttributes.oImages.sDescription = $translate.instant('global_images'); //"Photos",
-        };
+        // $scope.onChangeLanguage = function() {
+        //     servicesProvider.changeLanguage();
+        //     $rootScope.oDeficiencyAttributes.oPhase.sDescription = $translate.instant('deficiencyDetails_associatedProjectsAndPhases'); //"Project - Phase",
+        //     $rootScope.oDeficiencyAttributes.oUnit.sDescription = $translate.instant('deficiencyDetails_unit'); //"Unit",
+        //     $rootScope.oDeficiencyAttributes.oStatus.sDescription = $translate.instant('deficiencyDetails_status'); //"Status",
+        //     $rootScope.oDeficiencyAttributes.oPriority.sDescription = $translate.instant('deficiencyDetails_deficiencyPriority'); //"Priority",
+        //     $rootScope.oDeficiencyAttributes.oUser.sDescription = $translate.instant('deficiencyDetails_assignedUser'); //"User",
+        //     $rootScope.oDeficiencyAttributes.oDescriptionTags.sDescription = $translate.instant('deficiencyDetails_descriptionTags'); //"Description Tags",
+        //     $rootScope.oDeficiencyAttributes.oLocationTags.sDescription = $translate.instant('deficiencyDetails_locationTags'); //"Location Tags",
+        //     $rootScope.oDeficiencyAttributes.oContractors.sDescription = $translate.instant('deficiencyDetails_contractors'); //"Contractors",
+        //     $rootScope.oDeficiencyAttributes.oImages.sDescription = $translate.instant('global_images'); //"Photos",
+        // };
 
         $scope.onSave = function() {
             var onSuccessCreation = function() {
@@ -517,5 +524,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 onSuccess: onSuccessCreation,
             });
         };
+
+
     }
 ]);
