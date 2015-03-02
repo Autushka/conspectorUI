@@ -430,8 +430,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 				case "create":
 					if($rootScope.sFileMetadataSetGuid){
                     	oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;  				
-					}
-                    oDataForSave.FileMetadataSetGuid = $rootScope.sFileMetadataSetGuid;                				
+					}      				
 					apiProvider.createUnit({
 						bShowSpinner: true,
 						aLinks: aLinks,
