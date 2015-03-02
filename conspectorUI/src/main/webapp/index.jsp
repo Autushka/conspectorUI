@@ -67,13 +67,13 @@
 		<script src="apps/conspector/js/types.js"></script>
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>
-
+		<!--
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddWrapperController.js"></script>	
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddController.js"></script>	
-		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddItemsListsController.js"></script>				
-
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddItemsListsController.js"></script>	-->			
+		<!--Minification starts here-->
+		<!--
 		<script src="apps/conspector/js/common/cacheProvider.js"></script>		
-		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 		<script src="apps/conspector/js/common/dataProvider.js"></script>
 		<script src="apps/conspector/js/common/apiProvider.js"></script>
 		<script src="apps/conspector/js/rolesSettings.js"></script>			
@@ -89,6 +89,7 @@
 		<script src="apps/conspector/components/userManagement/controllers/roleSelectionController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/initialPasswordResetController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/passwordResetController.js"></script>
+		
 		<script src="apps/conspector/components/generalLayout/controllers/appController.js"></script>
 		
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListController.js"></script>
@@ -119,9 +120,6 @@
 		<script src="apps/conspector/components/profileSettings/controllers/profileDetailsController.js"></script>
 		<script src="apps/conspector/components/profileSettings/controllers/changePasswordController.js"></script>
 		
-		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>		
-		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>				
-
 		<script src="apps/conspector/components/adminPanel/controllers/adminPanelController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/companiesListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/usersListController.js"></script>
@@ -139,12 +137,18 @@
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValueListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/taskTypeListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/activityTypesListController.js"></script> 
+
+		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>	
+
+		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>		
+	-->
+
 		<%@page import="java.util.*" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file
 			int n = rand.nextInt(1000);
 		%>		
-		<!--<script src="dist/conspector.min.js?number=<%=n%>"></script> -->
+		<script src="dist/conspector.min.js?number=<%=n%>"></script> 
 
 	</head>
 	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;" ng-click="$root.hideGallery()">
