@@ -94,7 +94,11 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 			if (oUser.AvatarFileGuid) {
 				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oUser.AvatarFileGuid;
 			} else {
-				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
+				var MD5 = new Hashes.MD5;
+				var sUserEmailHash = MD5.hex($scope.oUser.sEmail);
+				$scope.oUser.sAvatarUrl = "http://www.gravatar.com/avatar/" + sUserEmailHash + ".png?d=identicon&s=200";
+				// $scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
+				
 			}
 			oUserWrapper.aData[0] = angular.copy($scope.oUser);
 		}

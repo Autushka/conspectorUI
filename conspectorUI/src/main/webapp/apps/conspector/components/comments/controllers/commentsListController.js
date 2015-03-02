@@ -67,7 +67,15 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 						sAuthor = sAuthor + oData.CommentDetails.results[i].ContactDetails.LastName;
 					}
 				}
-				sAvatarUrl = "apps/conspector/img/noAvatar.jpg";
+				var MD5 = new Hashes.MD5;
+				if(oData.CommentDetails.results[i].ContactDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0]){
+					var sUserEmailHash = MD5.hex(oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].EMail);
+				} else {
+					var sUserEmailHash = MD5.hex("deficien@cyDetails.com");
+				}
+				sAvatarUrl = "http://www.gravatar.com/avatar/" + sUserEmailHash + ".png?d=identicon&s=60";
+
+				
 				//here assumption is made that only one user can be assigned to contact...
 				if (oData.CommentDetails.results[i].ContactDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails.results) {
 					if(oData.CommentDetails.results[i].ContactDetails.UserDetails.results.length){
