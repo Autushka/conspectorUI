@@ -140,15 +140,15 @@
 
 		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>	
 
-		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>		
-	-->
+		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	-->	
+	
 
 		<%@page import="java.util.*" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file
 			int n = rand.nextInt(1000);
 		%>		
-		<script src="dist/conspector.min.js?number=<%=n%>"></script> 
+ 		<script src="dist/conspector.min.js?number=<%=n%>"></script> 
 
 	</head>
 	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;" ng-click="$root.hideGallery()">
