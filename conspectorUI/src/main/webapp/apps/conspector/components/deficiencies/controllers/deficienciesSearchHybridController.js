@@ -1,4 +1,4 @@
-viewControllers.controller('deficienciesListHybridView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout',
+viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout',
     function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
         historyProvider.removeHistory();	
 
@@ -9,11 +9,11 @@ viewControllers.controller('deficienciesListHybridView', ['$scope', '$rootScope'
         
         $scope.onMainMenu = function(){
             $state.go("mainMenuHybrid");
-        };	              	
+        };	 
 
-        $scope.onBackToSearch = function(){
-        	$rootScope.bIsListViewOpen = false;
-        }
+        $scope.onSearch = function(){
+        	$rootScope.bIsListViewOpen = true;
+        };            	
 
 		$scope.$on("$destroy", function() {
 			if(historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName){ //current state was already put to the history in the parent views

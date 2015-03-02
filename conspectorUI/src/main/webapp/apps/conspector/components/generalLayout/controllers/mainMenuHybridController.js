@@ -19,7 +19,7 @@ viewControllers.controller('mainMenuHybridView', ['$scope', '$rootScope', '$stat
 				sRole: sCurrentRole,
 				sMenuItem: "bShowDeficienciesList",
 			}),
-			sStateName: "deficienciesListHybrid",
+			sStateName: "deficienciesListHybridWrapper.deficienciesSearchHybrid",
 			sMenuLabel: "hybrid_deficienciesListItem",
 		});			
 

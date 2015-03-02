@@ -119,11 +119,30 @@ app.config(['$stateProvider', '$urlRouterProvider',
             controller: 'mainMenuHybridView'
         });		
 
-        $stateProvider.state('deficienciesListHybrid', {
-            url: '/deficienciesListHybrid',
-            templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridView.html',
-            controller: 'deficienciesListHybridView'
-        });         
+        // $stateProvider.state('deficienciesListHybrid', {
+        //     url: '/deficienciesListHybrid',
+        //     templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridView.html',
+        //     controller: 'deficienciesListHybridView'
+        // });         
+		$stateProvider.state('deficienciesListHybridWrapper', {//abstract view without controller that contains only ngView holders
+			templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridWrapperView.html',
+			controller: 'deficienciesListHybridWrapperView'
+		});
+
+		$stateProvider.state('deficienciesListHybridWrapper.deficienciesSearchHybrid', {//state that contains subviews
+			url: '/deficienciesListHybridWrapper',
+			views: {
+				'deficienciesSearchHybrid': {
+					templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesSearchHybridView.html',
+					controller: 'deficienciesSearchHybridView'
+				},
+				'deficienciesListHybrid': {
+					templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridView.html',
+					controller: 'deficienciesListHybridView'
+				},
+			}
+		});			
+
 
 		$stateProvider.state('deficiencyQuickAddWrapper', {//abstract view without controller that contains only ngView holders
 			templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddWrapperView.html',

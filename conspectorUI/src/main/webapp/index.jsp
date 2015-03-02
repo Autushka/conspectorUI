@@ -69,8 +69,11 @@
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 		
+
 		<script src="apps/conspector/components/generalLayout/controllers/mainMenuHybridController.js"></script>			
+		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListHybridWrapperController.js"></script>			
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListHybridController.js"></script>	
+		<script src="apps/conspector/components/deficiencies/controllers/deficienciesSearchHybridController.js"></script>			
 
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddWrapperController.js"></script>	
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddController.js"></script>	
