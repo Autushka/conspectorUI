@@ -236,15 +236,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 }
 
                 if (aData[i].Description) {
-                    sDescription = aData[i].Description.replace(/<style([\s\S]*?)<\/style>/gi, '');
-                    sDescription = sDescription.replace(/<script([\s\S]*?)<\/script>/gi, '');
-                    sDescription = sDescription.replace(/<\/div>/ig, '\n');
-                    sDescription = sDescription.replace(/<\/li>/ig, '\n');
-                    sDescription = sDescription.replace(/<li>/ig, '  *  ');
-                    sDescription = sDescription.replace(/<\/ul>/ig, '\n');
-                    sDescription = sDescription.replace(/<\/p>/ig, '\n');
-                    sDescription = sDescription.replace(/<br\s*[\/]?>/gi, "\n");
-                    sDescription = sDescription.replace(/<[^>]+>/ig, '');
+                    sDescription = utilsProvider.removeTagsFromString(aData[i].Description);
                 }
 
                 oDeficienciesListData.aData.push({

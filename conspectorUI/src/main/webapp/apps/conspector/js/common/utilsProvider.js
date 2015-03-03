@@ -255,7 +255,7 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 				return sTags;
 			},
 
-			replaceSpecialChars: function(sString) {//for filtering we don't care about upper/lower case....
+			replaceSpecialChars: function(sString) { //for filtering we don't care about upper/lower case....
 				var dict = {
 					'\u00e0': "a", //à
 					'\u00e2': "a", //â
@@ -275,13 +275,27 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 					'\u00e7': "c", //ç
 					'\u00f1': "n" //ñ
 				};
-				if(sString !== null && sString !== undefined) {
+				if (sString !== null && sString !== undefined) {
 					sString = sString.toString();
 
-					sString = sString.replace(/[^A-Za-z0-9]/g, function(char) {///[^\w ]/g
+					sString = sString.replace(/[^A-Za-z0-9]/g, function(char) { ///[^\w ]/g
 						return dict[char.toLowerCase()] || char;
 					});
 				}
+
+				return sString;
+			},
+
+			removeTagsFromString: function(sString) {
+				sString = sString.replace(/<style([\s\S]*?)<\/style>/gi, '');
+				sString = sString.replace(/<script([\s\S]*?)<\/script>/gi, '');
+				sString = sString.replace(/<\/div>/ig, '\n');
+				sString = sString.replace(/<\/li>/ig, '\n');
+				sString = sString.replace(/<li>/ig, '  *  ');
+				sString = sString.replace(/<\/ul>/ig, '\n');
+				sString = sString.replace(/<\/p>/ig, '\n');
+				sString = sString.replace(/<br\s*[\/]?>/gi, "\n");
+				sString = sString.replace(/<[^>]+>/ig, '');
 
 				return sString;
 			}

@@ -1,0 +1,125 @@
+<md-toolbar class="cnpMobileSideNavHeader">
+<div layout="row" layout-align="start start" ng-click="onClose()">
+	<div class="notSelectable cnpInputIcon cnpMobileBackIcon" layout-margin layout="column" layout-align="center start">
+		<div class="notSelectable cnpLink cnpLinkBackButton">
+			{{'global_back' | translate}}
+		</div>
+	</div>
+</div>
+</md-toolbar>
+
+
+<div class="cnpSidePanelWrapper cnpMobileSideNavContent cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="$root.sCurrentSearhCriteria === 'phase'">
+	<div layout="column" layout-align="start start" flex>
+		<div ng-repeat="project in $root.oSearchCriterias.aPhases" flex style="width: 100%;">
+			<div layout="row" layout-align="start center" class="cnpMobileH1">{{project.sProjectName}}</div>
+			<div layout="column" flex>
+				<div ng-repeat="phase in project.aPhases" ng-click="onSelectSearchCrireriaPhase(phase)">
+					<div>
+						<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': phase.bTicked, 'cnpMobileH2': !phase.bTicked }" class="cnpMobileH2" ng-click="onCloseRightSideNavWithDelay()">{{phase.sPhaseName}}<span class="cnpMobileTickMark" ng-if="phase.bTicked">✔</span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="cnpSidePanelWrapper" layout="row" layout-align="start start" ng-show="$root.sCurrentSearhCriteria === 'unit'">
+	<div layout="column" layout-align="start start" flex>
+		<div class="cnpMobileFilterWrapper" layout="row" layout-align="center center">
+			<input class="cnpTextInputField cnpMobileFilter" type="text" placeholder="{{'global_mobileSearchUnits' | translate}}" ng-model="$root.oSearchCriterias.sUnitFilter" ng-change="onChangeSearchCriteriaUnitFilter($root.oSearchCriterias.sUnitFilter)"/>
+		</div>
+		<div layout="column" flex style="width: 100%;" class="cnpMobileSideNavContentWithFilter">
+			<div ng-repeat="unit in $root.oSearchCriterias.aFilteredUnits" ng-click="onSelectSearchCrireriaUnit(unit)" style="width: 100%; min-height: 52px;">
+				<div>
+					<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': unit.bTicked, 'cnpMobileH2': !unit.bTicked }">{{unit.sName}}<span class="cnpMobileTickMark" ng-if="unit.bTicked">✔</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="$root.sCurrentSearhCriteria === 'status'">
+	<div layout="column" layout-align="start start" flex>
+		<div layout="column" flex style="width: 100%;">
+			<div ng-repeat="status in $root.oSearchCriterias.aStatuses" ng-click="onSelectSearchCrireriaStatus(status)" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH1 cnpMobileH1Selected': status.bTicked, 'cnpMobileH1': !status.bTicked }"><img ng-src="{{status.sIconUrl}}" class="cnpMobileStatusIcon">{{status.sName}}<span class="cnpMobileTickMark" ng-if="status.bTicked">✔</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- 
+<div class="cnpSidePanelWrapper" layout="row" layout-align="start start" ng-show="$root.sSideNavHeader === $root.oDeficiencyAttributes.oContractors.sDescription">
+	<div layout="column" layout-align="start start" flex>
+		<div class="cnpMobileFilterWrapper" layout="row" layout-align="center center">
+			<input class="cnpTextInputField cnpMobileFilter" type="text" placeholder="{{'global_mobileContractors' | translate}}" ng-model="$root.sContractorsFilter" ng-change="onChangeContractorsFilter($root.sContractorsFilter)"/>
+		</div>
+		<div layout="column" flex style="width: 100%;" class="cnpMobileSideNavContentWithFilter">
+			<div ng-repeat="contractor in $root.aFilteredContractors" ng-click="onSelectContractor(contractor)" style="width: 100%; min-height: 52px;">
+				<div>
+					<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': contractor.bTicked, 'cnpMobileH2': !contractor.bTicked }">{{contractor.sName}}<span class="cnpMobileTickMark" ng-if="contractor.bTicked">✔</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div layout="row" layout-align="start start" ng-show="$root.sSideNavHeader === $root.oDeficiencyAttributes.oDescriptionTags.sDescription" class="cnpSubSection cnpMobileSideNavContentTags" flex>
+	<div layout="column" flex style="width: 100%;">
+		<tags-input
+		class="cnpMobileTags"
+		ng-model="aDescriptionTags"
+		replace-spaces-with-dashes="false"
+		max-length="25"
+		placeholder="{{'global_addTag' | translate}}">
+		</tags-input>
+	</div>
+</div>
+<div layout="row" layout-align="start start" ng-show="$root.sSideNavHeader === $root.oDeficiencyAttributes.oLocationTags.sDescription" class="cnpSubSection cnpMobileSideNavContentTags" flex>
+	<div layout="column" flex style="width: 100%;">
+		<tags-input
+		class="cnpMobileTags"
+		ng-model="aLocationTags"
+		replace-spaces-with-dashes="false"
+		max-length="17"
+		placeholder="{{'global_addTag' | translate}}">
+		</tags-input>
+	</div>
+</div>
+<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="$root.sSideNavHeader === $root.oDeficiencyAttributes.oPriority.sDescription">
+	<div layout="column" layout-align="start start" flex>
+		<div layout="column" flex style="width: 100%;">
+			<div ng-repeat="priority in $root.aPriorities" ng-click="onSelectPriority(priority)" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': priority.bTicked, 'cnpMobileH2': !priority.bTicked }" ng-click="onCloseRightSideNavWithDelay()">{{priority.sName}}<span class="cnpMobileTickMark" ng-if="priority.bTicked">✔</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="$root.sSideNavHeader === $root.oDeficiencyAttributes.oUser.sDescription">
+	<div layout="column" layout-align="start start" flex>
+		<div layout="column" flex style="width: 100%;">
+			<div ng-repeat="user in $root.aUsers" ng-click="onSelectUser(user)" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': user.bTicked, 'cnpMobileH2': !user.bTicked }" ng-click="onCloseRightSideNavWithDelay()">{{user.sName}}<span class="cnpMobileTickMark" ng-if="user.bTicked">✔</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="$root.sSideNavHeader === $root.oDeficiencyAttributes.oImages.sDescription">
+	<div layout="column" layout-align="start start" flex>
+		<div layout="column" flex style="width: 100%;">
+			<div ng-click="onUseCamera()" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  class="cnpMobileH2" ng-click="onCloseRightSideNavWithDelay()">{{'global_useCamera' | translate}}</div>
+				</div>
+				
+			</div>
+			<div ng-click="onUseLibrary()" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  class="cnpMobileH2" ng-click="onCloseRightSideNavWithDelay()">{{'global_useLibrary' | translate}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->

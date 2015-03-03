@@ -8,5 +8,36 @@
 
 	<div ng-click="onSearch()">Search</div>
 
-	PlaceHolder for now...
+	<div class="cnpMobileListWrapper">
+		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectPhaseSearchCriteria()">
+		<div layout="column" layout-align="center start">
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{'deficiencyDetails_associatedProjectsAndPhases' | translate}}
+			</div>
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oSearchCriterias.oPhase.sValue}}
+			</label>
+		</div>
+		</button>
+		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectUnitSearchCriteria()">
+		<div layout="column" layout-align="center start">
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{'deficiencyDetails_unit' | translate}}
+			</div>
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oSearchCriterias.oUnit.sValue}}
+			</label>
+		</div>
+		</button>
+		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectStatusSearchCriteria()">
+		<div layout="column" layout-align="center start">
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{'deficiencyDetails_status' | translate}}
+			</div>
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oSearchCriterias.oStatus.sValue}}
+			</label>
+		</div>
+		</button>				
+	</div>	
 </section>	

@@ -393,7 +393,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			contractor: {
 				//sInitialState: "app.deficienciesList",
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",
+				sInitialStateHybrid: "deficienciesListHybreadWrapper.deficienciesSearchHybrid",
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -428,7 +428,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowChangePassword: true
 				},
 				oHybridMainMenu: {
-					bShowQuickAdd: true,
+					bShowQuickAdd: false,
 					bShowDeficienciesList: true,					
 				},				
 				oAuthorizationsPerEntity: {

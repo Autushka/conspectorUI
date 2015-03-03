@@ -1,12 +1,35 @@
-<section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }">
+<!-- <section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }"> -->
+<div style="webkit-overflow-scrolling: touch;">
 	<div layout="row" class="cnpMobileHeader" layout-align="space-between start">
 		<div layout="row" layout-align="start center">
 			<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}" ng-cloak/>
 		</div>
 		<div ng-click="onMainMenu()">Menu</div>
 	</div>
-
 	<div ng-click="onBackToSearch()">Back to search</div>
+	<button ng-repeat="deficiency in $root.aDeficiencies"class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectDeficiency(deficiency)">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			Project and Phase: {{deficiency.sProjectPhase}}
+		</div>
+		<div class="cnpMobileItemDescription" ng-cloak>
+			Unit: {{deficiency.sUnit}}
+		</div>
+		<div class="cnpMobileItemDescription" ng-cloak>
+			Description Tags: {{deficiency.sTags}}
+		</div>
+		<div class="cnpMobileItemDescription" ng-cloak>
+			Location Tags: {{deficiency.sLocationTags}}
+		</div>
+		<div class="cnpMobileItemDescription" ng-cloak>
+			Status:
+			<img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon">
+			<label class="cnpMobileItemValue cnpMobileItemValueStatus" ng-cloak>
+				{{deficiency.sStatusDescription}}
+			</label>
+		</div>
 
-	PlaceHolder for list...
-</section>	
+	</div>
+	</button>
+</div>
+<!-- </section> -->
