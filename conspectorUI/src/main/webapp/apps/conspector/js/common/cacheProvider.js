@@ -64,6 +64,12 @@ app.factory('cacheProvider', ['TYPES',
 					oFilter: {},
 					oSorting: {}
 				}],
+				notificationsList: [{
+					sStateName: "app.notificationsList",
+					aGroups: [],
+					oFilter: {},
+					oSorting: {}
+				}],
 				contactsList: [{
 					sStateName: "app.contactsList",
 					aGroups: [],
