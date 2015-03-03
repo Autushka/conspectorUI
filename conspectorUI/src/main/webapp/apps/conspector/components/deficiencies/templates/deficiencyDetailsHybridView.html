@@ -1,4 +1,4 @@
-<md-toolbar class="cnpMobileSideNavHeader">
+<!-- <md-toolbar class="cnpMobileSideNavHeader">
 <div layout="row" layout-align="start start" ng-click="onClose()">
 	<div class="notSelectable cnpInputIcon cnpMobileBackIcon" layout-margin layout="column" layout-align="center start">
 		<div class="notSelectable cnpLink cnpLinkBackButton">
@@ -6,8 +6,23 @@
 		</div>
 	</div>
 </div>
-</md-toolbar>
-
+</md-toolbar> -->
+<div layout="row" class="cnpMobileHeader" layout-align="space-between center" style="margin-top: 15px;">
+	<div ng-click="onMainMenu()" class="cnpMobileMenuIcon">
+		<img ng-src="{{$root.sMenuIconUrl}}"/>
+	</div>
+	<div layout="row" layout-align="start center">
+		<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}" ng-cloak/>
+	</div>
+	<div class="cnpMobileTitle">
+		{{'deficiencyDetails_title' | translate}}
+	</div>
+</div>
+<div ng-click="onClose()" class="notSelectable cnpInputIcon cnpMobileBackIcon" layout-margin layout="column" layout-align="center start" style="margin-left: 16px;">
+		<div class="notSelectable cnpLink cnpLinkBackButton">
+			{{'global_backToList' | translate}}
+		</div>
+</div>
 <div class="cnpMobileListWrapper">
 	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton">
 	<div layout="column" layout-align="center start">
