@@ -119,11 +119,13 @@ app.config(['$translateProvider',
                   global_post: 'Post',
                   global_postPlaceholder: 'Add a comment...',
                   global_noComments: 'No comments yet...',
+                  global_projectAndPhaseMandatory: 'Project and Phase is mandatory',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
                   hybrid_deficienciesListItem: 'Deficiencies List',
-
+                  hybrid_selectSearchCriterias:'Select your search criteria...',
+                  hybrid_searchDeficiencies: 'Search',
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -286,6 +288,7 @@ app.config(['$translateProvider',
                   deficiencyDetails_deletionConfirmationHeader: 'You are about to delete a deficiency.',
                   deficiencyDetails_deletionConfirmationContent: 'Are you sure you want to proceed ?',
                   deficiencyDetails_deficiencyQuickAdd: 'Deficiency QuickAdd',
+                  deficiencyDetails_searchDeficiencies: 'Search Deficiencies',
                   //commentsList
                   commentsList_title: 'Comments',
                   //unitList
@@ -546,11 +549,13 @@ app.config(['$translateProvider',
                   global_post: 'Publier',
                   global_postPlaceholder: 'Ajouter un commentaire...',
                   global_noComments: 'Pas de commentaires...',
+                  global_projectAndPhaseMandatory: 'Veuillez s\u00E9lectionner projet et phase',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Ajouter d\u00E9ficience',
                   hybrid_deficienciesListItem: 'Liste des d\u00E9ficiences',
-
+                  hybrid_selectSearchCriterias: 'S\u00E9lectionner vos options de recherche...',
+                  hybrid_searchDeficiencies: 'Recherche',
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',
                   m101: 'Un email contenant les instructions pour votre mot de passe vous a \u00E9t\u00E9 envoy\u00E9.',
@@ -714,6 +719,7 @@ app.config(['$translateProvider',
                   deficiencyDetails_deletionConfirmationHeader: 'Vous \u00EAtes sur le point d\u0027effacer une d\u00E9ficience.',
                   deficiencyDetails_deletionConfirmationContent: '\u00CAtes-vous s\u00FBr de vouloir effacer cette d\u00E9ficience ?',
                   deficiencyDetails_deficiencyQuickAdd: 'Ajout d\u00E9ficience',
+                  deficiencyDetails_searchDeficiencies: 'Recherche de d\u00E9ficiences',
                   //commentsList
                   commentsList_title: 'Commentaires',
                   //unitList
