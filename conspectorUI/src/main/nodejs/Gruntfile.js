@@ -36,7 +36,8 @@ module.exports = function(grunt) {
         '../webapp/apps/conspector/components/adminPanel/controllers/*.js',   
 
         '../webapp/apps/conspector/components/attachments/controllers/*.js',
-        '../webapp/apps/conspector/components/comments/controllers/*.js'                      
+        '../webapp/apps/conspector/components/comments/controllers/*.js',
+        '../webapp/apps/conspector/components/notifications/controllers/*.js'
         ],
         dest: '../webapp/dist/conspector.js'
       }
