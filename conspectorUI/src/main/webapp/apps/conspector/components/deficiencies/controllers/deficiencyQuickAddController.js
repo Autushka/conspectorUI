@@ -465,6 +465,8 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 $rootScope.oDeficiencyAttributes.oContractors.sValue = "...";
                 $rootScope.aContractors = [];
                 $rootScope.oDeficiencyAttributes.oImages.iValue = 0;
+
+                $rootScope.sContractorsFilter = "";
             };
 
             var oDataForSave = {};
