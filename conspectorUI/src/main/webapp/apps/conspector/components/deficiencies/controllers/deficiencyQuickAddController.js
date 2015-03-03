@@ -3,6 +3,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         historyProvider.removeHistory();
 
         servicesProvider.constructLogoUrl();
+        servicesProvider.constructMenuIconUrl();
 
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         var bCanContinue = rolesSettings.getRolesSettingsForEntityAndOperation({

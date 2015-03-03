@@ -1,10 +1,15 @@
 <!-- <section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }"> -->
 <div style="webkit-overflow-scrolling: touch;">
-	<div layout="row" class="cnpMobileHeader" layout-align="space-between start">
+	<div layout="row" class="cnpMobileHeader" layout-align="space-between center">
+		<div ng-click="onMainMenu()" class="cnpMobileMenuIcon">
+			<img ng-src="{{$root.sMenuIconUrl}}"/>
+		</div>
 		<div layout="row" layout-align="start center">
 			<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}" ng-cloak/>
 		</div>
-		<div ng-click="onMainMenu()">Menu</div>
+		<div class="cnpMobileTitle">
+			{{'hybrid_deficienciesListItem' | translate}}
+		</div>
 	</div>
 	<div ng-click="onBackToSearch()">Back to search</div>
 	<button ng-repeat="deficiency in $root.aDeficiencies"class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectDeficiency(deficiency)">
