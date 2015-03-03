@@ -7,6 +7,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
             }
             switch ($rootScope.sCurrentSearhCriteria) {
                 case "phase":
+                    $rootScope.oSearchCriterias["oPhase"].sSelectedItemGuid = "";
                     if ($rootScope.oSearchCriterias.bPhaseWasSelected) {
                         $rootScope.oSearchCriterias["oUnit"].bIsSelectionUnabled = true;
                         $rootScope.oSearchCriterias["oPhase"].sValue = "";
@@ -22,6 +23,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                     }
                     break;
                 case "unit":
+                    $rootScope.oSearchCriterias["oUnit"].aSelectedItemsGuids = [];
                     if ($rootScope.oSearchCriterias.bUnitWasSelected) {
                         $rootScope.oSearchCriterias["oUnit"].sValue = "";
                         for (var i = 0; i < $rootScope.oSearchCriterias.aUnits.length; i++) {
@@ -34,6 +36,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                     }
                     break;
                 case "status":
+                    $rootScope.oSearchCriterias["oStatus"].aSelectedItemsGuids = [];
                     if ($rootScope.oSearchCriterias.bStatusWasSelected) {
                         $rootScope.oSearchCriterias["oStatus"].sValue = "";
                         for (var i = 0; i < $rootScope.oSearchCriterias.aStatuses.length; i++) {

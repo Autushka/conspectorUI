@@ -147,6 +147,20 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			var sFileMetadataSetLastModifiedAt = "";
 			var aImages = [];
 			var sDescription = "";
+			var sUnitsGuids = "";
+			var sStatusesGuids = "";			
+
+			if($rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length){
+				for (var i = 0; i < $rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length; i++) {
+					sStatusesGuids = sStatusesGuids + $rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids[i] + ",";
+				}
+			}	
+
+			if($rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length){
+				for (var i = 0; i < $rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length; i++) {
+					sUnitsGuids = sUnitsGuids + $rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids[i] + ",";
+				}
+			}							
 
 			for (var i = 0; i < aData.length; i++) {
 				sProjectName = "";
@@ -164,6 +178,19 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 				iImagesNumber = 0;
 				aImages = [];
 				sDescription = "";
+
+				if(sUnitsGuids){
+					if(sUnitsGuids.indexOf(aData[i].UnitGuid) < 0){
+						continue;
+					}
+				}
+
+				if(sStatusesGuids){
+					if(sStatusesGuids.indexOf(aData[i].TaskStatusGuid) < 0){
+						continue;
+					}
+				}				
+
 
 				if (aData[i].PhaseDetails) {
 					iSortingSequence = aData[i].PhaseDetails.GeneralAttributes.SortingSequence;
@@ -267,21 +294,21 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 
 			var sFilterByAccountGuid = "";
 			var sFilterByPhaseGuid = "";
-			var sFilterByUnitGuids = "";
-			var sUnitGuids = "";
+			// var sFilterByUnitGuids = "";
+			// var sUnitsGuids = "";
 
 			if($rootScope.oSearchCriterias.oPhase.sSelectedItemGuid){
 				sFilterByPhaseGuid = " and PhaseGuid eq '" + $rootScope.oSearchCriterias.oPhase.sSelectedItemGuid + "'";
 				//sFilterByPhaseGuid = " "
 			}
 
-			if($rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length){
-				// for (var i = 0; i < $rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length; i++) {
-				// 	sUnitGuids = 
-				// }
-				sFilterByPhaseGuid = " and PhaseGuid eq '" + $rootScope.oSearchCriterias.oPhase.sSelectedItemGuid + "'";
-				//sFilterByPhaseGuid = " "
-			}			
+			// if($rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length){
+			// 	for (var i = 0; i < $rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length; i++) {
+			// 		sUnitsGuids = sUnitsGuids + $rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids[i] + ",";
+			// 	}
+			// 	sFilterByUnitsGuids = " and substringof(UnitGuid, '" + sUnitsGuids+ "') eq true";
+			// 	//sFilterByPhaseGuid = " "
+			// }			
 
 			if (cacheProvider.oUserProfile.sCurrentRole === "contractor") {
 				sFilterByAccountGuid = " and substringof('" + cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid + "', AccountGuids) eq true";
