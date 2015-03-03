@@ -13,8 +13,12 @@ viewControllers.controller('deficienciesListHybridView', ['$scope', '$rootScope'
 
         $scope.onBackToSearch = function() {
             $rootScope.sDeficienciesListView = "deficienciesListSearch"
-        }
+        };
 
+        $scope.onSelectDeficiency = function(oDeficiency){
+            $rootScope.oSelectedDeficiency = angular.copy(oDeficiency);
+            $rootScope.sDeficienciesListView = "deficiencyDetails"
+        }; 
 
         $scope.$on("$destroy", function() {
             if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views

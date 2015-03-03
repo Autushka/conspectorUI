@@ -1,0 +1,110 @@
+<md-toolbar class="cnpMobileSideNavHeader">
+<div layout="row" layout-align="start start" ng-click="onClose()">
+	<div class="notSelectable cnpInputIcon cnpMobileBackIcon" layout-margin layout="column" layout-align="center start">
+		<div class="notSelectable cnpLink cnpLinkBackButton">
+			{{'global_back' | translate}}
+		</div>
+	</div>
+</div>
+</md-toolbar>
+
+<div class="cnpMobileListWrapper">
+	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'deficiencyDetails_associatedProjectsAndPhases' | translate}}
+		</div>
+		<label class="cnpMobileItemValue" ng-cloak>
+			{{$root.oSelectedDeficiency.sProjectPhase}}
+		</label>
+	</div>
+	</button>
+	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton ">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'deficiencyDetails_unit' | translate}}
+		</div>
+		<label class="cnpMobileItemValue" ng-cloak>
+			{{$root.oSelectedDeficiency.sUnit}}
+		</label>
+	</div>
+	</button>
+	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onStatusAttribute()">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'deficiencyDetails_status' | translate}}
+		</div>
+		<div layout="row" layout-align="start center" style="margin-top: 12px;">
+			<img ng-src="{{$root.oSelectedDeficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon">
+			<label class="cnpMobileItemValue cnpMobileItemValueStatus" ng-cloak>
+				{{$root.oSelectedDeficiency.sStatusDescription}}
+			</label>
+		</div>
+	</div>
+	</button>
+	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton ">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'deficiencyDetails_contractors' | translate}}
+		</div>
+		<label class="cnpMobileItemValue" ng-cloak>
+			{{$root.oSelectedDeficiency.sContractors}}
+		</label>
+	</div>
+	</button>
+	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'deficiencyDetails_descriptionTags' | translate}}
+		</div>
+		<label class="cnpMobileItemValue cnpMobileItemValueTags" ng-cloak>
+			{{$root.oSelectedDeficiency.sTags}}
+		</label>
+	</div>
+	</button>
+	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton ">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'deficiencyDetails_locationTags' | translate}}
+		</div>
+		<label class="cnpMobileItemValue cnpMobileItemValueTags" ng-cloak>
+			{{$root.oSelectedDeficiency.sLocationTags}}
+		</label>
+	</div>
+	</button>
+	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton ">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'deficiencyDetails_deficiencyPriority' | translate}}
+		</div>
+		<label class="cnpMobileItemValue" ng-cloak>
+			{{$root.oSelectedDeficiency.sPriorityDescription}}
+		</label>
+	</div>
+	</button>
+	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton ">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'deficiencyDetails_assignedUser' | translate}}
+		</div>
+		<label class="cnpMobileItemValue" ng-cloak>
+			{{$root.oSelectedDeficiency.sAssignedUserName}}
+		</label>
+	</div>
+	</button>
+	<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onImagesAttribute()">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'global_images' | translate}}
+		</div>
+		<label class="cnpMobileItemValue" ng-cloak>
+			{{$root.oSelectedDeficiency.iImagesNumber}}
+		</label>
+	</div>
+	</button>
+	<div layout="column" layout-align="start center">
+		<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton cnpInputIcon cnpSaveIconWhiteMobile notSelectable" ng-click="onSave()" ng-cloak>
+		{{'global_mobileSave' | translate}}
+		</button>
+	</div>
+</div>

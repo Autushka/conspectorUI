@@ -74,7 +74,8 @@
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListHybridWrapperController.js"></script>			
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListHybridController.js"></script>	
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListItemsListsHybridController.js"></script>		
-		<script src="apps/conspector/components/deficiencies/controllers/deficienciesSearchHybridController.js"></script>			
+		<script src="apps/conspector/components/deficiencies/controllers/deficienciesSearchHybridController.js"></script>
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsHybridController.js"></script>					
 
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddWrapperController.js"></script>	
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddController.js"></script>	

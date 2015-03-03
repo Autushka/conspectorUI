@@ -143,7 +143,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
 				'deficienciesListItemsListsHybrid': {
 					templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListItemsListsHybridView.html',
 					controller: 'deficienciesListItemsListsHybridView'
-				},			
+				},	
+                'deficiencyDetailsHybrid': {
+                    templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyDetailsHybridView.html',
+                    controller: 'deficiencyDetailsHybridView'
+                },  						
 			}
 		});			
 

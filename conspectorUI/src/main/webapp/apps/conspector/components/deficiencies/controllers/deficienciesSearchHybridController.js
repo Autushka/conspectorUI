@@ -142,6 +142,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			var sStatuseIconUrl = "";
 			var sStatuseIconGuid = "";
 			var sStatusDescription = "";
+			var sPriorityDescription = "";
 			var sContractors = "";
 			var iImagesNumber = 0;
 			var sFileMetadataSetLastModifiedAt = "";
@@ -174,6 +175,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 				sStatuseIconUrl = "";
 				sStatusIconGuid = "";
 				sStatusDescription = "";
+				sPriorityDescription = "";
 				sContractors = "";
 				iImagesNumber = 0;
 				aImages = [];
@@ -218,6 +220,13 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					}
 					sStatusIconGuid = aData[i].TaskStatusDetails.AssociatedIconFileGuid;
 				}
+
+				if (aData[i].TaskPriorityDetails) {
+					sPriorityDescription = $translate.use() === "en" ? aData[i].TaskPriorityDetails.NameEN : aData[i].TaskPriorityDetails.NameFR;
+					if (!sPriorityDescription) {
+						sPriorityDescription = aData[i].TaskPriorityDetails.NameEN;
+					}
+				}				
 
 				if (aData[i].AccountDetails) {
 					for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
@@ -275,6 +284,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					sStatuseIconUrl: sStatuseIconUrl,
 					sStatusIconGuid: sStatusIconGuid,
 					sStatusDescription: sStatusDescription,
+					sPriorityDescription: sPriorityDescription,
 					sDescription: sDescription,
 					_unitGuid: aData[i].UnitGuid,
 					_sortingSequence: iSortingSequence,
@@ -282,6 +292,8 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					_fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,
 					iImagesNumber: iImagesNumber,
 					_aImages: aImages,
+					sAssignedUserName: aData[i].UserName,
+
 				});
 			}
 			$timeout(function() {
@@ -317,7 +329,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 
 
 			apiProvider.getDeficiencies({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
 				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhaseGuid + sFilterByAccountGuid,
 				bShowSpinner: true,
 				onSuccess: onDeficienciesLoaded
