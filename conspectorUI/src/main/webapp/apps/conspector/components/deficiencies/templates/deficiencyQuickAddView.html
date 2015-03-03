@@ -1,12 +1,14 @@
 <section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }">
-	<div layout="row" class="cnpMobileHeader" layout-align="space-between start">
-
+	<div layout="row" class="cnpMobileHeader" layout-align="start center">
+		<div ng-click="onMainMenu()" class="cnpMobileMenuIcon">
+			<img src="apps/conspector/img/mobileMenuIcon_tiny.svg"/>
+		</div>
 		<div layout="row" layout-align="start center">
 			<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}" ng-cloak/>
 		</div>
-
-		<div ng-click="onMainMenu()">Menu</div>
-
+		<div class="cnpMobileTitle" flex>
+				{{'deficiencyDetails_deficiencyQuickAdd' | translate}}
+		</div>
 	</div>
 	
 	<div class="cnpMobileListWrapper">
@@ -108,5 +110,5 @@
 			{{'global_mobileSave' | translate}}
 			</button>
 		</div>
-	</div>	
+	</div>
 </section>

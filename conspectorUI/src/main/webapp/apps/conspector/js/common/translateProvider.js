@@ -280,7 +280,7 @@ app.config(['$translateProvider',
                   deficiencyDetails_deficiencyAssignedUserDefaultLabel: 'Select User',
                   deficiencyDetails_deletionConfirmationHeader: 'You are about to delete a deficiency.',
                   deficiencyDetails_deletionConfirmationContent: 'Are you sure you want to proceed ?',
-
+                  deficiencyDetails_deficiencyQuickAdd: 'Deficiency QuickAdd',
                   //commentsList
                   commentsList_title: 'Comments',
                   //unitList
@@ -704,7 +704,7 @@ app.config(['$translateProvider',
                   deficiencyDetails_deficiencyAssignedUserDefaultLabel: 'S\u00E9lectionner l\u0027utilisateur',
                   deficiencyDetails_deletionConfirmationHeader: 'Vous \u00EAtes sur le point d\u0027effacer une d\u00E9ficience.',
                   deficiencyDetails_deletionConfirmationContent: '\u00CAtes-vous s\u00FBr de vouloir effacer cette d\u00E9ficience ?',
-                  
+                  deficiencyDetails_deficiencyQuickAdd: 'Ajout d\u00E9ficience',
                   //commentsList
                   commentsList_title: 'Commentaires',
                   //unitList
