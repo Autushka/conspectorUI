@@ -1,7 +1,7 @@
 <section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }">
 	<div layout="row" class="cnpMobileHeader" layout-align="space-between center">
 		<div ng-click="onMainMenu()" class="cnpMobileMenuIcon">
-			<img src="apps/conspector/img/mobileMenuIcon_tiny.svg"/>
+			<img ng-src="{{$root.sMenuIconUrl}}"/>
 		</div>
 		<div layout="row" layout-align="start center">
 			<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}" ng-cloak/>

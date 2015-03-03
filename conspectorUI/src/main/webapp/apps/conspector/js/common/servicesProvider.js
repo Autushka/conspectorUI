@@ -614,17 +614,18 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			constructMenuIconUrl: function() {
-				var sUrl = CONSTANTS.sAppAbsolutePath + "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_";
-				var oSvc = dataProvider.httpRequest({
-					sPath: sUrl
-				});
-				oSvc.then(function(aData) {
-					if (aData[0]) {
-						$rootScope.sMenuIconUrl = CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[0].guid;
-					} else {
-						$rootScope.sMenuIconUrl = CONSTANTS.sAppAbsolutePath + "apps/conspector/img/mobileMenuIcon_tiny.svg";
-					}
-				});
+				var sUrl = "";
+				// var oSvc = dataProvider.httpRequest({
+				// 	sPath: sUrl
+				// });
+				$rootScope.sMenuIconUrl = CONSTANTS.sAppAbsolutePath + "apps/conspector/img/mobileMenuIcon_tiny.svg";
+				// oSvc.then(function(aData) {
+				// 	if (aData[0]) {
+				// 		$rootScope.sMenuIconUrl = CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[0].guid;
+				// 	} else {
+						
+				// 	}
+				// });
 			},
 
 			getSeletedItemsKeysInMultiSelect: function(oParameters) {
