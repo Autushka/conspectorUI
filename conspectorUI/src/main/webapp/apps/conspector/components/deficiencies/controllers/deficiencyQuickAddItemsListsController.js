@@ -220,7 +220,7 @@ viewControllers.controller('deficiencyQuickAddItemsListsView', ['$rootScope', '$
                 targetWidth: 500,
                 targetHeight: 500,
                 popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: false
+                saveToPhotoAlbum: true
             };
 
             $cordovaCamera.getPicture(options).then(function(imageData) {
