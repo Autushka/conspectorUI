@@ -11,29 +11,30 @@
 			{{'hybrid_deficienciesListItem' | translate}}
 		</div>
 	</div>
-	<div ng-click="onBackToSearch()">Back to search</div>
+	<div ng-click="onBackToSearch()" class="notSelectable cnpInputIcon cnpMobileBackIcon" layout-margin layout="column" layout-align="center start" style="margin-left: 16px;">
+		<div class="notSelectable cnpLink cnpLinkBackButton">
+			{{'global_backToSearch' | translate}}
+		</div>
+	</div>
 	<button ng-repeat="deficiency in $root.aDeficiencies"class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectDeficiency(deficiency)">
 	<div layout="column" layout-align="center start">
-		<div class="cnpMobileItemDescription" ng-cloak>
-			Project and Phase: {{deficiency.sProjectPhase}}
+		<div class="cnpMobileListItem" layout="row" layout-align="start center" ng-cloak style="height: 43px;">
+			<div style="font-size: 20px;">{{deficiency.sUnit}}</div>
+			<div layout="row" layout-align="start center">
+				<img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon cnpMobileStatusIconMoreMargin">
+			</div>
+			<div>
+				<label class="cnpMobileItemValue cnpMobileItemValueStatus" ng-cloak>
+					{{deficiency.sStatusDescription}}
+				</label>
+			</div>
 		</div>
-		<div class="cnpMobileItemDescription" ng-cloak>
-			Unit: {{deficiency.sUnit}}
+		<div class="cnpMobileListItem" ng-cloak style="margin-bottom: 8px;">
+			{{deficiency.sTags}}
 		</div>
-		<div class="cnpMobileItemDescription" ng-cloak>
-			Description Tags: {{deficiency.sTags}}
+		<div class="cnpMobileListItem" ng-cloak>
+			{{deficiency.sLocationTags}}
 		</div>
-		<div class="cnpMobileItemDescription" ng-cloak>
-			Location Tags: {{deficiency.sLocationTags}}
-		</div>
-		<div class="cnpMobileItemDescription" ng-cloak>
-			Status:
-			<img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon">
-			<label class="cnpMobileItemValue cnpMobileItemValueStatus" ng-cloak>
-				{{deficiency.sStatusDescription}}
-			</label>
-		</div>
-
 	</div>
 	</button>
 </div>

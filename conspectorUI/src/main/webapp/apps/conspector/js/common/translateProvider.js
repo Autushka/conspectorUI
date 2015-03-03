@@ -120,6 +120,7 @@ app.config(['$translateProvider',
                   global_postPlaceholder: 'Add a comment...',
                   global_noComments: 'No comments yet...',
                   global_projectAndPhaseMandatory: 'Project and Phase is mandatory',
+                  global_backToSearch: 'Back to search',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
@@ -550,6 +551,7 @@ app.config(['$translateProvider',
                   global_postPlaceholder: 'Ajouter un commentaire...',
                   global_noComments: 'Pas de commentaires...',
                   global_projectAndPhaseMandatory: 'Veuillez s\u00E9lectionner projet et phase',
+                  global_backToSearch: 'Retour \u00E0 recherche',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Ajouter d\u00E9ficience',

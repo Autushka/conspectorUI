@@ -3,6 +3,7 @@ viewControllers.controller('deficienciesListHybridView', ['$scope', '$rootScope'
         historyProvider.removeHistory();
 
         servicesProvider.constructLogoUrl();
+        servicesProvider.constructMenuIconUrl();
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation  
