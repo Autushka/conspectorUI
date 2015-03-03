@@ -17,6 +17,14 @@ viewControllers.controller('deficienciesListHybridView', ['$scope', '$rootScope'
         };
 
         $scope.onSelectDeficiency = function(oDeficiency){
+            for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
+                if(oDeficiency.sStatusGuid === $rootScope.aSelectedDeficiencyStatuses[i].sGuid){
+                    $rootScope.aSelectedDeficiencyStatuses[i].bTicked = true;        
+                }else{
+                     $rootScope.aSelectedDeficiencyStatuses[i].bTicked = false;
+                }
+            }
+
             $rootScope.oSelectedDeficiency = angular.copy(oDeficiency);
             $rootScope.sDeficienciesListView = "deficiencyDetails"
         }; 

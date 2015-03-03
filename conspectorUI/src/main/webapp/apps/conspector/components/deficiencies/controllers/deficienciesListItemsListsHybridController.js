@@ -5,6 +5,8 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
             if(CONSTANTS.bIsHybridApplication){
                 $cordovaKeyboard.close();
             }
+
+
             switch ($rootScope.sCurrentSearhCriteria) {
                 case "phase":
                     $rootScope.oSearchCriterias["oPhase"].sSelectedItemGuid = "";
@@ -105,12 +107,34 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
             //         }
             //         break;
             }
+
+            switch ($rootScope.sSelectedDeficiencyAttribute){
+                case "statuses":
+
+                        for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
+                            if ($rootScope.aSelectedDeficiencyStatuses[i].bTicked) {
+                                $rootScope.oSelectedDeficiency.sStatusGuid = $rootScope.aSelectedDeficiencyStatuses[i].sGuid;
+                                $rootScope.oSelectedDeficiency.sStatusDescription = $rootScope.aSelectedDeficiencyStatuses[i].sName;
+                                $rootScope.oSelectedDeficiency.sStatuseIconUrl = $rootScope.aSelectedDeficiencyStatuses[i].sIconUrl;
+                            }
+                        }
+                  
+                    break;
+
+            }                       
             // $rootScope.bIsDeficienciesListItemsListsOpen = false;
             // $rootScope.bIsListViewOpen = true;
             if($rootScope.sCurrentSearhCriteria){
                 $rootScope.sDeficienciesListView = "deficienciesListSearch"; 
             }else{
-                $rootScope.sDeficienciesListView = "deficienciesList"; 
+                if($rootScope.sSelectedDeficiencyAttribute){
+                    $rootScope.sSelectedDeficiencyAttribute = "";
+                    $rootScope.sDeficienciesListView = "deficiencyDetails"; 
+                }else{
+                    $rootScope.sDeficienciesListView = "deficienciesList"; 
+                }
+                
+                
             }              
 
         };
@@ -206,7 +230,16 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
         //     } else {
         //         $rootScope.bContractorWasSelected = true;
         //     }
-        // };        
+        // }; 
+
+        $scope.onSelectDeficiencyAttributeStatus = function(oStatus){
+            if (!oStatus.bTicked) {
+                for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
+                    $rootScope.aSelectedDeficiencyStatuses[i].bTicked = false;
+                }
+                oStatus.bTicked = true;
+            }
+        }    
 
         $scope.onChangeSearchCriteriaUnitFilter = function(sFilter) {
             $rootScope.oSearchCriterias.sUnitFilter = utilsProvider.replaceSpecialChars(sFilter);
@@ -273,12 +306,62 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
         //     });
         // };        
 
-        // $scope.onUseCamera  = function(){
-        //      $scope.onAddImage(Camera.PictureSourceType.CAMERA);
-        // };
+        $scope.onAddImage = function(sImageSource) {
+            $rootScope.bIsItemsListsOpen = false;
+            var options = {
+                quality: 80,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: sImageSource, //Camera.PictureSourceType.CAMERA, //SAVEDPHOTOALBUM
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 500,
+                targetHeight: 500,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: true
+            };
 
-        // $scope.onUseLibrary  = function(){
-        //     $scope.onAddImage(Camera.PictureSourceType.SAVEDPHOTOALBUM);
-        // };        
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                var onSuccessUpload = function() {
+                    $scope.$apply(function() {
+                        $rootScope.$emit('UNLOAD');
+                        $rootScope.oSelectedDeficiency.iImagesNumber++;
+
+                    });
+                }
+                imageData = "data:image/jpeg;base64," + imageData; //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
+
+                var byteString = atob(imageData.split(',')[1]);
+                var ab = new ArrayBuffer(byteString.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                }
+
+                var oBlob = new Blob([ab], {
+                    type: 'image/jpeg'
+                });
+
+                var formData = new FormData();
+                formData.append('blob', oBlob, "quickAddAttachment");
+
+                servicesProvider.uploadAttachmentsForEntity({
+                    sPath: "Tasks",
+                    aFiles: [formData],
+                    sParentEntityGuid: $rootScope.oSelectedDeficiency._guid,
+                    sParentEntityFileMetadataSetGuid: $rootScope.oSelectedDeficiency._fileMetadataSetGuid,
+                    onSuccess: onSuccessUpload
+                });
+            }, function(err) {
+
+            });
+        };  
+
+        $scope.onUseCamera  = function(){
+             $scope.onAddImage(Camera.PictureSourceType.CAMERA);
+        };
+
+        $scope.onUseLibrary  = function(){
+            $scope.onAddImage(Camera.PictureSourceType.SAVEDPHOTOALBUM);
+        };                      
     }
 ]);

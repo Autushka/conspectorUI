@@ -4,7 +4,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 
 		servicesProvider.constructLogoUrl();
 		servicesProvider.constructMenuIconUrl();
-
+		
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
 		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation    
 
@@ -150,7 +150,8 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			var aImages = [];
 			var sDescription = "";
 			var sUnitsGuids = "";
-			var sStatusesGuids = "";			
+			var sStatusesGuids = "";
+			var sStatusGuid = "";			
 
 			if($rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length){
 				for (var i = 0; i < $rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length; i++) {
@@ -181,6 +182,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 				iImagesNumber = 0;
 				aImages = [];
 				sDescription = "";
+				sStatusGuid = "";
 
 				if(sUnitsGuids){
 					if(sUnitsGuids.indexOf(aData[i].UnitGuid) < 0){
@@ -213,6 +215,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 				}
 
 				if (aData[i].TaskStatusDetails) {
+					sStatusGuid = aData[i].TaskStatusDetails.Guid;
 					sStatusSortingSequence = aData[i].TaskStatusDetails.GeneralAttributes.SortingSequence;
 					sStatuseIconUrl = CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
 					sStatusDescription = $translate.use() === "en" ? aData[i].TaskStatusDetails.NameEN : aData[i].TaskStatusDetails.NameFR;
@@ -293,7 +296,9 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					_fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,
 					iImagesNumber: iImagesNumber,
 					_aImages: aImages,
+					_lastModifiedAt: aData[i].LastModifiedAt,
 					sAssignedUserName: aData[i].UserName,
+					sStatusGuid: sStatusGuid,
 
 				});
 			}

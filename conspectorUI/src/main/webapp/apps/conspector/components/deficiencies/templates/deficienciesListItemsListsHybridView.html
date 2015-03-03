@@ -47,7 +47,48 @@
 			</div>
 		</div>
 	</div>
-</div><!-- 
+</div>
+
+<div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="$root.sSelectedDeficiencyAttribute == 'statuses'">
+	<div layout="column" layout-align="start start" flex>
+		<div layout="column" flex style="width: 100%;">
+			<div ng-repeat="status in $root.aSelectedDeficiencyStatuses" ng-click="onSelectDeficiencyAttributeStatus(status)" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH1 cnpMobileH1Selected': status.bTicked, 'cnpMobileH1': !status.bTicked }"><img ng-src="{{status.sIconUrl}}" class="cnpMobileStatusIcon">{{status.sName}}<span class="cnpMobileTickMark" ng-if="status.bTicked">✔</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div ng-show="$root.sSelectedDeficiencyAttribute === 'images'">
+	<div ng-repeat="image in $root.aSelectedDeficiencyImages">
+		<img ng-src="{{image.sImgUrl}}" style="width:320px; height: 320px;">
+	</div>
+
+<!-- 	<div layout="column" layout-align="start start" flex>
+		<div layout="column" flex style="width: 100%;">
+			<div ng-click="onUseCamera()" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  class="cnpMobileH2" ng-click="onCLose()">{{'global_useCamera' | translate}}</div>
+				</div>
+				
+			</div>
+			<div ng-click="onUseLibrary()" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  class="cnpMobileH2" ng-click="onCLose()">{{'global_useLibrary' | translate}}</div>
+				</div>
+			</div>
+		</div>
+	</div> -->	
+</div>
+
+
+
+
+
+
+<!-- 
 <div class="cnpSidePanelWrapper" layout="row" layout-align="start start" ng-show="$root.sSideNavHeader === $root.oDeficiencyAttributes.oContractors.sDescription">
 	<div layout="column" layout-align="start start" flex>
 		<div class="cnpMobileFilterWrapper" layout="row" layout-align="center center">
