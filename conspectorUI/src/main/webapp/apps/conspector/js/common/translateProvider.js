@@ -119,6 +119,11 @@ app.config(['$translateProvider',
                   global_post: 'Post',
                   global_postPlaceholder: 'Add a comment...',
                   global_noComments: 'No comments yet...',
+
+                  //hybrid
+                  hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
+                  hybrid_deficienciesListItem: 'Deficiencies List',
+
                   //backendMessages
                   m100: 'Operation finished successfully.',
                   m101: 'Email with instructions to recover your password was successfully sent.',
@@ -541,6 +546,10 @@ app.config(['$translateProvider',
                   global_post: 'Publier',
                   global_postPlaceholder: 'Ajouter un commentaire...',
                   global_noComments: 'Pas de commentaires...',
+
+                  //hybrid
+                  hybrid_quickAddMenuItem: 'Ajouter d\u00E9ficience',
+                  hybrid_deficienciesListItem: 'Liste des d\u00E9ficiences',
 
                   //backendMessages
                   m100: 'Op\u00E9ration compl\u00E9t\u00E9e avec succ\u00E8s.',
