@@ -41,9 +41,17 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             sStateName: $rootScope.sCurrentStateName,
         });
 
-        $scope.oListSettings = {
-            bGroupListByProjectAndPhase: oTableStatusFromCache.oListSettings.bGroupListByProjectAndPhase
-        };
+
+        if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
+            $scope.oListSettings = {
+                bGroupListByProjectAndPhase: oTableStatusFromCache.oListSettings.bGroupListByProjectAndPhase
+            };
+        } else {
+            $scope.oListSettings = {
+                bGroupListByProjectAndPhase: false
+            };
+        }
+
 
 
         var oInitialSortingForContactList = {
@@ -168,7 +176,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
                     $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contactsList");
-                    cacheProvider.putListViewScrollPosition("contactsList", 0);                    
+                    cacheProvider.putListViewScrollPosition("contactsList", 0);
                 }
             }, 0);
         };
