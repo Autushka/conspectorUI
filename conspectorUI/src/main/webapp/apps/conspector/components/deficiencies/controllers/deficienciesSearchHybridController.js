@@ -341,14 +341,13 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			if (cacheProvider.oUserProfile.sCurrentRole === "contractor") {
 				sFilterByAccountGuid = " and substringof('" + cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid + "', AccountGuids) eq true";
 			}
-
-
-
+			
 			apiProvider.getDeficiencies({
 				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
 				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhaseGuid + sFilterByAccountGuid,
 				bShowSpinner: true,
-				onSuccess: onDeficienciesLoaded
+				onSuccess: onDeficienciesLoaded,
+				bNoCaching: true,
 			});
 
 		};

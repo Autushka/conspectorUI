@@ -1564,15 +1564,30 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			getDeficiencies: function(oParameters) {
-				var svc = dataProvider.getEntitySet({
-					sPath: "Tasks",
-					sExpand: oParameters.sExpand,
-					//sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
-					sFilter: oParameters.sFilter,
-					bShowSpinner: oParameters.bShowSpinner,
-					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oDeficiencyEntity"
-				});
+				var svc = {};
+				if(oParameters.bNoCaching){
+					svc = dataProvider.getEntitySet({
+						sPath: "Tasks",
+						sExpand: oParameters.sExpand,
+						//sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+						sFilter: oParameters.sFilter,
+						bShowSpinner: oParameters.bShowSpinner,
+						// oCacheProvider: cacheProvider,
+						// sCacheProviderAttribute: "oDeficiencyEntity"
+					});
+				}else{
+					svc = dataProvider.getEntitySet({
+						sPath: "Tasks",
+						sExpand: oParameters.sExpand,
+						//sExpand: "UserDetails,ContactTypeDetails,AccountDetails/AccountTypeDetails,PhaseDetails/ProjectDetails",
+						sFilter: oParameters.sFilter,
+						bShowSpinner: oParameters.bShowSpinner,
+						oCacheProvider: cacheProvider,
+						sCacheProviderAttribute: "oDeficiencyEntity"
+					});
+				}
+
+
 				if (svc instanceof Array) {
 					oParameters.onSuccess(svc); // data retrived from cache
 				} else {
