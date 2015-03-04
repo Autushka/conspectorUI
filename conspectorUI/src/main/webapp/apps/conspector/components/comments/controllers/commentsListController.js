@@ -50,56 +50,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 		});
 
 		var onCommentsLoaded = function(oData) {
-			var sAuthor = "";
-			var sAvatarUrl = "";
-			var sUserName = "";
-			var bAllowedEditMode = false;
-
-			for (var i = 0; i < oData.CommentDetails.results.length; i++) {
-				sAuthor = "";
-				sAvatarUrl = "";
-				sUserName = "";
-				if (oData.CommentDetails.results[i].ContactDetails) {
-					if (oData.CommentDetails.results[i].ContactDetails.FirstName) {
-						sAuthor = oData.CommentDetails.results[i].ContactDetails.FirstName + " ";
-					}
-					if (oData.CommentDetails.results[i].ContactDetails.LastName) {
-						sAuthor = sAuthor + oData.CommentDetails.results[i].ContactDetails.LastName;
-					}
-				}
-				var MD5 = new Hashes.MD5;
-				if(oData.CommentDetails.results[i].ContactDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0]){
-					var sUserEmailHash = MD5.hex(oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].EMail);
-				} else {
-					var sUserEmailHash = MD5.hex("deficien@cyDetails.com");
-				}
-				sAvatarUrl = "http://www.gravatar.com/avatar/" + sUserEmailHash + ".png?d=identicon&s=60";
-
-				
-				//here assumption is made that only one user can be assigned to contact...
-				if (oData.CommentDetails.results[i].ContactDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails.results) {
-					if(oData.CommentDetails.results[i].ContactDetails.UserDetails.results.length){
-						if(oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].AvatarFileGuid){
-							sAvatarUrl = servicesProvider.constructImageUrl(oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].AvatarFileGuid);
-						}
-						sUserName = oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].UserName;
-					}					
-				}
-				bAllowedEditMode = (sUserName === cacheProvider.oUserProfile.sUserName) ? true : false;
-
-				oCommentsListData.aData.push({
-					_guid: oData.CommentDetails.results[i].Guid,
-					_lastModifiedAt: oData.CommentDetails.results[i].LastModifiedAt,
-					_createdAt: oData.CommentDetails.results[i].CreatedAt,
-					sCreatedAt: utilsProvider.dBDateToSting(oData.CommentDetails.results[i].CreatedAt),
-					sText: oData.CommentDetails.results[i].Text,
-					sAuthor: sAuthor,
-					sAvatarUrl: sAvatarUrl,
-					_editMode: false,
-					_allowEditMode: bAllowedEditMode,
-					_userName: sUserName,
-				});
-			}
+			oCommentsListData.aData = angular.copy(servicesProvider.processListOfComments(oData));
 			$scope.tableParams.reload();
 		};
 

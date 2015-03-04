@@ -61,6 +61,16 @@
 		</label>
 	</div>
 	</button>
+	<button id="cnpButtonHighlightedMobile" class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onCommentsAttribute()">
+	<div layout="column" layout-align="center start">
+		<div class="cnpMobileItemDescription" ng-cloak>
+			{{'global_comments' | translate}}
+		</div>
+		<label class="cnpMobileItemValue" ng-cloak>
+			{{$root.oSelectedDeficiency.iCommentsNumber}}
+		</label>
+	</div>
+	</button>	
 	<button id="cnpDisabledButtonMobile" class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton ">
 	<div layout="column" layout-align="center start">
 		<div class="cnpMobileItemDescription" ng-cloak>

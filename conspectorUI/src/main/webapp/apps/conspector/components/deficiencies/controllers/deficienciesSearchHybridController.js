@@ -130,7 +130,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 
 		$rootScope.aDeficiencies = [];
 
-		var onDeficienciesLoaded = function(aData) {
+		$rootScope.onDeficienciesLoaded = function(aData) {
 			var sProjectName = "";
 			var sPhaseName = "";
 			var sUnitName = "";
@@ -147,8 +147,10 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			var sPriorityDescription = "";
 			var sContractors = "";
 			var iImagesNumber = 0;
+			var iCommentsNumber = 0;
 			var sFileMetadataSetLastModifiedAt = "";
 			var aImages = [];
+			var oComments = {};
 			var sDescription = "";
 			var sUnitsGuids = "";
 			var sStatusesGuids = "";
@@ -185,7 +187,9 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 				sPriorityDescription = "";
 				sContractors = "";
 				iImagesNumber = 0;
+				iCommentsNumber = 0;
 				aImages = [];
+				oComments = {};
 				sDescription = "";
 				sStatusGuid = "";
 
@@ -261,6 +265,14 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					iImagesNumber = aImages.length;
 				}
 
+				if (aData[i].CommentSetDetails) {
+					oComments = angular.copy(aData[i].CommentSetDetails);
+
+					if(aData[i].CommentSetDetails.CommentDetails && aData[i].CommentSetDetails.CommentDetails.results && aData[i].CommentSetDetails.CommentDetails.results.length){
+						iCommentsNumber = aData[i].CommentSetDetails.CommentDetails.results.length;
+					}
+				}				
+
 				var durationNumber = "";
 				var sDueInLetter = "";
 
@@ -298,26 +310,39 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					_unitGuid: aData[i].UnitGuid,
 					_sortingSequence: iSortingSequence,
 					_fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
+					_commentSetGuid: aData[i].CommentSetGuid,
 					_fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,
 					iImagesNumber: iImagesNumber,
+					iCommentsNumber: iCommentsNumber,
 					_aImages: aImages,
+					_oComments: oComments,
 					_lastModifiedAt: aData[i].LastModifiedAt,
 					_createdAt: aData[i].CreatedAt,
 					sAssignedUserName: aData[i].UserName,
 					sStatusGuid: sStatusGuid,
-				});				
+				});	
 			}
 
 			aDeficienciesForSorting = $filter('orderBy')(aDeficienciesForSorting, ["sUnit", "sStatusSortingSequence", "-_createdAt"]);
 
 			$rootScope.aDeficiencies = angular.copy(aDeficienciesForSorting);
 
-			$timeout(function() {
-				$rootScope.sDeficienciesListView = "deficienciesList"
-			}, 1000);
+			if($rootScope.oSelectedDeficiency){
+				for(var i = 0; i < $rootScope.aDeficiencies.length; i++){
+					if($rootScope.oSelectedDeficiency._guid === $rootScope.aDeficiencies[i]._guid){
+						$rootScope.oSelectedDeficiency = angular.copy($rootScope.aDeficiencies[i]);
+					}
+				}
+			}
+
+			if(!$rootScope.bIgnoreNavigation){
+				$timeout(function() {
+					$rootScope.sDeficienciesListView = "deficienciesList"
+				}, 1000);				
+			}
 		};
 
-		var loadDeficiencies = function() {
+		$rootScope.loadDeficiencies = function() {
 			$rootScope.aDeficiencies = [];
 
 			var sFilterByAccountGuid = "";
@@ -341,12 +366,12 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			if (cacheProvider.oUserProfile.sCurrentRole === "contractor") {
 				sFilterByAccountGuid = " and substringof('" + cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid + "', AccountGuids) eq true";
 			}
-			
+
 			apiProvider.getDeficiencies({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails/ContactDetails/UserDetails",
 				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhaseGuid + sFilterByAccountGuid,
 				bShowSpinner: true,
-				onSuccess: onDeficienciesLoaded,
+				onSuccess: $rootScope.onDeficienciesLoaded,
 				bNoCaching: true,
 			});
 
@@ -365,8 +390,8 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
                 });
                 return;
             }
-
-			loadDeficiencies();
+            $rootScope.bIgnoreNavigation = false;
+			$rootScope.loadDeficiencies();
 		};
 
 		$scope.onSelectPhaseSearchCriteria = function() {

@@ -2,7 +2,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
     function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window, $cordovaCamera, $cordovaKeyboard) {
 
         $scope.onClose = function() {
-            if(CONSTANTS.bIsHybridApplication){
+            if (CONSTANTS.bIsHybridApplication) {
                 $cordovaKeyboard.close();
             }
 
@@ -29,7 +29,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                     $rootScope.oSearchCriterias["oUnit"].aSelectedItemsGuids = [];
                     $rootScope.oSearchCriterias["oUnit"].sValue = "...";
                     if ($rootScope.oSearchCriterias.bUnitWasSelected) {
-                         $rootScope.oSearchCriterias["oUnit"].sValue = ""
+                        $rootScope.oSearchCriterias["oUnit"].sValue = ""
                         for (var i = 0; i < $rootScope.oSearchCriterias.aUnits.length; i++) {
                             if ($rootScope.oSearchCriterias.aUnits[i].bTicked) {
                                 $rootScope.oSearchCriterias["oUnit"].sValue = $rootScope.oSearchCriterias["oUnit"].sValue + $rootScope.oSearchCriterias.aUnits[i].sName + "; ";
@@ -48,94 +48,94 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                             if ($rootScope.oSearchCriterias.aStatuses[i].bTicked) {
                                 $rootScope.oSearchCriterias["oStatus"].sValue = $rootScope.oSearchCriterias["oStatus"].sValue + $rootScope.oSearchCriterias.aStatuses[i].sName + "; ";
                                 $rootScope.oSearchCriterias["oStatus"].aSelectedItemsGuids.push($rootScope.oSearchCriterias.aStatuses[i].sGuid);
-                              // $rootScope.oSearchCriterias["oStatus"].sIconUrl = $rootScope.oSearchCriterias.aStatuses[i].sIconUrl;
+                                // $rootScope.oSearchCriterias["oStatus"].sIconUrl = $rootScope.oSearchCriterias.aStatuses[i].sIconUrl;
                             }
                         }
                     }
                     break;
-            //     case $rootScope.oDeficiencyAttributes.oPriority.sDescription:
-            //         if ($rootScope.bPriorityWasSelected) {
-            //             $rootScope.oDeficiencyAttributes["oPriority"].sValue = "";
-            //             for (var i = 0; i < $rootScope.aPriorities.length; i++) {
-            //                 if ($rootScope.aPriorities[i].bTicked) {
-            //                     $rootScope.oDeficiencyAttributes["oPriority"].sValue = $rootScope.aPriorities[i].sName;
-            //                     $rootScope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid = $rootScope.aPriorities[i].sGuid;
-            //                     break;
-            //                 }
-            //             }
-            //         }
-            //         break;
-            //     case $rootScope.oDeficiencyAttributes.oUser.sDescription:
-            //         if ($rootScope.bUserWasSelected) {
-            //             $rootScope.oDeficiencyAttributes["oUser"].sValue = "";
-            //             for (var i = 0; i < $rootScope.aUsers.length; i++) {
-            //                 if ($rootScope.aUsers[i].bTicked) {
-            //                     $rootScope.oDeficiencyAttributes["oUser"].sValue = $rootScope.aUsers[i].sName;
-            //                     $rootScope.oDeficiencyAttributes["oUser"].sSelectedItemGuid = $rootScope.aUsers[i].sGuid;
-            //                     break;
-            //                 }
-            //             }
-            //         }
-            //         break;
-            //     case $rootScope.oDeficiencyAttributes.oDescriptionTags.sDescription:
-            //         if ($rootScope.aDescriptionTags.length) {
-            //             $rootScope.oDeficiencyAttributes["oDescriptionTags"].sValue = utilsProvider.tagsArrayToTagsString($rootScope.aDescriptionTags);
-            //         } else {
-            //             $rootScope.oDeficiencyAttributes["oDescriptionTags"].sValue = "...";
-            //         }
-            //         break;
-            //     case $rootScope.oDeficiencyAttributes.oLocationTags.sDescription:
-            //         if ($rootScope.aLocationTags.length) {
-            //             $rootScope.oDeficiencyAttributes["oLocationTags"].sValue = utilsProvider.tagsArrayToTagsString($rootScope.aLocationTags);
-            //         } else {
-            //             $rootScope.oDeficiencyAttributes["oLocationTags"].sValue = "...";
-            //         }
-            //         break;
-            //     case $rootScope.oDeficiencyAttributes.oContractors.sDescription:
-            //         if ($rootScope.bContractorWasSelected) {
-            //             $rootScope.oDeficiencyAttributes["oContractors"].sValue = "";
-            //             $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids = [];
-            //             for (var i = 0; i < $rootScope.aContractors.length; i++) {
-            //                 if ($rootScope.aContractors[i].bTicked) {
-            //                     $rootScope.oDeficiencyAttributes["oContractors"].sValue = $rootScope.oDeficiencyAttributes["oContractors"].sValue + $rootScope.aContractors[i].sName + "; ";
-            //                     $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.push($rootScope.aContractors[i].sGuid);
-            //                 }
-            //             }
-            //         } else {
-            //             $rootScope.oDeficiencyAttributes["oContractors"].sValue = "...";
-            //             $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids = [];
-            //         }
-            //         break;
+                    //     case $rootScope.oDeficiencyAttributes.oPriority.sDescription:
+                    //         if ($rootScope.bPriorityWasSelected) {
+                    //             $rootScope.oDeficiencyAttributes["oPriority"].sValue = "";
+                    //             for (var i = 0; i < $rootScope.aPriorities.length; i++) {
+                    //                 if ($rootScope.aPriorities[i].bTicked) {
+                    //                     $rootScope.oDeficiencyAttributes["oPriority"].sValue = $rootScope.aPriorities[i].sName;
+                    //                     $rootScope.oDeficiencyAttributes["oPriority"].sSelectedItemGuid = $rootScope.aPriorities[i].sGuid;
+                    //                     break;
+                    //                 }
+                    //             }
+                    //         }
+                    //         break;
+                    //     case $rootScope.oDeficiencyAttributes.oUser.sDescription:
+                    //         if ($rootScope.bUserWasSelected) {
+                    //             $rootScope.oDeficiencyAttributes["oUser"].sValue = "";
+                    //             for (var i = 0; i < $rootScope.aUsers.length; i++) {
+                    //                 if ($rootScope.aUsers[i].bTicked) {
+                    //                     $rootScope.oDeficiencyAttributes["oUser"].sValue = $rootScope.aUsers[i].sName;
+                    //                     $rootScope.oDeficiencyAttributes["oUser"].sSelectedItemGuid = $rootScope.aUsers[i].sGuid;
+                    //                     break;
+                    //                 }
+                    //             }
+                    //         }
+                    //         break;
+                    //     case $rootScope.oDeficiencyAttributes.oDescriptionTags.sDescription:
+                    //         if ($rootScope.aDescriptionTags.length) {
+                    //             $rootScope.oDeficiencyAttributes["oDescriptionTags"].sValue = utilsProvider.tagsArrayToTagsString($rootScope.aDescriptionTags);
+                    //         } else {
+                    //             $rootScope.oDeficiencyAttributes["oDescriptionTags"].sValue = "...";
+                    //         }
+                    //         break;
+                    //     case $rootScope.oDeficiencyAttributes.oLocationTags.sDescription:
+                    //         if ($rootScope.aLocationTags.length) {
+                    //             $rootScope.oDeficiencyAttributes["oLocationTags"].sValue = utilsProvider.tagsArrayToTagsString($rootScope.aLocationTags);
+                    //         } else {
+                    //             $rootScope.oDeficiencyAttributes["oLocationTags"].sValue = "...";
+                    //         }
+                    //         break;
+                    //     case $rootScope.oDeficiencyAttributes.oContractors.sDescription:
+                    //         if ($rootScope.bContractorWasSelected) {
+                    //             $rootScope.oDeficiencyAttributes["oContractors"].sValue = "";
+                    //             $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids = [];
+                    //             for (var i = 0; i < $rootScope.aContractors.length; i++) {
+                    //                 if ($rootScope.aContractors[i].bTicked) {
+                    //                     $rootScope.oDeficiencyAttributes["oContractors"].sValue = $rootScope.oDeficiencyAttributes["oContractors"].sValue + $rootScope.aContractors[i].sName + "; ";
+                    //                     $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.push($rootScope.aContractors[i].sGuid);
+                    //                 }
+                    //             }
+                    //         } else {
+                    //             $rootScope.oDeficiencyAttributes["oContractors"].sValue = "...";
+                    //             $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids = [];
+                    //         }
+                    //         break;
             }
 
-            switch ($rootScope.sSelectedDeficiencyAttribute){
+            switch ($rootScope.sSelectedDeficiencyAttribute) {
                 case "statuses":
 
-                        for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
-                            if ($rootScope.aSelectedDeficiencyStatuses[i].bTicked) {
-                                $rootScope.oSelectedDeficiency.sStatusGuid = $rootScope.aSelectedDeficiencyStatuses[i].sGuid;
-                                $rootScope.oSelectedDeficiency.sStatusDescription = $rootScope.aSelectedDeficiencyStatuses[i].sName;
-                                $rootScope.oSelectedDeficiency.sStatuseIconUrl = $rootScope.aSelectedDeficiencyStatuses[i].sIconUrl;
-                            }
+                    for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
+                        if ($rootScope.aSelectedDeficiencyStatuses[i].bTicked) {
+                            $rootScope.oSelectedDeficiency.sStatusGuid = $rootScope.aSelectedDeficiencyStatuses[i].sGuid;
+                            $rootScope.oSelectedDeficiency.sStatusDescription = $rootScope.aSelectedDeficiencyStatuses[i].sName;
+                            $rootScope.oSelectedDeficiency.sStatuseIconUrl = $rootScope.aSelectedDeficiencyStatuses[i].sIconUrl;
                         }
-                  
+                    }
+
                     break;
 
-            }                       
+            }
             // $rootScope.bIsDeficienciesListItemsListsOpen = false;
             // $rootScope.bIsListViewOpen = true;
-            if($rootScope.sCurrentSearhCriteria){
-                $rootScope.sDeficienciesListView = "deficienciesListSearch"; 
-            }else{
-                if($rootScope.sSelectedDeficiencyAttribute){
+            if ($rootScope.sCurrentSearhCriteria) {
+                $rootScope.sDeficienciesListView = "deficienciesListSearch";
+            } else {
+                if ($rootScope.sSelectedDeficiencyAttribute) {
                     $rootScope.sSelectedDeficiencyAttribute = "";
-                    $rootScope.sDeficienciesListView = "deficiencyDetails"; 
-                }else{
-                    $rootScope.sDeficienciesListView = "deficienciesList"; 
+                    $rootScope.sDeficienciesListView = "deficiencyDetails";
+                } else {
+                    $rootScope.sDeficienciesListView = "deficienciesList";
                 }
-                
-                
-            }              
+
+
+            }
 
         };
 
@@ -174,7 +174,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
             } else {
                 $rootScope.oSearchCriterias.bUnitWasSelected = true;
             }
-        }; 
+        };
 
         $scope.onSelectSearchCrireriaStatus = function(oStatus) {
             $rootScope.oSearchCriterias.bStatusWasSelected = false;
@@ -232,14 +232,14 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
         //     }
         // }; 
 
-        $scope.onSelectDeficiencyAttributeStatus = function(oStatus){
+        $scope.onSelectDeficiencyAttributeStatus = function(oStatus) {
             if (!oStatus.bTicked) {
                 for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
                     $rootScope.aSelectedDeficiencyStatuses[i].bTicked = false;
                 }
                 oStatus.bTicked = true;
             }
-        }    
+        }
 
         $scope.onChangeSearchCriteriaUnitFilter = function(sFilter) {
             $rootScope.oSearchCriterias.sUnitFilter = utilsProvider.replaceSpecialChars(sFilter);
@@ -354,14 +354,38 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
             }, function(err) {
 
             });
-        };  
-
-        $scope.onUseCamera  = function(){
-             $scope.onAddImage(Camera.PictureSourceType.CAMERA);
         };
 
-        $scope.onUseLibrary  = function(){
+        $scope.onSaveNewComment = function() {
+            var onSuccess = function() {
+                $rootScope.oNewComment.sText = "";
+                $rootScope.bIgnoreNavigation = true;
+                $rootScope.loadDeficiencies();
+                $rootScope.sSelectedDeficiencyAttribute = "";
+                $rootScope.sDeficienciesListView = "deficiencyDetails";
+            };
+            var oDataForSave = {
+                GeneralAttributes: {}
+            };
+
+            oDataForSave.ContactGuid = cacheProvider.oUserProfile.oUserContact.Guid;
+            oDataForSave.Text = $rootScope.oNewComment.sText;
+
+            servicesProvider.addCommentForEntity({
+                sPath: "Tasks",
+                oData: oDataForSave,
+                sParentEntityGuid: $rootScope.oSelectedDeficiency._guid,
+                sParentEntityCommentSetGuid: $rootScope.oSelectedDeficiency._commentSetGuid,
+                onSuccess: onSuccess,
+            });
+        };
+
+        $scope.onUseCamera = function() {
+            $scope.onAddImage(Camera.PictureSourceType.CAMERA);
+        };
+
+        $scope.onUseLibrary = function() {
             $scope.onAddImage(Camera.PictureSourceType.SAVEDPHOTOALBUM);
-        };                      
+        };
     }
 ]);

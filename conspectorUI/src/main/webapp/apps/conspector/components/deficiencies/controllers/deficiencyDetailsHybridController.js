@@ -88,6 +88,17 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
             $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
         };
 
+        $scope.onCommentsAttribute = function(){
+            //$rootScope.aSelectedDeficiencyComments = angular.copy($rootScope.oSelectedDeficiency._oComments);
+            $rootScope.aSelectedDeficiencyComments = angular.copy(servicesProvider.processListOfComments($rootScope.oSelectedDeficiency._oComments));
+
+            $rootScope.aSelectedDeficiencyComments = $filter('orderBy')($rootScope.aSelectedDeficiencyComments, ["_createdAt"]);
+            $rootScope.sCurrentSearhCriteria = "";
+
+            $rootScope.sSelectedDeficiencyAttribute = "comments";
+            $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
+        };
+
         $scope.onStatusAttribute = function() {
             $rootScope.sCurrentSearhCriteria = "";
             $rootScope.sSelectedDeficiencyAttribute = "statuses";
