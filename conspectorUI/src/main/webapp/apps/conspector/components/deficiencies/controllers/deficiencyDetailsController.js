@@ -232,13 +232,21 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
 			}
 			aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-			if ($rootScope.sMode === 'create' && aData.length) {
-				oDeficiencyWrapper.aData[0]._deficiencyStatusGuid = aData[0].Guid;
+			var aTaskStatuses = [];
+			for (var i = 0; i < aData.length; i++) {
+				if (aData[i].NameEN != "Done by Contractor" && aData[i].NameEN != "In Progress" && aData[i].NameEN != "Non Conform" && cacheProvider.oUserProfile.sCurrentRole === "contractor") {
+					continue;
+				}
+				aTaskStatuses.push(aData[i]);
+			}
+
+			if ($rootScope.sMode === 'create' && aTaskStatuses.length) {
+				oDeficiencyWrapper.aData[0]._deficiencyStatusGuid = aTaskStatuses[0].Guid;
 			}
 
 			servicesProvider.constructDependentMultiSelectArray({
 				oDependentArrayWrapper: {
-					aData: aData
+					aData: aTaskStatuses
 				},
 				oParentArrayWrapper: oDeficiencyWrapper,
 				sNameEN: "NameEN",

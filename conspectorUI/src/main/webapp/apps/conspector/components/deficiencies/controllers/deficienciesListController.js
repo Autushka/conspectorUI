@@ -92,7 +92,17 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
             }
             aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-            aTaskStatuses = angular.copy(aData);
+
+            aTaskStatuses = [];
+
+            for (var i = 0; i < aData.length; i++) {
+                if (aData[i].NameEN != "Done by Contractor" && aData[i].NameEN != "In Progress" && aData[i].NameEN != "Non Conform" && cacheProvider.oUserProfile.sCurrentRole === "contractor") {
+                    continue;
+                }
+                aTaskStatuses.push(aData[i]);
+            }
+
+            //aTaskStatuses = angular.copy(aData);
             oStatuses._statusesGuids = [];
             if ($scope.aSelectedStatuses) {
                 for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {

@@ -20,7 +20,7 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
                     sDescription = aData[i].NameEN;
                 }
 
-                if (aData[i].NameEN != "Done by Contractor" && aData[i].NameEN != "In Progress" && cacheProvider.oUserProfile.sCurrentRole === "contractor") {
+                if (aData[i].NameEN != "Done by Contractor" && aData[i].NameEN != "In Progress" && aData[i].NameEN != "Non Conform" && cacheProvider.oUserProfile.sCurrentRole === "contractor") {
                     continue;
                 }
 
