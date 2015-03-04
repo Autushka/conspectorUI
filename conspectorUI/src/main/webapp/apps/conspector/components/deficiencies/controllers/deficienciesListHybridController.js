@@ -1,5 +1,5 @@
-viewControllers.controller('deficienciesListHybridView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout',
-    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
+viewControllers.controller('deficienciesListHybridView', ['$scope', '$location', '$anchorScroll', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout',
+    function($scope, $location, $anchorScroll, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
         historyProvider.removeHistory();
 
         servicesProvider.constructLogoUrl();
@@ -17,6 +17,7 @@ viewControllers.controller('deficienciesListHybridView', ['$scope', '$rootScope'
         };
 
         $scope.onSelectDeficiency = function(oDeficiency){
+
             for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
                 if(oDeficiency.sStatusGuid === $rootScope.aSelectedDeficiencyStatuses[i].sGuid){
                     $rootScope.aSelectedDeficiencyStatuses[i].bTicked = true;        
@@ -27,6 +28,11 @@ viewControllers.controller('deficienciesListHybridView', ['$scope', '$rootScope'
 
             $rootScope.oSelectedDeficiency = angular.copy(oDeficiency);
             $rootScope.sDeficienciesListView = "deficiencyDetails"
+
+            // the element you wish to scroll to.
+            $location.hash('top');
+            // call $anchorScroll()
+            $anchorScroll();
         }; 
 
         $scope.$on("$destroy", function() {

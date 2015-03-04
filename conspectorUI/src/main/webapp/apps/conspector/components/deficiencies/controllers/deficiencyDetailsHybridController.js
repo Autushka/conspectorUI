@@ -4,6 +4,7 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
             $rootScope.sDeficienciesListView = "deficienciesList";
         }
 
+
         var onStatusesLoaded = function(aData) {
             var sDescription = "";
             for (var i = 0; i < aData.length; i++) {
