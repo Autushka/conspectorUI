@@ -58,7 +58,14 @@ viewControllers.controller('mainMenuHybridView', ['$scope', '$rootScope', '$stat
 			$rootScope.aFilteredContractors = undefined;
 			$rootScope.bContractorWasSelected = undefined;
 			$rootScope.oDeficiencyAttributes = undefined;
+
+			$rootScope.oSearchCriterias = undefined;
+			$rootScope.aDeficiencies = undefined;
+			$rootScope.aSelectedDeficiencyStatuses = undefined;
+			$rootScope.oSelectedDeficiency = undefined;
             servicesProvider.logOut();
+
+
         };		
 		
 		$scope.$on("$destroy", function() {

@@ -76,8 +76,9 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 		}
 
         var onUnitsLoaded = function(oData) {
+        	$rootScope.oSearchCriterias.aUnits = [];
             oData.UnitDetails.results = $filter('filter')(oData.UnitDetails.results, function(oItem, iIndex) {
-                return !oItem.GeneralAttributes.IsDeleted
+                return !oItem.GeneralAttributes.IsDeleted;
             });
 
             for (var i = 0; i < oData.UnitDetails.results.length; i++) {
@@ -153,7 +154,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			var sStatusesGuids = "";
 			var sStatusGuid = "";	
 
-	
+
 
 			if($rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length){
 				for (var i = 0; i < $rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length; i++) {
