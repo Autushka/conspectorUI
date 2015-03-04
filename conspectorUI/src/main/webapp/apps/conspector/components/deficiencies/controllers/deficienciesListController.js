@@ -60,7 +60,10 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         });
 
         var oInitialSortingForDeficienciesList = {
-            sUnit: 'asc'
+            sUnit: 'asc',
+            sStatusSortingSequence: 'asc',
+            _createdAt: 'desc',
+
         };
         if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
             oInitialSortingForDeficienciesList = angular.copy(oTableStatusFromCache.oSorting);
@@ -261,9 +264,11 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     _fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
                     _fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,
                     iImagesNumber: iImagesNumber,
+                    _createdAt: aData[i].CreatedAt,
                     _aImages: aImages,
-                });
+                });                
             }
+
             $scope.tableParams.reload();
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {

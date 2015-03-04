@@ -151,7 +151,9 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			var sDescription = "";
 			var sUnitsGuids = "";
 			var sStatusesGuids = "";
-			var sStatusGuid = "";			
+			var sStatusGuid = "";	
+
+	
 
 			if($rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length){
 				for (var i = 0; i < $rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length; i++) {
@@ -163,7 +165,9 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 				for (var i = 0; i < $rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length; i++) {
 					sUnitsGuids = sUnitsGuids + $rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids[i] + ",";
 				}
-			}							
+			}	
+
+			var aDeficienciesForSorting = [];						
 
 			for (var i = 0; i < aData.length; i++) {
 				sProjectName = "";
@@ -272,7 +276,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					sDescription = utilsProvider.removeTagsFromString(aData[i].Description);
 				}
 
-				$rootScope.aDeficiencies.push({
+				aDeficienciesForSorting.push({
 					_guid: aData[i].Guid,
 					sUnit: utilsProvider.convertStringToInt(aData[i].sUnitName),
 					sCleanedUnit: utilsProvider.replaceSpecialChars(aData[i].sUnitName),
@@ -297,11 +301,16 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					iImagesNumber: iImagesNumber,
 					_aImages: aImages,
 					_lastModifiedAt: aData[i].LastModifiedAt,
+					_createdAt: aData[i].CreatedAt,
 					sAssignedUserName: aData[i].UserName,
 					sStatusGuid: sStatusGuid,
-
-				});
+				});				
 			}
+
+			aDeficienciesForSorting = $filter('orderBy')(aDeficienciesForSorting, ["sUnit", "sStatusSortingSequence", "-_createdAt"]);
+
+			$rootScope.aDeficiencies = angular.copy(aDeficienciesForSorting);
+
 			$timeout(function() {
 				$rootScope.sDeficienciesListView = "deficienciesList"
 			}, 1000);
