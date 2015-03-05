@@ -243,7 +243,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                     sGuid: aData[i].Guid,
                     sName: sDescription,
                     bTicked: false,
-                    sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
+                    sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + aData[i].AssociatedIconFileGuid,
                 })
             }
             //initial value

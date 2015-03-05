@@ -115,7 +115,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
                     sGuid: aData[i].Guid,
                     sName: sDescription,
                     bTicked: false,
-                    sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[i].AssociatedIconFileGuid,
+                    sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + aData[i].AssociatedIconFileGuid,
                 })
             }
         };
@@ -226,7 +226,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 				if (aData[i].TaskStatusDetails) {
 					sStatusGuid = aData[i].TaskStatusDetails.Guid;
 					sStatusSortingSequence = aData[i].TaskStatusDetails.GeneralAttributes.SortingSequence;
-					sStatuseIconUrl = CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
+					sStatuseIconUrl = CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
 					sStatusDescription = $translate.use() === "en" ? aData[i].TaskStatusDetails.NameEN : aData[i].TaskStatusDetails.NameFR;
 					if (!sStatusDescription) {
 						sStatusDescription = aData[i].TaskStatusDetails.NameEN;

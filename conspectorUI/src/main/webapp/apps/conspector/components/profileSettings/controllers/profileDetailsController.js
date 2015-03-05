@@ -84,7 +84,7 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 			}
 
 			if (oData.AvatarFileGuid) {
-				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oData.AvatarFileGuid;
+				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + oData.AvatarFileGuid;
 			} else {
 				var MD5 = new Hashes.MD5;
 				var sUserEmailHash = MD5.hex($scope.oUser.sEmail);
@@ -166,7 +166,7 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 					file: file,
 				});
 				$scope.upload.success(function(sData) {
-					$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + sData;
+					$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + sData;
 					$scope.oUser._avatarFileGuid = sData;
 				});
 			}
@@ -174,7 +174,7 @@ viewControllers.controller('profileDetailsView', ['$scope', '$rootScope', '$stat
 
 		$scope.onAvatarSelected = function(aFiles, $event) {
 			$scope.onDataModified();
-			onImgSelected(aFiles, "rest/file/createUploadUrl/users/users/_avatar_", $event);
+			onImgSelected(aFiles, "rest/file/V2/createUploadUrl/users/users/_avatar_", $event);
 		};
 
 		var saveAndLeaveView = function() {

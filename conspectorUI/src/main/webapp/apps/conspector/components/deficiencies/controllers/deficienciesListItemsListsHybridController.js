@@ -307,7 +307,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
         // };        
 
         $scope.onAddImage = function(sImageSource) {
-            $rootScope.bIsItemsListsOpen = false;
+            //$rootScope.bIsItemsListsOpen = false;
             var options = {
                 quality: 80,
                 destinationType: Camera.DestinationType.DATA_URL,
@@ -324,8 +324,10 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                 var onSuccessUpload = function() {
                     $scope.$apply(function() {
                         $rootScope.$emit('UNLOAD');
-                        $rootScope.oSelectedDeficiency.iImagesNumber++;
-
+                        $rootScope.bIgnoreNavigation = true;
+                        $rootScope.loadDeficiencies();
+                        $rootScope.sSelectedDeficiencyAttribute = "";
+                        $rootScope.sDeficienciesListView = "deficiencyDetails";                        
                     });
                 }
                 imageData = "data:image/jpeg;base64," + imageData; //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
@@ -362,6 +364,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                 $rootScope.bIgnoreNavigation = true;
                 $rootScope.loadDeficiencies();
                 $rootScope.sSelectedDeficiencyAttribute = "";
+                $cordovaKeyboard.close();
                 $rootScope.sDeficienciesListView = "deficiencyDetails";
             };
             var oDataForSave = {

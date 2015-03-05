@@ -87,7 +87,8 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 					_lastModifiedAt: oData.FileMetadataDetails.results[i].LastModifiedAt,
 					_sortingSequence: iSortingSequence,
 					_createdAt: oData.FileMetadataDetails.results[i].CreatedAt,
-					sCreatedAt: utilsProvider.dBDateToSting(oData.FileMetadataDetails.results[i].CreatedAt)
+					sCreatedAt: utilsProvider.dBDateToSting(oData.FileMetadataDetails.results[i].CreatedAt),
+					sCreatedBy: oData.FileMetadataDetails.results[i].NewFileName
 				});
 			}
 			$scope.tableParams.reload();
@@ -140,7 +141,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				$event.target.nextElementSibling.click();
 				return;
 			}
-			$window.open("rest/file/get/" + oAttachment._guid);
+			$window.open("rest/file/V2/get/" + oAttachment._guid);
 		};
 
 		$scope.onDelete = function(oAttachment) {

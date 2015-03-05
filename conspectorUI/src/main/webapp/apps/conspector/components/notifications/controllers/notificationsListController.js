@@ -266,7 +266,7 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
             if (!$scope.bDisplayEditButtons) {
                 return;
             }
-            oNotification.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aTaskStatuses[(oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
+            oNotification.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aTaskStatuses[(oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
 
             $scope.aDataForMassChanges.push({
                 Guid: oNotification._guid,

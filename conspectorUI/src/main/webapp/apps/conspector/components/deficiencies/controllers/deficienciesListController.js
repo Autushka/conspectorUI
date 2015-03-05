@@ -204,7 +204,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
                 if (aData[i].TaskStatusDetails) {
                     sStatusSortingSequence = aData[i].TaskStatusDetails.GeneralAttributes.SortingSequence;
-                    sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
+                    sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
                     sStatusDescription = $translate.use() === "en" ? aData[i].TaskStatusDetails.NameEN : aData[i].TaskStatusDetails.NameFR;
                     if (!sStatusDescription) {
                         sStatusDescription = aData[i].TaskStatusDetails.NameEN;
@@ -480,7 +480,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             if (!$scope.bDisplayEditButtons) {
                 return;
             }
-            oDeficiency.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
+            oDeficiency.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
 
             $scope.aDataForMassChanges.push({
                 Guid: oDeficiency._guid,

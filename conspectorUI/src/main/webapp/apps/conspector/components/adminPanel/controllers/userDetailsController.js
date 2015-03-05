@@ -92,7 +92,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 			
 			$scope.oUser._sLanguage = oUser.Language;
 			if (oUser.AvatarFileGuid) {
-				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + oUser.AvatarFileGuid;
+				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + oUser.AvatarFileGuid;
 			} else {
 				var MD5 = new Hashes.MD5;
 				var sUserEmailHash = MD5.hex($scope.oUser.sEmail);
@@ -577,7 +577,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 					file: file,
 				});
 				$scope.upload.success(function(sData) {
-					$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/get/" + sData;
+					$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + sData;
 					$scope.oUser._avatarFileGuid = sData;
 				});
 			}
@@ -585,7 +585,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 
 		$scope.onAvatarSelected = function(aFiles, $event) {
 			$scope.onDataModified();
-			onImgSelected(aFiles, "rest/file/createUploadUrl/users/users/_avatar_", $event);
+			onImgSelected(aFiles, "rest/file/V1/createUploadUrl/users/users/_avatar_", $event);
 		};
 
 		var saveAndLeaveView = function() {

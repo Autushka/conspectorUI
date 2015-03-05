@@ -396,11 +396,11 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					for (var i = 0; i < oParameters.aFiles.length; i++) {
 						var file = oParameters.aFiles[i];
 						var sPath = this.costructUploadUrl({
-							sPath: CONSTANTS.sAppAbsolutePath + "rest/file/createUploadUrlWithFileMetadataSetGuid/Deficiency/" + oParameters.sParentEntityGuid + "/_attachments_/" + sFileMetadataSetGuid,
+							sPath: CONSTANTS.sAppAbsolutePath + "rest/file/V1V2/createUploadUrlWithFileMetadataSetGuid/Deficiency/" + oParameters.sParentEntityGuid + "/_attachments_/" + sFileMetadataSetGuid,
 						});
 
 						var oUpload = {};
-						if (oParameters.sParentEntityGuid === "quickAddApp") {
+						if (CONSTANTS.bIsHybridApplication) {
 							$rootScope.$emit('LOAD');
 
 							$.ajax({
@@ -495,7 +495,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			deleteFileAttachment: function(sGuid) {
-				var sUrl = "rest/file/delete/" + sGuid;
+				var sUrl = "rest/file/V2/delete/" + sGuid;
 				dataProvider.ajaxRequest({
 					sPath: sUrl,
 					sRequestType: "GET",
@@ -596,17 +596,31 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			constructImageUrl: function(sFileMetadataGuid){
-				return CONSTANTS.sAppAbsolutePath + "rest/file/get/" + sFileMetadataGuid;
+				return CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + sFileMetadataGuid;
 			},
 
 			constructLogoUrl: function() {
-				var sUrl = CONSTANTS.sAppAbsolutePath + "rest/file/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_";
+				// var onSuccessCompanyLoaded = function(oData){
+				// 	if(oData.LogoFileMetadataSetDetails && oData.LogoFileMetadataSetDetails.FileMetadataDetails && oData.LogoFileMetadataSetDetails.FileMetadataDetails.results.length){
+				// 		$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + Data.LogoFileMetadataSetDetails.FileMetadataDetails.results[0].Guid;
+				// 	}else{
+				// 		$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "apps/conspector/img/logo_conspector.png";
+				// 	}
+				// }
+				
+				// apiProvider.getCompany({
+				// 	sKey: cacheProvider.oUserProfile.sCurrentCompany,
+				// 	sExpand: "LogoFileMetadataSetDetails/FileMetadataDetails",
+				// 	onSuccess: onSuccessCompanyLoaded
+				// });
+
+				var sUrl = CONSTANTS.sAppAbsolutePath + "rest/file/V1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_";
 				var oSvc = dataProvider.httpRequest({
 					sPath: sUrl
 				});
 				oSvc.then(function(aData) {
 					if (aData[0]) {
-						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[0].guid;
+						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + aData[0].guid;
 					} else {
 						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "apps/conspector/img/logo_conspector.png";
 					}
@@ -634,6 +648,10 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var sUserName = "";
 				var bAllowedEditMode = false;
 				var aComments = [];
+
+				if(!oData.CommentDetails){
+					return [];
+				}
 
 				for (var i = 0; i < oData.CommentDetails.results.length; i++) {
 					sAuthor = "";
@@ -707,7 +725,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 							}
 						}
 						if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey]) {
-							oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/get/";
+							oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/V2/get/";
 							oMultiSelectItem.icon = oMultiSelectItem.icon + oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey] + "' class='cnpMultiSelectIcon'/>"
 						}
 
@@ -857,7 +875,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			setUpPhotoGallery: function(aImages) {
-				$rootScope.sGalleryPhotosLocation = $window.location.origin + $window.location.pathname + "rest/file/get/";
+				$rootScope.sGalleryPhotosLocation = $window.location.origin + $window.location.pathname + "rest/file/V2/get/";
 				$rootScope.aGalleryData = [];
 
 				for (var i = 0; i < aImages.length; i++) {

@@ -61,6 +61,22 @@
 	<div ng-repeat="image in $root.aSelectedDeficiencyImages">
 		<img ng-src="{{image.sImgUrl}}" style="width:320px; height: 320px;">
 	</div>
+
+	<div layout="column" layout-align="start start" flex>
+		<div layout="column" flex style="width: 100%;">
+			<div ng-click="onUseCamera()" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  class="cnpMobileH2" ng-click="onCloseRightSideNavWithDelay()">{{'global_useCamera' | translate}}</div>
+				</div>
+				
+			</div>
+			<div ng-click="onUseLibrary()" flex style="width: 100%;">
+				<div>
+					<div layout="row" layout-align="start center"  class="cnpMobileH2" ng-click="onCloseRightSideNavWithDelay()">{{'global_useLibrary' | translate}}</div>
+				</div>
+			</div>
+		</div>
+	</div>	
 </div>
 <div ng-show="$root.sSelectedDeficiencyAttribute === 'comments'">
 	<div ng-repeat="comment in $root.aSelectedDeficiencyComments">

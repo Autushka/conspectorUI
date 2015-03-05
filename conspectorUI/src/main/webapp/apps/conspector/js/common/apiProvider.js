@@ -479,6 +479,17 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				oSvc.then(onSuccess);
 			},
 
+			getCompany: function(oParameters) {
+				var svc = dataProvider.getEntity({
+					sPath: "Companies",
+					sKey: oParameters.sKey,
+					sExpand: oParameters.sExpand, //"PhaseDetails/ProjectDetails,AccountTypeDetails",
+					sFilter: "GeneralAttributes/IsDeleted eq false",
+					bShowSpinner: oParameters.bShowSpinner,
+				});
+				svc.then(oParameters.onSuccess);
+			},			
+
 			getCompanies: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Companys",
