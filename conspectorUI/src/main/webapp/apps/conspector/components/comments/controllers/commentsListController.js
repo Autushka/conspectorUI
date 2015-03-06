@@ -96,7 +96,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 				bShowSpinner: true,
 				sKey: oComment._guid,
 				oData: oDataForSave,
-				bShowSuccessMessage: true,
+				//bShowSuccessMessage: true,
 				bShowErrorMessage: true,
 				onSuccess: onSuccessDelete
 			});
@@ -115,7 +115,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 				bShowSpinner: true,
 				sKey: oComment._guid,
 				oData: oDataForSave,
-				bShowSuccessMessage: true,
+				//bShowSuccessMessage: true,
 				bShowErrorMessage: true,
 				onSuccess: onSuccessUpdate
 			});

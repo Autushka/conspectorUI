@@ -131,7 +131,6 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			initializePubNub: function() {
-				alert("pubNub initialization....");
 				$rootScope.sSessionGuid = utilsProvider.generateGUID();
 				// servicesProvider.onF5WithCurrentUserHandler(sUserName);
 
@@ -359,7 +358,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					apiProvider.createComment({
 						oData: oData,
 						bShowSpinner: true,
-						bShowSuccessMessage: true,
+						//bShowSuccessMessage: true,
 						bShowErrorMessage: true,
 						onSuccess: onSuccess
 					});
