@@ -33,12 +33,12 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 
 		$rootScope.sMode = $stateParams.sMode;
 
-		if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails") {
-            if ($scope.sMode === "display" || $scope.sMode === "edit") {
-                $scope.$parent.bDisplayDeficienciesList = true;
-                $scope.$parent.bDisplayActivitiesList = true;
-            }
-        }
+		// if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails") {
+  //           if ($scope.sMode === "display" || $scope.sMode === "edit") {
+  //               $scope.$parent.bDisplayDeficienciesList = false;
+  //               $scope.$parent.bDisplayActivitiesList = false;
+  //           }
+  //       }
 
         if ($rootScope.sMode === "create") {
             $rootScope.sFileMetadataSetGuid = "";

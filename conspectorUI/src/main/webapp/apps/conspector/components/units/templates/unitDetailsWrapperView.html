@@ -1,11 +1,10 @@
 <div ui-view="unitDetails" style="width: 100%; height: 100%;"></div>
 <div ui-view="attachmentsList"></div>
-<!-- <div flex class="cnpCollapseControl" layout="row" layout-align="end start" ng-click="onDisplayDeficienciesList()" ng-show="!bDisplayDeficienciesList">
-	<div layout="row" layout-align="end start">
-		<label class="cnpContentTitle notSelectable">
-			{{'deficienciesList_title' | translate}}
-		</label>
-	</div>
-</div> -->
-<div ng-if="bDisplayDeficienciesList" ui-view="unitDeficiencies" id="embeddedDeficienciesList"></div>
+<div id="embeddedDeficienciesList" flex class="cnpCollapseControl" layout="row" layout-align="center start" >
+	<md-button ng-class="{'md-button md-primary cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbol notSelectable': !bDisplayDeficienciesList, 'md-button md-primary cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbolReversed notSelectable': bDisplayDeficienciesList}" ng-click="onDisplayDeficienciesList()"><div class="cnpCollapseControlButtonText"><span ng-show="!bDisplayDeficienciesList">{{'global_showDeficienciesList' | translate}}</span><span ng-show="bDisplayDeficienciesList">{{'global_hideDeficienciesList' | translate}}</span></div></md-button>
+</div>
+<div ng-if="bDisplayDeficienciesList" ui-view="unitDeficiencies" ></div>
+<div id="embeddedActivitiesList" flex class="cnpCollapseControl" layout="row" layout-align="center start" >
+	<md-button ng-class="{'md-button md-primary cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbol notSelectable': !bDisplayActivitiesList, 'md-button md-primary cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbolReversed notSelectable': bDisplayActivitiesList}" ng-click="onDisplayActivitiesList()"><div class="cnpCollapseControlButtonText"><span ng-show="!bDisplayActivitiesList">{{'global_showActivitiesList' | translate}}</span><span ng-show="bDisplayActivitiesList">{{'global_hideActivitiesList' | translate}}</span></div></md-button>
+</div>
 <div ng-if="bDisplayActivitiesList" ui-view="unitActivities"></div>

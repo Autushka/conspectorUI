@@ -278,13 +278,14 @@ font-weight: 500;
 	}
 }
 .cnpCollapseControl{
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#E1E2E3), to(#F8F8F8));
-	// box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
-	min-height: 0px;
-	margin-bottom: 30px;
-	background-color: white;
-	padding-left: 10px;
-	padding-right: 10px;
+	min-height: 0;
+	margin-bottom: 25px;
+	margin-left: -1000px;
+	box-shadow: 0 4px 5px 0 rgba(0,0,0,0.26);
+	margin-right: -1000px;
+	padding-left: 18px;
+	padding-bottom: 4px;
+	padding-top: 12px;
 }
 
 .cnpCollapseSectionButton{
@@ -292,6 +293,9 @@ font-weight: 500;
 	margin-left: 10px;
 	margin-right: 10px;
 
+}
+.cnpCollapseControlButtonText{
+	font-weight: 500;
 }
 .md-button.md-default-theme.md-primary.md-raised, .md-button.md-default-theme.md-primary.md-fab{
 	color: white;
@@ -688,6 +692,22 @@ USER MANAGEMENT
     	background-size: 19px;
 	    background-image:url('../../../apps/conspector/img/editDetailsIconWhite.svg');
 	}
+	&.cnpCollapseSymbol{
+		background-position:12px;
+    	background-size: 19px;
+	    background-image:url('../../../apps/conspector/img/collapseSymbol_tiny.svg');
+	}
+	&.cnpCollapseSymbolReversed{
+		background-position:12px;
+    	background-size: 19px;
+	    background-image:url('../../../apps/conspector/img/collapseSymbolReversed_tiny.svg');
+	 //    -webkit-transform: rotate(180deg);
+		// -moz-transform: rotate(180deg);
+		// -ms-transform: rotate(180deg);
+		// -o-transform: rotate(180deg);
+		// transform: rotate(180deg);
+	}
+
 	&.cnpSaveIcon{
 		background-position:0px;
     	background-size: 21px;
@@ -772,6 +792,7 @@ APP VIEW
 	min-width: 585px;
 	height: 100vh;
 	overflow-y: scroll;
+	overflow-x: hidden;
 	background-color: @lightGreyBackgroundColor;
 }
 .cnpHeader{
@@ -1662,7 +1683,7 @@ NG TABLE
 	border-spacing: 0px;
 	table-layout: fixed;
 	// border-collapse: collapse;
-	margin-bottom: 40px;
+	margin-bottom: 30px;
 
 }
 .cnpNgTable>thead>tr>th {
@@ -2373,10 +2394,14 @@ NG TABLE
 	color: #8F8F90;
 }
 .cnpCommentTextArea{
+	width: 100%;
+	min-height: 100px;
 	margin-left: 0;
 	padding: 10px;
 	padding-left: 12px;
 	border-radius: 3px;
+	border-color: rgb(206, 206, 206);
+	background: rgb(252, 252, 252);
 }
 .cnpCommentPostArea{
 	margin-left: 16px;

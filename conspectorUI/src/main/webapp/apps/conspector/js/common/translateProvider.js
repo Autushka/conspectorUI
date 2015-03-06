@@ -122,6 +122,10 @@ app.config(['$translateProvider',
                   global_projectAndPhaseMandatory: 'Project and Phase is mandatory',
                   global_backToSearch: 'Back to search',
                   global_backToList: 'Back to list',
+                  global_hideDeficienciesList: 'Hide Deficiencies List',
+                  global_showDeficienciesList: 'Show Deficiencies List',
+                  global_hideActivitiesList: 'Hide Logbook entries',
+                  global_showActivitiesList: 'Show Logbook entries',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
@@ -554,6 +558,11 @@ app.config(['$translateProvider',
                   global_projectAndPhaseMandatory: 'Veuillez s\u00E9lectionner projet et phase',
                   global_backToSearch: 'Retour \u00E0 recherche',
                   global_backToList: 'Retour \u00E0 la liste',
+                  global_hideDeficienciesList: 'Fermer la liste des d\u00E9ficiences',
+                  global_showDeficienciesList: 'Afficher la liste des d\u00E9ficiences',
+                  global_hideActivitiesList: 'Fermer les entr\u00E9es du Logbook',
+                  global_showActivitiesList: 'Afficher les entr\u00E9es du Logbook',
+
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Ajouter d\u00E9ficience',

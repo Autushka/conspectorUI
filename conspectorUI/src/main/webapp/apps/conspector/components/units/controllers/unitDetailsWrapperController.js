@@ -5,10 +5,10 @@ viewControllers.controller('unitDetailsWrapperView', ['$scope', '$location', '$a
         $scope.bDisplayActivitiesList = false;
 
         $rootScope.bDataHasBeenModified = false;
-        // $scope.scrollTo = function() {
-        //     $location.hash($scope.sHtmlId);
-        //     $anchorScroll();
-        // };
+        $scope.scrollTo = function() {
+            $location.hash($scope.sHtmlId);
+            $anchorScroll();
+        };
 
         // $rootScope.$on('$viewContentLoaded', function() {
 
@@ -16,15 +16,35 @@ viewControllers.controller('unitDetailsWrapperView', ['$scope', '$location', '$a
         //    });
 
 
-        // $scope.onDisplayDeficienciesList = function() {
-        //     $scope.bDisplayDeficienciesList === false ? $scope.bDisplayDeficienciesList = true : $scope.bDisplayDeficienciesList = false;
-        //     $scope.sHtmlId = 'embeddedDeficienciesList';
-        //     $rootScope.$on('ngTableAfterReloadData', function() {
-        //         $timeout($scope.scrollTo, 1);
-        //     });
+        $scope.onDisplayDeficienciesList = function() {
+            $scope.bDisplayDeficienciesList === false ? $scope.bDisplayDeficienciesList = true : $scope.bDisplayDeficienciesList = false;
+            $scope.sHtmlId = 'embeddedDeficienciesList';
+            $rootScope.$on('ngTableAfterReloadData', function() {
+                $timeout($scope.scrollTo, 1);
+            });
 
            
-        // };
+        };
+
+        $scope.onDisplayActivitiesList = function() {
+            $scope.bDisplayActivitiesList === false ? $scope.bDisplayActivitiesList = true : $scope.bDisplayActivitiesList = false;
+            $scope.sHtmlId = 'embeddedActivitiesList';
+            $rootScope.$on('ngTableAfterReloadData', function() {
+                $timeout($scope.scrollTo, 1);
+            });
+
+           
+        };
+
+        $scope.onDisplayDeficienciesList = function() {
+            $scope.bDisplayDeficienciesList === false ? $scope.bDisplayDeficienciesList = true : $scope.bDisplayDeficienciesList = false;
+            $scope.sHtmlId = 'embeddedDeficienciesList';
+            $rootScope.$on('ngTableAfterReloadData', function() {
+                $timeout($scope.scrollTo, 1);
+            });
+
+           
+        };
 
 
 
