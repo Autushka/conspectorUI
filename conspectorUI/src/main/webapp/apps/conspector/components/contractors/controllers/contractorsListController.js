@@ -182,10 +182,12 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
             loadContractors();
         });
 
         $scope.$on('accountsShouldBeRefreshed', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
             loadContractors();
         });
 

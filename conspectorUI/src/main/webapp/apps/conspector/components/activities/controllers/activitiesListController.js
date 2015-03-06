@@ -373,10 +373,12 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
             loadActivities();
         });
 
         $scope.$on('activitiesShouldBeRefreshed', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
             loadActivities();
         });
 

@@ -176,10 +176,12 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...             
             loadClients();
         });
 
         $scope.$on('accountsShouldBeRefreshed', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...             
             loadClients();
         });
 

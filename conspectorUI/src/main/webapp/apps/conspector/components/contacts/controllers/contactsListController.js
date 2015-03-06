@@ -273,10 +273,12 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
             loadContacts();
         });
 
         $scope.$on('contactsShouldBeRefreshed', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
             loadContacts();
         });
 

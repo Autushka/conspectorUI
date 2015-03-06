@@ -211,10 +211,12 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
             loadUnits();
         });
 
         $scope.$on('accountsShouldBeRefreshed', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
             loadUnits();
         });
 
