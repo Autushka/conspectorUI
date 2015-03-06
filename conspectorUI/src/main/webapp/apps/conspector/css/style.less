@@ -3,7 +3,7 @@ VARIABLE AND SETTINGS
 */
 
 @spacingUnit: 0.5rem;
-@fieldHeight: 48px;
+@fieldHeight: 43px;
 
 //Colors
 @lightGreyBackgroundColor: #F8F8F8;
@@ -710,15 +710,15 @@ USER MANAGEMENT
 	}
 	&.cnpImagesIcon{
 		background-position: 50%;
-		background-size: 36px;
+		background-size: 30px;
 		background-image: url('../../../apps/conspector/img/imagesIcon.svg');
 		height: 38px;
 		margin-right: 15px;
-		margin-left: -6px;
+		margin-left: -9px;
 		font-weight: 500;
 		font-size: 16px;
 		padding-left: 63px;
-		padding-bottom: 0px;
+		padding-bottom: 0;
 		cursor: pointer;
 		&.cnpImagesIconWithOpacity{
 			opacity: 0.3;
@@ -1323,7 +1323,7 @@ APP VIEW CONTENT
 	max-width: 1280px;
 	padding-left: 10px;
 	padding-right: 10px;
-	padding-top: 20px;
+	padding-top: 16px;
 	padding-bottom: 30px;
 	margin-bottom: 0px;
 	background-color: @lightGreyBackgroundColor;
@@ -1642,10 +1642,11 @@ NG TABLE
 	padding-bottom: 0px;
 	padding-left: 1px;
 	margin-top: 0px;
+	margin-bottom: 6px;
 }
 .cnpNgTableWrapper{
 
-	padding-top: 10px;
+	padding-top: 0px;
 }
 .cnpNgTable{
 	width: 100%;
@@ -1752,8 +1753,8 @@ NG TABLE
 	border-style: solid;
 	padding-left: 8px;
 	padding-right: 8px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 	font-size: 14px;
 	overflow: hidden;
   	text-overflow: ellipsis !important;
@@ -1801,18 +1802,18 @@ NG TABLE
 }
 
 .ng-table-group-cell:before {
-    content:"\00a0";
-    height:40px;
-    width: 100%;
-    position:absolute;
-    margin-top: -11px;
-	left: 0px;
-    box-shadow: 0px 8px 17px rgba(0, 0, 0, 0.2);
-    border-top: 2px;
+	content: "\00a0";
+	height: 37px;
+	width: 100%;
+	position: absolute;
+	margin-top: -9px;
+	left: 0;
+	box-shadow: 0 8px 17px rgba(0,0,0,0.2);
+	border-top: 2px;
 	border-bottom: 2px;
-	border-left: 0px;
-	border-right: 0px;
-	border-color: @greyBorderColorHeader;
+	border-left: 0;
+	border-right: 0;
+	border-color: #c3c9c3;
 	border-style: solid;
 }
 
@@ -2336,8 +2337,8 @@ NG TABLE
 	border-style: solid;
 	padding-left: 8px;
 	padding-right: 8px;
-	padding-top: 4px;
-	padding-bottom: 4px;
+	padding-top: 6px;
+	padding-bottom: 6px;
 	font-size: 14px;
 	overflow: hidden;
   	text-overflow: ellipsis !important;
@@ -2346,12 +2347,19 @@ NG TABLE
 }
 
 .cnpNgTableComment{
-	background: #ECECEC;
-	/* min-height: 100%; */
-	border-radius: 10px;
-	padding: 10px;
-	position: relative;
-	margin-bottom: 20px;
+		background: #fcfcfc;
+		/* background: #ececec; */
+		border-radius: 3px;
+		padding: 10px;
+		position: relative;
+		border: 1px solid rgba(0,0,0,0.18);
+		/* border-bottom-color: rgba(0,0,0,0.29); */
+		-webkit-border-radius: 4px;
+		-webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.26);
+		color: #373e4d;
+		min-height: 14px;
+		word-wrap: break-word;
+
 }
 
 .cnpNgTableCommentInfo1{
@@ -2368,51 +2376,66 @@ NG TABLE
 	margin-left: 0;
 	padding: 10px;
 	padding-left: 12px;
-	border-radius: 10px;
+	border-radius: 3px;
 }
 .cnpCommentPostArea{
 	margin-left: 16px;
 }
 
-.cnpNgTableComment:before {
-	content: "";
-	position: absolute;
-	z-index: 1;
-	bottom: -8px;
-	height: 15px;
-	left: -47px;
-	border-right: 60px solid #ECECEC;
-	background: #ECECEC;
-	-webkit-border-bottom-right-radius: 80px 50px;
-	-moz-border-radius-bottomright: 80px 50px;
-	border-bottom-right-radius: 80px 50px;
-	-webkit-transform: translate(0, -2px);
-	-moz-transform: translate(0, -2px);
-	-ms-transform: translate(0, -2px);
-	-o-transform: translate(0, -2px);
-	transform: translate(0, -2px);
+// .cnpNgTableComment:before {
+// 	content: "";
+// 	position: absolute;
+// 	z-index: 1;
+// 	bottom: -8px;
+// 	height: 15px;
+// 	left: -47px;
+// 	border-right: 60px solid #ECECEC;
+// 	background: #ECECEC;
+// 	-webkit-border-bottom-right-radius: 80px 50px;
+// 	-moz-border-radius-bottomright: 80px 50px;
+// 	border-bottom-right-radius: 80px 50px;
+// 	-webkit-transform: translate(0, -2px);
+// 	-moz-transform: translate(0, -2px);
+// 	-ms-transform: translate(0, -2px);
+// 	-o-transform: translate(0, -2px);
+// 	transform: translate(0, -2px);
+// }
+
+// .cnpNgTableComment:after {
+	// bottom: -17px;
+	// /* right: 50%; */
+	// left: -30px;
+	// width: 60px;
+	// height: 24px;
+	// background: #fff;
+	// -webkit-border-bottom-right-radius: 40px 50px;
+	// -moz-border-radius-bottomright: 40px 50px;
+	// border-bottom-right-radius: 40px 50px;
+	// -webkit-transform: translate(-30px, -2px);
+	// -moz-transform: translate(-30px, -2px);
+	// -ms-transform: translate(-30px, -2px);
+	// -o-transform: translate(-30px, -2px);
+	// transform: translate(-30px, -2px);
+// }
+.cnpNgTableCommentBackGround{
+	position: relative;
+	margin-left: 2px;
 }
 
-.cnpNgTableComment:after {
-	content: "";
-	position: absolute;
-	z-index: 1;
-	bottom: -17px;
-	/* right: 50%; */
-	left: -30px;
-	width: 60px;
-	height: 24px;
-	background: #fff;
-	-webkit-border-bottom-right-radius: 40px 50px;
-	-moz-border-radius-bottomright: 40px 50px;
-	border-bottom-right-radius: 40px 50px;
-	-webkit-transform: translate(-30px, -2px);
-	-moz-transform: translate(-30px, -2px);
-	-ms-transform: translate(-30px, -2px);
-	-o-transform: translate(-30px, -2px);
-	transform: translate(-30px, -2px);
+.cnpNgTableCommentBackGround:before {
+content: "";
+position: absolute;
+z-index: 999;
+width: 35px;
+height: 100%;
+/* margin-top: 5px; */
+top: ~"calc(50% - 10px)";
+left: -10px;
+background-position: 0 0;
+background-size: 20px;
+background-repeat: no-repeat;
+    background-image:url('../../../apps/conspector/img/commentTail.svg');
 }
-
 #activitiesList th:nth-of-type(2) {
 	width: 200px;
 }
@@ -2427,7 +2450,7 @@ DETAILS VIEW
 
 
 .cnpSection{
-	margin-top: 8px;
+	margin-top: 0px;
 	margin-bottom: 30px;
 	padding: 4px;
 	width: 100%;
@@ -2446,7 +2469,7 @@ DETAILS VIEW
 
 }
 .cnpSubSection{
-	padding: 16px;
+	padding: 12px;
 	margin: 4px;
 	// width: 50%;
 	// height: 100%;
@@ -2540,6 +2563,8 @@ DETAILS VIEW
 	padding-top: 4px;
 	padding-left: 12px;
 	padding-right: 12px;
+	padding-bottom: 4px;
+
 }
 
 

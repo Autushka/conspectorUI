@@ -34,7 +34,7 @@
 							</div>
 						</td>
 						<td data-title="'global_text' | translate">
-							<div layout="row" layout-align="start center" >
+							<div layout="row" layout-align="start center" class="cnpNgTableCommentBackGround">
 								<div ng-if="!comment._editMode" class="cnpNgTableComment">
 									{{comment.sText}}
 								</div>
@@ -64,7 +64,7 @@
 				</table>
 			</div>
 			<div layout="row" flex style="width: 100%">
-				<div class="cnpSubSection" layout="row" flex>
+				<div class="cnpSubSection" layout="row" layout-align="start center" flex>
 					<textarea flex placeholder="{{'global_postPlaceholder' | translate}}" class="cnpCommentTextArea" ng-model="oComment.sText">
 					</textarea>
 					<div class="cnpCommentPostArea">
