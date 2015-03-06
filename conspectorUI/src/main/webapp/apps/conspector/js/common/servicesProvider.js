@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard',
-	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard) {
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', 'PubNub',
+	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard, PubNub) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -128,7 +128,52 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				}
 
 				cacheProvider.oUserProfile.oUserContact = angular.copy(oUserContactForCurrentCompany);
-			},			
+			},
+
+			initializePubNub: function() {
+				alert("pubNub initialization....");
+				$rootScope.sSessionGuid = utilsProvider.generateGUID();
+				// servicesProvider.onF5WithCurrentUserHandler(sUserName);
+
+				var sChannel = "";
+
+				PubNub.init({
+					publish_key: 'pub-c-59bd66cf-9992-42d5-af04-87ec537c73bb',
+					subscribe_key: 'sub-c-7606f63c-9908-11e4-a626-02ee2ddab7fe'
+				});
+				sChannel = "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany;
+				PubNub.ngSubscribe({
+					channel: sChannel
+				});
+
+				$rootScope.$on(PubNub.ngMsgEv(sChannel), function(event, payload) {
+					if (payload.message.sSessionGuid === $rootScope.sSessionGuid) {
+						return;
+					}
+					cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
+					if (payload.message.sEntityName === "oAccountEntity") {
+						cacheProvider.cleanEntitiesCache("oAccountTypeEntity"); //for cases when accountTypes are readed with Accounts;
+					}
+
+					switch (payload.message.sEntityName) {
+						case "oAccountEntity":
+							$rootScope.$broadcast('accountsShouldBeRefreshed');
+							break;
+						case "oContactEntity":
+							$rootScope.$broadcast('contactsShouldBeRefreshed');
+							break;
+						case "oDeficiencyEntity":
+							$rootScope.$broadcast('deficienciesShouldBeRefreshed');
+							break;
+						case "oUnitEntity":
+							$rootScope.$broadcast('unitsShouldBeRefreshed');
+							break;
+						case "oActivityEntity":
+							$rootScope.$broadcast('unitsShouldBeRefreshed');
+							break;
+					}
+				});
+			},
 
 			checkUserRolesAssignment: function(sCurrentCompany) {
 				var aUserRolesForCurrentCompany = [];
@@ -159,6 +204,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						return;
 					}
 					this.logSuccessLogIn(); //log login_success operation 
+					this.initializePubNub();
 					$state.go(rolesSettings.getRolesInitialState(sCurrentRole)); //navigation to the initial view for the role
 					return;
 				} else {
@@ -235,6 +281,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 				} else {
 					//cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
+					this.initializePubNub();
 					rolesSettings.setCurrentRole(sCurrentRole);
 				}
 			},
@@ -305,7 +352,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var oSrv = {};
 
 				var addComment = function(oData) {
-					onSuccess = function(){
+					onSuccess = function() {
 						oParameters.onSuccess();
 					};
 
@@ -373,6 +420,18 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				}
 			},
 
+			pubNubMessage: function(oParameters) {
+				PubNub.ngPublish({
+					channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+					message: {
+						sEntityName: oParameters.sEntityName,
+						sText: oParameters.sText,
+						sUserName: cacheProvider.oUserProfile.sUserName,
+						sSessionGuid: $rootScope.sSessionGuid,
+					}
+				});
+			},
+
 			uploadAttachmentsForEntity: function(oParameters) {
 				var oRequestData = {
 					__batchRequests: []
@@ -381,6 +440,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var oData = {};
 				var sFileMetadataSetGuid = "";
 				var oSrv = {};
+				var sEntityName = "";
 
 				var uploadFiles = $.proxy(function(sFileMetadataSetGuid) {
 					var iCounter = 0; //needed because files are sent async
@@ -391,7 +451,6 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 							oParameters.sParentEntityGuid = "attachmentsBeforeSave";
 						}
 					}
-
 
 					for (var i = 0; i < oParameters.aFiles.length; i++) {
 						var file = oParameters.aFiles[i];
@@ -410,12 +469,21 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 								contentType: false,
 								processData: false,
 								type: 'POST',
-								success: function(data) {
+								success: $.proxy(function(data) {
 									iCounter++;
 									if (iCounter === (oParameters.aFiles.length)) {
 										oParameters.onSuccess();
+										switch (oParameters.sPath) {
+											case "Tasks":
+												sEntityName = "oDeficiencyEntity";
+												break;
+										}
+										this.pubNubMessage({
+											sEntityName: sEntityName,
+											sText: "New attachemnts added..."
+										});
 									}
-								}
+								}, this)
 							});
 						} else {
 							oUpload = $upload.upload({
@@ -429,12 +497,21 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 								}
 							});
 
-							oUpload.success(function() {
+							oUpload.success($.proxy(function() {
 								iCounter++;
 								if (iCounter === (oParameters.aFiles.length)) {
 									oParameters.onSuccess();
+									switch (oParameters.sPath) {
+										case "Tasks":
+											sEntityName = "oDeficiencyEntity";
+											break;
+									}
+									this.pubNubMessage({
+										sEntityName: sEntityName,
+										sText: "New attachemnts added..."
+									});
 								}
-							});
+							}, this));
 						}
 					}
 				}, this);
@@ -595,7 +672,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				}
 			},
 
-			constructImageUrl: function(sFileMetadataGuid){
+			constructImageUrl: function(sFileMetadataGuid) {
 				return CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + sFileMetadataGuid;
 			},
 
@@ -607,7 +684,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				// 		$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "apps/conspector/img/logo_conspector.png";
 				// 	}
 				// }
-				
+
 				// apiProvider.getCompany({
 				// 	sKey: cacheProvider.oUserProfile.sCurrentCompany,
 				// 	sExpand: "LogoFileMetadataSetDetails/FileMetadataDetails",
@@ -637,19 +714,19 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				// 	if (aData[0]) {
 				// 		$rootScope.sMenuIconUrl = CONSTANTS.sAppAbsolutePath + "rest/file/get/" + aData[0].guid;
 				// 	} else {
-						
+
 				// 	}
 				// });
 			},
 
-			processListOfComments: function(oData){
+			processListOfComments: function(oData) {
 				var sAuthor = "";
 				var sAvatarUrl = "";
 				var sUserName = "";
 				var bAllowedEditMode = false;
 				var aComments = [];
 
-				if(!oData.CommentDetails){
+				if (!oData.CommentDetails) {
 					return [];
 				}
 
@@ -666,22 +743,22 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						}
 					}
 					var MD5 = new Hashes.MD5;
-					if(oData.CommentDetails.results[i].ContactDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0]){
+					if (oData.CommentDetails.results[i].ContactDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0]) {
 						var sUserEmailHash = MD5.hex(oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].EMail);
 					} else {
 						var sUserEmailHash = MD5.hex("deficien@cyDetails.com");
 					}
 					sAvatarUrl = "http://www.gravatar.com/avatar/" + sUserEmailHash + ".png?d=identicon&s=60";
 
-					
+
 					//here assumption is made that only one user can be assigned to contact...
 					if (oData.CommentDetails.results[i].ContactDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails && oData.CommentDetails.results[i].ContactDetails.UserDetails.results) {
-						if(oData.CommentDetails.results[i].ContactDetails.UserDetails.results.length){
-							if(oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].AvatarFileGuid){
+						if (oData.CommentDetails.results[i].ContactDetails.UserDetails.results.length) {
+							if (oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].AvatarFileGuid) {
 								sAvatarUrl = this.constructImageUrl(oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].AvatarFileGuid);
 							}
 							sUserName = oData.CommentDetails.results[i].ContactDetails.UserDetails.results[0].UserName;
-						}					
+						}
 					}
 					bAllowedEditMode = (sUserName === cacheProvider.oUserProfile.sUserName) ? true : false;
 

@@ -149,6 +149,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             var sStatuseIconUrl = "";
             var sStatuseIconGuid = "";
             var sStatusDescription = "";
+            var sStatusDescriptionEN = "";            
             var sContractors = "";
             var iImagesNumber = 0;
             var sFileMetadataSetLastModifiedAt = "";
@@ -169,6 +170,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 sStatuseIconUrl = "";
                 sStatusIconGuid = "";
                 sStatusDescription = "";
+                sStatusDescriptionEN = "";
                 sContractors = "";
                 iImagesNumber = 0;
                 aImages = [];
@@ -205,6 +207,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 if (aData[i].TaskStatusDetails) {
                     sStatusSortingSequence = aData[i].TaskStatusDetails.GeneralAttributes.SortingSequence;
                     sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
+                    sStatusDescriptionEN = aData[i].TaskStatusDetails.NameEN;
                     sStatusDescription = $translate.use() === "en" ? aData[i].TaskStatusDetails.NameEN : aData[i].TaskStatusDetails.NameFR;
                     if (!sStatusDescription) {
                         sStatusDescription = aData[i].TaskStatusDetails.NameEN;
@@ -268,6 +271,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sStatuseIconUrl: sStatuseIconUrl,
                     sStatusIconGuid: sStatusIconGuid,
                     sStatusDescription: sStatusDescription,
+                    sStatusDescriptionEN: sStatusDescriptionEN,
                     sDescription: sDescription,
                     _unitGuid: aData[i].UnitGuid,
                     _sortingSequence: iSortingSequence,
@@ -371,10 +375,18 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
-            $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
-                sMode: "edit",
-                sDeficiencyGuid: oDeficiency._guid,
-            });
+
+            if(sCurrentRole === 'contractor' && oDeficiency.sStatusDescriptionEN != "Done by Contractor" && oDeficiency.sStatusDescriptionEN != "In Progress" && oDeficiency.sStatusDescriptionEN != "Non Conform"){
+                $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
+                    sMode: "display",
+                    sDeficiencyGuid: oDeficiency._guid,
+                });
+            }else{
+                $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
+                    sMode: "edit",
+                    sDeficiencyGuid: oDeficiency._guid,
+                });                
+            }
         };
 
         $scope.onAddNew = function() {
@@ -409,10 +421,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             });
         };
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
             loadDeficiencies();
         });
 
         $scope.$on('deficienciesShouldBeRefreshed', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
             loadDeficiencies();
         });
 
@@ -480,6 +494,11 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             if (!$scope.bDisplayEditButtons) {
                 return;
             }
+
+            if(oDeficiency.sStatusDescriptionEN != "Done by Contractor" && oDeficiency.sStatusDescriptionEN != "Non Conform" && oDeficiency.sStatusDescriptionEN != "In Progress"  && cacheProvider.oUserProfile.sCurrentRole === "contractor"){
+                return;
+            }
+
             oDeficiency.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
 
             $scope.aDataForMassChanges.push({
@@ -505,9 +524,6 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 bShowErrorMessage: true,
                 onSuccess: onSuccess
             });
-
-
-
         };
 
         $scope.$on("$destroy", function() {

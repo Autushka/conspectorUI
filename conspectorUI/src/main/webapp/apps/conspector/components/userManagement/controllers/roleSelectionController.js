@@ -57,6 +57,7 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 			}
 
 			servicesProvider.logSuccessLogIn(); //log login_success operation 
+			servicesProvider.initializePubNub();
 			$state.go(rolesSettings.getRolesInitialState(sCurrentRole));
 		};
 
