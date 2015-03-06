@@ -73,18 +73,20 @@ app.factory('genericODataFactory', ['$resource', 'CONSTANTS',
 	}
 ]);
 
-app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', '$translate', 'cacheProvider', '$window', 'CONSTANTS',
-	function(genericODataFactory, utilsProvider, $q, $rootScope, $http, $translate, cacheProvider, $window, CONSTANTS) {
+app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$rootScope', '$http', '$translate', 'cacheProvider', '$window', 'CONSTANTS', '$timeout',
+	function(genericODataFactory, utilsProvider, $q, $rootScope, $http, $translate, cacheProvider, $window, CONSTANTS, $timeout) {
 		return {
 			commonOnSuccess: function(oParameters) {
 				if (oParameters.bShowSpinner) {
 					$rootScope.$emit('UNLOAD');
 				}
 				if (oParameters.bShowSuccessMessage) {
-					utilsProvider.displayMessage({
-						sText: $translate.instant("global_successOperation"),
-						sType: 'success'
-					});
+					$timeout(function() {
+						utilsProvider.displayMessage({
+							sText: $translate.instant("global_successOperation"),
+							sType: 'success'
+						});
+					}, 1000);
 				}
 			},
 			commonOnError: function(oParameters, deffered, sErrorText) { //sErrorText - for special case when entity has been modified before you
@@ -93,17 +95,20 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 				}
 				if (oParameters.bShowErrorMessage) {
 					if (sErrorText) {
-						utilsProvider.displayMessage({
-							sText: $translate.instant(sErrorText),
-							sType: 'error'
-						});
+						$timeout(function() {
+							utilsProvider.displayMessage({
+								sText: $translate.instant(sErrorText),
+								sType: 'error'
+							});
+						}, 1000);
 					} else {
-						utilsProvider.displayMessage({
-							sText: $translate.instant("global_errorOperation"),
-							sType: 'error'
-						});
+						$timeout(function() {
+							utilsProvider.displayMessage({
+								sText: $translate.instant("global_errorOperation"),
+								sType: 'error'
+							});
+						}, 1000);						
 					}
-
 				}
 				if (deffered) {
 					deffered.reject();
@@ -347,7 +352,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					var oDataForUpdate = {};
 					oDataForUpdate = angular.copy(oParameters.oData);
 
-					if(oParameters.bIgnoreLastModifiedAtValidation){// needed i.e. for fileMetadata (when rest api are used to create an item...)
+					if (oParameters.bIgnoreLastModifiedAtValidation) { // needed i.e. for fileMetadata (when rest api are used to create an item...)
 						oDataForUpdate.LastModifiedAt = oData.LastModifiedAt;
 					}
 
@@ -614,7 +619,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 					}, this), $.proxy(function(err) {
 						this.commonOnError(oParameters);
 					}, this), OData.batchHandler);
-				} else {//when nothing to send
+				} else { //when nothing to send
 					this.commonOnSuccess(oParameters);
 					deffered.resolve([]);
 				}

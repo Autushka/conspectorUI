@@ -1,5 +1,5 @@
-app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider', 'servicesProvider', 'cacheProvider', 'CONSTANTS', 'utilsProvider',
-	function($scope, $rootScope, $state, apiProvider, servicesProvider, cacheProvider, CONSTANTS, utilsProvider) {
+app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider', 'servicesProvider', 'cacheProvider', 'CONSTANTS', 'utilsProvider', 'cfpLoadingBar',
+	function($scope, $rootScope, $state, apiProvider, servicesProvider, cacheProvider, CONSTANTS, utilsProvider, cfpLoadingBar) {
 		var sUserName = apiProvider.getCurrentUserName();
 		// if(CONSTANTS.bIsHybridApplication){
 		// 		$cordovaStatusbar.overlaysWebView(false);			
@@ -53,9 +53,11 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 		}
 
 		$rootScope.$on('LOAD', function() {
+			cfpLoadingBar.start();
 			$rootScope.showSpinner = true;
 		});
 		$rootScope.$on('UNLOAD', function() {
+			cfpLoadingBar.complete();
 			$rootScope.showSpinner = false;
 		});
 
