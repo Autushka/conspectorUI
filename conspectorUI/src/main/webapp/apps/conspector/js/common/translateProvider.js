@@ -147,6 +147,7 @@ app.config(['$translateProvider',
                   global_showContactsListClient: 'Show related contacts for this client',
                   global_hideAttachmentsListActivity: 'Hide images and documents for this entry',
                   global_showAttachmentsListActivity: 'Show images and documents for this entry',
+                  global_associatedContact: 'Associated contact',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
@@ -604,6 +605,7 @@ app.config(['$translateProvider',
                   global_showContactsListClient: 'Afficher les contacts de ce client',
                   global_hideAttachmentsListActivity: 'Cacher les images et documents de cette entr\u00E9e',
                   global_showAttachmentsListActivity: 'Afficher les images et documents de cette entr\u00E9e',
+                  global_associatedContact: 'Contact associ\u00E9',
 
 
                   //hybrid
