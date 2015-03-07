@@ -122,10 +122,13 @@ app.config(['$translateProvider',
                   global_projectAndPhaseMandatory: 'Project and Phase is mandatory',
                   global_backToSearch: 'Back to search',
                   global_backToList: 'Back to list',
-                  global_hideDeficienciesList: 'Hide Deficiencies List',
-                  global_showDeficienciesList: 'Show Deficiencies List',
-                  global_hideActivitiesList: 'Hide Logbook entries',
-                  global_showActivitiesList: 'Show Logbook entries',
+                  global_hideDeficienciesListUnit: 'Hide deficiencies list for this unit',
+                  global_showDeficienciesListUnit: 'Show deficiencies list for this unit',
+                  global_hideActivitiesListUnit: 'Hide Logbook entries for this unit',
+                  global_showActivitiesListUnit: 'Show Logbook entries for this unit',
+                  global_hideAttachmentsListUnit: 'Hide images and documents for this unit',
+                  global_showAttachmentsListUnit: 'Show images and documents for this unit',
+
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',

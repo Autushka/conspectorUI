@@ -36,9 +36,9 @@ viewControllers.controller('unitDetailsWrapperView', ['$scope', '$location', '$a
            
         };
 
-        $scope.onDisplayDeficienciesList = function() {
-            $scope.bDisplayDeficienciesList === false ? $scope.bDisplayDeficienciesList = true : $scope.bDisplayDeficienciesList = false;
-            $scope.sHtmlId = 'embeddedDeficienciesList';
+        $scope.onDisplayAttachmentsList = function() {
+            $scope.bDisplayAttachmentsList === false ? $scope.bDisplayAttachmentsList = true : $scope.bDisplayAttachmentsList = false;
+            $scope.sHtmlId = 'embeddedAttachmentsList';
             $rootScope.$on('ngTableAfterReloadData', function() {
                 $timeout($scope.scrollTo, 1);
             });
