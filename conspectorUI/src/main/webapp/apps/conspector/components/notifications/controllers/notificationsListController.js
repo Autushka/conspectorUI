@@ -5,7 +5,8 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
         var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 
-        $rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
+        $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
+        $rootScope.oStateParams = {}; // for backNavigation 
 
         //Will be used for notification dropdown
         // if ($cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany) && $cookieStore.get("selectedDeficiencyStatuses" + sCurrentUser + sCompany).aSelectedStatuses) {
@@ -18,24 +19,13 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
             aData: []
         };
 
-        // var oNotificationStatusesWrapper = {
-        //     aData: [{
-        //         _statusesGuids: []
-        //     }]
-        // };
-
-        // var oStatuses = {
-        //     _statusesGuids: []
-        // };
-        // var aTaskStatuses = [];
-
         var oTableStatusFromCache = cacheProvider.getTableStatusFromCache({
             sTableName: "notificationsList",
             sStateName: $rootScope.sCurrentStateName,
         });
 
         var oInitialSortingForNotificationsList = {
-            sUnit: 'asc'
+            _createdAt: 'desc'
         };
         if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
             oInitialSortingForNotificationsList = angular.copy(oTableStatusFromCache.oSorting);
@@ -58,44 +48,6 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
             sGroupBy: "sProjectPhase",
             sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
         });
-
-        // var onDeficiencyStatusesLoaded = function(aData) {
-        //     for (var i = 0; i < aData.length; i++) {
-        //         aData[i]._sortingSequence = aData[i].GeneralAttributes.SortingSequence;
-        //     }
-        //     aData = $filter('orderBy')(aData, ["_sortingSequence"]);
-        //     aTaskStatuses = angular.copy(aData);
-        //     oStatuses._statusesGuids = [];
-        //     if ($scope.aSelectedStatuses) {
-        //         for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
-        //             oStatuses._statusesGuids.push($scope.aSelectedStatuses[i].Guid);
-        //         }
-        //     } else {
-        //         for (var i = 0; i < aData.length; i++) {
-        //             oStatuses._statusesGuids.push(aData[i].Guid);
-        //         }
-        //         $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
-        //             aSelectedStatuses: oStatuses._statusesGuids,
-        //         });
-        //     }
-        //     oNotificationStatusesWrapper.aData[0] = angular.copy(oStatuses);
-
-        //     servicesProvider.constructDependentMultiSelectArray({
-        //         oDependentArrayWrapper: {
-        //             aData: aData
-        //         },
-        //         oParentArrayWrapper: oNotificationStatusesWrapper,
-        //         sNameEN: "NameEN",
-        //         sNameFR: "NameFR",
-        //         sDependentKey: "Guid",
-        //         sParentKeys: "_statusesGuids",
-        //         sDependentIconKey: "AssociatedIconFileGuid",
-        //         sTargetArrayNameInParent: "aDeficiencyStatuses"
-        //     });
-        //     if (oNotificationStatusesWrapper.aData[0]) {
-        //         $scope.aDeficiencyStatuses = angular.copy(oNotificationStatusesWrapper.aData[0].aDeficiencyStatuses);
-        //     }
-        // };
 
         var onNotificationsLoaded = function(aData) {
             var sProjectName = "";
@@ -151,6 +103,10 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
 
                 sOperationName = $translate.use() === "en" ? aData[i].OperationNameEN : aData[i].OperationNameFR;
 
+                if(aData[i].Status === "not read"){
+
+                }
+
                 oNotificationsListData.aData.push({
                     _guid: aData[i].Guid,
                     sProjectPhase: sProjectPhase,
@@ -159,6 +115,9 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                     _entityGuid: aData[i].EntityGuid,
                     sOperationName:  sOperationName,
                     _sortingSequence: iSortingSequence,
+                    _createdAt: aData[i].CreatedAt,
+                    sCreatedAt: utilsProvider.dBDateToSting(aData[i].CreatedAt),
+                    sCreatedBy: aData[i].GeneralAttributes.CreatedBy,
                 });
             }
             $scope.tableParams.reload();
@@ -172,86 +131,38 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
 
         var loadNotifications = function() {
             oNotificationsListData.aData = [];
-            var sFilter = "";
-            var sFilterStart = " and (";
-            var sFilterEnd = ")";
-
-            if ($scope.globalSelectedPhases.length > 0) {
-                sFilter = sFilterStart;
-                for (var i = 0; i < $scope.globalSelectedPhases.length; i++) {
-                    sFilter = sFilter + "PhaseGuid eq '" + $scope.globalSelectedPhases[i] + "'";
-                    if (i < $scope.globalSelectedPhases.length - 1) {
-                        sFilter = sFilter + " or ";
-                    }
-                }
-                sFilter = sFilter + sFilterEnd;
-                // if ($scope.aSelectedStatuses) {
-                //     if ($scope.aSelectedStatuses.length > 0) {
-                //         sFilter = sFilter + sFilterStart;
-                //         for (var i = 0; i < $scope.aSelectedStatuses.length; i++) {
-                //             sFilter = sFilter + "TaskStatusGuid eq '" + $scope.aSelectedStatuses[i].Guid + "'";
-                //             if (i < $scope.aSelectedStatuses.length - 1) {
-                //                 sFilter = sFilter + " or ";
-                //             }
-                //         }
-                //         sFilter = sFilter + sFilterEnd;
-                //     }
-                // }
                 apiProvider.getOperationLogs({
                     sExpand: "PhaseDetails/ProjectDetails",
-                    sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
+                    sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "'",
                     bShowSpinner: true,
                     onSuccess: onNotificationsLoaded
                 });
-
-            } else {
-                oNotificationsListData.aData = [];
-                onNotificationsLoaded([]);
-                return;
-            }
         };
-
-        // var loadDeficiencyStatuses = function() {
-        //     apiProvider.getDeficiencyStatuses({
-        //         bShowSpinner: false,
-        //         onSuccess: onDeficiencyStatusesLoaded
-        //     });
-        // };
-        // loadDeficiencyStatuses();
         loadNotifications();
 
         $scope.onDisplay = function(oNotification, oEvent) {
             cacheProvider.putListViewScrollPosition("notificationsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+            switch(oNotification.sEntityName){
+                case "deficiency":
+                    $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
+                        sMode: "display",
+                        sDeficiencyGuid: oNotification._entityGuid,
+                    });                    
+                    break;
+            }
 
-            $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
-                sMode: "display",
-                sDeficiencyGuid: oNotification._entityGuid,
-            });
+            apiProvider.updateOperationLog({
+                sKey: oNotification._guid,
+                oData: {
+                    Status: 'read'
+                },                
+            })
         };
-
-        // $scope.onEdit = function(oNotification) {
-        //     cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
-
-        //     $rootScope.sFileMetadataSetGuid = oNotification._fileMetadataSetGuid;
-        //     $rootScope.sFileMetadataSetLastModifiedAt = oNotification._fileMetadataSetLastModifiedAt;
-        //     $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
-        //         sMode: "edit",
-        //         sDeficiencyGuid: oNotification._guid,
-        //     });
-        // };
 
         $scope.onClearFiltering = function() {
             $scope.tableParams.$params.filter = {};
             $scope.tableParams.reload();
         };
-
-        // $scope.onCloseCheckSelectedStatusesLength = function() {
-        //     $cookieStore.put("selectedDeficiencyStatuses" + sCurrentUser + sCompany, {
-        //         aSelectedStatuses: $scope.aSelectedStatuses,
-        //     });
-
-        //     loadNotifications();
-        // };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
             loadNotifications();
@@ -260,7 +171,6 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
         $scope.$on('notificationsShouldBeRefreshed', function(oParameters) {
             loadNotifications();
         });
-
 
         $scope.onStatusChange = function(oNotification) {
             if (!$scope.bDisplayEditButtons) {
@@ -291,28 +201,17 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                 bShowErrorMessage: true,
                 onSuccess: onSuccess
             });
-
-
-
         };
 
-        // $scope.$on("$destroy", function() {
-        //     if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
-        //         if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
-        //             return;
-        //         }
-        //         historyProvider.addStateToHistory({
-        //             sStateName: $rootScope.sCurrentStateName,
-        //             oStateParams: $rootScope.oStateParams
-        //         });
-        //     }
-        //     cacheProvider.putTableStatusToCache({
-        //         sTableName: "deficienciesList",
-        //         sStateName: $rootScope.sCurrentStateName,
-        //         aGroups: $scope.tableParams.settings().$scope.$groups,
-        //         oFilter: $scope.tableParams.$params.filter,
-        //         oSorting: $scope.tableParams.$params.sorting,
-        //     });
-        // });
+        $scope.$on("$destroy", function() {
+            if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
+                return;
+            }
+
+            historyProvider.addStateToHistory({
+                sStateName: $rootScope.sCurrentStateName,
+                oStateParams: $rootScope.oStateParams
+            });
+        });        
     }
 ]);

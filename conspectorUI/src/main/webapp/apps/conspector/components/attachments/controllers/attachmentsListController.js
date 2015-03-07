@@ -4,22 +4,22 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		var sEntityType = "";
 		var sEntitySPath = "";
-		var oEntity = "";
+		var sEntity = "";
 		switch ($rootScope.sCurrentStateName) {
 			case "app.deficiencyDetailsWrapper.deficiencyDetails":
 				sEntityType = "Deficiency";
 				sEntitySPath = "Tasks";
-				oEntity = "oDeficiencyEntity";
+				sEntity = "oDeficiencyEntity";
 				break;
 			case "app.activityDetailsWrapper.activityDetails":
 				sEntityType = "Activity";
 				sEntitySPath = "Activitys";
-				oEntity = "oActivityEntity";
+				sEntity = "oActivityEntity";
 				break;
 			case "app.unitDetailsWrapper.unitDetails":
 				sEntityType = "Unit";
 				sEntitySPath = "Units";
-				oEntity = "oUnitEntity";
+				sEntity = "oUnitEntity";
 				break;
 		}
 
@@ -126,6 +126,32 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 					$rootScope.bDataHasBeenModified = true;
 				}
 				loadAttachments();
+
+				var sEntityName = "";
+				var onInterestedUsersLoaded = function(aUsers) {
+					apiProvider.logEvent({
+						aUsers: aUsers,
+						sEntityName: sEntityName,
+						sEntityGuid: sParentEntityGuid,
+						sOperationNameEN: "New attachment has been added...",
+						sOperationNameFR: "New attachment has been added...",
+						sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
+					});
+				};
+
+				if (sParentEntityGuid) {
+					
+					switch(sEntity){
+						case "oDeficiencyEntity": 
+							sEntityName = "deficiency";
+							break;
+					}
+					apiProvider.getInterestedUsers({
+						sEntityName: sEntityName,
+						sEntityGuid: sParentEntityGuid,
+						onSuccess: onInterestedUsersLoaded
+					});
+				}				
 			};
 
 			servicesProvider.uploadAttachmentsForEntity({

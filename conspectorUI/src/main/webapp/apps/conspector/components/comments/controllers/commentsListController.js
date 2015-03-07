@@ -1,25 +1,25 @@
 viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$upload', 'utilsProvider',
 	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload, utilsProvider) {
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
-		
+
 		var sEntityType = "";
 		var sEntityPath = "";
-		var oEntity = "";
+		var sEntity = "";
 		switch ($rootScope.sCurrentStateName) {
 			case "app.deficiencyDetailsWrapper.deficiencyDetails":
 				sEntityType = "Deficiency";
 				sEntityPath = "Tasks";
-				oEntity = "oDeficiencyEntity";
+				sEntity = "oDeficiencyEntity";
 				break;
 			case "app.activityDetailsWrapper.activityDetails":
 				sEntityType = "Activity";
 				sEntityPath = "Activitys";
-				oEntity = "oActivityEntity";
+				sEntity = "oActivityEntity";
 				break;
 			case "app.unitDetailsWrapper.unitDetails":
 				sEntityType = "Unit";
 				sEntityPath = "Units";
-				oEntity = "oUnitEntity";
+				sEntity = "oUnitEntity";
 				break;
 		}
 
@@ -69,7 +69,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 		// $scope.$on("CommentsCanBeLoaded", function() {
 		// 	loadComments();
 		// });
-		
+
 		loadComments();
 
 		$scope.onEdit = function(oComment) {
@@ -127,11 +127,37 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 			var onSuccess = function() {
 				$scope.oComment.sText = "";
 				loadComments();
+				
+				var sEntityName = "";
+				var onInterestedUsersLoaded = function(aUsers) {
+					apiProvider.logEvent({
+						aUsers: aUsers,
+						sEntityName: sEntityName,
+						sEntityGuid: sParentEntityGuid,
+						sOperationNameEN: "New comment has been created...",
+						sOperationNameFR: "New comment has been created...",
+						sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
+					});
+				};
+
+				if (sParentEntityGuid) {
+					
+					switch(sEntity){
+						case "oDeficiencyEntity": 
+							sEntityName = "deficiency";
+							break;
+					}
+					apiProvider.getInterestedUsers({
+						sEntityName: sEntityName,
+						sEntityGuid: sParentEntityGuid,
+						onSuccess: onInterestedUsersLoaded
+					});
+				}
 			};
 			var oDataForSave = {
 				GeneralAttributes: {}
 			};
-			
+
 			oDataForSave.ContactGuid = cacheProvider.oUserProfile.oUserContact.Guid;
 			oDataForSave.Text = $scope.oComment.sText;
 

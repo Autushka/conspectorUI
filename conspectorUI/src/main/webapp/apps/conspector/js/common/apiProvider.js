@@ -270,41 +270,158 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				oSvc.then(onSuccess);
 			},
 
-			logEvent: function(oParameters) {
-				var oData = oParameters.oData;
-				var onSuccess = function(oData) {
-					cacheProvider.cleanEntitiesCache("oOperationLogEntity");
+			getInterestedUsers: function(oParameters) {
+				var onTaskInfoLoaded = function(oData) {
+					var aInterestedUsers = [];
+					var bAssignedUserAdded = false;
+
+					for (var i = oData.AccountDetails.results.length - 1; i >= 0; i--) {
+						for (var j = oData.AccountDetails.results[i].ContactDetails.results.length - 1; j >= 0; j--) {
+							for (var k = oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results.length - 1; k >= 0; k--) {
+								if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === oData.UserName) {
+									bAssignedUserAdded = true;
+								}
+								aInterestedUsers.push(oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName);
+							}
+						};
+					}
+
+					if (oData.UserName != cacheProvider.oUserProfile.sUserName && !bAssignedUserAdded) {
+						aInterestedUsers.push(oData.UserName);
+					}
+					aInterestedUsers.push("GeneralAdmin");// just for now...for test perposes.
+
+					oParameters.onSuccess(aInterestedUsers);
 				};
-				oData.OperationContent = JSON.stringify(oParameters.oData.OperationContent);
 
-				var oSvc = dataProvider.createEntity({
-					sPath: "OperationLogs",
-					oData: oData,
-					bGuidNeeded: true,
-					bCompanyNeeded: true
-				});
-
-				oSvc.then(onSuccess);
+				this.getDeficiency({
+					sKey: oParameters.sEntityGuid,
+					sExpand: "AccountDetails/ContactDetails/UserDetails",
+					onSuccess: onTaskInfoLoaded
+				})
 			},
 
-			getOperationLogs: function(oParameters) {
-				var svc = dataProvider.getEntitySet({
-					sPath: "OperationLogs",
-					sExpand: oParameters.sExpand,
-					sFilter: oParameters.sFilter,
-					bShowSpinner: oParameters.bShowSpinner,
-					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oOperationLogEntity"
+			initializePubNub: function() {
+				$rootScope.sSessionGuid = utilsProvider.generateGUID();
+				var sChannel = "";
+
+				PubNub.init({
+					publish_key: 'pub-c-59bd66cf-9992-42d5-af04-87ec537c73bb',
+					subscribe_key: 'sub-c-7606f63c-9908-11e4-a626-02ee2ddab7fe'
+				});
+				sChannel = "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany;
+				PubNub.ngSubscribe({
+					channel: sChannel
 				});
 
-				if (svc instanceof Array) {
-					oParameters.onSuccess(svc); // data retrived from cache
-				} else {
-					svc.then(oParameters.onSuccess);
+				$rootScope.$on(PubNub.ngMsgEv(sChannel), function(event, payload) {
+					if (payload.message.sSessionGuid === $rootScope.sSessionGuid) {
+						return;
+					}
+					cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
+					if (payload.message.sEntityName === "oAccountEntity") {
+						cacheProvider.cleanEntitiesCache("oAccountTypeEntity"); //for cases when accountTypes are readed with Accounts;
+					}
+
+					switch (payload.message.sEntityName) {
+						case "oAccountEntity":
+							$rootScope.$broadcast('accountsShouldBeRefreshed');
+							break;
+						case "oContactEntity":
+							$rootScope.$broadcast('contactsShouldBeRefreshed');
+							break;
+						case "oDeficiencyEntity":
+							$rootScope.$broadcast('deficienciesShouldBeRefreshed');
+							break;
+						case "oUnitEntity":
+							$rootScope.$broadcast('unitsShouldBeRefreshed');
+							break;
+						case "oActivityEntity":
+							$rootScope.$broadcast('activitiesShouldBeRefreshed');
+							break;
+						case "oOperationLogEntity":
+							$rootScope.$broadcast('notificationsShouldBeRefreshed');
+							$rootScope.$broadcast('notificationsNumberShouldBeRefreshed');
+							break;							
+					}
+				});
+			},			
+
+			pubNubMessage: function(oParameters) {
+				PubNub.ngPublish({
+					channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
+					message: {
+						sEntityName: oParameters.sEntityName,
+						sText: oParameters.sText,
+						sUserName: cacheProvider.oUserProfile.sUserName,
+						sSessionGuid: $rootScope.sSessionGuid,
+					}
+				});
+			},			
+
+			logEvent: function(oParameters) {
+				var oSrv = {};
+				var oRequestData = {
+					__batchRequests: []
+				};
+				var aData = [];
+				var oData = {};
+
+				for (var i = 0; i < oParameters.aUsers.length; i++) {
+					oData = {
+						requestUri: "OperationLogs",
+						method: "POST",
+						data: {
+							Guid: utilsProvider.generateGUID(),
+							CompanyName: cacheProvider.oUserProfile.sCurrentCompany, 
+							UserName: oParameters.aUsers[i],
+							Status: "not read",
+							EntityName: oParameters.sEntityName,
+							EntityGuid: oParameters.sEntityGuid,
+							OperationNameEN: oParameters.sOperationNameEN,
+							OperationNameFR: oParameters.sOperationNameFR,
+							PhaseGuid: oParameters.sPhaseGuid,
+							CreatedAt: utilsProvider.dateToDBDate(new Date()),
+							GeneralAttributes: {CreatedBy:cacheProvider.oUserProfile.sUserName}
+						}
+					};
+
+					aData.push(oData);
 				}
+
+				dataProvider.constructChangeBlockForBatch({
+					oRequestData: oRequestData,
+					aData: aData
+				});
+
+				oSrv = dataProvider.batchRequest({
+					oRequestData: oRequestData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSrv.then($.proxy(function(aData) {
+					this.pubNubMessage({sEntityName: "oOperationLogEntity", sText: "New Operation Log..."});
+					//this.onSuccessUpdateDeficiency(oParameters);
+				}, this));
+				// var oData = oParameters.oData;
+				// var onSuccess = function(oData) {
+				// 	cacheProvider.cleanEntitiesCache("oOperationLogEntity");
+				// };
+				// oData.OperationContent = JSON.stringify(oParameters.oData.OperationContent);
+
+				// var oSvc = dataProvider.createEntity({
+				// 	sPath: "OperationLogs",
+				// 	oData: oData,
+				// 	bGuidNeeded: true,
+				// 	bCompanyNeeded: true
+				// });
+
+				// oSvc.then(onSuccess);
 			},
 
-			updateOperationLogs: function(oParameters) {
+			logEvents: function(oParameters) {
 				var oSrv = {};
 				var oRequestData = {
 					__batchRequests: []
@@ -314,8 +431,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 				for (var i = 0; i < oParameters.aData.length; i++) {
 					oData = {
-						requestUri: "OperationLogs('" + oParameters.aData[i].Guid + "')",
-						method: "PUT",
+						requestUri: "OperationLogs",
+						method: "POST",
 						data: oParameters.aData[i]
 					};
 
@@ -335,9 +452,83 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				});
 
 				oSrv.then($.proxy(function(aData) {
-					this.onSuccessUpdateDeficiency(oParameters);
+					//this.onSuccessUpdateDeficiency(oParameters);
 				}, this));
 			},
+
+			getOperationLogs: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "OperationLogs",
+					sExpand: oParameters.sExpand,
+					sFilter: oParameters.sFilter,
+					bShowSpinner: oParameters.bShowSpinner,
+					oCacheProvider: cacheProvider,
+					sCacheProviderAttribute: "oOperationLogEntity"
+				});
+
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc); // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			updateOperationLog: function(oParameters){
+				var onSuccess = function(oData) {
+					cacheProvider.cleanEntitiesCache("oOperationLogEntity");
+					$rootScope.$emit('notificationsNumberShouldBeRefreshed');
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+				};
+				var oSvc = dataProvider.updateEntity({
+					bShowSpinner: oParameters.bShowSpinner,
+					sPath: "OperationLogs",
+					sKey: oParameters.sKey,
+					oData: oParameters.oData,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bIgnoreLastModifiedAtValidation: true
+
+				});
+
+				oSvc.then(onSuccess);				
+			},
+
+			// updateOperationLogs: function(oParameters) {
+			// 	var oSrv = {};
+			// 	var oRequestData = {
+			// 		__batchRequests: []
+			// 	};
+			// 	var aData = [];
+			// 	var oData = {};
+
+			// 	for (var i = 0; i < oParameters.aData.length; i++) {
+			// 		oData = {
+			// 			requestUri: "OperationLogs('" + oParameters.aData[i].Guid + "')",
+			// 			method: "PUT",
+			// 			data: oParameters.aData[i]
+			// 		};
+
+			// 		aData.push(oData);
+			// 	}
+
+			// 	dataProvider.constructChangeBlockForBatch({
+			// 		oRequestData: oRequestData,
+			// 		aData: aData
+			// 	});
+
+			// 	oSrv = dataProvider.batchRequest({
+			// 		oRequestData: oRequestData,
+			// 		bShowSpinner: oParameters.bShowSpinner,
+			// 		bShowSuccessMessage: oParameters.bShowSuccessMessage,
+			// 		bShowErrorMessage: oParameters.bShowErrorMessage,
+			// 	});
+
+			// 	oSrv.then($.proxy(function(aData) {
+			// 		//this.onSuccessUpdateDeficiency(oParameters);
+			// 	}, this));
+			// },
 
 			getProjects: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
@@ -488,7 +679,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 					bShowSpinner: oParameters.bShowSpinner,
 				});
 				svc.then(oParameters.onSuccess);
-			},			
+			},
 
 			getCompanies: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
@@ -1576,7 +1767,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 			getDeficiencies: function(oParameters) {
 				var svc = {};
-				if(oParameters.bNoCaching){
+				if (oParameters.bNoCaching) {
 					svc = dataProvider.getEntitySet({
 						sPath: "Tasks",
 						sExpand: oParameters.sExpand,
@@ -1586,7 +1777,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 						// oCacheProvider: cacheProvider,
 						// sCacheProviderAttribute: "oDeficiencyEntity"
 					});
-				}else{
+				} else {
 					svc = dataProvider.getEntitySet({
 						sPath: "Tasks",
 						sExpand: oParameters.sExpand,
@@ -1934,6 +2125,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
+					//this.logEvent
 				};
 				var oSvc = dataProvider.createEntity({
 					sPath: "Comments",

@@ -101,6 +101,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		};
 
 		var setDisplayedDeficiencyDetails = function(oDeficiency) {
+			$rootScope.sCurrentEntityPhaseGuid = oDeficiency.PhaseGuid;//needed for notifications...
 			$scope.oDeficiency._guid = oDeficiency.Guid;
 			$scope.oDeficiency._lastModifiedAt = oDeficiency.LastModifiedAt;
 			var sProject = "";
@@ -453,11 +454,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		};
 
 		$scope.onNavigateToUnitDetails = function() {
-			if($scope.sCurrentRole != 'contractor'){
+			if ($scope.sCurrentRole != 'contractor') {
 				$state.go('app.unitDetailsWrapper.unitDetails', {
 					sMode: "display",
 					sUnitGuid: $scope.oDeficiency._unitGuid,
-				});				
+				});
 			}
 		};
 
@@ -517,6 +518,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 			return aLinks;
 		};
+
+		// prepareInterestedUsersForSave = function(){
+
+		// };
 
 		$scope.onCloseCheckSelectedTaskPrioritiesLength = function() {
 			if ($scope.aSelectedTaskPriorities.length == 0)
@@ -583,6 +588,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				GeneralAttributes: {}
 			};
 			var aLinks = [];
+			// var aInterestedUsers = [];
 
 			oDataForSave.Guid = $scope.oDeficiency._guid;
 			var onSuccessCreation = function(oData) {
@@ -610,6 +616,22 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					$scope.oDeficiency.sDescription = "";
 					$scope.oDeficiency.dDueDate = "/Date(0)/";
 				}
+
+				var onInterestedUsersLoaded = function(aUsers) {
+					apiProvider.logEvent({
+						aUsers: aUsers,
+						sEntityName: "deficiency",
+						sEntityGuid: oData.Guid,
+						sOperationNameEN: "New deficiency has been created...",
+						sOperationNameFR: "New deficiency has been created...",
+						sPhaseGuid: oData.PhaseGuid
+					});
+				}
+				apiProvider.getInterestedUsers({
+					sEntityName: "deficiency",
+					sEntityGuid: oData.Guid,
+					onSuccess: onInterestedUsersLoaded
+				});
 			};
 			var onSuccessUpdate = function(oData) {
 				$rootScope.bDataHasBeenModified = false;
@@ -625,6 +647,22 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					sMode: "display",
 					sDeficiencyGuid: oData.Guid
 				});
+
+				var onInterestedUsersLoaded = function(aUsers) {
+					apiProvider.logEvent({
+						aUsers: aUsers,
+						sEntityName: "deficiency",
+						sEntityGuid: oData.Guid,
+						sOperationNameEN: "Deficiency has been modified...",
+						sOperationNameFR: "Deficiency has been modified...",
+						sPhaseGuid: oData.PhaseGuid
+					});
+				}
+				apiProvider.getInterestedUsers({
+					sEntityName: "deficiency",
+					sEntityGuid: oData.Guid,
+					onSuccess: onInterestedUsersLoaded
+				});				
 			};
 
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aDescriptionTags);
@@ -660,6 +698,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			$scope.sAccountValues = "";
 			$scope.sAccountGuids = "";
 			aLinks = prepareLinksForSave();
+			// aInterestedUsers = prepareInterestedUsersForSave();
 			oDataForSave.AccountValues = $scope.sAccountValues;
 			oDataForSave.AccountGuids = $scope.sAccountGuids;
 			oDataForSave.LastModifiedAt = $scope.oDeficiency._lastModifiedAt;

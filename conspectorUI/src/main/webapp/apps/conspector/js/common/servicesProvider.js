@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', 'PubNub',
-	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard, PubNub) {
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', 
+	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -70,31 +70,31 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			logSuccessLogIn: function() {
-				apiProvider.logEvent({
-					oData: {
-						GeneralAttributes: {},
-						OperationName: "login_success",
-						OperationContent: {
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sCompany: cacheProvider.oUserProfile.sCurrentCompany,
-							sRole: cacheProvider.oUserProfile.sCurrentRole,
-						}
-					}
-				});
+				// apiProvider.logEvent({
+				// 	oData: {
+				// 		GeneralAttributes: {},
+				// 		OperationName: "login_success",
+				// 		OperationContent: {
+				// 			sUserName: cacheProvider.oUserProfile.sUserName,
+				// 			sCompany: cacheProvider.oUserProfile.sCurrentCompany,
+				// 			sRole: cacheProvider.oUserProfile.sCurrentRole,
+				// 		}
+				// 	}
+				// });
 			},
 
 			logLogOut: function() {
-				apiProvider.logEvent({
-					oData: {
-						GeneralAttributes: {},
-						OperationName: "log_out",
-						OperationContent: {
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sCompany: cacheProvider.oUserProfile.sCurrentCompany,
-							sRole: cacheProvider.oUserProfile.sCurrentRole
-						}
-					}
-				});
+				// apiProvider.logEvent({
+				// 	oData: {
+				// 		GeneralAttributes: {},
+				// 		OperationName: "log_out",
+				// 		OperationContent: {
+				// 			sUserName: cacheProvider.oUserProfile.sUserName,
+				// 			sCompany: cacheProvider.oUserProfile.sCurrentCompany,
+				// 			sRole: cacheProvider.oUserProfile.sCurrentRole
+				// 		}
+				// 	}
+				// });
 			},
 
 			onNoDefaultViewForTheRole: function() {
@@ -130,49 +130,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				cacheProvider.oUserProfile.oUserContact = angular.copy(oUserContactForCurrentCompany);
 			},
 
-			initializePubNub: function() {
-				$rootScope.sSessionGuid = utilsProvider.generateGUID();
-				// servicesProvider.onF5WithCurrentUserHandler(sUserName);
 
-				var sChannel = "";
-
-				PubNub.init({
-					publish_key: 'pub-c-59bd66cf-9992-42d5-af04-87ec537c73bb',
-					subscribe_key: 'sub-c-7606f63c-9908-11e4-a626-02ee2ddab7fe'
-				});
-				sChannel = "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany;
-				PubNub.ngSubscribe({
-					channel: sChannel
-				});
-
-				$rootScope.$on(PubNub.ngMsgEv(sChannel), function(event, payload) {
-					if (payload.message.sSessionGuid === $rootScope.sSessionGuid) {
-						return;
-					}
-					cacheProvider.cleanEntitiesCache(payload.message.sEntityName);
-					if (payload.message.sEntityName === "oAccountEntity") {
-						cacheProvider.cleanEntitiesCache("oAccountTypeEntity"); //for cases when accountTypes are readed with Accounts;
-					}
-
-					switch (payload.message.sEntityName) {
-						case "oAccountEntity":
-							$rootScope.$broadcast('accountsShouldBeRefreshed');
-							break;
-						case "oContactEntity":
-							$rootScope.$broadcast('contactsShouldBeRefreshed');
-							break;
-						case "oDeficiencyEntity":
-							$rootScope.$broadcast('deficienciesShouldBeRefreshed');
-							break;
-						case "oUnitEntity":
-							$rootScope.$broadcast('unitsShouldBeRefreshed');
-							break;
-						case "oActivityEntity":
-							$rootScope.$broadcast('unitsShouldBeRefreshed');
-							break;
-					}
-				});
-			},
 
 			checkUserRolesAssignment: function(sCurrentCompany) {
 				var aUserRolesForCurrentCompany = [];
@@ -203,7 +161,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						return;
 					}
 					this.logSuccessLogIn(); //log login_success operation 
-					this.initializePubNub();
+					apiProvider.initializePubNub();
 					$state.go(rolesSettings.getRolesInitialState(sCurrentRole)); //navigation to the initial view for the role
 					return;
 				} else {
@@ -280,7 +238,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 				} else {
 					//cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
-					this.initializePubNub();
+					apiProvider.initializePubNub();
 					rolesSettings.setCurrentRole(sCurrentRole);
 				}
 			},
@@ -419,17 +377,6 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				}
 			},
 
-			pubNubMessage: function(oParameters) {
-				PubNub.ngPublish({
-					channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-					message: {
-						sEntityName: oParameters.sEntityName,
-						sText: oParameters.sText,
-						sUserName: cacheProvider.oUserProfile.sUserName,
-						sSessionGuid: $rootScope.sSessionGuid,
-					}
-				});
-			},
 
 			uploadAttachmentsForEntity: function(oParameters) {
 				var oRequestData = {
@@ -477,7 +424,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 												sEntityName = "oDeficiencyEntity";
 												break;
 										}
-										this.pubNubMessage({
+										apiProvider.pubNubMessage({
 											sEntityName: sEntityName,
 											sText: "New attachemnts added..."
 										});
@@ -505,7 +452,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 											sEntityName = "oDeficiencyEntity";
 											break;
 									}
-									this.pubNubMessage({
+									apiProvider.pubNubMessage({
 										sEntityName: sEntityName,
 										sText: "New attachemnts added..."
 									});

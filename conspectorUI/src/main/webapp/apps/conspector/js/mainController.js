@@ -61,6 +61,24 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 			$rootScope.showSpinner = false;
 		});
 
+		var onNotificationsLoaded = function(aData) {
+			$rootScope.iNotificationsNumber = aData.length;
+		};
+
+		var getNotificationsNumber = function(){
+			apiProvider.getOperationLogs({
+				sExpand: "PhaseDetails/ProjectDetails",
+				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "' and Status eq 'not read'",
+				onSuccess: onNotificationsLoaded
+			});			
+		}
+
+		$rootScope.$on('notificationsNumberShouldBeRefreshed', function(oParameters) {
+			getNotificationsNumber();
+		});
+
+		getNotificationsNumber();
+
 		$rootScope.bIsGalleryHidden = true;
 
 		$rootScope.hideGallery = function() {
