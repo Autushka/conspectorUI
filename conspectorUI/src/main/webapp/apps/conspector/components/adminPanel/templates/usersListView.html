@@ -31,7 +31,7 @@
 	<!-- END OF ACTION BAR -->
 	<!-- NG TABLE -->
 	<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
-		<table ng-table="tableParams" class="cnpNgTable" id="usersList">
+		<table ng-table="tableParams" class="cnpNgTable" id="usersList" show-filter="true">
 			<tbody ng-repeat="group in $groups">	
 				<tr class="ng-table-group notSelectable" >
 					<td colspan="{{$columns.length}}" style="overflow: visible; padding-left: 0; padding-right: 0" >
@@ -51,14 +51,14 @@
 							</div>
 						</div>
 					</td>
-					<td data-title="'global_userName' | translate" sortable="'userName'">
+					<td data-title="'global_userName' | translate" sortable="'userName'" filter="{'userName': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>{{user.userName}}</span>
 							</div>
 						</div>
 					</td>
-					<td data-title="'global_email' | translate" sortable="'email'">
+					<td data-title="'global_email' | translate" sortable="'email'" filter="{'email': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>{{user.email}}</span>
@@ -74,7 +74,7 @@
 						</div>
 						
 					</td> -->
-					<td data-title="'global_roles' | translate" >
+					<td data-title="'global_roles' | translate" sortable="'sRoles'" filter="{'sRoles': 'text'}">
 						<div layout="row" layout-align="start center">
 							<div>
 								<span>{{user.sRoles}}</span>
