@@ -20,7 +20,7 @@ viewControllers.controller('unitDetailsWrapperView', ['$scope', '$location', '$a
             $scope.bDisplayDeficienciesList === false ? $scope.bDisplayDeficienciesList = true : $scope.bDisplayDeficienciesList = false;
             $scope.sHtmlId = 'embeddedDeficienciesList';
             $rootScope.$on('ngTableAfterReloadData', function() {
-                $timeout($scope.scrollTo, 1);
+                $timeout($scope.scrollTo, 100);
             });
 
            
@@ -30,7 +30,7 @@ viewControllers.controller('unitDetailsWrapperView', ['$scope', '$location', '$a
             $scope.bDisplayActivitiesList === false ? $scope.bDisplayActivitiesList = true : $scope.bDisplayActivitiesList = false;
             $scope.sHtmlId = 'embeddedActivitiesList';
             $rootScope.$on('ngTableAfterReloadData', function() {
-                $timeout($scope.scrollTo, 1);
+                $timeout($scope.scrollTo, 100);
             });
 
            
@@ -40,7 +40,7 @@ viewControllers.controller('unitDetailsWrapperView', ['$scope', '$location', '$a
             $scope.bDisplayAttachmentsList === false ? $scope.bDisplayAttachmentsList = true : $scope.bDisplayAttachmentsList = false;
             $scope.sHtmlId = 'embeddedAttachmentsList';
             $rootScope.$on('ngTableAfterReloadData', function() {
-                $timeout($scope.scrollTo, 1);
+                $timeout($scope.scrollTo, 100);
             });
 
            

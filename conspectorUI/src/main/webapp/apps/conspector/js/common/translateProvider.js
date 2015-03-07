@@ -561,10 +561,14 @@ app.config(['$translateProvider',
                   global_projectAndPhaseMandatory: 'Veuillez s\u00E9lectionner projet et phase',
                   global_backToSearch: 'Retour \u00E0 recherche',
                   global_backToList: 'Retour \u00E0 la liste',
-                  global_hideDeficienciesList: 'Fermer la liste des d\u00E9ficiences',
-                  global_showDeficienciesList: 'Afficher la liste des d\u00E9ficiences',
-                  global_hideActivitiesList: 'Fermer les entr\u00E9es du Logbook',
-                  global_showActivitiesList: 'Afficher les entr\u00E9es du Logbook',
+                  global_hideDeficienciesListUnit: 'Cacher la liste des d\u00E9ficiences pour cette unit\u00E9',
+                  global_showDeficienciesListUnit: 'Afficher la liste des d\u00E9ficiences pour cette unit\u00E9',
+                  global_hideActivitiesListUnit: 'Cacher les entr\u00E9es du Logbook pour cette unit\u00E9',
+                  global_showActivitiesListUnit: 'Afficher les entr\u00E9es du Logbook pour cette unit\u00E9',
+                  global_hideAttachmentsListUnit: 'Cacher les images et documents de cette unit\u00E9',
+                  global_showAttachmentsListUnit: 'Afficher les images et documents de cette unit\u00E9',
+
+
 
 
                   //hybrid
