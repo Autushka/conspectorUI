@@ -34,9 +34,9 @@ viewControllers.controller('contactDetailsView', ['$rootScope', '$scope', '$loca
 
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 		if ($rootScope.sCurrentStateName === "app.contactDetailsWrapper.contactDetails") {
-            if ($scope.sMode === "display" || $scope.sMode === "edit") {
-                $scope.$parent.bDisplayActivitiesList = true;
-            }
+            // if ($scope.sMode === "display" || $scope.sMode === "edit") {
+            //     $scope.$parent.bDisplayActivitiesList = true;
+            // }
         }
 
 		if ($rootScope.sCurrentStateName === "app.profileSettings.contactDetails") {

@@ -7,7 +7,7 @@
 	</div>
 	</button>
 </div>
-<div ng-show="bDisplayCommentsList" ui-view="commentsList"></div>
+<div ng-if="bDisplayCommentsList" ui-view="commentsList"></div>
 <div id="embeddedAttachmentsList" flex class="cnpCollapseControl" layout="row" layout-align="center center" ng-click="onDisplayAttachmentsList()">
 	<button ng-class="{'md-button md-primary cnpCollapseSectionButton cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbol notSelectable': !bDisplayAttachmentsList, 'md-button md-primary cnpCollapseSectionButton cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbolReversed notSelectable': bDisplayAttachmentsList}" layout="row" layout-align="center center" >
 	<div class="cnpCollapseControlButtonText">
@@ -16,5 +16,5 @@
 	</div>
 	</button>
 </div>
-<div ng-show="bDisplayAttachmentsList" ui-view="attachmentsList"></div>
+<div ng-if="bDisplayAttachmentsList" ui-view="attachmentsList"></div>
 <div style="height: 400px;"></div>

@@ -66,9 +66,11 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 			}
 		};
 
-		$scope.$on("CommentsCanBeLoaded", function() {
-			loadComments();
-		});
+		// $scope.$on("CommentsCanBeLoaded", function() {
+		// 	loadComments();
+		// });
+		
+		loadComments();
 
 		$scope.onEdit = function(oComment) {
 			if (oComment._userName !== cacheProvider.oUserProfile.sUserName) {

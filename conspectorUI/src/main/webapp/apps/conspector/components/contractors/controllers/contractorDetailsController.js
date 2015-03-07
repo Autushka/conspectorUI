@@ -30,11 +30,11 @@ viewControllers.controller('contractorDetailsView', ['$rootScope', '$scope', '$l
 
         $scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
         if ($rootScope.sCurrentStateName === "app.contractorDetailsWrapper.contractorDetails") {
-            if ($scope.sMode === "display" || $scope.sMode === "edit") {
-                $scope.$parent.bDisplayContactsList = true;
-                $scope.$parent.bDisplayDeficienciesList = true;
-                $scope.$parent.bDisplayActivitiesList = true;
-            }
+            // if ($scope.sMode === "display" || $scope.sMode === "edit") {
+            //     $scope.$parent.bDisplayContactsList = true;
+            //     $scope.$parent.bDisplayDeficienciesList = true;
+            //     $scope.$parent.bDisplayActivitiesList = true;
+            // }
             $scope.sAccountType = "Contractor";
         }
 

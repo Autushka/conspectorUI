@@ -30,10 +30,10 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$locat
         $scope.sAccountType = "";
         $scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
         if ($rootScope.sCurrentStateName === "app.clientDetailsWrapper.clientDetails") {
-            if ($scope.sMode === "display" || $scope.sMode === "edit") {
-                $scope.$parent.bDisplayContactsList = true;
-                $scope.$parent.bDisplayActivitiesList = true;
-            }
+            // if ($scope.sMode === "display" || $scope.sMode === "edit") {
+            //     $scope.$parent.bDisplayContactsList = true;
+            //     $scope.$parent.bDisplayActivitiesList = true;
+            // }
             $scope.sAccountType = "Client";
         }
 

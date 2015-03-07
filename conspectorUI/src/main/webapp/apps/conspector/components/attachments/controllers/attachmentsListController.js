@@ -106,9 +106,11 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			}
 		};
 
-		$scope.$on("FileAttachemntsCanBeLoaded", function() {
-			loadAttachments();
-		});
+		// $scope.$on("FileAttachemntsCanBeLoaded", function() {
+		// 	loadAttachments();
+		// });
+		loadAttachments();
+
 
 		$scope.onFilesSelected = function(aFiles, $event) {
 			var onProgress = function($event) {
