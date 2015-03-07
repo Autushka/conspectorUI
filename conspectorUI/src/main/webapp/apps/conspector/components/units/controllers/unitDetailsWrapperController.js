@@ -19,30 +19,30 @@ viewControllers.controller('unitDetailsWrapperView', ['$scope', '$location', '$a
         $scope.onDisplayDeficienciesList = function() {
             $scope.bDisplayDeficienciesList === false ? $scope.bDisplayDeficienciesList = true : $scope.bDisplayDeficienciesList = false;
             $scope.sHtmlId = 'embeddedDeficienciesList';
-            $rootScope.$on('ngTableAfterReloadData', function() {
-                $timeout($scope.scrollTo, 100);
-            });
-
+            // $rootScope.$on('ngTableAfterReloadData', function() {
+            //     $timeout($scope.scrollTo, 100);
+            // });
+            // $scope.scrollTo();
            
         };
 
         $scope.onDisplayActivitiesList = function() {
             $scope.bDisplayActivitiesList === false ? $scope.bDisplayActivitiesList = true : $scope.bDisplayActivitiesList = false;
             $scope.sHtmlId = 'embeddedActivitiesList';
-            $rootScope.$on('ngTableAfterReloadData', function() {
-                $timeout($scope.scrollTo, 100);
-            });
-
-           
+            // $rootScope.$on('ngTableAfterReloadData', function() {
+            //     $timeout($scope.scrollTo, 100);
+            // });
+            // $scope.scrollTo();
+            
         };
 
         $scope.onDisplayAttachmentsList = function() {
             $scope.bDisplayAttachmentsList === false ? $scope.bDisplayAttachmentsList = true : $scope.bDisplayAttachmentsList = false;
             $scope.sHtmlId = 'embeddedAttachmentsList';
-            $rootScope.$on('ngTableAfterReloadData', function() {
-                $timeout($scope.scrollTo, 100);
-            });
-
+            // $rootScope.$on('ngTableAfterReloadData', function() {
+            //     $timeout($scope.scrollTo, 100);
+            // });
+            // $scope.scrollTo();
            
         };
 

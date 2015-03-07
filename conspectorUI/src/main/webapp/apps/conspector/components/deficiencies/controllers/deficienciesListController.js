@@ -284,12 +284,13 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             }
 
             $scope.tableParams.reload();
+            if($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails"){
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
                     $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
                     cacheProvider.putListViewScrollPosition("deficienciesList", 0);
                 }
-            }, 0);
+            }, 0);}
         };
 
         var loadDeficiencies = function() {

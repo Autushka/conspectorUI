@@ -250,12 +250,13 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                 }
             }
             $scope.tableParams.reload();
+            if($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contactDetailsWrapper.contactDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails"){
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
                     $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("activitiesList");
                     cacheProvider.putListViewScrollPosition("activitiesList", 0); 
                 }
-            }, 0);
+            }, 0);}
         };
 
         var loadActivities = function() {
