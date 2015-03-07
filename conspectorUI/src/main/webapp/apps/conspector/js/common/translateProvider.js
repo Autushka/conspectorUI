@@ -128,7 +128,10 @@ app.config(['$translateProvider',
                   global_showActivitiesListUnit: 'Show Logbook entries for this unit',
                   global_hideAttachmentsListUnit: 'Hide images and documents for this unit',
                   global_showAttachmentsListUnit: 'Show images and documents for this unit',
-
+                  global_hideCommentsListDeficiency: 'Hide comments for this deficiency',
+                  global_showCommentsListDeficiency: 'Show comments for this deficiency',
+                  global_hideAttachmentsListDeficiency: 'Hide images and documents for this deficiency',
+                  global_showAttachmentsListDeficiency: 'Show images and documents for this deficiency',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
@@ -567,7 +570,10 @@ app.config(['$translateProvider',
                   global_showActivitiesListUnit: 'Afficher les entr\u00E9es du Logbook pour cette unit\u00E9',
                   global_hideAttachmentsListUnit: 'Cacher les images et documents de cette unit\u00E9',
                   global_showAttachmentsListUnit: 'Afficher les images et documents de cette unit\u00E9',
-
+                  global_hideCommentsListDeficiency: 'Cacher les commentaires de cette d\u00E9ficience',
+                  global_showCommentsListDeficiency: 'Afficher les commentaires de cette d\u00E9ficience',
+                  global_hideAttachmentsListDeficiency: 'Cacher les images et documents de cette d\u00E9ficience',
+                  global_showAttachmentsListDeficiency: 'Afficher les images et documents de cette d\u00E9ficience',
 
 
 
