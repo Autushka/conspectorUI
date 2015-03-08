@@ -7,27 +7,28 @@
 					{{'app_switchCompanies' | translate}}
 				</label>
 			</div>
-			<div>
-				<label ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeader notSelectable">
+			<div layout="row" layout-align="end center" flex>
+				<div ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeader notSelectable">
 					{{'app_switchRoles' | translate}}
-				</label>
-				<label ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeader notSelectable">
+				</div>
+				<div ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeader notSelectable">
 					{{'app_adminPanel' | translate}}
-				</label>
-				<label ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="cnpLink cnpLinkHeader notSelectable">
+				</div>
+				<div ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="cnpLink cnpLinkHeader notSelectable">
 					{{sCurrentUser}}
-				</label>
+				</div>
 				<!-- add notifications counter -->
-				<label ng-click="onNotificationsList()" class="cnpLink cnpLinkHeader notSelectable">
-					{{'global_notificationsList' | translate}}
-				</label>
-				<label>{{$root.iNotificationsNumber}}</label>
-				<label ng-click="onLogOut()" class="cnpLink cnpLinkHeader notSelectable">
+				<div ng-click="onNotificationsList()" class="cnpLink cnpLinkHeader notSelectable" style="position: relative;">
+					{{'notificationsList_title' | translate}}
+					<div layout="row" layout-align="center center" class="cnpNotificationsCounter">{{$root.iNotificationsNumber}}</div>
+				</div>
+				
+				<div ng-click="onLogOut()" class="cnpLink cnpLinkHeader notSelectable">
 					{{'app_logOut' | translate}}
-				</label>
-				<label ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeader">
+				</div>
+				<div ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeader">
 					{{'signIn_languageCode' | translate}}
-				</label>
+				</div>
 			</div>
 		</div>
 	</div>

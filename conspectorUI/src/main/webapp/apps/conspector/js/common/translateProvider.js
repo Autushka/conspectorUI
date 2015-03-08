@@ -456,6 +456,8 @@ app.config(['$translateProvider',
                   clientDetails_shippingPostalCode: 'Postal Code/ZIP:',
                   clientDetails_shippingCountry: 'Shipping Country:',
                   clientDetails_shippingProvince: 'Shipping State/Province:',
+
+                  notificationsList_title: 'Notifications'
             });
 
             $translateProvider.translations('fr', {
@@ -914,7 +916,9 @@ app.config(['$translateProvider',
                   clientDetails_shippingCity: 'Ville livraison :',
                   clientDetails_shippingPostalCode: 'Code postal livraison :',
                   clientDetails_shippingCountry: 'Pays livraison :',
-                  clientDetails_shippingProvince: 'Province/\u00E9tat livraison :'
+                  clientDetails_shippingProvince: 'Province/\u00E9tat livraison :',
+
+                  notificationsList_title: 'Notifications',
             });
 
             $translateProvider.preferredLanguage('en');
