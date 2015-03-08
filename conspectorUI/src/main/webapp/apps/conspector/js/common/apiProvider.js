@@ -476,7 +476,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			updateOperationLog: function(oParameters){
 				var onSuccess = function(oData) {
 					cacheProvider.cleanEntitiesCache("oOperationLogEntity");
-					$rootScope.$emit('notificationsNumberShouldBeRefreshed');
+					$rootScope.getNotificationsNumber();
+					//$rootScope.$emit('notificationsNumberShouldBeRefreshed');
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
