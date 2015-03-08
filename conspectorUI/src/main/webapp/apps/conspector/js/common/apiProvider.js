@@ -341,7 +341,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 							break;
 						case "oOperationLogEntity":
 							$rootScope.$broadcast('notificationsShouldBeRefreshed');
-							$rootScope.$broadcast('notificationsNumberShouldBeRefreshed');
+							$rootScope.getNotificationsNumber();
 							break;							
 					}
 				});

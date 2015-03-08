@@ -55,6 +55,22 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
                         break;
                     }
                 }
+
+                var onInterestedUsersLoaded = function(aUsers) {
+                    apiProvider.logEvent({
+                        aUsers: aUsers,
+                        sEntityName: "deficiency",
+                        sEntityGuid: oData.Guid,
+                        sOperationNameEN: "Deficiency has been modified (mobile)...",
+                        sOperationNameFR: "Deficiency has been modified (mobile)...",
+                        sPhaseGuid: oData.PhaseGuid
+                    });
+                }
+                apiProvider.getInterestedUsers({
+                    sEntityName: "deficiency",
+                    sEntityGuid: oData.Guid,
+                    onSuccess: onInterestedUsersLoaded
+                });                
             }
 
             oDataForSave.Guid = $rootScope.oSelectedDeficiency._guid;

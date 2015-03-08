@@ -151,6 +151,8 @@
 		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>	
 
 		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	
+
+		<script src="apps/conspector/components/notifications/controllers/notificationsListController.js"></script>			
 	
 
 		<!--<%@page import="java.util.*" %>

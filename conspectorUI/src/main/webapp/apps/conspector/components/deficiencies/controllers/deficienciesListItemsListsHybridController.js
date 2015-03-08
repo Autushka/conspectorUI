@@ -327,7 +327,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                         $rootScope.bIgnoreNavigation = true;
                         $rootScope.loadDeficiencies();
                         $rootScope.sSelectedDeficiencyAttribute = "";
-                        $rootScope.sDeficienciesListView = "deficiencyDetails";                        
+                        $rootScope.sDeficienciesListView = "deficiencyDetails";
                     });
                 }
                 imageData = "data:image/jpeg;base64," + imageData; //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
@@ -366,6 +366,24 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                 $rootScope.sSelectedDeficiencyAttribute = "";
                 $cordovaKeyboard.close();
                 $rootScope.sDeficienciesListView = "deficiencyDetails";
+
+                // var onInterestedUsersLoaded = function(aUsers) {
+                //     apiProvider.logEvent({
+                //         aUsers: aUsers,
+                //         sEntityName: sEntityName,
+                //         sEntityGuid: sParentEntityGuid,
+                //         sOperationNameEN: "New comment has been created (mobile)...",
+                //         sOperationNameFR: "New comment has been created (mobile)...",
+                //         sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
+                //     });
+                // };
+
+                // apiProvider.getInterestedUsers({
+                //     sEntityName: sEntityName,
+                //     sEntityGuid: sParentEntityGuid,
+                //     onSuccess: onInterestedUsersLoaded
+                // });
+
             };
             var oDataForSave = {
                 GeneralAttributes: {}

@@ -453,7 +453,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         // };
 
         $scope.onSave = function() {
-            var onSuccessCreation = function() {
+            var onSuccessCreation = function(oData) {
                 $rootScope.sFileMetadataSetGuid = "";
 
                 $rootScope.oDeficiencyAttributes.oDescriptionTags.sValue = "...";
@@ -467,6 +467,22 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 $rootScope.oDeficiencyAttributes.oImages.iValue = 0;
 
                 $rootScope.sContractorsFilter = "";
+
+                var onInterestedUsersLoaded = function(aUsers) {
+                    apiProvider.logEvent({
+                        aUsers: aUsers,
+                        sEntityName: "deficiency",
+                        sEntityGuid: oData.Guid,
+                        sOperationNameEN: "New deficiency has been created (quickAdd)...",
+                        sOperationNameFR: "New deficiency has been created (quickAdd)...",
+                        sPhaseGuid: oData.PhaseGuid
+                    });
+                }
+                apiProvider.getInterestedUsers({
+                    sEntityName: "deficiency",
+                    sEntityGuid: oData.Guid,
+                    onSuccess: onInterestedUsersLoaded
+                });                
             };
 
             var oDataForSave = {};

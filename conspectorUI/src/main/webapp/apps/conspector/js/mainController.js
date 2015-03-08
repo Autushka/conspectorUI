@@ -65,7 +65,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 			$rootScope.iNotificationsNumber = aData.length;
 		};
 
-		var getNotificationsNumber = function(){
+		$rootScope.getNotificationsNumber = function(){
 			apiProvider.getOperationLogs({
 				sExpand: "PhaseDetails/ProjectDetails",
 				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "' and Status eq 'not read'",
@@ -73,11 +73,7 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 			});			
 		}
 
-		$rootScope.$on('notificationsNumberShouldBeRefreshed', function(oParameters) {
-			getNotificationsNumber();
-		});
-
-		getNotificationsNumber();
+		$rootScope.getNotificationsNumber();
 
 		$rootScope.bIsGalleryHidden = true;
 
