@@ -60,6 +60,15 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			$scope.bDisplayProfileSettings = true;
 		}
 
+		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
+			sRole: sCurrentRole,
+			sMenuItem: "bShowNotifications"
+		})) {
+			$scope.bDisplayNotifications = true;
+		}		
+
+		
+
 		if (cacheProvider.oUserProfile.aUserCompanies && cacheProvider.oUserProfile.aUserCompanies.length > 1) {
 			$scope.bDisplaySwitchCompanies = true;
 		}

@@ -93,15 +93,6 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 		$scope.aMenuItems.push({
 			bShouldBeDisplayed: rolesSettings.getRolesAdminPanelMenuItemSettings({
 				sRole: sCurrentRole,
-				sMenuItem: "bShowOperationLogs"
-			}),
-			sStateName: "app.adminPanel.operationLogsList",
-			sMenuLabel: "adminPanel_operationLogs",
-		});
-
-		$scope.aMenuItems.push({
-			bShouldBeDisplayed: rolesSettings.getRolesAdminPanelMenuItemSettings({
-				sRole: sCurrentRole,
 				sMenuItem: "bShowAccountTypesManagement"
 			}),
 			sStateName: "app.adminPanel.accountTypesList",

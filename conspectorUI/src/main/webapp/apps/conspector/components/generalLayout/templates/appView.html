@@ -18,7 +18,7 @@
 					{{sCurrentUser}}
 				</div>
 				<!-- add notifications counter -->
-				<div ng-click="onNotificationsList()" class="cnpLink cnpLinkHeader notSelectable" style="position: relative;">
+				<div ng-if="bDisplayNotifications" ng-click="onNotificationsList()" class="cnpLink cnpLinkHeader notSelectable" style="position: relative;">
 					{{'notificationsList_title' | translate}}
 					<div layout="row" layout-align="center center" class="cnpNotificationsCounter">{{$root.iNotificationsNumber}}</div>
 				</div>

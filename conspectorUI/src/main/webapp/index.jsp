@@ -137,7 +137,6 @@
 		<script src="apps/conspector/components/adminPanel/controllers/projectsListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/phasesListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/rolesListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/operationLogsListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/deficiencyStatusesListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/systemFilesController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/accountTypesListController.js"></script>

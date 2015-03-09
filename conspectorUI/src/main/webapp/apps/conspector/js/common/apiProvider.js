@@ -409,6 +409,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				});
 
 				oSrv.then($.proxy(function(aData) {
+					cacheProvider.cleanEntitiesCache("oOperationLogEntity");
+					$rootScope.getNotificationsNumber();
 					this.pubNubMessage({sEntityName: "oOperationLogEntity", sText: "New Operation Log..."});
 					//this.onSuccessUpdateDeficiency(oParameters);
 				}, this));
@@ -1332,22 +1334,14 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			createAccount: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
 					cacheProvider.cleanEntitiesCache("oAccountTypeEntity"); //for cases when accountTypes are readed with Accounts;
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oAccountEntity",
-							sText: "Account has been created...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
-				};
+					this.pubNubMessage({sEntityName: "oAccountEntity", sText: "Account has been created..."});
+				},this);
 				var oSvc = dataProvider.createEntity({
 					sPath: "Accounts",
 					sKeyAttribute: "Guid", //needed for links creation
@@ -1364,22 +1358,14 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			updateAccount: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
 					cacheProvider.cleanEntitiesCache("oAccountEntity");
 					cacheProvider.cleanEntitiesCache("oAccountTypeEntity"); //for cases when accountTypes are readed with Accounts;					
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oAccountEntity",
-							sText: "Account has been updated...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
-				};
+					this.pubNubMessage({sEntityName: "oAccountEntity", sText: "Account has been updated..."});
+				}, this);
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "Accounts",
@@ -1438,21 +1424,13 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			updateContact: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
 					cacheProvider.cleanEntitiesCache("oContactEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oContactEntity",
-							sText: "Contact has been updated...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
-				};
+					this.pubNubMessage({sEntityName: "oContactEntity", sText: "Contact has been updated..."});
+				}, this);
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "Contacts",
@@ -1469,21 +1447,13 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			createContact: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
 					cacheProvider.cleanEntitiesCache("oContactEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oContactEntity",
-							sText: "Contact has been created...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
-				};
+					this.pubNubMessage({sEntityName: "oContactEntity", sText: "Contact has been created..."});					
+				}, this);
 				var oSvc = dataProvider.createEntity({
 					sPath: "Contacts",
 					sKeyAttribute: "Guid", //needed for links creation
@@ -1713,21 +1683,13 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			updateActivity: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
 					cacheProvider.cleanEntitiesCache("oActivityEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oActivityEntity",
-							sText: "Activity has been updated...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
-				};
+					this.pubNubMessage({sEntityName: "oActivityEntity", sText: "Activity has been updated..."});	
+				}, this);
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "Activitys",
@@ -1743,21 +1705,13 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			createActivity: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
 					cacheProvider.cleanEntitiesCache("oActivityEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oActivityEntity",
-							sText: "Activity has been created...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
-				};
+					this.pubNubMessage({sEntityName: "oActivityEntity", sText: "Activity has been created..."});					
+				}, this);
 				var oSvc = dataProvider.createEntity({
 					sPath: "Activitys",
 					sKeyAttribute: "Guid", //needed for links creation
@@ -1821,15 +1775,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				if (oParameters.onSuccess) {
 					oParameters.onSuccess(oData);
 				}
-				PubNub.ngPublish({
-					channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-					message: {
-						sEntityName: "oDeficiencyEntity",
-						sText: "Deficiency has been updated...",
-						sUserName: cacheProvider.oUserProfile.sUserName,
-						sSessionGuid: $rootScope.sSessionGuid,
-					}
-				});
+				this.pubNubMessage({sEntityName: "oDeficiencyEntity", sText: "Deficiency has been updated..."});
 			},
 
 			updateDeficiency: function(oParameters) {
@@ -1932,22 +1878,14 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			updateUnit: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
 					cacheProvider.cleanEntitiesCache("oUnitEntity");
 					cacheProvider.cleanEntitiesCache("oPhaseEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oUnitEntity",
-							sText: "Unit has been updated...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
-				};
+					this.pubNubMessage({sEntityName: "oUnitEntity", sText: "Unit has been updated..."});
+				},this);
 				var oSvc = dataProvider.updateEntity({
 					bShowSpinner: oParameters.bShowSpinner,
 					sPath: "Units",
@@ -1963,22 +1901,14 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			createUnit: function(oParameters) {
-				var onSuccess = function(oData) {
+				var onSuccess = $.proxy(function(oData) {
 					cacheProvider.cleanEntitiesCache("oUnitEntity");
 					cacheProvider.cleanEntitiesCache("oPhaseEntity");
 					if (oParameters.onSuccess) {
 						oParameters.onSuccess(oData);
 					}
-					PubNub.ngPublish({
-						channel: "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany,
-						message: {
-							sEntityName: "oUnitEntity",
-							sText: "Unit has been created...",
-							sUserName: cacheProvider.oUserProfile.sUserName,
-							sSessionGuid: $rootScope.sSessionGuid,
-						}
-					});
-				};
+					this.pubNubMessage({sEntityName: "oUnitEntity", sText: "Unit has been created..."});
+				}, this);
 				var oSvc = dataProvider.createEntity({
 					sPath: "Units",
 					sKeyAttribute: "Guid", //needed for links creation

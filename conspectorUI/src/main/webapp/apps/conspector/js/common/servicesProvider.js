@@ -70,31 +70,21 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			logSuccessLogIn: function() {
-				// apiProvider.logEvent({
-				// 	oData: {
-				// 		GeneralAttributes: {},
-				// 		OperationName: "login_success",
-				// 		OperationContent: {
-				// 			sUserName: cacheProvider.oUserProfile.sUserName,
-				// 			sCompany: cacheProvider.oUserProfile.sCurrentCompany,
-				// 			sRole: cacheProvider.oUserProfile.sCurrentRole,
-				// 		}
-				// 	}
-				// });
+				apiProvider.logEvent({
+					aUsers: ["GeneralAdmin"],
+					sEntityName: "",
+					sEntityGuid: "",
+					sOperationNameEN: "Log In",
+				});
 			},
 
 			logLogOut: function() {
-				// apiProvider.logEvent({
-				// 	oData: {
-				// 		GeneralAttributes: {},
-				// 		OperationName: "log_out",
-				// 		OperationContent: {
-				// 			sUserName: cacheProvider.oUserProfile.sUserName,
-				// 			sCompany: cacheProvider.oUserProfile.sCurrentCompany,
-				// 			sRole: cacheProvider.oUserProfile.sCurrentRole
-				// 		}
-				// 	}
-				// });
+				apiProvider.logEvent({
+					aUsers: ["GeneralAdmin"],
+					sEntityName: "",
+					sEntityGuid: "",
+					sOperationNameEN: "Log Out",
+				});				
 			},
 
 			onNoDefaultViewForTheRole: function() {

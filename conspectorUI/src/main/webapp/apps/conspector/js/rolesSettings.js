@@ -57,7 +57,8 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContacts: true,
 					bShowActivities: true,
 					bShowAdminPanel: true,
-					bShowProfileSettings: true
+					bShowProfileSettings: true,
+					bShowNotifications: true					
 				},
 				oAdminPanelMenu: {
 					bShowCompaniesManagement: true,
@@ -68,7 +69,6 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowDeficiencyStatusesManagement: true,
 					bShowDeficiencyPrioritiesManagement: true,
 					bShowSystemFilesManagement: true,
-					bShowOperationLogs: true,
 					bShowAccountTypesManagement: true,
 					bShowContactTypesManagement: true,
 					bShowUnitOptionSetManagement: true,
@@ -143,7 +143,8 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContacts: true,
 					bShowActivities: true,
 					bShowAdminPanel: true,
-					bShowProfileSettings: true
+					bShowProfileSettings: true,
+					bShowNotifications: true
 				},
 				oAdminPanelMenu: {
 					bShowCompaniesManagement: false,
@@ -154,7 +155,6 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowDeficiencyStatusesManagement: true,
 					bShowDeficiencyPrioritiesManagement: true,
 					bShowSystemFilesManagement: true,
-					bShowOperationLogs: true,
 					bShowAccountTypesManagement: true,
 					bShowContactTypesManagement: true,
 					bShowUnitOptionSetManagement: true,
@@ -230,7 +230,8 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContacts: true,
 					bShowActivities: false,
 					bShowAdminPanel: false,
-					bShowProfileSettings: true
+					bShowProfileSettings: true,
+					bShowNotifications: true
 				},
 				oAdminPanelMenu: {
 					bShowCompaniesManagement: false,
@@ -241,7 +242,6 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowDeficiencyStatusesManagement: false,
 					bShowDeficiencyPrioritiesManagement: false,
 					bShowSystemFilesManagement: false,
-					bShowOperationLogs: false,
 					bShowAccountTypesManagement: false,
 					bShowContactTypesManagement: false,
 					bShowUnitOptionSetManagement: false,
@@ -316,7 +316,8 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContacts: true,
 					bShowActivities: false,
 					bShowAdminPanel: false,
-					bShowProfileSettings: true
+					bShowProfileSettings: true,
+					bShowNotifications: true
 				},
 				oAdminPanelMenu: {
 					bShowCompaniesManagement: false,
@@ -327,7 +328,6 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowDeficiencyStatusesManagement: false,
 					bShowDeficiencyPrioritiesManagement: false,
 					bShowSystemFilesManagement: false,
-					bShowOperationLogs: false,
 					bShowAccountTypesManagement: false,
 					bShowContactTypesManagement: false,
 					bShowUnitOptionSetManagement: false,
@@ -403,7 +403,8 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowContacts: false,
 					bShowActivities: false,
 					bShowAdminPanel: false,
-					bShowProfileSettings: true
+					bShowProfileSettings: true,
+					bShowNotifications: true
 				},
 				oAdminPanelMenu: {
 					bShowCompaniesManagement: false,
@@ -414,7 +415,6 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 					bShowDeficiencyStatusesManagement: false,
 					bShowDeficiencyPrioritiesManagement: false,
 					bShowSystemFilesManagement: false,
-					bShowOperationLogs: false,
 					bShowAccountTypesManagement: false,
 					bShowContactTypesManagement: false,
 					bShowUnitOptionSetManagement: false,

@@ -360,7 +360,7 @@ app.factory('dataProvider', ['genericODataFactory', 'utilsProvider', '$q', '$roo
 						oDataForUpdate.LastModifiedAt = utilsProvider.dateToDBDate(new Date());
 
 						if (!oDataForUpdate.GeneralAttributes) {
-							oDataForUpdate.GeneralAttributes = {};
+							oDataForUpdate.GeneralAttributes = oData.GeneralAttributes;
 						}
 
 						oDataForUpdate.GeneralAttributes.LastModifiedBy = cacheProvider.oUserProfile.sUserName;
