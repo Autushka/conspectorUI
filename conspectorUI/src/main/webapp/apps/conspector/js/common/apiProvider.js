@@ -594,41 +594,6 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				}, this));
 			},
 
-			// updateOperationLogs: function(oParameters) {
-			// 	var oSrv = {};
-			// 	var oRequestData = {
-			// 		__batchRequests: []
-			// 	};
-			// 	var aData = [];
-			// 	var oData = {};
-
-			// 	for (var i = 0; i < oParameters.aData.length; i++) {
-			// 		oData = {
-			// 			requestUri: "OperationLogs('" + oParameters.aData[i].Guid + "')",
-			// 			method: "PUT",
-			// 			data: oParameters.aData[i]
-			// 		};
-
-			// 		aData.push(oData);
-			// 	}
-
-			// 	dataProvider.constructChangeBlockForBatch({
-			// 		oRequestData: oRequestData,
-			// 		aData: aData
-			// 	});
-
-			// 	oSrv = dataProvider.batchRequest({
-			// 		oRequestData: oRequestData,
-			// 		bShowSpinner: oParameters.bShowSpinner,
-			// 		bShowSuccessMessage: oParameters.bShowSuccessMessage,
-			// 		bShowErrorMessage: oParameters.bShowErrorMessage,
-			// 	});
-
-			// 	oSrv.then($.proxy(function(aData) {
-			// 		//this.onSuccessUpdateDeficiency(oParameters);
-			// 	}, this));
-			// },
-
 			getProjects: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Projects",

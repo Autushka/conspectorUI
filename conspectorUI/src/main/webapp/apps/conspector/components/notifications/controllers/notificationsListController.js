@@ -225,8 +225,8 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
             apiProvider.updateOperationLogs({
                 aData: aData,
                 onSuccess: onSuccess,
-                bShowSuccessMessage: true,
-                bShowErrorMessage: true,
+                //bShowSuccessMessage: true,
+                //bShowErrorMessage: true,
             });
         };
 
@@ -249,8 +249,8 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
             apiProvider.deleteOperationLogs({
                 aData: aData,
                 onSuccess: onSuccess,
-                bShowSuccessMessage: true,
-                bShowErrorMessage: true,
+                //bShowSuccessMessage: true,
+                //bShowErrorMessage: true,
             });
 
         };
