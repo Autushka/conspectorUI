@@ -1,5 +1,5 @@
-app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', 
-	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard) {
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', '$rootScope',
+	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard, $rootScope) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
@@ -162,6 +162,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					}
 					this.logSuccessLogIn(); //log login_success operation 
 					apiProvider.initializePubNub();
+					this.initializeGetNotificationsFunction();
+					$rootScope.getNotificationsNumber();
 					$state.go(rolesSettings.getRolesInitialState(sCurrentRole)); //navigation to the initial view for the role
 					return;
 				} else {
@@ -239,6 +241,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				} else {
 					//cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
 					apiProvider.initializePubNub();
+					this.initializeGetNotificationsFunction();
+					$rootScope.getNotificationsNumber();
 					rolesSettings.setCurrentRole(sCurrentRole);
 				}
 			},
@@ -851,6 +855,19 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					// 	}
 					// }
 					oParameters.oParentArrayWrapper.aData[i][oParameters.sTargetArrayNameInParent] = aArray;
+				}
+			},
+
+			initializeGetNotificationsFunction: function() {
+				$rootScope.getNotificationsNumber = function() {
+					var onNotificationsLoaded = function(aData) {
+						$rootScope.iNotificationsNumber = aData.length;
+					};
+					apiProvider.getOperationLogs({
+						sExpand: "PhaseDetails/ProjectDetails",
+						sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "' and Status eq 'not read'",
+						onSuccess: onNotificationsLoaded
+					});
 				}
 			},
 

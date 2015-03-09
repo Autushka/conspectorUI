@@ -274,6 +274,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				var onTaskInfoLoaded = function(oData) {
 					var aInterestedUsers = [];
 					var bAssignedUserAdded = false;
+					var bAuthorAdded = false;
 
 					for (var i = oData.AccountDetails.results.length - 1; i >= 0; i--) {
 						for (var j = oData.AccountDetails.results[i].ContactDetails.results.length - 1; j >= 0; j--) {
@@ -281,13 +282,19 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 								if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === oData.UserName) {
 									bAssignedUserAdded = true;
 								}
+								if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === oData.GeneralAttributes.CreatedBy) {
+									bAuthorAdded = true;
+								}								
 								aInterestedUsers.push(oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName);
 							}
 						};
 					}
-
 					if (oData.UserName != cacheProvider.oUserProfile.sUserName && !bAssignedUserAdded) {
 						aInterestedUsers.push(oData.UserName);
+					}
+
+					if(oData.GeneralAttributes.CreatedBy != cacheProvider.oUserProfile.sUserName && !bAuthorAdded && oData.GeneralAttributes.CreatedBy != oData.UserName){
+						aInterestedUsers.push(oData.CreatedBy);
 					}
 					aInterestedUsers.push("GeneralAdmin");// just for now...for test perposes.
 

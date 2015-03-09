@@ -58,6 +58,8 @@ viewControllers.controller('roleSelectionView', ['$scope', '$rootScope', '$state
 
 			servicesProvider.logSuccessLogIn(); //log login_success operation 
 			apiProvider.initializePubNub();
+			servicesProvider.initializeGetNotificationsFunction();
+			$rootScope.getNotificationsNumber();
 			$state.go(rolesSettings.getRolesInitialState(sCurrentRole));
 		};
 
