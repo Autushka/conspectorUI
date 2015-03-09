@@ -13,21 +13,25 @@
 				</div>
 				<div ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeader notSelectable">
 					{{'app_adminPanel' | translate}}
-				</div>
-				<div ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="cnpLink cnpLinkHeader notSelectable">
+				</div> 
+				<div class="notSelectable" ng-class="{'cnpUserDropdownMenuWrapper': !bDisplayUserDropdownMenu, 'cnpUserDropdownMenuWrapper active': bDisplayUserDropdownMenu}" ng-init="bDisplayUserDropdownMenu = false" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+					<div class="cnpUserDropdownMenu"  layout="column" layout-align="start center">
+						<div ng-if="bDisplayProfileSettings" class="cnpLink cnpLinkHeaderInDownDown" ng-click="onProfileSettings()" >
+							User Settings
+						</div>
+						<div ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeaderInDownDown">
+							{{'signIn_languageCode' | translate}}
+						</div>
+						<div ng-click="onLogOut()" class="cnpLink cnpLinkHeaderInDownDown notSelectable" style="border-bottom-width: 0; padding-bottom:0;">
+							{{'app_logOut' | translate}}
+						</div>
+					</div>
 					{{sCurrentUser}}
 				</div>
 				<!-- add notifications counter -->
-				<div ng-if="bDisplayNotifications" ng-click="onNotificationsList()" class="cnpLink cnpLinkHeader notSelectable" style="position: relative;">
+				<div ng-click="onNotificationsList()" class="cnpLink cnpLinkHeader notSelectable" style="position: relative; margin-left: 11px;">
 					{{'notificationsList_title' | translate}}
-					<div layout="row" layout-align="center center" class="cnpNotificationsCounter">{{$root.iNotificationsNumber}}</div>
-				</div>
-				
-				<div ng-click="onLogOut()" class="cnpLink cnpLinkHeader notSelectable">
-					{{'app_logOut' | translate}}
-				</div>
-				<div ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeader">
-					{{'signIn_languageCode' | translate}}
+					<div ng-show="$root.iNotificationsNumber > 0" layout="row" layout-align="center center" class="cnpNotificationsCounter">{{$root.iNotificationsNumber}}</div>
 				</div>
 			</div>
 		</div>
@@ -35,7 +39,7 @@
 	<div class="cnpSubHeaderBackground" layout="column" layout-align="start center">
 		<div class="cnpSubHeader" layout="row" layout-align="start center">
 			<!-- <label class="cnpLinkProjectsAndPhases">
-											{{'global_selectedProjectsAndPhases' | translate }}
+															{{'global_selectedProjectsAndPhases' | translate }}
 			</label> -->
 			<div
 				class="cnpMultiSelectProjectsAndPhases"
@@ -60,11 +64,9 @@
 			</md-tabs>
 		</div>
 	</div>
-	
 	<div ui-view class="cnpAppViewContent">
 	</div>
 	<div>
 		<!-- Place to put global right sidebar -->
 	</div>
-	
 </section>

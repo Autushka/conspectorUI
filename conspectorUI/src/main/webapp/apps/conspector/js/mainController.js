@@ -20,5 +20,6 @@ app.controller('mainController', ['$scope', '$rootScope', '$state', 'apiProvider
 		$rootScope.hideGallery = function() {
 			$rootScope.bIsGalleryHidden = true;
 		};
+
 	}
 ]);

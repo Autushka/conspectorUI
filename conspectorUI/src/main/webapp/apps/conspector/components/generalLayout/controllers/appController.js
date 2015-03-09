@@ -60,15 +60,6 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			$scope.bDisplayProfileSettings = true;
 		}
 
-		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
-			sRole: sCurrentRole,
-			sMenuItem: "bShowNotifications"
-		})) {
-			$scope.bDisplayNotifications = true;
-		}		
-
-		
-
 		if (cacheProvider.oUserProfile.aUserCompanies && cacheProvider.oUserProfile.aUserCompanies.length > 1) {
 			$scope.bDisplaySwitchCompanies = true;
 		}
@@ -238,6 +229,14 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 			$scope.selectedTabIndex = -1;
 			$scope.$broadcast("$mdTabsPaginationChanged");
 			$state.go('app.profileSettings.profileDetails');
+		};
+
+		$scope.hoverIn = function() {
+			$scope.bDisplayUserDropdownMenu = true;
+		}; 
+
+		$scope.hoverOut = function() {
+			$scope.bDisplayUserDropdownMenu = false;
 		};
 
 		$scope.onNotificationsList = function() {

@@ -202,7 +202,14 @@ font-weight: 500;
 		padding-bottom: 0px;
 	}
 	&.cnpLinkHeader{
-		padding-left: 12px;
+		margin-left: 16px;
+	}
+	&.cnpLinkHeaderInDownDown{
+		margin-bottom: 8px;
+		border-bottom: solid rgb(225, 226, 227) 1px;
+		width: 100%;
+		padding-bottom: 5px;
+
 	}
 	&.cnpLinkHeaderCompany{
 		padding-left: 30px;
@@ -2377,21 +2384,81 @@ NG TABLE
 
 .cnpNotificationsCounter{
 	position: absolute;
-	top: -17px;
-	right: -8px;
+	top: -18px;
+	right: -15px;
 	color: white;
 	background: #f50606;
 	width: auto;
-	/* padding: 3px; */
-	padding-bottom: 2px;
-	padding-top: 2px;
-	padding-right: 3px;
-	font-size: 14px;
-	padding-left: 2px;
+	padding-bottom: 4px;
+	padding-top: 3px;
+	padding-right: 4px;
+	font-size: 13px;
+	padding-left: 3px;
 	height: auto;
 	border-radius: 2px;
 	/* text-align: center; */
+	-webkit-transition: all 0.2s;
+	  -moz-transition: all 0.2s;
+	  -ms-transition: all 0.2s;
+	  -o-transition: all 0.2s;
+	  transition: all 0.2s;
 }
+.cnpUserDropdownMenuWrapper.active .cnpUserDropdownMenu{
+	max-height: 400px;
+	opacity: 1;
+	visibility: visible;
+
+}
+.cnpUserDropdownMenuWrapper.active{
+	background-color: @mediumGreyBackgroundColor;
+	border-radius: 3px;
+}
+.cnpUserDropdownMenuWrapper{
+	position: relative;
+	font-size: 16px;
+	cursor: pointer;
+	font-weight: 500;
+	margin-left: 12px;
+	padding: 8px;
+	padding-right: 25px;
+}
+.cnpUserDropdownMenuWrapper:after{
+	content: "";
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 50%;
+	right: 9px;
+	margin-top: -3px;
+	border-width: 6px 6px 0 6px;
+	border-style: solid;
+	border-color: @textColor transparent;
+}
+
+.cnpUserDropdownMenuWrapper .cnpUserDropdownMenu{
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: -10px;
+	overflow: hidden;
+	max-height: 0;
+}
+
+.cnpUserDropdownMenu{
+	position: absolute;
+	width: 110%;
+	padding: 16px 16px 8px 12px;
+	/* top: 27px; */
+	border-radius: 3px;
+	z-index: 999;
+	background: white;
+	right: 0;
+	opacity: 0;
+	visibility: hidden;
+	box-shadow: 0 3px 17px 3px rgba(0,0,0,0.2);
+	max-height: 0;
+}
+
 
 .cnpNgTableComment{
 		background: #fcfcfc;
