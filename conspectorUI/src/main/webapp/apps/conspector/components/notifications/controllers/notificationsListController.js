@@ -68,11 +68,11 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                 sProjectName = "";
                 sPhaseName = "";
                 sProjectPhase = "";
-                
+
                 iSortingSequence = 0;
-                
+
                 sStatus = "";
-                
+
                 bMatchFound = false;
 
                 if (aData[i].PhaseDetails) {
@@ -103,7 +103,7 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
 
                 sOperationName = $translate.use() === "en" ? aData[i].OperationNameEN : aData[i].OperationNameFR;
 
-                if(aData[i].Status === "not read"){
+                if (aData[i].Status === "not read") {
 
                 }
 
@@ -113,7 +113,7 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                     sStatus: aData[i].Status,
                     sEntityName: aData[i].EntityName,
                     _entityGuid: aData[i].EntityGuid,
-                    sOperationName:  sOperationName,
+                    sOperationName: sOperationName,
                     _sortingSequence: iSortingSequence,
                     _createdAt: aData[i].CreatedAt,
                     sCreatedAt: utilsProvider.dBDateToSting(aData[i].CreatedAt),
@@ -131,23 +131,23 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
 
         var loadNotifications = function() {
             oNotificationsListData.aData = [];
-                apiProvider.getOperationLogs({
-                    sExpand: "PhaseDetails/ProjectDetails",
-                    sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "'",
-                    bShowSpinner: true,
-                    onSuccess: onNotificationsLoaded
-                });
+            apiProvider.getOperationLogs({
+                sExpand: "PhaseDetails/ProjectDetails",
+                sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "' and GeneralAttributes/IsDeleted eq false",
+                bShowSpinner: true,
+                onSuccess: onNotificationsLoaded
+            });
         };
         loadNotifications();
 
         $scope.onDisplay = function(oNotification, oEvent) {
             cacheProvider.putListViewScrollPosition("notificationsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
-            switch(oNotification.sEntityName){
+            switch (oNotification.sEntityName) {
                 case "deficiency":
                     $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
                         sMode: "display",
                         sDeficiencyGuid: oNotification._entityGuid,
-                    });                    
+                    });
                     break;
             }
 
@@ -155,7 +155,7 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                 sKey: oNotification._guid,
                 oData: {
                     Status: 'read'
-                },                
+                },
             })
         };
 
@@ -203,6 +203,58 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
             });
         };
 
+        $scope.onMarkAllAsRead = function() {
+            var onSuccess = function() {
+                loadNotifications();
+            };
+            var aData = [];
+            for (var i = 0; i < $scope.tableParams.data.length; i++) {
+                for (var j = 0; j < $scope.tableParams.data[i].data.length; j++) {
+                    if ($scope.tableParams.data[i].data[j].sStatus === "not read") {
+                        aData.push({
+                            Guid: $scope.tableParams.data[i].data[j]._guid,
+                            Status: "read",
+                        });
+                    }
+                }
+            }
+
+            if (!aData.length) {
+                return;
+            }
+            apiProvider.updateOperationLogs({
+                aData: aData,
+                onSuccess: onSuccess,
+                bShowSuccessMessage: true,
+                bShowErrorMessage: true,
+            });
+        };
+
+        $scope.onDismissAll = function() {
+            var onSuccess = function() {
+                loadNotifications();
+            };
+            var aData = [];
+            for (var i = 0; i < $scope.tableParams.data.length; i++) {
+                for (var j = 0; j < $scope.tableParams.data[i].data.length; j++) {
+                    aData.push({
+                        Guid: $scope.tableParams.data[i].data[j]._guid,
+                    });
+                }
+            }
+
+            if (!aData.length) {
+                return;
+            }
+            apiProvider.deleteOperationLogs({
+                aData: aData,
+                onSuccess: onSuccess,
+                bShowSuccessMessage: true,
+                bShowErrorMessage: true,
+            });
+
+        };
+
         $scope.$on("$destroy", function() {
             if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views
                 return;
@@ -212,6 +264,6 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                 sStateName: $rootScope.sCurrentStateName,
                 oStateParams: $rootScope.oStateParams
             });
-        });        
+        });
     }
 ]);
