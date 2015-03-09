@@ -389,7 +389,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 							OperationNameFR: oParameters.sOperationNameFR,
 							PhaseGuid: oParameters.sPhaseGuid,
 							CreatedAt: utilsProvider.dateToDBDate(new Date()),
-							GeneralAttributes: {CreatedBy:cacheProvider.oUserProfile.sUserName}
+							GeneralAttributes: {CreatedBy:cacheProvider.oUserProfile.sUserName},
+							ContactGuid: cacheProvider.oUserProfile.oUserContact.Guid,
 						}
 					};
 

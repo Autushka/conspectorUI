@@ -140,8 +140,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 					});
 				};
 
-				if (sParentEntityGuid) {
-					
+				if (sParentEntityGuid) {					
 					switch(sEntity){
 						case "oDeficiencyEntity": 
 							sEntityName = "deficiency";
