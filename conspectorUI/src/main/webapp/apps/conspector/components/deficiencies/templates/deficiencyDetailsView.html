@@ -121,6 +121,12 @@
 							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 						</div>
 					</div>
+					<div layout="row" layout-align="center center"
+						ng-class="{ 'cnpInputIcon cnpImagesIcon': oDeficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity': oDeficiency.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery($event)">
+						<a>
+							({{oDeficiency.iImagesNumber}})
+						</a>
+					</div>
 				</div>
 			</div>
 			<div layout="row" style="width: 100%" flex>
@@ -206,7 +212,7 @@
 							</div>
 							<!-- <input ng-model="aSelectedContractors.length" type="number" ng-show="false" name="selectedContractors" min="1">
 							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedContractors.$error" ng-if="(oForms.deficiencyDetailsForm.selectedContractors.$dirty && !oForms.deficiencyDetailsForm.selectedContractors.$valid) || submitted">
-										<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+											<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 							</div> -->
 						</div>
 						<div style="margin-top: 12px; margin-bottom: 12px;">

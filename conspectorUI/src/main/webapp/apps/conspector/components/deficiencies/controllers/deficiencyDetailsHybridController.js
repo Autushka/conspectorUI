@@ -117,7 +117,7 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
 
         $scope.onStatusAttribute = function() {
             if ($rootScope.oSelectedDeficiency.sStatusDescriptionEN != "Done by Contractor" && $rootScope.oSelectedDeficiency.sStatusDescriptionEN != "In Progress" && $rootScope.oSelectedDeficiency.sStatusDescriptionEN != "Non Conform" && cacheProvider.oUserProfile.sCurrentRole === "contractor") {
-                continue;
+                return;
             }
             $rootScope.sCurrentSearhCriteria = "";
             $rootScope.sSelectedDeficiencyAttribute = "statuses";

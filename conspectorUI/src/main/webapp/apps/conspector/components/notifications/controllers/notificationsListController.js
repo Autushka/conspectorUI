@@ -56,6 +56,8 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
             var sProjectPhase = "";
             var bMatchFound = false;
             var iSortingSequence = 0;
+            var sAuthor = "";
+            var sAvatarUrl = "";
             // var sStatusSortingSequence = "";
             // var sStatuseIconUrl = "";
             // var sStatuseIconGuid = "";
@@ -68,10 +70,10 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                 sProjectName = "";
                 sPhaseName = "";
                 sProjectPhase = "";
-
                 iSortingSequence = 0;
-
                 sStatus = "";
+                sAuthor = "";
+                sAvatarUrl = "";
 
                 bMatchFound = false;
 
@@ -103,9 +105,21 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
 
                 sOperationName = $translate.use() === "en" ? aData[i].OperationNameEN : aData[i].OperationNameFR;
 
-                if (aData[i].Status === "not read") {
-
+                if (aData[i].ContactDetails) {
+                    if (aData[i].ContactDetails.FirstName) {
+                        sAuthor = aData[i].ContactDetails.FirstName + " ";
+                    }
+                    if (aData[i].ContactDetails.LastName) {
+                        sAuthor = sAuthor + aData[i].ContactDetails.LastName;
+                    }
                 }
+                var MD5 = new Hashes.MD5;
+                if (aData[i].ContactDetails && aData[i].ContactDetails.UserDetails && aData[i].ContactDetails.UserDetails.results[0]) {
+                    var sUserEmailHash = MD5.hex(aData[i].ContactDetails.UserDetails.results[0].EMail);
+                } else {
+                    var sUserEmailHash = MD5.hex("deficien@cyDetails.com");
+                }
+                sAvatarUrl = "http://www.gravatar.com/avatar/" + sUserEmailHash + ".png?d=identicon&s=60";
 
                 oNotificationsListData.aData.push({
                     _guid: aData[i].Guid,
@@ -118,6 +132,8 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                     _createdAt: aData[i].CreatedAt,
                     sCreatedAt: utilsProvider.dBDateToSting(aData[i].CreatedAt),
                     sCreatedBy: aData[i].GeneralAttributes.CreatedBy,
+                    sAuthor: sAuthor,
+                    sAvatarUrl: sAvatarUrl,
                 });
             }
             $scope.tableParams.reload();
@@ -132,7 +148,7 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
         var loadNotifications = function() {
             oNotificationsListData.aData = [];
             apiProvider.getOperationLogs({
-                sExpand: "PhaseDetails/ProjectDetails",
+                sExpand: "PhaseDetails/ProjectDetails,ContactDetails/UserDetails",
                 sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "' and GeneralAttributes/IsDeleted eq false",
                 bShowSpinner: true,
                 onSuccess: onNotificationsLoaded

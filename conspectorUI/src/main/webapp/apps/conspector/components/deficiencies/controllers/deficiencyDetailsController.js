@@ -101,7 +101,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		};
 
 		var setDisplayedDeficiencyDetails = function(oDeficiency) {
-			$rootScope.sCurrentEntityPhaseGuid = oDeficiency.PhaseGuid;//needed for notifications...
+			$rootScope.sCurrentEntityPhaseGuid = oDeficiency.PhaseGuid; //needed for notifications...
 			$scope.oDeficiency._guid = oDeficiency.Guid;
 			$scope.oDeficiency._lastModifiedAt = oDeficiency.LastModifiedAt;
 			var sProject = "";
@@ -167,6 +167,23 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			$scope.oDeficiency._taskPriorityGuid = oDeficiency.TaskPriorityGuid;
 			$scope.oDeficiency._assignedUserName = oDeficiency.UserName;
 			$scope.oDeficiency._unitGuid = oDeficiency.UnitGuid;
+			var aImages = [];
+			var iImagesNumber = 0;
+			if (oDeficiency.FileMetadataSetDetails) {
+				if (oDeficiency.FileMetadataSetDetails.FileMetadataDetails) {
+					for (var j = 0; j < oDeficiency.FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
+						if (oDeficiency.FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType) {
+							if (oDeficiency.FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && oDeficiency.FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false) {
+								aImages.push(oDeficiency.FileMetadataSetDetails.FileMetadataDetails.results[j]);
+							}
+						}
+					}
+				}
+				iImagesNumber = aImages.length;
+			}
+
+			$scope.oDeficiency.iImagesNumber = iImagesNumber;
+			$scope.oDeficiency._aImages = angular.copy(aImages);
 
 			$scope.oDeficiency._contractorsGuids = [];
 			if (oDeficiency.AccountDetails) {
@@ -294,7 +311,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 		var getDeficiencyDetails = function() {
 			apiProvider.getDeficiency({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails, TaskPriorityDetails, AccountDetails, UnitDetails,FileMetadataSetDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
 				sKey: sDeficiencyGuid,
 				bShowSpinner: true,
 				onSuccess: onDeficiencyDetailsLoaded,
@@ -662,7 +679,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					sEntityName: "deficiency",
 					sEntityGuid: oData.Guid,
 					onSuccess: onInterestedUsersLoaded
-				});				
+				});
 			};
 
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aDescriptionTags);
@@ -731,6 +748,13 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 						onSuccess: onSuccessCreation,
 					});
 					break;
+			}
+		};
+
+		$scope.onDisplayPhotoGallery = function(oEvent) {
+			oEvent.stopPropagation();
+			if ($scope.oDeficiency._aImages.length) {
+				servicesProvider.setUpPhotoGallery($scope.oDeficiency._aImages);
 			}
 		};
 
