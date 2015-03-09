@@ -147,7 +147,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
             }
             $rootScope.$broadcast("FileAttachemntsCanBeLoaded");
 
-
             $scope.oActivity._guid = oActivity.Guid;
             $scope.oActivity.sObject = oActivity.Object;
             $scope.oActivity._lastModifiedAt = oActivity.LastModifiedAt;
@@ -166,7 +165,23 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
 
             constructPhasesMultiSelect(aActivityPhasesGuids);
 
+            var aImages = [];
+            var iImagesNumber = 0;
+            if (oActivity.FileMetadataSetDetails) {
+                if (oActivity.FileMetadataSetDetails.FileMetadataDetails) {
+                    for (var j = 0; j < oActivity.FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
+                        if (oActivity.FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType) {
+                            if (oActivity.FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && oActivity.FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false) {
+                                aImages.push(oActivity.FileMetadataSetDetails.FileMetadataDetails.results[j]);
+                            }
+                        }
+                    }
+                }
+                iImagesNumber = aImages.length;
+            }
 
+            $scope.oActivity.iImagesNumber = iImagesNumber;
+            $scope.oActivity._aImages = angular.copy(aImages);
 
             $scope.oActivity._unitsGuids = [];
             if (oActivity.UnitDetails) {
@@ -174,8 +189,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                     $scope.oActivity._unitsGuids.push(oActivity.UnitDetails.results[i].Guid);
                 }
             }
-
-
 
             $scope.oActivity._activityTypeGuid = oActivity.ActivityTypeGuid;
 
@@ -204,7 +217,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
 
         var oActivity = cacheProvider.getEntityDetails({
             sCacheProviderAttribute: "oActivityEntity",
-            sRequestSettings: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + "PhaseDetails/ProjectDetails,ActivityTypeDetails", //filter + expand
+            sRequestSettings: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + "PhaseDetails/ProjectDetails,ActivityTypeDetails,FileMetadataSetDetails/FileMetadataDetails", //filter + expand
             sKeyName: "Guid",
             sKeyValue: $stateParams.sActivityGuid
         });
@@ -361,7 +374,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         var getActivityDetails = function() {
             apiProvider.getActivity({
                 sKey: sActivityGuid,
-                sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails, UnitDetails/PhaseDetails, UserDetails",
+                sExpand: "AccountDetails/AccountTypeDetails,ActivityTypeDetails,ContactDetails,PhaseDetails/ProjectDetails,UnitDetails/PhaseDetails,UserDetails,FileMetadataSetDetails/FileMetadataDetails",
                 bShowSpinner: true,
                 onSuccess: onActivityDetailsLoaded,
             });
@@ -717,6 +730,13 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
             $rootScope.bDataHasBeenModified = false;
             $state.go(oNavigateToInfo.toState, oNavigateToInfo.toParams);
         };
+
+        $scope.onDisplayPhotoGallery = function(oEvent) {
+            oEvent.stopPropagation();
+            if ($scope.oActivity._aImages.length) {
+                servicesProvider.setUpPhotoGallery($scope.oActivity._aImages);
+            }
+        };        
 
         $scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             if ($rootScope.bDataHasBeenModified) {
