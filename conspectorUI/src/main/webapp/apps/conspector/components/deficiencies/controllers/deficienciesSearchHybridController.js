@@ -144,6 +144,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			var sStatuseIconUrl = "";
 			var sStatuseIconGuid = "";
 			var sStatusDescription = "";
+			var sStatusDescriptionEN = "";
 			var sPriorityDescription = "";
 			var sContractors = "";
 			var iImagesNumber = 0;
@@ -184,6 +185,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 				sStatuseIconUrl = "";
 				sStatusIconGuid = "";
 				sStatusDescription = "";
+				sStatusDescriptionEN = "";
 				sPriorityDescription = "";
 				sContractors = "";
 				iImagesNumber = 0;
@@ -232,6 +234,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 						sStatusDescription = aData[i].TaskStatusDetails.NameEN;
 					}
 					sStatusIconGuid = aData[i].TaskStatusDetails.AssociatedIconFileGuid;
+					sStatusDescriptionEN = aData[i].TaskStatusDetails.NameEN;
 				}
 
 				if (aData[i].TaskPriorityDetails) {
@@ -306,6 +309,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					sStatuseIconUrl: sStatuseIconUrl,
 					sStatusIconGuid: sStatusIconGuid,
 					sStatusDescription: sStatusDescription,
+					sStatusDescriptionEN: sStatusDescriptionEN,
 					sPriorityDescription: sPriorityDescription,
 					sDescription: sDescription,
 					_unitGuid: aData[i].UnitGuid,

@@ -70,7 +70,7 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
                     sEntityName: "deficiency",
                     sEntityGuid: oData.Guid,
                     onSuccess: onInterestedUsersLoaded
-                });                
+                });
             }
 
             oDataForSave.Guid = $rootScope.oSelectedDeficiency._guid;
@@ -104,7 +104,7 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
             $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
         };
 
-        $scope.onCommentsAttribute = function(){
+        $scope.onCommentsAttribute = function() {
             //$rootScope.aSelectedDeficiencyComments = angular.copy($rootScope.oSelectedDeficiency._oComments);
             $rootScope.aSelectedDeficiencyComments = angular.copy(servicesProvider.processListOfComments($rootScope.oSelectedDeficiency._oComments));
 
@@ -116,6 +116,9 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
         };
 
         $scope.onStatusAttribute = function() {
+            if ($rootScope.oSelectedDeficiency.sStatusDescriptionEN != "Done by Contractor" && $rootScope.oSelectedDeficiency.sStatusDescriptionEN != "In Progress" && $rootScope.oSelectedDeficiency.sStatusDescriptionEN != "Non Conform" && cacheProvider.oUserProfile.sCurrentRole === "contractor") {
+                continue;
+            }
             $rootScope.sCurrentSearhCriteria = "";
             $rootScope.sSelectedDeficiencyAttribute = "statuses";
             $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
