@@ -291,6 +291,7 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 
 				aDeficienciesForSorting.push({
 					_guid: aData[i].Guid,
+					_phaseGuid: aData[i].PhaseGuid,
 					sUnit: utilsProvider.convertStringToInt(aData[i].sUnitName),
 					sCleanedUnit: utilsProvider.replaceSpecialChars(aData[i].sUnitName),
 					sTags: aData[i].DescriptionTags !== null && aData[i].DescriptionTags !== undefined ? aData[i].DescriptionTags : "",

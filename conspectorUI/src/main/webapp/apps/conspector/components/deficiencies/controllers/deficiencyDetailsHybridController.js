@@ -63,7 +63,7 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
                         sEntityGuid: oData.Guid,
                         sOperationNameEN: "Deficiency has been modified (mobile)...",
                         sOperationNameFR: "Deficiency has been modified (mobile)...",
-                        sPhaseGuid: oData.PhaseGuid
+                        sPhaseGuid: $rootScope.oSelectedDeficiency._phaseGuid
                     });
                 }
                 apiProvider.getInterestedUsers({

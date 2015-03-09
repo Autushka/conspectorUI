@@ -70,20 +70,30 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			logSuccessLogIn: function() {
+				var sOperation =  "Log In";
+				if(CONSTANTS.bIsHybridApplication){
+					sOperation =  "Log In (mobile)";
+				}
+
 				apiProvider.logEvent({
 					aUsers: ["GeneralAdmin"],
 					sEntityName: "",
 					sEntityGuid: "",
-					sOperationNameEN: "Log In",
+					sOperationNameEN: sOperation,
 				});
 			},
 
 			logLogOut: function() {
+				var sOperation =  "Log Out";
+				if(CONSTANTS.bIsHybridApplication){
+					sOperation =  "Log Out (mobile)";
+				}
+
 				apiProvider.logEvent({
 					aUsers: ["GeneralAdmin"],
 					sEntityName: "",
 					sEntityGuid: "",
-					sOperationNameEN: "Log Out",
+					sOperationNameEN: sOperation,
 				});				
 			},
 
