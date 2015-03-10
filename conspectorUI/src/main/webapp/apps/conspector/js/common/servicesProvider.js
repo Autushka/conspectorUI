@@ -865,7 +865,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					};
 					apiProvider.getOperationLogs({
 						sExpand: "PhaseDetails/ProjectDetails",
-						sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "' and Status eq 'not read'",
+						sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "' and Status eq 'not read' and GeneralAttributes/IsDeleted eq false",
 						onSuccess: onNotificationsLoaded
 					});
 				}
