@@ -22,12 +22,12 @@
 				</label>
 		</div>
 		</button> -->
-		<div class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton" layout="row" layout-align="start center" ng-click="onImagesAttribute()">
+		<div class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton" layout="row" layout-align="space-between center" ng-click="onImagesAttribute()">
 			<div class="cnpMobileItemDescription" ng-cloak>
 				{{'global_addImages' | translate}}
 			</div>
-			<div layout="row" layout-align="center center" ng-show="{{$root.oDeficiencyAttributes.oImages.iValue}} || {{$root.oDeficiencyAttributes.oImages.iValue}} == 0"
-				ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp notSelectable': {{$root.oDeficiencyAttributes.oImages.iValue}}>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp cnpImagesIconWithOpacity notSelectable': {{$root.oDeficiencyAttributes.oImages.iValue}}==0 }" >
+			<div layout="row" layout-align="center center" ng-show="$root.oDeficiencyAttributes.oImages.iValue || $root.oDeficiencyAttributes.oImages.iValue == 0"
+				ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp notSelectable': $root.oDeficiencyAttributes.oImages.iValue>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp cnpImagesIconWithOpacity notSelectable': $root.oDeficiencyAttributes.oImages.iValue==0 }" >
 				
 				<a>
 					({{$root.oDeficiencyAttributes.oImages.iValue}})

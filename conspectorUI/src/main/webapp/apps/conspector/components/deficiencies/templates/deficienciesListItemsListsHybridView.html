@@ -61,7 +61,6 @@
 	<div ng-repeat="image in $root.aSelectedDeficiencyImages">
 		<img ng-src="{{image.sImgUrl}}" style="width:320px; height: 320px;">
 	</div>
-
 	<div layout="column" layout-align="start start" flex>
 		<div layout="column" flex style="width: 100%;">
 			<div ng-click="onUseCamera()" flex style="width: 100%;">
@@ -76,31 +75,30 @@
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 </div>
-<div ng-show="$root.sSelectedDeficiencyAttribute === 'comments'">
+<div ng-show="$root.sSelectedDeficiencyAttribute === 'comments'" class="cnpMobileCommentsWrapper">
 	<div ng-repeat="comment in $root.aSelectedDeficiencyComments">
-		<div layout="row" layout-align="start center">
-			<div layout="column" layout-align="center start">
+		<div layout="row" layout-align="start center" style="padding: 5px;">
+			<div layout="column" layout-align="center start" style="min-width: 48px;">
 				<img ng-src="{{comment.sAvatarUrl}}" style="width:34px; height:34px;"/>
 			</div>
-			<div layout="column" layout-align="center start" class="cnpNgTableCommentInfo1">
-				<div>
-					<span class="cnpNgTableCommentAuthor">
-						{{comment.sAuthor}}
-					</span>
-				</div>
-				<div>
-					<span class="cnpNgTableCommentCreationDate">
-						{{comment.sCreatedAt}}
-					</span>
+			<div class="cnpNgTableCommentBackGroundMobile">
+				<div ng-if="!comment._editMode" class="cnpNgTableCommentMobile">
+					{{comment.sText}}
 				</div>
 			</div>
-			
 		</div>
-		<div layout="row" layout-align="start center" >
-			<div ng-if="!comment._editMode" class="cnpNgTableComment">
-				{{comment.sText}}
+		<div layout="column" layout-align="center start" class="cnpNgTableCommentInfo1Mobile">
+			<div>
+				<span class="cnpNgTableCommentAuthorMobile">
+					{{comment.sAuthor}}
+				</span>
+			</div>
+			<div>
+				<span class="cnpNgTableCommentCreationDateMobile">
+					{{comment.sCreatedAt}}
+				</span>
 			</div>
 		</div>
 	</div>

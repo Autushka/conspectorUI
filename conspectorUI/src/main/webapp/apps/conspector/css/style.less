@@ -746,7 +746,7 @@ USER MANAGEMENT
 	&.cnpImagesIcon{
 		background-position: 50%;
 		background-size: 30px;
-		background-image: url('../../../apps/conspector/img/imagesIcon.svg');
+		background-image: url('../../../apps/conspector/img/imagesIcon_tiny.svg');
 		height: 38px;
 		margin-right: 15px;
 		margin-left: -10px;
@@ -767,6 +767,38 @@ USER MANAGEMENT
 			padding-left: 35px;
 		}
 		&.cnpImagesIconInMobileApp{
+			/* margin: 0; */
+			margin-left: 16px;
+			/* padding: 0; */
+			/* padding-left: 54px; */
+			background-position: 0 50%;
+			padding-left: 35px;
+		}
+	}
+	&.cnpCommentsIcon{
+		background-position: 50%;
+		background-size: 29px;
+		background-image: url('../../../apps/conspector/img/commentsIcon_tiny.svg');
+		height: 38px;
+		margin-right: 15px;
+		margin-left: -10px;
+		font-weight: 500;
+		font-size: 16px;
+		padding-left: 63px;
+		padding-bottom: 0;
+		cursor: pointer;
+		&.cnpCommentsIconWithOpacity{
+			opacity: 0.3;
+		}
+		&.cnpCommentsIconInActionBar{
+			/* margin: 0; */
+			margin-left: 16px;
+			/* padding: 0; */
+			/* padding-left: 54px; */
+			background-position: 0 50%;
+			padding-left: 35px;
+		}
+		&.cnpCommentsIconInMobileApp{
 			/* margin: 0; */
 			margin-left: 16px;
 			/* padding: 0; */
@@ -1519,7 +1551,8 @@ ADMIN PANEL
 	background-color: #fff;
 	box-shadow: none;
 	border-style: solid;
-	border-bottom-width: 2px;
+	border-bottom-width: 0px;
+	border-top-width: 2px;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	border-color: @mediumGreyBackgroundColor;
@@ -1532,10 +1565,10 @@ ADMIN PANEL
 	width: 80% !important;
 }
 .cnpMobileItemDescription{
-	font-size: 18px;
+	font-size: 17px;
 }
 .cnpMobileItemValue{
-	font-size: 16px;
+	font-size: 15px;
 	margin-top: 12px;
 	color: @blueColor;
 	white-space: normal;
@@ -1564,11 +1597,15 @@ ADMIN PANEL
 	width: 127px;
 }
 .cnpMobileSubHeaderText{
-	font-size: 18px;
-	font-weight: 400;
+	font-size: 16px;
+	font-weight: 500;
 	color: #ec8910;
-	margin-left: 16px;
-	margin-top: 24px;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 8px;
+	background: rgb(236, 137, 16);
+	color: #FFFFFF;
+	height: 30px;
 }
 .cnpMobileListItem{
 	white-space: normal;
@@ -1594,7 +1631,7 @@ ADMIN PANEL
 	margin-right: 16px;
 }
 .cnpMobileHeader{
-
+	background-color: #f8f8f8;
 	min-height: 66px;
 }
 .cnpContentTitle{
@@ -1609,7 +1646,7 @@ ADMIN PANEL
 	background-color: white;
 }
 .cnpMobileH1{
-	font-size: 18px;
+	font-size: 17px;
 	font-weight: 500;
 	height: 52px;
 	margin-top: 8px;
@@ -1620,7 +1657,7 @@ ADMIN PANEL
 	background-color: @greyButtonColor;
 }
 .cnpMobileH2{
-	font-size: 18px;
+	font-size: 17px;
 	font-weight: 500;
 	height: 52px;
 	margin-left: 20px;
@@ -1634,10 +1671,10 @@ ADMIN PANEL
 	border-bottom-style: solid;
 }
 #cnpButtonHighlightedMobile{
-	box-shadow: inset 0 0 12px @blueColor;
+	// box-shadow: inset 0 0 6px #1EB800;
 }
 #cnpDisabledButtonMobile{
-	background-color: @mediumGreyBackgroundColor;
+	background-color: #F8F8F8;
 }
 .cnpMobileH2Selected{
 	background-color: @greyButtonColor;
@@ -2396,7 +2433,9 @@ NG TABLE
 	overflow: hidden;
   	text-overflow: ellipsis !important;
   	// white-space: nowrap;
-  	
+}
+.cnpMobileCommentsWrapper{
+	padding: 10px;
 }
 
 #notificationsList{
@@ -2563,14 +2602,43 @@ margin-bottom: -8px;
 		word-wrap: break-word;
 		white-space: pre-wrap;
 }
+.cnpNgTableCommentMobile{
+		background: #fcfcfc;
+		/* background: #ececec; */
+		border-radius: 3px;
+		padding-left: 10px;
+		padding-right: 10px;
+		position: relative;
+		padding-bottom: 8px;
+		padding-top: 8px;
+		border: 1px solid rgba(0,0,0,0.18);
+		/* border-bottom-color: rgba(0,0,0,0.29); */
+		-webkit-border-radius: 4px;
+		-webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.26);
+		color: #373e4d;
+		min-height: 14px;
+		word-wrap: break-word;
+		white-space: normal;
+		font-size: 14px;
+}
 
 .cnpNgTableCommentInfo1{
 	margin-left: 8px;
+}
+.cnpNgTableCommentInfo1Mobile{
+	margin-bottom: 8px;
 }
 .cnpNgTableCommentAuthor{
 	font-size: 18px;
 }
 .cnpNgTableCommentCreationDate{
+	font-size: 11px;
+	color: #8F8F90;
+}
+.cnpNgTableCommentAuthorMobile{
+	font-size: 14px;
+}
+.cnpNgTableCommentCreationDateMobile{
 	font-size: 13px;
 	color: #8F8F90;
 }
@@ -2628,20 +2696,41 @@ margin-bottom: -8px;
 	margin-left: 2px;
 }
 
+.cnpNgTableCommentBackGroundMobile{
+	position: relative;
+	margin-left: 0px;
+}
+
 .cnpNgTableCommentBackGround:before {
-content: "";
-position: absolute;
-z-index: 999;
-width: 35px;
-height: 100%;
-/* margin-top: 5px; */
-top: ~"calc(50% - 10px)";
-left: -10px;
-background-position: 0 0;
-background-size: 20px;
-background-repeat: no-repeat;
+	content: "";
+	position: absolute;
+	z-index: 999;
+	width: 35px;
+	height: 100%;
+	/* margin-top: 5px; */
+	top: ~"calc(50% - 10px)";
+	left: -10px;
+	background-position: 0 0;
+	background-size: 20px;
+	background-repeat: no-repeat;
     background-image:url('../../../apps/conspector/img/commentTail.svg');
 }
+
+.cnpNgTableCommentBackGroundMobile:before{
+	content: "";
+	position: absolute;
+	z-index: 999;
+	width: 35px;
+	height: 100%;
+	/* margin-top: 5px; */
+	top: ~"calc(50% - 10px)";
+	left: -10px;
+	background-position: 0 0;
+	background-size: 20px;
+	background-repeat: no-repeat;
+    background-image:url('../../../apps/conspector/img/commentTail.svg');
+}
+
 #activitiesList th:nth-of-type(2) {
 	width: 200px;
 }
