@@ -12,6 +12,29 @@
 	</div>
 	
 	<div class="cnpMobileListWrapper">
+		<!-- 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onImagesAttribute()">
+		<div layout="column" layout-align="center start">
+				<div class="cnpMobileItemDescription" ng-cloak>
+						{{'global_images' | translate}}
+				</div>
+				<label class="cnpMobileItemValue" ng-cloak>
+						{{$root.oDeficiencyAttributes.oImages.iValue}}
+				</label>
+		</div>
+		</button> -->
+		<div class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton" layout="row" layout-align="start center" ng-click="onImagesAttribute()">
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{'global_addImages' | translate}}
+			</div>
+			<div layout="row" layout-align="center center" ng-show="{{$root.oDeficiencyAttributes.oImages.iValue}} || {{$root.oDeficiencyAttributes.oImages.iValue}} == 0"
+				ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp notSelectable': {{$root.oDeficiencyAttributes.oImages.iValue}}>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp cnpImagesIconWithOpacity notSelectable': {{$root.oDeficiencyAttributes.oImages.iValue}}==0 }" >
+				
+				<a>
+					({{$root.oDeficiencyAttributes.oImages.iValue}})
+				</a>
+			</div>
+		</div>
+		
 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onPhaseAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
@@ -75,13 +98,13 @@
 			</label>
 		</div>
 		</button>
-<!-- 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onPriorityAttribute()">
+		<!-- 		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onPriorityAttribute()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
-				{{'deficiencyDetails_deficiencyPriority' | translate}}
+						{{'deficiencyDetails_deficiencyPriority' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" ng-cloak>
-				{{$root.oDeficiencyAttributes.oPriority.sValue}}
+						{{$root.oDeficiencyAttributes.oPriority.sValue}}
 			</label>
 		</div>
 		</button> -->
@@ -92,16 +115,6 @@
 			</div>
 			<label class="cnpMobileItemValue" ng-cloak>
 				{{$root.oDeficiencyAttributes.oUser.sValue}}
-			</label>
-		</div>
-		</button>
-		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onImagesAttribute()">
-		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription" ng-cloak>
-				{{'global_images' | translate}}
-			</div>
-			<label class="cnpMobileItemValue" ng-cloak>
-				{{$root.oDeficiencyAttributes.oImages.iValue}}
 			</label>
 		</div>
 		</button>

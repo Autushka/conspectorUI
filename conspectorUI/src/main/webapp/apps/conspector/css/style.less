@@ -766,6 +766,14 @@ USER MANAGEMENT
 			background-position: 0 50%;
 			padding-left: 35px;
 		}
+		&.cnpImagesIconInMobileApp{
+			/* margin: 0; */
+			margin-left: 16px;
+			/* padding: 0; */
+			/* padding-left: 54px; */
+			background-position: 0 50%;
+			padding-left: 35px;
+		}
 	}
   
 }
@@ -1441,7 +1449,7 @@ ADMIN PANEL
 	// -webkit-overflow-scrolling: touch;
 }
 .cnpMobileContentWrapperWithTouch{
-	padding-top: 15px;
+	padding-top: 0px;
 	padding-left: 0px;
 	padding-right: 0px;
 	background-color: @lightGreyBackgroundColor;
@@ -1477,7 +1485,7 @@ ADMIN PANEL
 	// height: 72px !important;
 }
 .cnpMobileListWrapper{
-	margin-top: 26px;
+	margin-top: 0px;
 	margin-bottom: 26px;
 }
 .cnpMobileFilterWrapper{
@@ -1506,8 +1514,8 @@ ADMIN PANEL
 .cnpMobileListButton{
 	width: 100% !important;
 	height: auto !important;
-	padding-top: 8px;
-	padding-bottom: 8px;
+	padding-top: 6px;
+	padding-bottom: 6px;
 	background-color: #fff;
 	box-shadow: none;
 	border-style: solid;
@@ -1524,10 +1532,10 @@ ADMIN PANEL
 	width: 80% !important;
 }
 .cnpMobileItemDescription{
-	font-size: 20px;
+	font-size: 18px;
 }
 .cnpMobileItemValue{
-	font-size: 18px;
+	font-size: 16px;
 	margin-top: 12px;
 	color: @blueColor;
 	white-space: normal;
@@ -1545,7 +1553,7 @@ ADMIN PANEL
 	width: 121px;
 	margin-top: 0px;
 	margin-left: 16px;
-	margin-bottom: 4px;
+	margin-bottom: 0px;
 
 }
 .cnpMobileTitle{
@@ -1582,11 +1590,12 @@ ADMIN PANEL
 	width: 53px;
 	padding-left: 16px;
 	/* padding-top: 8px; */
+	margin-top: 6px;
 	margin-right: 16px;
 }
 .cnpMobileHeader{
 
-	min-height: 56px;
+	min-height: 66px;
 }
 .cnpContentTitle{
 	font-size: 35px;
@@ -1600,7 +1609,7 @@ ADMIN PANEL
 	background-color: white;
 }
 .cnpMobileH1{
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 500;
 	height: 52px;
 	margin-top: 8px;
@@ -1611,7 +1620,7 @@ ADMIN PANEL
 	background-color: @greyButtonColor;
 }
 .cnpMobileH2{
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 500;
 	height: 52px;
 	margin-left: 20px;
@@ -2540,8 +2549,11 @@ margin-bottom: -8px;
 		background: #fcfcfc;
 		/* background: #ececec; */
 		border-radius: 3px;
-		padding: 10px;
+		padding-left: 10px;
+		padding-right: 10px;
 		position: relative;
+		padding-bottom: 0px;
+		padding-top: 0px;
 		border: 1px solid rgba(0,0,0,0.18);
 		/* border-bottom-color: rgba(0,0,0,0.29); */
 		-webkit-border-radius: 4px;
@@ -2549,7 +2561,7 @@ margin-bottom: -8px;
 		color: #373e4d;
 		min-height: 14px;
 		word-wrap: break-word;
-
+		white-space: pre-wrap;
 }
 
 .cnpNgTableCommentInfo1{
@@ -2793,7 +2805,7 @@ tags-input.ng-invalid .tags{
 }
 
 .tags input{
-	width:16em;
+	width:14em;
 }
 
 tags-input .tags .input,

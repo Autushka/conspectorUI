@@ -150,6 +150,7 @@ app.config(['$translateProvider',
                   global_associatedContact: 'Associated contact',
                   global_markAllAsRead: 'Mark all as read',
                   global_dismissAll: 'Clear all notifications',
+                  global_addImages: 'Add images',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
@@ -550,7 +551,7 @@ app.config(['$translateProvider',
                   global_shippingCountry: 'Pays livraison:',
                   global_shippingProvince: 'Province/\u00E9tat livraison:',
                   global_tags: 'Tags',
-                  global_addTag: 'Ajouter un mot clef (25 char. max)',
+                  global_addTag: 'Ajouter tag (25 char. max)',
                   global_contactType: 'Type de contact:',
                   global_account: 'Compte',
                   global_selectCountry: 'S\u00E9lectionner pays',
@@ -615,6 +616,7 @@ app.config(['$translateProvider',
                   global_associatedContact: 'Contact associ\u00E9',
                   global_markAllAsRead: 'Marquer tout comme lu',
                   global_dismissAll: 'Effacer notifications',
+                  global_addImages: 'Ajouter images',
 
 
                   //hybrid
