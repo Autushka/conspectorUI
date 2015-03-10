@@ -3,22 +3,22 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		var sEntityType = "";
-		var sEntitySPath = "";
+		var sEntityPath = "";
 		var sEntity = "";
 		switch ($rootScope.sCurrentStateName) {
 			case "app.deficiencyDetailsWrapper.deficiencyDetails":
 				sEntityType = "Deficiency";
-				sEntitySPath = "Tasks";
+				sEntityPath = "Tasks";
 				sEntity = "oDeficiencyEntity";
 				break;
 			case "app.activityDetailsWrapper.activityDetails":
 				sEntityType = "Activity";
-				sEntitySPath = "Activitys";
+				sEntityPath = "Activitys";
 				sEntity = "oActivityEntity";
 				break;
 			case "app.unitDetailsWrapper.unitDetails":
 				sEntityType = "Unit";
-				sEntitySPath = "Units";
+				sEntityPath = "Units";
 				sEntity = "oUnitEntity";
 				break;
 		}
@@ -155,7 +155,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			};
 
 			servicesProvider.uploadAttachmentsForEntity({
-				sPath: sEntitySPath,
+				sPath: sEntityPath,
 				aFiles: aFiles,
 				sParentEntityGuid: sParentEntityGuid,
 				sParentEntityFileMetadataSetGuid: $rootScope.sFileMetadataSetGuid,

@@ -5,18 +5,17 @@ viewControllers.controller('deficiencyDetailsWrapperView', ['$scope', '$rootScop
 		$scope.bDisplayCommentsList = false;
 
 		$scope.onDisplayAttachmentsList = function() {
-            $scope.bDisplayAttachmentsList === false ? $scope.bDisplayAttachmentsList = true : $scope.bDisplayAttachmentsList = false;     
+            $scope.bDisplayAttachmentsList = !$scope.bDisplayAttachmentsList;     
         };
 
 		$scope.onDisplayCommentsList = function() {
-            $scope.bDisplayCommentsList === false ? $scope.bDisplayCommentsList = true : $scope.bDisplayCommentsList = false;     
+            $scope.bDisplayCommentsList = !$scope.bDisplayCommentsList;     
         };
 
 		$scope.$on("$destroy", function() {
 			if(historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName){ //current state was already put to the history in the parent views
 				return;
 			}
-
 			historyProvider.addStateToHistory({
 				sStateName: $rootScope.sCurrentStateName,
 				oStateParams: angular.copy($rootScope.oStateParams)

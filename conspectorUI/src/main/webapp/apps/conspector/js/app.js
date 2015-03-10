@@ -303,6 +303,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
                     templateUrl: 'apps/conspector/components/attachments/templates/attachmentsListView.html',
                     controller: 'attachmentsListView'
                 },
+                'commentsList': {
+                    templateUrl: 'apps/conspector/components/comments/templates/commentsListView.html',
+                    controller: 'commentsListView'
+                },                
             }
         });
 

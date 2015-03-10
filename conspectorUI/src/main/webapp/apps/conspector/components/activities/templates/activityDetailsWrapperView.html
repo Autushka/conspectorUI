@@ -1,4 +1,13 @@
 <div ui-view="activityDetails" style="width: 100%; height: 100%;"></div>
+<div id="embeddedCommentsList" flex class="cnpCollapseControl" layout="row" layout-align="center center" ng-click="onDisplayCommentsList()">
+	<button ng-class="{'md-button md-primary cnpCollapseSectionButton cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbol notSelectable': !bDisplayCommentsList, 'md-button md-primary cnpCollapseSectionButton cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbolReversed notSelectable': bDisplayCommentsList}" layout="row" layout-align="center center" >
+	<div class="cnpCollapseControlButtonText">
+		<span ng-show="!bDisplayCommentsList">{{'global_showCommentsListDeficiency' | translate}}</span>
+		<span ng-show="bDisplayCommentsList">{{'global_hideCommentsListDeficiency' | translate}}</span>
+	</div>
+	</button>
+</div>
+<div ng-if="bDisplayCommentsList" ui-view="commentsList"></div>
 <div id="embeddedAttachmentsList" flex class="cnpCollapseControl" layout="row" layout-align="center center" ng-click="onDisplayAttachmentsList()">
 	<button ng-class="{'md-button md-primary cnpCollapseSectionButton cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbol notSelectable': !bDisplayAttachmentsList, 'md-button md-primary cnpCollapseSectionButton cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbolReversed notSelectable': bDisplayAttachmentsList}" layout="row" layout-align="center center" >
 	<div class="cnpCollapseControlButtonText">

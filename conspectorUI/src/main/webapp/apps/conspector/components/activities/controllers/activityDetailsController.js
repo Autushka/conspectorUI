@@ -46,6 +46,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         $rootScope.sMode = $stateParams.sMode;
 
         if ($rootScope.sMode === "create") {
+            $rootScope.sCommentSetGuid = "";
             $rootScope.sFileMetadataSetGuid = "";
             $rootScope.sFileMetadataSetLastModifiedAt = "";
         }
@@ -139,6 +140,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         };
 
         var setDisplayedActivityDetails = function(oActivity) {
+            $rootScope.sCurrentEntityPhaseGuid = oActivity.PhaseGuid; //needed for notifications...            
             var aActivityPhasesGuids = [];
 
             $rootScope.sFileMetadataSetGuid = oActivity.FileMetadataSetGuid;
@@ -146,6 +148,12 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                 $rootScope.sFileMetadataSetLastModifiedAt = oActivity.FileMetadataSetDetails.LastModifiedAt;
             }
             $rootScope.$broadcast("FileAttachemntsCanBeLoaded");
+
+            $rootScope.sCommentSetGuid = oActivity.CommentSetGuid;
+            if (oActivity.CommentSetDetails) {
+                $rootScope.sCommentSetLastModifiedAt = oActivity.CommentSetDetails.LastModifiedAt;
+            }
+            $rootScope.$broadcast("CommentsCanBeLoaded");            
 
             $scope.oActivity._guid = oActivity.Guid;
             $scope.oActivity.sObject = oActivity.Object;

@@ -66,10 +66,6 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 			}
 		};
 
-		// $scope.$on("CommentsCanBeLoaded", function() {
-		// 	loadComments();
-		// });
-
 		loadComments();
 
 		$scope.onEdit = function(oComment) {
@@ -98,7 +94,6 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 				bShowSpinner: true,
 				sKey: oComment._guid,
 				oData: oDataForSave,
-				//bShowSuccessMessage: true,
 				bShowErrorMessage: true,
 				onSuccess: onSuccessDelete
 			});
@@ -107,7 +102,6 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 		$scope.onSaveUpdate = function(oComment) {
 			var oDataForSave = {};
 			var onSuccessUpdate = function() {
-				//loadComments();
 				oComment._editMode = false;
 			}
 
@@ -117,7 +111,6 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 				bShowSpinner: true,
 				sKey: oComment._guid,
 				oData: oDataForSave,
-				//bShowSuccessMessage: true,
 				bShowErrorMessage: true,
 				onSuccess: onSuccessUpdate
 			});
@@ -126,32 +119,34 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 		$scope.onSave = function() {
 			var onSuccess = function() {
 				$scope.oComment.sText = "";
-				loadComments();
-				
-				var sEntityName = "";
-				var onInterestedUsersLoaded = function(aUsers) {
-					apiProvider.logEvent({
-						aUsers: aUsers,
-						sEntityName: sEntityName,
-						sEntityGuid: sParentEntityGuid,
-						sOperationNameEN: "New comment has been added ",
-						sOperationNameFR: "Un commentaire a \u00E9t\u00E9 ajout\u00E9",
-						sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
-					});
-				};
+				loadComments();				
+				// var sEntityName = "";
+				// var onInterestedUsersLoaded = function(aUsers) {
+				// 	apiProvider.logEvent({
+				// 		aUsers: aUsers,
+				// 		sEntityName: sEntityName,
+				// 		sEntityGuid: sParentEntityGuid,
+				// 		sOperationNameEN: "New comment has been added ",
+				// 		sOperationNameFR: "Un commentaire a \u00E9t\u00E9 ajout\u00E9",
+				// 		sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
+				// 	});
+				// };
 
-				if (sParentEntityGuid) {					
-					switch(sEntity){
-						case "oDeficiencyEntity": 
-							sEntityName = "deficiency";
-							break;
-					}
-					apiProvider.getInterestedUsers({
-						sEntityName: sEntityName,
-						sEntityGuid: sParentEntityGuid,
-						onSuccess: onInterestedUsersLoaded
-					});
-				}
+				// if (sParentEntityGuid) {					
+				// 	switch(sEntity){
+				// 		case "oDeficiencyEntity": 
+				// 			sEntityName = "deficiency";
+				// 			break;
+				// 		case "oActivityEntity": 
+				// 			sEntityName = "activity";
+				// 			break;							
+				// 	}
+				// 	apiProvider.getInterestedUsers({
+				// 		sEntityName: sEntityName,
+				// 		sEntityGuid: sParentEntityGuid,
+				// 		onSuccess: onInterestedUsersLoaded
+				// 	});
+				// }
 			};
 			var oDataForSave = {
 				GeneralAttributes: {}
