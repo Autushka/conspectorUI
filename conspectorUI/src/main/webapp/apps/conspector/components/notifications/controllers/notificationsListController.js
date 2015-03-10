@@ -79,16 +79,6 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
 
                 if (aData[i].PhaseDetails) {
                     iSortingSequence = aData[i].PhaseDetails.GeneralAttributes.SortingSequence;
-                    for (var k = 0; k < cacheProvider.oUserProfile.aGloballySelectedPhasesGuids.length; k++) {
-                        if (aData[i].PhaseDetails.Guid === cacheProvider.oUserProfile.aGloballySelectedPhasesGuids[k]) {
-                            bMatchFound = true;
-                            break;
-                        }
-                    }
-                    if (!bMatchFound) {
-                        continue;
-                    }
-
                     sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.ProjectDetails.NameEN : aData[i].PhaseDetails.ProjectDetails.NameFR;
                     if (!sProjectName) {
                         sProjectName = aData[i].PhaseDetails.ProjectDetails.NameEN;
