@@ -2382,6 +2382,74 @@ NG TABLE
   	
 }
 
+#notificationsList{
+	// width: 100%;
+	// height: auto;
+	// border-top: 0px;
+	// border-bottom: 0px;
+	// border-left: 0px;
+	// border-right: 0px;
+	// border-color: @greyBorderColorHeader;
+	// border-style: solid;
+	// color: @textColor;
+	// background-color: white;
+	// border-spacing: 0px;
+	// table-layout: fixed;
+	// border-collapse: collapse;
+	// margin-bottom: -8px;
+	// margin-top: 8px;
+	// box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
+	// padding-top: 8px;
+	// padding-left: 8px;
+}
+
+#notificationsList td:nth-of-type(1) {
+	width: 230px;
+}
+// #notificationsList td:nth-of-type(3) {
+// 	width: 80px;
+// }
+
+#notificationsList tbody tr:nth-child(2n) {
+	background-color: @whiteColor;
+	cursor: pointer;
+}
+#notificationsList tbody tr:nth-child(2n + 1) {
+	background-color: @whiteColor;
+	cursor: pointer;
+}
+
+#notificationsList>tbody>tr>td {
+	// border-top: 0px;
+	// border-bottom: 1px;
+	// border-left: 0px;
+	// border-right: 0px;
+	// border-color: @greyBorderColorHeader;
+	// border-style: solid;
+	// padding-left: 8px;
+	// padding-right: 8px;
+	// padding-top: 6px;
+	// padding-bottom: 6px;
+	font-size: 16px;
+	// overflow: hidden;
+ //  	text-overflow: ellipsis !important;
+  	// white-space: nowrap;
+}
+
+.cnpNgTableNotification{
+padding-top: 16px;
+padding-bottom: 16px;
+padding-left: 16px;
+background: rgb(215, 220, 222);
+margin-left: -8px;
+margin-top: -8px;
+margin-right: -8px;
+margin-bottom: -8px;
+ &.cnpNgTableNotificationRead{
+ 	background: white;
+ }
+}
+
 .cnpNotificationsCounter{
 	position: absolute;
 	top: -18px;
@@ -2418,7 +2486,7 @@ NG TABLE
 	font-size: 16px;
 	cursor: pointer;
 	font-weight: 500;
-	margin-left: 12px;
+	margin-left: 26px;
 	padding: 8px;
 	padding-right: 25px;
 }
@@ -2438,15 +2506,15 @@ NG TABLE
 .cnpUserDropdownMenuWrapper .cnpUserDropdownMenu{
 	position: absolute;
 	top: 100%;
-	left: 0;
-	right: -10px;
+	// left: 0;
+	right: 0;
 	overflow: hidden;
 	max-height: 0;
 }
 
 .cnpUserDropdownMenu{
 	position: absolute;
-	width: 110%;
+	width: 183px;
 	padding: 16px 16px 8px 12px;
 	/* top: 27px; */
 	border-radius: 3px;

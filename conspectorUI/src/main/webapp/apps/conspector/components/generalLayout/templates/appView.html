@@ -8,16 +8,20 @@
 				</label>
 			</div>
 			<div layout="row" layout-align="end center" flex>
-				<div ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeader notSelectable">
-					{{'app_switchRoles' | translate}}
+				<div ng-click="onNotificationsList()" class="cnpLink cnpLinkHeader notSelectable" style="position: relative; margin-left: 11px;">
+					{{'notificationsList_title' | translate}}
+					<div ng-show="$root.iNotificationsNumber > 0" layout="row" layout-align="center center" class="cnpNotificationsCounter">{{$root.iNotificationsNumber}}</div>
 				</div>
-				<div ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeader notSelectable">
-					{{'app_adminPanel' | translate}}
-				</div> 
 				<div class="notSelectable" ng-class="{'cnpUserDropdownMenuWrapper': !bDisplayUserDropdownMenu, 'cnpUserDropdownMenuWrapper active': bDisplayUserDropdownMenu}" ng-init="bDisplayUserDropdownMenu = false" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
 					<div class="cnpUserDropdownMenu"  layout="column" layout-align="start center">
+						<div ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
+							{{'app_switchRoles' | translate}}
+						</div>
+						<div ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
+							{{'app_adminPanel' | translate}}
+						</div>
 						<div ng-if="bDisplayProfileSettings" class="cnpLink cnpLinkHeaderInDownDown" ng-click="onProfileSettings()" >
-							User Settings
+							{{'profileSettings_profileDetails' | translate}}
 						</div>
 						<div ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeaderInDownDown">
 							{{'signIn_languageCode' | translate}}
@@ -29,17 +33,14 @@
 					{{sCurrentUser}}
 				</div>
 				<!-- add notifications counter -->
-				<div ng-click="onNotificationsList()" class="cnpLink cnpLinkHeader notSelectable" style="position: relative; margin-left: 11px;">
-					{{'notificationsList_title' | translate}}
-					<div ng-show="$root.iNotificationsNumber > 0" layout="row" layout-align="center center" class="cnpNotificationsCounter">{{$root.iNotificationsNumber}}</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
 	<div class="cnpSubHeaderBackground" layout="column" layout-align="start center">
 		<div class="cnpSubHeader" layout="row" layout-align="start center">
 			<!-- <label class="cnpLinkProjectsAndPhases">
-															{{'global_selectedProjectsAndPhases' | translate }}
+																			{{'global_selectedProjectsAndPhases' | translate }}
 			</label> -->
 			<div
 				class="cnpMultiSelectProjectsAndPhases"

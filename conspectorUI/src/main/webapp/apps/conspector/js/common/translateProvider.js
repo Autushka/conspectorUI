@@ -148,6 +148,8 @@ app.config(['$translateProvider',
                   global_hideAttachmentsListActivity: 'Hide images and documents for this entry',
                   global_showAttachmentsListActivity: 'Show images and documents for this entry',
                   global_associatedContact: 'Associated contact',
+                  global_markAllAsRead: 'Mark all as read',
+                  global_dismissAll: 'Clear all notifications',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
@@ -178,7 +180,7 @@ app.config(['$translateProvider',
                   app_activitiesTab: 'Logbook',
                   //profileSettings
                   profileSettings_menuHeader: 'User Menu',
-                  profileSettings_profileDetails: 'User Profile',
+                  profileSettings_profileDetails: 'User Settings',
                   profileSettings_contactDetails: 'User\u0027s Contact',
                   profileSettings_changePassword: 'Change Password',
                   profileSettings_hideSidenav: 'Open User Menu',
@@ -457,7 +459,10 @@ app.config(['$translateProvider',
                   clientDetails_shippingCountry: 'Shipping Country:',
                   clientDetails_shippingProvince: 'Shipping State/Province:',
 
-                  notificationsList_title: 'Notifications'
+                  notificationsList_title: 'Notifications',
+                  notificationsList_byAuthor: 'by',
+                  notificationsList_onDate: 'on',
+                  notificationsList_noNotification: 'No notifications for now...'
             });
 
             $translateProvider.translations('fr', {
@@ -608,6 +613,8 @@ app.config(['$translateProvider',
                   global_hideAttachmentsListActivity: 'Cacher les images et documents de cette entr\u00E9e',
                   global_showAttachmentsListActivity: 'Afficher les images et documents de cette entr\u00E9e',
                   global_associatedContact: 'Contact associ\u00E9',
+                  global_markAllAsRead: 'Marquer tout comme lu',
+                  global_dismissAll: 'Effacer notifications',
 
 
                   //hybrid
@@ -919,6 +926,9 @@ app.config(['$translateProvider',
                   clientDetails_shippingProvince: 'Province/\u00E9tat livraison :',
 
                   notificationsList_title: 'Notifications',
+                  notificationsList_byAuthor: 'par',
+                  notificationsList_onDate: 'le',
+                  notificationsList_noNotification: 'Aucune notification pour le moment...'
             });
 
             $translateProvider.preferredLanguage('en');

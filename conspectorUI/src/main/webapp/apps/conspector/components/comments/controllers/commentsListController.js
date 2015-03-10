@@ -134,8 +134,8 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 						aUsers: aUsers,
 						sEntityName: sEntityName,
 						sEntityGuid: sParentEntityGuid,
-						sOperationNameEN: "New comment has been created...",
-						sOperationNameFR: "New comment has been created...",
+						sOperationNameEN: "New comment has been added ",
+						sOperationNameFR: "Un commentaire a \u00E9t\u00E9 ajout\u00E9",
 						sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
 					});
 				};
