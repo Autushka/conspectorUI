@@ -52,7 +52,7 @@ viewControllers.controller('deficiencyStatusesListView', ['$scope', '$rootScope'
 			$scope.tableParams.reload();
 
 			apiProvider.getAttachments({
-				sPath: "rest/file/list/V1/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_",
+				sPath: "rest/file/V1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_",
 				onSuccess: onIconsLoaded
 			});
 		}
