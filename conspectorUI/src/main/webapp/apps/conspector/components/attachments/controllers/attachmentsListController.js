@@ -61,6 +61,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			var sMediaType = "";
 			var iImagesNumber = 0;
 			var iSortingSequence = 0;
+			var aImages = [];
 			for (var i = 0; i < oData.FileMetadataDetails.results.length; i++) {
 				sMediaType = "";
 				iSortingSequence = 0;
@@ -69,6 +70,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 						sMediaType = "Image";
 						iImagesNumber++;
 						iSortingSequence = 1;
+						aImages.push(oData.FileMetadataDetails.results[i]);
 					}
 					if (oData.FileMetadataDetails.results[i].MediaType.indexOf("pdf") > -1) {
 						sMediaType = "PDF";
@@ -91,6 +93,17 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 					sCreatedBy: oData.FileMetadataDetails.results[i].NewFileName
 				});
 			}
+			switch(sEntityType){
+				case "Deficiency":
+					$rootScope.oCurrentDeficiency.iImagesNumber = iImagesNumber; //to refresh info for parent entity details view...
+					$rootScope.oCurrentDeficiency._aImages = angular.copy(aImages);
+					break;
+				case "Activity":
+					$rootScope.oCurrentActivity.iImagesNumber = iImagesNumber; //to refresh info for parent entity details view...
+					$rootScope.oCurrentActivity._aImages = angular.copy(aImages);
+					break;					
+			}
+			
 			$scope.tableParams.reload();
 		};
 
@@ -106,18 +119,10 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			}
 		};
 
-		// $scope.$on("FileAttachemntsCanBeLoaded", function() {
-		// 	loadAttachments();
-		// });
 		loadAttachments();
-
 
 		$scope.onFilesSelected = function(aFiles, $event) {
 			var onProgress = function($event) {
-				// $scope.iUploadProgress = 100 * parseInt($event.loaded / $event.total, 10);
-				// $scope.iUploadProgress = 50;
-				// $scope.iUploadProgress = $scope.iUploadProgress + "%";
-				//console.log('progress: ' + progressPercentage + '% ' + $event.config.file.name);
 			};
 			var onSuccessUpload = function() { //called once for the last uploaded file
 				// $scope.iUploadProgress = 50;
@@ -128,30 +133,32 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				loadAttachments();
 
 				var sEntityName = "";
-				var onInterestedUsersLoaded = function(aUsers) {
-					apiProvider.logEvent({
-						aUsers: aUsers,
-						sEntityName: sEntityName,
-						sEntityGuid: sParentEntityGuid,
-						sOperationNameEN: "New attachment has been added...",
-						sOperationNameFR: "Un ficher a \u00E9t\u00E9 ajout\u00E9...",
-						sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
-					});
-				};
+				if (sEntity === "oDeficiencyEntity") {
+					var onInterestedUsersLoaded = function(aUsers) {
+						apiProvider.logEvent({
+							aUsers: aUsers,
+							sEntityName: sEntityName,
+							sEntityGuid: sParentEntityGuid,
+							sOperationNameEN: "New attachment has been added...",
+							sOperationNameFR: "Un ficher a \u00E9t\u00E9 ajout\u00E9...",
+							sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
+						});
+					};
 
-				if (sParentEntityGuid) {
-					
-					switch(sEntity){
-						case "oDeficiencyEntity": 
-							sEntityName = "deficiency";
-							break;
-					}
-					apiProvider.getInterestedUsers({
-						sEntityName: sEntityName,
-						sEntityGuid: sParentEntityGuid,
-						onSuccess: onInterestedUsersLoaded
-					});
-				}				
+					if (sParentEntityGuid) {
+						
+						switch(sEntity){
+							case "oDeficiencyEntity": 
+								sEntityName = "deficiency";
+								break;
+						}
+						apiProvider.getInterestedUsers({
+							sEntityName: sEntityName,
+							sEntityGuid: sParentEntityGuid,
+							onSuccess: onInterestedUsersLoaded
+						});
+					}						
+				}			
 			};
 
 			servicesProvider.uploadAttachmentsForEntity({

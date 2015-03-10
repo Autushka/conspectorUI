@@ -119,34 +119,36 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 		$scope.onSave = function() {
 			var onSuccess = function() {
 				$scope.oComment.sText = "";
-				loadComments();				
-				// var sEntityName = "";
-				// var onInterestedUsersLoaded = function(aUsers) {
-				// 	apiProvider.logEvent({
-				// 		aUsers: aUsers,
-				// 		sEntityName: sEntityName,
-				// 		sEntityGuid: sParentEntityGuid,
-				// 		sOperationNameEN: "New comment has been added ",
-				// 		sOperationNameFR: "Un commentaire a \u00E9t\u00E9 ajout\u00E9",
-				// 		sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
-				// 	});
-				// };
+				loadComments();
+				var sEntityName = "";
+				if (sEntity === "oDeficiencyEntity") {
+					var onInterestedUsersLoaded = function(aUsers) {
+						apiProvider.logEvent({
+							aUsers: aUsers,
+							sEntityName: sEntityName,
+							sEntityGuid: sParentEntityGuid,
+							sOperationNameEN: "New comment has been added ",
+							sOperationNameFR: "Un commentaire a \u00E9t\u00E9 ajout\u00E9",
+							sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
+						});
+					};
 
-				// if (sParentEntityGuid) {					
-				// 	switch(sEntity){
-				// 		case "oDeficiencyEntity": 
-				// 			sEntityName = "deficiency";
-				// 			break;
-				// 		case "oActivityEntity": 
-				// 			sEntityName = "activity";
-				// 			break;							
-				// 	}
-				// 	apiProvider.getInterestedUsers({
-				// 		sEntityName: sEntityName,
-				// 		sEntityGuid: sParentEntityGuid,
-				// 		onSuccess: onInterestedUsersLoaded
-				// 	});
-				// }
+					if (sParentEntityGuid) {
+						switch (sEntity) {
+							case "oDeficiencyEntity":
+								sEntityName = "deficiency";
+								break;
+							case "oActivityEntity":
+								sEntityName = "activity";
+								break;
+						}
+						apiProvider.getInterestedUsers({
+							sEntityName: sEntityName,
+							sEntityGuid: sParentEntityGuid,
+							onSuccess: onInterestedUsersLoaded
+						});
+					}
+				}
 			};
 			var oDataForSave = {
 				GeneralAttributes: {}

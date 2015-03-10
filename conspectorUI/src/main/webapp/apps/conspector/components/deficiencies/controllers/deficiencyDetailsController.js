@@ -194,6 +194,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 			$scope.oDeficiency.sDescription = oDeficiency.Description;
 
+			$rootScope.oCurrentDeficiency  = angular.copy($scope.oDeficiency);
+
 			oDeficiencyWrapper.aData[0] = angular.copy($scope.oDeficiency);
 			constructPhasesMultiSelect([$scope.oDeficiency._phaseGuid]);
 		};
@@ -753,8 +755,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 		$scope.onDisplayPhotoGallery = function(oEvent) {
 			oEvent.stopPropagation();
-			if ($scope.oDeficiency._aImages.length) {
-				servicesProvider.setUpPhotoGallery($scope.oDeficiency._aImages);
+			if ($rootScope.oCurrentDeficiency._aImages.length) {
+				servicesProvider.setUpPhotoGallery($rootScope.oCurrentDeficiency._aImages);
 			}
 		};
 

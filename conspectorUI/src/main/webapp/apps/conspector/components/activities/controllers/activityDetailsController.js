@@ -218,6 +218,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
 
             $scope.oActivity.sDescription = oActivity.Description;
 
+            $rootScope.oCurrentActivity = angular.copy($scope.oActivity);
+
             oActivityWrapper.aData[0] = angular.copy($scope.oActivity);
 
             getPhasesWithUnits($scope.oActivity._aPhases);
@@ -741,8 +743,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
 
         $scope.onDisplayPhotoGallery = function(oEvent) {
             oEvent.stopPropagation();
-            if ($scope.oActivity._aImages.length) {
-                servicesProvider.setUpPhotoGallery($scope.oActivity._aImages);
+            if ( $rootScope.oCurrentActivity._aImages.length) {
+                servicesProvider.setUpPhotoGallery( $rootScope.oCurrentActivity._aImages);
             }
         };        
 
