@@ -27,7 +27,7 @@
 			<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
 			<md-button ng-show="sMode == 'edit' && bDisplayDeleteButton" class="md-button md-warn md-hue-2 md-raised cnpButtonWithIcon cnpInputIcon cnpDeleteIconWhite notSelectable " ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
 			<md-button ng-show="sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
-			<div layout="row" layout-align="center center"
+			<div layout="row" layout-align="center center" ng-show="oActivity.iImagesNumber || oActivity.iImagesNumber == 0"
 				ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar notSelectable': oActivity.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar cnpImagesIconWithOpacity notSelectable': oActivity.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery($event)">
 				<a>
 					({{oActivity.iImagesNumber}})
