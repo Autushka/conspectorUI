@@ -640,7 +640,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 						sEntityName: "deficiency",
 						sEntityGuid: oData.Guid,
 						sOperationNameEN: "New deficiency has been created...",
-						sOperationNameFR: "New deficiency has been created...",
+						sOperationNameFR: "Une nouvelle d\u00E9ficience a \u00E9t\u00E9 ajout\u00E9e...",
 						sPhaseGuid: oData.PhaseGuid
 					});
 				}
@@ -671,7 +671,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 						sEntityName: "deficiency",
 						sEntityGuid: oData.Guid,
 						sOperationNameEN: "Deficiency has been modified...",
-						sOperationNameFR: "Deficiency has been modified...",
+						sOperationNameFR: "Une d\u00E9ficience a \u00E9t\u00E9 modifi\u00E9e...",
 						sPhaseGuid: oData.PhaseGuid
 					});
 				}

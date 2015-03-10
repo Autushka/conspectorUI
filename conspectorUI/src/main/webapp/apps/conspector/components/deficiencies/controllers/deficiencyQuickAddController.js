@@ -436,8 +436,8 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                         aUsers: aUsers,
                         sEntityName: "deficiency",
                         sEntityGuid: oData.Guid,
-                        sOperationNameEN: "New deficiency has been created (quickAdd)...",
-                        sOperationNameFR: "New deficiency has been created (quickAdd)...",
+                        sOperationNameEN: "New deficiency has been created (on mobile)...",
+                        sOperationNameFR: "Une nouvelle d\u00E9ficience a \u00E9t\u00E9 ajout\u00E9e (sur mobile)...",
                         sPhaseGuid: oData.PhaseGuid
                     });
                 }

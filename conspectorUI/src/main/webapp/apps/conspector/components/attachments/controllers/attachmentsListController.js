@@ -134,7 +134,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 						sEntityName: sEntityName,
 						sEntityGuid: sParentEntityGuid,
 						sOperationNameEN: "New attachment has been added...",
-						sOperationNameFR: "New attachment has been added...",
+						sOperationNameFR: "Un ficher a \u00E9t\u00E9 ajout\u00E9...",
 						sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
 					});
 				};
