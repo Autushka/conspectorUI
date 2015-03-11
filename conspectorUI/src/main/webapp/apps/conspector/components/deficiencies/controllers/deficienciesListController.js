@@ -257,6 +257,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
                 oDeficienciesListData.aData.push({
                     _guid: aData[i].Guid,
+                    _phaseGuid: aData[i].PhaseGuid,
                     sUnit: utilsProvider.convertStringToInt(aData[i].sUnitName),
                     sCleanedUnit: utilsProvider.replaceSpecialChars(aData[i].sUnitName),
                     sTags: aData[i].DescriptionTags !== null && aData[i].DescriptionTags !== undefined ? aData[i].DescriptionTags : "",
@@ -505,10 +506,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $scope.aDataForMassChanges.push({
                 Guid: oDeficiency._guid,
                 TaskStatusGuid: aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].Guid,
+                PhaseGuid: oDeficiency._phaseGuid,
             });
             oDeficiency.sStatusSortingSequence = (oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length;
-            // alert(oDeficiency._guid);
-            // oDeficiency._guid = "!!!";
         };
 
         $scope.onMassSave = function() {

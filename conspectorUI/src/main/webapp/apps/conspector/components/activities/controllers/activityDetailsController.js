@@ -1,6 +1,5 @@
 viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$location', '$anchorScroll', '$state', 'servicesProvider', 'apiProvider', '$translate', '$stateParams', 'cacheProvider', 'utilsProvider', '$filter', 'dataProvider', 'CONSTANTS', 'historyProvider', 'rolesSettings',
     function($rootScope, $scope, $location, $anchorScroll, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings) {
-
         // the element you wish to scroll to.
         $location.hash('top');
         // call $anchorScroll()
@@ -28,18 +27,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         });
 
         $scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
-
-        //to delete
-        // $scope.sActivityType = "";
-        // if ($rootScope.sCurrentStateName === "app.activityDetailsWrapper.activityDetails") { 
-        // 	if($rootScope.sMode === "display" || $rootScope.sMode === "edit"){
-        // 		$scope.$parent.bDisplayContactsList = true;
-        // 	}
-        // 	$scope.sActivityType = "Activity";
-        // }
-
-        // $scope.sActivityTypeGuid = ""; 
-        //for new activity creation flow
 
         var oNavigateToInfo = {}; //needed to keen in scope info about state change parameters (for save and leave scenario)
 
@@ -766,13 +753,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                     event: event
                 });
             }
-        });
-
-        // $scope.$on("$destroy", function() {
-        // 	$rootScope.aActivityPhasesGuids = [];
-        // 	for (var i = 0; i < $scope.aSelectedPhases.length; i++) {
-        // 		$rootScope.aActivityPhasesGuids.push($scope.aSelectedPhases[i].Guid);
-        // 	}			
-        // });			
+        });	
     }
 ]);

@@ -271,10 +271,14 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			getInterestedUsers: function(oParameters) {
+				var sGuid = oParameters.sEntityGuid;
+				var sPhaseGuid = "";
+
 				var onTaskInfoLoaded = function(oData) {
 					var aInterestedUsers = [];
 					var bAssignedUserAdded = false;
 					var bAuthorAdded = false;
+					sPhaseGuid = oData.PhaseGuid;
 
 					for (var i = oData.AccountDetails.results.length - 1; i >= 0; i--) {
 						for (var j = oData.AccountDetails.results[i].ContactDetails.results.length - 1; j >= 0; j--) {
@@ -298,7 +302,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 					}
 					aInterestedUsers.push("GeneralAdmin"); // just for now...for test perposes.
 
-					oParameters.onSuccess(aInterestedUsers);
+					oParameters.onSuccess(aInterestedUsers, sGuid, sPhaseGuid);
 				};
 
 				this.getDeficiency({
@@ -1903,6 +1907,25 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 				oSrv.then($.proxy(function(aData) {
 					this.onSuccessUpdateDeficiency(oParameters);
+
+					var onInterestedUsersLoaded = $.proxy(function(aUsers, sGuid, sPhaseGuid) {
+						this.logEvent({
+							aUsers: aUsers,
+							sEntityName: "deficiency",
+							sEntityGuid: sGuid,
+							sOperationNameEN: "Deficiency has been modified...",
+							sOperationNameFR: "Une d\u00E9ficience a \u00E9t\u00E9 modifi\u00E9e...",
+							sPhaseGuid: sPhaseGuid
+						});
+					}, this);
+					for (var i = 0; i < oParameters.aData.length; i++) {
+						this.getInterestedUsers({
+							sEntityName: "deficiency",
+							sEntityGuid: oParameters.aData[i].Guid,
+							onSuccess: onInterestedUsersLoaded
+						});
+					}
+
 				}, this));
 			},
 
