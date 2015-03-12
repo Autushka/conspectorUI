@@ -1,4 +1,4 @@
-var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'angularFileUpload', "pubnub.angular.service", "ngTagsInput", 'angular-loading-bar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ui.bootstrap']);
+var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'angularFileUpload', "pubnub.angular.service", "ngTagsInput", 'angular-loading-bar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ui.bootstrap', 'ngStorage']);
 var viewControllers = angular.module('viewControllers', []);
 
 app.config(['$anchorScrollProvider',

@@ -42,10 +42,10 @@ viewControllers.controller('companySelectionView', ['$scope', '$rootScope', '$st
 			apiProvider.setCurrentCompany(sCurrentCompany);
 
 			cacheProvider.oUserProfile.aUserRoles = angular.copy(cacheProvider.oUserProfile.aAllUserRoles);
-			servicesProvider.checkUserRolesAssignment(sCurrentCompany);
 			servicesProvider.setUserPhasesForCurrentCompany(sCurrentCompany);
-			servicesProvider.setUserContactForCurrentCompany(sCurrentCompany);		
-			//$rootScope.getNotificationsNumber();				
+			servicesProvider.setUserContactForCurrentCompany(sCurrentCompany);				
+			servicesProvider.checkUserRolesAssignment(sCurrentCompany);
+					
 		};
 
 		$scope.onChangeLanguage = function() {

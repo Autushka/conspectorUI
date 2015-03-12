@@ -37,7 +37,7 @@
 							<div layout="row" layout-align="center center">
 								<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(attachment, $event)">
 								</div>
-								<a ng-attr-id="{{'download' + attachment._guid}" href="{{'rest/file/V2/get/' + attachment._guid}}" download="{{attachment.sOriginalFileName}}" style="display: none"></a>
+								<a ng-attr-id="{{'download' + attachment._guid}" href="{{'rest/file/v2/get/' + attachment._guid}}" download="{{attachment.sOriginalFileName}}" style="display: none"></a>
 								<div class="cnpInputIcon cnpDeleteIcon" ng-if="sCurrentRole != 'contractor'" ng-click="onDelete(attachment)">
 								</div>
 							</div>

@@ -202,7 +202,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                     }
 
                     if (aData[i].ActivityTypeDetails) {
-                        sTypeIconUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aData[i].ActivityTypeDetails.AssociatedIconFileGuid;
+                        sTypeIconUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aData[i].ActivityTypeDetails.AssociatedIconFileGuid;
                         sTypeSortingSequence = aData[i].ActivityTypeDetails.GeneralAttributes.SortingSequence;
                     }
 

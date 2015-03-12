@@ -286,10 +286,14 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 								if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === oData.UserName) {
 									bAssignedUserAdded = true;
 								}
-								if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === oData.GeneralAttributes.CreatedBy) {
-									bAuthorAdded = true;
+
+								if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName !== cacheProvider.oUserProfile.sUserName) {
+									if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === oData.GeneralAttributes.CreatedBy) {
+										bAuthorAdded = true;
+									}
+
+									aInterestedUsers.push(oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName);
 								}
-								aInterestedUsers.push(oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName);
 							}
 						};
 					}
@@ -302,7 +306,12 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 					}
 					aInterestedUsers.push("GeneralAdmin"); // just for now...for test perposes.
 
-					oParameters.onSuccess(aInterestedUsers, sGuid, sPhaseGuid);
+					var aUniqueNames = [];
+					$.each(aInterestedUsers, function(i, el) { // removing dublicates
+						if ($.inArray(el, aUniqueNames) === -1) aUniqueNames.push(el);
+					});
+
+					oParameters.onSuccess(aUniqueNames, sGuid, sPhaseGuid);
 				};
 
 				this.getDeficiency({
@@ -1913,8 +1922,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 							aUsers: aUsers,
 							sEntityName: "deficiency",
 							sEntityGuid: sGuid,
-							sOperationNameEN: "Deficiency has been modified...",
-							sOperationNameFR: "Une d\u00E9ficience a \u00E9t\u00E9 modifi\u00E9e...",
+							sOperationNameEN: CONSTANTS.updatedDeficiencyEN, //"Deficiency has been modified...",
+							sOperationNameFR: CONSTANTS.updatedDeficiencyFR, //"Une d\u00E9ficience a \u00E9t\u00E9 modifi\u00E9e...",
 							sPhaseGuid: sPhaseGuid
 						});
 					}, this);

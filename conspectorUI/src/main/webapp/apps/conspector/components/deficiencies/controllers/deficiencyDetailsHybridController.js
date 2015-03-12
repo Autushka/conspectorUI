@@ -29,7 +29,7 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
                     sGuid: aData[i].Guid,
                     sName: sDescription,
                     bTicked: false,
-                    sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + aData[i].AssociatedIconFileGuid,
+                    sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/v2/get/" + aData[i].AssociatedIconFileGuid,
                 })
             }
         };
@@ -61,8 +61,8 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
                         aUsers: aUsers,
                         sEntityName: "deficiency",
                         sEntityGuid: oData.Guid,
-                        sOperationNameEN: "Deficiency has been modified (mobile)...",
-                        sOperationNameFR: "Deficiency has been modified (mobile)...",
+                        sOperationNameEN: CONSTANTS.updatedDeficiencyEN,//"Deficiency has been modified (mobile)...",
+                        sOperationNameFR: CONSTANTS.updatedDeficiencyFR,//"Deficiency has been modified (mobile)...",
                         sPhaseGuid: $rootScope.oSelectedDeficiency._phaseGuid
                     });
                 }

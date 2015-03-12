@@ -42,7 +42,7 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 					_guid: aData[i].Guid,
 					_lastModifiedAt: aData[i].LastModifiedAt,
 					_associatedIconFileGuid: aData[i].AssociatedIconFileGuid,
-					sUrl: $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aData[i].AssociatedIconFileGuid,
+					sUrl: $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aData[i].AssociatedIconFileGuid,
 					nameEN: aData[i].NameEN,
 					nameFR: aData[i].NameFR,
 					associatedColor: aData[i].AssociatedColor,
@@ -52,7 +52,7 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 			$scope.tableParams.reload();
 
 			apiProvider.getAttachments({
-				sPath: "rest/file/V1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_",
+				sPath: "rest/file/v1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_",
 				onSuccess: onIconsLoaded
 			});
 		}
@@ -126,13 +126,13 @@ viewControllers.controller('activityTypesListView', ['$scope', '$rootScope', '$s
 				oActivityType._lastModifiedAt = oData.LastModifiedAt;
 				oActivityType._editMode = false;
 				oActivityType._associatedIconFileGuid = oData.AssociatedIconFileGuid;
-				oActivityType.sUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + oData.AssociatedIconFileGuid;
+				oActivityType.sUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + oData.AssociatedIconFileGuid;
 			};
 			var onSuccessUpdate = function(oData) {
 				oActivityType._editMode = false;
 				oActivityType._lastModifiedAt = oData.LastModifiedAt;
 				oActivityType._associatedIconFileGuid = oData.AssociatedIconFileGuid;
-				oActivityType.sUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + oData.AssociatedIconFileGuid;
+				oActivityType.sUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + oData.AssociatedIconFileGuid;
 			};
 
 			oDataForSave.NameEN = oActivityType.nameEN;

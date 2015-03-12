@@ -40,7 +40,7 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope', '$state',
 		var onFilesLoaded = function(aData, aAppendTo, oTableToReload) {
 			for (var i = 0; i < aData.length; i++) {
 				var oFile = {};
-				oFile.sUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aData[i].guid;
+				oFile.sUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aData[i].guid;
 				oFile.sDescriptionEN = aData[i].descriptionEN;
 				oFile.sDescriptionFR = aData[i].descriptionFR;
 				oFile._createMode = false;
@@ -93,7 +93,7 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope', '$state',
 				$scope.upload.success(function(sData) {
 					aUpdateAt[iIndex]._createMode = false;
 					aUpdateAt[iIndex]._editMode = false;
-					aUpdateAt[iIndex].sUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + sData;
+					aUpdateAt[iIndex].sUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + sData;
 					aUpdateAt[iIndex]._guid = sData;
 				});
 			}
@@ -116,22 +116,22 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope', '$state',
 		};
 
 		apiProvider.getAttachments({
-			sPath: "rest/file/V1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_",
+			sPath: "rest/file/v1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_",
 			onSuccess: onLogoImgsLoaded
 		});
 
 		apiProvider.getAttachments({
-			sPath: "rest/file/V1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_",
+			sPath: "rest/file/v1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_",
 			onSuccess: onDeficienciesStatusesImgsLoaded
 		});
 
 		apiProvider.getAttachments({
-			sPath: "rest/file/V1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_",
+			sPath: "rest/file/v1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_",
 			onSuccess: onActivitiesTypesImgsLoaded
 		});
 
 		apiProvider.getAttachments({
-			sPath: "rest/file/V1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_reportsTemplates_",
+			sPath: "rest/file/v1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_reportsTemplates_",
 			onSuccess: onReportsTemplatesLoaded
 		});
 
@@ -148,7 +148,7 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope', '$state',
 		};
 
 		$scope.onLogoSelected = function(aFiles, $event, iIndex) {
-			onFileSelected(aFiles, "rest/file/V1/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_", oLogosListData.aData, $event, iIndex);
+			onFileSelected(aFiles, "rest/file/v1/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_", oLogosListData.aData, $event, iIndex);
 		};
 
 		$scope.onAddNewDeficiencyStatus = function() {
@@ -164,7 +164,7 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope', '$state',
 		};
 
 		$scope.onDeficiencyStatusSelected = function(aFiles, $event, iIndex) {
-			onFileSelected(aFiles, "rest/file/V1/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_", oDeficiencyStatusesListData.aData, $event, iIndex);
+			onFileSelected(aFiles, "rest/file/v1/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_deficiencyStatuses_", oDeficiencyStatusesListData.aData, $event, iIndex);
 		};
 
 		$scope.onAddNewActivityType = function() {
@@ -180,7 +180,7 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope', '$state',
 		};
 
 		$scope.onActivityTypeSelected = function(aFiles, $event, iIndex) {
-			onFileSelected(aFiles, "rest/file/V1/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_", oActivityTypesListData.aData, $event, iIndex);
+			onFileSelected(aFiles, "rest/file/v1/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_activityTypes_", oActivityTypesListData.aData, $event, iIndex);
 		};
 
 		$scope.onAddNewReportTemplate = function() {
@@ -210,7 +210,7 @@ viewControllers.controller('systemFilesView', ['$scope', '$rootScope', '$state',
 		};
 
 		$scope.onReportTemplateSelected = function(aFiles, $event, iIndex) {
-			onFileSelected(aFiles, "rest/file/V1/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_reportsTemplates_", oReportsTemplatesListData.aData, $event, iIndex);
+			onFileSelected(aFiles, "rest/file/v1/createUploadUrl/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_reportsTemplates_", oReportsTemplatesListData.aData, $event, iIndex);
 		};
 	}
 ]);

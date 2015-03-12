@@ -1,5 +1,5 @@
-viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout',
-    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
+viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout', 'CONSTANTS',
+    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout, CONSTANTS) {
 
         var sCurrentUser = cacheProvider.oUserProfile.sUserName;
         var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
@@ -93,6 +93,34 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                     sProjectPhase = "Not Assigned";
                 }
 
+                switch (aData[i].OperationNameFR) {
+                    case "Une nouvelle d??ficience a ??t?? ajout??e":
+                        aData[i].OperationNameFR = CONSTANTS.newDeficiencyFR;
+                        break;
+                    case "Une d??ficience a ??t?? modifi??e":
+                        aData[i].OperationNameFR = CONSTANTS.updatedDeficiencyFR;
+                        break;
+                    case "Un commentaire a ??t?? ajout??":
+                        aData[i].OperationNameFR = CONSTANTS.newCommentFR;
+                        break;
+                    case "Un ficher a ??t?? ajout??":
+                        aData[i].OperationNameFR = CONSTANTS.newAttachmentFR;
+                        break;
+
+                    case "Une nouvelle d??ficience a ??t?? ajout??e (mobile)":
+                        aData[i].OperationNameFR = CONSTANTS.newDeficiencyFR + " (mobile)";
+                        break;
+                    case "Une d??ficience a ??t?? modifi??e (mobile)":
+                        aData[i].OperationNameFR = CONSTANTS.updatedDeficiencyFR + " (mobile)";
+                        break;
+                    case "Un commentaire a ??t?? ajout?? (mobile)":
+                        aData[i].OperationNameFR = CONSTANTS.newCommentFR + " (mobile)";
+                        break;
+                    case "Un ficher a ??t?? ajout?? (mobile)":
+                        aData[i].OperationNameFR = CONSTANTS.newAttachmentFR + " (mobile)";
+                        break;
+                }
+
                 sOperationName = $translate.use() === "en" ? aData[i].OperationNameEN : aData[i].OperationNameFR;
 
                 if (aData[i].ContactDetails) {
@@ -182,7 +210,7 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
             if (!$scope.bDisplayEditButtons) {
                 return;
             }
-            oNotification.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aTaskStatuses[(oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
+            oNotification.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aTaskStatuses[(oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
 
             $scope.aDataForMassChanges.push({
                 Guid: oNotification._guid,

@@ -1,4 +1,4 @@
-var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'cfp.loadingBar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ui.bootstrap']);
+var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'cfp.loadingBar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ui.bootstrap', 'ngStorage', 'ngJsTree']);
 var viewControllers = angular.module('viewControllers', []);
 
 app.config(['cfpLoadingBarProvider',
@@ -380,6 +380,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'apps/conspector/components/adminPanel/templates/unitOptionValueListView.html',
             controller: 'unitOptionValueListView'
         });
+        $stateProvider.state('app.adminPanel.additionalAttributesList', {
+            url: '/additionalAttributesList',
+            templateUrl: 'apps/conspector/components/adminPanel/templates/additionalAttributesListView.html',
+            controller: 'additionalAttributesListView'
+        });        
 
         $stateProvider.state('app.adminPanel.taskTypeList', {
             url: '/taskTypeList',

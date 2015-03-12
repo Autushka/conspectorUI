@@ -23,10 +23,10 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation        
 
-        
-        $scope.onMainMenu = function(){
+
+        $scope.onMainMenu = function() {
             $state.go("mainMenuHybrid");
-        };  
+        };
 
         if (!$rootScope.aUnits) {
             $rootScope.aUnits = [];
@@ -219,7 +219,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                     sGuid: aData[i].Guid,
                     sName: sDescription,
                     bTicked: false,
-                    sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + aData[i].AssociatedIconFileGuid,
+                    sIconUrl: CONSTANTS.sAppAbsolutePath + "rest/file/v2/get/" + aData[i].AssociatedIconFileGuid,
                 })
             }
             //initial value
@@ -387,7 +387,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
            // onAddImage();
             $rootScope.sSideNavHeader = $rootScope.oDeficiencyAttributes.oImages.sDescription;
 
-            $rootScope.bIsItemsListsOpen = true;           
+            $rootScope.bIsItemsListsOpen = true;
         };
 
         var prepareLinksForSave = function() { // link contact to phases
@@ -397,11 +397,10 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
             if ($rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids && $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.length) {
                 $scope.sAccountValues = $rootScope.oDeficiencyAttributes["oContractors"].sValue;
-                $scope.sAccountGuids = "";
                 for (var i = 0; i < $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids.length; i++) {
                     sUri = "Accounts('" + $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids[i] + "')";
                     aUri.push(sUri);
-                    
+
                     $scope.sAccountGuids = $scope.sAccountGuids + $rootScope.oDeficiencyAttributes["oContractors"].aSelectedItemsGuids[i] + "; ";
                 }
             }
@@ -436,8 +435,8 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                         aUsers: aUsers,
                         sEntityName: "deficiency",
                         sEntityGuid: oData.Guid,
-                        sOperationNameEN: "New deficiency has been created (on mobile)...",
-                        sOperationNameFR: "New deficiency has been created (on mobile)...",//"Une nouvelle d\u00E9ficience a \u00E9t\u00E9 ajout\u00E9e sur mobile",
+                        sOperationNameEN: CONSTANTS.newDeficiencyEN, //""New deficiency has been created (on mobile)...",
+                        sOperationNameFR: CONSTANTS.newDeficiencyFR, //""New deficiency has been created (on mobile)...",//"Une nouvelle d\u00E9ficience a \u00E9t\u00E9 ajout\u00E9e sur mobile",
                         sPhaseGuid: oData.PhaseGuid
                     });
                 }
@@ -445,7 +444,7 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                     sEntityName: "deficiency",
                     sEntityGuid: oData.Guid,
                     onSuccess: onInterestedUsersLoaded
-                });                
+                });
             };
 
             var oDataForSave = {};
@@ -494,12 +493,9 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
             $scope.sAccountGuids = "";
 
             var aLinks = prepareLinksForSave();
-            if(!$scope.sAccountValues){
-                oDataForSave.AccountValues = $scope.sAccountValues;
-            }
-            if(!$scope.sAccountGuids){
-                oDataForSave.AccountGuids = $scope.sAccountGuids;
-            }
+
+            oDataForSave.AccountValues = $scope.sAccountValues;
+            oDataForSave.AccountGuids = $scope.sAccountGuids;
 
             apiProvider.createDeficiency({
                 bShowSpinner: true,
@@ -510,7 +506,5 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
                 onSuccess: onSuccessCreation,
             });
         };
-
-
     }
 ]);

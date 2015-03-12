@@ -149,12 +149,13 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             var sStatuseIconUrl = "";
             var sStatuseIconGuid = "";
             var sStatusDescription = "";
-            var sStatusDescriptionEN = "";            
+            var sStatusDescriptionEN = "";
             var sContractors = "";
             var iImagesNumber = 0;
             var sFileMetadataSetLastModifiedAt = "";
             var aImages = [];
             var sDescription = "";
+            var sContractorsGuids = "";
 
             oDeficienciesListData.aData = [];
 
@@ -175,6 +176,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 iImagesNumber = 0;
                 aImages = [];
                 sDescription = "";
+                sContractorsGuids = "";
 
                 bMatchFound = false;
 
@@ -206,7 +208,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
                 if (aData[i].TaskStatusDetails) {
                     sStatusSortingSequence = aData[i].TaskStatusDetails.GeneralAttributes.SortingSequence;
-                    sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
+                    sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aData[i].TaskStatusDetails.AssociatedIconFileGuid;
                     sStatusDescriptionEN = aData[i].TaskStatusDetails.NameEN;
                     sStatusDescription = $translate.use() === "en" ? aData[i].TaskStatusDetails.NameEN : aData[i].TaskStatusDetails.NameFR;
                     if (!sStatusDescription) {
@@ -218,6 +220,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 if (aData[i].AccountDetails) {
                     for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
                         sContractors = sContractors + aData[i].AccountDetails.results[j].Name + "; ";
+                        sContractorsGuids = sContractorsGuids + aData[i].AccountDetails.results[j].Guid + "; ";
                     }
                 }
 
@@ -267,6 +270,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sDueInLetter: sDueInLetter,
                     sProjectPhase: sProjectPhase,
                     sContractors: sContractors,
+                    sContractorsGuids: sContractorsGuids,
                     sCleanedContractors: utilsProvider.replaceSpecialChars(sContractors),
                     sStatusSortingSequence: sStatusSortingSequence,
                     sStatuseIconUrl: sStatuseIconUrl,
@@ -281,17 +285,18 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     iImagesNumber: iImagesNumber,
                     _createdAt: aData[i].CreatedAt,
                     _aImages: aImages,
-                });                
+                });
             }
 
             $scope.tableParams.reload();
-            if($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails"){
-            $timeout(function() {
-                if ($(".cnpAppView")[0]) {
-                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
-                    cacheProvider.putListViewScrollPosition("deficienciesList", 0);
-                }
-            }, 0);}
+            if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") {
+                $timeout(function() {
+                    if ($(".cnpAppView")[0]) {
+                        $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
+                        cacheProvider.putListViewScrollPosition("deficienciesList", 0);
+                    }
+                }, 0);
+            }
         };
 
         var loadDeficiencies = function() {
@@ -378,16 +383,16 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
 
-            if(sCurrentRole === 'contractor' && oDeficiency.sStatusDescriptionEN != "Done by Contractor" && oDeficiency.sStatusDescriptionEN != "In Progress" && oDeficiency.sStatusDescriptionEN != "Non Conform"){
+            if (sCurrentRole === 'contractor' && oDeficiency.sStatusDescriptionEN != "Done by Contractor" && oDeficiency.sStatusDescriptionEN != "In Progress" && oDeficiency.sStatusDescriptionEN != "Non Conform") {
                 $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
                     sMode: "display",
                     sDeficiencyGuid: oDeficiency._guid,
                 });
-            }else{
+            } else {
                 $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
                     sMode: "edit",
                     sDeficiencyGuid: oDeficiency._guid,
-                });                
+                });
             }
         };
 
@@ -497,17 +502,26 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 return;
             }
 
-            if(oDeficiency.sStatusDescriptionEN != "Done by Contractor" && oDeficiency.sStatusDescriptionEN != "Non Conform" && oDeficiency.sStatusDescriptionEN != "In Progress"  && cacheProvider.oUserProfile.sCurrentRole === "contractor"){
+            if (oDeficiency.sStatusDescriptionEN != "Done by Contractor" && oDeficiency.sStatusDescriptionEN != "Non Conform" && oDeficiency.sStatusDescriptionEN != "In Progress" && cacheProvider.oUserProfile.sCurrentRole === "contractor") {
                 return;
             }
 
-            oDeficiency.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/V2/get/" + aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
+            oDeficiency.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
+            
+            $scope.sAccountValues = "";
+            $scope.sAccountGuids = "";
+            $scope.sAccountValues = oDeficiency.sContractors;
+            $scope.sAccountGuids = oDeficiency.sContractorsGuids;
 
             $scope.aDataForMassChanges.push({
                 Guid: oDeficiency._guid,
-                TaskStatusGuid: aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].Guid,
+                //to put back...
+                TaskStatusGuid: aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].Guid,//aTaskStatuses[oDeficiency.sStatusSortingSequence - 1].Guid
                 PhaseGuid: oDeficiency._phaseGuid,
+                //AccountValues:  $scope.sAccountValues,
+                //AccountGuids: $scope.sAccountGuids,
             });
+
             oDeficiency.sStatusSortingSequence = (oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length;
         };
 

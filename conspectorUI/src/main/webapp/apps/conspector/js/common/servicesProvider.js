@@ -1,4 +1,4 @@
-app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', '$rootScope',
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', '$rootScope', 
 	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard, $rootScope) {
 		return {
 			changeLanguage: function() {
@@ -14,27 +14,31 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				$rootScope.$emit('languageChanged');
 			},
 
-			logIn: function(oParameters, bRememberUserName) {
+			logIn: function(oParameters) {
 				var oSrv = {};
 				var SHA512 = new Hashes.SHA512;
 
-				var sPath = CONSTANTS.sAppAbsolutePath + "rest/account/login/" + oParameters.userName + "/" + SHA512.hex(oParameters.password);
+				var sPath = CONSTANTS.sAppAbsolutePath + "rest/account/login/" + oParameters.oData.userName + "/" + SHA512.hex(oParameters.oData.password);
 				var onSuccess = $.proxy(function(oData) {
 					var bNoErrorMessages = this.messagesHandler(oData.messages);
 					if (bNoErrorMessages) {
-						if (bRememberUserName) {
-							var oObjToStore = {
-								sUserName: oParameters.userName
-							};
+						// if (bRememberUserName) {
+						// 	var oObjToStore = {
+						// 		sUserName: oParameters.userName
+						// 	};
 
-							if (CONSTANTS.bIsHybridApplication) {
-								oObjToStore.sPassword = oParameters.password;
-							}
-							$cookieStore.put("userName", oObjToStore);
-						} else {
-							$cookieStore.remove("userName");
+						// 	if (CONSTANTS.bIsHybridApplication) {
+						// 		oObjToStore.sPassword = oParameters.password;
+						// 	}
+						// 	$cookieStore.put("userName", oObjToStore);
+						// } else {
+						// 	$cookieStore.remove("userName");
+						// }
+						if(oParameters.onSuccess){
+							oParameters.onSuccess();
 						}
-						this.onLogInSuccessHandler(oParameters.userName);
+						
+						this.onLogInSuccessHandler(oParameters.oData.userName);
 					}
 				}, this);
 
@@ -405,7 +409,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					for (var i = 0; i < oParameters.aFiles.length; i++) {
 						var file = oParameters.aFiles[i];
 						var sPath = this.costructUploadUrl({
-							sPath: CONSTANTS.sAppAbsolutePath + "rest/file/V1V2/createUploadUrlWithFileMetadataSetGuid/Deficiency/" + oParameters.sParentEntityGuid + "/_attachments_/" + sFileMetadataSetGuid,
+							sPath: CONSTANTS.sAppAbsolutePath + "rest/file/v1v2/createUploadUrlWithFileMetadataSetGuid/Deficiency/" + oParameters.sParentEntityGuid + "/_attachments_/" + sFileMetadataSetGuid,
 						});
 
 						var oUpload = {};
@@ -522,7 +526,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			deleteFileAttachment: function(sGuid) {
-				var sUrl = "rest/file/V2/delete/" + sGuid;
+				var sUrl = "rest/file/v2/delete/" + sGuid;
 				dataProvider.ajaxRequest({
 					sPath: sUrl,
 					sRequestType: "GET",
@@ -623,13 +627,13 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			constructImageUrl: function(sFileMetadataGuid) {
-				return CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + sFileMetadataGuid;
+				return CONSTANTS.sAppAbsolutePath + "rest/file/v2/get/" + sFileMetadataGuid;
 			},
 
 			constructLogoUrl: function() {
 				// var onSuccessCompanyLoaded = function(oData){
 				// 	if(oData.LogoFileMetadataSetDetails && oData.LogoFileMetadataSetDetails.FileMetadataDetails && oData.LogoFileMetadataSetDetails.FileMetadataDetails.results.length){
-				// 		$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + Data.LogoFileMetadataSetDetails.FileMetadataDetails.results[0].Guid;
+				// 		$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "rest/file/v2/get/" + Data.LogoFileMetadataSetDetails.FileMetadataDetails.results[0].Guid;
 				// 	}else{
 				// 		$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "apps/conspector/img/logo_conspector.png";
 				// 	}
@@ -641,13 +645,13 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				// 	onSuccess: onSuccessCompanyLoaded
 				// });
 
-				var sUrl = CONSTANTS.sAppAbsolutePath + "rest/file/V1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_";
+				var sUrl = CONSTANTS.sAppAbsolutePath + "rest/file/v1/list/companyDependentSettings/" + cacheProvider.oUserProfile.sCurrentCompany + "/_logo_";
 				var oSvc = dataProvider.httpRequest({
 					sPath: sUrl
 				});
 				oSvc.then(function(aData) {
 					if (aData[0]) {
-						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "rest/file/V2/get/" + aData[0].guid;
+						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "rest/file/v2/get/" + aData[0].guid;
 					} else {
 						$rootScope.sLogoUrl = CONSTANTS.sAppAbsolutePath + "apps/conspector/img/logo_conspector.png";
 					}
@@ -684,6 +688,10 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					sAuthor = "";
 					sAvatarUrl = "";
 					sUserName = "";
+
+					if(oData.CommentDetails.results[i].GeneralAttributes.IsDeleted){
+						return;
+					}
 					if (oData.CommentDetails.results[i].ContactDetails) {
 						if (oData.CommentDetails.results[i].ContactDetails.FirstName) {
 							sAuthor = oData.CommentDetails.results[i].ContactDetails.FirstName + " ";
@@ -752,7 +760,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 							}
 						}
 						if (oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey]) {
-							oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/V2/get/";
+							oMultiSelectItem.icon = "<img src='" + $window.location.origin + $window.location.pathname + "rest/file/v2/get/";
 							oMultiSelectItem.icon = oMultiSelectItem.icon + oParameters.oDependentArrayWrapper.aData[i][oParameters.sDependentIconKey] + "' class='cnpMultiSelectIcon'/>"
 						}
 
@@ -915,7 +923,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			setUpPhotoGallery: function(aImages) {
-				$rootScope.sGalleryPhotosLocation = $window.location.origin + $window.location.pathname + "rest/file/V2/get/";
+				$rootScope.sGalleryPhotosLocation = $window.location.origin + $window.location.pathname + "rest/file/v2/get/";
 				$rootScope.aGalleryData = [];
 
 				for (var i = 0; i < aImages.length; i++) {
@@ -955,10 +963,12 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var sCurrentCompany = cacheProvider.oUserProfile.sCurrentCompany;
 				var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 				var aGloballySelectedPhasesGuids = angular.copy(cacheProvider.oUserProfile.aGloballySelectedPhasesGuids);
+				//var oUserContact = angular.copy(cacheProvider.oUserProfile.oUserContact),
 				cacheProvider.oUserProfile = apiProvider.getUserProfile(cacheProvider.oUserProfile.sUserName);
 				cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
 				cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
 				cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aGloballySelectedPhasesGuids;
+				this.setUserContactForCurrentCompany(sCurrentCompany);		
 			}
 		}
 	}

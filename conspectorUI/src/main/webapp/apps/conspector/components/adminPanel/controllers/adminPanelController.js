@@ -144,6 +144,16 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 			sMenuLabel: "adminPanel_activityTypes",
 		});		
 
+		$scope.aMenuItems.push({
+			// bShouldBeDisplayed: rolesSettings.getRolesAdminPanelMenuItemSettings({
+			// 	sRole: sCurrentRole,
+			// 	sMenuItem: "bShowActivityTypesManagement"
+			// }),
+			bShouldBeDisplayed: true,
+			sStateName: "app.adminPanel.additionalAttributesList",
+			sMenuLabel: "adminPanel_additionalAttributes",
+		});			
+
 		var oWindow = angular.element($window);
 
 		oWindow.bind('resize', function() {

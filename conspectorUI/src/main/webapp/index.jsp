@@ -51,7 +51,12 @@
 		<script src='bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
 		<script src='bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
 		<script src='bower_components/textAngular/dist/textAngular.min.js'></script>	
-		<script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>						
+		<script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>	
+		<script src="bower_components/ngstorage/ngStorage.min.js"></script>
+
+		<script src="bower_components/jstree/dist/jstree.min.js"></script>
+		<script src="bower_components/ng-js-tree/dist/ngJsTree.min.js"></script>			
+
 		
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->
 		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
@@ -144,6 +149,7 @@
 		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script>  
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionSetListController.js"></script>  	
 		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValueListController.js"></script>
+		<script src="apps/conspector/components/adminPanel/controllers/additionalAttributesListController.js"></script>		
 		<script src="apps/conspector/components/adminPanel/controllers/taskTypeListController.js"></script>
 		<script src="apps/conspector/components/adminPanel/controllers/activityTypesListController.js"></script> 
 

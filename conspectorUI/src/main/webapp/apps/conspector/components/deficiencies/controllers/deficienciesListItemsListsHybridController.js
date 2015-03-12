@@ -177,8 +177,8 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                             aUsers: aUsers,
                             sEntityName: "deficiency",
                             sEntityGuid: $rootScope.oSelectedDeficiency._guid,
-                            sOperationNameEN: "New photo has added (mobile)...",
-                            sOperationNameFR: "Une nouvelle image a \u00E9t\u00E9 ajout\u00E9e sur mobile",
+                            sOperationNameEN: CONSTANTS.newAttachmentEN,//"New photo has added (mobile)...",
+                            sOperationNameFR: CONSTANTS.newAttachmentFR,//"Une nouvelle image a \u00E9t\u00E9 ajout\u00E9e sur mobile",
                             sPhaseGuid: $rootScope.oSelectedDeficiency._phaseGuid
                         });
                     };
@@ -231,8 +231,8 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                         aUsers: aUsers,
                         sEntityName: "deficiency",
                         sEntityGuid: $rootScope.oSelectedDeficiency._guid,
-                        sOperationNameEN: "New comment has been created (mobile)...",
-                        sOperationNameFR: "Un commentaire a \u00E9t\u00E9 ajout\u00E9 (sur mobile)...",
+                        sOperationNameEN: CONSTANTS.newCommentEN,//"New comment has been created (mobile)...",
+                        sOperationNameFR: CONSTANTS.newCommentFR,//"Un commentaire a \u00E9t\u00E9 ajout\u00E9 (sur mobile)...",
                         sPhaseGuid: $rootScope.oSelectedDeficiency._phaseGuid
                     });
                 };

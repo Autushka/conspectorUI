@@ -1,5 +1,5 @@
-viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$upload', 'utilsProvider',
-	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload, utilsProvider) {
+viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$upload', 'utilsProvider', 'CONSTANTS',
+	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload, utilsProvider, CONSTANTS) {
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 		var sEntityType = "";
@@ -139,8 +139,8 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 							aUsers: aUsers,
 							sEntityName: sEntityName,
 							sEntityGuid: sParentEntityGuid,
-							sOperationNameEN: "New attachment has been added...",
-							sOperationNameFR: "Un ficher a \u00E9t\u00E9 ajout\u00E9...",
+							sOperationNameEN: CONSTANTS.newAttachmentEN,//"New attachment has been added...",
+							sOperationNameFR: CONSTANTS.newAttachmentFR, //"Un ficher a \u00E9t\u00E9 ajout\u00E9...",
 							sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
 						});
 					};
@@ -176,7 +176,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				$event.target.nextElementSibling.click();
 				return;
 			}
-			$window.open("rest/file/V2/get/" + oAttachment._guid);
+			$window.open("rest/file/v2/get/" + oAttachment._guid);
 		};
 
 		$scope.onDelete = function(oAttachment) {

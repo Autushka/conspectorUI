@@ -1,5 +1,5 @@
-viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$upload', 'utilsProvider',
-	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload, utilsProvider) {
+viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', 'rolesSettings', '$upload', 'utilsProvider', 'CONSTANTS',
+	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, historyProvider, $mdSidenav, $window, $filter, rolesSettings, $upload, utilsProvider, CONSTANTS) {
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 
 		var sEntityType = "";
@@ -127,8 +127,8 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 							aUsers: aUsers,
 							sEntityName: sEntityName,
 							sEntityGuid: sParentEntityGuid,
-							sOperationNameEN: "New comment has been added ",
-							sOperationNameFR: "Un commentaire a \u00E9t\u00E9 ajout\u00E9",
+							sOperationNameEN: CONSTANTS.newCommentEN,//"New comment has been added ",
+							sOperationNameFR: CONSTANTS.newCommentFR,//"Un commentaire a \u00E9t\u00E9 ajout\u00E9",
 							sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
 						});
 					};
