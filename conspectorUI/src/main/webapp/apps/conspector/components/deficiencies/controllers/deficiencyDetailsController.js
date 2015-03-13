@@ -422,6 +422,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				});
 			}
 		} else {
+			$rootScope.oCurrentDeficiency = angular.copy({});
 			constructPhasesMultiSelect({
 				aSelectedPhases: []
 			});

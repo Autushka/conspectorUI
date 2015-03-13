@@ -407,6 +407,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                 });
             }
         } else {
+            $rootScope.oCurrentActivity = angular.copy({});
             constructPhasesMultiSelect({
                 aSelectedPhases: []
             });
