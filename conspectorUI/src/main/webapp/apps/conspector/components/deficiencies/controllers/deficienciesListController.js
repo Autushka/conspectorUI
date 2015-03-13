@@ -506,7 +506,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 return;
             }
 
-            oDeficiency.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
+            oDeficiency.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aTaskStatuses[(oDeficiency.sStatusSortingSequence) % aTaskStatuses.length].AssociatedIconFileGuid;
             
             $scope.sAccountValues = "";
             $scope.sAccountGuids = "";
@@ -516,7 +516,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $scope.aDataForMassChanges.push({
                 Guid: oDeficiency._guid,
                 //to put back...
-                TaskStatusGuid: aTaskStatuses[(oDeficiency.sStatusSortingSequence + 1) % aTaskStatuses.length].Guid,//aTaskStatuses[oDeficiency.sStatusSortingSequence - 1].Guid
+                TaskStatusGuid: aTaskStatuses[(oDeficiency.sStatusSortingSequence) % aTaskStatuses.length].Guid,//aTaskStatuses[oDeficiency.sStatusSortingSequence - 1].Guid
                 PhaseGuid: oDeficiency._phaseGuid,
                 //AccountValues:  $scope.sAccountValues,
                 //AccountGuids: $scope.sAccountGuids,
