@@ -66,7 +66,7 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
                     sOperationNameEN: CONSTANTS.updatedDeficiencyEN,
                     sOperationNameFR: CONSTANTS.updatedDeficiencyEN,
                    // sEntityGuid: oData.Guid,
-                    aData: [{Guid: oData: Guid}],
+                    aData: [{Guid: oData.Guid}],
                     onSuccess: onInterestedUsersLoaded
                 }); 
             }

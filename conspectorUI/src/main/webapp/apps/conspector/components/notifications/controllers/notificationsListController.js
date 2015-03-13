@@ -198,11 +198,8 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
             $scope.tableParams.reload();
         };
 
-        $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-            loadNotifications();
-        });
-
         $scope.$on('notificationsShouldBeRefreshed', function(oParameters) {
+            cacheProvider.putListViewScrollPosition("notificationsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
             loadNotifications();
         });
 

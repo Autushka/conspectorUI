@@ -513,6 +513,15 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $scope.sAccountValues = oDeficiency.sContractors;
             $scope.sAccountGuids = oDeficiency.sContractorsGuids;
 
+
+            for (var i = $scope.aDataForMassChanges.length - 1; i >= 0; i--) {
+                if($scope.aDataForMassChanges[i].Guid === oDeficiency._guid){
+                    $scope.aDataForMassChanges.splice(i, 1);
+                    break;
+                }
+            }
+
+
             $scope.aDataForMassChanges.push({
                 Guid: oDeficiency._guid,
                 //to put back...
