@@ -156,10 +156,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			$scope.oDeficiency.aDescriptionTags = utilsProvider.tagsStringToTagsArray(oDeficiency.DescriptionTags);
 			$scope.oDeficiency.aLocationTags = utilsProvider.tagsStringToTagsArray(oDeficiency.LocationTags);
 
-			//if (oDeficiency.PhaseDetails) {
-			$scope.oDeficiency._phaseGuid = oDeficiency.PhaseGuid;
+			$scope.oDeficiency.sDescription = oDeficiency.Description;
 
-			//} 
+			$scope.oDeficiency._phaseGuid = oDeficiency.PhaseGuid;
 
 			$scope.oDeficiency._deficiencyStatusGuid = oDeficiency.TaskStatusGuid;
 			$scope.oDeficiency._taskTypeGuid = oDeficiency.TaskTypeGuid;
@@ -536,13 +535,21 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			return aLinks;
 		};
 
-		// prepareInterestedUsersForSave = function(){
-
-		// };
-
 		$scope.onCloseCheckSelectedTaskPrioritiesLength = function() {
 			if ($scope.aSelectedTaskPriorities.length == 0)
 				$scope.onSelectedTaskPrioritiesModified();
+		};
+
+		$scope.onSelectedContractorsModified = function(){
+			$scope.onDataModified();
+		};
+
+		$scope.onDescriptionChanged = function(){
+			$scope.onDataModified();
+		};
+
+		$scope.onDueDateChanged = function(){
+			$scope.onDataModified();
 		};
 
 		$scope.onSelectedTaskPrioritiesModified = function() {
@@ -579,6 +586,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		};
 
 		$scope.onSave = function(bSaveAndNew, oNavigateTo) {
+			// if(!$rootScope.bDataHasBeenModified){
+			// 	return;
+			// }
+
+
 			if ($scope.oForms.deficiencyDetailsForm.selectedTaskTypes) {
 				$scope.oForms.deficiencyDetailsForm.selectedTaskTypes.$setDirty(); //to display validation messages on submit press
 			}

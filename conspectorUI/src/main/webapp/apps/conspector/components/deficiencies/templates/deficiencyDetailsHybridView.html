@@ -147,7 +147,7 @@
 		</button>
 		
 		<div layout="column" layout-align="start center">
-			<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton cnpInputIcon cnpSaveIconWhiteMobile notSelectable" ng-click="onSave()" ng-cloak>
+			<md-button type="submit" ng-if="$root.oSelectedDeficiency.bDataHasBeenModified" class="md-button md-primary md-raised cnpMobileLargeButton cnpInputIcon cnpSaveIconWhiteMobile notSelectable" ng-click="onSave()" ng-cloak>
 			{{'global_mobileSave' | translate}}
 			</button>
 		</div>

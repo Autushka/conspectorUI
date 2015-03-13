@@ -135,6 +135,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
         };
 
         $scope.onSelectDeficiencyAttributeStatus = function(oStatus) {
+            $rootScope.oSelectedDeficiency.bDataHasBeenModified = true;
             if (!oStatus.bTicked) {
                 for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
                     $rootScope.aSelectedDeficiencyStatuses[i].bTicked = false;

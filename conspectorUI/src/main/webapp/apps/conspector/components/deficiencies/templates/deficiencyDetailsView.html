@@ -15,7 +15,7 @@
 		<div layout="row" layout-align="space-between center" class="md-default-theme cnpActionBar">
 			<div layout="row" layout-align="start center">
 				<md-button ng-show="sMode == 'display' && bDisplayEditButton" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpEditDetailsIconWhite notSelectable" ng-click="onEdit()">{{'global_edit' | translate}}</md-button>
-				<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
+				<md-button ng-show="( sMode == 'edit' && bDataHasBeenModified == true ) || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
 				<md-button ng-show="sMode == 'edit' && bDisplayDeleteButton" class="md-button md-warn md-hue-2 md-raised cnpButtonWithIcon cnpInputIcon cnpDeleteIconWhite notSelectable " ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
 				<md-button ng-show="sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
 				<div layout="row" layout-align="center center" ng-show="$root.oCurrentDeficiency.iImagesNumber || $root.oCurrentDeficiency.iImagesNumber == 0"
@@ -284,7 +284,7 @@
 						</label>
 					</div>
 					<div class="cnpSubSectionText" ng-if="sMode == 'display' || sCurrentRole == 'contractor'" ng-bind-html="oDeficiency.sDescription"></div>
-					<div text-angular ng-model="oDeficiency.sDescription" ng-if="sMode != 'display' && sCurrentRole != 'contractor'"></div>
+					<div text-angular ng-change="onDescriptionChanged()" ng-model="oDeficiency.sDescription" ng-if="sMode != 'display' && sCurrentRole != 'contractor'"></div>
 				</div>
 			</div>
 			<div layout="row" style="width: 100%" flex>
@@ -296,7 +296,7 @@
 							</label>
 						</div>
 						<div class="cnpSubSectionData cnpSubSectionDataNoBottomMargin" ng-if="sMode == 'display'|| sCurrentRole == 'contractor'">{{oDeficiency.sDueDate}}</div>
-						<quick-datepicker ng-if="sMode != 'display' && sCurrentRole != 'contractor'" ng-model='oDeficiency.dDueDate' width="100%"></quick-datepicker>
+						<quick-datepicker ng-change="onDueDateChanged()" ng-if="sMode != 'display' && sCurrentRole != 'contractor'" ng-model='oDeficiency.dDueDate' width="100%"></quick-datepicker>
 					</div>
 					<div>
 						<div  class="cnpSubSectionLabel">
