@@ -134,30 +134,31 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 
 				var sEntityName = "";
 				if (sEntity === "oDeficiencyEntity") {
-					var onInterestedUsersLoaded = function(aUsers) {
-						apiProvider.logEvent({
-							aUsers: aUsers,
-							sEntityName: sEntityName,
-							sEntityGuid: sParentEntityGuid,
-							sOperationNameEN: CONSTANTS.newAttachmentEN,//"New attachment has been added...",
-							sOperationNameFR: CONSTANTS.newAttachmentFR, //"Un ficher a \u00E9t\u00E9 ajout\u00E9...",
-							sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
+					var onInterestedUsersLoaded = function(aData) {
+						apiProvider.logEvents({
+							aData: aData,
 						});
-					};
+					};					
 
 					if (sParentEntityGuid) {
-						
-						switch(sEntity){
-							case "oDeficiencyEntity": 
+						switch (sEntity) {
+							case "oDeficiencyEntity":
 								sEntityName = "deficiency";
+								break;
+							case "oActivityEntity":
+								sEntityName = "activity";
 								break;
 						}
 						apiProvider.getInterestedUsers({
 							sEntityName: sEntityName,
-							sEntityGuid: sParentEntityGuid,
+							sOperationNameEN: CONSTANTS.newAttachmentEN,
+							sOperationNameFR: CONSTANTS.newAttachmentFR,
+							aData: [{
+								Guid: sParentEntityGuid
+							}],
 							onSuccess: onInterestedUsersLoaded
 						});
-					}						
+					}										
 				}			
 			};
 

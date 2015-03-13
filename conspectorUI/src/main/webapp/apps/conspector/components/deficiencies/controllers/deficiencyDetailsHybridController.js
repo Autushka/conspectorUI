@@ -56,21 +56,19 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
                     }
                 }
 
-                var onInterestedUsersLoaded = function(aUsers) {
-                    apiProvider.logEvent({
-                        aUsers: aUsers,
-                        sEntityName: "deficiency",
-                        sEntityGuid: oData.Guid,
-                        sOperationNameEN: CONSTANTS.updatedDeficiencyEN,//"Deficiency has been modified (mobile)...",
-                        sOperationNameFR: CONSTANTS.updatedDeficiencyFR,//"Deficiency has been modified (mobile)...",
-                        sPhaseGuid: $rootScope.oSelectedDeficiency._phaseGuid
+                var onInterestedUsersLoaded = function(aData) {
+                    apiProvider.logEvents({
+                        aData: aData,
                     });
-                }
+                };
                 apiProvider.getInterestedUsers({
                     sEntityName: "deficiency",
-                    sEntityGuid: oData.Guid,
+                    sOperationNameEN: CONSTANTS.updatedDeficiencyEN,
+                    sOperationNameFR: CONSTANTS.updatedDeficiencyEN,
+                   // sEntityGuid: oData.Guid,
+                    aData: [{Guid: oData: Guid}],
                     onSuccess: onInterestedUsersLoaded
-                });
+                }); 
             }
 
             oDataForSave.Guid = $rootScope.oSelectedDeficiency._guid;

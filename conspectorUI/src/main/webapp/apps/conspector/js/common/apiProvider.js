@@ -270,57 +270,6 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				oSvc.then(onSuccess);
 			},
 
-			getInterestedUsers: function(oParameters) {
-				var sGuid = oParameters.sEntityGuid;
-				var sPhaseGuid = "";
-
-				var onTaskInfoLoaded = function(oData) {
-					var aInterestedUsers = [];
-					var bAssignedUserAdded = false;
-					var bAuthorAdded = false;
-					sPhaseGuid = oData.PhaseGuid;
-
-					for (var i = oData.AccountDetails.results.length - 1; i >= 0; i--) {
-						for (var j = oData.AccountDetails.results[i].ContactDetails.results.length - 1; j >= 0; j--) {
-							for (var k = oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results.length - 1; k >= 0; k--) {
-								if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === oData.UserName) {
-									bAssignedUserAdded = true;
-								}
-
-								if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName !== cacheProvider.oUserProfile.sUserName) {
-									if (oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === oData.GeneralAttributes.CreatedBy) {
-										bAuthorAdded = true;
-									}
-
-									aInterestedUsers.push(oData.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName);
-								}
-							}
-						};
-					}
-					if (oData.UserName != cacheProvider.oUserProfile.sUserName && !bAssignedUserAdded) {
-						aInterestedUsers.push(oData.UserName);
-					}
-
-					if (oData.GeneralAttributes.CreatedBy != cacheProvider.oUserProfile.sUserName && !bAuthorAdded && oData.GeneralAttributes.CreatedBy != oData.UserName) {
-						aInterestedUsers.push(oData.CreatedBy);
-					}
-					aInterestedUsers.push("GeneralAdmin"); // just for now...for test perposes.
-
-					var aUniqueNames = [];
-					$.each(aInterestedUsers, function(i, el) { // removing dublicates
-						if ($.inArray(el, aUniqueNames) === -1) aUniqueNames.push(el);
-					});
-
-					oParameters.onSuccess(aUniqueNames, sGuid, sPhaseGuid);
-				};
-
-				this.getDeficiency({
-					sKey: oParameters.sEntityGuid,
-					sExpand: "AccountDetails/ContactDetails/UserDetails",
-					onSuccess: onTaskInfoLoaded
-				})
-			},
-
 			initializePubNub: function() {
 				$rootScope.sSessionGuid = utilsProvider.generateGUID();
 				var sChannel = "";
@@ -432,22 +381,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 						sEntityName: "oOperationLogEntity",
 						sText: "New Operation Log..."
 					});
-					//this.onSuccessUpdateDeficiency(oParameters);
 				}, this));
-				// var oData = oParameters.oData;
-				// var onSuccess = function(oData) {
-				// 	cacheProvider.cleanEntitiesCache("oOperationLogEntity");
-				// };
-				// oData.OperationContent = JSON.stringify(oParameters.oData.OperationContent);
-
-				// var oSvc = dataProvider.createEntity({
-				// 	sPath: "OperationLogs",
-				// 	oData: oData,
-				// 	bGuidNeeded: true,
-				// 	bCompanyNeeded: true
-				// });
-
-				// oSvc.then(onSuccess);
 			},
 
 			logEvents: function(oParameters) {
@@ -459,13 +393,30 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				var oData = {};
 
 				for (var i = 0; i < oParameters.aData.length; i++) {
-					oData = {
-						requestUri: "OperationLogs",
-						method: "POST",
-						data: oParameters.aData[i]
-					};
-
-					aData.push(oData);
+					for (var j = 0; j < oParameters.aData[i].aUsers.length; j++) {
+						oData = {
+							requestUri: "OperationLogs",
+							method: "POST",
+							data: {
+								Guid: utilsProvider.generateGUID(),
+								CompanyName: cacheProvider.oUserProfile.sCurrentCompany,
+								UserName: oParameters.aData[i].aUsers[j],
+								Status: "not read",
+								EntityName: oParameters.aData[i].sEntityName,
+								EntityGuid: oParameters.aData[i].sGuid,
+								OperationNameEN: oParameters.aData[i].sOperationNameEN,
+								OperationNameFR: oParameters.aData[i].sOperationNameFR,
+								PhaseGuid: oParameters.aData[i].sPhaseGuid,
+								CreatedAt: utilsProvider.dateToDBDate(new Date()),
+								GeneralAttributes: {
+									CreatedBy: cacheProvider.oUserProfile.sUserName,
+									IsDeleted: false
+								},
+								ContactGuid: cacheProvider.oUserProfile.oUserContact.Guid,
+							}
+						};
+						aData.push(oData);
+					}
 				}
 
 				dataProvider.constructChangeBlockForBatch({
@@ -481,7 +432,12 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				});
 
 				oSrv.then($.proxy(function(aData) {
-					//this.onSuccessUpdateDeficiency(oParameters);
+					cacheProvider.cleanEntitiesCache("oOperationLogEntity");
+					$rootScope.getNotificationsNumber();
+					this.pubNubMessage({
+						sEntityName: "oOperationLogEntity",
+						sText: "New Operation Log..."
+					});					
 				}, this));
 			},
 
@@ -1884,6 +1840,84 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				oSvc.then(onSuccess);
 			},
 
+			getInterestedUsers: function(oParameters) {
+				var oSrv = {};
+				var oRequestData = {
+					__batchRequests: []
+				};
+				var aData = [];
+				var oData = {};
+
+				for (var i = 0; i < oParameters.aData.length; i++) {
+					oData = {
+						requestUri: "Tasks('" + oParameters.aData[i].Guid + "')?$expand=AccountDetails/ContactDetails/UserDetails",
+						method: "GET",
+					};
+					oRequestData.__batchRequests.push(oData);
+				}
+
+				oSrv = dataProvider.batchRequest({
+					oRequestData: oRequestData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSrv.then($.proxy(function(aData) {
+					var aProcessedData = [];
+					var aInterestedUsers = [];
+					var bAssignedUserAdded = false;
+					var bAuthorAdded = false;
+					var sPhaseGuid = "";
+
+					for (var e = 0; e < aData.length; e++) {
+						aInterestedUsers = [];
+						sPhaseGuid = aData[e].data.PhaseGuid;
+						for (var i = aData[e].data.AccountDetails.results.length - 1; i >= 0; i--) {
+							for (var j = aData[e].data.AccountDetails.results[i].ContactDetails.results.length - 1; j >= 0; j--) {
+								for (var k = aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results.length - 1; k >= 0; k--) {
+									if (aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === aData[e].data.UserName) {
+										bAssignedUserAdded = true;
+									}
+
+									if (aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName !== cacheProvider.oUserProfile.sUserName) {
+										if (aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === aData[e].data.GeneralAttributes.CreatedBy) {
+											bAuthorAdded = true;
+										}
+
+										aInterestedUsers.push(aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName);
+									}
+								}
+							}
+						}
+						if (aData[e].data.UserName != cacheProvider.oUserProfile.sUserName && !bAssignedUserAdded) {
+							aInterestedUsers.push(aData[e].data.UserName);
+						}
+
+						if (aData[e].data.GeneralAttributes.CreatedBy != cacheProvider.oUserProfile.sUserName && !bAuthorAdded && aData[e].data.GeneralAttributes.CreatedBy != aData[e].data.UserName) {
+							aInterestedUsers.push(aData[e].data.CreatedBy);
+						}
+						aInterestedUsers.push("GeneralAdmin"); // just for now...for test perposes.
+
+						var aUniqueNames = [];
+						$.each(aInterestedUsers, function(i, el) { // removing dublicates
+							if ($.inArray(el, aUniqueNames) === -1) aUniqueNames.push(el);
+						});
+
+						aProcessedData.push({
+							aUsers: aUniqueNames,
+							sGuid: aData[e].data.Guid,
+							sPhaseGuid: sPhaseGuid,
+							sEntityName: oParameters.sEntityName,
+							sOperationNameEN: oParameters.sOperationNameEN,
+							sOperationNameFR: oParameters.sOperationNameFR,
+						});
+					}
+					oParameters.onSuccess(aProcessedData);
+
+				}, this));
+			},
+
 			updateDeficiencies: function(oParameters) {
 				var oSrv = {};
 				var oRequestData = {
@@ -1917,24 +1951,19 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				oSrv.then($.proxy(function(aData) {
 					this.onSuccessUpdateDeficiency(oParameters);
 
-					var onInterestedUsersLoaded = $.proxy(function(aUsers, sGuid, sPhaseGuid) {
-						this.logEvent({
-							aUsers: aUsers,
-							sEntityName: "deficiency",
-							sEntityGuid: sGuid,
-							sOperationNameEN: CONSTANTS.updatedDeficiencyEN, //"Deficiency has been modified...",
-							sOperationNameFR: CONSTANTS.updatedDeficiencyFR, //"Une d\u00E9ficience a \u00E9t\u00E9 modifi\u00E9e...",
-							sPhaseGuid: sPhaseGuid
+					var onInterestedUsersLoaded = $.proxy(function(aData) {
+						this.logEvents({
+							aData: aData,
 						});
 					}, this);
-					for (var i = 0; i < oParameters.aData.length; i++) {
-						this.getInterestedUsers({
-							sEntityName: "deficiency",
-							sEntityGuid: oParameters.aData[i].Guid,
-							onSuccess: onInterestedUsersLoaded
-						});
-					}
 
+					this.getInterestedUsers({
+						sEntityName: "deficiency",
+						sOperationNameEN: CONSTANTS.updatedDeficiencyEN,
+						sOperationNameFR: CONSTANTS.updatedDeficiencyFR,
+						aData: oParameters.aData, //oParameters.aData[i].Guid,
+						onSuccess: onInterestedUsersLoaded
+					});
 				}, this));
 			},
 

@@ -52,7 +52,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                         }
                     }
                     break;
-  
+
             }
 
             switch ($rootScope.sSelectedDeficiencyAttribute) {
@@ -68,7 +68,8 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
 
                     break;
 
-            }            if ($rootScope.sCurrentSearhCriteria) {
+            }
+            if ($rootScope.sCurrentSearhCriteria) {
                 $rootScope.sDeficienciesListView = "deficienciesListSearch";
             } else {
                 if ($rootScope.sSelectedDeficiencyAttribute) {
@@ -147,7 +148,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
             $rootScope.oSearchCriterias.aFilteredUnits = $filter('filter')($rootScope.oSearchCriterias.aUnits, {
                 sCleanedName: $rootScope.oSearchCriterias.sUnitFilter
             });
-        };    
+        };
 
         $scope.onAddImage = function(sImageSource) {
             var options = {
@@ -172,22 +173,21 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                         $rootScope.sDeficienciesListView = "deficiencyDetails";
                     });
 
-                    var onInterestedUsersLoaded = function(aUsers) {
-                        apiProvider.logEvent({
-                            aUsers: aUsers,
-                            sEntityName: "deficiency",
-                            sEntityGuid: $rootScope.oSelectedDeficiency._guid,
-                            sOperationNameEN: CONSTANTS.newAttachmentEN,//"New photo has added (mobile)...",
-                            sOperationNameFR: CONSTANTS.newAttachmentFR,//"Une nouvelle image a \u00E9t\u00E9 ajout\u00E9e sur mobile",
-                            sPhaseGuid: $rootScope.oSelectedDeficiency._phaseGuid
+                    var onInterestedUsersLoaded = function(aData) {
+                        apiProvider.logEvents({
+                            aData: aData,
                         });
                     };
 
                     apiProvider.getInterestedUsers({
                         sEntityName: "deficiency",
-                        sEntityGuid: $rootScope.oSelectedDeficiency._guid,
+                        sOperationNameEN: CONSTANTS.newAttachmentEN,
+                        sOperationNameFR: CONSTANTS.newAttachmentEN,
+                        aData: [{
+                            Guid: $rootScope.oSelectedDeficiency._guid
+                        }],
                         onSuccess: onInterestedUsersLoaded
-                    });                    
+                    });
                 }
                 imageData = "data:image/jpeg;base64," + imageData; //http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
 
@@ -226,20 +226,19 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                 $cordovaKeyboard.close();
                 $rootScope.sDeficienciesListView = "deficiencyDetails";
 
-                var onInterestedUsersLoaded = function(aUsers) {
-                    apiProvider.logEvent({
-                        aUsers: aUsers,
-                        sEntityName: "deficiency",
-                        sEntityGuid: $rootScope.oSelectedDeficiency._guid,
-                        sOperationNameEN: CONSTANTS.newCommentEN,//"New comment has been created (mobile)...",
-                        sOperationNameFR: CONSTANTS.newCommentFR,//"Un commentaire a \u00E9t\u00E9 ajout\u00E9 (sur mobile)...",
-                        sPhaseGuid: $rootScope.oSelectedDeficiency._phaseGuid
+                var onInterestedUsersLoaded = function(aData) {
+                    apiProvider.logEvents({
+                        aData: aData,
                     });
                 };
 
                 apiProvider.getInterestedUsers({
                     sEntityName: "deficiency",
-                    sEntityGuid: $rootScope.oSelectedDeficiency._guid,
+                    sOperationNameEN: CONSTANTS.newCommentEN,
+                    sOperationNameFR: CONSTANTS.newCommentFR,
+                    aData: [{
+                        Guid: $rootScope.oSelectedDeficiency._guid
+                    }],
                     onSuccess: onInterestedUsersLoaded
                 });
             };

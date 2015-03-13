@@ -122,14 +122,9 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 				loadComments();
 				var sEntityName = "";
 				if (sEntity === "oDeficiencyEntity") {
-					var onInterestedUsersLoaded = function(aUsers) {
-						apiProvider.logEvent({
-							aUsers: aUsers,
-							sEntityName: sEntityName,
-							sEntityGuid: sParentEntityGuid,
-							sOperationNameEN: CONSTANTS.newCommentEN,//"New comment has been added ",
-							sOperationNameFR: CONSTANTS.newCommentFR,//"Un commentaire a \u00E9t\u00E9 ajout\u00E9",
-							sPhaseGuid: $rootScope.sCurrentEntityPhaseGuid
+					var onInterestedUsersLoaded = function(aData) {
+						apiProvider.logEvents({
+							aData: aData,
 						});
 					};
 
@@ -144,11 +139,15 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 						}
 						apiProvider.getInterestedUsers({
 							sEntityName: sEntityName,
-							sEntityGuid: sParentEntityGuid,
+							sOperationNameEN: CONSTANTS.newCommentEN,
+							sOperationNameFR: CONSTANTS.newCommentFR,
+							aData: [{
+								Guid: sParentEntityGuid
+							}],
 							onSuccess: onInterestedUsersLoaded
 						});
 					}
-				}
+				};
 			};
 			var oDataForSave = {
 				GeneralAttributes: {}

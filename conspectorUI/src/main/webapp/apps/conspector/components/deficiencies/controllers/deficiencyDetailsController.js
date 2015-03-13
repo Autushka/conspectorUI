@@ -191,9 +191,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				}
 			}
 
-			$scope.oDeficiency.sDescription = oDeficiency.Description;
-
-			$rootScope.oCurrentDeficiency  = angular.copy($scope.oDeficiency);
+			$rootScope.oCurrentDeficiency = angular.copy($scope.oDeficiency);
 
 			oDeficiencyWrapper.aData[0] = angular.copy($scope.oDeficiency);
 			constructPhasesMultiSelect([$scope.oDeficiency._phaseGuid]);
@@ -635,19 +633,17 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					$scope.oDeficiency.dDueDate = "/Date(0)/";
 				}
 
-				var onInterestedUsersLoaded = function(aUsers) {
-					apiProvider.logEvent({
-						aUsers: aUsers,
-						sEntityName: "deficiency",
-						sEntityGuid: oData.Guid,
-						sOperationNameEN: CONSTANTS.newDeficiencyEN,//"New deficiency has been created...",
-						sOperationNameFR: CONSTANTS.newDeficiencyFR,//"Une nouvelle d\u00E9ficience a \u00E9t\u00E9 ajout\u00E9e...",
-						sPhaseGuid: oData.PhaseGuid
+				var onInterestedUsersLoaded = function(aData) {
+					apiProvider.logEvents({
+						aData: aData,
 					});
-				}
+				};
 				apiProvider.getInterestedUsers({
 					sEntityName: "deficiency",
-					sEntityGuid: oData.Guid,
+					sOperationNameEN: CONSTANTS.newDeficiencyEN,
+					sOperationNameFR: CONSTANTS.newDeficiencyFR,
+					//sEntityGuid: oData.Guid,
+					aData: [{Guid: oData.Guid}],
 					onSuccess: onInterestedUsersLoaded
 				});
 			};
@@ -666,21 +662,19 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					sDeficiencyGuid: oData.Guid
 				});
 
-				var onInterestedUsersLoaded = function(aUsers) {
-					apiProvider.logEvent({
-						aUsers: aUsers,
-						sEntityName: "deficiency",
-						sEntityGuid: oData.Guid,
-						sOperationNameEN: CONSTANTS.updatedDeficiencyEN,//"Deficiency has been modified...",
-						sOperationNameFR: CONSTANTS.updatedDeficiencyFR,//"Une d\u00E9ficience a \u00E9t\u00E9 modifi\u00E9e...",
-						sPhaseGuid: oData.PhaseGuid
+				var onInterestedUsersLoaded = function(aData) {
+					apiProvider.logEvents({
+						aData: aData,
 					});
-				}
+				};
 				apiProvider.getInterestedUsers({
 					sEntityName: "deficiency",
-					sEntityGuid: oData.Guid,
+					sOperationNameEN: CONSTANTS.updatedDeficiencyEN,
+					sOperationNameFR: CONSTANTS.updatedDeficiencyEN,
+					//sEntityGuid: oData.Guid,
+					aData: [{Guid: oData.Guid}],
 					onSuccess: onInterestedUsersLoaded
-				});
+				});				
 			};
 
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aDescriptionTags);

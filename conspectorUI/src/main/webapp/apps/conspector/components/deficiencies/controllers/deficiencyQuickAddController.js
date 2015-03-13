@@ -430,19 +430,17 @@ viewControllers.controller('deficiencyQuickAddView', ['$rootScope', '$scope', '$
 
                 $rootScope.sContractorsFilter = "";
 
-                var onInterestedUsersLoaded = function(aUsers) {
-                    apiProvider.logEvent({
-                        aUsers: aUsers,
-                        sEntityName: "deficiency",
-                        sEntityGuid: oData.Guid,
-                        sOperationNameEN: CONSTANTS.newDeficiencyEN, //""New deficiency has been created (on mobile)...",
-                        sOperationNameFR: CONSTANTS.newDeficiencyFR, //""New deficiency has been created (on mobile)...",//"Une nouvelle d\u00E9ficience a \u00E9t\u00E9 ajout\u00E9e sur mobile",
-                        sPhaseGuid: oData.PhaseGuid
+                var onInterestedUsersLoaded = function(aData) {
+                    apiProvider.logEvents({
+                        aData: aData,
                     });
-                }
+                };
                 apiProvider.getInterestedUsers({
                     sEntityName: "deficiency",
-                    sEntityGuid: oData.Guid,
+                    sOperationNameEN: CONSTANTS.newDeficiencyEN,
+                    sOperationNameFR: CONSTANTS.newDeficiencyFR,
+                    //sEntityGuid: oData.Guid,
+                    aData: [{Guid: oData.Guid}],
                     onSuccess: onInterestedUsersLoaded
                 });
             };
