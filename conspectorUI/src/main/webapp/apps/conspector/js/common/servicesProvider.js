@@ -1,4 +1,4 @@
-app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', '$rootScope', 
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', '$rootScope',
 	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard, $rootScope) {
 		return {
 			changeLanguage: function() {
@@ -34,10 +34,10 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						// } else {
 						// 	$cookieStore.remove("userName");
 						// }
-						if(oParameters.onSuccess){
+						if (oParameters.onSuccess) {
 							oParameters.onSuccess();
 						}
-						
+
 						this.onLogInSuccessHandler(oParameters.oData.userName);
 					}
 				}, this);
@@ -74,9 +74,9 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			logSuccessLogIn: function() {
-				var sOperation =  "Log In";
-				if(CONSTANTS.bIsHybridApplication){
-					sOperation =  "Log In (mobile)";
+				var sOperation = "Log In";
+				if (CONSTANTS.bIsHybridApplication) {
+					sOperation = "Log In (mobile)";
 				}
 
 				apiProvider.logEvent({
@@ -88,9 +88,9 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			},
 
 			logLogOut: function() {
-				var sOperation =  "Log Out";
-				if(CONSTANTS.bIsHybridApplication){
-					sOperation =  "Log Out (mobile)";
+				var sOperation = "Log Out";
+				if (CONSTANTS.bIsHybridApplication) {
+					sOperation = "Log Out (mobile)";
 				}
 
 				apiProvider.logEvent({
@@ -98,7 +98,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					sEntityName: "",
 					sEntityGuid: "",
 					sOperationNameEN: sOperation,
-				});				
+				});
 			},
 
 			onNoDefaultViewForTheRole: function() {
@@ -689,7 +689,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					sAvatarUrl = "";
 					sUserName = "";
 
-					if(oData.CommentDetails.results[i].GeneralAttributes.IsDeleted){
+					if (oData.CommentDetails.results[i].GeneralAttributes.IsDeleted) {
 						return;
 					}
 					if (oData.CommentDetails.results[i].ContactDetails) {
@@ -968,7 +968,9 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				cacheProvider.oUserProfile.sCurrentCompany = sCurrentCompany;
 				cacheProvider.oUserProfile.sCurrentRole = sCurrentRole;
 				cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aGloballySelectedPhasesGuids;
-				this.setUserContactForCurrentCompany(sCurrentCompany);		
+				this.setUserPhasesForCurrentCompany(sCurrentCompany);
+				this.setUserContactForCurrentCompany(sCurrentCompany);
+				this.setUserContactForCurrentCompany(sCurrentCompany);
 			}
 		}
 	}
