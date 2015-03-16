@@ -16,24 +16,26 @@ viewControllers.controller('deficienciesListHybridView', ['$scope', '$location',
             $rootScope.sDeficienciesListView = "deficienciesListSearch"
         };
 
-        $scope.onSelectDeficiency = function(oDeficiency){
-
+        $scope.onSelectDeficiency = function(oDeficiency) {
+            cacheProvider.putListViewScrollPosition("deficienciesList", $("#body")[0].scrollTop); //saving scroll position...
             for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
-                if(oDeficiency.sStatusGuid === $rootScope.aSelectedDeficiencyStatuses[i].sGuid){
-                    $rootScope.aSelectedDeficiencyStatuses[i].bTicked = true;        
-                }else{
-                     $rootScope.aSelectedDeficiencyStatuses[i].bTicked = false;
+                if (oDeficiency.sStatusGuid === $rootScope.aSelectedDeficiencyStatuses[i].sGuid) {
+                    $rootScope.aSelectedDeficiencyStatuses[i].bTicked = true;
+                } else {
+                    $rootScope.aSelectedDeficiencyStatuses[i].bTicked = false;
                 }
             }
 
             $rootScope.oSelectedDeficiency = angular.copy(oDeficiency);
-            $rootScope.sDeficienciesListView = "deficiencyDetails"
+            $rootScope.sDeficienciesListView = "deficiencyDetails";
+
+
 
             // the element you wish to scroll to.
-            $location.hash('top');
+            //$location.hash('top');
             // call $anchorScroll()
-            $anchorScroll();
-        }; 
+            //$anchorScroll();
+        };
 
         $scope.$on("$destroy", function() {
             if (historyProvider.getPreviousStateName() === $rootScope.sCurrentStateName) { //current state was already put to the history in the parent views

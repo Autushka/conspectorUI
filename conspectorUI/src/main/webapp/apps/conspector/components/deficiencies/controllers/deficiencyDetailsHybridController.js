@@ -2,6 +2,13 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
     function($scope, $location, $anchorScroll, $rootScope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout) {
         $scope.onClose = function() {
             $rootScope.sDeficienciesListView = "deficienciesList";
+
+            $timeout(function() {
+                if ($("#body")[0]) {
+                    $("#body")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
+                    cacheProvider.putListViewScrollPosition("deficienciesList", 0);
+                }
+            }, 0);            
         }
 
 
