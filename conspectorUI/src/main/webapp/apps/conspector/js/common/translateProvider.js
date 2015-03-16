@@ -151,6 +151,8 @@ app.config(['$translateProvider',
                   global_markAllAsRead: 'Mark all as read',
                   global_dismissAll: 'Clear all notifications',
                   global_addImages: 'Add images',
+                  global_imagesAndComments: 'Images/Comments',
+                  global_comments: 'Comments',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
@@ -617,6 +619,8 @@ app.config(['$translateProvider',
                   global_markAllAsRead: 'Marquer tout comme lu',
                   global_dismissAll: 'Effacer notifications',
                   global_addImages: 'Ajouter images',
+                  global_imagesAndComments: 'Images/Commentaires',
+                  global_comments: 'Commentaires',
 
 
                   //hybrid

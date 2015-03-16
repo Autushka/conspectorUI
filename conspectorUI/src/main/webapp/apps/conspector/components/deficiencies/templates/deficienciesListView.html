@@ -3,9 +3,9 @@
 		<div layout="row" layout-align="space-between start" class="md-default-theme cnpDeficienciesListContentHeader">
 			<div layout="row" layout-align="start center" >
 				<!-- 			<div class="cnpSubSectionLabel">
-						<label>
-								{{'deficienciesList_statuses' | translate}}
-						</label>
+					<label>
+						{{'deficienciesList_statuses' | translate}}
+					</label>
 				</div> -->
 				<div class="cnpDeficienciesListStatusesWrapper">
 					<div
@@ -13,7 +13,7 @@
 						input-model="aDeficiencyStatuses"
 						default-label="{{'deficienciesList_deficiencyStatusesDefaultLabel' | translate }}"
 						button-label="icon name"
-						item-label="icon name"	
+						item-label="icon name"
 						tick-property="ticked"
 						output-model="aSelectedStatuses"
 						on-close="onCloseCheckSelectedStatusesLength()"
@@ -31,15 +31,15 @@
 					</md-button>
 					<md-button class="md-button md-primary md-hue-2 md-raised cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpEraseIcon cnpButtonMarginRight notSelectable" ng-click="onClearFiltering()">{{'global_clearFiltering' | translate}}</md-button>
 					<md-button class="md-button md-primary md-hue-2 md-raised cnpButtonWithIcon cnpInputIcon cnpWordReportIcon cnpButtonMarginRight cnpButtonMoreMorePadding notSelectable" ng-click="onReports()">{{'global_reporting' | translate}}</md-button>
-					<md-button ng-show="aDataForMassChanges.length" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onMassSave()">{{'global_massSave' | translate}}</md-button> 
-					<md-button ng-show="aDataForMassChanges.length" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable cnpDeficienciesMassSaveButton" ng-click="onMassSave()">{{'global_massSave' | translate}}</md-button>				
+					<md-button ng-show="aDataForMassChanges.length" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onMassSave()">{{'global_massSave' | translate}}</md-button>
+					<md-button ng-show="aDataForMassChanges.length" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable cnpDeficienciesMassSaveButton" ng-click="onMassSave()">{{'global_massSave' | translate}}</md-button>
 				</div>
 				<!-- <div flex flex-order="2" layout="row" layout-align="start center">
-										<md-switch  class="md-checkbox md-checkboxForList" ng-model="oListSettings.bGroupListByProjectAndPhase" ng-change="onGroupingChange()" style="margin-left: 24px;">
-										<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
-																{{'global_groupByProjectAndPhase' | translate}}
-										</div>
-										</md-switch>
+												<md-switch  class="md-checkbox md-checkboxForList" ng-model="oListSettings.bGroupListByProjectAndPhase" ng-change="onGroupingChange()" style="margin-left: 24px;">
+												<div class="notSelectable cnpCursorDefault minus2pxMarginTop">
+																				{{'global_groupByProjectAndPhase' | translate}}
+												</div>
+												</md-switch>
 				</div> -->
 				
 			</div>
@@ -73,9 +73,9 @@
 							<div layout="row" layout-align="center center">
 								<div>
 									<span>
-									<a ng-click="onNavigateToUnitDetails(deficiency)">
-										{{deficiency.sUnit}}
-									</a>
+										<a ng-click="onNavigateToUnitDetails(deficiency)">
+											{{deficiency.sUnit}}
+										</a>
 									</span>
 								</div>
 							</div>
@@ -88,7 +88,7 @@
 						<td data-title="'global_contractors' | translate" sortable="'sContractors'" filter="{'sCleanedContractors': 'text'}">
 							<div layout="row" layout-align="start center">
 								<span>
-								{{deficiency.sContractors}}
+									{{deficiency.sContractors}}
 								</span>
 							</div>
 						</td>
@@ -96,7 +96,7 @@
 							<div layout="row" layout-align="start center">
 								<div>
 									<span>
-									{{deficiency.sTags}}
+										{{deficiency.sTags}}
 									</span>
 								</div>
 							</div>
@@ -105,33 +105,35 @@
 							<div layout="row" layout-align="start center">
 								<div>
 									<span>
-									{{deficiency.sLocationTags}}
+										{{deficiency.sLocationTags}}
 									</span>
 								</div>
 							</div>
 						</td>
 						
 						
-						<td data-title="'global_dueIn' | translate" sortable="'sDueIn'" filter="{'sDueIn': 'text'}">
-							<div layout="row" layout-align="center center">
-								<span>
-								{{deficiency.sDueIn}}{{deficiency.sDueInLetter}}
-								</span>
+						<!-- 						<td data-title="'global_dueIn' | translate" sortable="'sDueIn'" filter="{'sDueIn': 'text'}">
+								<div layout="row" layout-align="center center">
+										<span>
+												{{deficiency.sDueIn}}{{deficiency.sDueInLetter}}
+										</span>
+								</div>
+						</td> -->
+						<td data-title="'global_comments' | translate" sortable="'iCommentsNumber'" filter="{'iCommentsNumber': 'text'}">
+							<div layout="row" layout-align="center center"
+								ng-class="{ 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInDefList': deficiency.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconWithOpacity': deficiency.iCommentsNumber==0 }" ng-click="onDisplay(deficiency, $event)">
+								<a>
+									({{deficiency.iCommentsNumber}})
+								</a>
 							</div>
 						</td>
 						<td data-title="'global_images' | translate" sortable="'iImagesNumber'" filter="{'iImagesNumber': 'text'}">
 							<div layout="row" layout-align="center center"
-								ng-class="{ 'cnpInputIcon cnpImagesIcon': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity': deficiency.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery(deficiency, $event)">
+								ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInDefList': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity': deficiency.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery(deficiency, $event)">
 								<a>
 									({{deficiency.iImagesNumber}})
 								</a>
 							</div>
-							<div layout="row" layout-align="center center"
-								ng-class="{ 'cnpInputIcon cnpCommentsIcon': deficiency.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconWithOpacity': deficiency.iCommentsNumber==0 }">
-								<a>
-									({{deficiency.iCommentsNumber}})
-								</a>
-							</div>							
 						</td>
 					</tr>
 				</tbody>
