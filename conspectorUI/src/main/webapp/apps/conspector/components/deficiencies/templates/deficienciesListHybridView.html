@@ -29,26 +29,33 @@
 				</label>
 			</div>
 		</div>
-		<div class="cnpMobileListItem cnpMobileTagsInList" ng-cloak ng-if="deficiency.sTags != ''"style="margin-bottom: 8px;">
-			{{deficiency.sTags}}
+		<div layout="row" layout-align="space-between center" style="width: 100%;">
+			<div layout="column" layout-align="center start" flex>
+				<div class="cnpMobileListItem cnpMobileTagsInList" ng-cloak ng-if="deficiency.sTags != ''"style="margin-bottom: 8px;">
+					{{deficiency.sTags}}
+				</div>
+				<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="deficiency.sLocationTags != ''" ng-cloak>
+					{{deficiency.sLocationTags}}
+				</div>
+			</div>
+			<div layout="column" layout-align="center start">
+				<div layout="row" layout-align="center center" ng-show="deficiency.iImagesNumber || deficiency.iImagesNumber == 0"
+					ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList notSelectable': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList cnpImagesIconWithOpacity notSelectable': deficiency.iImagesNumber==0 }" >
+					
+					<a>
+						({{deficiency.iImagesNumber}})
+					</a>
+				</div>
+				<div layout="row" layout-align="center center" ng-show="deficiency.iCommentsNumber || deficiency.iCommentsNumber == 0"
+					ng-class="{ 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList notSelectable': deficiency.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList cnpCommentsIconWithOpacity notSelectable': deficiency.iCommentsNumber==0 }" >
+					
+					<a>
+						({{deficiency.iCommentsNumber}})
+					</a>
+				</div>
+			</div>
 		</div>
-		<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="deficiency.sLocationTags != ''" ng-cloak>
-			{{deficiency.sLocationTags}}
-		</div>
-		<div layout="row" layout-align="center center" ng-show="deficiency.iImagesNumber || deficiency.iImagesNumber == 0"
-			ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp notSelectable': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp cnpImagesIconWithOpacity notSelectable': deficiency.iImagesNumber==0 }" >
-			
-			<a>
-				({{deficiency.iImagesNumber}})
-			</a>
-		</div>		
-		<div layout-align="center center" ng-show="deficiency.iCommentsNumber || deficiency.iCommentsNumber == 0"
-			ng-class="{ 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileApp notSelectable': deficiency.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileApp cnpCommentsIconWithOpacity notSelectable': deficiency.iCommentsNumber==0 }" >
-			
-			<a>
-				({{deficiency.iCommentsNumber}})
-			</a>
-		</div>
+		
 	</div>
 	</button>
 </div>
