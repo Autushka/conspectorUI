@@ -118,7 +118,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 			var onProgress = function($event) {};
 			var onSuccessUpload = function() { //called once for the last uploaded file
 				// $scope.iUploadProgress = 50;
-				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
+				cacheProvider.cleanEntitiesCache(sEntity);
 				if ($rootScope.sMode === "create") {
 					$rootScope.bDataHasBeenModified = true;
 				}
@@ -179,7 +179,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 				},
 			};
 			var onSuccessDelete = function() {
-				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
+				cacheProvider.cleanEntitiesCache(sEntity);
 				loadAttachments();
 			}
 

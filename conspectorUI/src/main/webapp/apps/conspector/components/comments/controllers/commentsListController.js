@@ -89,6 +89,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 				}
 			};
 			var onSuccessDelete = function() {
+				cacheProvider.cleanEntitiesCache(sEntity);
 				loadComments();
 			}
 
@@ -122,6 +123,7 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 		$scope.onSave = function() {
 			var onSuccess = function() {
 				$scope.oComment.sText = "";
+				cacheProvider.cleanEntitiesCache(sEntity);
 				loadComments();
 				var sEntityName = "";
 				if (sEntity === "oDeficiencyEntity") {

@@ -142,6 +142,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             var sProjectName = "";
             var sPhaseName = "";
             var sAccounts = "";
+            var aAccountsNames = "";
             var sContacts = "";
             var _sortingSequence = "";
             var sTypeSortingSequence = "";
@@ -151,11 +152,14 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             var sLastModifiedAt = "";
             var sLastModifiedAt = "";
             var bMatchFound = false;
+            var sDescription = "";
             for (var i = 0; i < aData.length; i++) {
                 sCreatedAt = "";
                 sLastModifiedAt = "";
                 sTypeSortingSequence = "";
                 sTypeIconUrl = "";
+                aAccountsNames = [];
+                sDescription = "";
 
                 sDbCreatedAt = aData[i].CreatedAt;
                 sCreatedAt = utilsProvider.dBDateToSting(aData[i].CreatedAt);
@@ -176,10 +180,22 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 
                     } else {
                         for (var j = 0; j < aData[i].AccountDetails.results.length; j++) {
-
                             if (!aData[i].AccountDetails.results[j].GeneralAttributes.IsDeleted) {
-                                // _aAccounts.push(oData.AccountDetails.results[i]);
                                 sAccounts = sAccounts + aData[i].AccountDetails.results[j].Name + ", ";
+                                aAccountsNames.push(aData[i].AccountDetails.results[j].Name);
+                            }
+                        }
+                    }
+
+                    var aImages = [];
+                    if (aData[i].FileMetadataSetDetails) {
+                        if (aData[i].FileMetadataSetDetails.FileMetadataDetails) {
+                            for (var j = 0; j < aData[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
+                                if (aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType) {
+                                    if (aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false) {
+                                        aImages.push(aData[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
+                                    }
+                                }
                             }
                         }
                     }
@@ -227,12 +243,17 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                             sPhaseName = aData[i].PhaseDetails.results[j].NameEN;
                         }
 
+                        if (aData[i].Description) {
+                            sDescription = utilsProvider.removeTagsFromString(aData[i].Description);
+                        }
+
                         oActivitiesListData.aData.push({
                             sActivityType: sActivityType,
                             sCleanedActivityType: utilsProvider.replaceSpecialChars(sActivityType),
                             sObject: aData[i].Object,
                             sCleanedObject: utilsProvider.replaceSpecialChars(aData[i].Object),
                             sAccounts: sAccounts,
+                            aAccountsNames: aAccountsNames,
                             sCleanedAccounts: utilsProvider.replaceSpecialChars(sAccounts),
                             sContacts: sContacts,
                             sCleanedContacts: utilsProvider.replaceSpecialChars(sContacts),
@@ -242,21 +263,25 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
                             sLastModifiedAt: sLastModifiedAt,
                             _guid: aData[i].Guid,
                             sProjectPhase: sProjectName + " - " + sPhaseName,
+                            sProjectName: sProjectName,
                             _sortingSequence: aData[i].PhaseDetails.results[j]._sortingSequence,
                             sTypeSortingSequence: sTypeSortingSequence,
                             sTypeIconUrl: sTypeIconUrl,
+                            _aImages: aImages,
+                            sDescription: sDescription,
                         });
                     }
                 }
             }
             $scope.tableParams.reload();
-            if($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contactDetailsWrapper.contactDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails"){
-            $timeout(function() {
-                if ($(".cnpAppView")[0]) {
-                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("activitiesList");
-                    cacheProvider.putListViewScrollPosition("activitiesList", 0); 
-                }
-            }, 0);}
+            if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contactDetailsWrapper.contactDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") {
+                $timeout(function() {
+                    if ($(".cnpAppView")[0]) {
+                        $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("activitiesList");
+                        cacheProvider.putListViewScrollPosition("activitiesList", 0);
+                    }
+                }, 0);
+            }
         };
 
         var loadActivities = function() {
@@ -382,6 +407,55 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
             loadActivities();
         });
+
+        var onReportTemplateLoaded = function(aData) {
+            if (aData.length === 1) {
+                var oEntries = {
+                    logBookEntries: [],
+                };
+                var aImagesGuids = [];
+
+                for (var i = 0; i < $scope.tableParams.data.length; i++) {
+                    for (var j = 0; j < $scope.tableParams.data[i].data.length; j++) {
+                        aImagesGuids = [];
+                        for (var k = 0; k < $scope.tableParams.data[i].data[j]._aImages.length; k++) {
+                            aImagesGuids.push({
+                                guid: $scope.tableParams.data[i].data[j]._aImages[k].Guid
+                            });
+                        }
+                        oEntries.logBookEntries.push({
+                            creationDate: $scope.tableParams.data[i].data[j].sCreatedAt,
+                            projectName: $scope.tableParams.data[i].data[j].sProjectName,
+                            accountsNames: $scope.tableParams.data[i].data[j].aAccountsNames,
+                            description: $scope.tableParams.data[i].data[j].sDescription,
+                            fls: aImagesGuids
+                        });
+                    }
+                }
+
+                var sEntries = JSON.stringify(oEntries);
+
+                apiProvider.generateReport({
+                    oReportParameters: {
+                        reportId: sCompany + "-" + $scope.sReportName + "-" + Math.round(1000000 * Math.random()),
+                        fileGuid: aData[0].Guid,
+                        converter: "",
+                        processState: "generated",
+                        dispatch: "download",
+                        entryName: "",
+                        data: sEntries
+                    }
+                });
+            }
+        };
+
+        $scope.onReports = function() {
+            $scope.sReportName = $translate.use() === "en" ? "AvancementJournalierDesTravaux" : "AvancementJournalierDesTravaux";
+            apiProvider.getFileMetadatas({
+                sFilter: "CatalogId eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and DescriptionEN eq '" + $scope.sReportName + "'",
+                onSuccess: onReportTemplateLoaded
+            });
+        };
 
         $scope.$on("$destroy", function() {
             if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contactDetailsWrapper.contactDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") { //don't save in history if contact list is weathin the contractor/client details view...  
