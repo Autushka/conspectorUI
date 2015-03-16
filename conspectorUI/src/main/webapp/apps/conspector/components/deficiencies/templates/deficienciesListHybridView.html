@@ -35,6 +35,20 @@
 		<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="deficiency.sLocationTags != ''" ng-cloak>
 			{{deficiency.sLocationTags}}
 		</div>
+		<div layout="row" layout-align="center center" ng-show="deficiency.iImagesNumber || deficiency.iImagesNumber == 0"
+			ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp notSelectable': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileApp cnpImagesIconWithOpacity notSelectable': deficiency.iImagesNumber==0 }" >
+			
+			<a>
+				({{deficiency.iImagesNumber}})
+			</a>
+		</div>		
+		<div layout-align="center center" ng-show="deficiency.iCommentsNumber || deficiency.iCommentsNumber == 0"
+			ng-class="{ 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileApp notSelectable': deficiency.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileApp cnpCommentsIconWithOpacity notSelectable': deficiency.iCommentsNumber==0 }" >
+			
+			<a>
+				({{deficiency.iCommentsNumber}})
+			</a>
+		</div>
 	</div>
 	</button>
 </div>

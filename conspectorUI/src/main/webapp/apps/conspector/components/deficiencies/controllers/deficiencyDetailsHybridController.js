@@ -65,10 +65,12 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
                     sEntityName: "deficiency",
                     sOperationNameEN: CONSTANTS.updatedDeficiencyEN,
                     sOperationNameFR: CONSTANTS.updatedDeficiencyEN,
-                   // sEntityGuid: oData.Guid,
-                    aData: [{Guid: oData.Guid}],
+                    // sEntityGuid: oData.Guid,
+                    aData: [{
+                        Guid: oData.Guid
+                    }],
                     onSuccess: onInterestedUsersLoaded
-                }); 
+                });
             }
 
             oDataForSave.Guid = $rootScope.oSelectedDeficiency._guid;
@@ -104,7 +106,9 @@ viewControllers.controller('deficiencyDetailsHybridView', ['$scope', '$location'
 
         $scope.onCommentsAttribute = function() {
             //$rootScope.aSelectedDeficiencyComments = angular.copy($rootScope.oSelectedDeficiency._oComments);
-            $rootScope.aSelectedDeficiencyComments = angular.copy(servicesProvider.processListOfComments($rootScope.oSelectedDeficiency._oComments));
+            $rootScope.aSelectedDeficiencyComments = angular.copy(servicesProvider.processListOfComments({
+                oData: $rootScope.oSelectedDeficiency._oComments,
+            }));
 
             $rootScope.aSelectedDeficiencyComments = $filter('orderBy')($rootScope.aSelectedDeficiencyComments, ["_createdAt"]);
             $rootScope.sCurrentSearhCriteria = "";

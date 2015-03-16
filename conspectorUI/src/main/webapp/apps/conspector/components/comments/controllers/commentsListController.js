@@ -50,7 +50,10 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 		});
 
 		var onCommentsLoaded = function(oData) {
-			oCommentsListData.aData = angular.copy(servicesProvider.processListOfComments(oData));
+			oCommentsListData.aData = angular.copy(servicesProvider.processListOfComments({
+				oData: oData
+			}));
+
 			$scope.tableParams.reload();
 		};
 

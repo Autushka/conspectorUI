@@ -242,6 +242,17 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     iImagesNumber = aImages.length;
                 }
 
+                var iCommentsNumber = 0;
+                if (aData[i].CommentSetDetails) {
+                    if (aData[i].CommentSetDetails.CommentDetails) {
+                        for (var j = 0; j < aData[i].CommentSetDetails.CommentDetails.results.length; j++) {
+                            if(!aData[i].CommentSetDetails.CommentDetails.results[j].GeneralAttributes.IsDeleted){
+                                iCommentsNumber++;
+                            }
+                        }
+                    }
+                }                
+
                 var durationNumber = "";
                 var sDueInLetter = "";
 
@@ -283,6 +294,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     _fileMetadataSetGuid: aData[i].FileMetadataSetGuid,
                     _fileMetadataSetLastModifiedAt: sFileMetadataSetLastModifiedAt,
                     iImagesNumber: iImagesNumber,
+                    iCommentsNumber: iCommentsNumber,
                     _createdAt: aData[i].CreatedAt,
                     _aImages: aImages,
                 });
@@ -343,7 +355,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                         }
 
                         apiProvider.getDeficiencies({
-                            sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
+                            sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails",
                             sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByCompanyGuid + sFilter,
                             bShowSpinner: true,
                             onSuccess: onDeficienciesLoaded

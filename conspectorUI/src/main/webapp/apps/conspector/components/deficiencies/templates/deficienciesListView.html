@@ -126,6 +126,12 @@
 									({{deficiency.iImagesNumber}})
 								</a>
 							</div>
+							<div layout="row" layout-align="center center"
+								ng-class="{ 'cnpInputIcon cnpCommentsIcon': deficiency.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconWithOpacity': deficiency.iCommentsNumber==0 }">
+								<a>
+									({{deficiency.iCommentsNumber}})
+								</a>
+							</div>							
 						</td>
 					</tr>
 				</tbody>

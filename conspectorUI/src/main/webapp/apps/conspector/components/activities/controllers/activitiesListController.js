@@ -305,7 +305,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
 
 
                         apiProvider.getActivities({
-                            sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails",
+                            sExpand: "AccountDetails/AccountTypeDetails, ActivityTypeDetails, ContactDetails, PhaseDetails/ProjectDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails",
                             sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilter,
                             bShowSpinner: true,
                             onSuccess: onActivitiesLoaded

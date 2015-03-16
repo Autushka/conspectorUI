@@ -179,9 +179,20 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				}
 				iImagesNumber = aImages.length;
 			}
+			var iCommentsNumber = 0;
+			if (oDeficiency.CommentSetDetails) {
+				if (oDeficiency.CommentSetDetails.CommentDetails) {
+					for (var j = 0; j < oDeficiency.CommentSetDetails.CommentDetails.results.length; j++) {
+						if(!oDeficiency.CommentSetDetails.CommentDetails.results[j].GeneralAttributes.IsDeleted){
+							iCommentsNumber++;
+						}
+					}
+				}
+			}			
 
-			$scope.oDeficiency.iImagesNumber = iImagesNumber;
-			$scope.oDeficiency._aImages = angular.copy(aImages);
+			$rootScope._aImages = angular.copy(aImages);	
+			$rootScope.iImagesNumber = iImagesNumber;
+			$rootScope.iCommentsNumber = iCommentsNumber;
 
 			$scope.oDeficiency._contractorsGuids = [];
 			if (oDeficiency.AccountDetails) {
@@ -190,15 +201,13 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				}
 			}
 
-			$rootScope.oCurrentDeficiency = angular.copy($scope.oDeficiency);
-
 			oDeficiencyWrapper.aData[0] = angular.copy($scope.oDeficiency);
 			constructPhasesMultiSelect([$scope.oDeficiency._phaseGuid]);
 		};
 
 		var sRequestSettings = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false";
 
-		sRequestSettings = sRequestSettings + "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails";
+		sRequestSettings = sRequestSettings + "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails";
 		var oDeficiency = cacheProvider.getEntityDetails({
 			sCacheProviderAttribute: "oDeficiencyEntity",
 			sRequestSettings: sRequestSettings, //filter + expand
@@ -309,7 +318,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 		var getDeficiencyDetails = function() {
 			apiProvider.getDeficiency({
-				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails",
+				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails",
 				sKey: sDeficiencyGuid,
 				bShowSpinner: true,
 				onSuccess: onDeficiencyDetailsLoaded,
@@ -421,7 +430,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				});
 			}
 		} else {
-			$rootScope.oCurrentDeficiency = angular.copy({});
+            $rootScope._aImages = [];    
+            $rootScope.iImagesNumber = 0;
+            $rootScope.iCommentsNumber = 0;
 			constructPhasesMultiSelect({
 				aSelectedPhases: []
 			});
@@ -761,8 +772,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 		$scope.onDisplayPhotoGallery = function(oEvent) {
 			oEvent.stopPropagation();
-			if ($rootScope.oCurrentDeficiency._aImages.length) {
-				servicesProvider.setUpPhotoGallery($rootScope.oCurrentDeficiency._aImages);
+			if ($rootScope._aImages.length) {
+				servicesProvider.setUpPhotoGallery($rootScope._aImages);
 			}
 		};
 

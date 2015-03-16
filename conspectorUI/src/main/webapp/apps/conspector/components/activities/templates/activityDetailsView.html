@@ -2,9 +2,9 @@
 	<div layout="row" layout-align="space-between start" class="md-default-theme cnpContentHeader" ng-if="bShowBackButton">
 		<div layout="row" layout-align="start start" >
 			<!-- <div>
-														<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
-														Open Sidenav
-														</md-button>
+															<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()" hide-gt-md>
+															Open Sidenav
+															</md-button>
 			</div> -->
 			<div class="notSelectable cnpInputIcon cnpBackIcon" layout="column" layout-align="center start">
 				<div ng-if="bShowBackButton" ng-click="onBack()" class="notSelectable cnpLink cnpLinkBackButton">
@@ -14,7 +14,7 @@
 		</div>
 		<div layout="row" layout-align="end start">
 			<!-- <label class="cnpContentTitle notSelectable">
-														{{'activityDetails_title' | translate}}
+															{{'activityDetails_title' | translate}}
 			</label> -->
 		</div>
 	</div>
@@ -27,10 +27,16 @@
 			<md-button ng-show="sMode == 'edit' || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
 			<md-button ng-show="sMode == 'edit' && bDisplayDeleteButton" class="md-button md-warn md-hue-2 md-raised cnpButtonWithIcon cnpInputIcon cnpDeleteIconWhite notSelectable " ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
 			<md-button ng-show="sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
-			<div layout="row" layout-align="center center" ng-show="$root.oCurrentActivity.iImagesNumber || $root.oCurrentActivity.iImagesNumber == 0"
-				ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar notSelectable': $root.oCurrentActivity.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar cnpImagesIconWithOpacity notSelectable': $root.oCurrentActivity.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery($event)">
+			<div layout="row" layout-align="center center" ng-show="$root.iImagesNumber || $root.iImagesNumber == 0"
+				ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar notSelectable': $root.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar cnpImagesIconWithOpacity notSelectable': $root.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery($event)">
 				<a>
-					({{$root.oCurrentActivity.iImagesNumber}})
+					({{$root.iImagesNumber}})
+				</a>
+			</div>
+			<div layout="row" layout-align="center center" ng-show="$root.iCommentsNumber || $root.iCommentsNumber == 0"
+				ng-class="{ 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInActionBar notSelectable': $root.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInActionBar cnpCommentsIconWithOpacity notSelectable': $root.iCommentsNumber==0 }">
+				<a>
+					({{$root.iCommentsNumber}})
 				</a>
 			</div>
 		</div>
@@ -167,7 +173,7 @@
 					</div>
 					<!-- <input ng-model="aSelectedPhases.length" type="number" ng-show="false" name="selectedPhases" min="1">
 					<div class="cnpErrorMessageValidation" ng-messages="oForms.activityDetailsForm.selectedPhases.$error" ng-if="(oForms.activityDetailsForm.selectedPhases.$dirty && !oForms.activityDetailsForm.selectedPhases.$valid) || submitted">
-											<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+												<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 					</div> -->
 				</div>
 				

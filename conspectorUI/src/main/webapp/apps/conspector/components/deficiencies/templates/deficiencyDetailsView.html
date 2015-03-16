@@ -18,12 +18,18 @@
 				<md-button ng-show="( sMode == 'edit' && bDataHasBeenModified == true ) || sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpSaveIconWhite cnpButtonMarginRight notSelectable" ng-click="onSave()">{{'global_save' | translate}}</md-button>
 				<md-button ng-show="sMode == 'edit' && bDisplayDeleteButton" class="md-button md-warn md-hue-2 md-raised cnpButtonWithIcon cnpInputIcon cnpDeleteIconWhite notSelectable " ng-click="onDelete()">{{'global_delete' | translate}}</md-button>
 				<md-button ng-show="sMode == 'create'" type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpPlusIcon notSelectable" ng-click="onSaveAndNew()">{{'global_saveAndNew' | translate}}</md-button>
-				<div layout="row" layout-align="center center" ng-show="$root.oCurrentDeficiency.iImagesNumber || $root.oCurrentDeficiency.iImagesNumber == 0"
-					ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar notSelectable': $root.oCurrentDeficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar cnpImagesIconWithOpacity notSelectable': $root.oCurrentDeficiency.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery($event)">
+				<div layout="row" layout-align="center center" ng-show="$root.iImagesNumber || $root.iImagesNumber == 0"
+					ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar notSelectable': $root.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInActionBar cnpImagesIconWithOpacity notSelectable': $root.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery($event)">
 					<a>
-						({{$root.oCurrentDeficiency.iImagesNumber}})
+						({{$root.iImagesNumber}})
 					</a>
 				</div>
+				<div layout="row" layout-align="center center" ng-show="$root.iCommentsNumber || $root.iCommentsNumber == 0"
+					ng-class="{ 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInActionBar notSelectable': $root.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInActionBar cnpCommentsIconWithOpacity notSelectable': $root.iCommentsNumber==0 }">
+					<a>
+						({{$root.iCommentsNumber}})
+					</a>
+				</div>				
 			</div>
 			<div layout="row" layout-align="end start">
 				<label class="cnpContentTitle notSelectable">

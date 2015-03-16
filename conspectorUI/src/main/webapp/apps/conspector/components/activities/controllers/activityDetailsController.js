@@ -175,8 +175,21 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                 iImagesNumber = aImages.length;
             }
 
-            $scope.oActivity.iImagesNumber = iImagesNumber;
-            $scope.oActivity._aImages = angular.copy(aImages);
+            var iCommentsNumber = 0;
+            if (oActivity.CommentSetDetails) {
+                if (oActivity.CommentSetDetails.CommentDetails) {
+                    for (var j = 0; j < oActivity.CommentSetDetails.CommentDetails.results.length; j++) {
+                        if(!oActivity.CommentSetDetails.CommentDetails.results[j].GeneralAttributes.IsDeleted){
+                            iCommentsNumber++;
+                        }
+                    }
+                }
+            }               
+
+            $rootScope.iImagesNumber = iImagesNumber;
+            $rootScope._aImages = angular.copy(aImages);
+
+            $rootScope.iCommentsNumber = iCommentsNumber;
 
             $scope.oActivity._unitsGuids = [];
             if (oActivity.UnitDetails) {
@@ -204,8 +217,6 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
             }
 
             $scope.oActivity.sDescription = oActivity.Description;
-
-            $rootScope.oCurrentActivity = angular.copy($scope.oActivity);
 
             oActivityWrapper.aData[0] = angular.copy($scope.oActivity);
 
@@ -371,7 +382,7 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
         var getActivityDetails = function() {
             apiProvider.getActivity({
                 sKey: sActivityGuid,
-                sExpand: "AccountDetails/AccountTypeDetails,ActivityTypeDetails,ContactDetails,PhaseDetails/ProjectDetails,UnitDetails/PhaseDetails,UserDetails,FileMetadataSetDetails/FileMetadataDetails",
+                sExpand: "AccountDetails/AccountTypeDetails,ActivityTypeDetails,ContactDetails,PhaseDetails/ProjectDetails,UnitDetails/PhaseDetails,UserDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails",
                 bShowSpinner: true,
                 onSuccess: onActivityDetailsLoaded,
             });
@@ -407,7 +418,9 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
                 });
             }
         } else {
-            $rootScope.oCurrentActivity = angular.copy({});
+            $rootScope._aImages = [];    
+            $rootScope.iImagesNumber = 0;
+            $rootScope.iCommentsNumber = 0;
             constructPhasesMultiSelect({
                 aSelectedPhases: []
             });
@@ -731,8 +744,8 @@ viewControllers.controller('activityDetailsView', ['$rootScope', '$scope', '$loc
 
         $scope.onDisplayPhotoGallery = function(oEvent) {
             oEvent.stopPropagation();
-            if ( $rootScope.oCurrentActivity._aImages.length) {
-                servicesProvider.setUpPhotoGallery( $rootScope.oCurrentActivity._aImages);
+            if ( $rootScope._aImages.length) {
+                servicesProvider.setUpPhotoGallery( $rootScope._aImages);
             }
         };        
 

@@ -93,17 +93,10 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 					sCreatedBy: oData.FileMetadataDetails.results[i].NewFileName
 				});
 			}
-			switch(sEntityType){
-				case "Deficiency":
-					$rootScope.oCurrentDeficiency.iImagesNumber = iImagesNumber; //to refresh info for parent entity details view...
-					$rootScope.oCurrentDeficiency._aImages = angular.copy(aImages);
-					break;
-				case "Activity":
-					$rootScope.oCurrentActivity.iImagesNumber = iImagesNumber; //to refresh info for parent entity details view...
-					$rootScope.oCurrentActivity._aImages = angular.copy(aImages);
-					break;					
-			}
-			
+
+			$rootScope.iImagesNumber = iImagesNumber; //to refresh info for parent entity details view...
+			$rootScope._aImages = angular.copy(aImages);
+
 			$scope.tableParams.reload();
 		};
 
@@ -122,8 +115,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		loadAttachments();
 
 		$scope.onFilesSelected = function(aFiles, $event) {
-			var onProgress = function($event) {
-			};
+			var onProgress = function($event) {};
 			var onSuccessUpload = function() { //called once for the last uploaded file
 				// $scope.iUploadProgress = 50;
 				cacheProvider.cleanEntitiesCache("oDeficiencyEntity");
@@ -138,7 +130,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 						apiProvider.logEvents({
 							aData: aData,
 						});
-					};					
+					};
 
 					if (sParentEntityGuid) {
 						switch (sEntity) {
@@ -158,8 +150,8 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 							}],
 							onSuccess: onInterestedUsersLoaded
 						});
-					}										
-				}			
+					}
+				}
 			};
 
 			servicesProvider.uploadAttachmentsForEntity({
@@ -173,7 +165,7 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 		};
 
 		$scope.onDisplay = function(oAttachment, $event) {
-			if(oAttachment.sMediaType === "Other"){
+			if (oAttachment.sMediaType === "Other") {
 				$event.target.nextElementSibling.click();
 				return;
 			}

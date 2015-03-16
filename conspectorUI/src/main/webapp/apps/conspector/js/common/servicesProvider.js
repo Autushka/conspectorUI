@@ -673,12 +673,14 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				// });
 			},
 
-			processListOfComments: function(oData) {
+			processListOfComments: function(oParameters) { //
 				var sAuthor = "";
 				var sAvatarUrl = "";
 				var sUserName = "";
 				var bAllowedEditMode = false;
 				var aComments = [];
+
+				var oData = angular.copy(oParameters.oData);
 
 				if (!oData.CommentDetails) {
 					return [];
@@ -690,7 +692,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 					sUserName = "";
 
 					if (oData.CommentDetails.results[i].GeneralAttributes.IsDeleted) {
-						return;
+						continue;
 					}
 					if (oData.CommentDetails.results[i].ContactDetails) {
 						if (oData.CommentDetails.results[i].ContactDetails.FirstName) {
@@ -733,7 +735,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 						_userName: sUserName,
 					});
 				}
-
+				$rootScope.iCommentsNumber = aComments.length; //to refresh info for parent entity details view...
 				return aComments;
 			},
 

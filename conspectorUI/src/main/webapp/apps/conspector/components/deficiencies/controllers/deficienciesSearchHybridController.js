@@ -272,7 +272,12 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					oComments = angular.copy(aData[i].CommentSetDetails);
 
 					if(aData[i].CommentSetDetails.CommentDetails && aData[i].CommentSetDetails.CommentDetails.results && aData[i].CommentSetDetails.CommentDetails.results.length){
-						iCommentsNumber = aData[i].CommentSetDetails.CommentDetails.results.length;
+							
+						for (var j = aData[i].CommentSetDetails.CommentDetails.results.length - 1; j >= 0; j--) {
+							if(!aData[i].CommentSetDetails.CommentDetails.results[j].GeneralAttributes.IsDeleted){
+								iCommentsNumber++;
+							}
+						}
 					}
 				}				
 
