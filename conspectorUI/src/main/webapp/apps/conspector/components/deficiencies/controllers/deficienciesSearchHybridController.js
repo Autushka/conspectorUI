@@ -340,7 +340,12 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			if($rootScope.oSelectedDeficiency){
 				for(var i = 0; i < $rootScope.aDeficiencies.length; i++){
 					if($rootScope.oSelectedDeficiency._guid === $rootScope.aDeficiencies[i]._guid){
+						var sStatuseIconUrl = $rootScope.oSelectedDeficiency.sStatuseIconUrl;
+						var sStatusDescription = $rootScope.oSelectedDeficiency.sStatusDescription;
+
 						$rootScope.oSelectedDeficiency = angular.copy($rootScope.aDeficiencies[i]);
+						$rootScope.oSelectedDeficiency.sStatuseIconUrl = sStatuseIconUrl;
+						$rootScope.oSelectedDeficiency.sStatusDescription = sStatusDescription;
 					}
 				}
 			}
