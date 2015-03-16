@@ -33,13 +33,6 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 
 		$rootScope.sMode = $stateParams.sMode;
 
-		// if ($rootScope.sCurrentStateName === "app.unitDetailsWrapper.unitDetails") {
-  //           if ($scope.sMode === "display" || $scope.sMode === "edit") {
-  //               $scope.$parent.bDisplayDeficienciesList = false;
-  //               $scope.$parent.bDisplayActivitiesList = false;
-  //           }
-  //       }
-
         if ($rootScope.sMode === "create") {
             $rootScope.sFileMetadataSetGuid = "";
             $rootScope.sFileMetadataSetLastModifiedAt = "";
@@ -58,6 +51,7 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 		$scope.aUnitOptionsArrays = [];
 
 		var onUnitOptionSetsLoaded = function(oData) {
+			$scope.aUnitOptionsArrays = [];
 			//var bMatchFound = false;
 			//aData = $filter('orderBy')(aData, ["Name"]);
 			for (var i = 0; i < oData.UnitOptionSetDetails.results.length; i++) {
@@ -341,9 +335,9 @@ viewControllers.controller('unitDetailsView', ['$scope', '$location', '$anchorSc
 			$scope.onDataModified();
 			// $scope.oForms.unitDetailsForm.selectedClients.$setDirty();
 
-			if ($scope.aSelectedPhases[0]) {
-				getUnitOptionSets($scope.aSelectedPhases[0].Guid);
-			}
+			// if ($scope.aSelectedPhases[0]) {
+			// 	getUnitOptionSets($scope.aSelectedPhases[0].Guid);
+			// }
 		};
 
 		$scope.onDataModified = function() {
