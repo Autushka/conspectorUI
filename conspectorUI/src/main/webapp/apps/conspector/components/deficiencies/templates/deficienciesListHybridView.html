@@ -29,8 +29,8 @@
 				</label>
 			</div>
 		</div>
-		<div layout="row" layout-align="space-between center" style="width: 100%;">
-			<div layout="column" layout-align="center start" flex>
+		<div layout="row" layout-align="space-between start" style="width: 100%;">
+			<div layout="column" layout-align="start start" flex>
 				<div class="cnpMobileListItem cnpMobileTagsInList" ng-cloak ng-if="deficiency.sTags != ''"style="margin-bottom: 8px;">
 					{{deficiency.sTags}}
 				</div>
@@ -38,7 +38,7 @@
 					{{deficiency.sLocationTags}}
 				</div>
 			</div>
-			<div layout="column" layout-align="center start">
+			<div layout="column" layout-align="start center">
 				<div layout="row" layout-align="center center" ng-show="deficiency.iImagesNumber || deficiency.iImagesNumber == 0"
 					ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList notSelectable': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList cnpImagesIconWithOpacity notSelectable': deficiency.iImagesNumber==0 }" >
 					
