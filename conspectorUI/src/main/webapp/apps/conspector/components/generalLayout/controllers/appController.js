@@ -158,7 +158,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$windo
 				$window.location.hash.indexOf("#/app/contactDetails") > -1 ||
 				$window.location.hash.indexOf("#/app/deficiencyDetails") > -1 ||
 				$window.location.hash.indexOf("#/app/activityDetails") > -1 ||
-				$window.location.hash.indexOf("#/app/unitDetails") > -1) {
+				$window.location.hash.indexOf("#/app/unitDetails") > -1 ||
+				$window.location.hash.indexOf("#/app/notificationsList") > -1) {
 				$scope.selectedTabIndex = -1;
 				$scope.$broadcast("$mdTabsPaginationChanged");
 				return;
