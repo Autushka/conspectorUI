@@ -179,6 +179,30 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			onLogInSuccessHandler: function(sUserName) {
 				var sCurrentCompany = "";
 				var sCurrentRole = "";
+
+				if (CONSTANTS.bIsHybridApplication) {
+					if (oDeviceInfo && oDeviceInfo.sDeviceToken) {
+						var onSuccess = function(aData) {
+							if (!aData.length) {
+								apiProvider.createUserDevice({
+									oData: {
+										UserName: sUserName,
+										DeviceToken: oDeviceInfo.sDeviceToken,
+										BadgeNumber: 0
+									}
+								});
+							}else{
+								oDeviceInfo.sGuid = aData[0].Guid;
+							}
+						}
+
+						apiProvider.getUserDevices({
+							sFilter: "DeviceToken eq '" + oDeviceInfo.sDeviceToken + "' and UserName eq '" + sUserName + "'",
+							onSuccess: onSuccess
+						});
+					}
+				}
+
 				cacheProvider.oUserProfile = apiProvider.getUserProfile(sUserName);
 
 				if (cacheProvider.oUserProfile.bIsInitialPassword) {

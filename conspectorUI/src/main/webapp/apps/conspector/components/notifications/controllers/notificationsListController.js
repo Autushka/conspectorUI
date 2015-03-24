@@ -214,7 +214,7 @@ viewControllers.controller('notificationsListView', ['$scope', '$rootScope', '$s
                 TaskStatusGuid: aTaskStatuses[(oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length].Guid,
             });
             oNotification.sStatusSortingSequence = (oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length;
-            alert(oNotification._guid);
+            //alert(oNotification._guid);
             oNotification._guid = "!!!";
         };
 

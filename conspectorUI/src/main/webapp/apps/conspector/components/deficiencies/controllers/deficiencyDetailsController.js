@@ -183,14 +183,14 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			if (oDeficiency.CommentSetDetails) {
 				if (oDeficiency.CommentSetDetails.CommentDetails) {
 					for (var j = 0; j < oDeficiency.CommentSetDetails.CommentDetails.results.length; j++) {
-						if(!oDeficiency.CommentSetDetails.CommentDetails.results[j].GeneralAttributes.IsDeleted){
+						if (!oDeficiency.CommentSetDetails.CommentDetails.results[j].GeneralAttributes.IsDeleted) {
 							iCommentsNumber++;
 						}
 					}
 				}
-			}			
+			}
 
-			$rootScope._aImages = angular.copy(aImages);	
+			$rootScope._aImages = angular.copy(aImages);
 			$rootScope.iImagesNumber = iImagesNumber;
 			$rootScope.iCommentsNumber = iCommentsNumber;
 
@@ -430,9 +430,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				});
 			}
 		} else {
-            $rootScope._aImages = [];    
-            $rootScope.iImagesNumber = 0;
-            $rootScope.iCommentsNumber = 0;
+			$rootScope._aImages = [];
+			$rootScope.iImagesNumber = 0;
+			$rootScope.iCommentsNumber = 0;
 			constructPhasesMultiSelect({
 				aSelectedPhases: []
 			});
@@ -551,15 +551,15 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				$scope.onSelectedTaskPrioritiesModified();
 		};
 
-		$scope.onSelectedContractorsModified = function(){
+		$scope.onSelectedContractorsModified = function() {
 			$scope.onDataModified();
 		};
 
-		$scope.onDescriptionChanged = function(){
+		$scope.onDescriptionChanged = function() {
 			$scope.onDataModified();
 		};
 
-		$scope.onDueDateChanged = function(){
+		$scope.onDueDateChanged = function() {
 			$scope.onDataModified();
 		};
 
@@ -667,7 +667,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 					sOperationNameEN: CONSTANTS.newDeficiencyEN,
 					sOperationNameFR: CONSTANTS.newDeficiencyFR,
 					//sEntityGuid: oData.Guid,
-					aData: [{Guid: oData.Guid}],
+					aData: [{
+						Guid: oData.Guid
+					}],
 					onSuccess: onInterestedUsersLoaded
 				});
 			};
@@ -694,11 +696,13 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				apiProvider.getInterestedUsers({
 					sEntityName: "deficiency",
 					sOperationNameEN: CONSTANTS.updatedDeficiencyEN,
-					sOperationNameFR: CONSTANTS.updatedDeficiencyEN,
+					sOperationNameFR: CONSTANTS.updatedDeficiencyFR,
 					//sEntityGuid: oData.Guid,
-					aData: [{Guid: oData.Guid}],
+					aData: [{
+						Guid: oData.Guid
+					}],
 					onSuccess: onInterestedUsersLoaded
-				});				
+				});
 			};
 
 			oDataForSave.DescriptionTags = utilsProvider.tagsArrayToTagsString($scope.oDeficiency.aDescriptionTags);

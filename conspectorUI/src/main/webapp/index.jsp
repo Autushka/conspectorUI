@@ -22,7 +22,7 @@
 		<link rel="stylesheet" href="apps/conspector/css/style.css">
 		<link rel="stylesheet" type="text/css" href="apps/conspector/css/photoGallery.css" />
 
-		<script src="bower_components/pubnub/web/pubnub.min.js"></script>
+		<script src="bower_components/pubnub/web/pubnub.js"></script>
 		
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
@@ -60,7 +60,7 @@
 		
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->
 		<script src="apps/conspector/js/thirdParty/angular-file-upload-shim.min.js"></script>  <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
-		<script src="apps/conspector/js/thirdParty/angular-file-upload.min.js"></script> <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->
+		<script src="apps/conspector/js/thirdParty/angular-file-upload.min.js"></script> <!-- version 2.0.5 is not available on bower  TODO: try to put it on bower-->		
 		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> <!-- was not able to find it as a bower component-->	
 		<script src="apps/conspector/js/thirdParty/jQuery.download.js"></script> <!-- small function that needed to allow ajax requests that return files (needed for dynamic reports...)-->		
 		
@@ -87,7 +87,7 @@
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddItemsListsController.js"></script>	
 			
 		<!--Minification starts here-->
-		
+		<!--
 		<script src="apps/conspector/js/common/cacheProvider.js"></script>		
 		<script src="apps/conspector/js/common/dataProvider.js"></script>
 		<script src="apps/conspector/js/common/apiProvider.js"></script>
@@ -157,15 +157,15 @@
 
 		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	
 
-		<script src="apps/conspector/components/notifications/controllers/notificationsListController.js"></script>			
+		<script src="apps/conspector/components/notifications/controllers/notificationsListController.js"></script>	-->		
 	
-
-		<!--<%@page import="java.util.*" %>
+  
+		<%@page import="java.util.*" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file
 			int n = rand.nextInt(1000);
 		%>		
- 		<script src="dist/conspector.min.js?number=<%=n%>"></script> -->
+ 		<script src="dist/conspector.min.js?number=<%=n%>"></script> 
 
 	</head>
 	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;" ng-click="$root.hideGallery()">

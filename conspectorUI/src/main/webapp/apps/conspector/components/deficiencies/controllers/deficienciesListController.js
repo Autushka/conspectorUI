@@ -1,5 +1,5 @@
-viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout',
-    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
+viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout', 'CONSTANTS',
+    function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout, CONSTANTS) {
         if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") {
             historyProvider.removeHistory(); // because current view doesn't have a back button
             $rootScope.oStateParams = {}; // for backNavigation	
@@ -246,12 +246,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 if (aData[i].CommentSetDetails) {
                     if (aData[i].CommentSetDetails.CommentDetails) {
                         for (var j = 0; j < aData[i].CommentSetDetails.CommentDetails.results.length; j++) {
-                            if(!aData[i].CommentSetDetails.CommentDetails.results[j].GeneralAttributes.IsDeleted){
+                            if (!aData[i].CommentSetDetails.CommentDetails.results[j].GeneralAttributes.IsDeleted) {
                                 iCommentsNumber++;
                             }
                         }
                     }
-                }                
+                }
 
                 var durationNumber = "";
                 var sDueInLetter = "";
@@ -519,7 +519,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             }
 
             oDeficiency.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aTaskStatuses[(oDeficiency.sStatusSortingSequence) % aTaskStatuses.length].AssociatedIconFileGuid;
-            
+
             $scope.sAccountValues = "";
             $scope.sAccountGuids = "";
             $scope.sAccountValues = oDeficiency.sContractors;
@@ -527,7 +527,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
 
 
             for (var i = $scope.aDataForMassChanges.length - 1; i >= 0; i--) {
-                if($scope.aDataForMassChanges[i].Guid === oDeficiency._guid){
+                if ($scope.aDataForMassChanges[i].Guid === oDeficiency._guid) {
                     $scope.aDataForMassChanges.splice(i, 1);
                     break;
                 }
@@ -537,7 +537,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $scope.aDataForMassChanges.push({
                 Guid: oDeficiency._guid,
                 //to put back...
-                TaskStatusGuid: aTaskStatuses[(oDeficiency.sStatusSortingSequence) % aTaskStatuses.length].Guid,//aTaskStatuses[oDeficiency.sStatusSortingSequence - 1].Guid
+                TaskStatusGuid: aTaskStatuses[(oDeficiency.sStatusSortingSequence) % aTaskStatuses.length].Guid, //aTaskStatuses[oDeficiency.sStatusSortingSequence - 1].Guid
                 PhaseGuid: oDeficiency._phaseGuid,
                 //AccountValues:  $scope.sAccountValues,
                 //AccountGuids: $scope.sAccountGuids,

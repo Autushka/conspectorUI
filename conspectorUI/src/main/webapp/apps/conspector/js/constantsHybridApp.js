@@ -1,3 +1,5 @@
+var oGlobalConstants = {sServicePath: "http://app-6.conspector-app.appspot.com/odata.svc/"};
+
 app.factory('CONSTANTS', [function() {
 	return {
 		messageDisplayTime: 5000,

@@ -1,5 +1,5 @@
-app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 'cacheProvider', 'PubNub',
-	function($rootScope, dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider, PubNub) {
+app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'utilsProvider', 'cacheProvider', 'PubNub', '$timeout',
+	function($rootScope, dataProvider, CONSTANTS, $q, utilsProvider, cacheProvider, PubNub, $timeout) {
 		return {
 			getUserProfile: function(sUserName) {
 				var sPath = CONSTANTS.sServicePath + "Users('" + sUserName + "')?$expand=CompanyDetails,RoleDetails,PhaseDetails/ProjectDetails,ContactDetails/AccountDetails&$format=json";
@@ -275,8 +275,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				var sChannel = "";
 
 				PubNub.init({
-					publish_key: 'pub-c-59bd66cf-9992-42d5-af04-87ec537c73bb',
-					subscribe_key: 'sub-c-7606f63c-9908-11e4-a626-02ee2ddab7fe'
+			        publish_key: 'pub-c-ca905ca3-be6e-4a5b-96cd-49dc2312a4e6',
+			        subscribe_key: 'sub-c-8b324682-73df-11e3-9291-02ee2ddab7fe'
 				});
 				sChannel = "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany;
 				PubNub.ngSubscribe({
@@ -437,7 +437,84 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 					this.pubNubMessage({
 						sEntityName: "oOperationLogEntity",
 						sText: "New Operation Log..."
-					});					
+					});
+				}, this));
+
+				this.sendPushNotifications(oParameters);
+			},
+
+			sendPushNotifications: function(oParameters){
+				var oSrv = {};
+				var oRequestData = {
+					__batchRequests: []
+				};
+				var aData = [];
+				var oData = {};
+
+				for (var i = 0; i < oParameters.aData.length; i++) {
+					for (var j = 0; j < oParameters.aData[i].aUsers.length; j++) {
+						oData = {
+							requestUri: "Users('" + oParameters.aData[i].aUsers[j] + "')?$expand=UserDeviceDetails",
+							method: "GET",
+						};
+						oRequestData.__batchRequests.push(oData);						
+					}
+				}
+
+				oSrv = dataProvider.batchRequest({
+					oRequestData: oRequestData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+				});
+
+				oSrv.then($.proxy(function(aData) { //oParameters.aData[i].sOperationNameEN
+					//alert("Yo!");
+					for (var i = aData.length - 1; i >= 0; i--) {
+						for (var j= aData[i].data.UserDeviceDetails.results.length - 1; j >= 0; j--) {
+							//increase badgenumber first
+							//var iCounter = 0;
+					        pubnub.mobile_gw_provision({
+					            device_id: aData[i].data.UserDeviceDetails.results[j].DeviceToken,
+					            channel: 'pushNotifications', 
+					            op: 'add', 
+					            gw_type: 'apns',
+					            error: function(msg){console.log(msg);},
+					            // callback: function(msg) {
+					            // }            
+					        });
+						}
+
+						$timeout(function(){
+							for (var i = aData.length - 1; i >= 0; i--) {
+								for (var j= aData[i].data.UserDeviceDetails.results.length - 1; j >= 0; j--) {
+					                var message = PNmessage();
+
+					                message.pubnub = pubnub;
+
+					                var sOperationName = aData[i].data.Language === 'en' ? oParameters.aData[0].sOperationNameEN : oParameters.aData[0].sOperationNameFR;
+					                //message.callback = function (msg){ console.log('success'); console.log(msg); };
+					                //message.error = function (msg){ console.log('error'); console.log(msg); };
+					                message.channel = 'pushNotifications';
+					                message.apns = {
+					                    alert: sOperationName,//oParameters.aData[0].sOperationNameEN,
+					                    //badge: aData[i].data.UserDeviceDetails.results[j].BadgeNumber + 1,
+					                    sound: 'notification-beep.wav',
+					                };
+
+					                message.publish();	
+
+						            // OData.request({
+						            //     requestUri: CONSTANTS.sServicePath + "UserDevices('" + aData[i].data.UserDeviceDetails.results[j].Guid + "')",
+						            //     method: 'PUT',
+						            //     data: {
+						            //         BadgeNumber: aData[i].data.UserDeviceDetails.results[j].BadgeNumber + 1
+						            //     }
+						            // }, function(){}, function(){});
+								}
+							}
+						}, 1000);
+					}
 				}, this));
 			},
 
@@ -1895,7 +1972,9 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 						}
 
 						if (aData[e].data.GeneralAttributes.CreatedBy != cacheProvider.oUserProfile.sUserName && !bAuthorAdded && aData[e].data.GeneralAttributes.CreatedBy != aData[e].data.UserName) {
-							aInterestedUsers.push(aData[e].data.CreatedBy);
+							if(aData[e].data.GeneralAttributes.CreatedBy != null && aData[e].data.GeneralAttributes.CreatedBy != undefined){
+								aInterestedUsers.push(aData[e].data.CreatedBy);
+							}
 						}
 						aInterestedUsers.push("GeneralAdmin"); // just for now...for test perposes.
 
@@ -2220,6 +2299,43 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 				oSvc.then(onSuccess);
 			},
+
+			getUserDevices: function(oParameters) {
+				var svc = dataProvider.getEntitySet({
+					sPath: "UserDevices",
+					sExpand: oParameters.sExpand,
+					sFilter: oParameters.sFilter,
+					bShowSpinner: oParameters.bShowSpinner,
+					//oCacheProvider: cacheProvider,
+					//sCacheProviderAttribute: "oUnitEntity"
+				});
+				if (svc instanceof Array) {
+					oParameters.onSuccess(svc); // data retrived from cache
+				} else {
+					svc.then(oParameters.onSuccess);
+				}
+			},
+
+			createUserDevice: function(oParameters) {
+				var onSuccess = function(oData) {
+					if (oParameters.onSuccess) {
+						oParameters.onSuccess(oData);
+					}
+					//this.logEvent
+				};
+				var oSvc = dataProvider.createEntity({
+					sPath: "UserDevices",
+					sKeyAttribute: "Guid", //needed for links creation
+					oData: oParameters.oData,
+					bShowSpinner: oParameters.bShowSpinner,
+					bShowSuccessMessage: oParameters.bShowSuccessMessage,
+					bShowErrorMessage: oParameters.bShowErrorMessage,
+					bGuidNeeded: true,
+					bCompanyNeeded: false
+				});
+
+				oSvc.then(onSuccess);
+			},			
 
 			generateReport: function(oParameters) {
 				$.download('xdocReportsService', oParameters.oReportParameters, "post");
