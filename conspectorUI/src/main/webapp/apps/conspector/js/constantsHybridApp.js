@@ -1,4 +1,4 @@
-var oGlobalConstants = {sServicePath: "http://app-6.conspector-app.appspot.com/odata.svc/"};
+var oGlobalConstants = {sServicePath: "http://app.conspector.com/odata.svc/"};
 
 app.factory('CONSTANTS', [function() {
 	return {
@@ -6,9 +6,9 @@ app.factory('CONSTANTS', [function() {
 		messageDisplayLayout: 'topCenter',
 		currentProject: 'conspector',
 		appPathname: "",
-		sServicePath: "http://app-6.conspector-app.appspot.com/odata.svc/",  //http://app.conspector.com/
+		sServicePath: "http://app.conspector.com/odata.svc/",  //http://app.conspector.com/
 		sDefaultRoleNameForNewCompany: "systemAdministrator",
-		sAppAbsolutePath: "http://app-6.conspector-app.appspot.com/",
+		sAppAbsolutePath: "http://app.conspector.com/",
 		bIsHybridApplication: true,
 
 		newDeficiencyEN: "New deficiency has been created (mobile)",

@@ -44,6 +44,7 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$locat
 
         $scope.oClient = {
             _aPhases: [],
+            bIsProspect: true,
         };
 
         var oClientWrapper = {
@@ -76,6 +77,7 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$locat
             $scope.oClient.sWebsite = oClient.Website;
             $scope.oClient.sEmail = oClient.Email;
             $scope.oClient.sFax = oClient.Fax;
+            $scope.oClient.bIsProspect = oClient.IsProspect;
 
             $scope.oClient.aTags = utilsProvider.tagsStringToTagsArray(oClient.DescriptionTags);
 
@@ -425,6 +427,8 @@ viewControllers.controller('clientDetailsView', ['$rootScope', '$scope', '$locat
             } else {
                 oDataForSave.Fax = "";
             }
+
+            oDataForSave.IsProspect = $scope.oClient.bIsProspect;
 
             oDataForSave.Website = $scope.oClient.sWebsite;
             oDataForSave.Email = $scope.oClient.sEmail;

@@ -38,30 +38,13 @@ var oHybridApp = {
     onDeviceReady: function() {
         document.addEventListener("pause", function() {
             console.log('pause...');
-
-        //     OData.request({
-        //         requestUri: oGlobalConstants.sServicePath + "UserDevices?$filter=DeviceToken eq '" + oDeviceInfo.sDeviceToken + "'",
-        //         method: 'GET',
-        //     }, function(aData) {
-        //         for (var i = aData.results.length - 1; i >= 0; i--) {
-        //             //Things[i]
-        //             OData.request({
-        //                 requestUri: oGlobalConstants.sServicePath + "UserDevices('" + aData.results[i].Guid + "')",
-        //                 method: 'PUT',
-        //                 data: {
-        //                     BadgeNumber: 0
-        //                 }
-        //             }, function() {
-        //                 console.log('updated...');
-        //             });
-        //         }
-        //     });
-        // }, false);
+        }, false);
 
         var pushNotification = window.plugins.pushNotification;
 
         var errorHandler = function(error) {
             console.log('Error: ' + error);
+            //alert('Error: ' + error);
             //alert("Yo2");
         };
 
@@ -88,6 +71,8 @@ var oHybridApp = {
         var tokenHandler = $.proxy(function(result) {
             console.log('device token: ' + result);
             oDeviceInfo.sDeviceToken = result;
+
+            //alert("Device Token: " + result);
             // alert("Yo3" + oDeviceInfo.sDeviceToken);
             //alert('device token: '+ result);
             // Your iOS push server needs to know the token before it can push to this device
@@ -120,7 +105,7 @@ var oHybridApp = {
         }, this);
 
         pushNotification.register(tokenHandler, errorHandler, {
-            'badge': 'false',
+            'badge': 'true',
             'sound': 'true',
             'alert': 'true',
             'ecb': 'onNotificationAPN'

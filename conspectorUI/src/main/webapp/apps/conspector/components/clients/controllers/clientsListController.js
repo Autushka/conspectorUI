@@ -27,7 +27,8 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
             sStateName: $rootScope.sCurrentStateName,
         });
         $scope.oListSettings = {
-            bGroupListByProjectAndPhase: oTableStatusFromCache.oListSettings.bGroupListByProjectAndPhase
+            bGroupListByProjectAndPhase: oTableStatusFromCache.oListSettings.bGroupListByProjectAndPhase,
+            bIsProspect: oTableStatusFromCache.oListSettings.bIsProspect
         };
 
         var oInitialSortingForClientsList = {
@@ -127,10 +128,18 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
         };
 
         var loadClients = function() {
+            var sFilter = "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false";
+
+            if($scope.oListSettings.bIsProspect){
+                sFilter = sFilter + " and IsProspect eq true";
+            }else{
+                sFilter = sFilter + " and IsProspect eq false";
+            }
             oClientsListData.aData = [];
             if ($scope.globalSelectedPhases.length > 0) {
                 apiProvider.getClients({
                     sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
+                    sFilter: sFilter,
                     bShowSpinner: true,
                     onSuccess: onClientsLoaded
                 });
@@ -153,7 +162,11 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
 
         $scope.onGroupingChange = function() {
             loadClients();
-        }
+        };
+
+        $scope.onIsProspectChange = function(){
+            loadClients();
+        };
 
         $scope.onEdit = function(oClient) {
             cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 

@@ -275,8 +275,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				var sChannel = "";
 
 				PubNub.init({
-			        publish_key: 'pub-c-ca905ca3-be6e-4a5b-96cd-49dc2312a4e6',
-			        subscribe_key: 'sub-c-8b324682-73df-11e3-9291-02ee2ddab7fe'
+					publish_key: 'pub-c-ca905ca3-be6e-4a5b-96cd-49dc2312a4e6',
+					subscribe_key: 'sub-c-8b324682-73df-11e3-9291-02ee2ddab7fe'
 				});
 				sChannel = "conspectorPubNub" + cacheProvider.oUserProfile.sCurrentCompany;
 				PubNub.ngSubscribe({
@@ -457,7 +457,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 							requestUri: "Users('" + oParameters.aData[i].aUsers[j] + "')?$expand=UserDeviceDetails",
 							method: "GET",
 						};
-						oRequestData.__batchRequests.push(oData);						
+						oRequestData.__batchRequests.push(oData);
 					}
 				}
 
@@ -469,48 +469,38 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				});
 
 				oSrv.then($.proxy(function(aData) { //oParameters.aData[i].sOperationNameEN
-					//alert("Yo!");
+					var aDevices = [];
 					for (var i = aData.length - 1; i >= 0; i--) {
-						for (var j= aData[i].data.UserDeviceDetails.results.length - 1; j >= 0; j--) {
-							//increase badgenumber first
-							//var iCounter = 0;
-					        pubnub.mobile_gw_provision({
-					            device_id: aData[i].data.UserDeviceDetails.results[j].DeviceToken,
-					            channel: 'pushNotifications', 
-					            op: 'add', 
-					            gw_type: 'apns',
-					            error: function(msg){console.log(msg);},
-					            // callback: function(msg) {
-					            // }            
-					        });
+						for (var j = aData[i].data.UserDeviceDetails.results.length - 1; j >= 0; j--) {
+							if ($.inArray(aData[i].data.UserDeviceDetails.results[j].DeviceToken, aDevices) === -1) {
+								aDevices.push(aData[i].data.UserDeviceDetails.results[j].DeviceToken);
+							}else{
+								continue;
+							}
+							pubnub.mobile_gw_provision({
+								device_id: aData[i].data.UserDeviceDetails.results[j].DeviceToken,
+								channel: 'pushNotifications',
+								op: 'add',
+								gw_type: 'apns',
+								error: function(msg) {
+									console.log(msg);
+								},
+							});
 						}
 
-						$timeout(function(){
+						$timeout(function() {
 							for (var i = aData.length - 1; i >= 0; i--) {
-								for (var j= aData[i].data.UserDeviceDetails.results.length - 1; j >= 0; j--) {
-					                var message = PNmessage();
-
-					                message.pubnub = pubnub;
-
-					                var sOperationName = aData[i].data.Language === 'en' ? oParameters.aData[0].sOperationNameEN : oParameters.aData[0].sOperationNameFR;
-					                //message.callback = function (msg){ console.log('success'); console.log(msg); };
-					                //message.error = function (msg){ console.log('error'); console.log(msg); };
-					                message.channel = 'pushNotifications';
-					                message.apns = {
-					                    alert: sOperationName,//oParameters.aData[0].sOperationNameEN,
-					                    //badge: aData[i].data.UserDeviceDetails.results[j].BadgeNumber + 1,
-					                    sound: 'notification-beep.wav',
-					                };
-
-					                message.publish();	
-
-						            // OData.request({
-						            //     requestUri: CONSTANTS.sServicePath + "UserDevices('" + aData[i].data.UserDeviceDetails.results[j].Guid + "')",
-						            //     method: 'PUT',
-						            //     data: {
-						            //         BadgeNumber: aData[i].data.UserDeviceDetails.results[j].BadgeNumber + 1
-						            //     }
-						            // }, function(){}, function(){});
+								for (var j = aData[i].data.UserDeviceDetails.results.length - 1; j >= 0; j--) {
+									var message = PNmessage();
+									message.pubnub = pubnub;
+									var sOperationName = aData[i].data.Language === 'en' ? oParameters.aData[0].sOperationNameEN : oParameters.aData[0].sOperationNameFR;
+									message.channel = 'pushNotifications';
+									message.apns = {
+										alert: sOperationName, //oParameters.aData[0].sOperationNameEN,
+										badge: 1,
+										sound: 'notification-beep.wav',
+									};
+									message.publish();
 								}
 							}
 						}, 1000);
@@ -1378,7 +1368,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			getClients: function(oParameters) {
 				var svc = dataProvider.getEntitySet({
 					sPath: "Accounts",
-					sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false",
+					sFilter: oParameters.sFilter,
 					sExpand: oParameters.sExpand,
 					//sExpand: "PhaseDetails/ProjectDetails,AccountTypeDetails",
 					bShowSpinner: oParameters.bShowSpinner,
@@ -1972,7 +1962,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 						}
 
 						if (aData[e].data.GeneralAttributes.CreatedBy != cacheProvider.oUserProfile.sUserName && !bAuthorAdded && aData[e].data.GeneralAttributes.CreatedBy != aData[e].data.UserName) {
-							if(aData[e].data.GeneralAttributes.CreatedBy != null && aData[e].data.GeneralAttributes.CreatedBy != undefined){
+							if (aData[e].data.GeneralAttributes.CreatedBy != null && aData[e].data.GeneralAttributes.CreatedBy != undefined) {
 								aInterestedUsers.push(aData[e].data.CreatedBy);
 							}
 						}
@@ -2335,7 +2325,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				});
 
 				oSvc.then(onSuccess);
-			},			
+			},
 
 			generateReport: function(oParameters) {
 				$.download('xdocReportsService', oParameters.oReportParameters, "post");

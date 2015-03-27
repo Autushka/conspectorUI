@@ -181,6 +181,8 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				var sCurrentRole = "";
 
 				if (CONSTANTS.bIsHybridApplication) {
+					//alert(oDeviceInfo);
+					//alert(oDeviceInfo.sDeviceToken);
 					if (oDeviceInfo && oDeviceInfo.sDeviceToken) {
 						var onSuccess = function(aData) {
 							if (!aData.length) {

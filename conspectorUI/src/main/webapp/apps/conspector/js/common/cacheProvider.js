@@ -101,7 +101,8 @@ app.factory('cacheProvider', ['TYPES',
 					oFilter: {},
 					oSorting: {},
 					oListSettings: {
-						bGroupListByProjectAndPhase: true
+						bGroupListByProjectAndPhase: true,
+						bIsProspect: true,
 					}
 				}],
 				contractorsList: [{
