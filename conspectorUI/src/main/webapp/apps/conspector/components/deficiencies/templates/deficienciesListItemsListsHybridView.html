@@ -46,6 +46,20 @@
 		</div>
 	</div>
 </div>
+<div class="cnpSidePanelWrapper" layout="row" layout-align="start start" ng-show="$root.sCurrentSearhCriteria === 'contractor'">
+	<div layout="column" layout-align="start start" flex>
+		<div class="cnpMobileFilterWrapper" layout="row" layout-align="center center">
+			<input class="cnpTextInputField cnpMobileFilter" type="text" placeholder="{{'global_mobileContractors' | translate}}" ng-model="$root.oSearchCriterias.sContractorFilter" ng-change="onChangeSearchCriteriaContractorFilter($root.oSearchCriterias.sContractorFilter)"/>
+		</div>
+		<div layout="column" flex style="width: 100%;" class="cnpMobileSideNavContentWithFilter">
+			<div ng-repeat="contractor in $root.oSearchCriterias.aFilteredContractors" ng-click="onSelectSearchCrireriaContractor(contractor)" style="width: 100%; min-height: 52px;">
+				<div>
+					<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': contractor.bTicked, 'cnpMobileH2': !contractor.bTicked }">{{contractor.sName}}<span class="cnpMobileTickMark" ng-if="contractor.bTicked">✔</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="cnpSidePanelWrapper cnpMobileSideNavContent" layout="row" layout-align="start start" ng-show="$root.sSelectedDeficiencyAttribute == 'statuses'">
 	<div layout="column" layout-align="start start" flex>
 		<div layout="column" flex style="width: 100%;">

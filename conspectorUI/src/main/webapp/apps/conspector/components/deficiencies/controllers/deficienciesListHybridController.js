@@ -2,6 +2,8 @@ viewControllers.controller('deficienciesListHybridView', ['$scope', '$location',
     function($scope, $location, $anchorScroll, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
         historyProvider.removeHistory();
 
+        $scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+
         servicesProvider.constructLogoUrl();
         servicesProvider.constructMenuIconUrl();
 

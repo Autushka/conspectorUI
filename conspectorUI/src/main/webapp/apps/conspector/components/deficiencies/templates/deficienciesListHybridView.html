@@ -37,6 +37,9 @@
 				<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="deficiency.sLocationTags != ''" ng-cloak>
 					{{deficiency.sLocationTags}}
 				</div>
+				<div class="cnpMobileListItem" ng-if="deficiency.sContractors != '' && sCurrentRole != 'contractor'" ng-cloak>
+					{{deficiency.sContractors}}
+				</div>				
 			</div>
 			<div layout="column" layout-align="start center">
 				<div layout="row" layout-align="center center" ng-show="deficiency.iImagesNumber || deficiency.iImagesNumber == 0"

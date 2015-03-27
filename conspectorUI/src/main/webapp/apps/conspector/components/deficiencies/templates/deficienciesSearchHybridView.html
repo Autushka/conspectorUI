@@ -34,7 +34,7 @@
 			</label>
 		</div>
 		</button>
-		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectStatusSearchCriteria()" style="border-bottom-width: 2px;">
+		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectStatusSearchCriteria()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" ng-cloak>
 				{{'deficiencyDetails_status' | translate}}
@@ -44,6 +44,16 @@
 			</label>
 		</div>
 		</button>
+		<button ng-show="sCurrentRole != 'contractor'" class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectContractorSearchCriteria()" style="border-bottom-width: 2px;">
+		<div layout="column" layout-align="center start">
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{'deficiencyDetails_contractors' | translate}}
+			</div>
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oSearchCriterias.oContractor.sValue}}
+			</label>
+		</div>
+		</button>		
 		<div layout="column" layout-align="start center">
 			<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton notSelectable" ng-click="onSearch()" ng-cloak>
 			{{'hybrid_searchDeficiencies' | translate}}

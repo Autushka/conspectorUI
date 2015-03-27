@@ -2,6 +2,8 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 	function($scope, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout, CONSTANTS) {
 		historyProvider.removeHistory();
 
+		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+
 		servicesProvider.constructLogoUrl();
 		servicesProvider.constructMenuIconUrl();
 		
@@ -38,7 +40,15 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 					aSelectedItemsGuids: [],
 				},
 				aStatuses: [],
-				bStatusWasSelected: false,				
+				bStatusWasSelected: false,	
+				oContractor: {
+					sDescription: $translate.instant('deficiencyDetails_contractor'), //"Status",
+					sValue: "...",
+					bIsSelectionUnabled: false,
+					aSelectedItemsGuids: [],
+				},
+				aContractors: [],
+				bContractorWasSelected: false,								
 			};
 		}
 
@@ -95,6 +105,30 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
             });
         };
 
+        var onContractorsLoaded = function(oData) {
+        	$rootScope.oSearchCriterias.aContractors = [];
+            oData.AccountDetails.results = $filter('filter')(oData.AccountDetails.results, function(oItem, iIndex) {
+            	if(!oItem.GeneralAttributes.IsDeleted && oItem.AccountTypeDetails.NameEN === "Contractor"){
+            		return true;
+            	}else{
+            		return false;
+            	}
+            });
+
+            for (var i = 0; i < oData.AccountDetails.results.length; i++) {
+                $rootScope.oSearchCriterias.aContractors.push({
+                    sGuid: oData.AccountDetails.results[i].Guid,
+                    sName: oData.AccountDetails.results[i].Name,
+                    sCleanedName: utilsProvider.replaceSpecialChars(utilsProvider.convertStringToInt(oData.AccountDetails.results[i].Name)),
+                    bTicked: false
+                })
+            }
+            $rootScope.oSearchCriterias.aContractors = $filter('orderBy')($rootScope.oSearchCriterias.aContractors, ["sName"]);
+            $rootScope.oSearchCriterias.aFilteredContractors = $filter('filter')($rootScope.oSearchCriterias.aContractors, {
+                sName: $rootScope.oSearchCriterias.sContractorFilter
+            });
+        };        
+
         var onStatusesLoaded = function(aData) {
             var sDescription = "";
             for (var i = 0; i < aData.length; i++) {
@@ -126,7 +160,16 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
             apiProvider.getDeficiencyStatuses({
                 onSuccess: onStatusesLoaded
             });
-        }        
+        }   
+
+
+        // if (!$rootScope.oSearchCriterias.aContractors.length) {
+        //     $rootScope.oSearchCriterias.aStatuses = [];
+        //     $rootScope.oSearchCriterias.bStatusWasSelected = false;
+        //     apiProvider.getDeficiencyStatuses({
+        //         onSuccess: onStatusesLoaded
+        //     });
+        // }               
 
 		$rootScope.aDeficiencies = [];
 
@@ -156,8 +199,6 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 			var sUnitsGuids = "";
 			var sStatusesGuids = "";
 			var sStatusGuid = "";	
-
-
 
 			if($rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length){
 				for (var i = 0; i < $rootScope.oSearchCriterias.oStatus.aSelectedItemsGuids.length; i++) {
@@ -362,12 +403,12 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 
 			var sFilterByAccountGuid = "";
 			var sFilterByPhaseGuid = "";
+			var sFilterByAccountsGuids = "";
 			// var sFilterByUnitGuids = "";
 			// var sUnitsGuids = "";
 
 			if($rootScope.oSearchCriterias.oPhase.sSelectedItemGuid){
 				sFilterByPhaseGuid = " and PhaseGuid eq '" + $rootScope.oSearchCriterias.oPhase.sSelectedItemGuid + "'";
-				//sFilterByPhaseGuid = " "
 			}
 
 			// if($rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length){
@@ -382,9 +423,22 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 				sFilterByAccountGuid = " and substringof('" + cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid + "', AccountGuids) eq true";
 			}
 
+			if($rootScope.oSearchCriterias.oContractor.aSelectedItemsGuids.length){
+				sFilterByAccountsGuids = " and ( "
+
+				for (var i = $rootScope.oSearchCriterias.oContractor.aSelectedItemsGuids.length - 1; i >= 0; i--) {
+					sFilterByAccountsGuids = sFilterByAccountsGuids + "substringof('" + $rootScope.oSearchCriterias.oContractor.aSelectedItemsGuids[i] + "', AccountGuids) eq true";
+					if(i !== 0){
+						sFilterByAccountsGuids = sFilterByAccountsGuids + " or ";
+					}else{
+						sFilterByAccountsGuids = sFilterByAccountsGuids + " )";
+					}
+				}
+			}
+
 			apiProvider.getDeficiencies({
 				sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails/ContactDetails/UserDetails",
-				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhaseGuid + sFilterByAccountGuid,
+				sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhaseGuid + sFilterByAccountGuid + sFilterByAccountsGuids,
 				bShowSpinner: true,
 				onSuccess: $rootScope.onDeficienciesLoaded,
 				bNoCaching: true,
@@ -432,11 +486,31 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 
             $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
 		};
+
 		$scope.onSelectStatusSearchCriteria = function() {
 			$rootScope.sCurrentSearhCriteria = "status";
 			$rootScope.sDeficienciesListView = "deficienciesListItemsLists";
 			// $rootScope.bIsListViewOpen = false;
 			// $rootScope.bIsDeficienciesListItemsListsOpen = true;
+		};
+
+
+		$scope.onSelectContractorSearchCriteria = function() {
+            if (!$rootScope.oSearchCriterias.oContractor.bIsSelectionUnabled) {
+                return;
+            }
+
+            $rootScope.sCurrentSearhCriteria = "contractor";
+            if (!$rootScope.oSearchCriterias.aContractors.length) {
+                apiProvider.getPhase({
+                    sExpand: "AccountDetails/AccountTypeDetails",
+                    sKey: $rootScope.oSearchCriterias["oPhase"].sSelectedItemGuid,
+                    onSuccess: onContractorsLoaded
+                });
+
+            }
+
+            $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
 		};
 
 		$scope.$on("$destroy", function() {
