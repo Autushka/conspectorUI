@@ -202,7 +202,7 @@
 									{{'deficiencyDetails_contractors' | translate}}
 								</label>
 							</div>
-								  <ui-select multiple ng-model="multipleDemo.selectedPeople" ng-disabled="disabled" style="width: 800px;">
+								  <ui-select multiple ng-model="multipleDemo.selectedPeople" ng-disabled="disabled">
 								    <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
 								    <ui-select-choices repeat="person in people">
 								      <div ng-bind-html="person.name | highlight: $select.search"></div>
@@ -211,7 +211,7 @@
 								        age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
 								      </small>
 								    </ui-select-choices>
-								  </ui-select>						
+								  </ui-select>							
 <!-- 							<div
 								multi-select
 								input-model="aContractors"
