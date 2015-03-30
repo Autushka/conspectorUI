@@ -32,6 +32,8 @@
   "angular-loading-bar": "0.7.x",
   "ngstorage": "0.3.x",
   "jstree": "3.0.x",
-  "ng-js-tree": "0.0.x"
+  "ng-js-tree": "0.0.x",
+  "angular-ui-select": "0.11.x",
+  "angular-sanitize": "1.3.x"
   }
 }

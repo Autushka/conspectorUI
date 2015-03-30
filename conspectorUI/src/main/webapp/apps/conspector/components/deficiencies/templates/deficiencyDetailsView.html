@@ -202,7 +202,17 @@
 									{{'deficiencyDetails_contractors' | translate}}
 								</label>
 							</div>
-							<div
+								  <ui-select multiple ng-model="multipleDemo.selectedPeople" ng-disabled="disabled" style="width: 800px;">
+								    <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
+								    <ui-select-choices repeat="person in people">
+								      <div ng-bind-html="person.name | highlight: $select.search"></div>
+								      <small>
+								        email: {{person.email}}
+								        age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
+								      </small>
+								    </ui-select-choices>
+								  </ui-select>						
+<!-- 							<div
 								multi-select
 								input-model="aContractors"
 								default-label="{{'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}"
@@ -215,10 +225,6 @@
 								on-close="onCloseCheckSelectedContractorsLength()"
 								helper-elements="filter"
 								>
-							</div>
-							<!-- <input ng-model="aSelectedContractors.length" type="number" ng-show="false" name="selectedContractors" min="1">
-							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedContractors.$error" ng-if="(oForms.deficiencyDetailsForm.selectedContractors.$dirty && !oForms.deficiencyDetailsForm.selectedContractors.$valid) || submitted">
-												<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 							</div> -->
 						</div>
 						<div style="margin-top: 12px; margin-bottom: 12px;">

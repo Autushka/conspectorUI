@@ -17,7 +17,9 @@
 		<link rel="stylesheet" href="bower_components/ngQuickDate/dist/ng-quick-date-default-theme.css">
 		<link rel='stylesheet' href='bower_components/textAngular/src/textAngular.css'>		
 		<link rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css'>
-		<link rel='stylesheet' href='bower_components/angular-loading-bar/build/loading-bar.min.css'>							
+		<link rel='stylesheet' href='bower_components/angular-loading-bar/build/loading-bar.min.css'>	
+
+		<link rel='stylesheet' href='bower_components/angular-ui-select/dist/select.css'>								
 		
 		<link rel="stylesheet" href="apps/conspector/css/style.css">
 		<link rel="stylesheet" type="text/css" href="apps/conspector/css/photoGallery.css" />
@@ -55,7 +57,10 @@
 		<script src="bower_components/ngstorage/ngStorage.min.js"></script>
 
 		<script src="bower_components/jstree/dist/jstree.min.js"></script>
-		<script src="bower_components/ng-js-tree/dist/ngJsTree.min.js"></script>			
+		<script src="bower_components/ng-js-tree/dist/ngJsTree.min.js"></script>
+		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>				
+		<script src="bower_components/angular-ui-select/dist/select.min.js"></script>	
+
 
 		
 		<script src="apps/conspector/js/thirdParty/ng-table.js"></script> <!-- standard control has been modified to support multiple tables on the view  TODO: dont forget to minify it-->
