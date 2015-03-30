@@ -3121,13 +3121,25 @@ tags-input .host {
 .ui-select-container{
 
 }
-.dropdown-menu{
-	background-color: white;
+.open > ul[class*="dropdown-menu"] {
+	  background-color: white;
+  /* border: 1px solid #a9a9a9; */
+  border: 1px solid #a9a9a9;
+  border-radius: 3px;
+  border-top: none;
+  border-bottom: none;
+  left: -1px;
+  /* box-shadow: 1px -1px 1px 0 #d3d3d3 inset; */
+  box-shadow: 0 3px 17px 3px rgba(0,0,0,0.2);
+  /* box-shadow: 1px 1px 1px 0 #d3d3d3 inset; */
+  margin-top: -1px;
+  /* padding-bottom: 7px !important; */
 }
 .ui-select-multiple{
   -webkit-appearance: textfield;
   padding: 1px;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
   word-wrap: break-word;
   cursor: text;
   background-color: #fff;
@@ -3179,9 +3191,16 @@ tags-input .host {
 	list-style-type: none;
 	margin: 0;
   	padding: 0;
+  	position: absolute;
 }
 .ui-select-bootstrap .ui-select-choices-row.active>a{
 	  background-color: @blueColor;
+}
+.ui-select-choices-row{
+	position: relative;
+}
+.ui-select-choices-group{
+	position: relative;
 }
 
 // .btn-default.disabled, .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active{
