@@ -51,6 +51,9 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 		$scope.oDeficiency = {};
 
+		$scope.aContractors = [];
+		$scope.aSelectedContractors = [];
+
 		var oDeficiencyWrapper = {
 			aData: [{
 				_contractorsGuids: []
@@ -194,10 +197,16 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			$rootScope.iImagesNumber = iImagesNumber;
 			$rootScope.iCommentsNumber = iCommentsNumber;
 
-			$scope.oDeficiency._contractorsGuids = [];
+			//$scope.oDeficiency._contractorsGuids = [];
+			$scope.aSelectedContractors = [];
 			if (oDeficiency.AccountDetails) {
 				for (var i = 0; i < oDeficiency.AccountDetails.results.length; i++) {
-					$scope.oDeficiency._contractorsGuids.push(oDeficiency.AccountDetails.results[i].Guid);
+					$scope.aSelectedContractors.push({
+						sName: oDeficiency.AccountDetails.results[i].Name,
+						sCleanedName: utilsProvider.replaceSpecialChars(oDeficiency.AccountDetails.results[i].Name),
+						sGuid: oDeficiency.AccountDetails.results[i].Guid
+					});
+					//$scope.oDeficiency._contractorsGuids.push(oDeficiency.AccountDetails.results[i].Guid);
 				}
 			}
 
@@ -326,24 +335,32 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		};
 
 		var onContractorsLoaded = function(aData) {
-			//Sort aData by accountType sorting sequence and then by AccountName
 			aData = $filter('orderBy')(aData, ["Name"]);
 
-			servicesProvider.constructDependentMultiSelectArray({
-				oDependentArrayWrapper: {
-					aData: aData
-				},
-				oParentArrayWrapper: oDeficiencyWrapper,
-				sNameEN: "Name",
-				sNameFR: "Name",
-				sDependentKey: "Guid",
-				sParentKeys: "_contractorsGuids",
-				sTargetArrayNameInParent: "aContractors"
-			});
-
-			if (oDeficiencyWrapper.aData[0]) {
-				$scope.aContractors = angular.copy(oDeficiencyWrapper.aData[0].aContractors);
+			$scope.aContractors = [];
+			for (var i = 0; i < aData.length; i++) {
+				$scope.aContractors.push({
+					sName: aData[i].Name,
+					sCleanedName: utilsProvider.replaceSpecialChars(aData[i].Name),
+					sGuid: aData[i].Guid					
+				});
 			}
+
+			// servicesProvider.constructDependentMultiSelectArray({
+			// 	oDependentArrayWrapper: {
+			// 		aData: aData
+			// 	},
+			// 	oParentArrayWrapper: oDeficiencyWrapper,
+			// 	sNameEN: "Name",
+			// 	sNameFR: "Name",
+			// 	sDependentKey: "Guid",
+			// 	sParentKeys: "_contractorsGuids",
+			// 	sTargetArrayNameInParent: "aContractors"
+			// });
+
+			// if (oDeficiencyWrapper.aData[0]) {
+			// 	$scope.aContractors = angular.copy(oDeficiencyWrapper.aData[0].aContractors);
+			// }
 		};
 
 		var onUsersWithCompaniesLoaded = function(aData) {
@@ -822,34 +839,28 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 
 
+		// $scope.people = [
+		//    { name: 'Adam',      email: 'adam@email.com',      age: 12, country: 'United States' },
+		//    { name: 'Amalie',    email: 'amalie@email.com',    age: 12, country: 'Argentina' },
+		//    { name: 'Estefanía', email: 'estefania@email.com', age: 21, country: 'Argentina' },
+		//    { name: 'Adrian',    email: 'adrian@email.com',    age: 21, country: 'Ecuador' },
+		//    { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30, country: 'Ecuador' },
+		//    { name: 'Samantha',  email: 'samantha@email.com',  age: 30, country: 'United States' },
+		//    { name: 'Nicole',    email: 'nicole@email.com',    age: 43, country: 'Colombia' },
+		//    { name: 'Natasha',   email: 'natasha@email.com',   age: 54, country: 'Ecuador' },
+		//    { name: 'Michael',   email: 'michael@email.com',   age: 15, country: 'Colombia' },
+		//    { name: 'Nicolás',   email: 'nicolas@email.com',    age: 43, country: 'Colombia' }
+		//  ];
+
+		//  $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
+
+		//  $scope.multipleDemo = {};
+		//  $scope.multipleDemo.colors = ['Blue','Red'];
+		//  $scope.multipleDemo.selectedPeople = [$scope.people[5], $scope.people[4]];
+		//  $scope.multipleDemo.selectedPeopleWithGroupBy = [$scope.people[8], $scope.people[6]];
+		//  $scope.multipleDemo.selectedPeopleSimple = ['samantha@email.com','wladimir@email.com'];
 
 
 
-		 $scope.people = [
-		    { name: 'Adam',      email: 'adam@email.com',      age: 12, country: 'United States' },
-		    { name: 'Amalie',    email: 'amalie@email.com',    age: 12, country: 'Argentina' },
-		    { name: 'Estefanía', email: 'estefania@email.com', age: 21, country: 'Argentina' },
-		    { name: 'Adrian',    email: 'adrian@email.com',    age: 21, country: 'Ecuador' },
-		    { name: 'Wladimir',  email: 'wladimir@email.com',  age: 30, country: 'Ecuador' },
-		    { name: 'Samantha',  email: 'samantha@email.com',  age: 30, country: 'United States' },
-		    { name: 'Nicole',    email: 'nicole@email.com',    age: 43, country: 'Colombia' },
-		    { name: 'Natasha',   email: 'natasha@email.com',   age: 54, country: 'Ecuador' },
-		    { name: 'Michael',   email: 'michael@email.com',   age: 15, country: 'Colombia' },
-		    { name: 'Nicolás',   email: 'nicolas@email.com',    age: 43, country: 'Colombia' }
-		  ];
-
-		  $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
-
-		  $scope.multipleDemo = {};
-		  $scope.multipleDemo.colors = ['Blue','Red'];
-		  $scope.multipleDemo.selectedPeople = [$scope.people[5], $scope.people[4]];
-		  $scope.multipleDemo.selectedPeopleWithGroupBy = [$scope.people[8], $scope.people[6]];
-		  $scope.multipleDemo.selectedPeopleSimple = ['samantha@email.com','wladimir@email.com'];
-
-
-
-
-
-		
 	}
 ]);

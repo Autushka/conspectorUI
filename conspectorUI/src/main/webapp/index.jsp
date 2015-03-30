@@ -59,7 +59,7 @@
 		<script src="bower_components/jstree/dist/jstree.min.js"></script>
 		<script src="bower_components/ng-js-tree/dist/ngJsTree.min.js"></script>
 		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>				
-		<script src="bower_components/angular-ui-select/dist/select.min.js"></script>	
+		<script src="bower_components/angular-ui-select/dist/select.js"></script>	
 
 
 		

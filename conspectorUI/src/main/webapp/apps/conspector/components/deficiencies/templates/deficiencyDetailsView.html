@@ -202,14 +202,10 @@
 									{{'deficiencyDetails_contractors' | translate}}
 								</label>
 							</div>
-								  <ui-select multiple ng-model="multipleDemo.selectedPeople" ng-disabled="disabled">
-								    <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
-								    <ui-select-choices repeat="person in people">
-								      <div ng-bind-html="person.name | highlight: $select.search"></div>
-								      <small>
-								        email: {{person.email}}
-								        age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>
-								      </small>
+								  <ui-select multiple ng-model="aSelectedContractors">
+								    <ui-select-match placeholder="Select contractor...">{{$item.sName}}</ui-select-match>
+								    <ui-select-choices refresh repeat="contractor in aContractors | orFilter: {sName: $select.search, sCleanedName: $select.search} track by contractor.sName">
+								      <div ng-bind-html="contractor.sName | highlight: $select.search"></div>
 								    </ui-select-choices>
 								  </ui-select>							
 <!-- 							<div
