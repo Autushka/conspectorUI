@@ -14,6 +14,7 @@ VARIABLE AND SETTINGS
 @greyBorderColor: rgba(228, 228, 228, 1);
 @greyBorderColorHeader: #c3c9c3;
 @greyButtonColor: rgba(230, 230, 230, 1);
+@labelTextColor: #8F8F90;
 
 //Fonts
 @clickableTextColor: #0088B8;
@@ -785,7 +786,7 @@ USER MANAGEMENT
 			margin-right: 0px;
 			background-position: 0 50%;
 			padding-left: 28px;
-			background-size: 26px;
+			background-size: 24px;
 			font-size: 15px;
 		}
 		// &.cnpImagesIconInDefList{
@@ -969,7 +970,8 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tab{
 md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
 	color: @lightGreyBackgroundColor;
 	background-color: #BFBFBF;
-	height: 7px;
+	height: 9px;
+	top: 0;
 }
 // md-tabs:not(md-tabs-ink-bar){
 // 	// color: @lightGreyBackgroundColor;
@@ -1639,6 +1641,13 @@ ADMIN PANEL
 	white-space: normal;
 	text-align: left;
 	line-height: 130%;
+}
+.cnpMobileContractorLabel{
+	text-align: left;
+	width: 100%;
+	padding-bottom: 8px;
+	color: @labelTextColor;
+	font-size: 15px;
 }
 .cnpMobileTagsInList{
 	background-color: @tagColor;
@@ -2830,7 +2839,7 @@ DETAILS VIEW
 .cnpSubSectionLabel{
 	font-size: 15px;
 	font-weight: 500;
-	color: #8F8F90;
+	color: @labelTextColor;
 	margin-bottom: 4px;
 
 	&.cnpSubSectionLabelMarginBottomAndBigger{

@@ -3,6 +3,7 @@ viewControllers.controller('deficienciesListHybridView', ['$scope', '$location',
         historyProvider.removeHistory();
 
         $scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+        $scope.bShowContractorInList = true;
 
         servicesProvider.constructLogoUrl();
         servicesProvider.constructMenuIconUrl();

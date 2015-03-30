@@ -18,30 +18,20 @@
 	</div>
 	<button ng-repeat="deficiency in $root.aDeficiencies"class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectDeficiency(deficiency)">
 	<div layout="column" layout-align="center start">
-		<div class="cnpMobileListItem" layout="row" layout-align="start center" ng-cloak style="height: 43px;">
-			<div style="font-size: 20px;">{{deficiency.sUnit}}</div>
+		<div class="cnpMobileListItem" layout="row" layout-align="space-between center" ng-cloak style="height: 38px; width: 100%;">
 			<div layout="row" layout-align="start center">
-				<img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon cnpMobileStatusIconMoreMargin">
+				<div layout="row" layout-align="start center">
+					<img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon">
+				</div>
+				<div style="font-size: 18px;">{{deficiency.sUnit}}
+				</div>
 			</div>
-			<div>
+			<!-- 				<div>
 				<label class="cnpMobileItemValue cnpMobileItemValueStatus" ng-cloak>
 					{{deficiency.sStatusDescription}}
 				</label>
-			</div>
-		</div>
-		<div layout="row" layout-align="space-between start" style="width: 100%;">
-			<div layout="column" layout-align="start start" flex>
-				<div class="cnpMobileListItem cnpMobileTagsInList" ng-cloak ng-if="deficiency.sTags != ''"style="margin-bottom: 8px;">
-					{{deficiency.sTags}}
-				</div>
-				<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="deficiency.sLocationTags != ''" ng-cloak>
-					{{deficiency.sLocationTags}}
-				</div>
-				<div class="cnpMobileListItem" ng-if="deficiency.sContractors != '' && sCurrentRole != 'contractor'" ng-cloak>
-					{{deficiency.sContractors}}
-				</div>				
-			</div>
-			<div layout="column" layout-align="start center">
+			</div> -->
+			<div layout="row" layout-align="start center">
 				<div layout="row" layout-align="center center" ng-show="deficiency.iImagesNumber || deficiency.iImagesNumber == 0"
 					ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList notSelectable': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList cnpImagesIconWithOpacity notSelectable': deficiency.iImagesNumber==0 }" >
 					
@@ -56,6 +46,20 @@
 						({{deficiency.iCommentsNumber}})
 					</a>
 				</div>
+			</div>
+		</div>
+		<div layout="row" layout-align="space-between start" style="width: 100%;">
+			<div layout="column" layout-align="start start" flex>
+				<div class="cnpMobileListItem cnpMobileContractorLabel" ng-if="deficiency.sContractors != '' && sCurrentRole != 'contractor'" ng-cloak>
+					{{deficiency.sContractors}}
+				</div>
+				<div class="cnpMobileListItem cnpMobileTagsInList" ng-cloak ng-if="deficiency.sTags != ''"style="margin-bottom: 8px;">
+					{{deficiency.sTags}}
+				</div>
+				<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="deficiency.sLocationTags != ''" ng-cloak>
+					{{deficiency.sLocationTags}}
+				</div>
+				
 			</div>
 		</div>
 		
