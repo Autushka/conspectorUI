@@ -3118,6 +3118,12 @@ tags-input .host {
 	margin-left: 0;
 }
 //multi select tags
+.ui-select-container{
+
+}
+.dropdown-menu{
+	background-color: white;
+}
 .ui-select-multiple{
   -webkit-appearance: textfield;
   padding: 1px;
@@ -3135,11 +3141,14 @@ tags-input .host {
   padding-top: 2px !important;
 }
 .ui-select-multiple.ui-select-bootstrap input.ui-select-search{
-	width: auto !important;
+	width: 50% !important;
+	background-color: white !important;
+	border-bottom: 1px dotted rgb(143, 143, 144);
+	padding-left: 4px;
 }
 .ui-select-match{
 	padding: 0px;
-	display: block;
+	// display: block;
 }
 
 .ui-select-match-item{
@@ -3155,17 +3164,24 @@ tags-input .host {
 	margin-bottom: 2px !important;
 	display: inline-block;
 	border: 1px solid #d9d9d9;
-
 }
 .ui-select-multiple.ui-select-bootstrap .ui-select-match .close{
 	font-size: 1.6em;
-  line-height: 0.75;
-  position: absolute;
-  right: 5px;
-  top: 19%;
-  cursor: pointer;
-  vertical-align: top;
-  display: block;
+	line-height: 0.75;
+	position: absolute;
+	right: 5px;
+	top: 19%;
+	cursor: pointer;
+	vertical-align: top;
+	display: block;
+}
+.ui-select-bootstrap > .ui-select-choices{
+	list-style-type: none;
+	margin: 0;
+  	padding: 0;
+}
+.ui-select-bootstrap .ui-select-choices-row.active>a{
+	  background-color: @blueColor;
 }
 
 // .btn-default.disabled, .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active{
