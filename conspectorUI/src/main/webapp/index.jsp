@@ -19,7 +19,7 @@
 		<link rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css'>
 		<link rel='stylesheet' href='bower_components/angular-loading-bar/build/loading-bar.min.css'>	
 
-		<link rel='stylesheet' href='bower_components/angular-ui-select/dist/select.css'>								
+		<link rel='stylesheet' href='bower_components/angular-ui-select/dist/select.min.css'>								
 		
 		<link rel="stylesheet" href="apps/conspector/css/style.css">
 		<link rel="stylesheet" type="text/css" href="apps/conspector/css/photoGallery.css" />
@@ -59,7 +59,7 @@
 		<script src="bower_components/jstree/dist/jstree.min.js"></script>
 		<script src="bower_components/ng-js-tree/dist/ngJsTree.min.js"></script>
 		<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>				
-		<script src="bower_components/angular-ui-select/dist/select.js"></script>	
+		<script src="bower_components/angular-ui-select/dist/select.min.js"></script>	
 
 
 		

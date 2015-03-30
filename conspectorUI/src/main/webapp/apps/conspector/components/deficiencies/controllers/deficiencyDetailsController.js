@@ -51,8 +51,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 		$scope.oDeficiency = {};
 
-		$scope.aContractors = [];
-		$scope.aSelectedContractors = [];
+
+		$scope.oContractors = {};
+		$scope.oContractors.aContractors = [];
+		$scope.oContractors.aSelectedContractors = [];
 
 		var oDeficiencyWrapper = {
 			aData: [{
@@ -198,10 +200,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			$rootScope.iCommentsNumber = iCommentsNumber;
 
 			//$scope.oDeficiency._contractorsGuids = [];
-			$scope.aSelectedContractors = [];
+			$scope.oContractors.aSelectedContractors = [];
 			if (oDeficiency.AccountDetails) {
 				for (var i = 0; i < oDeficiency.AccountDetails.results.length; i++) {
-					$scope.aSelectedContractors.push({
+					$scope.oContractors.aSelectedContractors.push({
 						sName: oDeficiency.AccountDetails.results[i].Name,
 						sCleanedName: utilsProvider.replaceSpecialChars(oDeficiency.AccountDetails.results[i].Name),
 						sGuid: oDeficiency.AccountDetails.results[i].Guid
@@ -337,30 +339,14 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		var onContractorsLoaded = function(aData) {
 			aData = $filter('orderBy')(aData, ["Name"]);
 
-			$scope.aContractors = [];
+			$scope.oContractors.aContractors = [];
 			for (var i = 0; i < aData.length; i++) {
-				$scope.aContractors.push({
+				$scope.oContractors.aContractors.push({
 					sName: aData[i].Name,
 					sCleanedName: utilsProvider.replaceSpecialChars(aData[i].Name),
 					sGuid: aData[i].Guid					
 				});
 			}
-
-			// servicesProvider.constructDependentMultiSelectArray({
-			// 	oDependentArrayWrapper: {
-			// 		aData: aData
-			// 	},
-			// 	oParentArrayWrapper: oDeficiencyWrapper,
-			// 	sNameEN: "Name",
-			// 	sNameFR: "Name",
-			// 	sDependentKey: "Guid",
-			// 	sParentKeys: "_contractorsGuids",
-			// 	sTargetArrayNameInParent: "aContractors"
-			// });
-
-			// if (oDeficiencyWrapper.aData[0]) {
-			// 	$scope.aContractors = angular.copy(oDeficiencyWrapper.aData[0].aContractors);
-			// }
 		};
 
 		var onUsersWithCompaniesLoaded = function(aData) {
@@ -545,12 +531,12 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			var aUri = [];
 			var sUri = "";
 
-			if ($scope.aSelectedContractors && $scope.aSelectedContractors.length) {
-				for (var i = 0; i < $scope.aSelectedContractors.length; i++) {
-					sUri = "Accounts('" + $scope.aSelectedContractors[i].Guid + "')";
+			if ($scope.oContractors.aSelectedContractors && $scope.oContractors.aSelectedContractors.length) {
+				for (var i = 0; i < $scope.oContractors.aSelectedContractors.length; i++) {
+					sUri = "Accounts('" + $scope.oContractors.aSelectedContractors[i].sGuid + "')";
 					aUri.push(sUri);
-					$scope.sAccountValues = $scope.sAccountValues + $scope.aSelectedContractors[i].name + "; ";
-					$scope.sAccountGuids = $scope.sAccountGuids + $scope.aSelectedContractors[i].Guid + "; ";
+					$scope.sAccountValues = $scope.sAccountValues + $scope.oContractors.aSelectedContractors[i].sName + "; ";
+					$scope.sAccountGuids = $scope.sAccountGuids + $scope.oContractors.aSelectedContractors[i].sGuid + "; ";
 				}
 			}
 
@@ -837,7 +823,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			}
 		});
 
-
+//$scope.people = [];
 
 		// $scope.people = [
 		//    { name: 'Adam',      email: 'adam@email.com',      age: 12, country: 'United States' },
@@ -852,13 +838,13 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		//    { name: 'Nicolás',   email: 'nicolas@email.com',    age: 43, country: 'Colombia' }
 		//  ];
 
-		//  $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
+		// $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
 
-		//  $scope.multipleDemo = {};
-		//  $scope.multipleDemo.colors = ['Blue','Red'];
-		//  $scope.multipleDemo.selectedPeople = [$scope.people[5], $scope.people[4]];
-		//  $scope.multipleDemo.selectedPeopleWithGroupBy = [$scope.people[8], $scope.people[6]];
-		//  $scope.multipleDemo.selectedPeopleSimple = ['samantha@email.com','wladimir@email.com'];
+		// $scope.multipleDemo = {};
+		 //$scope.multipleDemo.colors = ['Blue','Red'];
+		// $scope.multipleDemo.selectedPeople = [];//[$scope.people[5], $scope.people[4]];
+		// $scope.multipleDemo.selectedPeopleWithGroupBy = [$scope.people[8], $scope.people[6]];
+		// $scope.multipleDemo.selectedPeopleSimple = ['samantha@email.com','wladimir@email.com'];
 
 
 

@@ -44,28 +44,27 @@ angular.module('filtersProvider', [])
  * performs a AND between 'name: $select.search' and 'age: $select.search'.
  * We want to perform a OR.
  */
-    .filter('orFilter', function() {  
+    .filter('searchInMultiSelect', function() {  
         return function(items, props) {
             var out = [];
-            if (angular.isArray(items)) {
-                items.forEach(function(item) {
-                    var itemMatches = false;
-                    var keys = Object.keys(props);
-                    for (var i = 0; i < keys.length; i++) {
-                        var prop = keys[i];
-                        var text = props[prop].toLowerCase();
-                        if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-                            itemMatches = true;
-                            break;
-                        }
+
+            var bAlreadySelected = false;
+            for (var i = 0; i < items.length; i++) {
+                bAlreadySelected = false;
+
+                if(items[i].sName.toString().toLowerCase().indexOf(props.sName.toString().toLowerCase()) !== -1 || items[i].sCleanedName.toString().toLowerCase().indexOf(props.sName.toString().toLowerCase()) !== -1){
+                    for (var j = 0; j < props.aSelectedItems.length; j++) {
+                        if(items[i].sGuid === props.aSelectedItems[j].sGuid){
+                            bAlreadySelected = true;
+                        }                        
                     }
-                    if (itemMatches) {
-                        out.push(item);
-                    }
-                });
-            } else {
-                // Let the output be the input untouched
-                out = items;
+                }else{
+                    continue;
+                }
+
+                if(!bAlreadySelected){
+                    out.push(items[i]);
+                }
             }
             return out;
         };
