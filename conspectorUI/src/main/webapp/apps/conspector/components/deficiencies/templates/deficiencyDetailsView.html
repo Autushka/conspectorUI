@@ -235,7 +235,7 @@
 									{{'deficiencyDetails_contractors' | translate}}
 								</label>
 							</div>
-							<ui-select multiple ng-model="oContractors.aSelectedContractors" ng-disabled="bUiSelectDisabled" on-remove="onDataModified()" on-select="onDataModified()">
+							<ui-select multiple ng-model="oContractors.aSelectedContractors" ng-disabled="bUiSelectDisabled || sCurrentRole == 'contractor'" on-remove="onDataModified()" on-select="onDataModified()">
 							<ui-select-match placeholder="{{'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}">{{$item.sName}}</ui-select-match>
 							<ui-select-choices repeat="contractor in oContractors.aContractors | searchInMultiSelect: {sName: $select.search, aSelectedItems: oContractors.aSelectedContractors}">
 							<div ng-bind-html="contractor.sName | highlight: $select.search"></div>
