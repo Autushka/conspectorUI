@@ -417,11 +417,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
             controller: 'changePasswordView'
         });
         
-        $stateProvider.state('app.notificationsList', {
-            url: '/notificationsList',
-            templateUrl: 'apps/conspector/components/notifications/templates/notificationsListView.html',
-            controller: 'notificationsListView'
-        });        
+        // $stateProvider.state('app.notificationsList', {
+        //     url: '/notificationsList',
+        //     templateUrl: 'apps/conspector/components/notifications/templates/notificationsListView.html',
+        //     controller: 'notificationsListView'
+        // });        
 
         //Hybrid App
        $stateProvider.state('mainMenuHybrid', {

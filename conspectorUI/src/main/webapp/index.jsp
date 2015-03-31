@@ -79,7 +79,7 @@
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 		
-
+		
 		<script src="apps/conspector/components/generalLayout/controllers/mainMenuHybridController.js"></script>			
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListHybridWrapperController.js"></script>			
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListHybridController.js"></script>	
@@ -89,7 +89,7 @@
 
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddWrapperController.js"></script>	
 		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddController.js"></script>	
-		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddItemsListsController.js"></script>	
+		<script src="apps/conspector/components/deficiencies/controllers/deficiencyQuickAddItemsListsController.js"></script>
 			
 		<!--Minification starts here-->
 		
@@ -163,17 +163,18 @@
 		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	
 
 		<script src="apps/conspector/components/notifications/controllers/notificationsListController.js"></script> 
-	
+		
   		<!--
 		<%@page import="java.util.*" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file
 			int n = rand.nextInt(1000);
 		%>		
- 		<script src="dist/conspector.min.js?number=<%=n%>"></script> 	-->	
+ 		<script src="dist/conspector.min.js?number=<%=n%>"></script> 
+ 		-->	
 
 	</head>
-	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%;" ng-click="$root.hideGallery()">
+	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%; overflow: hidden;" ng-click="$root.hideGallery()">
 		<!-- <div ng-show="$root.showSpinner" layout="row" layout-align="center center" style="position: absolute; z-index: 2; height: 100%; width: 100%;">
 			<md-progress-circular md-mode="indeterminate"> </md-progress-circular>
 		</div> -->

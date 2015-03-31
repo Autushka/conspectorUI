@@ -898,15 +898,15 @@ APP VIEW
 */
 .cnpAppView{
 	width: 100%;
-	min-width: 585px;
+	// min-width: 585px;
 	height: 100vh;
-	overflow-y: scroll;
+	// overflow-y: scroll;
 	overflow-x: hidden;
 	background-color: @lightGreyBackgroundColor;
 }
 .cnpHeader{
 	width: 100%;	
-	max-width: 1280px;
+	// max-width: 1280px;
 	min-height: 65px;
 	max-height: 65px;
 	padding-left: 20px;
@@ -939,20 +939,19 @@ APP VIEW
 }
 .cnpNavBar{
 	width: 100%;
-	max-width: 1280px;
+	// max-width: 1280px;
 	padding-left: 20px;
 	padding-right: 20px;
 	min-height: 48px;
 	max-height: 48px;
-	
-}
-.cnpNavBarBackground{
-	width: 100%;
-	min-width: 585px;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+  z-index: 10;
+  	width: 100%;
+	// min-width: 585px;
 	background-color: @darkerGreyBackgroundColor;
-	min-height: 48px;
 	
 }
+
 .cnpCompanyLogo{
 	height: 50px;
 	width: auto;
@@ -987,8 +986,8 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tab{
 md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
 	color: @lightGreyBackgroundColor;
 	background-color: #BFBFBF;
-	height: 8px;
-	// top: 0;
+	height: 10px;
+	top: 0;
 }
 // md-tabs:not(md-tabs-ink-bar){
 // 	// color: @lightGreyBackgroundColor;
@@ -1450,7 +1449,7 @@ APP VIEW CONTENT
 
 .cnpAppViewContent{
 	width: 100%;
-	min-height: ~"calc(100vh - 168px)";
+	height: ~"calc(100vh - 115px)";
 	max-width: 1280px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -1506,6 +1505,10 @@ ADMIN PANEL
     &.cnpContentDeficienciesList{
     	// only need if an md content is used 
     	// min-height: 500px;
+    }
+    &.cnpContentNotificationsList{
+    	padding: 0;
+    	background-color: white !important;
     }
 }
 .cnpContentHeader{
@@ -1694,6 +1697,9 @@ ADMIN PANEL
 	color: @greyTitleTextColor;
 	// text-transform: uppercase;
 	text-align: right;
+	&.cnpContentTitleSideNav{
+		margin: 12px;
+	}
 }
 .cnpSidePanelWrapper{
 	padding-bottom: 16px;
@@ -1749,10 +1755,10 @@ ADMIN PANEL
 	background-color: @mediumGreyBackgroundColor;
 }
 md-toolbar.md-default-theme{
-	height: 56px;
-	min-height: 56px;
-	background-color: @mediumGreyBackgroundColor;
-	min-height: 56px;
+	// height: 56px;
+	
+	background-color: white;
+	min-height: 66px;
 	border-width: 0px;
 	border-bottom-width: 1px;
 	border-color: @greyBorderColorHeader;
@@ -1762,17 +1768,34 @@ md-toolbar.md-default-theme{
 
 .md-sidenav-left{
 	margin-right: 20px;
-	&.cnpSidenavLeft{
+	&.cnpSideNav{
 	border-width: 1px;
 	border-color: @greyBorderColorHeader;
 	border-style: solid;
 	color: @textColor;
 	overflow-y: auto;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 17px 0px;
+	}
+}
+.md-sidenav-right{
+	margin-right: 20px;
+	&.cnpSideNav{
+	border-width: 1px;
+	border-color: @greyBorderColorHeader;
+	border-style: solid;
+	color: @textColor;
+	overflow-y: auto;
+	background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 17px 0px;
 	}
 }
 .cnpSidenavElements{
-	padding-top: 10px;
-	padding-bottom: 10px;
+	// padding-top: 10px;
+	// padding-bottom: 10px;
+	width: 100%;
+	height: ~"calc(100vh - 69px)";
+	background-color: white!important;
+
 }
 /*
 END OF ADMIN PANEL
@@ -2497,24 +2520,14 @@ NG TABLE
 }
 
 #notificationsList{
-	// width: 100%;
-	// height: auto;
-	// border-top: 0px;
-	// border-bottom: 0px;
-	// border-left: 0px;
-	// border-right: 0px;
-	// border-color: @greyBorderColorHeader;
-	// border-style: solid;
-	// color: @textColor;
-	// background-color: white;
-	// border-spacing: 0px;
-	// table-layout: fixed;
-	// border-collapse: collapse;
-	// margin-bottom: -8px;
-	// margin-top: 8px;
-	// box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.26);
-	// padding-top: 8px;
-	// padding-left: 8px;
+
+	border-top: 0px;
+	border-bottom: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	border-color: @greyBorderColorHeader;
+	border-style: solid;
+
 }
 
 #notificationsList td:nth-of-type(1) {
@@ -2551,17 +2564,20 @@ NG TABLE
 }
 
 .cnpNgTableNotification{
-padding-top: 16px;
-padding-bottom: 16px;
-padding-left: 16px;
-background: rgb(215, 220, 222);
-margin-left: -8px;
-margin-top: -8px;
-margin-right: -8px;
-margin-bottom: -8px;
- &.cnpNgTableNotificationRead{
- 	background: white;
- }
+	padding: 8px;
+	background: rgb(215, 220, 222);
+	margin-left: -8px;
+	margin-top: -8px;
+	margin-right: -8px;
+	margin-bottom: -8px;
+	&.cnpNgTableNotificationRead{
+		background: white;
+	}
+}
+.cnpNgTableNotificationText{
+	font-size: 14px;
+	margin-left: 8px;
+	line-height: 20px;
 }
 
 .cnpNotificationsCounter{
@@ -2687,11 +2703,13 @@ margin-bottom: -8px;
 	margin-bottom: 8px;
 }
 .cnpNgTableCommentAuthor{
-	font-size: 18px;
+	font-size: 14px;
+
 }
 .cnpNgTableCommentCreationDate{
 	font-size: 11px;
 	color: #8F8F90;
+	margin-top: 4px;
 }
 .cnpNgTableCommentAuthorMobile{
 	font-size: 14px;
