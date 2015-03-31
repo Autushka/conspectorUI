@@ -61,8 +61,8 @@
 						</td>
 					</tr>
 					<tr ng-hide="group.$hideRows" ng-repeat="deficiency in group.data">
-						<td data-title="'global_actions' | translate">
-							<div layout="row" layout-align="center center">
+						<td data-title="'global_actions' | translate" ng-class="deficiency.sPriorityDescriptionEN=='Severe' ? 'cnpPriorityItem': ''">
+							<div layout="row" layout-align="center center" >
 								<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(deficiency, $event)">
 								</div>
 								<div ng-if="bDisplayEditButtons" class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(deficiency)">

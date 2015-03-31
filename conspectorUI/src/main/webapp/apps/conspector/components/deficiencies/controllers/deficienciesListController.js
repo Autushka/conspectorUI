@@ -172,6 +172,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 sStatusIconGuid = "";
                 sStatusDescription = "";
                 sStatusDescriptionEN = "";
+                sPriorityDescriptionEN = "";
                 sContractors = "";
                 iImagesNumber = 0;
                 aImages = [];
@@ -215,6 +216,9 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                         sStatusDescription = aData[i].TaskStatusDetails.NameEN;
                     }
                     sStatusIconGuid = aData[i].TaskStatusDetails.AssociatedIconFileGuid;
+                }
+                if (aData[i].TaskPriorityDetails) {
+                    sPriorityDescriptionEN = aData[i].TaskPriorityDetails.NameEN;
                 }
 
                 if (aData[i].AccountDetails) {
@@ -268,6 +272,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                 if (aData[i].Description) {
                     sDescription = utilsProvider.removeTagsFromString(aData[i].Description);
                 }
+                
 
                 oDeficienciesListData.aData.push({
                     _guid: aData[i].Guid,
@@ -288,6 +293,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                     sStatusIconGuid: sStatusIconGuid,
                     sStatusDescription: sStatusDescription,
                     sStatusDescriptionEN: sStatusDescriptionEN,
+                    sPriorityDescriptionEN: sPriorityDescriptionEN,
                     sDescription: sDescription,
                     _unitGuid: aData[i].UnitGuid,
                     _sortingSequence: iSortingSequence,
@@ -355,7 +361,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
                         }
 
                         apiProvider.getDeficiencies({
-                            sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails",
+                            sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails, TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails",
                             sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByCompanyGuid + sFilter,
                             bShowSpinner: true,
                             onSuccess: onDeficienciesLoaded

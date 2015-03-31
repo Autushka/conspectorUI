@@ -147,8 +147,10 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			if (oDeficiency.TaskPriorityDetails) {
 				if (oDeficiency.TaskPriorityDetails.NameFR && $translate.use() === "fr") {
 					$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameFR;
+					$scope.oDeficiency._deficiencyPriorityEN = oDeficiency.TaskPriorityDetails.NameEN;
 				} else {
 					$scope.oDeficiency._deficiencyPriority = oDeficiency.TaskPriorityDetails.NameEN;
+					$scope.oDeficiency._deficiencyPriorityEN = oDeficiency.TaskPriorityDetails.NameEN;
 				}
 			}
 
