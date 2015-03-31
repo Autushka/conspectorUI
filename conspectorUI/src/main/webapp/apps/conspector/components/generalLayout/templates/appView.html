@@ -38,8 +38,12 @@
 			</div>
 		</div>
 		<div layout="row" layout-align="end center">
-			<div ng-click="toggleRightSidenav()" class="cnpLink cnpLinkHeader notSelectable" style="position: relative; margin-left: 11px;">
-				{{'notificationsList_title' | translate}}
+			<div ng-click="toggleRightSidenav()" class="cnpInputIcon cnpNotificationsIcon notSelectable" style="position: relative;
+				margin-left: 11px;
+				height: 35px;
+				width: 35px;
+				cursor: pointer;">
+				<!-- {{'notificationsList_title' | translate}} -->
 				<div ng-show="$root.iNotificationsNumber > 0" layout="row" layout-align="center center" class="cnpNotificationsCounter">{{$root.iNotificationsNumber}}
 					
 				</div>
@@ -76,6 +80,8 @@
 	
 	<md-content ui-view class="cnpAppViewContent">
 	</md-content>
+	<!-- 		<md-content class="cnpAppViewContent">
+	</md-content> -->
 </div>
 <md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight">
 <md-toolbar class="md-default-theme" layout="column" layout-align="center center">

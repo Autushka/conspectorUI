@@ -388,11 +388,12 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             // cacheProvider.putListViewScrollPosition("notificationsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
             switch (oNotification.sEntityName) {
                 case "deficiency":
-                	$scope.toggleRightSidenav();
+                	$timeout($scope.toggleRightSidenav, 100);
                     $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
                         sMode: "display",
                         sDeficiencyGuid: oNotification._entityGuid,
                     });
+
                     break;
             }
 

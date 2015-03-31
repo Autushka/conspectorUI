@@ -1917,7 +1917,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 				for (var i = 0; i < oParameters.aData.length; i++) {
 					oData = {
-						requestUri: "Tasks('" + oParameters.aData[i].Guid + "')?$expand=AccountDetails/ContactDetails/UserDetails",
+						requestUri: "Tasks('" + oParameters.aData[i].Guid + "')?$expand=AccountDetails/ContactDetails/UserDetails/PhaseDetails",
 						method: "GET",
 					};
 					oRequestData.__batchRequests.push(oData);
@@ -1951,8 +1951,12 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 										if (aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName === aData[e].data.GeneralAttributes.CreatedBy) {
 											bAuthorAdded = true;
 										}
-
+										for (var l = aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].PhaseDetails.results.length - 1; l >= 0; l--) {
+										if (aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].PhaseDetails.results[l].Guid === sPhaseGuid) {
 										aInterestedUsers.push(aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName);
+										break;
+										}
+										}
 									}
 								}
 							}
