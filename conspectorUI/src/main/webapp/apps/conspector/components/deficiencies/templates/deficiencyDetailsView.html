@@ -29,7 +29,7 @@
 					<a>
 						({{$root.iCommentsNumber}})
 					</a>
-				</div>				
+				</div>
 			</div>
 			<div layout="row" layout-align="end start">
 				<label class="cnpContentTitle notSelectable">
@@ -107,30 +107,63 @@
 					</div>
 				</div>
 				<div class="cnpSubSection" flex>
-					<div>
-						<div  class="cnpSubSectionLabel">
-							<label>
-								{{'deficiencyDetails_status' | translate}}
-							</label>
+					<div layout="column" layout-gt-md="row" flex>
+						<div flex="100" flex-gt-md="60" class="cnpDeficiencyPrNPhWrapper">
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_status' | translate}}
+								</label>
+							</div>
+							<div
+								multi-select
+								input-model="aDeficiencyStatuses"
+								default-label="{{'deficiencyDetails_deficiencyStatusDefaultLabel' | translate }}"
+								button-label="icon name"
+								item-label="icon name"
+								is-disabled="sMode == 'display'"
+								tick-property="ticked"
+								selection-mode="single"
+								on-item-click="onSelectedStatusesModified()"
+								output-model="aSelectedStatuses"
+								on-close="onCloseCheckSelectedStatusesLength()"
+								helper-elements=""
+								>
+							</div>
+							<input ng-model="aSelectedStatuses.length" type="number" ng-show="false" name="selectedStatuses" min="1">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedStatuses.$error" ng-if="(oForms.deficiencyDetailsForm.selectedStatuses.$dirty && !oForms.deficiencyDetailsForm.selectedStatuses.$valid) || submitted">
+								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+							</div>
 						</div>
-						<div
-							multi-select
-							input-model="aDeficiencyStatuses"
-							default-label="{{'deficiencyDetails_deficiencyStatusDefaultLabel' | translate }}"
-							button-label="icon name"
-							item-label="icon name"
-							is-disabled="sMode == 'display'"
-							tick-property="ticked"
-							selection-mode="single"
-							on-item-click="onSelectedStatusesModified()"
-							output-model="aSelectedStatuses"
-							on-close="onCloseCheckSelectedStatusesLength()"
-							helper-elements=""
-							>
-						</div>
-						<input ng-model="aSelectedStatuses.length" type="number" ng-show="false" name="selectedStatuses" min="1">
-						<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedStatuses.$error" ng-if="(oForms.deficiencyDetailsForm.selectedStatuses.$dirty && !oForms.deficiencyDetailsForm.selectedStatuses.$valid) || submitted">
-							<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+						<div flex="100" flex-gt-md="auto">
+							<div  class="cnpSubSectionLabel">
+								<label>
+									{{'deficiencyDetails_deficiencyPriority' | translate}}
+								</label>
+							</div>
+							<!-- <div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oDeficiency._deficiencyPriority}}</div> -->
+							<div ng-class="oDeficiency._deficiencyPriority=='Severe' ? 'cnpPriorityIndicator cnpPriorityIndicatorSevere' : 'cnpPriorityIndicator cnpPriorityIndicatorDefault'"  ng-click="onPriorityChange()">
+							</div>
+							<div ng-show="sMode != 'display'">
+								<div
+									multi-select
+									input-model="aTaskPriorities"
+									button-label="name"
+									default-label="{{'deficiencyDetails_deficiencyPriorityDefaultLabel' | translate }}"
+									item-label="name"
+									selection-mode="single"
+									tick-property="ticked"
+									group-property="multiSelectGroup"
+									is-disabled="sMode == 'display' || sCurrentRole == 'contractor'"
+									on-item-click="onDataModified()"
+									output-model="aSelectedTaskPriorities"
+									helper-elements=""
+									>
+								</div>
+							</div>
+							<input ng-model="aSelectedTaskPriorities.length" type="number" ng-show="false" name="selectedTaskPriorities" min="1">
+							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskPriorities.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskPriorities.$dirty && !oForms.deficiencyDetailsForm.selectedTaskPriorities.$valid) || submitted">
+								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -202,14 +235,13 @@
 									{{'deficiencyDetails_contractors' | translate}}
 								</label>
 							</div>
-								  <ui-select multiple ng-model="oContractors.aSelectedContractors" ng-disabled="disabled" on-remove="onDataModified()" on-select="onDataModified()">
-								    <ui-select-match placeholder="{{'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}">{{$item.sName}}</ui-select-match>
-								    <ui-select-choices repeat="contractor in oContractors.aContractors | searchInMultiSelect: {sName: $select.search, aSelectedItems: oContractors.aSelectedContractors}">
-								      <div ng-bind-html="contractor.sName | highlight: $select.search"></div>
-								    </ui-select-choices>
-								  </ui-select>	
-  				
-<!-- 							<div
+							<ui-select multiple ng-model="oContractors.aSelectedContractors" ng-disabled="bUiSelectDisabled" on-remove="onDataModified()" on-select="onDataModified()">
+							<ui-select-match placeholder="{{'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}">{{$item.sName}}</ui-select-match>
+							<ui-select-choices repeat="contractor in oContractors.aContractors | searchInMultiSelect: {sName: $select.search, aSelectedItems: oContractors.aSelectedContractors}">
+							<div ng-bind-html="contractor.sName | highlight: $select.search"></div>
+							</ui-select-choices>
+							</ui-select>
+							<!-- 							<div
 								multi-select
 								input-model="aContractors"
 								default-label="{{'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}"
@@ -253,35 +285,7 @@
 								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
 							</div>
 						</div>
-						<div ng-show="false">
-							<div  class="cnpSubSectionLabel">
-								<label>
-									{{'deficiencyDetails_deficiencyPriority' | translate}}
-								</label>
-							</div>
-							<div class="cnpSubSectionData" ng-if="sMode == 'display'">{{oDeficiency._deficiencyPriority}}</div>
-							<div ng-show="sMode != 'display'">
-								<div
-									multi-select
-									input-model="aTaskPriorities"
-									button-label="name"
-									default-label="{{'deficiencyDetails_deficiencyPriorityDefaultLabel' | translate }}"
-									item-label="name"
-									selection-mode="single"
-									tick-property="ticked"
-									group-property="multiSelectGroup"
-									is-disabled="sMode == 'display' || sCurrentRole == 'contractor'"
-									on-item-click="onDataModified()"
-									output-model="aSelectedTaskPriorities"
-									helper-elements=""
-									>
-								</div>
-							</div>
-							<input ng-model="aSelectedTaskPriorities.length" type="number" ng-show="false" name="selectedTaskPriorities" min="1">
-							<div class="cnpErrorMessageValidation" ng-messages="oForms.deficiencyDetailsForm.selectedTaskPriorities.$error" ng-if="(oForms.deficiencyDetailsForm.selectedTaskPriorities.$dirty && !oForms.deficiencyDetailsForm.selectedTaskPriorities.$valid) || submitted">
-								<div class="cnpErrorMessageValidationMessage" ng-message="min">{{'global_emptyFieldError' | translate}}</div>
-							</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>

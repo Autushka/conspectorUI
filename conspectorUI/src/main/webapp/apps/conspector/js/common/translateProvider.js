@@ -153,6 +153,8 @@ app.config(['$translateProvider',
                   global_addImages: 'Add images',
                   global_imagesAndComments: 'Images/Comments',
                   global_comments: 'Comments',
+                  global_showProspect: 'Display prospects',
+                  global_isProspect: 'Is a prospect',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
@@ -621,6 +623,8 @@ app.config(['$translateProvider',
                   global_addImages: 'Ajouter images',
                   global_imagesAndComments: 'Images/Commentaires',
                   global_comments: 'Commentaires',
+                  global_showProspect: 'Afficher clients potentiels',
+                  global_isProspect: 'Est un client potentiel',
 
 
                   //hybrid

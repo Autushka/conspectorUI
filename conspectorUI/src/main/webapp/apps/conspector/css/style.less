@@ -322,6 +322,23 @@ font-weight: 500;
 	color: white;
 	font-weight: 400;
 }
+.cnpPriorityIndicator{
+	height: 24px;
+	width: 24px;
+	border: 0 solid;
+	border-radius: 50%;
+	margin-top: 12px;
+	&.cnpPriorityIndicatorSevere{
+	background-color: red;
+	box-shadow: 0 0 6px 0 #FF0000;
+	}
+	&.cnpPriorityIndicatorDefault{
+	background-color: transparent;
+	border: 1px solid @blueColor;
+	}
+
+
+}
 //Animation
 .cnpWithAnimation {
 	-webkit-transition: all 0.15s ease-in-out;
@@ -970,8 +987,8 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tab{
 md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
 	color: @lightGreyBackgroundColor;
 	background-color: #BFBFBF;
-	height: 9px;
-	top: 0;
+	height: 8px;
+	// top: 0;
 }
 // md-tabs:not(md-tabs-ink-bar){
 // 	// color: @lightGreyBackgroundColor;
@@ -3091,6 +3108,14 @@ tags-input .host {
 	padding-right: 12px;
 	color: black;
 }
+button[class*="btn-default"]{
+	  background: rgb(248, 248, 248);
+  border: 1px solid rgb(196, 197, 198);
+  outline: 0;
+  height: 32px;
+  width: 36px;
+  border-radius: 3px;
+}
 
 .btn-group{
 	margin-bottom: 4px;
@@ -3122,41 +3147,50 @@ tags-input .host {
 
 }
 .open > ul[class*="dropdown-menu"] {
-	  background-color: white;
-  /* border: 1px solid #a9a9a9; */
-  border: 1px solid #a9a9a9;
-  border-radius: 3px;
-  border-top: none;
-  border-bottom: none;
-  left: -1px;
-  /* box-shadow: 1px -1px 1px 0 #d3d3d3 inset; */
-  box-shadow: 0 3px 17px 3px rgba(0,0,0,0.2);
-  /* box-shadow: 1px 1px 1px 0 #d3d3d3 inset; */
-  margin-top: -1px;
-  /* padding-bottom: 7px !important; */
+	background-color: white;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	border-width: 0;
+	/* border-top: none; */
+	/* border-bottom: none; */
+	overflow-y: hidden;
+	width: ~"calc(100% + 2px)";
+	left: -1px;
+	max-height: 300px;
+	/* right: -4px; */
+	box-shadow: 0 3px 17px 3px rgba(0,0,0,0.2);
+	margin-top: 3px;
 }
 .ui-select-multiple{
-  -webkit-appearance: textfield;
-  padding: 1px;
-  overflow: visible;
-  position: relative;
-  word-wrap: break-word;
-  cursor: text;
-  background-color: #fff;
-  border: 1px solid #a9a9a9;
-  box-shadow: 1px 1px 1px 0 #d3d3d3 inset;
-  height: 100% !important;
-  border-radius: 3px;
-  margin-top: 8px;
-  margin-bottom: 12px;
-  padding: 4px !important;
-  padding-top: 2px !important;
+	-webkit-appearance: textfield;
+	padding: 1px;
+	overflow: visible;
+	position: relative;
+	word-wrap: break-word;
+	cursor: text;
+	background-color: #fff;
+	border: 1px solid #a9a9a9;
+	box-shadow: 1px 1px 1px 0 #d3d3d3 inset;
+	height: 100% !important;
+	border-radius: 3px;
+	margin-top: 8px;
+	margin-bottom: 12px;
+	padding: 4px !important;
+	padding-top: 2px !important;
+	padding-bottom: 1px !important;
+}
+.ui-select-multiple[disabled*="disabled"]{
+	background-color: transparent;
+	border: none;
+	box-shadow: none;
+	padding-left: 0 !important;
 }
 .ui-select-multiple.ui-select-bootstrap input.ui-select-search{
 	width: 50% !important;
 	background-color: white !important;
 	border-bottom: 1px dotted rgb(143, 143, 144);
 	padding-left: 4px;
+	height: 33px;
 }
 .ui-select-match{
 	padding: 0px;
@@ -3164,7 +3198,7 @@ tags-input .host {
 }
 
 .ui-select-match-item{
-	background-color: #F5F5F5;
+	background-color: #C4C5C6;
 	/* min-height: 50px; */
 	padding: 8px;
 	padding-right: 24px;
@@ -3192,9 +3226,12 @@ tags-input .host {
 	margin: 0;
   	padding: 0;
   	position: absolute;
+  	z-index: 1000;
 }
 .ui-select-bootstrap .ui-select-choices-row.active>a{
 	  background-color: @blueColor;
+	  height: 40px;
+	padding-top: 8px;
 }
 .ui-select-choices-row{
 	position: relative;
@@ -3202,6 +3239,11 @@ tags-input .host {
 .ui-select-choices-group{
 	position: relative;
 }
+.ui-select-bootstrap .ui-select-choices-row>a{
+	height: 40px;
+	padding-top: 8px;
+}
+
 
 // .btn-default.disabled, .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active{
 // 	background-color: white;

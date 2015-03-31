@@ -13,6 +13,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		$scope.sTaskPriority = "";
 		$scope.sTaskPriorityGuid = "";
 		$scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+		
 
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation	
 		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation
@@ -47,6 +48,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 			$rootScope.sFileMetadataSetLastModifiedAt = "";
 			$rootScope.sCommentSetGuid = "";
 			$rootScope.sCommentSetLastModifiedAt = "";
+			$rootScope.bUiSelectDisabled = false;
 		}
 
 		$scope.oDeficiency = {};
@@ -338,7 +340,11 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 
 		var onContractorsLoaded = function(aData) {
 			aData = $filter('orderBy')(aData, ["Name"]);
-
+			if($rootScope.sMode === "create" || $rootScope.sMode === "edit"){
+				$rootScope.bUiSelectDisabled = false;
+			} else if($rootScope.sMode === "display"){
+				$rootScope.bUiSelectDisabled = true;
+			}
 			$scope.oContractors.aContractors = [];
 			for (var i = 0; i < aData.length; i++) {
 				$scope.oContractors.aContractors.push({
@@ -477,6 +483,7 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 		}
 
 		$scope.onEdit = function() {
+			$rootScope.bUiSelectDisabled = false;
 			$state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
 				sMode: "edit",
 				sDeficiencyGuid: $scope.oDeficiency._guid,
