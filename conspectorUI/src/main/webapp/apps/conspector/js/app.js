@@ -1,6 +1,8 @@
 var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'cfp.loadingBar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ui.bootstrap', 'ngStorage', 'ngJsTree', 'ngSanitize', 'ui.select']);
 var viewControllers = angular.module('viewControllers', []);
 
+var bMobileMode = true;
+
 app.config(['cfpLoadingBarProvider',
     function(cfpLoadingBarProvider) {
         cfpLoadingBarProvider.includeSpinner = false;
@@ -96,6 +98,51 @@ app.config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/signIn");
 
+        
+        if(bMobileMode) {
+        //STATES AND ROUTES FOR MOBILE MODE
+        $stateProvider.state('signIn', {
+            url: '/signIn',
+            templateUrl: 'apps/conspector/components/userManagement/templates/signInMobileView.html',
+            controller: 'signInView'
+        });
+        $stateProvider.state('forgotPassword', {
+            url: '/forgotPassword',
+            templateUrl: 'apps/conspector/components/userManagement/templates/forgotPasswordMobileView.html',
+            controller: 'forgotPasswordView'
+        })
+        $stateProvider.state('initialPasswordReset', {
+            url: '/initialPasswordReset',
+            templateUrl: 'apps/conspector/components/userManagement/templates/initialPasswordResetMobileView.html',
+            controller: 'initialPasswordResetView'
+        });
+        $stateProvider.state('companySelection', {
+            url: '/companySelection',
+            templateUrl: 'apps/conspector/components/userManagement/templates/companySelectionMobileView.html',
+            controller: 'companySelectionView'
+        });
+        $stateProvider.state('roleSelection', {
+            url: '/roleSelection',
+            templateUrl: 'apps/conspector/components/userManagement/templates/roleSelectionMobileView.html',
+            controller: 'roleSelectionView'
+        });
+        $stateProvider.state('resetPassword', {
+            url: '/resetPassword/:pr',
+            templateUrl: 'apps/conspector/components/userManagement/templates/passwordMobileResetView.html',
+            controller: 'passwordResetView'
+        });
+        $stateProvider.state('app', {
+            url: '/app',
+            templateUrl: 'apps/conspector/components/generalLayout/templates/appView.html',
+            controller: 'appView'
+        });
+        $stateProvider.state('app.deficienciesList', {
+            url: '/deficienciesList',
+            templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListMobileView.html',
+            controller: 'deficienciesListMobileView'
+        });
+    } else {
+         //STATES AND ROUTES FOR WEBAPP
         $stateProvider.state('signIn', {
             url: '/signIn',
             templateUrl: 'apps/conspector/components/userManagement/templates/signInView.html',
@@ -416,70 +463,8 @@ app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'apps/conspector/components/profileSettings/templates/changePasswordView.html',
             controller: 'changePasswordView'
         });
-        
-        // $stateProvider.state('app.notificationsList', {
-        //     url: '/notificationsList',
-        //     templateUrl: 'apps/conspector/components/notifications/templates/notificationsListView.html',
-        //     controller: 'notificationsListView'
-        // });        
 
-        //Hybrid App
-       $stateProvider.state('mainMenuHybrid', {
-            url: '/mainMenuHybrid',
-            templateUrl: 'apps/conspector/components/generalLayout/templates/mainMenuHybridView.html',
-            controller: 'mainMenuHybridView'
-        });     
-
-        // $stateProvider.state('deficienciesListHybrid', {
-        //     url: '/deficienciesListHybrid',
-        //     templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridView.html',
-        //     controller: 'deficienciesListHybridView'
-        // });         
-        $stateProvider.state('deficienciesListHybridWrapper', {//abstract view without controller that contains only ngView holders
-            templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridWrapperView.html',
-            controller: 'deficienciesListHybridWrapperView'
-        });
-
-        $stateProvider.state('deficienciesListHybridWrapper.deficienciesSearchHybrid', {//state that contains subviews
-            url: '/deficienciesListHybridWrapper',
-            views: {
-                'deficienciesSearchHybrid': {
-                    templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesSearchHybridView.html',
-                    controller: 'deficienciesSearchHybridView'
-                },
-                'deficienciesListHybrid': {
-                    templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListHybridView.html',
-                    controller: 'deficienciesListHybridView'
-                },
-                'deficienciesListItemsListsHybrid': {
-                    templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListItemsListsHybridView.html',
-                    controller: 'deficienciesListItemsListsHybridView'
-                },  
-                'deficiencyDetailsHybrid': {
-                    templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyDetailsHybridView.html',
-                    controller: 'deficiencyDetailsHybridView'
-                },                                 
-            }
-        });         
-
-
-        $stateProvider.state('deficiencyQuickAddWrapper', {//abstract view without controller that contains only ngView holders
-            templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddWrapperView.html',
-            controller: 'deficiencyQuickAddWrapperView'
-        });     
-
-        $stateProvider.state('deficiencyQuickAddWrapper.quickAdd', {//state that contains subviews
-            url: '/deficiencyQuickAddWrapper',
-            views: {
-                'deficiencyQuickAdd': {
-                    templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddView.html',
-                    controller: 'deficiencyQuickAddView'
-                },
-                'deficiencyQuickAddItemsLists': {
-                    templateUrl: 'apps/conspector/components/deficiencies/templates/deficiencyQuickAddItemsListsView.html',
-                    controller: 'deficiencyQuickAddItemsListsView'
-                },
-            }
-        }); 
+    }
+       
     }
 ]);
