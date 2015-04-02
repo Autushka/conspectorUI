@@ -598,12 +598,12 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				for (var i = 0; i < oParameters.aData.length; i++) {
 					oData = {
 						requestUri: "OperationLogs('" + oParameters.aData[i].Guid + "')",
-						method: "PUT",
-						data: {
-							GeneralAttributes: {
-								IsDeleted: true
-							}
-						}
+						method: "DELETE",
+						// data: {
+						// 	GeneralAttributes: {
+						// 		IsDeleted: true
+						// 	}
+						// }
 					};
 
 					aData.push(oData);
