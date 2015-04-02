@@ -443,7 +443,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				this.sendPushNotifications(oParameters);
 			},
 
-			sendPushNotifications: function(oParameters){
+			sendPushNotifications: function(oParameters) {
 				var oSrv = {};
 				var oRequestData = {
 					__batchRequests: []
@@ -474,7 +474,7 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 						for (var j = aData[i].data.UserDeviceDetails.results.length - 1; j >= 0; j--) {
 							if ($.inArray(aData[i].data.UserDeviceDetails.results[j].DeviceToken, aDevices) === -1) {
 								aDevices.push(aData[i].data.UserDeviceDetails.results[j].DeviceToken);
-							}else{
+							} else {
 								continue;
 							}
 							pubnub.mobile_gw_provision({
@@ -509,20 +509,59 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 			},
 
 			getOperationLogs: function(oParameters) {
-				var svc = dataProvider.getEntitySet({
-					sPath: "OperationLogs",
-					sExpand: oParameters.sExpand,
-					sFilter: oParameters.sFilter,
-					bShowSpinner: oParameters.bShowSpinner,
-					oCacheProvider: cacheProvider,
-					sCacheProviderAttribute: "oOperationLogEntity"
-				});
+				var sUrl = CONSTANTS.sServicePath + "OperationLogs";
 
-				if (svc instanceof Array) {
-					oParameters.onSuccess(svc); // data retrived from cache
-				} else {
-					svc.then(oParameters.onSuccess);
+				if(oParameters.bAddCountUrlParam){
+					sUrl = sUrl + '/$count/'
 				}
+
+				if(oParameters.sFilter){
+					sUrl = sUrl + "?$filter=" + oParameters.sFilter + "";
+				}
+				if(oParameters.sExpand){
+					if(oParameters.sFilter){
+						sUrl = sUrl + "&$expand=" + oParameters.sExpand + "";
+					}else{
+						sUrl = sUrl + "?$expand=" + oParameters.sExpand + "";
+					}
+					
+				}	
+				if(oParameters.sOtherUrlParams){
+					if(oParameters.sFilter || oParameters.sExpand){
+						sUrl = sUrl + "&" + oParameters.sOtherUrlParams;
+					}else{
+						sUrl = sUrl + "?" + oParameters.sOtherUrlParams;
+					}					
+				}							
+
+				OData.request({
+						requestUri: sUrl,
+						method: "GET",
+					}, 
+					$.proxy(function(data) {
+						if(data){
+							oParameters.onSuccess(data);
+						}						
+					}, this),
+					$.proxy(function(err) {}, this)
+				);
+
+
+
+				// var svc = dataProvider.getEntitySet({
+				// 	sPath: "OperationLogs",
+				// 	sExpand: oParameters.sExpand,
+				// 	sFilter: oParameters.sFilter,
+				// 	bShowSpinner: oParameters.bShowSpinner,
+				// 	oCacheProvider: cacheProvider,
+				// 	sCacheProviderAttribute: "oOperationLogEntity"
+				// });
+
+				// if (svc instanceof Array) {
+				// 	oParameters.onSuccess(svc); // data retrived from cache
+				// } else {
+				// 	svc.then(oParameters.onSuccess);
+				// }
 			},
 
 			updateOperationLog: function(oParameters) {
@@ -1952,10 +1991,10 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 											bAuthorAdded = true;
 										}
 										for (var l = aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].PhaseDetails.results.length - 1; l >= 0; l--) {
-										if (aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].PhaseDetails.results[l].Guid === sPhaseGuid) {
-										aInterestedUsers.push(aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName);
-										break;
-										}
+											if (aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].PhaseDetails.results[l].Guid === sPhaseGuid) {
+												aInterestedUsers.push(aData[e].data.AccountDetails.results[i].ContactDetails.results[j].UserDetails.results[k].UserName);
+												break;
+											}
 										}
 									}
 								}

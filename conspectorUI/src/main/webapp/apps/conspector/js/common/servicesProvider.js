@@ -896,12 +896,14 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 
 			initializeGetNotificationsFunction: function() {
 				$rootScope.getNotificationsNumber = function() {
-					var onNotificationsLoaded = function(aData) {
-						$rootScope.iNotificationsNumber = aData.length;
+					var onNotificationsLoaded = function(iData) {
+						$rootScope.iNotificationsNumber = iData;
 					};
 					apiProvider.getOperationLogs({
-						sExpand: "PhaseDetails/ProjectDetails",
+						//sExpand: "PhaseDetails/ProjectDetails",
 						sFilter: "CompanyName eq '" + cacheProvider.oUserProfile.sCurrentCompany + "' and UserName eq '" + cacheProvider.oUserProfile.sUserName + "' and Status eq 'not read' and GeneralAttributes/IsDeleted eq false",
+						//sOtherUrlParams: "$count",
+						bAddCountUrlParam: true,
 						onSuccess: onNotificationsLoaded
 					});
 				}
