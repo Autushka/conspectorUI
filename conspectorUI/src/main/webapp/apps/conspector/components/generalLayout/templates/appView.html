@@ -1,4 +1,4 @@
-<section class="cnpAppView" layout="row" flex>
+<div class="cnpAppView" layout="row" flex>
 	<md-sidenav class="md-sidenav-left cnpSideNav" md-component-id="globalLeft">
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
 	<label class="cnpSidebarTitle">
@@ -14,15 +14,15 @@
 <div flex>
 	<md-toolbar class="md-theme-indigo" style="  z-index: 1;">
 	<div id="top" class="cnpHeader" layout="row"  layout-align="space-between center">
-<!-- 		<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()">
+		<!-- 		<md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenSidenavIcon cnpDefaultColor" ng-click="toggleLeftSidenav()">
 		</md-button> -->
+		<!-- <div ng-click="toggleLeftSidenav()" class="cnpInputIcon cnpMenuIcon notSelectable" style="height: 35px;
+						width: 35px;
+						cursor: pointer;">
+					
+		</div> -->
 		<div layout="row" layout-align="start center">
 			<img class="cnpCompanyLogo" ng-src="{{$root.sLogoUrl}}"/>
-			<label ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="cnpLink cnpLinkHeaderCompany notSelectable">
-				{{'app_switchCompanies' | translate}}
-			</label>
-		</div>
-		<div layout="row" layout-align="start center">
 			<div
 				class="cnpMultiSelectProjectsAndPhases"
 				multi-select
@@ -37,6 +37,8 @@
 				directive-id="multiSelectFull" >
 			</div>
 		</div>
+		<div layout="row" layout-align="start center">
+		</div>
 		<div layout="row" layout-align="end center">
 			<div ng-click="toggleRightSidenav()" class="cnpInputIcon cnpNotificationsIcon notSelectable" style="position: relative;
 				margin-left: 11px;
@@ -50,23 +52,26 @@
 			</div>
 			<div class="notSelectable" ng-class="{'cnpUserDropdownMenuWrapper': !bDisplayUserDropdownMenu, 'cnpUserDropdownMenuWrapper active': bDisplayUserDropdownMenu}" ng-init="bDisplayUserDropdownMenu = false" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
 				<div class="cnpUserDropdownMenu"  layout="column" layout-align="start center">
+					<div ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
+						{{'app_switchCompanies' | translate}}
+					</div>
 					<div ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
-						{{'app_switchRoles' | translate}}
+						{{::'app_switchRoles' | translate}}
 					</div>
 					<div ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
-						{{'app_adminPanel' | translate}}
+						{{::'app_adminPanel' | translate}}
 					</div>
 					<div ng-if="bDisplayProfileSettings" class="cnpLink cnpLinkHeaderInDownDown" ng-click="onProfileSettings()" >
-						{{'profileSettings_profileDetails' | translate}}
+						{{::'profileSettings_profileDetails' | translate}}
 					</div>
 					<div ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeaderInDownDown">
 						{{'signIn_languageCode' | translate}}
 					</div>
 					<div ng-click="onLogOut()" class="cnpLink cnpLinkHeaderInDownDown notSelectable" style="border-bottom-width: 0; padding-bottom:0;">
-						{{'app_logOut' | translate}}
+						{{::'app_logOut' | translate}}
 					</div>
 				</div>
-				{{sCurrentUser}}
+				{{::sCurrentUser}}
 			</div>
 			<!-- add notifications counter -->
 			
@@ -78,9 +83,9 @@
 	</md-tab>
 	</md-tabs>
 	
-	<md-content ui-view class="cnpAppViewContent">
-	</md-content>
-	<!-- 		<md-content class="cnpAppViewContent">
+	<div ui-view class="cnpAppViewContent">
+	</div>
+	<!-- 			<md-content class="cnpAppViewContent">
 	</md-content> -->
 </div>
 <md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight">
@@ -141,4 +146,4 @@
 </div>
 </md-content>
 </md-sidenav>
-</section>
+</div>

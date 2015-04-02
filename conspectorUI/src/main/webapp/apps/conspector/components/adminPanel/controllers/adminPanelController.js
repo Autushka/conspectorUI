@@ -1,16 +1,18 @@
-viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider', '$mdSidenav', '$window', 'historyProvider', 'rolesSettings', '$translate',
-	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider, $mdSidenav, $window, historyProvider, rolesSettings, $translate) {
+viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvider', '$window', 'CONSTANTS', 'cacheProvider', '$mdSidenav', '$window', 'historyProvider', 'rolesSettings', '$translate', '$timeout',
+	function($scope, $state, servicesProvider, $window, CONSTANTS, cacheProvider, $mdSidenav, $window, historyProvider, rolesSettings, $translate, $timeout) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button		
 		cacheProvider.clearOtherViewsScrollPosition("");
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 
-		$scope.toggleLeftSidenav = function() {
-			$mdSidenav('left').toggle();
+		$scope.toggleAdminPanelRightSideNav = function() {
+			$timeout($mdSidenav('adminPanelRightSideNav').toggle, 200);
+			// $mdSidenav('adminPanelRightSideNav').toggle();
 		};
 
 		var navigateToCustomizing = function(sStateName) {
-			$mdSidenav('left').close();
 			$state.go(sStateName);
+			// $mdSidenav('adminPanelRightSideNav').close();
+			$timeout($mdSidenav('adminPanelRightSideNav').close, 350);
 		}
 
 		$scope.onMenuItemSelected = function(oMenuItem) {
@@ -154,16 +156,16 @@ viewControllers.controller('adminPanelView', ['$scope', '$state', 'servicesProvi
 			sMenuLabel: "adminPanel_additionalAttributes",
 		});			
 
-		var oWindow = angular.element($window);
+		// var oWindow = angular.element($window);
 
-		oWindow.bind('resize', function() {
-			if ($mdSidenav('left')) {
-				$mdSidenav('left').close();
-			}
-		});
+		// oWindow.bind('resize', function() {
+		// 	if ($mdSidenav('left')) {
+		// 		$mdSidenav('left').close();
+		// 	}
+		// });
 
-		$scope.$on("$destroy", function() {
-			oWindow.unbind();
-		});				
+		// $scope.$on("$destroy", function() {
+		// 	oWindow.unbind();
+		// });				
 	}
 ]);

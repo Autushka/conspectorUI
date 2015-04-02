@@ -1,4 +1,5 @@
-<div ui-view="contactDetails" style="width: 100%; height: 100%;"></div>
+<div layout="row" layout="center start" class="cnpContentWrapper">
+<div ui-view="contactDetails" style="width: 100%;"></div>
 <div id="embeddedActivitiesList" flex class="cnpCollapseControl" layout="row" layout-align="center center" ng-click="onDisplayActivitiesList()">
 	<button ng-class="{'md-button md-primary cnpCollapseSectionButton cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbol notSelectable': !bDisplayActivitiesList, 'md-button md-primary cnpCollapseSectionButton cnpButtonWithIcon cnpButtonMorePadding cnpInputIcon cnpCollapseSymbolReversed notSelectable': bDisplayActivitiesList}" layout="row" layout-align="center center" >
 	<div class="cnpCollapseControlButtonText">
@@ -9,3 +10,4 @@
 </div>
 <div ng-if="bDisplayActivitiesList" ui-view="contactActivities"></div>
 <div style="height: 400px;"></div>
+</div>

@@ -1,7 +1,6 @@
 viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSidenav', '$window', 'servicesProvider', '$translate', 'cacheProvider', 'rolesSettings', '$cookieStore', 'historyProvider', 'apiProvider', 'utilsProvider', '$filter', '$timeout', 'CONSTANTS',
 	function($scope, $rootScope, $state, $mdSidenav, $window, servicesProvider, $translate, cacheProvider, rolesSettings, $cookieStore, historyProvider, apiProvider, utilsProvider, $filter, $timeout, CONSTANTS) {
 		
-
 		var sCurrentUser = cacheProvider.oUserProfile.sUserName;
 		var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
 		var aSelectedPhases = [];
@@ -20,6 +19,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
 
 		servicesProvider.constructLogoUrl();
+
 
 		if ($cookieStore.get("globallySelectedPhasesGuids" + sCurrentUser + sCompany) && $cookieStore.get("globallySelectedPhasesGuids" + sCurrentUser + sCompany).aPhasesGuids) {
 			aSelectedPhases = angular.copy($cookieStore.get("globallySelectedPhasesGuids" + sCurrentUser + sCompany).aPhasesGuids);
@@ -514,7 +514,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
 		$scope.toggleRightSidenav = function() {
 			loadNotifications();
-			$mdSidenav('globalRight').toggle();
+			$timeout($mdSidenav('globalRight').toggle,200);
+			// $mdSidenav('globalRight').toggle();
 		};
 
 		$scope.toggleLeftSidenav = function() {

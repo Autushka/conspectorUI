@@ -640,8 +640,14 @@ USER MANAGEMENT
 	&.cnpNotificationsIcon{
     	background-position:6px;
     	background-size: 26px;
-	    background-image:url('../../../apps/conspector/img/notificationIcon_editable.svg');
+	    background-image:url('../../../apps/conspector/img/notificationIcon_tiny.svg');
 	}
+	&.cnpMenuIcon{
+    	background-position: 0px;
+  		background-size: 31px;
+	    background-image:url('../../../apps/conspector/img/mobileMenuIcon_tiny.svg');
+	}
+	
 	&.cnpBackIcon{
     	background-position: 0px;
     	background-size: 14px;
@@ -671,10 +677,10 @@ USER MANAGEMENT
 	    background-image:url('../../../apps/conspector/img/backIcon.svg');
 	    height: 38px;
 	}
-	&.cnpOpenSidenavIcon{
+	&.cnpOpenRightSideNavIcon{
 		background-position:14px;
     	background-size: 16px;
-	    background-image:url('../../../apps/conspector/img/openRightSidenavIcon.svg');
+	    background-image:url('../../../apps/conspector/img/openRightSidenavIcon_tiny.svg');
 	}
 	&.cnpPlusIcon{
 		background-position:12px;
@@ -950,7 +956,7 @@ APP VIEW
 	min-height: 48px;
 	max-height: 48px;
 	box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-  z-index: 10;
+  	z-index: 10;
   	width: 100%;
 	// min-width: 585px;
 	background-color: @darkerGreyBackgroundColor;
@@ -1089,6 +1095,7 @@ md-tabs.md-conspectorColorPaletteNavbar-theme md-tabs-ink-bar{
     font-size: 16px;
     font-weight: 500;
     height: 55px;
+    margin-left: 20px;
 }
 
 cnpMultiSelectProjectsAndPhasesDefaultLabel {
@@ -1438,6 +1445,7 @@ cnpMultiSelectProjectsAndPhasesDefaultLabel {
 	padding-top: 2px;
 	padding-bottom: 0px;
 	border-radius: @borderRadius;
+	position: relative;
 	// margin-left: 0px;
 }
 
@@ -1455,17 +1463,24 @@ APP VIEW CONTENT
 .cnpAppViewContent{
 	width: 100%;
 	height: ~"calc(100vh - 115px)";
-	max-width: 1280px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 16px;
-	padding-bottom: 30px;
+	// max-width: 1280px;
+	// padding-left: 10px;
+	// padding-right: 10px;
+	// padding-top: 16px;
+	// padding-bottom: 30px;
 	margin-bottom: 0px;
 	background-color: @lightGreyBackgroundColor;
-	position: relative;
+	// position: relative;
+	  overflow: hidden;
 }
 .cnpContentWrapper{
 	// min-height: 550px;
+	background-color: #f8f8f8;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: block;
+  // padding: 16px 10px 0 10px;
 	background-color: @lightGreyBackgroundColor;
 
 }
@@ -1502,14 +1517,17 @@ ADMIN PANEL
 }
 
 .cnpContent{
+	padding-top: 16px;
 	padding-left: 10px;
 	padding-right: 10px;
 	background-color: @lightGreyBackgroundColor;
 	max-width: 100%;
     overflow-x: hidden;
     &.cnpContentDeficienciesList{
-    	// only need if an md content is used 
-    	// min-height: 500px;
+    	min-height: 500px;
+    }
+    &.cnpContentActivitiesList{
+    	min-height: 500px;
     }
     &.cnpContentNotificationsList{
     	padding: 0;
@@ -1517,8 +1535,8 @@ ADMIN PANEL
     }
 }
 .cnpContentHeader{
-
-	height: 45px;
+	width: 100%;
+	height: 64px;
 }
 .cnpDeficienciesListContentHeader{
 	height: auto;
@@ -1780,6 +1798,7 @@ md-toolbar.md-default-theme{
 	color: @textColor;
 	overflow-y: auto;
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 17px 0px;
+	// position: fixed;
 	}
 }
 .md-sidenav-right{
@@ -1792,6 +1811,7 @@ md-toolbar.md-default-theme{
 	overflow-y: auto;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 17px 0px;
+	// position: fixed;
 	}
 }
 .cnpSidenavElements{

@@ -44,7 +44,7 @@
 					<tr class="ng-table-group notSelectable" >
 						<td colspan="{{$columns.length}}" style="overflow: visible; padding-left: 0; padding-right: 0" >
 							<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">
-								{{ group.value }}
+								{{ ::group.value }}
 							</div>
 							
 						</td>
@@ -71,7 +71,7 @@
 						<td data-title="'global_operationName' | translate" sortable="'sOperationName'" filter="{'sOperationName': 'text'}">
 							<div layout="row" layout-align="start center" ng-class="{'cnpNgTableNotification': notification.sStatus === 'not read', 'cnpNgTableNotification cnpNgTableNotificationRead': notification.sStatus === 'read'}">
 								<span>
-									{{notification.sOperationName}}
+									{{::notification.sOperationName}}
 								</span>
 								<span style="margin-left: 8px;
 									margin-right: 8px;">

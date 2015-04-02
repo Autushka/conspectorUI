@@ -6,6 +6,11 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             cacheProvider.clearOtherViewsScrollPosition("deficienciesList");
         }
 
+        $scope.toggleAdminPanelRightSideNav = function() {
+            $timeout($mdSidenav('adminPanelRightSideNav').toggle, 200);
+            // $mdSidenav('adminPanelRightSideNav').toggle();
+        };
+
         var sCurrentUser = cacheProvider.oUserProfile.sUserName;
         var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
