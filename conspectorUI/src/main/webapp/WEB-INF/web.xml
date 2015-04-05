@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>web.app</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+<!--   <listener> -->
+<!--     <listener-class>com.projectx.PersistenceAppListener</listener-class> -->
+<!--   </listener>   -->
+<!--   <servlet> -->
+<!-- 	<servlet-name>jersey-serlvet</servlet-name> -->
+<!-- 	<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
+<!-- 	<init-param> -->
+<!-- 	  <param-name>com.sun.jersey.config.property.packages</param-name> -->
+<!-- 	  <param-value>com.projectx.rest</param-value> -->
+<!-- 	</init-param> -->
+<!-- 	<load-on-startup>1</load-on-startup> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!-- 	<servlet-name>jersey-serlvet</servlet-name> -->
+<!-- 	<url-pattern>/rest/*</url-pattern> -->
+<!--   </servlet-mapping> -->
+
+  <!-- Servlet 1: Expose the OData service endpoint -->
+<!--   <servlet> -->
+<!--     <servlet-name>OData</servlet-name> -->
+<!--     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
+<!--      <init-param> -->
+<!--       <param-name>javax.ws.rs.Application</param-name> -->
+<!--       <param-value>org.odata4j.jersey.producer.resources.ODataApplication</param-value> -->
+<!--     </init-param> -->
+<!--     <init-param> -->
+<!--       <param-name>odata4j.producerfactory</param-name> -->
+<!--       <param-value>com.projectx.rest.JPAProducerFactory</param-value> -->
+<!--     </init-param> -->
+<!--     <load-on-startup>1</load-on-startup> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>OData</servlet-name> -->
+<!--     <url-pattern>/odata/*</url-pattern> -->
+<!--   </servlet-mapping> -->
+  
+<!--   <servlet> -->
+<!-- 	<servlet-name>ODataServlet</servlet-name> -->
+<!-- 	<servlet-class>org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet</servlet-class> -->
+<!-- 	<init-param> -->
+<!-- 		<param-name>javax.ws.rs.Application</param-name> -->
+<!-- 		<param-value>org.apache.olingo.odata2.core.rest.app.ODataApplication</param-value> -->
+<!-- 	</init-param> -->
+<!-- 	<init-param> -->
+<!-- 		<param-name>org.apache.olingo.odata2.service.factory</param-name> -->
+<!-- 		<param-value>com.projectx.rest.MyODataJPAServiceFactory</param-value> -->
+<!-- 	</init-param> -->
+<!-- 	<load-on-startup>1</load-on-startup> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!-- 	<servlet-name>ODataServlet</servlet-name> -->
+<!-- 	<url-pattern>/odata.svc/*</url-pattern> -->
+<!--   </servlet-mapping>   -->
+
+<!--   <filter> -->
+<!--     <filter-name>RequestContextFilter</filter-name> -->
+<!--     <filter-class>com.projectx.rest.RequestContextFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>RequestContextFilter</filter-name> -->
+<!--     <url-pattern>/odata/*</url-pattern> -->
+<!--   </filter-mapping> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>RequestContextFilter</filter-name> -->
+<!--     <url-pattern>/odata.svc/*</url-pattern> -->
+<!--   </filter-mapping> -->
+  
+<!--   <servlet> -->
+<!-- 	<servlet-name>xdocReport</servlet-name> -->
+<!-- 	<servlet-class> -->
+<!-- 		com.projectx.reports.xdocReportsService -->
+<!-- 	</servlet-class> -->
+<!-- 	<init-param> -->
+<!-- 		<param-name>encoding</param-name> -->
+<!-- 		<param-value>UTF-8</param-value> -->
+<!-- 	</init-param> -->
+<!-- 	<init-param> -->
+<!-- 		<param-name>forceEncoding</param-name> -->
+<!-- 		<param-value>true</param-value> -->
+<!-- 	</init-param> -->
+<!--   </servlet>  -->
+	
+<!--   <servlet-mapping> -->
+<!-- 	<servlet-name>xdocReport</servlet-name> -->
+<!-- 	<url-pattern>/xdocReportsService/*</url-pattern> -->
+<!--   </servlet-mapping>  	  -->
+</web-app>

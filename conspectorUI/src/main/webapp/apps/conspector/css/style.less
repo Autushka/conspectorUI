@@ -29,7 +29,7 @@ VARIABLE AND SETTINGS
 @navbarTextColor: rgba(255, 255, 255, 0.65);
 @tagColor: #93E890;
 @locationTagColor: rgb(144, 213, 232);
-@fontSize: 18px;
+@fontSize: 14px;
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
 // @font-face {
 //   font-family: 'Ubuntu';
@@ -94,7 +94,7 @@ a:hover {
 cursor: pointer;
 }
 body {
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Open sans', sans-serif;
 	font-size: @fontSize;
 	font-style: normal;
 	font-weight: 400;
@@ -643,7 +643,7 @@ USER MANAGEMENT
 	    background-image:url('../../../apps/conspector/img/notificationIcon_tiny.svg');
 	}
 	&.cnpMenuIcon{
-    	background-position: 0px;
+    	background-position: 50% 50%;
   		background-size: 31px;
 	    background-image:url('../../../apps/conspector/img/mobileMenuIcon_tiny.svg');
 	}
@@ -917,11 +917,11 @@ APP VIEW
 }
 .cnpHeader{
 	width: 100%;	
-	// max-width: 1280px;
-	min-height: 65px;
+	max-width: 1024px;
+	min-height: 75px;
 	max-height: 65px;
-	padding-left: 20px;
-	padding-right: 20px;
+	// padding-left: 20px;
+	// padding-right: 20px;
 	background-color: @whiteColor;
 	
 }
@@ -956,8 +956,7 @@ APP VIEW
 	min-height: 48px;
 	max-height: 48px;
 	box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-  	z-index: 4;
-  	position: relative;
+  	z-index: 10;
   	width: 100%;
 	// min-width: 585px;
 	background-color: @darkerGreyBackgroundColor;
@@ -969,6 +968,7 @@ APP VIEW
 	width: auto;
 	margin-top: 10px;
 	margin-bottom: 10px;
+	margin-left: 16px;
 
 }
 
@@ -1463,7 +1463,7 @@ APP VIEW CONTENT
 
 .cnpAppViewContent{
 	width: 100%;
-	height: ~"calc(100vh - 115px)";
+	height: ~"calc(100vh - 76px)";
 	// max-width: 1280px;
 	// padding-left: 10px;
 	// padding-right: 10px;
@@ -1782,7 +1782,7 @@ md-toolbar.md-default-theme{
 	// height: 56px;
 	
 	background-color: white;
-	min-height: 66px;
+	min-height: 76px;
 	border-width: 0px;
 	border-bottom-width: 1px;
 	border-color: @greyBorderColorHeader;
@@ -1819,7 +1819,7 @@ md-toolbar.md-default-theme{
 	// padding-top: 10px;
 	// padding-bottom: 10px;
 	width: 100%;
-	height: ~"calc(100vh - 69px)";
+	height: ~"calc(100vh - 79px)";
 	background-color: white!important;
 
 }
@@ -3353,3 +3353,42 @@ DETAILS VIEW
 
 
 
+//promo website
+.cnpFooter{
+	width: 100%;
+	height: 200px;
+	background-color: @textColor;
+	color: white;
+}
+.cnpFooterBlock{
+	max-width: 1024px;
+	width: 100%;
+}
+.cnpPromoHeaderLinks{
+	color: @blueColor;
+	margin: 8px;
+	padding: 8px;
+	cursor: pointer;
+}
+.cnpPromoHeaderButton{
+	margin: 16px;
+	padding-left: 12px;
+	padding-right: 12px;
+	// border: 1px solid rgb(66, 67, 71);
+	// border-radius: 3px;
+	// background: rgb(66, 67, 71);
+	// color: white;
+	// cursor: pointer;
+	// box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+}
+.cnpPromoHeaderButtonToApp{
+	background-color: @blueColor;
+	border-color: @blueColor;
+}
+#cnpPromoMenuIcon{
+	height: 70px;
+  width: 70px;
+  padding: 16px;
+  cursor: pointer;
+  // margin-right: 20px;
+}

@@ -942,6 +942,6 @@ app.config(['$translateProvider',
             });
 
             $translateProvider.preferredLanguage('en');
-            $translateProvider.useCookieStorage();
+            // $translateProvider.useCookieStorage();
       }
 ]);

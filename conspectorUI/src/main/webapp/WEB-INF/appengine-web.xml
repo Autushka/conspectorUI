@@ -8,7 +8,7 @@
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
   
-       http://www.apache.org/licenses/LICENSE-2.0
+ 	http://www.apache.org/licenses/LICENSE-2.0
   
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,8 +18,8 @@
   #L%
   -->
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-	<application>conspector-app</application>
-	<version>app-3</version>
+	<application>conspector-promo</application>
+	<version>app-promo</version>
 	
 
 	
@@ -56,12 +56,23 @@
   
   
   
-<instance-class>B4</instance-class>
+<instance-class>F1</instance-class>
 
-<basic-scaling>
-    <max-instances>1</max-instances>
-    <idle-timeout>15m</idle-timeout>
- </basic-scaling>
+ <automatic-scaling>
+    <min-idle-instances>1</min-idle-instances>
+    
+    <max-idle-instances>automatic</max-idle-instances>
+    
+    <min-pending-latency>automatic</min-pending-latency>
+    <max-pending-latency>30ms</max-pending-latency>
+    <max-concurrent-requests>50</max-concurrent-requests>
+  </automatic-scaling>
+
+
+<!-- <basic-scaling> -->
+<!--     <max-instances>2</max-instances> -->
+<!--     <idle-timeout>15m</idle-timeout> -->
+<!--  </basic-scaling> -->
   
 <!--   <manual-scaling> -->
 <!--     <instances>1</instances> -->

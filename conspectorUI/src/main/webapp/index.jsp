@@ -29,8 +29,7 @@
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<script src="bower_components/angular-animate/angular-animate.min.js"></script>
 		<script src="bower_components/angular-translate/angular-translate.min.js"></script>
-		<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
-		<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
+		
 		<script src="bower_components/angular-resource/angular-resource.min.js"></script>
 		<script src="bower_components/angular-ui-utils/ui-utils.min.js"></script>
 		<script src="bower_components/hammerjs/hammer.min.js"></script>
@@ -74,14 +73,14 @@
 	    <!-- COMMON JS -->
 	    <script src="apps/conspector/js/app.js"></script>
 		<script src="apps/conspector/js/constants.js"></script>
-		<script src="apps/conspector/js/types.js"></script>
+
 		<script src="apps/conspector/js/common/translateProvider.js"></script>
 		<script src="apps/conspector/js/common/utilsProvider.js"></script>
 
 		<script src="apps/conspector/js/common/cacheProvider.js"></script>		
 		<script src="apps/conspector/js/common/dataProvider.js"></script>
 		<script src="apps/conspector/js/common/apiProvider.js"></script>
-		<script src="apps/conspector/js/rolesSettings.js"></script>			
+	
 		<script src="apps/conspector/js/common/servicesProvider.js"></script>
 		<script src="apps/conspector/js/common/historyProvider.js"></script>
 		<script src="apps/conspector/js/common/filtersProvider.js"></script>
@@ -89,69 +88,16 @@
 		<script src="apps/conspector/js/mainController.js"></script>
 
 		<!--MOBILE CONTROLLERS -->	
-		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListMobileController.js"></script>
 		
 		<!--Minification starts here-->
 
 		<!--WEBAPP CONTROLLERS -->	
 		
-		<script src="apps/conspector/components/userManagement/controllers/signInController.js"></script>
-		<script src="apps/conspector/components/userManagement/controllers/forgotPasswordController.js"></script>
-		<script src="apps/conspector/components/userManagement/controllers/companySelectionController.js"></script>
-		<script src="apps/conspector/components/userManagement/controllers/roleSelectionController.js"></script>
-		<script src="apps/conspector/components/userManagement/controllers/initialPasswordResetController.js"></script>
-		<script src="apps/conspector/components/userManagement/controllers/passwordResetController.js"></script>
+		
 		
 		<script src="apps/conspector/components/generalLayout/controllers/appController.js"></script>
+		<script src="apps/conspector/components/landingPage/controllers/landingPageController.js"></script>
 		
-		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListController.js"></script>
-		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsWrapperController.js"></script>	
-		<script src="apps/conspector/components/deficiencies/controllers/deficiencyDetailsController.js"></script>		
-
-		<script src="apps/conspector/components/units/controllers/unitsListController.js"></script>
-		<script src="apps/conspector/components/units/controllers/unitDetailsController.js"></script>
-		<script src="apps/conspector/components/units/controllers/unitDetailsWrapperController.js"></script>
-
-		<script src="apps/conspector/components/contractors/controllers/contractorsListController.js"></script>
-		<script src="apps/conspector/components/contractors/controllers/contractorDetailsWrapperController.js"></script>
-		<script src="apps/conspector/components/contractors/controllers/contractorDetailsController.js"></script>
-
-		<script src="apps/conspector/components/contacts/controllers/contactsListController.js"></script>
-		<script src="apps/conspector/components/contacts/controllers/contactDetailsWrapperController.js"></script>
-		<script src="apps/conspector/components/contacts/controllers/contactDetailsController.js"></script>	
-
-		<script src="apps/conspector/components/clients/controllers/clientsListController.js"></script>
-		<script src="apps/conspector/components/clients/controllers/clientDetailsWrapperController.js"></script>			
-		<script src="apps/conspector/components/clients/controllers/clientDetailsController.js"></script>
-
-		<script src="apps/conspector/components/activities/controllers/activitiesListController.js"></script>
-		<script src="apps/conspector/components/activities/controllers/activityDetailsWrapperController.js"></script>		
-		<script src="apps/conspector/components/activities/controllers/activityDetailsController.js"></script>
-
-		<script src="apps/conspector/components/profileSettings/controllers/profileSettingsController.js"></script>
-		<script src="apps/conspector/components/profileSettings/controllers/profileDetailsController.js"></script>
-		<script src="apps/conspector/components/profileSettings/controllers/changePasswordController.js"></script>
-		
-		<script src="apps/conspector/components/adminPanel/controllers/adminPanelController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/companiesListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/usersListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/userDetailsController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/projectsListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/phasesListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/rolesListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/deficiencyStatusesListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/systemFilesController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/accountTypesListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/contactTypesListController.js"></script>		
-		<script src="apps/conspector/components/adminPanel/controllers/deficiencyPrioritiesListController.js"></script>  
-		<script src="apps/conspector/components/adminPanel/controllers/unitOptionSetListController.js"></script>  	
-		<script src="apps/conspector/components/adminPanel/controllers/unitOptionValueListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/additionalAttributesListController.js"></script>		
-		<script src="apps/conspector/components/adminPanel/controllers/taskTypeListController.js"></script>
-		<script src="apps/conspector/components/adminPanel/controllers/activityTypesListController.js"></script> 
-
-		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>	
-		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	
 
 		
 		<!--
@@ -165,11 +111,11 @@
  		-->
 
 	</head>
-	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%; overflow: hidden;" ng-click="$root.hideGallery()">
+	<body id="body" ng-controller="mainController">
 		<!-- <div ng-show="$root.showSpinner" layout="row" layout-align="center center" style="position: absolute; z-index: 2; height: 100%; width: 100%;">
 			<md-progress-circular md-mode="indeterminate"> </md-progress-circular>
 		</div> -->
-		<cnp-photo-gallery></cnp-photo-gallery>			
+		
 		<div ui-view></div>
 	</body>
 </html>
