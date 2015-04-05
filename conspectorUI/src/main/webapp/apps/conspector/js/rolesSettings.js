@@ -17,10 +17,10 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 
 			getRolesInitialState: function(sRole) {
-				if(!CONSTANTS.bIsHybridApplication){
+				if(!bMobileMode){
 					return this[sRole].sInitialState;
 				}else{
-					return this[sRole].sInitialStateHybrid;
+					return this[sRole].sInitialStateMobile;
 				}
 				
 			},
@@ -47,7 +47,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 
 			globalAdministrator: {
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",
+				sInitialStateMobile: "app.deficienciesList",
 				bIsGlobalUserAdministrator: true,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -133,7 +133,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			systemAdministrator: {
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
+				sInitialStateMobile: "deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,
@@ -220,7 +220,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 
 			contactManagementUser: {
 				sInitialState: "app.contactsList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
+				sInitialStateMobile: "deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,
@@ -306,7 +306,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			},
 			contactViewerUser: {
 				sInitialState: "app.contactsList",
-				sInitialStateHybrid: "deficiencyQuickAddWrapper.quickAdd",				
+				sInitialStateMobile: "deficiencyQuickAddWrapper.quickAdd",				
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: false,
@@ -393,7 +393,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			contractor: {
 				//sInitialState: "app.deficienciesList",
 				sInitialState: "app.deficienciesList",
-				sInitialStateHybrid: "deficienciesListHybridWrapper.deficienciesSearchHybrid",
+				sInitialStateMobile: "deficienciesListHybridWrapper.deficienciesSearchHybrid",
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,

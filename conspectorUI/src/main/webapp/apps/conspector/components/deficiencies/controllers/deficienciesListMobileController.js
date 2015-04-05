@@ -5,20 +5,12 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
         $scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
         $scope.bShowContractorInList = true;
 
-        servicesProvider.constructLogoUrl();
-        servicesProvider.constructMenuIconUrl();
-
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation  
 
-        $scope.onMainMenu = function() {
-            $state.go("mainMenuHybrid");
-        };
 
-        $scope.onBackToSearch = function() {
-            $rootScope.sDeficienciesListView = "deficienciesListSearch"
-        };
 
+        //cleaned
         $scope.onSelectDeficiency = function(oDeficiency) {
             cacheProvider.putListViewScrollPosition("deficienciesList", $("#body")[0].scrollTop); //saving scroll position...
             for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {

@@ -1,7 +1,7 @@
 <!-- <section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }"> -->
 <div id="scrollableArea" style="webkit-overflow-scrolling: touch;">
 	<div layout="row" class="cnpMobileHeader" layout-align="space-between center">
-		<div ng-click="onMainMenu()" class="cnpMobileMenuIcon">
+<!-- 		<div ng-click="onMainMenu()" class="cnpMobileMenuIcon">
 			<img ng-src="{{$root.sMenuIconUrl}}"/>
 		</div>
 		<div layout="row" layout-align="start center">
@@ -9,13 +9,66 @@
 		</div>
 		<div class="cnpMobileTitle">
 			{{'hybrid_deficienciesListItem' | translate}}
-		</div>
+		</div> -->
+		<section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }">
+	<div class="cnpMobileSubHeaderText" layout="column" layout-align="center center">
+		{{'hybrid_selectSearchCriterias' | translate}}
 	</div>
-	<div ng-click="onBackToSearch()" class="notSelectable cnpInputIcon cnpMobileBackIcon" layout-margin layout="column" layout-align="center start" style="margin-left: 16px;">
+	<div class="cnpMobileListWrapper">
+		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectPhaseSearchCriteria()">
+		<div layout="column" layout-align="center start">
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{'deficiencyDetails_associatedProjectsAndPhases' | translate}}
+			</div>
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oSearchCriterias.oPhase.sValue}}
+			</label>
+		</div>
+		</button>
+		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectUnitSearchCriteria()">
+		<div layout="column" layout-align="center start">
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{'deficiencyDetails_unit' | translate}}
+			</div>
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oSearchCriterias.oUnit.sValue}}
+			</label>
+		</div>
+		</button>
+		<button class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectStatusSearchCriteria()">
+		<div layout="column" layout-align="center start">
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{'deficiencyDetails_status' | translate}}
+			</div>
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oSearchCriterias.oStatus.sValue}}
+			</label>
+		</div>
+		</button>
+		<button ng-show="sCurrentRole != 'contractor'" class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectContractorSearchCriteria()" style="border-bottom-width: 2px;">
+		<div layout="column" layout-align="center start">
+			<div class="cnpMobileItemDescription" ng-cloak>
+				{{'deficiencyDetails_contractors' | translate}}
+			</div>
+			<label class="cnpMobileItemValue" ng-cloak>
+				{{$root.oSearchCriterias.oContractor.sValue}}
+			</label>
+		</div>
+		</button>		
+		<div layout="column" layout-align="start center">
+			<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton notSelectable" ng-click="onSearch()" ng-cloak>
+			{{'hybrid_searchDeficiencies' | translate}}
+			</button>
+		</div>
+		
+	</div>
+</section>
+	</div>
+<!-- 	<div ng-click="onBackToSearch()" class="notSelectable cnpInputIcon cnpMobileBackIcon" layout-margin layout="column" layout-align="center start" style="margin-left: 16px;">
 		<div class="notSelectable cnpLink cnpLinkBackButton">
 			{{'global_backToSearch' | translate}}
 		</div>
-	</div>
+	</div> -->
 	<button ng-repeat="deficiency in $root.aDeficiencies"class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectDeficiency(deficiency)">
 	<div layout="column" layout-align="center start">
 		<div class="cnpMobileListItem" layout="row" layout-align="space-between center" ng-cloak style="height: 38px; width: 100%;">
