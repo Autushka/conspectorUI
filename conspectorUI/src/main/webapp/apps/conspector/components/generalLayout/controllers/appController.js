@@ -1,7 +1,9 @@
-viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSidenav', '$window', '$translate', '$filter', '$timeout',
-	function($scope, $rootScope, $state, $mdSidenav, $window, $translate, $filter, $timeout) {
+viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSidenav', '$window', 'servicesProvider', '$translate', '$filter', '$timeout',
+	function($scope, $rootScope, $state, $mdSidenav, $window, servicesProvider, $translate, $filter, $timeout) {
 
 		$state.go('app.landingPage');
+
+		// $timeout($mdSidenav('globalLeft').close, 100);
 
 		// var sCurrentUser = cacheProvider.oUserProfile.sUserName;
 		// var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
@@ -532,8 +534,12 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 		// 	loadNotifications(iPageNumber);
 		// };
 
-		$scope.toggleLeftSidenav = function() {
-			$mdSidenav('globalLeft').toggle();
+		$scope.openLeftSidenav = function() {
+			$timeout($mdSidenav('globalLeft').open, 100);
+		};
+
+		$scope.closeLeftSidenav = function() {
+			$timeout($mdSidenav('globalLeft').close, 100);
 		};
 
 		// $scope.hoverIn = function() {
@@ -550,9 +556,9 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 		// 	$state.go('app.notificationsList');
 		// };
 
-		// $scope.onChangeLanguage = function() {
-		// 	servicesProvider.changeLanguage();
-		// };
+		$scope.onChangeLanguage = function() {
+			servicesProvider.changeLanguage();
+		};
 
 		// $scope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
 		// 	$timeout(tabSelectionBasedOnHash, 100);

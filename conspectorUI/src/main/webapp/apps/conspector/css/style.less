@@ -30,7 +30,7 @@ VARIABLE AND SETTINGS
 @tagColor: #93E890;
 @locationTagColor: rgb(144, 213, 232);
 @fontSize: 14px;
-@import url(http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:100,200,300,400,500,700);
 // @font-face {
 //   font-family: 'Ubuntu';
 //   src: url('../fonts/glyphicons-halflings-regular.ttf') format('truetype');
@@ -50,6 +50,7 @@ VARIABLE AND SETTINGS
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	outline: none;
 }
 //Class for making text unselectable
 .cnpCursorDefault {
@@ -94,7 +95,7 @@ a:hover {
 cursor: pointer;
 }
 body {
-	font-family: 'Open sans', sans-serif;
+	font-family: 'Ubuntu';
 	font-size: @fontSize;
 	font-style: normal;
 	font-weight: 400;
@@ -255,13 +256,15 @@ font-weight: 500;
 	}
 	&.cnpSidebarButton{
 		min-width: 100%;
-		height: @fieldHeight*1;
+		height: 48px;
+		margin: 0;
 		border-radius: 0px;
-		padding-left: 12px;
+		padding-left: 79px;
 		padding-right: 12px;
 		font-size: 16px;
 		font-weight: 500;
 		color: @textColor;
+		text-align: left;
 	}
 	&.cnpMobileLargeButton{
 		margin-top: 24px;
@@ -678,8 +681,8 @@ USER MANAGEMENT
 	    height: 38px;
 	}
 	&.cnpOpenRightSideNavIcon{
-		background-position:14px;
-    	background-size: 16px;
+		background-position:31px;
+    	background-size: 21px;
 	    background-image:url('../../../apps/conspector/img/openRightSidenavIcon_tiny.svg');
 	}
 	&.cnpPlusIcon{
@@ -1463,7 +1466,7 @@ APP VIEW CONTENT
 
 .cnpAppViewContent{
 	width: 100%;
-	height: ~"calc(100vh - 76px)";
+	// height: ~"calc(100vh - 76px)";
 	// max-width: 1280px;
 	// padding-left: 10px;
 	// padding-right: 10px;
@@ -1472,7 +1475,7 @@ APP VIEW CONTENT
 	margin-bottom: 0px;
 	background-color: @lightGreyBackgroundColor;
 	// position: relative;
-	  overflow: hidden;
+	  // overflow: hidden;
 }
 .cnpContentWrapper{
 	// min-height: 550px;
@@ -1781,13 +1784,13 @@ ADMIN PANEL
 md-toolbar.md-default-theme{
 	// height: 56px;
 	
-	background-color: white;
-	min-height: 76px;
+	// background-color: white;
+	min-height: 75px;
 	border-width: 0px;
-	border-bottom-width: 1px;
-	border-color: @greyBorderColorHeader;
-	border-style: solid;
-	color: @headerTextColor;
+	// border-bottom-width: 1px;
+	// border-color: @greyBorderColorHeader;
+	// border-style: solid;
+	color: white;
 }
 
 .md-sidenav-left{
@@ -3365,15 +3368,20 @@ DETAILS VIEW
 	width: 100%;
 }
 .cnpPromoHeaderLinks{
+	font-size: 16px;
 	color: @blueColor;
-	margin: 8px;
+	margin: 6px;
 	padding: 8px;
 	cursor: pointer;
 }
+.cnpPromoHeaderLinksSeparator{
+	color: @blueColor;
+
+}
 .cnpPromoHeaderButton{
-	margin: 16px;
-	padding-left: 12px;
-	padding-right: 12px;
+	font-size: 16px;
+	margin: 8px;
+	padding: 3px 8px 5px 8px;
 	// border: 1px solid rgb(66, 67, 71);
 	// border-radius: 3px;
 	// background: rgb(66, 67, 71);
@@ -3391,4 +3399,29 @@ DETAILS VIEW
   padding: 16px;
   cursor: pointer;
   // margin-right: 20px;
+}
+#cnpPromoMainToolbar{
+	background-color: white;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+}
+.cnpPromoLangingPageImage{
+	width: 100%;
+}
+.cnpPromoLangingPageImagePortrait{
+	height: 100%;
+	width: 50%;
+
+}
+.cnpPromoLangingPageDiv{
+	position: relative;
+}
+.cnpPromoBigTitle{
+background: rgba(255, 255, 255, 0.63);
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  padding: 26px;
+  color: #514d4b;
+  font-weight: 100;
+  font-size: 39px;
 }

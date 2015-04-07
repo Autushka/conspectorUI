@@ -1,7 +1,7 @@
-viewControllers.controller('landingPageView', ['$scope', '$rootScope', '$state', '$translate',
-	function($scope, $rootScope, $state, $translate) {
+viewControllers.controller('landingPageView', ['$scope', '$rootScope', '$state', '$mdSidenav', '$translate', '$timeout',
+	function($scope, $rootScope, $state, $mdSidenav, $translate, $timeout) {
 		// $rootScope.sCurrentStateName = $state.current.name;
-
+		// $timeout($mdSidenav('globalLeft').close, 100);
 		//servicesProvider.logOut();
 
 		// $scope.oForms = {};

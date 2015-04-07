@@ -1,4 +1,4 @@
-var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngMaterial']);
+var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'ngMaterial', 'ngTouch']);
 var viewControllers = angular.module('viewControllers', []);
 
 // app.config(['cfpLoadingBarProvider',
