@@ -19,7 +19,7 @@
   -->
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
 	<application>conspector-app</application>
-	<version>app-3</version>
+	<version>app-6</version>
 	
 
 	
@@ -56,12 +56,22 @@
   
   
   
-<instance-class>B4</instance-class>
+<instance-class>F2</instance-class>
 
-<basic-scaling>
-    <max-instances>1</max-instances>
-    <idle-timeout>15m</idle-timeout>
- </basic-scaling>
+<!-- <basic-scaling> -->
+<!--     <max-instances>1</max-instances> -->
+<!--     <idle-timeout>15m</idle-timeout> -->
+<!--  </basic-scaling> -->
+
+  <automatic-scaling>
+    <min-idle-instances>1</min-idle-instances>
+    <!-- ‘automatic’ is the default value. -->
+    <max-idle-instances>5</max-idle-instances>
+    <!-- ‘automatic’ is the default value. -->
+    <min-pending-latency>automatic</min-pending-latency>
+    <max-pending-latency>30ms</max-pending-latency>
+    <max-concurrent-requests>50</max-concurrent-requests>
+  </automatic-scaling>
   
 <!--   <manual-scaling> -->
 <!--     <instances>1</instances> -->

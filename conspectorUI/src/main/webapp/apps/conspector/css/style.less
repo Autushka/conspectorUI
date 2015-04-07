@@ -979,6 +979,9 @@ APP VIEW
 md-tabs.md-conspectorColorPaletteNavbar-theme md-tab.active{
 	color: white !important;
 }
+md-tabs.md-conspectorColorPaletteNavbar-theme .md-paginator md-icon{
+	color: rgb(248, 248, 248);
+}
 
 md-tabs.md-conspectorColorPaletteNavbar-theme md-tab:focus {
 	// color: @navbarTextColor;
@@ -1481,6 +1484,8 @@ APP VIEW CONTENT
   overflow-y: auto;
   overflow-x: hidden;
   display: block;
+  position: relative;
+  z-index: 0;
   // padding: 16px 10px 0 10px;
 	background-color: @lightGreyBackgroundColor;
 
