@@ -108,6 +108,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'apps/conspector/components/landingPage/templates/landingPageView.html',
             controller: 'landingPageView'
         });
+        $stateProvider.state('app.contactPage', {
+            url: '/contact',
+            templateUrl: 'apps/conspector/components/contactPage/templates/contactPageView.html',
+            controller: 'landingPageView'
+        });
         
        
     }

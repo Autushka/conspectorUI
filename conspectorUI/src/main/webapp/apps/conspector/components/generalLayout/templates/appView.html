@@ -2,78 +2,94 @@
 	<md-sidenav class="md-sidenav-left cnpSideNav" md-component-id="globalLeft" ng-swipe-left="closeLeftSidenav()">
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center" style="
 	box-shadow: none";
-	>MENU
-
+	>{{ 'global_menu' | translate }}
 	</md-toolbar>
 	<md-divider></md-divider>
 	<md-button ng-click="closeLeftSidenav()" class="md-button cnpSidebarButton cnpInputIcon cnpOpenRightSideNavIcon cnpDefaultColor md-button md-default-theme">{{ 'global_closeMenu' | translate }}</md-button>
 	<md-divider></md-divider>
-	<md-button ng-click="closeLeftSidenav()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor md-button md-default-theme">Pricing</md-button>
+	<md-button ng-click="onGoHome()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor md-button md-default-theme">{{ 'global_home' | translate }}</md-button>
 	<md-divider md-inset></md-divider>
-	<md-button ng-click="closeLeftSidenav()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor md-button md-default-theme">Support</md-button>
-	<md-divider></md-divider>
-	<md-button ng-click="closeLeftSidenav()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor md-button md-default-theme">Contact</md-button>
+	<md-button ng-click="onGoContact()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor md-button md-default-theme">{{ 'global_contact' | translate }}</md-button>
 	<md-divider md-inset></md-divider>
-	<md-button ng-click="closeLeftSidenav()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor md-button md-default-theme">Login</md-button>
+	<md-button ng-click="onGoAboutUs()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor md-button md-default-theme">{{ 'global_aboutUs' | translate }}</md-button>
+	<md-divider md-inset></md-divider>
+	<md-button ng-href="http://app.conspector.com/" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor md-button md-default-theme">{{ 'global_login' | translate }}</md-button>
 	<md-divider></md-divider>
 	<md-button ng-click="onChangeLanguage()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor md-button md-default-theme">{{ 'global_languageCode' | translate }}</md-button>
-	<!-- <div class="cnpSidenavElements">  
-	<div ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}">
-		<md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton"> {{menuItem.sMenuLabel | translate}}
-		</md-button>
-	</div>
-</div> -->
-</md-sidenav>
-<div flex style="
-	width: 100%;">
-	<md-toolbar id="cnpPromoMainToolbar" style="z-index: 1;">
-	<div layout="column" layout-align="start center">
-		<div id="top" class="cnpHeader" layout="row"  layout-align="space-between center">
-			<div layout="row" layout-align="start center">
-				<div ng-click="openLeftSidenav()" class="cnpInputIcon cnpMenuIcon notSelectable" id="cnpPromoMenuIcon" hide-gt-sm>
-					
-				</div>
-				<img class="cnpCompanyLogo notSelectable" src="apps/conspector/img/logo_conspector.png"/>
+	<!-- <div class="cnpSidenavElements">
+			<div ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}">
+						<md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton"> {{menuItem.sMenuLabel | translate}}
+						</md-button>
 			</div>
-			<div layout="row" layout-align="end center" hide-sm>
-				<div class="cnpPromoHeaderLinks notSelectable">Pricing</div><span class="cnpPromoHeaderLinksSeparator notSelectable">|</span>
-				<div class="cnpPromoHeaderLinks notSelectable">Support</div><span class="cnpPromoHeaderLinksSeparator notSelectable">|</span>
-				<div ng-click="onChangeLanguage()" class="cnpPromoHeaderLinks notSelectable">{{ 'global_languageCode' | translate }}</div><span class="cnpPromoHeaderLinksSeparator notSelectable">
-				<md-button class="cnpPromoHeaderButton md-button md-button md-default-theme notSelectable" style="  color: rgb(96, 93, 91);
-				background: rgb(227, 227, 227);  text-shadow: 0px 1px 1px #FFF;">Contact Us</md-button>
-				<md-button class="cnpPromoHeaderButton md-button md-primary md-raised md-button md-default-theme notSelectable">Login</md-button>
+	</div> -->
+	</md-sidenav>
+	<div flex style="
+		width: 100%;">
+		<md-toolbar id="cnpPromoMainToolbar" style="z-index: 1;">
+		<div layout="column" layout-align="start center">
+			<div id="top" class="cnpHeader" layout="row"  layout-align="space-between center">
+				<div layout="row" layout-align="start center">
+					<div ng-click="openLeftSidenav()" class="cnpInputIcon cnpMenuIcon notSelectable" id="cnpPromoMenuIcon" hide-gt-sm>
+						
+					</div>
+					<img class="cnpCompanyLogo notSelectable" src="apps/conspector/img/logo_conspector.png"/>
+				</div>
+				<div layout="row" layout-align="end center" hide-sm>
+					<div ng-click="onGoHome()" class="cnpPromoHeaderLinks notSelectable">{{ 'global_home' | translate }}</div><span class="cnpPromoHeaderLinksSeparator notSelectable">|</span>
+					<div ng-click="onGoAboutUs()" class="cnpPromoHeaderLinks notSelectable">{{ 'global_aboutUs' | translate }}</div><span class="cnpPromoHeaderLinksSeparator notSelectable">|</span>
+					<div ng-click="onChangeLanguage()" class="cnpPromoHeaderLinks notSelectable">{{ 'global_languageCode' | translate }}
+					</div>
+					<md-button ng-click="onGoContact()" class="cnpPromoHeaderButton md-button md-button md-default-theme notSelectable" style="  color: rgb(96, 93, 91);
+					background: rgb(227, 227, 227);  text-shadow: 0px 1px 1px #FFF;">{{ 'global_contact' | translate }}</md-button>
+					<md-button ng-href="http://app.conspector.com/" class="cnpPromoHeaderButton md-button md-primary md-raised md-button md-default-theme notSelectable">{{ 'global_login' | translate }}</md-button>
+				</div>
 			</div>
 		</div>
-	</div>
-	</md-toolbar>
-<!-- 	<md-toolbar style="  z-index: 1;" md-scroll-shrink>
-	<div layout="column" layout-align="start center">
-		<div id="top" class="cnpHeader" layout="row"  layout-align="space-between center">
-			<div layout="row" layout-align="start center">
-				<div ng-click="toggleLeftSidenav()" class="cnpInputIcon cnpMenuIcon notSelectable" id="cnpPromoMenuIcon" hide-gt-sm>
-					
+		</md-toolbar>
+		<!-- 	<md-toolbar style="  z-index: 1;" md-scroll-shrink>
+		<div layout="column" layout-align="start center">
+				<div id="top" class="cnpHeader" layout="row"  layout-align="space-between center">
+							<div layout="row" layout-align="start center">
+										<div ng-click="toggleLeftSidenav()" class="cnpInputIcon cnpMenuIcon notSelectable" id="cnpPromoMenuIcon" hide-gt-sm>
+													
+										</div>
+										<img class="cnpCompanyLogo notSelectable" src="apps/conspector/img/logo_conspector.png"/>
+							</div>
+							<div layout="row" layout-align="end center" hide-sm>
+										<div class="cnpPromoHeaderLinks notSelectable">Pricing</div>|
+										<div class="cnpPromoHeaderLinks notSelectable">Support</div>
+										<md-button class="cnpPromoHeaderButton md-button md-button md-default-theme notSelectable" style="  color: rgb(96, 93, 91);
+										background: rgb(227, 227, 227);  text-shadow: 0px 1px 1px #FFF;">Contact Us</md-button>
+										<md-button class="cnpPromoHeaderButton md-button md-primary md-raised md-button md-default-theme notSelectable">Login</md-button>
+							</div>
 				</div>
-				<img class="cnpCompanyLogo notSelectable" src="apps/conspector/img/logo_conspector.png"/>
-			</div>
-			<div layout="row" layout-align="end center" hide-sm>
-				<div class="cnpPromoHeaderLinks notSelectable">Pricing</div>|
-				<div class="cnpPromoHeaderLinks notSelectable">Support</div>
-				<md-button class="cnpPromoHeaderButton md-button md-button md-default-theme notSelectable" style="  color: rgb(96, 93, 91);
-				background: rgb(227, 227, 227);  text-shadow: 0px 1px 1px #FFF;">Contact Us</md-button>
-				<md-button class="cnpPromoHeaderButton md-button md-primary md-raised md-button md-default-theme notSelectable">Login</md-button>
-			</div>
 		</div>
+		</md-toolbar> -->
+		<!-- 	<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
+		<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle | translate}}">
+		</md-tab>
+		</md-tabs> -->
+		<md-content class="cnpAppViewContent">
+		<div ui-view >
+		</div>
+		</md-content>
+		<!-- <footer class="cnpFooter" layout="column" layout-align="start center">
+			<div layout-sm="column" layout-align-sm="start start" layout-gt-sm="row"  layout-align-gt-sm="start start" class="cnpFooterBlock" flex>
+				<div>
+					<ul>About Us
+						<li>Team
+						</li>
+					</ul>
+				</div>
+				<div>
+					<ul>About Us
+						<li>Team
+						</li>
+					</ul>
+				</div>
+			</div>
+		</footer> -->
+		<!-- 			<md-content class="cnpAppViewContent">
+		</md-content> -->
 	</div>
-	</md-toolbar> -->
-	<!-- 	<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
-	<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle | translate}}">
-	</md-tab>
-	</md-tabs> -->
-	<md-content class="cnpAppViewContent">
-	<div ui-view >
-	</div>
-	</md-content>
-	<!-- 			<md-content class="cnpAppViewContent">
-	</md-content> -->
-</div>
 </div>

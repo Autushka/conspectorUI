@@ -542,6 +542,29 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 			$timeout($mdSidenav('globalLeft').close, 100);
 		};
 
+		$scope.onGoHome = function() {
+			$state.go('app.landingPage');
+			$timeout($mdSidenav('globalLeft').close, 100);
+		};
+
+		$scope.onGoContact = function() {
+			$state.go('app.contactPage');
+			$timeout($mdSidenav('globalLeft').close, 100);
+		};
+
+		$scope.onGoAboutUs = function() {
+			$state.go('app.aboutUsPage');
+			$timeout($mdSidenav('globalLeft').close, 100);
+		};
+
+		// $scope.onGoToApp = function() {
+		// 	$state.go('app.contactPage');
+		// };
+
+		
+		
+		
+
 		// $scope.hoverIn = function() {
 		// 	$scope.bDisplayUserDropdownMenu = true;
 		// };
