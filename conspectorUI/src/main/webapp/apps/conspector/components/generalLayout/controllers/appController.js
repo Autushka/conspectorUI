@@ -88,7 +88,18 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 			$scope.bDisplaySwitchRoles = true;
 		}
 
+		$scope.aMenuItems = [];
+
+		$scope.aMenuItems.push({
+			sTitle: "global_closeMenu"
+		});
+
 		$scope.aTabs = [];
+
+		$scope.onCloseMenu = function(){
+			$timeout($mdSidenav('leftMenu').close, 200);
+		};
+		
 
 		if (cacheProvider.oUserProfile.oCurrentRoleSettings && rolesSettings.getRolesMainMenuItemSettings({
 			sRole: sCurrentRole,
@@ -530,8 +541,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 			loadNotifications(iPageNumber);
 		};
 
-		$scope.toggleLeftSidenav = function() {
-			$mdSidenav('globalLeft').toggle();
+		$scope.onOpenMenu = function() {
+			$mdSidenav('leftMenu').open();
 		};
 
 		$scope.hoverIn = function() {

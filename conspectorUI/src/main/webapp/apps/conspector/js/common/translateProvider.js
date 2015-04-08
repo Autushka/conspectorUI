@@ -156,6 +156,8 @@ app.config(['$translateProvider',
                   global_showProspect: 'Display prospects',
                   global_isProspect: 'Is a prospect',
 
+                  global_closeMenu: 'Close Menu',
+
                   //hybrid
                   hybrid_quickAddMenuItem: 'Deficiency QuickAdd',
                   hybrid_deficienciesListItem: 'Deficiencies List',
@@ -626,6 +628,7 @@ app.config(['$translateProvider',
                   global_showProspect: 'Afficher clients potentiels',
                   global_isProspect: 'Est un client potentiel',
 
+                  global_closeMenu: 'Fermer menu',
 
                   //hybrid
                   hybrid_quickAddMenuItem: 'Ajouter d\u00E9ficience',

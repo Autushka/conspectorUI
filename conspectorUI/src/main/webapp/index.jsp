@@ -94,7 +94,7 @@
 		<!--Minification starts here-->
 
 		<!--WEBAPP CONTROLLERS -->	
-		<!--
+		
 		<script src="apps/conspector/components/userManagement/controllers/signInController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/forgotPasswordController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/companySelectionController.js"></script>
@@ -152,9 +152,9 @@
 
 		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>	
 		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	
-		-->
 		
 		
+		<!--
   		
 		<%@page import="java.util.Random" %>
 		<%
@@ -163,7 +163,7 @@
 		%>		
  		<script src="dist/conspector.min.js?number=<%=n%>"></script> 
  		
-
+	-->
 	</head>
 	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%; overflow: hidden;" ng-click="$root.hideGallery()">
 		<!-- <div ng-show="$root.showSpinner" layout="row" layout-align="center center" style="position: absolute; z-index: 2; height: 100%; width: 100%;">
