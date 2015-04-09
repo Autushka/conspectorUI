@@ -3,44 +3,49 @@
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
 	Menu
 	</md-toolbar>
-	<md-button ng-click="onCloseMenu()" class="md-button cnpSidebarButton cnpInputIcon cnpOpenRightSideNavIcon cnpDefaultColor">{{ 'global_closeMenu' | translate }}</md-button>
-	<md-divider ng-if="bDisplayProfileSettings"></md-divider>
-	<md-button ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">{{ 'profileSettings_profileDetails' | translate }}</md-button>
+	<md-button ng-click="onCloseMenu()" class="md-button cnpSidebarButton cnpInputIcon cnpOpenRightSideNavIcon cnpDefaultColor">{{ ::'global_closeMenu' | translate }}</md-button>
+	<md-subheader class="md-no-sticky">What do you want to do ?</md-subheader>
+	<div ng-repeat="sideMenuItem in aSideMenuItems">
+		<md-button ng-click="onSideMenuItemClicked(sideMenuItem, $event)" class="md-button cnpSidebarButton cnpInputIcon cnpDefaultColor">{{ ::sideMenuItem.sTitle | translate }}</md-button>
+		<md-divider md-inset ng-if="!$last"></md-divider>
+	</div>
+	<md-subheader class="md-no-sticky">Settings</md-subheader>
+	<md-button ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">{{ ::'profileSettings_profileDetails' | translate }}</md-button>
 	<md-divider ng-if="bDisplaySwitchCompanies" md-inset></md-divider>
-	<md-button ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">{{ 'app_switchCompanies' | translate}}</md-button>
+	<md-button ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">{{ ::'app_switchCompanies' | translate}}</md-button>
 	<md-divider ng-if="bDisplaySwitchRoles" md-inset></md-divider>
-	<md-button ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">{{ 'app_switchRoles' | translate}}</md-button>
+	<md-button ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">{{ ::'app_switchRoles' | translate}}</md-button>
 	<md-divider ng-if="bDisplayAdminPanel" md-inset></md-divider>
-	<md-button ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">{{'app_adminPanel' | translate}}</md-button>
+	<md-button ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">{{ ::'app_adminPanel' | translate}}</md-button>
 	<md-divider md-inset></md-divider>
+	<md-button ng-click="onLogOut()" class="md-button cnpSidebarButton cnpInputIcon cnpDefaultColor">{{ ::'app_logOut' | translate }}</md-button>
+	<md-subheader class="md-no-sticky">Language</md-subheader>
 	<md-button ng-click="onChangeLanguage()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">{{ 'signIn_languageCode' | translate }}</md-button>
-	<md-divider></md-divider>
-	<md-button ng-click="onLogOut()" class="md-button cnpSidebarButton cnpInputIcon cnpDefaultColor">{{ 'app_logOut' | translate }}</md-button>
-
-		<!-- <div ng-repeat="menuItem in aMenuItems">
-		<md-button class="md-button cnpSidebarButton cnpInputIcon cnpOpenRightSideNavIcon cnpDefaultColor">{{ menuItem.sTitle | translate }}</md-button>
-		<md-divider md-inset></md-divider>
-	</div> -->
+	
+	
 	</md-sidenav>
 	<md-toolbar style="z-index: 5;">
 	<div id="top" class="cnpHeader" layout="row"  layout-align="space-between center">
 		<div layout="row" layout-align="start center">
 			<div ng-click="onOpenMenu()" class="cnpInputIcon cnpMenuIcon notSelectable">
 			</div>
-			<img class="cnpCompanyLogo" ng-src="{{$root.sLogoUrl}}"/>
+			<img  class="cnpCompanyLogo" ng-src="{{::$root.sLogoUrl}}"/>
+			<!-- ng if might cause issues... -->
 			<div
 				class="cnpMultiSelectProjectsAndPhases"
 				multi-select
 				input-model="globalProjectsWithPhases"
-				default-label="<cnpMultiSelectProjectsAndPhasesDefaultLabel>{{'global_selectedProjectsAndPhases' | translate }}</cnpMultiSelectProjectsAndPhasesDefaultLabel>"
+				default-label="<cnpMultiSelectProjectsAndPhasesDefaultLabel>{{::'global_selectedProjectsAndPhases' | translate }}</cnpMultiSelectProjectsAndPhasesDefaultLabel>"
 				button-label="fullName"
 				item-label="name"
 				tick-property="ticked"
 				group-property="multiSelectGroup"
 				on-close="onGlobalUserPhasesChanged()"
 				max-labels="2"
-				directive-id="multiSelectFull" >
+				directive-id="multiSelectFull"
+				ng-if="!bMobileMode"  >
 			</div>
+			
 		</div>
 		<div layout="row" layout-align="end center">
 			<div ng-click="toggleRightSidenav()" class="cnpInputIcon cnpNotificationsIcon notSelectable" style="position: relative;
@@ -53,101 +58,123 @@
 					
 				</div>
 			</div>
-			<div class="notSelectable" ng-class="{'cnpUserDropdownMenuWrapper': !bDisplayUserDropdownMenu, 'cnpUserDropdownMenuWrapper active': bDisplayUserDropdownMenu}" ng-init="bDisplayUserDropdownMenu = false" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
-				<div class="cnpUserDropdownMenu"  layout="column" layout-align="start center">
-					<div ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
-						{{'app_switchCompanies' | translate}}
-					</div>
-					<div ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
-						{{::'app_switchRoles' | translate}}
-					</div>
-					<div ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
-						{{::'app_adminPanel' | translate}}
-					</div>
-					<div ng-if="bDisplayProfileSettings" class="cnpLink cnpLinkHeaderInDownDown" ng-click="onProfileSettings()" >
-						{{::'profileSettings_profileDetails' | translate}}
-					</div>
-					<div ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeaderInDownDown">
-						{{'signIn_languageCode' | translate}}
-					</div>
-					<div ng-click="onLogOut()" class="cnpLink cnpLinkHeaderInDownDown notSelectable" style="border-bottom-width: 0; padding-bottom:0;">
-						{{::'app_logOut' | translate}}
-					</div>
-				</div>
-				{{::sCurrentUser}}
+			<!-- <img ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" ng-src="{{::sAvatarUrl}}" style="width: 40px;
+			height: 40px;
+			/* padding: 16px; */
+			margin: 16px 16px 16px 32px;
+			cursor: pointer;"/> -->
+			<avatar ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" user="oUserProfile" size="medium"></avatar>
+			<!-- <avatar email="sUserEmail2" size="small"></avatar> -->
+			<!-- <div class="notSelectable" ng-class="{'cnpUserDropdownMenuWrapper': !bDisplayUserDropdownMenu, 'cnpUserDropdownMenuWrapper active': bDisplayUserDropdownMenu}" ng-init="bDisplayUserDropdownMenu = false" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"> -->
+			<!-- <div class="cnpUserDropdownMenu"  layout="column" layout-align="start center">
+							<div ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
+											{{::'app_switchCompanies' | translate}}
+							</div>
+							<div ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
+											{{::'app_switchRoles' | translate}}
+							</div>
+							<div ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
+											{{::'app_adminPanel' | translate}}
+							</div>
+							<div ng-if="bDisplayProfileSettings" class="cnpLink cnpLinkHeaderInDownDown" ng-click="onProfileSettings()" >
+											{{::'profileSettings_profileDetails' | translate}}
+							</div>
+							<div ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeaderInDownDown">
+											{{'signIn_languageCode' | translate}}
+							</div>
+							<div ng-click="onLogOut()" class="cnpLink cnpLinkHeaderInDownDown notSelectable" style="border-bottom-width: 0; padding-bottom:0;">
+											{{::'app_logOut' | translate}}
+							</div>
+			</div> -->
+			<!-- 	{{::sCurrentUser}}
+		</div> -->
+		<!-- add notifications counter -->
+		
+	</div>
+</div>
+</md-toolbar>
+<md-tabs ng-if="!bMobileMode" class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
+<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{::tab.sTitle | translate}}">
+</md-tab>
+</md-tabs>
+<div ui-view class="cnpAppViewContent">
+</div>
+<!-- 			<md-content class="cnpAppViewContent">
+</md-content> -->
+<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight">
+<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
+{{::'notificationsList_title' | translate}}
+</md-toolbar>
+<div ng-repeat="notification in aNotifications">
+	<md-button class="md-button cnpSidebarButton cnpDefaultColor">
+	<div layout="column" layout-align="center start" ng-class="{'cnpNgTableNotification': notification.sStatus === 'not read', 'cnpNgTableNotification cnpNgTableNotificationRead': notification.sStatus === 'read'}">
+		
+		<div layout="row" layout-align="start center">
+			<img ng-src="{{notification.sAvatarUrl}}" style="width:30px; height:30px;"/>
+			<div class="cnpNgTableNotificationText" flex>
+				
+				{{notification.sAuthor}} {{notification.sOperationName}}
+				
 			</div>
-			<!-- add notifications counter -->
-			
 		</div>
-	</div>
-	</md-toolbar>
-	<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
-	<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle | translate}}">
-	</md-tab>
-	</md-tabs>
-	
-	<div ui-view class="cnpAppViewContent">
-	</div>
-	<!-- 			<md-content class="cnpAppViewContent">
-	</md-content> -->
-	<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight">
-	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
-	<label class="cnpSidebarTitle">
-		{{'notificationsList_title' | translate}}
-	</label>
-	</md-toolbar>
-	<md-content class="cnpSidenavElements">  <!-- ng-controller="LeftCtrl" -->
-	<div class="cnpContent cnpContentNotificationsList" layout="column">
-		<div flex layout="column" layout-align="start center" class="md-default-theme cnpActionBar">
-			<md-button class="md-button cnpSidebarButton" ng-click="onMarkAllAsRead()">{{'global_markAllAsRead' | translate}}</md-button>
-			<md-button class="md-button cnpSidebarButton" ng-click="onDismissAll()">{{'global_dismissAll' | translate}}</md-button>
+		<div class="cnpNgTableCommentCreationDate">
+			{{notification.sCreatedAt}}
 		</div>
-		<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
-			<table ng-table="tableParams" class="cnpNgTable" id="notificationsList" show-filter="false">
-				<thead>
-				</thead>
-				<tbody ng-repeat="group in $groups">
-					<tr class="ng-table-group notSelectable" >
-						<td colspan="{{$columns.length}}" style="overflow: visible; padding-left: 0; padding-right: 0" >
-							<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">
-								{{ group.value }}
-							</div>
-							
-						</td>
-					</tr>
-					<tr ng-hide="group.$hideRows" ng-repeat="notification in group.data" ng-click="onDisplay(notification, $event)">
-						<td data-title="'global_operationName' | translate" sortable="'sOperationName'" filter="{'sOperationName': 'text'}">
-							<div layout="column" layout-align="center start" ng-class="{'cnpNgTableNotification': notification.sStatus === 'not read', 'cnpNgTableNotification cnpNgTableNotificationRead': notification.sStatus === 'read'}">
-								
-								<div layout="row" layout-align="start center">
-									<img ng-src="{{notification.sAvatarUrl}}" style="width:30px; height:30px;"/>
-									<div class="cnpNgTableNotificationText" flex>
-										
-										{{notification.sAuthor}} {{notification.sOperationName}} <!-- {{'notificationsList_byAuthor' | translate}} -->
-										
-									</div>
-								</div>
-								<div class="cnpNgTableCommentCreationDate">
-									<!-- {{'notificationsList_onDate' | translate}} -->{{notification.sCreatedAt}}
-								</div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-				<tr ng-if="$groups.length == 0">
-					<td colspan="{{$columns.length}}">
-						<div layout="row" layout-align="start center">
-							<div>
-								{{'notificationsList_noNotification' | translate}}
-							</div>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div>{{iDisplayedNotificationsNumber}}/{{iTotalNotificationsNumber}}</div>
-		<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpButtonMarginRight notSelectable" ng-click="onShowMore()">{{'global_showMore' | translate}}</md-button>
-	</div>
-	</md-content>
-	</md-sidenav>
+	</div></md-button>
+	<md-divider ng-if="!$last"></md-divider>
+</div>
+<!-- <md-content class="cnpSidenavElements">
+<div class="cnpContent cnpContentNotificationsList" layout="column">
+				<div flex layout="column" layout-align="start center" class="md-default-theme cnpActionBar">
+								<md-button class="md-button cnpSidebarButton" ng-click="onMarkAllAsRead()">{{'global_markAllAsRead' | translate}}</md-button>
+								<md-button class="md-button cnpSidebarButton" ng-click="onDismissAll()">{{'global_dismissAll' | translate}}</md-button>
+				</div>
+				<div layout="row" layout-align="start start" class="cnpNgTableWrapper">
+								<table ng-table="tableParams" class="cnpNgTable" id="notificationsList" show-filter="false">
+												<thead>
+												</thead>
+												<tbody ng-repeat="group in $groups">
+																<tr class="ng-table-group notSelectable" >
+																				<td colspan="{{$columns.length}}" style="overflow: visible; padding-left: 0; padding-right: 0" >
+																								<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">
+																												{{ group.value }}
+																								</div>
+																								
+																				</td>
+																</tr>
+																<tr ng-hide="group.$hideRows" ng-repeat="notification in group.data" ng-click="onDisplay(notification, $event)">
+																				<td data-title="'global_operationName' | translate" sortable="'sOperationName'" filter="{'sOperationName': 'text'}">
+																								<div layout="column" layout-align="center start" ng-class="{'cnpNgTableNotification': notification.sStatus === 'not read', 'cnpNgTableNotification cnpNgTableNotificationRead': notification.sStatus === 'read'}">
+																												
+																												<div layout="row" layout-align="start center">
+																																<img ng-src="{{notification.sAvatarUrl}}" style="width:30px; height:30px;"/>
+																																<div class="cnpNgTableNotificationText" flex>
+																																				
+																																				{{notification.sAuthor}} {{notification.sOperationName}}
+																																				
+																																</div>
+																												</div>
+																												<div class="cnpNgTableCommentCreationDate">
+																																{{notification.sCreatedAt}}
+																												</div>
+																								</div>
+																				</td>
+																</tr>
+												</tbody>
+												<tr ng-if="$groups.length == 0">
+																<td colspan="{{$columns.length}}">
+																				<div layout="row" layout-align="start center">
+																								<div>
+																												{{'notificationsList_noNotification' | translate}}
+																								</div>
+																				</div>
+																</td>
+												</tr>
+								</table>
+				</div>
+				<div>{{iDisplayedNotificationsNumber}}/{{iTotalNotificationsNumber}}</div>
+				<md-button type="submit" class="md-button md-primary md-raised cnpButtonWithIcon cnpInputIcon cnpButtonMarginRight notSelectable" ng-click="onShowMore()">{{'global_showMore' | translate}}</md-button>
+</div>
+</md-content> -->
+</md-sidenav>
 </div>

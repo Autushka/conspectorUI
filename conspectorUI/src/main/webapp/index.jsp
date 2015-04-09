@@ -24,7 +24,7 @@
 		
 		<!-- COMMON JS DEPENDENCIES -->
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
-		<script src="bower_components/angular/angular.min.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-route/angular-route.min.js"></script>
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<script src="bower_components/angular-animate/angular-animate.min.js"></script>
@@ -83,10 +83,12 @@
 		<script src="apps/conspector/js/common/apiProvider.js"></script>
 		<script src="apps/conspector/js/rolesSettings.js"></script>			
 		<script src="apps/conspector/js/common/servicesProvider.js"></script>
+		<script src="apps/conspector/js/common/notificationsProvider.js"></script>
 		<script src="apps/conspector/js/common/historyProvider.js"></script>
 		<script src="apps/conspector/js/common/filtersProvider.js"></script>
 		<script src="apps/conspector/js/common/controlsProvider.js"></script>						
 		<script src="apps/conspector/js/mainController.js"></script>
+
 
 		<!--MOBILE CONTROLLERS -->	
 		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListMobileController.js"></script>
@@ -153,7 +155,7 @@
 		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>	
 		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	
 		
-		
+		<script src="apps/conspector/directives/dirAvatar.js"></script>
 		<!--
   		
 		<%@page import="java.util.Random" %>

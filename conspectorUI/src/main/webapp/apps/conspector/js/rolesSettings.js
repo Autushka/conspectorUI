@@ -393,7 +393,7 @@ app.factory('rolesSettings', ['cacheProvider', 'utilsProvider', 'apiProvider', '
 			contractor: {
 				//sInitialState: "app.deficienciesList",
 				sInitialState: "app.deficienciesList",
-				sInitialStateMobile: "deficienciesListHybridWrapper.deficienciesSearchHybrid",
+				sInitialStateMobile: "app.deficienciesList",
 				bIsGlobalUserAdministrator: false,
 				oMainMenu: {
 					bShowDeficiencies: true,

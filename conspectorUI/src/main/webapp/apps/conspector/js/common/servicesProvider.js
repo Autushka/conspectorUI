@@ -656,6 +656,14 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 				return CONSTANTS.sAppAbsolutePath + "rest/file/v2/get/" + sFileMetadataGuid;
 			},
 
+			constructUserAvatarUrl: function(email) {
+                var MD5 = new Hashes.MD5;
+                if (email === "") {
+                    email = "deficien@cyDetails.com";
+                }
+                return sAvatarUrl = "http://www.gravatar.com/avatar/" + MD5.hex(email) + ".png?d=identicon";
+            },
+
 			constructLogoUrl: function() {
 				// var onSuccessCompanyLoaded = function(oData){
 				// 	if(oData.LogoFileMetadataSetDetails && oData.LogoFileMetadataSetDetails.FileMetadataDetails && oData.LogoFileMetadataSetDetails.FileMetadataDetails.results.length){

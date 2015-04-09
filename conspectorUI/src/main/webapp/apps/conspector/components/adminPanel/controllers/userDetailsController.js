@@ -9,6 +9,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 		$scope.bShowBackButton = historyProvider.aHistoryStates.length > 0 ? true : false;
 
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
+		$scope.oUserProfile = cacheProvider.oUserProfile;
 		$scope.bIsGlobalUserAdministrator = rolesSettings[sCurrentRole].bIsGlobalUserAdministrator;
 		$scope.bDisplayEditButton = rolesSettings.getRolesSettingsForEntityAndOperation({
 			sRole: sCurrentRole,
@@ -91,15 +92,7 @@ viewControllers.controller('userDetailsView', ['$scope', '$rootScope', '$state',
 			}
 			
 			$scope.oUser._sLanguage = oUser.Language;
-			if (oUser.AvatarFileGuid) {
-				$scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + oUser.AvatarFileGuid;
-			} else {
-				var MD5 = new Hashes.MD5;
-				var sUserEmailHash = MD5.hex($scope.oUser.sEmail);
-				$scope.oUser.sAvatarUrl = "http://www.gravatar.com/avatar/" + sUserEmailHash + ".png?d=identicon&s=200";
-				// $scope.oUser.sAvatarUrl = $window.location.origin + $window.location.pathname + "img/noAvatar.jpg";
-				
-			}
+
 			oUserWrapper.aData[0] = angular.copy($scope.oUser);
 		}
 

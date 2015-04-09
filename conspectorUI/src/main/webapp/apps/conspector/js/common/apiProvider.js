@@ -7,6 +7,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				var aUserRoles = [];
 				var aUserPhases = [];
 				var aUserContacts = [];
+				var sEmail = "";
+				var sAvatarFileGuid = "";
 				var sCreatedAt = "";
 				var sLastModifiedAt = "";
 				var bIsInitialPassword = false;
@@ -15,6 +17,10 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				var onSuccess = function(oData) {
 					bIsInitialPassword = oData.d.IsPasswordInitial;
 					sLastModifiedAt = oData.d.LastModifiedAt;
+					
+					sEmail = oData.d.EMail;
+					
+					sAvatarFileGuid = oData.d.AvatarFileGuid;
 					for (var i = 0; i < oData.d.CompanyDetails.results.length; i++) {
 						if (!oData.d.CompanyDetails.results[i].GeneralAttributes.IsDeleted) {
 							aUserCompanies.push(oData.d.CompanyDetails.results[i]);
@@ -49,6 +55,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				});
 				return {
 					sUserName: sUserName,
+					sEmail: sEmail,
+					sAvatarFileGuid: sAvatarFileGuid,
 					aUserRoles: aUserRoles, //will contain list of user roles for the current company
 					aAllUserRoles: aUserRoles, //will contain list of user roles for all users compnanies
 					aUserPhases: aUserPhases, //will contain list of user phases for the current company
