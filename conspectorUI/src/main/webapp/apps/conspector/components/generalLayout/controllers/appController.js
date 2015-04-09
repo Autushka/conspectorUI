@@ -1,6 +1,6 @@
 viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSidenav', '$window', 'servicesProvider', 'notificationsProvider', '$translate', 'cacheProvider', 'rolesSettings', '$cookieStore', 'historyProvider', 'apiProvider', 'utilsProvider', '$filter', '$timeout', 'CONSTANTS',
     function($scope, $rootScope, $state, $mdSidenav, $window, servicesProvider, notificationsProvider, $translate, cacheProvider, rolesSettings, $cookieStore, historyProvider, apiProvider, utilsProvider, $filter, $timeout, CONSTANTS) {
-
+    	
         var sCurrentUser = cacheProvider.oUserProfile.sUserName;
         var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
         var aSelectedPhases = [];
@@ -13,6 +13,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         $scope.sCurrentUser = sCurrentUser;
         $scope.oUserProfile = cacheProvider.oUserProfile;
+        $scope.sCurrentLanguage = $translate.use();
         // $scope.sAvatarUrl = servicesProvider.constructUserAvatarUrl($scope.sUserEmail);
         // $scope.sUserEmail2 = 'phil2@conspector.com';
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation (i.e. switch role/company views)	
@@ -300,6 +301,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
             // var aData = oData.results;
             $scope.aNotifications = oData.results;
+
             $scope.iTotalNotificationsNumber = oData.__count;
 
             // for (var i = 0; i < aData.length; i++) {
@@ -367,7 +369,6 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             //         sAuthor = sAuthor + aData[i].ContactDetails.LastName;
             //     }
             // }
-            var sUserEmail = "";
             // if (aData[i].ContactDetails && aData[i].ContactDetails.UserDetails && aData[i].ContactDetails.UserDetails.results[0]) {
             //     sUserEmail = aData[i].ContactDetails.UserDetails.results[0].EMail;
             // }
@@ -389,7 +390,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             // });
 
 
-            $scope.iDisplayedNotificationsNumber = oNotificationsListData.aData.length;
+            $scope.iDisplayedNotificationsNumber = $scope.aNotifications.length;
             // $scope.tableParams.reload();
             $timeout(function() {
                 if ($(".cnpAppView")[0]) {
@@ -572,6 +573,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         $scope.onChangeLanguage = function() {
             servicesProvider.changeLanguage();
+            
             //need to tell user to refresh the page
             $scope.onCloseMenu();
         };

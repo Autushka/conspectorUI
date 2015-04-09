@@ -10,6 +10,7 @@ angular.module('conspector').directive('avatar', ['$window',
             template: '<img src="{{ url }}" style="height: {{ sizeInPx }}px; width: {{ sizeInPx }}px;"/>',
             link: function(scope, element, attrs) {
                 // scope.url = url;
+                scope.url = "";
                 if (scope.size === 'small') {
                     scope.sizeInPx = '30';
                 }

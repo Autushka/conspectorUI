@@ -25,6 +25,7 @@
 		<!-- COMMON JS DEPENDENCIES -->
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
 		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
 		<script src="bower_components/angular-route/angular-route.min.js"></script>
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<script src="bower_components/angular-animate/angular-animate.min.js"></script>
@@ -156,6 +157,7 @@
 		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	
 		
 		<script src="apps/conspector/directives/dirAvatar.js"></script>
+		<script src="apps/conspector/directives/dirDate.js"></script>
 		<!--
   		
 		<%@page import="java.util.Random" %>

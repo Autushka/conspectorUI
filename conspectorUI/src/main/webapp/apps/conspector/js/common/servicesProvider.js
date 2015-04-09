@@ -1,14 +1,16 @@
-app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', '$rootScope',
-	function($rootScope, $state, ngTableParams, $translate, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard, $rootScope) {
+app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$translate', 'tmhDynamicLocale', 'utilsProvider', 'cacheProvider', 'apiProvider', 'dataProvider', 'rolesSettings', '$cookieStore', '$window', '$filter', '$mdDialog', '$upload', 'CONSTANTS', '$cordovaKeyboard', '$rootScope',
+	function($rootScope, $state, ngTableParams, $translate, tmhDynamicLocale, utilsProvider, cacheProvider, apiProvider, dataProvider, rolesSettings, $cookieStore, $window, $filter, $mdDialog, $upload, CONSTANTS, $cordovaKeyboard, $rootScope) {
 		return {
 			changeLanguage: function() {
 				var sCurrentLanguageKey = $translate.use();
 				switch (sCurrentLanguageKey) {
 					case 'en':
 						$translate.use('fr');
+						tmhDynamicLocale.set('fr');
 						break;
 					case 'fr':
 						$translate.use('en');
+						tmhDynamicLocale.set('en');
 						break;
 				}
 				$rootScope.$emit('languageChanged');
