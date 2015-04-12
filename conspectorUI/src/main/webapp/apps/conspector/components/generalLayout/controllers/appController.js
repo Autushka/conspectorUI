@@ -1,21 +1,17 @@
 viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSidenav', '$window', 'servicesProvider', 'notificationsProvider', '$translate', 'cacheProvider', 'rolesSettings', '$cookieStore', 'historyProvider', 'apiProvider', 'utilsProvider', '$filter', '$timeout', 'CONSTANTS',
     function($scope, $rootScope, $state, $mdSidenav, $window, servicesProvider, notificationsProvider, $translate, cacheProvider, rolesSettings, $cookieStore, historyProvider, apiProvider, utilsProvider, $filter, $timeout, CONSTANTS) {
-    	
+
+        $scope.bMobileMode = bMobileMode;
         var sCurrentUser = cacheProvider.oUserProfile.sUserName;
         var sCompany = cacheProvider.oUserProfile.sCurrentCompany;
         var aSelectedPhases = [];
         var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
-        
-        $scope.bMobileMode = bMobileMode;
-
         var iPageNumber = 1;
         $scope.iDisplayedNotificationsNumber = 0
 
         $scope.sCurrentUser = sCurrentUser;
         $scope.oUserProfile = cacheProvider.oUserProfile;
         $scope.sCurrentLanguage = $translate.use();
-        // $scope.sAvatarUrl = servicesProvider.constructUserAvatarUrl($scope.sUserEmail);
-        // $scope.sUserEmail2 = 'phil2@conspector.com';
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation (i.e. switch role/company views)	
         $rootScope.oStateParams = {}; // for backNavigation
 
@@ -285,119 +281,20 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
         });
 
+        $scope.aNotifications = [];
+
+        // $scope.$watch($scope.aNotifications.length, function() {
+
+        // }, true);
+
         var onNotificationsLoaded = function(oData) {
-            // var sProjectName = "";
-            // var sPhaseName = "";
-            // var dCurrentDate = new Date();
-            // var sProjectPhase = "";
-            // var bMatchFound = false;
-            // var iSortingSequence = 0;
-            // var sAuthor = "";
-            // var sAvatarUrl = "";
-            // var sStatusSortingSequence = "";
-            // var sStatuseIconUrl = "";
-            // var sStatuseIconGuid = "";
-            // var sStatusDescription = "";
 
-            // var aData = oData.results;
-            $scope.aNotifications = oData.results;
-
+            if (oData.results.length > 0) {
+                $scope.aNotifications = $scope.aNotifications.concat(oData.results);
+            }
+            
             $scope.iTotalNotificationsNumber = oData.__count;
-
-            // for (var i = 0; i < aData.length; i++) {
-            //     sProjectName = "";
-            //     sPhaseName = "";
-            //     sProjectPhase = "";
-            //     iSortingSequence = 0;
-            //     sStatus = "";
-            //     sAuthor = "";
-            //     sAvatarUrl = "";
-
-            //     bMatchFound = false;
-
-            //     if (aData[i].PhaseDetails) {
-            //         iSortingSequence = aData[i].PhaseDetails.GeneralAttributes.SortingSequence;
-            //         sProjectName = $translate.use() === "en" ? aData[i].PhaseDetails.ProjectDetails.NameEN : aData[i].PhaseDetails.ProjectDetails.NameFR;
-            //         if (!sProjectName) {
-            //             sProjectName = aData[i].PhaseDetails.ProjectDetails.NameEN;
-            //         }
-            //         sPhaseName = $translate.use() === "en" ? aData[i].PhaseDetails.NameEN : aData[i].PhaseDetails.NameFR;
-            //         if (!sPhaseName) {
-            //             sPhaseName = aData[i].PhaseDetails.NameEN;
-            //         }
-
-            //         sProjectPhase = sProjectName + " - " + sPhaseName;
-            //     } else {
-            //         sProjectPhase = "Not Assigned";
-            //     }
-
-            //     switch (aData[i].OperationNameFR) {
-            //         case "Une nouvelle d??ficience a ??t?? ajout??e":
-            //             aData[i].OperationNameFR = CONSTANTS.newDeficiencyFR;
-            //             break;
-            //         case "Une d??ficience a ??t?? modifi??e":
-            //             aData[i].OperationNameFR = CONSTANTS.updatedDeficiencyFR;
-            //             break;
-            //         case "Un commentaire a ??t?? ajout??":
-            //             aData[i].OperationNameFR = CONSTANTS.newCommentFR;
-            //             break;
-            //         case "Un ficher a ??t?? ajout??":
-            //             aData[i].OperationNameFR = CONSTANTS.newAttachmentFR;
-            //             break;
-
-            //         case "Une nouvelle d??ficience a ??t?? ajout??e (mobile)":
-            //             aData[i].OperationNameFR = CONSTANTS.newDeficiencyFR + " (mobile)";
-            //             break;
-            //         case "Une d??ficience a ??t?? modifi??e (mobile)":
-            //             aData[i].OperationNameFR = CONSTANTS.updatedDeficiencyFR + " (mobile)";
-            //             break;
-            //         case "Un commentaire a ??t?? ajout?? (mobile)":
-            //             aData[i].OperationNameFR = CONSTANTS.newCommentFR + " (mobile)";
-            //             break;
-            //         case "Un ficher a ??t?? ajout?? (mobile)":
-            //             aData[i].OperationNameFR = CONSTANTS.newAttachmentFR + " (mobile)";
-            //             break;
-            //     }
-
-            // sOperationName = $translate.use() === "en" ? aData[i].OperationNameEN : aData[i].OperationNameFR;
-
-            // if (aData[i].ContactDetails) {
-            //     if (aData[i].ContactDetails.FirstName) {
-            //         sAuthor = aData[i].ContactDetails.FirstName + " ";
-            //     }
-            //     if (aData[i].ContactDetails.LastName) {
-            //         sAuthor = sAuthor + aData[i].ContactDetails.LastName;
-            //     }
-            // }
-            // if (aData[i].ContactDetails && aData[i].ContactDetails.UserDetails && aData[i].ContactDetails.UserDetails.results[0]) {
-            //     sUserEmail = aData[i].ContactDetails.UserDetails.results[0].EMail;
-            // }
-            // $scope.sAvatarUrl = servicesProvider.constructUserAvatarUrl(sUserEmail);
-
-            // oNotificationsListData.aData.push({
-            //     _guid: aData[i].Guid,
-            //     sProjectPhase: sProjectPhase,
-            //     sStatus: aData[i].Status,
-            //     sEntityName: aData[i].EntityName,
-            //     _entityGuid: aData[i].EntityGuid,
-            //     sOperationName: sOperationName,
-            //     _sortingSequence: iSortingSequence,
-            //     _createdAt: aData[i].CreatedAt,
-            //     sCreatedAt: utilsProvider.dBDateToSting(aData[i].CreatedAt),
-            //     sCreatedBy: aData[i].GeneralAttributes.CreatedBy,
-            //     sAuthor: sAuthor,
-            //     sAvatarUrl: sAvatarUrl,
-            // });
-
-
             $scope.iDisplayedNotificationsNumber = $scope.aNotifications.length;
-            // $scope.tableParams.reload();
-            $timeout(function() {
-                if ($(".cnpAppView")[0]) {
-                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("notificationsList");
-                    cacheProvider.putListViewScrollPosition("notificationsList", 0);
-                }
-            }, 0);
         };
 
         var loadNotifications = function(iPageNumber) {
@@ -419,19 +316,18 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         $scope.onDisplay = function(oNotification, oEvent) {
             // cacheProvider.putListViewScrollPosition("notificationsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
-            switch (oNotification.sEntityName) {
+            switch (oNotification.EntityName) {
                 case "deficiency":
-                    $timeout($scope.toggleRightSidenav, 100);
                     $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
                         sMode: "display",
-                        sDeficiencyGuid: oNotification._entityGuid,
+                        sDeficiencyGuid: oNotification.EntityGuid,
                     });
-
+                    $timeout($scope.onCloseNotificationsMenu, 200);
                     break;
             }
 
             apiProvider.updateOperationLog({
-                sKey: oNotification._guid,
+                sKey: oNotification.Guid,
                 oData: {
                     Status: 'read'
                 },
@@ -445,7 +341,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         $scope.$on('notificationsShouldBeRefreshed', function(oParameters) {
             cacheProvider.putListViewScrollPosition("notificationsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
-            oNotificationsListData.aData = [];
+            $scope.aNotifications = [];
             iPageNumber = 1;
             loadNotifications(iPageNumber);
         });
@@ -467,27 +363,30 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         $scope.onMarkAllAsRead = function() {
             var onSuccess = function() {
-                oNotificationsListData.aData = [];
+                $scope.aNotifications = [];
                 iPageNumber = 1;
                 loadNotifications(iPageNumber);
             };
-            var aData = [];
-            for (var i = 0; i < $scope.tableParams.data.length; i++) {
-                for (var j = 0; j < $scope.tableParams.data[i].data.length; j++) {
-                    if ($scope.tableParams.data[i].data[j].sStatus === "not read") {
-                        aData.push({
-                            Guid: $scope.tableParams.data[i].data[j]._guid,
-                            Status: "read",
-                        });
-                    }
-                }
+            // var aData = [];
+            // for (var i = 0; i < $scope.tableParams.data.length; i++) {
+            //     for (var j = 0; j < $scope.tableParams.data[i].data.length; j++) {
+            //         if ($scope.tableParams.data[i].data[j].sStatus === "not read") {
+            //             aData.push({
+            //                 Guid: $scope.tableParams.data[i].data[j]._guid,
+            //                 Status: "read",
+            //             });
+            //         }
+            //     }
+            // }
+            for(var i = 0; i < $scope.aNotifications.length; i++){
+                $scope.aNotifications[i].Status = "read";
             }
 
-            if (!aData.length) {
+            if (!$scope.aNotifications.length) {
                 return;
             }
             apiProvider.updateOperationLogs({
-                aData: aData,
+                aData: $scope.aNotifications,
                 onSuccess: onSuccess,
                 //bShowSuccessMessage: true,
                 //bShowErrorMessage: true,
@@ -496,24 +395,24 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         $scope.onDismissAll = function() {
             var onSuccess = function() {
-                oNotificationsListData.aData = [];
+                $scope.aNotifications = [];
                 iPageNumber = 1;
                 loadNotifications(iPageNumber);
             };
-            var aData = [];
-            for (var i = 0; i < $scope.tableParams.data.length; i++) {
-                for (var j = 0; j < $scope.tableParams.data[i].data.length; j++) {
-                    aData.push({
-                        Guid: $scope.tableParams.data[i].data[j]._guid,
-                    });
-                }
-            }
+            // var aData = [];
+            // for (var i = 0; i < $scope.tableParams.data.length; i++) {
+            //     for (var j = 0; j < $scope.tableParams.data[i].data.length; j++) {
+            //         aData.push({
+            //             Guid: $scope.tableParams.data[i].data[j]._guid,
+            //         });
+            //     }
+            // }
 
-            if (!aData.length) {
+            if (!$scope.aNotifications.length) {
                 return;
             }
             apiProvider.deleteOperationLogs({
-                aData: aData,
+                aData: $scope.aNotifications,
                 onSuccess: onSuccess,
                 //bShowSuccessMessage: true,
                 //bShowErrorMessage: true,
@@ -525,7 +424,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         $scope.onSideMenuItemClicked = function(aSideMenuItem) {
             $state.go(aSideMenuItem.sState);
-            $scope.onCloseMenu();
+            $timeout($scope.onCloseMenu, 200);
         }
 
         $scope.onAdminPanel = function() {
@@ -543,11 +442,19 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
         };
 
         $scope.toggleRightSidenav = function() {
-            oNotificationsListData.aData = [];
+            $scope.aNotifications = [];
             iPageNumber = 1;
             loadNotifications(iPageNumber);
             $timeout($mdSidenav('globalRight').toggle, 200);
             // $mdSidenav('globalRight').toggle();
+        };
+
+        $scope.onOpenNotificationsMenu = function() {
+            $timeout($mdSidenav('globalRight').open, 200);
+        };
+
+        $scope.onCloseNotificationsMenu = function() {
+            $timeout($mdSidenav('globalRight').close, 200);
         };
 
         $scope.onShowMore = function() {
@@ -573,7 +480,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         $scope.onChangeLanguage = function() {
             servicesProvider.changeLanguage();
-            
+
             //need to tell user to refresh the page
             $scope.onCloseMenu();
         };
@@ -589,7 +496,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
         };
 
         $scope.onLogOut = function() {
-        	$scope.onCloseMenu();
+            $scope.onCloseMenu();
             servicesProvider.logOut();
         };
 

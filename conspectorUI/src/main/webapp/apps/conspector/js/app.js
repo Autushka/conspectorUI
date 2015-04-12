@@ -2,7 +2,7 @@ var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalp
 
 var viewControllers = angular.module('viewControllers', []);
 
-var bMobileMode = true;
+var bMobileMode = false;
 
 
 
