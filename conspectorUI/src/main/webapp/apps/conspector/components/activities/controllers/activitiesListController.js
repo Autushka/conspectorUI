@@ -276,8 +276,8 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
             $scope.tableParams.reload();
             if ($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contactDetailsWrapper.contactDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails") {
                 $timeout(function() {
-                    if ($(".cnpAppView")[0]) {
-                        $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("activitiesList");
+                    if ($(".cnpContentWrapper")[0]) {
+                        $(".cnpContentWrapper")[0].scrollTop = cacheProvider.getListViewScrollPosition("activitiesList");
                         cacheProvider.putListViewScrollPosition("activitiesList", 0);
                     }
                 }, 0);
@@ -354,7 +354,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         loadActivities(); //load Activities
 
         $scope.onDisplay = function(oActivity) {
-            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...             
+            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...             
             $state.go('app.activityDetailsWrapper.activityDetails', {
                 sMode: "display",
                 sActivityGuid: oActivity._guid,
@@ -362,7 +362,7 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         };
 
         $scope.onEdit = function(oActivity) {
-            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...              
+            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...              
             $state.go('app.activityDetailsWrapper.activityDetails', {
                 sMode: "edit",
                 sActivityGuid: oActivity._guid,
@@ -399,12 +399,12 @@ viewControllers.controller('activitiesListView', ['$scope', '$rootScope', '$stat
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
             loadActivities();
         });
 
         $scope.$on('activitiesShouldBeRefreshed', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
+            cacheProvider.putListViewScrollPosition("activitiesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...            
             loadActivities();
         });
 

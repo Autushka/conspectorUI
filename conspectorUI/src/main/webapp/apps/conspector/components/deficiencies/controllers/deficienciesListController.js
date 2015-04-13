@@ -314,8 +314,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             $scope.tableParams.reload();
             if ($rootScope.sCurrentStateName !== "app.unitDetailsWrapper.unitDetails" && $rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails") {
                 $timeout(function() {
-                    if ($(".cnpAppView")[0]) {
-                        $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
+                    if ($(".cnpContentWrapper")[0]) {
+                        $(".cnpContentWrapper")[0].scrollTop = cacheProvider.getListViewScrollPosition("deficienciesList");
                         cacheProvider.putListViewScrollPosition("deficienciesList", 0);
                     }
                 }, 0);
@@ -390,7 +390,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         loadDeficiencies();
 
         $scope.onDisplay = function(oDeficiency, oEvent) {
-            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
 
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
@@ -401,8 +401,8 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onEdit = function(oDeficiency) {
-            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
-
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
+            
             $rootScope.sFileMetadataSetGuid = oDeficiency._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oDeficiency._fileMetadataSetLastModifiedAt;
 
@@ -451,12 +451,12 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
             });
         };
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
             loadDeficiencies();
         });
 
         $scope.$on('deficienciesShouldBeRefreshed', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
             loadDeficiencies();
         });
 
@@ -558,7 +558,7 @@ viewControllers.controller('deficienciesListView', ['$scope', '$rootScope', '$st
         };
 
         $scope.onMassSave = function() {
-            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+            cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
             var onSuccess = function() {
                 $scope.aDataForMassChanges = [];
                 loadDeficiencies();

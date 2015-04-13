@@ -121,8 +121,8 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
             }
             $scope.tableParams.reload();
             $timeout(function() {
-                if ($(".cnpAppView")[0]) {
-                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contractorsList");
+                if ($(".cnpContentWrapper")[0]) {
+                    $(".cnpContentWrapper")[0].scrollTop = cacheProvider.getListViewScrollPosition("contractorsList");
                     cacheProvider.putListViewScrollPosition("contractorsList", 0);
                 }
             }, 0);
@@ -146,7 +146,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
         loadContractors(); //load Contractors
 
         $scope.onDisplay = function(oContractor) {
-            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
+            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...            
             $state.go('app.contractorDetailsWrapper.contractorDetails', {
                 sMode: "display",
                 sContractorGuid: oContractor._guid,
@@ -158,7 +158,7 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
         }
 
         $scope.onEdit = function(oContractor) {
-            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
             $state.go('app.contractorDetailsWrapper.contractorDetails', {
                 sMode: "edit",
                 sContractorGuid: oContractor._guid,
@@ -182,12 +182,12 @@ viewControllers.controller('contractorsListView', ['$scope', '$rootScope', '$sta
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position... 
             loadContractors();
         });
 
         $scope.$on('accountsShouldBeRefreshed', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+            cacheProvider.putListViewScrollPosition("contractorsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position... 
             loadContractors();
         });
 

@@ -139,8 +139,8 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
             }
             $scope.tableParams.reload();
             $timeout(function() {
-                if ($(".cnpAppView")[0]) {
-                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("unitsList");
+                if ($(".cnpContentWrapper")[0]) {
+                    $(".cnpContentWrapper")[0].scrollTop = cacheProvider.getListViewScrollPosition("unitsList");
                     cacheProvider.putListViewScrollPosition("unitsList", 0);
                 }
             }, 0);
@@ -177,7 +177,7 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         loadUnits(); //load Units
 
         $scope.onDisplay = function(oUnit) {
-            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
 
             $rootScope.sFileMetadataSetGuid = oUnit._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oUnit._fileMetadataSetLastModifiedAt;
@@ -188,7 +188,7 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         };
 
         $scope.onEdit = function(oUnit) {
-            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
 
             $rootScope.sFileMetadataSetGuid = oUnit._fileMetadataSetGuid;
             $rootScope.sFileMetadataSetLastModifiedAt = oUnit._fileMetadataSetLastModifiedAt;
@@ -211,12 +211,12 @@ viewControllers.controller('unitsListView', ['$scope', '$rootScope', '$state', '
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
+            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...            
             loadUnits();
         });
 
         $scope.$on('accountsShouldBeRefreshed', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
+            cacheProvider.putListViewScrollPosition("unitsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...            
             loadUnits();
         });
 

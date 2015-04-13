@@ -315,7 +315,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
 
             $scope.onDisplay = function(oNotification, oEvent) {
-                // cacheProvider.putListViewScrollPosition("notificationsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...
+                cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...
                 switch (oNotification.EntityName) {
                     case "deficiency":
                         $state.go('app.deficiencyDetailsWrapper.deficiencyDetails', {
@@ -340,7 +340,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             };
 
             $scope.$on('notificationsShouldBeRefreshed', function(oParameters) {
-                cacheProvider.putListViewScrollPosition("notificationsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...            
+                cacheProvider.putListViewScrollPosition("deficienciesList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...            
                 $scope.aNotifications = [];
                 iPageNumber = 1;
                 loadNotifications(iPageNumber);

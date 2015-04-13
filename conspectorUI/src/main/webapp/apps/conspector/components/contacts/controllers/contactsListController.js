@@ -175,8 +175,8 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
             $scope.tableParams.reload();
             if($rootScope.sCurrentStateName !== "app.contractorDetailsWrapper.contractorDetails" && $rootScope.sCurrentStateName !== "app.clientDetailsWrapper.clientDetails"){
             $timeout(function() {
-                if ($(".cnpAppView")[0]) {
-                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("contactsList");
+                if ($(".cnpContentWrapper")[0]) {
+                    $(".cnpContentWrapper")[0].scrollTop = cacheProvider.getListViewScrollPosition("contactsList");
                     cacheProvider.putListViewScrollPosition("contactsList", 0);
                 }
             }, 0);}
@@ -211,7 +211,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         loadContacts();
 
         $scope.onDisplay = function(oContact) {
-            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position... 
 
             if (!sAccountGuid) {
                 sAccountGuid = oContact._accountGuid;
@@ -228,7 +228,7 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         }
 
         $scope.onEdit = function(oContact) {
-            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position... 
 
             if (!sAccountGuid) {
                 sAccountGuid = oContact._accountGuid;
@@ -274,12 +274,12 @@ viewControllers.controller('contactsListView', ['$scope', '$rootScope', '$state'
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position... 
             loadContacts();
         });
 
         $scope.$on('contactsShouldBeRefreshed', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+            cacheProvider.putListViewScrollPosition("contactsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position... 
             loadContacts();
         });
 

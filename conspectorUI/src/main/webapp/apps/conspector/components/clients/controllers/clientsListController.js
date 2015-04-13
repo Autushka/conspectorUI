@@ -120,8 +120,8 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
             }
             $scope.tableParams.reload();
             $timeout(function() {
-                if ($(".cnpAppView")[0]) {
-                    $(".cnpAppView")[0].scrollTop = cacheProvider.getListViewScrollPosition("clientsList");
+                if ($(".cnpContentWrapper")[0]) {
+                    $(".cnpContentWrapper")[0].scrollTop = cacheProvider.getListViewScrollPosition("clientsList");
                     cacheProvider.putListViewScrollPosition("clientsList", 0);                      
                 }
             }, 0);
@@ -153,7 +153,7 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
         loadClients(); //load Clients
 
         $scope.onDisplay = function(oClient) {
-            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position... 
             $state.go('app.clientDetailsWrapper.clientDetails', {
                 sMode: "display",
                 sClientGuid: oClient._guid,
@@ -169,7 +169,7 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
         };
 
         $scope.onEdit = function(oClient) {
-            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position... 
+            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position... 
             $state.go('app.clientDetailsWrapper.clientDetails', {
                 sMode: "edit",
                 sClientGuid: oClient._guid,
@@ -189,12 +189,12 @@ viewControllers.controller('clientsListView', ['$scope', '$rootScope', '$state',
         };
 
         $scope.$on('globalUserPhasesHaveBeenChanged', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...             
+            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...             
             loadClients();
         });
 
         $scope.$on('accountsShouldBeRefreshed', function(oParameters) {
-            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpAppView")[0].scrollTop); //saving scroll position...             
+            cacheProvider.putListViewScrollPosition("clientsList", $(".cnpContentWrapper")[0].scrollTop); //saving scroll position...             
             loadClients();
         });
 
