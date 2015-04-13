@@ -346,20 +346,20 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             loadNotifications(iPageNumber);
         });
 
-        $scope.onStatusChange = function(oNotification) {
-            if (!$scope.bDisplayEditButtons) {
-                return;
-            }
-            oNotification.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aTaskStatuses[(oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
+        // $scope.onStatusChange = function(oNotification) {
+        //     if (!$scope.bDisplayEditButtons) {
+        //         return;
+        //     }
+        //     oNotification.sStatuseIconUrl = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + aTaskStatuses[(oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length].AssociatedIconFileGuid;
 
-            $scope.aDataForMassChanges.push({
-                Guid: oNotification._guid,
-                TaskStatusGuid: aTaskStatuses[(oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length].Guid,
-            });
-            oNotification.sStatusSortingSequence = (oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length;
-            //alert(oNotification._guid);
-            oNotification._guid = "!!!";
-        };
+        //     $scope.aDataForMassChanges.push({
+        //         Guid: oNotification._guid,
+        //         TaskStatusGuid: aTaskStatuses[(oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length].Guid,
+        //     });
+        //     oNotification.sStatusSortingSequence = (oNotification.sStatusSortingSequence + 1) % aTaskStatuses.length;
+        //     alert(oNotification._guid);
+        //     oNotification._guid = "!!!";
+        // };
 
         $scope.onMarkAllAsRead = function() {
             var onSuccess = function() {

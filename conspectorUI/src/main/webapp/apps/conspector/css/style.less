@@ -268,7 +268,7 @@ font-weight: 500;
 		color: #424347;
 		text-align: left;
 		width: 100%;
-  		white-space: pre-line;
+  		white-space: normal;
 		background-position: 28px!important;
 		background-size: 25px!important;
 		&.cnpSidebarButtonCenter{
@@ -930,6 +930,7 @@ APP VIEW
 	height: 100vh;
 	// overflow-y: scroll;
 	overflow-x: hidden;
+	overflow-y: hidden;
 	background-color: @lightGreyBackgroundColor;
 }
 .cnpHeader{
@@ -1493,6 +1494,12 @@ APP VIEW CONTENT
 	background-color: @lightGreyBackgroundColor;
 	// position: relative;
 	  overflow: hidden;
+}
+.cnpAppViewContentMobile{
+	width: 100%;
+	height: ~"calc(100vh - 75px)";
+	margin-bottom: 0px;
+	background-color: @lightGreyBackgroundColor;
 }
 .cnpContentWrapper{
 	// min-height: 550px;
