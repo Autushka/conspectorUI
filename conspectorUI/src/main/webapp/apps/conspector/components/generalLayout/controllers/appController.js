@@ -260,26 +260,26 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
         }
 
         //Notifications logic
-        if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
-            oInitialSortingForNotificationsList = angular.copy(oTableStatusFromCache.oSorting);
-        }
-        var oInitialFilterForNotificationsList = {};
-        if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oFilter, {})) {
-            oInitialFilterForNotificationsList = angular.copy(oTableStatusFromCache.oFilter);
-        }
-        var oInitialGroupsSettingsForNotificationsList = [];
-        if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.aGroups, [])) {
-            oInitialGroupsSettingsForNotificationsList = angular.copy(oTableStatusFromCache.aGroups);
-        }
-        $scope.tableParams = servicesProvider.createNgTable({
-            oInitialDataArrayWrapper: oNotificationsListData,
-            sDisplayedDataArrayName: "aDisplayedNotification",
-            oInitialSorting: oInitialSortingForNotificationsList,
-            oInitialFilter: oInitialFilterForNotificationsList,
-            aInitialGroupsSettings: oInitialGroupsSettingsForNotificationsList,
-            sGroupBy: "sProjectPhase",
-            sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
-        });
+        // if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oSorting, {})) {
+        //     oInitialSortingForNotificationsList = angular.copy(oTableStatusFromCache.oSorting);
+        // }
+        // var oInitialFilterForNotificationsList = {};
+        // if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.oFilter, {})) {
+        //     oInitialFilterForNotificationsList = angular.copy(oTableStatusFromCache.oFilter);
+        // }
+        // var oInitialGroupsSettingsForNotificationsList = [];
+        // if (oTableStatusFromCache && !angular.equals(oTableStatusFromCache.aGroups, [])) {
+        //     oInitialGroupsSettingsForNotificationsList = angular.copy(oTableStatusFromCache.aGroups);
+        // }
+        // $scope.tableParams = servicesProvider.createNgTable({
+        //     oInitialDataArrayWrapper: oNotificationsListData,
+        //     sDisplayedDataArrayName: "aDisplayedNotification",
+        //     oInitialSorting: oInitialSortingForNotificationsList,
+        //     oInitialFilter: oInitialFilterForNotificationsList,
+        //     aInitialGroupsSettings: oInitialGroupsSettingsForNotificationsList,
+        //     sGroupBy: "sProjectPhase",
+        //     sGroupsSortingAttribue: "_sortingSequence" //for default groups sorting
+        // });
 
         $scope.aNotifications = [];
 
@@ -381,6 +381,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             for(var i = 0; i < $scope.aNotifications.length; i++){
                 $scope.aNotifications[i].Status = "read";
             }
+            
 
             if (!$scope.aNotifications.length) {
                 return;
