@@ -1,4 +1,28 @@
-<md-content layout="row" layout="center start" class="cnpContentWrapper">
+<div layout="column" layout="start center" class="cnpContentWrapper">
+    <div class="cnpContent" layout="column">
+        <div layout="row" layout-align="end start" class="md-default-theme cnpContentHeader">
+            <md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenRightSideNavIcon cnpDefaultColor" ng-click="toggleProfileSettingsRightSideNav()">
+                {{::'profileSettings_menuHeader' | translate}}
+            </md-button>
+        </div>
+        <div ui-view style="width: 100%; height: 100%;">
+        </div>
+    </div>
+</div>
+<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="profileSettingsRightSideNav" >
+    <md-list>
+        <md-toolbar class="md-default-theme" layout="column" layout-align="center center">
+            {{::'adminPanel_menuHeader' | translate}}
+        </md-toolbar>
+        <div ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}">
+            <md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton cnpSidebarButtonCenter">
+                {{::menuItem.sMenuLabel | translate}}
+            </md-button>
+            <md-divider></md-divider>
+        </div>
+    </md-list>
+</md-sidenav>
+<!-- <md-content layout="row" layout="center start" class="cnpContentWrapper">
     <md-sidenav class="md-sidenav-left cnpSidenavLeft" md-component-id="left" md-is-locked-open="$media('gt-md')">
         <md-toolbar class="md-default-theme" layout="column" layout-align="center center">
             <label class="cnpSidebarTitle">
@@ -8,15 +32,15 @@
         <div class="cnpSidenavElements">  
             <div ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}">
                 <md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton"> {{menuItem.sMenuLabel | translate}}</md-button>
-            </div>
+            </div> -->
 <!--              <md-button layout="row" layout-align="start center" ng-click="onProfileDetails()" class="md-button cnpSidebarButton">
                       {{'profileSettings_profileDetails' | translate}}
              </md-button>
              <md-button layout="row" layout-align="start center" ng-click="onChangePassword()" class="md-button cnpSidebarButton">
                        {{'profileSettings_changePassword' | translate}}
              </md-button> -->
-        </div>
+<!--         </div>
     </md-sidenav>
        <div ui-view style="width: 100%; height: 100%;">
     </div>
-</md-content>
+</md-content> -->

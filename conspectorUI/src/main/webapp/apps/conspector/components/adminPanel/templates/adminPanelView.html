@@ -2,7 +2,7 @@
     <div class="cnpContent" layout="column">
         <div layout="row" layout-align="end start" class="md-default-theme cnpContentHeader">
             <md-button class="md-button cnpButtonWithIcon cnpInputIcon cnpOpenRightSideNavIcon cnpDefaultColor" ng-click="toggleAdminPanelRightSideNav()">
-            {{'adminPanel_hideSidenav' | translate}}
+            {{::'adminPanel_hideSidenav' | translate}}
             </md-button>
         </div>
         <div ui-view style="width: 100%; height: 100%;">
@@ -10,14 +10,15 @@
     </div>
 </div>
 <md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="adminPanelRightSideNav" >
-<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
-<label class="cnpSidebarTitle">
-    {{'adminPanel_menuHeader' | translate}}
-</label>
-</md-toolbar>
-<md-content class="cnpSidenavElements">  <!-- ng-controller="LeftCtrl" -->
-<div ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}">
-    <md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton"> {{menuItem.sMenuLabel | translate}}</md-button>
-</div>
-</md-content>
+    <md-list>
+        <md-toolbar class="md-default-theme" layout="column" layout-align="center center">
+            {{::'adminPanel_menuHeader' | translate}}
+        </md-toolbar>
+        <div ng-repeat="menuItem in aMenuItems | filter:{bShouldBeDisplayed:true}">
+            <md-button  layout="row" layout-align="start center" ng-click="onMenuItemSelected(menuItem)" class="md-button cnpSidebarButton cnpSidebarButtonCenter">
+                {{::menuItem.sMenuLabel | translate}}
+            </md-button>
+            <md-divider></md-divider>
+        </div>
+    </md-list>
 </md-sidenav>

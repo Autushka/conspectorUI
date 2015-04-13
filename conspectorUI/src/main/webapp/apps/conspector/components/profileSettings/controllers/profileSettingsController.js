@@ -1,23 +1,21 @@
-viewControllers.controller('profileSettingsView', ['$scope', '$state', 'servicesProvider', '$cookieStore', 'cacheProvider', '$window', '$mdSidenav', 'historyProvider', '$translate', 'rolesSettings',
-	function($scope, $state, servicesProvider, $cookieStore, cacheProvider, $window, $mdSidenav, historyProvider, $translate, rolesSettings) {
+viewControllers.controller('profileSettingsView', ['$scope', '$state', 'servicesProvider', '$cookieStore', 'cacheProvider', '$window', '$mdSidenav', 'historyProvider', '$translate', '$timeout', 'rolesSettings',
+	function($scope, $state, servicesProvider, $cookieStore, cacheProvider, $window, $mdSidenav, historyProvider, $translate, $timeout, rolesSettings) {
 		historyProvider.removeHistory(); // because current view doesn't have a back button				
 		cacheProvider.clearOtherViewsScrollPosition("");
 		var sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
 
-		$scope.toggleLeftSidenav = function() {
-			$mdSidenav('left').toggle();
+		$scope.toggleProfileSettingsRightSideNav = function() {
+			$timeout($mdSidenav('profileSettingsRightSideNav').toggle, 200);
 		};
 
 		var navigateToCustomizing = function(sStateName, oStateParams) {
-			if ($mdSidenav('left'))  {
-				$mdSidenav('left').close();
-			}
-
+			
 			if (oStateParams) {
 				$state.go(sStateName, oStateParams);
 			} else {
 				$state.go(sStateName);
 			}
+			$timeout($mdSidenav('profileSettingsRightSideNav').close, 350);
 		};
 
 		$scope.onMenuItemSelected = function(oMenuItem) {

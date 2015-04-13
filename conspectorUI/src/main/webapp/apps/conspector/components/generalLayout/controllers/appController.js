@@ -368,17 +368,6 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
                     iPageNumber = 1;
                     loadNotifications(iPageNumber);
                 };
-                // var aData = [];
-                // for (var i = 0; i < $scope.tableParams.data.length; i++) {
-                //     for (var j = 0; j < $scope.tableParams.data[i].data.length; j++) {
-                //         if ($scope.tableParams.data[i].data[j].sStatus === "not read") {
-                //             aData.push({
-                //                 Guid: $scope.tableParams.data[i].data[j]._guid,
-                //                 Status: "read",
-                //             });
-                //         }
-                //     }
-                // }
                 for (var i = 0; i < $scope.aNotifications.length; i++) {
                     if ($scope.aNotifications[i].Status === "not read") {
                         aData.push({
