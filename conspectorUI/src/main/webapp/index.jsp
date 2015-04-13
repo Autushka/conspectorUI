@@ -156,8 +156,8 @@
 		<script src="apps/conspector/components/attachments/controllers/attachmentsListController.js"></script>	
 		<script src="apps/conspector/components/comments/controllers/commentsListController.js"></script>	
 		
-		<script src="apps/conspector/directives/dirAvatar.js"></script>
-		<script src="apps/conspector/directives/dirDate.js"></script>
+		<script src="apps/conspector/directives/drAvatar.js"></script>
+		<script src="apps/conspector/directives/drDate.js"></script>
 		<!--
   		
 		<%@page import="java.util.Random" %>

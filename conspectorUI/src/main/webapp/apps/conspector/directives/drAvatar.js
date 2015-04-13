@@ -1,4 +1,4 @@
-angular.module('conspector').directive('avatar', ['$window',
+angular.module('conspector').directive('drAvatar', ['$window',
     function($window) {
         return {
             restrict: 'EA',
@@ -21,7 +21,7 @@ angular.module('conspector').directive('avatar', ['$window',
                     scope.sizeInPx = '200';
                 }
                 if (scope.user.sAvatarFileGuid) {
-
+                    // check for path for mobile
                     scope.url = $window.location.origin + $window.location.pathname + "rest/file/v2/get/" + scope.user.sAvatarFileGuid;
 
                 } else {

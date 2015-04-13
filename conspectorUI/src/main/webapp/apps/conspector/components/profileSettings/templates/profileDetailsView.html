@@ -130,7 +130,7 @@
 						</label>
 					</div>
 					<!-- <img style="width: 200px; height: 200px;" ng-src="{{oUser.sAvatarUrl}}"></img> -->
-					<avatar user="oUserProfile" size="large"></avatar>
+					<dr-avatar user="oUserProfile" size="large"></dr-avatar>
 					<button ng-if="(sMode == 'edit' || sMode == 'create')" ng-file-select accept="image/*" ng-file-change="onAvatarSelected($files, $event, $index)">{{'global_upload' | translate}}</button>
 				</div>
 			</div>

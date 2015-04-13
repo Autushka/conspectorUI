@@ -1,6 +1,9 @@
 <div class="cnpAppView" layout="column" layout-align="start center" layout-fill>
 	<md-sidenav class="md-sidenav-left cnpSideNav" md-component-id="leftMenu">
-		<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
+		
+		<!-- add md-content for smooth rendering when opening side panel -->
+		 <md-list>
+		 <md-toolbar class="md-default-theme" layout="column" layout-align="center center">
 			Menu
 		</md-toolbar>
 	<md-button ng-click="onCloseMenu()" class="md-button cnpSidebarButton cnpInputIcon cnpOpenRightSideNavIcon cnpDefaultColor">
@@ -43,6 +46,7 @@
 	<md-button ng-click="onChangeLanguage()" class="md-button cnpSidebarButton cnpInputIcon  cnpDefaultColor">
 		{{ 'signIn_languageCode' | translate }}
 	</md-button>
+	 </md-list>
 		
 	</md-sidenav>
 		<md-toolbar md-scroll-shrink style="z-index: 5;">
@@ -78,14 +82,15 @@
 							{{$root.iNotificationsNumber}}
 						</div>
 					</div>
-					<avatar id="dirAvatar1" ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" user="oUserProfile" size="medium">
-					</avatar>
+					<dr-avatar id="dirAvatar1" ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" user="oUserProfile" size="medium">
+					</dr-avatar>
 				</div>
 			</div>
 		</md-toolbar>
-	<md-content ng-if="bMobileMode" layout-fill class="cnpAppViewContentMobile">
-		<div ui-view>
-	</md-content>
+	<!-- <md-content layout-fill class="cnpAppViewContentMobile">
+		
+		<div ui-view> </div>
+	</md-content> -->
 	<md-tabs ng-if="!bMobileMode" class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
 		<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{::tab.sTitle | translate}}">
 		</md-tab>
@@ -96,6 +101,7 @@
 <!-- 			<md-content class="cnpAppViewContent">
 </md-content> -->
 	<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight">
+	<md-list>
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
 	{{::'notificationsList_title' | translate}}
 	</md-toolbar>
@@ -113,7 +119,7 @@
 		<md-list-item class="" ng-repeat="notification in aNotifications" >
 			<div ng-class="{'cnpNotification': notification.Status === 'not read', 'cnpNotification cnpNotificationRead': notification.Status === 'read'}" ng-click="onDisplay(notification, $event)">
 				<div layout="row" layout-align="start center">
-				<avatar class="md-avatar" user="::notification.ContactDetails.UserDetails.results[0]" size="small"></avatar>
+				<dr-avatar class="md-avatar" user="::notification.ContactDetails.UserDetails.results[0]" size="small"></dr-avatar>
 					<div class="cnpNgTableNotificationText">
 						{{::notification.GeneralAttributes.CreatedBy}} <span ng-show="sCurrentLanguage === 'en'">{{::notification.OperationNameEN}}</span><span ng-show="sCurrentLanguage === 'fr'">{{::notification.OperationNameFR}}</span>
 					</div>
@@ -132,5 +138,6 @@
 		<md-button type="submit" class="md-button cnpSidebarButton cnpSidebarButtonCenter cnpDefaultColor" ng-click="onShowMore()">
 			{{iTotalNotificationsNumber - iDisplayedNotificationsNumber}} more
 		</md-button>
+	</md-list>
 	</md-sidenav>
 </div>
