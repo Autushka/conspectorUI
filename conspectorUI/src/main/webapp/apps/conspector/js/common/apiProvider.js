@@ -1882,6 +1882,62 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 				oSvc.then(onSuccess);
 			},
 
+			getMobileDeficiencies: function(oParameters) {
+				var sUrl = CONSTANTS.sServicePath + "Tasks";
+
+				if(oParameters.bAddCountUrlParam){
+					sUrl = sUrl + '/$count/'
+				}
+
+				if(oParameters.sFilter){
+					sUrl = sUrl + "?$filter=" + oParameters.sFilter + "";
+				}
+				if(oParameters.sExpand){
+					if(oParameters.sFilter){
+						sUrl = sUrl + "&$expand=" + oParameters.sExpand + "";
+					}else{
+						sUrl = sUrl + "?$expand=" + oParameters.sExpand + "";
+					}
+					
+				}	
+				if(oParameters.sOtherUrlParams){
+					if(oParameters.sFilter || oParameters.sExpand){
+						sUrl = sUrl + "&" + oParameters.sOtherUrlParams;
+					}else{
+						sUrl = sUrl + "?" + oParameters.sOtherUrlParams;
+					}					
+				}							
+
+				OData.request({
+						requestUri: sUrl,
+						method: "GET",
+					}, 
+					$.proxy(function(data) {
+						if(data){
+							oParameters.onSuccess(data);
+						}						
+					}, this),
+					$.proxy(function(err) {}, this)
+				);
+
+
+
+				// var svc = dataProvider.getEntitySet({
+				// 	sPath: "OperationLogs",
+				// 	sExpand: oParameters.sExpand,
+				// 	sFilter: oParameters.sFilter,
+				// 	bShowSpinner: oParameters.bShowSpinner,
+				// 	oCacheProvider: cacheProvider,
+				// 	sCacheProviderAttribute: "oOperationLogEntity"
+				// });
+
+				// if (svc instanceof Array) {
+				// 	oParameters.onSuccess(svc); // data retrived from cache
+				// } else {
+				// 	svc.then(oParameters.onSuccess);
+				// }
+			},
+
 			getDeficiencies: function(oParameters) {
 				var svc = {};
 				if (oParameters.bNoCaching) {

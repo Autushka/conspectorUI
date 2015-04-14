@@ -46,20 +46,20 @@
 		</div>
 		</button>
 		<div layout="column" layout-align="start center">
-			<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton notSelectable" ng-click="onSearch()" ng-cloak>
+			<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton notSelectable" ng-click="loadDeficiencies()" ng-cloak>
 			{{::'hybrid_searchDeficiencies' | translate}}
-			</button>
+			</md-button>
 		</div>
 	</div>
 	
 	<md-divider></md-divider>
 
-	<button ng-repeat="deficiency in $root.aDeficiencies"class="md-button md-whiteframe-z1 cnpMobileListButton cnpSidebarButton " ng-click="onSelectDeficiency(deficiency)">
+	<button ng-repeat="deficiency in aDeficiencies" class="md-button cnpMobileListButton" ng-click="onSelectDeficiency(deficiency)">
 	<div layout="column" layout-align="center start">
 		<div class="cnpMobileListItem" layout="row" layout-align="space-between center" ng-cloak style="height: 38px; width: 100%;">
 			<div layout="row" layout-align="start center">
 				<div layout="row" layout-align="start center">
-					<img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon">
+					<!-- <img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon"> -->
 				</div>
 				<div style="font-size: 18px;">{{deficiency.sUnit}}
 				</div>
@@ -104,7 +104,7 @@
 	</div>
 	</button>
 
-	
+
 	
 </div>
 <!-- <div id="scrollableArea" style="webkit-overflow-scrolling: touch;"> -->

@@ -6,7 +6,8 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation  
         $scope.bShowContractorInList = true;
-
+        var iPageNumberDeficiencies = 1;
+        $scope.aDeficiencies = [];
 
 
 
@@ -14,6 +15,34 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
         $scope.onSelectPhaseSearchCriteria = function() {
             $rootScope.sCurrentSearhCriteria = "phase";
             $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
+        };
+
+        var onDeficienciesLoaded = function(aData) {
+
+            $scope.aDeficiencies = aData;
+
+        }
+
+
+        $scope.loadDeficiencies = function(iPageNumberDeficiencies) {
+
+            var sFilterByAccountGuid = "";
+            var sFilterByPhaseGuid = "";
+            var sFilterByAccountsGuids = "";
+            
+            var sOtherUrlParams = "$top=5&$orderby=CreatedAt desc&$inlinecount=allpages";
+            if (iPageNumberDeficiencies > 1) {
+                sOtherUrlParams = sOtherUrlParams + "&$skip=" + 5 * (iPageNumberDeficiencies - 1);
+            }
+
+            apiProvider.getMobileDeficiencies({
+                sExpand: "PhaseDetails/ProjectDetails,TaskStatusDetails,TaskPriorityDetails,AccountDetails,UnitDetails,FileMetadataSetDetails/FileMetadataDetails,CommentSetDetails/CommentDetails/ContactDetails/UserDetails",
+                sFilter: "CompanyName eq '" + $scope.oUserProfile.sCurrentCompany + "' and GeneralAttributes/IsDeleted eq false" + sFilterByPhaseGuid + sFilterByAccountGuid + sFilterByAccountsGuids,
+                sOtherUrlParams: sOtherUrlParams,
+                bShowSpinner: true,
+                onSuccess: onDeficienciesLoaded,
+                bNoCaching: true,
+            });
         };
 
 

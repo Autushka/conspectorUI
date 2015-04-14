@@ -10,10 +10,6 @@ viewControllers.controller('deficienciesSearchHybridView', ['$scope', '$rootScop
 		$rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
 		$rootScope.oStateParams = angular.copy($stateParams); // for backNavigation    
 
-		$scope.onMainMenu = function() {
-			$state.go("mainMenuHybrid");
-		};
-
 		if (!$rootScope.oSearchCriterias) {
 			$rootScope.oSearchCriterias = {
 				oPhase: {
