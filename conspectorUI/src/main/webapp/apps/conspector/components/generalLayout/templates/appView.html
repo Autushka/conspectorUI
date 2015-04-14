@@ -1,5 +1,5 @@
 <div class="cnpAppView" layout="column" layout-align="start center" layout-fill>
-	<md-sidenav class="md-sidenav-left cnpSideNav" md-component-id="leftMenu">
+	<md-sidenav class="md-sidenav-left cnpSideNav" md-component-id="leftMenu" ng-swipe-left="onCloseMenu()">
 		
 		<!-- add md-content for smooth rendering when opening side panel -->
 		 <md-list>
@@ -76,31 +76,33 @@
 						margin-left: 11px;
 						height: 35px;
 						width: 35px;
-						cursor: pointer;margin-right: 16px;">
+						cursor: pointer;margin-right: 22px;">
 						<!-- {{'notificationsList_title' | translate}} -->
 						<div ng-show="$root.iNotificationsNumber > 0" layout="row" layout-align="center center" class="cnpNotificationsCounter">
 							{{$root.iNotificationsNumber}}
 						</div>
 					</div>
-					<dr-avatar id="dirAvatar1" ng-if="bDisplayProfileSettings" ng-click="onProfileSettings()" user="oUserProfile" size="medium">
+					<dr-avatar id="dirAvatar1" ng-if="bDisplayProfileSettings && !bMobileMode" ng-click="onProfileSettings()" user="oUserProfile" size="medium">
 					</dr-avatar>
 				</div>
 			</div>
 		</md-toolbar>
-	<!-- <md-content layout-fill class="cnpAppViewContentMobile">
+		<!-- for mobile -->
+	<md-content layout-fill class="cnpAppViewContentMobile">
 		
 		<div ui-view> </div>
-	</md-content> -->
-	<md-tabs ng-if="!bMobileMode" class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
+	</md-content>
+	<!-- for webapp -->
+	<!-- <md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
 		<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{::tab.sTitle | translate}}">
 		</md-tab>
 	</md-tabs>
 	<div ui-view class="cnpAppViewContent" ng-if="!bMobileMode">
-	</div>
+	</div> -->
 	
 <!-- 			<md-content class="cnpAppViewContent">
 </md-content> -->
-	<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight">
+	<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight" ng-swipe-right="onCloseNotificationsMenu()">
 	<md-list>
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
 	{{::'notificationsList_title' | translate}}

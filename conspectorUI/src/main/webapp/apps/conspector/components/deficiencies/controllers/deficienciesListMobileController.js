@@ -1,16 +1,12 @@
 viewControllers.controller('deficienciesListMobileView', ['$scope', '$location', '$anchorScroll', '$rootScope', '$state', '$stateParams', 'servicesProvider', '$translate', 'apiProvider', 'cacheProvider', 'utilsProvider', 'historyProvider', '$mdSidenav', '$window', '$filter', '$cookieStore', 'rolesSettings', '$timeout',
     function($scope, $location, $anchorScroll, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
+        
         historyProvider.removeHistory();
-
-        $scope.sCurrentRole = cacheProvider.oUserProfile.sCurrentRole;
-        $scope.bShowContractorInList = true;
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation  
+        $scope.bShowContractorInList = true;
 
-
-
-        //cleaned
         $scope.onSelectDeficiency = function(oDeficiency) {
             cacheProvider.putListViewScrollPosition("deficienciesList", $("#body")[0].scrollTop); //saving scroll position...
             for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {

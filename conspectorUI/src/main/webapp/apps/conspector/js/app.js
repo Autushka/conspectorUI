@@ -1,8 +1,8 @@
-var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'tmh.dynamicLocale', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'cfp.loadingBar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ui.bootstrap', 'ngStorage', 'ngJsTree', 'ngSanitize', 'ui.select']);
+var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'tmh.dynamicLocale', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'cfp.loadingBar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ui.bootstrap', 'ngStorage', 'ngJsTree', 'ngSanitize', 'ui.select',  'ngTouch']);
 
 var viewControllers = angular.module('viewControllers', []);
 
-var bMobileMode = false;
+var bMobileMode = true;
 
 
 

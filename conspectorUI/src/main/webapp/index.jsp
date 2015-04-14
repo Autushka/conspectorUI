@@ -24,7 +24,7 @@
 		
 		<!-- COMMON JS DEPENDENCIES -->
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
-		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular/angular.min.js"></script>
 		<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
 		<script src="bower_components/angular-route/angular-route.min.js"></script>
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -48,6 +48,7 @@
 		<script src="bower_components/datajs/datajs-1.1.2.min.js"></script>
 		<script src="bower_components/angular-ui-select/dist/select.min.js"></script>
 		<script src="bower_components/ngstorage/ngStorage.min.js"></script>
+		<script src="bower_components/angular-touch/angular-touch.min.js"></script>
 		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> 
 		<!-- was not able to find it as a bower component-->	
 
