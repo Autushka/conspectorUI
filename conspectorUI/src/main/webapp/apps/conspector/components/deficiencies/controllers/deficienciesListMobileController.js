@@ -7,6 +7,16 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation  
         $scope.bShowContractorInList = true;
 
+
+
+
+
+        $scope.onSelectPhaseSearchCriteria = function() {
+            $rootScope.sCurrentSearhCriteria = "phase";
+            $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
+        };
+
+
         $scope.onSelectDeficiency = function(oDeficiency) {
             cacheProvider.putListViewScrollPosition("deficienciesList", $("#body")[0].scrollTop); //saving scroll position...
             for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
@@ -19,9 +29,6 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
 
             $rootScope.oSelectedDeficiency = angular.copy(oDeficiency);
             $rootScope.sDeficienciesListView = "deficiencyDetails";
-
-
-
             // the element you wish to scroll to.
             //$location.hash('top');
             // call $anchorScroll()

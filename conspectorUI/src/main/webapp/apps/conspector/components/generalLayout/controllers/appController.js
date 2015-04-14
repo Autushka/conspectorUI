@@ -3,7 +3,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation (i.e. switch role/company views)  
         $rootScope.oStateParams = {}; // for backNavigation
-        $scope.bMobileMode = bMobileMode;
+        $scope.bMobileMode = bMobileMode; //used to skip logic not needed for mobile app
         $scope.oUserProfile = cacheProvider.oUserProfile;
         $scope.sCurrentLanguage = $translate.use();
         $scope.iDisplayedNotificationsNumber = 0;
