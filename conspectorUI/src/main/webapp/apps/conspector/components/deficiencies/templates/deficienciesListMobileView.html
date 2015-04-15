@@ -9,7 +9,7 @@
 				{{::'deficiencyDetails_associatedProjectsAndPhases' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" >
-				{{oPhase.sProjectName}} - {{oPhase.sPhaseName}}
+				{{sProjectandPhase}}
 			</label>
 		</div>
 		</md-button>
@@ -17,10 +17,10 @@
 		<md-button class="md-button cnpMobileListButton" ng-click="onSelectUnitSearchCriteria()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" >
-				{{::'deficiencyDetails_unit' | translate}}
+				{{::'deficiencyDetails_units' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" >
-				{{$root.oSearchCriterias.oUnit.sValue}}
+				{{sUnits}}
 			</label>
 		</div>
 		</md-button>
@@ -31,7 +31,7 @@
 				{{::'deficiencyDetails_status' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" >
-				{{$root.oSearchCriterias.oStatus.sValue}}
+				{{sStatuses}}
 			</label>
 		</div>
 		</md-button>
@@ -42,7 +42,7 @@
 				{{::'deficiencyDetails_contractors' | translate}}
 			</div>
 			<label class="cnpMobileItemValue" >
-				{{$root.oSearchCriterias.oContractor.sValue}}
+				{{sContractors}}
 			</label>
 		</div>
 		</md-button>
@@ -107,14 +107,13 @@
 	</md-card>
 	<!-- <md-divider></md-divider> -->
 </div>
+<md-button type="submit" class="md-button cnpSidebarButton cnpSidebarButtonCenter cnpDefaultColor" ng-click="onShowMore()">Load more items</md-button>
 </div>
 <md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="phasesSidenav">
 	<md-list>
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
 	Phase selection
 	</md-toolbar>
-	<!-- <md-subheader class="md-no-sticky">3 line item
-	</md-subheader> -->
 	<div layout="row" layout-align="start center">
 		<!-- <md-button class="md-button cnpSidebarButton cnpSidebarButtonCenter" style="  border-right: 1px rgba(0,0,0,0.12) solid; min-height: 60px;">
 			Button
@@ -136,14 +135,42 @@
 				</div>
 			</div>
 		</div>
-			<!-- <md-divider></md-divider> -->
-			<!-- <md-divider ng-if="!$last"></md-divider> -->
 		</md-list-item>
-		<!-- <md-button type="submit" class="md-button cnpSidebarButton cnpSidebarButtonCenter cnpDefaultColor" ng-click="onShowMore()">
-			{{iTotalNotificationsNumber - iDisplayedNotificationsNumber}} more
-		</md-button> -->
 	</md-list>
 </md-sidenav>
+<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="unitsSidenav">
+	<md-list>
+	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
+	Units selection
+	</md-toolbar>
+	<div layout="row" layout-align="start center">
+		<!-- <md-button class="md-button cnpSidebarButton cnpSidebarButtonCenter" style="  border-right: 1px rgba(0,0,0,0.12) solid; min-height: 60px;">
+			Button
+		</md-button>
+		<md-button class="md-button cnpSidebarButton cnpSidebarButtonCenter" style="min-height: 60px;">
+			Another button
+		</md-button> -->
+		</div>
+		<md-divider></md-divider>
+		<md-list-item ng-repeat="project in aProjects">
+			<div layout="row" layout-align="start center" class="cnpMobileH1">{{project.sProjectName}}</div>
+			<md-divider></md-divider>
+			<div layout="column" flex>
+				<div ng-repeat="phase in project.aPhases" ng-click="onSelectSearchCriteriaPhase(phase)">
+					<div>
+						<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': phase.bTicked, 'cnpMobileH2': !phase.bTicked }" class="cnpMobileH2" ng-click="onClosePhasesSidenav()">{{phase.sPhaseName}}<span class="cnpMobileTickMark" ng-if="phase.bTicked">✔</span></div>
+					</div>
+					<md-divider ng-if="!$last"></md-divider>
+				</div>
+			</div>
+		</div>
+		</md-list-item>
+	</md-list>
+</md-sidenav>
+
+
+
+
 <!-- <div id="scrollableArea" style="webkit-overflow-scrolling: touch;"> -->
 <!-- </section> -->
 <!-- <section layout="column" ng-class="{ 'cnpMobileContentWrapperWithTouch': !bIsSideNaveOpen, 'cnpMobileContentWrapper': bIsSideNaveOpen }"> -->

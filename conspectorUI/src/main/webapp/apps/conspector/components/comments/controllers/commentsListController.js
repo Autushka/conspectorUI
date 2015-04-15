@@ -144,8 +144,8 @@ viewControllers.controller('commentsListView', ['$scope', '$rootScope', '$state'
 						}
 						apiProvider.getInterestedUsers({
 							sEntityName: sEntityName,
-							sOperationNameEN: CONSTANTS.newCommentEN,
-							sOperationNameFR: CONSTANTS.newCommentFR,
+							sOperationNameEN: "notificationsList_newComment",
+							sOperationNameFR: "",
 							aData: [{
 								Guid: sParentEntityGuid
 							}],

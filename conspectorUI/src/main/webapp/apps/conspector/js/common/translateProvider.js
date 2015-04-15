@@ -291,7 +291,7 @@ app.config(['$translateProvider',
                   passwordReset_newPassword: 'New password',
                   passwordReset_newPasswordConfirmation: 'New password confirmation',
                   passwordReset_reset: 'Set new password',
-                  passwordReset_passwordsDontMatch: "Provided passwords don\u0027 match.",
+                  passwordReset_passwordsDontMatch: 'Provided passwords don\u0027 match.',
                   //companySelection
                   companySelection_heagerLabel: 'Please choose a company:',
                   //roleSelection
@@ -315,6 +315,7 @@ app.config(['$translateProvider',
                   deficiencyDetails_locationTags: 'Location Tags:',
                   deficiencyDetails_contractors: 'Contractors:',
                   deficiencyDetails_unit: 'Unit:',
+                  deficiencyDetails_units: 'Units:',
                   deficiencyDetails_creationDate: 'Creation Date:',
                   deficiencyDetails_lastModificationDate: 'Last Modification:',
                   deficiencyDetails_dueDate: 'Due Date:',
@@ -472,7 +473,12 @@ app.config(['$translateProvider',
                   notificationsList_title: 'Notifications',
                   notificationsList_byAuthor: 'by',
                   notificationsList_onDate: 'on',
-                  notificationsList_noNotification: 'No notifications for now...'
+                  notificationsList_noNotification: 'No notifications for now...',
+                  notificationsList_newDeficiency: 'has created a new deficiency',
+                  notificationsList_updatedDeficiency: 'has modified a deficiency ',
+                  notificationsList_newComment: 'has added a new comment',
+                  notificationsList_newAttachment: 'has added new attachment'
+
             });
 
             $translateProvider.translations('fr', {
@@ -793,6 +799,7 @@ app.config(['$translateProvider',
                   deficiencyDetails_locationTags: 'Tags de l\u0027emplacement :',
                   deficiencyDetails_contractors: 'Sous-traitants :',
                   deficiencyDetails_unit: 'Unit\u00E9 :',
+                  deficiencyDetails_units: 'Unit\u00E9s :',
                   deficiencyDetails_creationDate: 'Date de cr\u00E9ation :',
                   deficiencyDetails_lastModificationDate: 'Derni\u00E8re modification :',
                   deficiencyDetails_dueDate: 'Date d\u0027\u00E9ch\u00E9ance :',
@@ -949,7 +956,11 @@ app.config(['$translateProvider',
                   notificationsList_title: 'Notifications',
                   notificationsList_byAuthor: 'par',
                   notificationsList_onDate: 'le',
-                  notificationsList_noNotification: 'Aucune notification pour le moment...'
+                  notificationsList_noNotification: 'Aucune notification pour le moment...',
+                  notificationsList_newDeficiency: 'a ajout\u00E9 une nouvelle d\u00E9ficience',
+                  notificationsList_updatedDeficiency: 'a modifi\u00E9 une d\u00E9ficience',
+                  notificationsList_newComment: 'a ajout\u00E9 un commentaire ',
+                  notificationsList_newAttachment: 'a ajout\u00E9 un ficher'
             });
 
             $translateProvider.preferredLanguage('en');

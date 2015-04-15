@@ -676,8 +676,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				};
 				apiProvider.getInterestedUsers({
 					sEntityName: "deficiency",
-					sOperationNameEN: CONSTANTS.newDeficiencyEN,
-					sOperationNameFR: CONSTANTS.newDeficiencyFR,
+					sOperationNameEN: "notificationsList_newDeficiency",
+					sOperationNameFR: "",
 					//sEntityGuid: oData.Guid,
 					aData: [{
 						Guid: oData.Guid
@@ -707,8 +707,8 @@ viewControllers.controller('deficiencyDetailsView', ['$scope', '$location', '$an
 				};
 				apiProvider.getInterestedUsers({
 					sEntityName: "deficiency",
-					sOperationNameEN: CONSTANTS.updatedDeficiencyEN,
-					sOperationNameFR: CONSTANTS.updatedDeficiencyFR,
+					sOperationNameEN: "notificationsList_updatedDeficiency",
+					sOperationNameFR: "",
 					//sEntityGuid: oData.Guid,
 					aData: [{
 						Guid: oData.Guid

@@ -91,19 +91,19 @@
 <!-- 	<md-content layout-fill class="cnpAppViewContentMobile">
 		<div ui-view> </div>
 	</md-content> -->
-		<div ui-view class="cnpAppViewContentMobile">
-	</div>
+<!-- 		<div ui-view class="cnpAppViewContentMobile">
+	</div> -->
 
 <!-- 	<md-content ui-view layout-fill class="cnpAppViewContentMobile">
 	</md-content> -->
 
 	<!-- for webapp -->
-<!-- 	<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
-		<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{::tab.sTitle | translate}}">
-		</md-tab>
-	</md-tabs>
-	<div ui-view class="cnpAppViewContent" ng-if="!bMobileMode">
-	</div> -->
+<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
+<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{::tab.sTitle | translate}}">
+</md-tab>
+</md-tabs>
+<div ui-view class="cnpAppViewContent" ng-if="!bMobileMode">
+</div>
 
 	<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight" ng-swipe-right="onCloseNotificationsMenu()">
 	<md-list>
@@ -126,7 +126,7 @@
 				<div layout="row" layout-align="start center">
 				<dr-avatar id="dirAvatar2" user="::notification.ContactDetails.UserDetails.results[0]" size="small"></dr-avatar>
 					<div class="cnpNgTableNotificationText">
-						{{::notification.GeneralAttributes.CreatedBy}} <span ng-show="sCurrentLanguage === 'en'">{{::notification.OperationNameEN}}</span><span ng-show="sCurrentLanguage === 'fr'">{{::notification.OperationNameFR}}</span>
+						{{::notification.GeneralAttributes.CreatedBy}} <span>{{ notification.OperationNameEN | translate}}</span>
 					</div>
 				</div>
 				<div class="cnpNgTableCommentCreationDate" layout="row" layout-align="space-between center">

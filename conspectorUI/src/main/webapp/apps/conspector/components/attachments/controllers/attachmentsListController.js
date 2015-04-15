@@ -143,8 +143,8 @@ viewControllers.controller('attachmentsListView', ['$scope', '$rootScope', '$sta
 						}
 						apiProvider.getInterestedUsers({
 							sEntityName: sEntityName,
-							sOperationNameEN: CONSTANTS.newAttachmentEN,
-							sOperationNameFR: CONSTANTS.newAttachmentFR,
+							sOperationNameEN: "notificationsList_newAttachment",
+							sOperationNameFR: "",
 							aData: [{
 								Guid: sParentEntityGuid
 							}],

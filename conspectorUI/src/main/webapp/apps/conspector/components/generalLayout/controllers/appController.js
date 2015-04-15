@@ -253,14 +253,20 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
         var onNotificationsLoaded = function(oData) {
 
             if (oData.results.length > 0) {
-                $scope.$apply(function() {
+                // $scope.$apply(function() {
+                //     $scope.aNotifications = $scope.aNotifications.concat(oData.results);
+                //     $scope.iTotalNotificationsNumber = oData.__count;
+                //     $scope.iDisplayedNotificationsNumber = $scope.aNotifications.length;
+                // });
+
+                $scope.$evalAsync(function() {
                     $scope.aNotifications = $scope.aNotifications.concat(oData.results);
                     $scope.iTotalNotificationsNumber = oData.__count;
                     $scope.iDisplayedNotificationsNumber = $scope.aNotifications.length;
                 });
                 // $scope.aNotifications = $scope.aNotifications.concat(oData.results);
             }
-            
+
         };
 
         var loadNotifications = function(iPageNumber) {

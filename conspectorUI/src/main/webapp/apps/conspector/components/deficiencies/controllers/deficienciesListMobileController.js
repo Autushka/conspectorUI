@@ -16,7 +16,14 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
         $scope.aDeficiencies = [];
         $scope.aProjects = [];
         $scope.bPhasesButtonDisabled = false;
-        $scope.oPhase = {};
+        var oPhaseForSearch = {};
+        var oUnitsForSearch = {};
+        var oStatusForSearch = {};
+        var oContractorsForSearch = {};
+        $scope.sProjectandPhase = "...";
+        $scope.sUnits = $filter('translate')('HELLO_WORLD');
+        $scope.sStatuses = "...";
+        $scope.sContractors = "...";
 
 
         $scope.onSelectPhaseSearchCriteria = function() {
@@ -65,10 +72,11 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
                     }
                 }
                 oPhase.bTicked = true;
-                $scope.oPhase = oPhase;
-                // $rootScope.oSearchCriterias.aUnits = [];
-                // $rootScope.oSearchCriterias.aFilteredUnits = [];
-                // $rootScope.oSearchCriterias.sUnitFilter = "";
+                $scope.sProjectandPhase = oPhase.sProjectName + " - " + oPhase.sPhaseName;
+                oPhaseForSearch = oPhase;
+                $scope.aUnits = [];
+                $scope.aFilteredUnits = [];
+                $scope.sUnitFilter = "";
                 // $rootScope.oSearchCriterias["oUnit"].sValue = "...";
                 // $rootScope.oSearchCriterias["oUnit"].aSelectedItemsGuids = [];
                 // $rootScope.oSearchCriterias.bUnitWasSelected = false;
@@ -83,12 +91,34 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
             // $scope.onClose();
         };
 
+        $scope.onSelectUnitSearchCriteria = function() {
+            if (!$rootScope.oSearchCriterias.oUnit.bIsSelectionUnabled) {
+                return;
+            }
+
+            $rootScope.sCurrentSearhCriteria = "unit";
+            if (!$rootScope.oSearchCriterias.aUnits.length) {
+                apiProvider.getPhase({
+                    sExpand: "UnitDetails",
+                    sKey: $rootScope.oSearchCriterias["oPhase"].sSelectedItemGuid,
+                    onSuccess: onUnitsLoaded
+                });
+
+            }
+
+            $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
+        };
+
        
 
         var onDeficienciesLoaded = function(aData) {
 
             
-            $scope.$apply( function() {
+            // $scope.$apply( function() {
+            //     $scope.aDeficiencies = aData.results;
+            // });
+
+            $scope.$evalAsync( function() {
                 $scope.aDeficiencies = aData.results;
             });
 
@@ -114,8 +144,8 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
             var sFilterByPhaseGuid = "";
             var sFilterByAccountsGuids = "";
 
-            if($scope.oPhase){
-                sFilterByPhaseGuid = " and PhaseGuid eq '" + $scope.oPhase.Guid + "'";
+            if(oPhaseForSearch){
+                sFilterByPhaseGuid = " and PhaseGuid eq '" + oPhaseForSearch.Guid + "'";
             }
 
             //cant filter by extended value

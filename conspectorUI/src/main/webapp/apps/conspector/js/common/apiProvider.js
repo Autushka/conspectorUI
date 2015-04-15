@@ -2135,8 +2135,8 @@ app.factory('apiProvider', ['$rootScope', 'dataProvider', 'CONSTANTS', '$q', 'ut
 
 					this.getInterestedUsers({
 						sEntityName: "deficiency",
-						sOperationNameEN: CONSTANTS.updatedDeficiencyEN,
-						sOperationNameFR: CONSTANTS.updatedDeficiencyFR,
+						sOperationNameEN: "notificationsList_updatedDeficiency",
+						sOperationNameFR: "",
 						aData: oParameters.aData, //oParameters.aData[i].Guid,
 						onSuccess: onInterestedUsersLoaded
 					});
