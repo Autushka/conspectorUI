@@ -7,12 +7,12 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
         $scope.oUserProfile = cacheProvider.oUserProfile;
         $scope.sCurrentLanguage = $translate.use();
         $scope.iDisplayedNotificationsNumber = 0;
-        
+
         var sCurrentUser = $scope.oUserProfile.sUserName;
-        var sCompany =  $scope.oUserProfile.sCurrentCompany;
+        var sCompany = $scope.oUserProfile.sCurrentCompany;
         var sCurrentRole = $scope.oUserProfile.sCurrentRole;
         var aSelectedPhases = [];
-        var iPageNumber = 1;    
+        var iPageNumber = 1;
 
         if (!sCurrentUser) {
             servicesProvider.logOut();
@@ -253,15 +253,18 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
         var onNotificationsLoaded = function(oData) {
 
             if (oData.results.length > 0) {
-                $scope.aNotifications = $scope.aNotifications.concat(oData.results);
+                $scope.$apply(function() {
+                    $scope.aNotifications = $scope.aNotifications.concat(oData.results);
+                    $scope.iTotalNotificationsNumber = oData.__count;
+                    $scope.iDisplayedNotificationsNumber = $scope.aNotifications.length;
+                });
+                // $scope.aNotifications = $scope.aNotifications.concat(oData.results);
             }
-
-            $scope.iTotalNotificationsNumber = oData.__count;
-            $scope.iDisplayedNotificationsNumber = $scope.aNotifications.length;
+            
         };
 
         var loadNotifications = function(iPageNumber) {
-            
+
             var sOtherUrlParams = "$top=5&$orderby=CreatedAt desc&$inlinecount=allpages";
             if (iPageNumber > 1) {
                 sOtherUrlParams = sOtherUrlParams + "&$skip=" + 5 * (iPageNumber - 1);
@@ -314,7 +317,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             var onSuccess = function() {
                 // $scope.aNotifications = [];
                 iPageNumber = 1;
-                loadNotifications(iPageNumber);
+                // loadNotifications(iPageNumber);
+                onNotificationsLoaded();
             };
             for (var i = 0; i < $scope.aNotifications.length; i++) {
                 if ($scope.aNotifications[i].Status === "not read") {
@@ -342,7 +346,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
                 iPageNumber = 1;
                 loadNotifications(iPageNumber);
             };
-            
+
             if (!$scope.aNotifications.length) {
                 return;
             }
@@ -375,15 +379,10 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             $scope.onCloseMenu();
         };
 
-        $scope.toggleRightSidenav = function() {
+        $scope.onOpenNotificationsMenu = function() {
             $scope.aNotifications = [];
             iPageNumber = 1;
             loadNotifications(iPageNumber);
-            $timeout($mdSidenav('globalRight').toggle, 200);
-            // $mdSidenav('globalRight').toggle();
-        };
-
-        $scope.onOpenNotificationsMenu = function() {
             $timeout($mdSidenav('globalRight').open, 200);
         };
 

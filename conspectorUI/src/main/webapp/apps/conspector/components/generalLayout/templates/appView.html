@@ -49,12 +49,12 @@
 	 </md-list>
 		
 	</md-sidenav>
-		<md-toolbar md-scroll-shrink style="z-index: 5;">
+		<md-toolbar md-scroll-shrink style="z-index: 5;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);">
 			<div id="top" class="cnpHeader" layout="row"  layout-align="space-between center">
 				<div layout="row" layout-align="start center">
 					<div ng-click="onOpenMenu()" class="cnpInputIcon cnpMenuIcon notSelectable">
 					</div>
-					<img  class="cnpCompanyLogo" ng-src="{{::$root.sLogoUrl}}"/>
+					<img  class="cnpCompanyLogo" ng-src="{{$root.sLogoUrl}}"/>
 					<!-- ng if might cause issues... -->
 					<div
 						class="cnpMultiSelectProjectsAndPhases"
@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<div layout="row" layout-align="end center">
-					<div ng-click="toggleRightSidenav()" class="cnpInputIcon cnpNotificationsIcon notSelectable" style="position: relative;
+					<div ng-click="onOpenNotificationsMenu()" class="cnpInputIcon cnpNotificationsIcon notSelectable" style="position: relative;
 						margin-left: 11px;
 						height: 35px;
 						width: 35px;
@@ -87,21 +87,24 @@
 				</div>
 			</div>
 		</md-toolbar>
-		<!-- for mobile -->
-	<md-content layout-fill class="cnpAppViewContentMobile">
-		
+	<!-- for mobile -->
+<!-- 	<md-content layout-fill class="cnpAppViewContentMobile">
 		<div ui-view> </div>
-	</md-content>
+	</md-content> -->
+<!-- 		<div ui-view class="cnpAppViewContentMobile">
+	</div> -->
+
+<!-- 	<md-content ui-view layout-fill class="cnpAppViewContentMobile">
+	</md-content> -->
+
 	<!-- for webapp -->
-	<!-- <md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
+	<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
 		<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{::tab.sTitle | translate}}">
 		</md-tab>
 	</md-tabs>
 	<div ui-view class="cnpAppViewContent" ng-if="!bMobileMode">
-	</div> -->
-	
-<!-- 			<md-content class="cnpAppViewContent">
-</md-content> -->
+	</div>
+
 	<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight" ng-swipe-right="onCloseNotificationsMenu()">
 	<md-list>
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">

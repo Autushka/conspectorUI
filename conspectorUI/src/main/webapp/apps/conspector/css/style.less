@@ -277,11 +277,11 @@ font-weight: 500;
 		}
 	}
 	&.cnpMobileLargeButton{
-		margin-top: 24px;
-		width: 97%;
-		font-size: 22px;
-		height: @fieldHeight*1.2;
-		margin-bottom: 16px;
+		  margin: 0;
+		  /* width: 100%; */
+		  font-size: 22px;
+		  height: 51.6px;
+		  border-radius: 0;
 	}
 	&.cnpButtonWithIcon{
 		padding-left: 37px;
@@ -1757,18 +1757,12 @@ ADMIN PANEL
 	background-color: @greyButtonColor;
 }
 .cnpMobileH2{
-	font-size: 17px;
-	font-weight: 500;
-	height: 52px;
-	margin-left: 20px;
-	padding-left: 20px;
-	position: relative;
-	border-top-color: @mediumGreyBackgroundColor;
-	border-top-width: 1px;
-	// border-top-style: solid;
-	border-bottom-color: @mediumGreyBackgroundColor;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
+	  font-size: 17px;
+	  font-weight: 300;
+	  height: 52px;
+	  margin-left: 20px;
+	  padding-left: 20px;
+	  position: relative;
 }
 #cnpButtonHighlightedMobile{
 	// box-shadow: inset 0 0 6px #1EB800;
@@ -3386,4 +3380,8 @@ DETAILS VIEW
 
 md-list{
 	padding: 0;
+}
+md-card{
+	background: white;
+ 	padding: 16px;
 }
