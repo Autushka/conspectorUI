@@ -5,6 +5,11 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation  
         $scope.bShowContractorInList = true;
+        $scope.bFadeImagesIcon = true;
+        $scope.bFadeCommentsIcon = true;
+        if($scope.oUserProfile.sCurrentRole === "contractor"){
+             $scope.bShowContractorInList = false;
+        }
         var iPageNumberDeficiencies = 1;
         var bPhaseWasSelected = false;
 

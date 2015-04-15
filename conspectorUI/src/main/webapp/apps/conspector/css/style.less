@@ -51,6 +51,9 @@ VARIABLE AND SETTINGS
 	-ms-user-select: none;
 	user-select: none;
 }
+.cnpHide{
+	display: none !important;
+}
 //Class for making text unselectable
 .cnpCursorDefault {
 	cursor: default;
@@ -277,11 +280,11 @@ font-weight: 500;
 		}
 	}
 	&.cnpMobileLargeButton{
-		  margin: 0;
-		  /* width: 100%; */
-		  font-size: 22px;
-		  height: 51.6px;
-		  border-radius: 0;
+		margin: 0 0 10px 0;
+		/* width: 100%; */
+		font-size: 22px;
+		height: 51.6px;
+		border-radius: 0;
 	}
 	&.cnpButtonWithIcon{
 		padding-left: 37px;
@@ -1749,7 +1752,7 @@ ADMIN PANEL
 	font-size: 17px;
 	font-weight: 500;
 	height: 52px;
-	margin-top: 8px;
+	// margin-top: 8px;
 	padding-left: 16px;
 	position: relative;
 }
@@ -1757,12 +1760,12 @@ ADMIN PANEL
 	background-color: @greyButtonColor;
 }
 .cnpMobileH2{
-	  font-size: 17px;
-	  font-weight: 300;
-	  height: 52px;
-	  margin-left: 20px;
-	  padding-left: 20px;
-	  position: relative;
+  font-size: 17px;
+  font-weight: 300;
+  height: 52px;
+  /* margin-left: 20px; */
+  padding-left: 40px;
+  position: relative;
 }
 #cnpButtonHighlightedMobile{
 	// box-shadow: inset 0 0 6px #1EB800;
@@ -3367,6 +3370,9 @@ DETAILS VIEW
 #dirAvatar1{
 	margin: 16px 16px 16px 16px;
 	cursor: pointer;
+}
+#dirAvatar2{
+	display: inline-table;
 }
 
 .cnpNotification {

@@ -288,7 +288,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
                         sMode: "display",
                         sDeficiencyGuid: oNotification.EntityGuid,
                     });
-                    $timeout($scope.onCloseNotificationsMenu, 200);
+                    $scope.onCloseNotificationsMenu();
                     break;
             }
 
@@ -362,7 +362,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             $scope.selectedTabIndex = -1;
             $scope.$broadcast("$mdTabsPaginationChanged");
             $state.go(aSideMenuItem.sState);
-            $timeout($scope.onCloseMenu, 200);
+            $scope.onCloseMenu();
         }
 
         $scope.onAdminPanel = function() {
@@ -383,11 +383,11 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             $scope.aNotifications = [];
             iPageNumber = 1;
             loadNotifications(iPageNumber);
-            $timeout($mdSidenav('globalRight').open, 200);
+            $timeout($mdSidenav('globalRight').open, 300);
         };
 
         $scope.onCloseNotificationsMenu = function() {
-            $timeout($mdSidenav('globalRight').close, 200);
+            $timeout($mdSidenav('globalRight').close, 300);
         };
 
         $scope.onShowMore = function() {
@@ -396,11 +396,11 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
         };
 
         $scope.onOpenMenu = function() {
-            $timeout($mdSidenav('leftMenu').open, 200);
+            $timeout($mdSidenav('leftMenu').open, 300);
         };
 
         $scope.onCloseMenu = function() {
-            $timeout($mdSidenav('leftMenu').close, 200);
+            $timeout($mdSidenav('leftMenu').close, 300);
         };
 
         $scope.onChangeLanguage = function() {

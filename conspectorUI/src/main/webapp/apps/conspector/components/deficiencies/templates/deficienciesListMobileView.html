@@ -5,21 +5,21 @@
 		</div>
 		<md-button class="md-button cnpMobileListButton" ng-click="onSelectPhaseSearchCriteria()" ng-disabled="bPhasesButtonDisabled">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription" ng-cloak>
+			<div class="cnpMobileItemDescription" >
 				{{::'deficiencyDetails_associatedProjectsAndPhases' | translate}}
 			</div>
-			<label class="cnpMobileItemValue" ng-cloak>
-				{{oPhase.sProjectName}} -  {{oPhase.sPhaseName}}
+			<label class="cnpMobileItemValue" >
+				{{oPhase.sProjectName}} - {{oPhase.sPhaseName}}
 			</label>
 		</div>
 		</md-button>
 		<md-divider></md-divider>
 		<md-button class="md-button cnpMobileListButton" ng-click="onSelectUnitSearchCriteria()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription" ng-cloak>
+			<div class="cnpMobileItemDescription" >
 				{{::'deficiencyDetails_unit' | translate}}
 			</div>
-			<label class="cnpMobileItemValue" ng-cloak>
+			<label class="cnpMobileItemValue" >
 				{{$root.oSearchCriterias.oUnit.sValue}}
 			</label>
 		</div>
@@ -27,10 +27,10 @@
 		<md-divider></md-divider>
 		<md-button class="md-button cnpMobileListButton" ng-click="onSelectStatusSearchCriteria()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription" ng-cloak>
+			<div class="cnpMobileItemDescription" >
 				{{::'deficiencyDetails_status' | translate}}
 			</div>
-			<label class="cnpMobileItemValue" ng-cloak>
+			<label class="cnpMobileItemValue" >
 				{{$root.oSearchCriterias.oStatus.sValue}}
 			</label>
 		</div>
@@ -38,62 +38,65 @@
 		<md-divider></md-divider>
 		<md-button ng-show="sCurrentRole != 'contractor'" class="md-button cnpMobileListButton" ng-click="onSelectContractorSearchCriteria()">
 		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription" ng-cloak>
+			<div class="cnpMobileItemDescription" >
 				{{::'deficiencyDetails_contractors' | translate}}
 			</div>
-			<label class="cnpMobileItemValue" ng-cloak>
+			<label class="cnpMobileItemValue" >
 				{{$root.oSearchCriterias.oContractor.sValue}}
 			</label>
 		</div>
 		</md-button>
-		<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton notSelectable" ng-click="onSearch()" ng-cloak>
+		<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton notSelectable" ng-click="onSearch()" >
 			{{::'hybrid_searchDeficiencies' | translate}}
 			</md-button>
 	</div>
 	
-	<md-divider></md-divider>
+	
 	<div ng-repeat="deficiency in aDeficiencies" >
 	<md-card class="" ng-click="onSelectDeficiency(deficiency)">
 	<div layout="column" layout-align="center start">
-		<div class="cnpMobileListItem" layout="row" layout-align="space-between center" ng-cloak style="height: 38px; width: 100%;">
+		<div class="cnpMobileListItem" layout="row" layout-align="space-between center"  style="height: 38px; width: 100%;">
 			<div layout="row" layout-align="start center">
 				<div layout="row" layout-align="start center">
-					<img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon">
+					<!-- <img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon"> -->
 				</div>
 				<div style="font-size: 18px;">{{::deficiency.UnitDetails.Name}}
 				</div>
 			</div>
 			<!-- 				<div>
-				<label class="cnpMobileItemValue cnpMobileItemValueStatus" ng-cloak>
+				<label class="cnpMobileItemValue cnpMobileItemValueStatus" >
 					{{deficiency.sStatusDescription}}
 				</label>
 			</div> -->
 			<div layout="row" layout-align="start center">
-				<div layout="row" layout-align="center center" ng-show="deficiency.iImagesNumber || deficiency.iImagesNumber == 0"
-					ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList notSelectable': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList cnpImagesIconWithOpacity notSelectable': deficiency.iImagesNumber==0 }" >
-					
+				<div layout="row" ng-if="::bFadeImagesIcon" layout-align="center center" class="cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity cnpImagesIconInMobileAppInList notSelectable">
 					<a>
 						({{::deficiency.iImagesNumber}})
 					</a>
 				</div>
-				<div layout="row" layout-align="center center" ng-show="deficiency.iCommentsNumber || deficiency.iCommentsNumber == 0"
-					ng-class="{ 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList notSelectable': deficiency.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList cnpCommentsIconWithOpacity notSelectable': deficiency.iCommentsNumber==0 }" >
+				<div layout="row" ng-if="::(!bFadeImagesIcon)" layout-align="center center" class="cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList notSelectable cnpImagesIconInMobileAppInList">
+					<a>
+						({{::deficiency.iImagesNumber}})
+					</a>
+				</div>
+				<!-- <div layout="row" layout-align="center center" 
+					ng-class="::{ 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList notSelectable': deficiency.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList cnpCommentsIconWithOpacity notSelectable cnpHide': deficiency.iCommentsNumber==0 }" >
 					
 					<a>
 						({{::deficiency.iCommentsNumber}})
 					</a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div layout="row" layout-align="space-between start" style="width: 100%;">
 			<div layout="column" layout-align="start start" flex>
-				<div class="cnpMobileListItem cnpMobileContractorLabel" ng-if="deficiency.sContractors != '' && sCurrentRole != 'contractor'" ng-cloak>
+				<div class="cnpMobileListItem cnpMobileContractorLabel" ng-if="::bShowContractorInList" >
 					{{::deficiency.sContractors}}
 				</div>
-				<div class="cnpMobileListItem cnpMobileTagsInList" ng-cloak ng-if="deficiency.sTags != ''"style="margin-bottom: 8px;">
+				<div class="cnpMobileListItem cnpMobileTagsInList"  ng-if="::deficiency.sTags != ''" style="margin-bottom: 8px;">
 					{{::deficiency.DescriptionTags}}
 				</div>
-				<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="deficiency.sLocationTags != ''" ng-cloak>
+				<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="::deficiency.sLocationTags != ''" >
 					{{::deficiency.LocationTags}}
 				</div>
 				
@@ -123,15 +126,17 @@
 		<md-divider></md-divider>
 		<md-list-item ng-repeat="project in aProjects">
 			<div layout="row" layout-align="start center" class="cnpMobileH1">{{project.sProjectName}}</div>
+			<md-divider></md-divider>
 			<div layout="column" flex>
 				<div ng-repeat="phase in project.aPhases" ng-click="onSelectSearchCriteriaPhase(phase)">
 					<div>
 						<div layout="row" layout-align="start center"  ng-class="{ 'cnpMobileH2 cnpMobileH2Selected': phase.bTicked, 'cnpMobileH2': !phase.bTicked }" class="cnpMobileH2" ng-click="onClosePhasesSidenav()">{{phase.sPhaseName}}<span class="cnpMobileTickMark" ng-if="phase.bTicked">✔</span></div>
 					</div>
+					<md-divider ng-if="!$last"></md-divider>
 				</div>
 			</div>
 		</div>
-			<md-divider></md-divider>
+			<!-- <md-divider></md-divider> -->
 			<!-- <md-divider ng-if="!$last"></md-divider> -->
 		</md-list-item>
 		<!-- <md-button type="submit" class="md-button cnpSidebarButton cnpSidebarButtonCenter cnpDefaultColor" ng-click="onShowMore()">
@@ -146,7 +151,7 @@
 	<img ng-src="{{$root.sMenuIconUrl}}"/>
 </div>
 <div layout="row" layout-align="start center">
-	<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}" ng-cloak/>
+	<img class="cnpMobileCompanyLogo" ng-src="{{$root.sLogoUrl}}" />
 </div>
 <div class="cnpMobileTitle">
 	{{'hybrid_deficienciesListItem' | translate}}
