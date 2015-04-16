@@ -91,19 +91,19 @@
 <!-- 	<md-content layout-fill class="cnpAppViewContentMobile">
 		<div ui-view> </div>
 	</md-content> -->
-<!-- 		<div ui-view class="cnpAppViewContentMobile">
-	</div> -->
+		<div ui-view class="cnpAppViewContentMobile">
+	</div>
 
 <!-- 	<md-content ui-view layout-fill class="cnpAppViewContentMobile">
 	</md-content> -->
 
 	<!-- for webapp -->
-<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
-<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{::tab.sTitle | translate}}">
-</md-tab>
-</md-tabs>
-<div ui-view class="cnpAppViewContent" ng-if="!bMobileMode">
-</div>
+<!-- 	<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
+		<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{::tab.sTitle | translate}}">
+		</md-tab>
+	</md-tabs>
+	<div ui-view class="cnpAppViewContent" ng-if="!bMobileMode">
+	</div> -->
 
 	<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight" ng-swipe-right="onCloseNotificationsMenu()">
 	<md-list>

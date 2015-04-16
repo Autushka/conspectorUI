@@ -21,9 +21,9 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
         var oStatusForSearch = {};
         var oContractorsForSearch = {};
         $scope.sProjectandPhase = "...";
-        $scope.sUnits = $filter('translate')('HELLO_WORLD');
-        $scope.sStatuses = "...";
-        $scope.sContractors = "...";
+        $scope.sUnits = $filter('translate')('global_allUnits');
+        $scope.sStatuses = $filter('translate')('global_allStatuses');
+        $scope.sContractors = $filter('translate')('global_allContractors');
 
 
         $scope.onSelectPhaseSearchCriteria = function() {
