@@ -2,6 +2,12 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
     function($scope, $location, $anchorScroll, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
         historyProvider.removeHistory();
 
+        $rootScope.sMode = 
+        sMode = "list"; // search and list
+        = "add"; // show form to add new def
+        = "display"; // show expanded card with edit button sMode
+        = "edit";
+
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation  
         $scope.bShowContractorInList = true;
