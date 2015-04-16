@@ -1658,10 +1658,12 @@ ADMIN PANEL
 	width: 80% !important;
 }
 .cnpMobileItemDescription{
-	font-size: 17px;
+	font-size: 15px;
+	font-weight: 500;
 }
 .cnpMobileItemValue{
-	font-size: 15px;
+	font-size: 14px;
+	font-weight: 100;
 	margin-top: 12px;
 	color: @blueColor;
 	white-space: normal;
@@ -3219,6 +3221,30 @@ button[class*="btn-default"]{
 	box-shadow: 0 3px 17px 3px rgba(0,0,0,0.2);
 	margin-top: 3px;
 }
+
+#cnpMobileUiSelect > ul[class*="dropdown-menu"] {
+	background-color: white;
+	border: 1px solid transparent;
+	border-radius: 0px;
+	border-width: 0;
+	/* border-top: none; */
+	/* border-bottom: none; */
+	overflow-y: auto;
+	width: ~"calc(100% + 2px)";
+	left: -1px;
+	max-height: 300px;
+	/* right: -4px; */
+	  box-shadow: none;
+	margin-top: 0;
+	position: relative;
+}
+#cnpMobileUiSelect {
+	padding: 8px 8px 6px 8px !important;
+	  margin: 8px;
+	  font-size: 16px;
+}
+
+
 .ui-select-multiple{
 	-webkit-appearance: textfield;
 	padding: 1px;
@@ -3287,7 +3313,7 @@ button[class*="btn-default"]{
   	z-index: 1000;
 }
 .ui-select-bootstrap .ui-select-choices-row.active>a{
-	  background-color: @blueColor;
+	  background-color: #EC8910;
 	  height: 40px;
 	padding-top: 8px;
 }

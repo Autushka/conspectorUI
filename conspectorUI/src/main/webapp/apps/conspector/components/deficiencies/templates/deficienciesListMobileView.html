@@ -14,7 +14,7 @@
 		</div>
 		</md-button>
 		<md-divider></md-divider>
-		<md-button class="md-button cnpMobileListButton" ng-click="onSelectUnitSearchCriteria()">
+		<!-- <md-button class="md-button cnpMobileListButton" ng-click="onSelectUnitSearchCriteria()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" >
 				{{::'deficiencyDetails_units' | translate}}
@@ -23,7 +23,13 @@
 				{{sUnits}}
 			</label>
 		</div>
-		</md-button>
+		</md-button> -->
+		<ui-select id="cnpMobileUiSelect" multiple ng-model="oUnits.aSelectedUnits" on-remove="onDataModified()" on-select="onDataModified()">
+		<ui-select-match placeholder="{{::'deficiencyDetails_deficiencyUnitsDefaultLabel' | translate }}">{{$item.sName}}</ui-select-match>
+			<ui-select-choices repeat="unit in oUnits.aUnits | searchInMultiSelect: {sName: $select.search, aSelectedItems: oUnits.aSelectedUnits}">
+			<div ng-bind-html="unit.sName | highlight: $select.search"></div>
+			</ui-select-choices>
+		</ui-select>
 		<md-divider></md-divider>
 		<md-button class="md-button cnpMobileListButton" ng-click="onSelectStatusSearchCriteria()">
 		<div layout="column" layout-align="center start">
@@ -35,7 +41,7 @@
 			</label>
 		</div>
 		</md-button>
-		<md-divider></md-divider>
+		<md-divider></md-divider><!-- 
 		<md-button ng-show="sCurrentRole != 'contractor'" class="md-button cnpMobileListButton" ng-click="onSelectContractorSearchCriteria()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" >
@@ -45,7 +51,13 @@
 				{{sContractors}}
 			</label>
 		</div>
-		</md-button>
+		</md-button> -->
+		<ui-select id="cnpMobileUiSelect" multiple ng-model="oContractors.aSelectedContractors" ng-disabled="oUserProfile.sCurrentRole == 'contractor'" on-remove="onDataModified()" on-select="onDataModified()">
+		<ui-select-match placeholder="{{::'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}">{{$item.sName}}</ui-select-match>
+			<ui-select-choices repeat="contractor in oContractors.aContractors | searchInMultiSelect: {sName: $select.search, aSelectedItems: oContractors.aSelectedContractors}">
+			<div ng-bind-html="contractor.sName | highlight: $select.search"></div>
+			</ui-select-choices>
+		</ui-select>
 		<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton notSelectable" ng-click="onSearch()" >
 			{{::'hybrid_searchDeficiencies' | translate}}
 			</md-button>
