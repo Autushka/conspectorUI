@@ -6,7 +6,8 @@
 		<link rel="icon" type="image/x-icon" href="favicon.ico">
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 
-		<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+		<!-- <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"> -->
+		<link rel="stylesheet" href="apps/conspector/css/angular-material.min.css">
 		<link rel="stylesheet" href="apps/conspector/js/thirdParty/ng-table.min.css">
 		<link rel="stylesheet" href="bower_components/isteven-angular-multiselect/angular-multi-select.css">
 		<link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.min.css">
