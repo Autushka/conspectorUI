@@ -1,4 +1,10 @@
-<div layout="row" layout="center start" class="cnpContentWrapper">
+<div layout="row" layout="center start" class="cnpContentWrapper" ng-show="sDisplayedView=='details'">
+</div>
+
+<!-- <div layout="row" layout="center start" class="cnpContentWrapper" ng-show="sMode=='list'">
+</div> -->
+
+<div layout="row" layout="center start" class="cnpContentWrapper" ng-show="sDisplayedView=='list'">
 	<div class="cnpMobileContent" layout="column">
 		<div class="cnpMobileSubHeaderText" layout="column" layout-align="center center">
 			{{::'hybrid_selectSearchCriterias' | translate}}

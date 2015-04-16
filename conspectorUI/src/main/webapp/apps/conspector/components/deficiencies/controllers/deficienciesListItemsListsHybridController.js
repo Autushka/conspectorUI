@@ -2,7 +2,7 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
     function($rootScope, $scope, $state, servicesProvider, apiProvider, $translate, $stateParams, cacheProvider, utilsProvider, $filter, dataProvider, CONSTANTS, historyProvider, rolesSettings, $timeout, $mdSidenav, $window, $cordovaCamera, $cordovaKeyboard) {
 
         $scope.onClose = function() {
-            if (CONSTANTS.bIsHybridApplication) {
+            if (CONSTANTS.bIsHybridApplication && CONSTANTS.sMobileType === "ios") {
                 $cordovaKeyboard.close();
             }
 
@@ -269,7 +269,9 @@ viewControllers.controller('deficienciesListItemsListsHybridView', ['$rootScope'
                 $rootScope.bIgnoreNavigation = true;
                 $rootScope.loadDeficiencies();
                 $rootScope.sSelectedDeficiencyAttribute = "";
-                $cordovaKeyboard.close();
+                if(CONSTANTS.sMobileType === "ios"){
+                	$cordovaKeyboard.close();
+                }
                 $rootScope.sDeficienciesListView = "deficiencyDetails";
 
                 var onInterestedUsersLoaded = function(aData) {

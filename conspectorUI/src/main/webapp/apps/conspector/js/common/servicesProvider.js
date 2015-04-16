@@ -282,7 +282,7 @@ app.factory('servicesProvider', ['$rootScope', '$state', 'ngTableParams', '$tran
 			messagesHandler: function(aMessages) {
 				var bNoErrorMessages = true;
 
-				if (CONSTANTS.bIsHybridApplication) {
+				if (CONSTANTS.bIsHybridApplication && CONSTANTS.sMobileType === "ios") {
 					$cordovaKeyboard.close();
 				}
 
