@@ -62,35 +62,94 @@
 		<div class="cnpMobileSubHeaderText" layout="column" layout-align="center center">
 			{{::'hybrid_selectSearchCriterias' | translate}}
 		</div>
-		<md-button class="md-button cnpMobileListButton" ng-click="onSelectPhaseSearchCriteria()" ng-disabled="bPhasesButtonDisabled">
-		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription" >
-				{{::'deficiencyDetails_associatedProjectsAndPhases' | translate}}
+		
+		<div class="cnpSection" layout="column" layout-align="start center" flex>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div class="cnpSubSectionLabel">
+						<label>
+							{{::'deficiencyDetails_associatedProjectsAndPhases' | translate}}
+						</label>
+					</div>
+					<md-select ng-model="selectedPhase" md-on-open="onSelectPhaseSearchCriteria()" placeholder="Select project & phase">
+						<md-option ng-value="phase" ng-click="onSelectSearchCriteriaPhase(phase)" ng-repeat="phase in aPhases">{{::phase.sProjectAndPhaseName}}</md-option>
+					</md-select>
+					<!-- <md-select ng-model="selectedPhase" md-on-open="onSelectPhaseSearchCriteria()" placeholder="Select project & phase">
+						<div ng-repeat="project in aProjects">
+							<md-optgroup label='{{project.sProjectName}}'>
+							<md-option ng-value="phase" ng-repeat="phase in project.aPhases">{{phase.sProjectAndPhaseName}}</md-option>
+							</md-optgroup>
+						</div>
+					</md-select> -->
+				</div>
 			</div>
-			<label class="cnpMobileItemValue" >
-				{{sProjectandPhase}}
-			</label>
-		</div>
-		</md-button>
-		<md-divider></md-divider>
-		<!-- <md-button class="md-button cnpMobileListButton" ng-click="onSelectUnitSearchCriteria()">
-		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription" >
-				{{::'deficiencyDetails_units' | translate}}
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div class="cnpSubSectionLabel">
+						<label>
+							{{::'deficiencyDetails_units' | translate}}
+						</label>
+					</div>
+					<ui-select id="cnpMobileUiSelect" multiple ng-model="oUnits.aSelectedUnits" on-remove="onDataModified()" on-select="onDataModified()">
+					<ui-select-match placeholder="{{::'deficiencyDetails_deficiencyUnitsDefaultLabel' | translate }}">{{$item.sName}}</ui-select-match>
+					<ui-select-choices repeat="unit in oUnits.aUnits | searchInMultiSelect: {sName: $select.search, aSelectedItems: oUnits.aSelectedUnits}">
+					<div ng-bind-html="unit.sName | highlight: $select.search"></div>
+					</ui-select-choices>
+					</ui-select>
+				</div>
 			</div>
-			<label class="cnpMobileItemValue" >
-				{{sUnits}}
-			</label>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div class="cnpSubSectionLabel">
+						<label>
+							{{::'deficiencyDetails_status' | translate}}
+						</label>
+					</div>
+					<md-select multiple="true" ng-model="aStatuses.aSelectedStatuses">
+						<md-select-label>
+							<span ng-repeat="selectedStatuses in aStatuses.aSelectedStatuses">
+								<div layout="row" layout-align="start center">
+									<img ng-src="{{selectedStatuses.sIconUrl}}" class="cnpMobileStatusIcon">
+									<div class="md-text">
+										{{selectedStatuses.sDescription}} 
+									</div>
+								</div>
+							</span>
+						</md-select-label>
+						<md-option ng-value="status" ng-repeat="status in aStatuses">
+							<div layout="row" layout-align="start center">
+								<img ng-src="{{::status.sIconUrl}}" class="cnpMobileStatusIcon">
+								<div class="md-text">
+									{{::status.sDescription}}
+								</div>
+							</div>
+							</md-option>
+					</md-select>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<div class="cnpSubSection" flex>
+					<div class="cnpSubSectionLabel">
+						<label>
+							{{::'deficiencyDetails_contractors' | translate}}
+						</label>
+					</div>
+					<ui-select id="cnpMobileUiSelect" multiple ng-model="oContractors.aSelectedContractors" ng-disabled="oUserProfile.sCurrentRole == 'contractor'" on-remove="onDataModified()" on-select="onDataModified()">
+					<ui-select-match placeholder="{{::'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}">{{$item.sName}}</ui-select-match>
+					<ui-select-choices repeat="contractor in oContractors.aContractors | searchInMultiSelect: {sName: $select.search, aSelectedItems: oContractors.aSelectedContractors}">
+					<div ng-bind-html="contractor.sName | highlight: $select.search"></div>
+					</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
+			<div layout="row" style="width: 100%" flex>
+				<md-button flex type="submit" class="md-button md-primary md-raised cnpMobileLargeButton notSelectable" ng-click="onSearch()" >
+					{{::'hybrid_searchDeficiencies' | translate}}
+				</md-button>
+			</div>
 		</div>
-		</md-button> -->
-		<ui-select id="cnpMobileUiSelect" multiple ng-model="oUnits.aSelectedUnits" on-remove="onDataModified()" on-select="onDataModified()">
-		<ui-select-match placeholder="{{::'deficiencyDetails_deficiencyUnitsDefaultLabel' | translate }}">{{$item.sName}}</ui-select-match>
-			<ui-select-choices repeat="unit in oUnits.aUnits | searchInMultiSelect: {sName: $select.search, aSelectedItems: oUnits.aSelectedUnits}">
-			<div ng-bind-html="unit.sName | highlight: $select.search"></div>
-			</ui-select-choices>
-		</ui-select>
-		<md-divider></md-divider>
-		<md-button class="md-button cnpMobileListButton" ng-click="onSelectStatusSearchCriteria()">
+
+<!-- 		<md-button class="md-button cnpMobileListButton" ng-click="onSelectStatusSearchCriteria()">
 		<div layout="column" layout-align="center start">
 			<div class="cnpMobileItemDescription" >
 				{{::'deficiencyDetails_status' | translate}}
@@ -99,27 +158,9 @@
 				{{sStatuses}}
 			</label>
 		</div>
-		</md-button>
-		<md-divider></md-divider><!-- 
-		<md-button ng-show="sCurrentRole != 'contractor'" class="md-button cnpMobileListButton" ng-click="onSelectContractorSearchCriteria()">
-		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription" >
-				{{::'deficiencyDetails_contractors' | translate}}
-			</div>
-			<label class="cnpMobileItemValue" >
-				{{sContractors}}
-			</label>
-		</div>
 		</md-button> -->
-		<ui-select id="cnpMobileUiSelect" multiple ng-model="oContractors.aSelectedContractors" ng-disabled="oUserProfile.sCurrentRole == 'contractor'" on-remove="onDataModified()" on-select="onDataModified()">
-		<ui-select-match placeholder="{{::'deficiencyDetails_deficiencyContractorsDefaultLabel' | translate }}">{{$item.sName}}</ui-select-match>
-			<ui-select-choices repeat="contractor in oContractors.aContractors | searchInMultiSelect: {sName: $select.search, aSelectedItems: oContractors.aSelectedContractors}">
-			<div ng-bind-html="contractor.sName | highlight: $select.search"></div>
-			</ui-select-choices>
-		</ui-select>
-		<md-button type="submit" class="md-button md-primary md-raised cnpMobileLargeButton notSelectable" ng-click="onSearch()" >
-			{{::'hybrid_searchDeficiencies' | translate}}
-			</md-button>
+
+
 	</div>
 	
 	
@@ -129,7 +170,7 @@
 		<div class="cnpMobileListItem" layout="row" layout-align="space-between center"  style="height: 38px; width: 100%;">
 			<div layout="row" layout-align="start center">
 				<div layout="row" layout-align="start center">
-					<!-- <img ng-src="{{deficiency.sStatuseIconUrl}}" class="cnpMobileStatusIcon"> -->
+					<img ng-src="{{::deficiency.sIconUrl}}" class="cnpMobileStatusIcon">
 				</div>
 				<div style="font-size: 18px;">{{::deficiency.UnitDetails.Name}}
 				</div>
@@ -181,23 +222,18 @@
 	</md-card>
 	<!-- <md-divider></md-divider> -->
 </div>
-
-<md-button type="submit" class="md-button cnpSidebarButton cnpSidebarButtonCenter cnpDefaultColor" ng-click="onShowMore()">Show more</md-button>
+	<div layout="row" style="width: 100%; margin-bottom: 30px;" flex>
+		<md-button flex ng-show="aDeficiencies.length !== 0" type="submit" class="md-button md-primary cnpMobileLargeButton notSelectable" ng-click="onShowMore()">Load more items ...</md-button>
+	</div>
 </div>
 
 
-<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="phasesSidenav">
+<!-- <md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="phasesSidenav">
 	<md-list>
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
 	Phase selection
 	</md-toolbar>
 	<div layout="row" layout-align="start center">
-		<!-- <md-button class="md-button cnpSidebarButton cnpSidebarButtonCenter" style="  border-right: 1px rgba(0,0,0,0.12) solid; min-height: 60px;">
-			Button
-		</md-button>
-		<md-button class="md-button cnpSidebarButton cnpSidebarButtonCenter" style="min-height: 60px;">
-			Another button
-		</md-button> -->
 		</div>
 		<md-divider></md-divider>
 		<md-list-item ng-repeat="project in aProjects">
@@ -214,7 +250,7 @@
 		</div>
 		</md-list-item>
 	</md-list>
-</md-sidenav>
+</md-sidenav> -->
 <md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="unitsSidenav">
 	<md-list>
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">

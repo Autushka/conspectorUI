@@ -280,11 +280,12 @@ font-weight: 500;
 		}
 	}
 	&.cnpMobileLargeButton{
-		margin: 0 0 10px 0;
-		/* width: 100%; */
+		margin-right: 5px;
+		margin-left: 5px;
 		font-size: 22px;
+		/* width: 100%; */
 		height: 51.6px;
-		border-radius: 0;
+		/* border-radius: 0; */
 	}
 	&.cnpButtonWithIcon{
 		padding-left: 37px;
@@ -1625,8 +1626,10 @@ ADMIN PANEL
 	padding-left: 12px;
 }
 .cnpMobileStatusIcon{
-	height: 26px;
-	width: 26px;
+  min-width: 26px;
+  max-width: 26px;
+  max-height: 26px;
+  min-height: 26px;
 	margin-right: 8px;
 	&.cnpMobileStatusIconMoreMargin{
 		// margin-right: 20px;
@@ -3240,8 +3243,8 @@ button[class*="btn-default"]{
 }
 #cnpMobileUiSelect {
 	padding: 8px 8px 6px 8px !important;
-	  margin: 8px;
-	  font-size: 16px;
+	// margin: 8px;
+	font-size: 16px;
 }
 
 
@@ -3416,4 +3419,10 @@ md-list{
 md-card{
 	background: white;
  	padding: 16px;
+}
+md-select-label{
+	font-weight: 500;
+}
+.md-select-menu-container.md-active md-select-menu>*{
+	background-color: white;
 }
