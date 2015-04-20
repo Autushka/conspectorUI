@@ -102,7 +102,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 url: '/forgotPassword',
                 templateUrl: 'apps/conspector/components/userManagement/templates/forgotPasswordMobileView.html',
                 controller: 'forgotPasswordView'
-            })
+            });
             $stateProvider.state('initialPasswordReset', {
                 url: '/initialPasswordReset',
                 templateUrl: 'apps/conspector/components/userManagement/templates/initialPasswordResetMobileView.html',
@@ -144,7 +144,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 url: '/forgotPassword',
                 templateUrl: 'apps/conspector/components/userManagement/templates/forgotPasswordView.html',
                 controller: 'forgotPasswordView'
-            })
+            });
             $stateProvider.state('initialPasswordReset', {
                 url: '/initialPasswordReset',
                 templateUrl: 'apps/conspector/components/userManagement/templates/initialPasswordResetView.html',

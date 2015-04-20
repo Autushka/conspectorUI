@@ -2,20 +2,15 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
     function($scope, $location, $anchorScroll, $rootScope, $state, $stateParams, servicesProvider, $translate, apiProvider, cacheProvider, utilsProvider, historyProvider, $mdSidenav, $window, $filter, $cookieStore, rolesSettings, $timeout) {
         historyProvider.removeHistory();
 
-        $scope.sDisplayedView = "list";//list or details
-        $scope.sDisplayMode = "display";//display, edit or add
-        // sMode = "list"; // search and list
-        // = "add"; // show form to add new def
-        // = "display"; // show expanded card with edit button sMode
-        // = "edit";
+        $scope.sDisplayedView = "list";
+        $scope.sDisplayMode = "display";
 
         $rootScope.sCurrentStateName = $state.current.name; // for backNavigation   
         $rootScope.oStateParams = angular.copy($stateParams); // for backNavigation  
         $scope.bShowContractorInList = true;
-        $scope.bFadeImagesIcon = true;
-        $scope.bFadeCommentsIcon = true;
-        if($scope.oUserProfile.sCurrentRole === "contractor"){
-             $scope.bShowContractorInList = false;
+
+        if ($scope.oUserProfile.sCurrentRole === "contractor") {
+            $scope.bShowContractorInList = false;
         }
         var iPageNumberDeficiencies = 1;
         var bPhaseWasSelected = false;
@@ -98,60 +93,50 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
                 $scope.oUnits = {};
                 $scope.oUnits.aUnits = [];
                 $scope.oUnits.aSelectedUnits = [];
-                
+
                 loadContractorsAndUnits();
-                
-                // $rootScope.oSearchCriterias["oUnit"].sValue = "...";
-                // $rootScope.oSearchCriterias["oUnit"].aSelectedItemsGuids = [];
-                // $rootScope.oSearchCriterias.bUnitWasSelected = false;
-                
-                // $rootScope.oSearchCriterias.aContractors = [];
-                // $rootScope.oSearchCriterias.aFilteredContractors = [];
-                // $rootScope.oSearchCriterias.sContractorFilter = "";
-                // $rootScope.oSearchCriterias["oContractor"].sValue = "...";
-                // $rootScope.oSearchCriterias["oContractor"].aSelectedItemsGuids = [];
-                // $rootScope.oSearchCriterias.bContractorWasSelected = false;                
             }
-            // $scope.onClose();
         };
-
-        // $scope.onSelectUnitSearchCriteria = function() {
-        //     if (!$rootScope.oSearchCriterias.oUnit.bIsSelectionUnabled) {
-        //         return;
-        //     }
-
-        //     $rootScope.sCurrentSearhCriteria = "unit";
-        //     if (!$rootScope.oSearchCriterias.aUnits.length) {
-        //         apiProvider.getPhase({
-        //             sExpand: "UnitDetails",
-        //             sKey: $rootScope.oSearchCriterias["oPhase"].sSelectedItemGuid,
-        //             onSuccess: onUnitsLoaded
-        //         });
-
-        //     }
-
-        //     $rootScope.sDeficienciesListView = "deficienciesListItemsLists";
-        // };
-
-       
 
         var onDeficienciesLoaded = function(aData) {
 
-            
+            var aImages = [];
+            for (var i = 0; i < aData.results.length; i++) {
+                aData.results[i].iImagesNumber = 0;
+                aData.results[i].iCommentsNumber = 0;
+                aData.results[i].bFadeImagesIcon = true;
+                aData.results[i].bFadeCommentsIcon = true;
+                if (aData.results[i].FileMetadataSetDetails) {
+                    // sFileMetadataSetLastModifiedAt = aData[i].FileMetadataSetDetails.LastModifiedAt;
+                    if (aData.results[i].FileMetadataSetDetails.FileMetadataDetails) {
+                        for (var j = 0; j < aData.results[i].FileMetadataSetDetails.FileMetadataDetails.results.length; j++) {
+                            if (aData.results[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType) {
+                                if (aData.results[i].FileMetadataSetDetails.FileMetadataDetails.results[j].MediaType.indexOf("image") > -1 && aData.results[i].FileMetadataSetDetails.FileMetadataDetails.results[j].GeneralAttributes.IsDeleted === false) {
+                                    aImages.push(aData.results[i].FileMetadataSetDetails.FileMetadataDetails.results[j]);
+                                }
+                            }
+                        }
+                    }
+                    if (aImages.length) {
+                        aData.results[i].iImagesNumber = aImages.length;
+                        aData.results[i].aImages = aImages;
+                        aData.results[i].bFadeImagesIcon = false;
+                    }
+
+                }
+                if (aData.results[i].CommentSetDetails) {
+                    aData.results[i].iCommentsNumber = aData.results[i].CommentSetDetails.CommentDetails.results.length;
+                    aData.results[i].bFadeCommentsIcon = false;
+                }
+            }
             // $scope.$apply( function() {
             //     $scope.aDeficiencies = aData.results;
             // });
 
-            $scope.$evalAsync( function() {
-                $scope.aDeficiencies = aData.results;
+            $scope.$evalAsync(function() {
+                $scope.aDeficiencies = $scope.aDeficiencies.concat(aData.results);
             });
-
-            // for(var i = 0; i < aData.results.length; i++){
-            //     $scope.aDeficiencies.push(aData.results[i]);
-            // }
-
-            // $scope.aDeficiencies = angular.copy(aData.results);
-        }
+        };
 
         $scope.onOpenPhasesSidenav = function() {
             $timeout($mdSidenav('phasesSidenav').open, 200);
@@ -161,6 +146,10 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
             $timeout($mdSidenav('phasesSidenav').close, 200);
         };
 
+        $scope.onShowMore = function() {
+            iPageNumberDeficiencies++;
+            loadDeficiencies(iPageNumberDeficiencies);
+        };
 
         var loadDeficiencies = function(iPageNumberDeficiencies) {
 
@@ -168,49 +157,40 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
             var sFilterByAccountsGuids = "";
             var sFilterByUnitsGuids = "";
 
-            if(oPhaseForSearch){
+            if (oPhaseForSearch) {
                 sFilterByPhaseGuid = " and PhaseGuid eq '" + oPhaseForSearch.Guid + "'";
             }
 
-            //cant filter by extended value
-            // if($rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length){
-            //  for (var i = 0; i < $rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids.length; i++) {
-            //      sUnitsGuids = sUnitsGuids + $rootScope.oSearchCriterias.oUnit.aSelectedItemsGuids[i] + ",";
-            //  }
-            //  sFilterByUnitsGuids = " and substringof(UnitGuid, '" + sUnitsGuids+ "') eq true";
-            //  //sFilterByPhaseGuid = " "
-            // }            
+            if ($scope.oUserProfile.sCurrentRole === "contractor") {
+                sFilterByAccountsGuids = " and substringof('" + $scope.oUserProfile.oUserContact.AccountDetails.Guid + "', AccountGuids) eq true";
+            }
 
-            // if (cacheProvider.oUserProfile.sCurrentRole === "contractor") {
-            //     sFilterByAccountGuid = " and substringof('" + cacheProvider.oUserProfile.oUserContact.AccountDetails.Guid + "', sUnitsGuids) eq true";
-            // }
-
-            if($scope.oUnits.aSelectedUnits.length){
-                sFilterByUnitsGuids = " and ( "
+            if ($scope.oUnits.aSelectedUnits.length) {
+                sFilterByUnitsGuids = " and ( ";
 
                 for (var i = $scope.oUnits.aSelectedUnits.length - 1; i >= 0; i--) {
                     sFilterByUnitsGuids = sFilterByUnitsGuids + "substringof('" + $scope.oUnits.aSelectedUnits[i].sGuid + "', UnitGuid) eq true";
-                    if(i !== 0){
+                    if (i !== 0) {
                         sFilterByUnitsGuids = sFilterByUnitsGuids + " or ";
-                    }else{
+                    } else {
                         sFilterByUnitsGuids = sFilterByUnitsGuids + " )";
                     }
                 }
             }
 
-            if($scope.oContractors.aSelectedContractors.length){
-                sFilterByAccountsGuids = " and ( "
+            if ($scope.oContractors.aSelectedContractors.length) {
+                sFilterByAccountsGuids = " and ( ";
 
                 for (var i = $scope.oContractors.aSelectedContractors.length - 1; i >= 0; i--) {
                     sFilterByAccountsGuids = sFilterByAccountsGuids + "substringof('" + $scope.oContractors.aSelectedContractors[i].sGuid + "', AccountGuids) eq true";
-                    if(i !== 0){
+                    if (i !== 0) {
                         sFilterByAccountsGuids = sFilterByAccountsGuids + " or ";
-                    }else{
+                    } else {
                         sFilterByAccountsGuids = sFilterByAccountsGuids + " )";
                     }
                 }
             }
-            
+
             var sOtherUrlParams = "$top=10&$orderby=CreatedAt desc&$inlinecount=allpages";
             if (iPageNumberDeficiencies > 1) {
                 sOtherUrlParams = sOtherUrlParams + "&$skip=" + 10 * (iPageNumberDeficiencies - 1);
@@ -228,9 +208,9 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
 
         var onAccountsAndUnitsLoaded = function(oData) {
             oData.AccountDetails.results = $filter('filter')(oData.AccountDetails.results, function(oItem, iIndex) {
-                if(!oItem.GeneralAttributes.IsDeleted && oItem.AccountTypeDetails.NameEN === "Contractor"){
+                if (!oItem.GeneralAttributes.IsDeleted && oItem.AccountTypeDetails.NameEN === "Contractor") {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             });
@@ -241,13 +221,13 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
                     sName: oData.AccountDetails.results[i].Name,
                     sCleanedName: utilsProvider.replaceSpecialChars(utilsProvider.convertStringToInt(oData.AccountDetails.results[i].Name)),
                     bTicked: false
-                })
+                });
             }
 
             oData.UnitDetails.results = $filter('filter')(oData.UnitDetails.results, function(oItem, iIndex) {
-                if(!oItem.GeneralAttributes.IsDeleted){
+                if (!oItem.GeneralAttributes.IsDeleted) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             });
@@ -258,49 +238,33 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
                     sName: oData.UnitDetails.results[i].Name,
                     sCleanedName: utilsProvider.replaceSpecialChars(utilsProvider.convertStringToInt(oData.UnitDetails.results[i].Name)),
                     bTicked: false
-                })
+                });
             }
-            // $rootScope.oSearchCriterias.aContractors = $filter('orderBy')($rootScope.oSearchCriterias.aContractors, ["sName"]);
-            // $rootScope.oSearchCriterias.aFilteredContractors = $filter('filter')($rootScope.oSearchCriterias.aContractors, {
-            //     sName: $rootScope.oSearchCriterias.sContractorFilter
-            // });
         };
 
-        var loadContractorsAndUnits = function(){
+        var loadContractorsAndUnits = function() {
 
-             if (oPhaseForSearch.bTicked) {
+            if (oPhaseForSearch.bTicked) {
                 apiProvider.getPhase({
                     sExpand: "AccountDetails/AccountTypeDetails, UnitDetails",
                     sKey: oPhaseForSearch.Guid,
                     onSuccess: onAccountsAndUnitsLoaded
                 });
-
-            }  
-
+            }
         };
 
-        
-
-
         $scope.onSelectDeficiency = function(oDeficiency) {
-            cacheProvider.putListViewScrollPosition("deficienciesList", $("#body")[0].scrollTop); //saving scroll position...
-            for (var i = 0; i < $rootScope.aSelectedDeficiencyStatuses.length; i++) {
-                if (oDeficiency.sStatusGuid === $rootScope.aSelectedDeficiencyStatuses[i].sGuid) {
-                    $rootScope.aSelectedDeficiencyStatuses[i].bTicked = true;
-                } else {
-                    $rootScope.aSelectedDeficiencyStatuses[i].bTicked = false;
-                }
-            }
+            $scope.sDisplayedView = 'details';
+            $scope.oSelectedDeficiency = angular.copy(oDeficiency);
+        };
 
-            $rootScope.oSelectedDeficiency = angular.copy(oDeficiency);
-            $rootScope.sDeficienciesListView = "deficiencyDetails";
-            // the element you wish to scroll to.
-            //$location.hash('top');
-            // call $anchorScroll()
-            //$anchorScroll();
+        $scope.onDone = function() {
+            $scope.sDisplayedView = 'list';
         };
 
         $scope.onSearch = function() {
+            iPageNumberDeficiencies = 1;
+            $scope.aDeficiencies = [];
             loadDeficiencies();
         };
 

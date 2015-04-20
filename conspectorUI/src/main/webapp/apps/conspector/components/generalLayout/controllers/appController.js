@@ -168,8 +168,8 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
                     if ($scope.aTabs[i].sState === sState) {
                         return i;
                     }
-                };
-            }
+                }
+            };
 
             var tabSelectionBasedOnHash = function() {
                 if ($window.location.hash.indexOf("#/app/adminPanel") > -1 ||
@@ -303,7 +303,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
                 oData: {
                     Status: 'read'
                 },
-            })
+            });
         };
 
         $scope.onClearFiltering = function() {
@@ -369,7 +369,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             $scope.$broadcast("$mdTabsPaginationChanged");
             $state.go(aSideMenuItem.sState);
             $scope.onCloseMenu();
-        }
+        };
 
         $scope.onAdminPanel = function() {
             $scope.selectedTabIndex = -1;
