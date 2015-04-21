@@ -162,6 +162,7 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
 
             $scope.$evalAsync(function() {
                 $scope.aDeficiencies = $scope.aDeficiencies.concat(aData.results);
+                $scope.iTotalDeficienciesNumber = aData.__count;
             });
         };
 

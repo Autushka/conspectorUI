@@ -1,4 +1,4 @@
-<div layout="row" layout="center start" class="cnpContentWrapper" ng-show="sDisplayedView=='details'">
+<md-content layout="row" layout="center start" class="cnpContentWrapper" ng-show="sDisplayedView=='details'">
 	<md-card class="">
 	<div layout="column" layout-align="center start">
 		<div class="cnpMobileListItem" layout="row" layout-align="space-between center"  style="height: 38px; width: 100%;">
@@ -52,12 +52,12 @@
 	</div>
 	<md-button ng-click="onDone()">DONE</md-button>
 	</md-card>
-</div>
+</md-content>
 
 <!-- <div layout="row" layout="center start" class="cnpContentWrapper" ng-show="sMode=='list'">
 </div> -->
 
-<div layout="row" layout="center start" class="cnpContentWrapper" ng-show="sDisplayedView=='list'">
+<md-content layout="column" layout="start center" class="cnpContentWrapper" ng-show="sDisplayedView=='list'">
 	<div class="cnpMobileContent" layout="column">
 		<div class="cnpMobileSubHeaderText" layout="column" layout-align="center center">
 			{{::'hybrid_selectSearchCriterias' | translate}}
@@ -106,15 +106,13 @@
 						</label>
 					</div>
 					<md-select multiple="true" ng-model="aStatuses.aSelectedStatuses">
-						<md-select-label>
-							<span ng-repeat="selectedStatuses in aStatuses.aSelectedStatuses">
-								<div layout="row" layout-align="start center">
-									<img ng-src="{{selectedStatuses.sIconUrl}}" class="cnpMobileStatusIcon">
-									<div class="md-text">
-										{{selectedStatuses.sDescription}} 
-									</div>
+						<md-select-label style="display: inline-block;" layout-wrap>
+							<div layout="row" layout-align="start center" flex ng-repeat="selectedStatuses in aStatuses.aSelectedStatuses" class="cnpSelectItem">
+								<img ng-src="{{selectedStatuses.sIconUrl}}" class="cnpMobileStatusIcon">
+								<div class="md-text">
+									{{selectedStatuses.sDescription}} 
 								</div>
-							</span>
+							</div>
 						</md-select-label>
 						<md-option ng-value="status" ng-repeat="status in aStatuses">
 							<div layout="row" layout-align="start center">
@@ -148,84 +146,67 @@
 				</md-button>
 			</div>
 		</div>
-
-<!-- 		<md-button class="md-button cnpMobileListButton" ng-click="onSelectStatusSearchCriteria()">
-		<div layout="column" layout-align="center start">
-			<div class="cnpMobileItemDescription" >
-				{{::'deficiencyDetails_status' | translate}}
+				<md-card ng-repeat="deficiency in aDeficiencies" class="" ng-click="onSelectDeficiency(deficiency)">
+			<div layout="column" layout-align="center start">
+				<div class="cnpMobileListItem" layout="row" layout-align="space-between center"  style="height: 38px; width: 100%;">
+					<div layout="row" layout-align="start center">
+						<div layout="row" layout-align="start center">
+							<img ng-src="{{::deficiency.sIconUrl}}" class="cnpMobileStatusIcon">
+						</div>
+						<div style="font-size: 18px;">{{::deficiency.UnitDetails.Name}}
+						</div>
+					</div>
+					<!-- 				<div>
+						<label class="cnpMobileItemValue cnpMobileItemValueStatus" >
+							{{deficiency.sStatusDescription}}
+						</label>
+					</div> -->
+					<div layout="row" layout-align="start center">
+						<div layout="row" ng-if="::(deficiency.bFadeImagesIcon)" layout-align="center center" class="cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity cnpImagesIconInMobileAppInList notSelectable">
+							<a>
+								({{::deficiency.iImagesNumber}})
+							</a>
+						</div>
+						<div layout="row" ng-if="::(!deficiency.bFadeImagesIcon)" layout-align="center center" class="cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList notSelectable cnpImagesIconInMobileAppInList">
+							<a>
+								({{::deficiency.iImagesNumber}})
+							</a>
+						</div>
+						<div layout="row" ng-if="::(deficiency.bFadeCommentsIcon)" layout-align="center center" class="cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList cnpCommentsIconWithOpacity notSelectable">
+							<a>
+								({{::deficiency.iCommentsNumber}})
+							</a>
+						</div>
+						<div layout="row" ng-if="::(!deficiency.bFadeCommentsIcon)" layout-align="center center" class="cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList notSelectable">
+							<a>
+								({{::deficiency.iCommentsNumber}})
+							</a>
+						</div>
+					</div>
+				</div>
+				<div layout="row" layout-align="space-between start" style="width: 100%;">
+					<div layout="column" layout-align="start start" flex>
+						<div class="cnpMobileListItem cnpMobileContractorLabel" ng-if="::bShowContractorInList" >
+							{{::deficiency.sContractors}}
+						</div>
+						<div class="cnpMobileListItem cnpMobileTagsInList"  ng-if="::deficiency.sTags != ''" style="margin-bottom: 8px;">
+							{{::deficiency.DescriptionTags}}
+						</div>
+						<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="::deficiency.sLocationTags != ''" >
+							{{::deficiency.LocationTags}}
+						</div>
+						
+					</div>
+				</div>
 			</div>
-			<label class="cnpMobileItemValue" >
-				{{sStatuses}}
-			</label>
-		</div>
-		</md-button> -->
-
-
+		</md-card>
+			<div layout="row" style="width: 100%; margin-bottom: 30px;" flex>
+			<md-button flex ng-show="aDeficiencies.length !== 0 && (iTotalDeficienciesNumber - aDeficiencies.length)>0" type="submit" class="md-button md-primary cnpMobileLargeButton notSelectable" ng-click="onShowMore()">{{iTotalDeficienciesNumber - aDeficiencies.length}} more</md-button>
+			</div>
 	</div>
-	
-	
-	<div ng-repeat="deficiency in aDeficiencies" >
-	<md-card class="" ng-click="onSelectDeficiency(deficiency)">
-	<div layout="column" layout-align="center start">
-		<div class="cnpMobileListItem" layout="row" layout-align="space-between center"  style="height: 38px; width: 100%;">
-			<div layout="row" layout-align="start center">
-				<div layout="row" layout-align="start center">
-					<img ng-src="{{::deficiency.sIconUrl}}" class="cnpMobileStatusIcon">
-				</div>
-				<div style="font-size: 18px;">{{::deficiency.UnitDetails.Name}}
-				</div>
-			</div>
-			<!-- 				<div>
-				<label class="cnpMobileItemValue cnpMobileItemValueStatus" >
-					{{deficiency.sStatusDescription}}
-				</label>
-			</div> -->
-			<div layout="row" layout-align="start center">
-				<div layout="row" ng-if="::(deficiency.bFadeImagesIcon)" layout-align="center center" class="cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity cnpImagesIconInMobileAppInList notSelectable">
-					<a>
-						({{::deficiency.iImagesNumber}})
-					</a>
-				</div>
-				<div layout="row" ng-if="::(!deficiency.bFadeImagesIcon)" layout-align="center center" class="cnpInputIcon cnpImagesIcon cnpImagesIconInMobileAppInList notSelectable cnpImagesIconInMobileAppInList">
-					<a>
-						({{::deficiency.iImagesNumber}})
-					</a>
-				</div>
-				<div layout="row" ng-if="::(deficiency.bFadeCommentsIcon)" layout-align="center center" class="cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList cnpCommentsIconWithOpacity notSelectable">
-					<a>
-						({{::deficiency.iCommentsNumber}})
-					</a>
-				</div>
-				<div layout="row" ng-if="::(!deficiency.bFadeCommentsIcon)" layout-align="center center" class="cnpInputIcon cnpCommentsIcon cnpCommentsIconInMobileAppInList notSelectable">
-					<a>
-						({{::deficiency.iCommentsNumber}})
-					</a>
-				</div>
-			</div>
-		</div>
-		<div layout="row" layout-align="space-between start" style="width: 100%;">
-			<div layout="column" layout-align="start start" flex>
-				<div class="cnpMobileListItem cnpMobileContractorLabel" ng-if="::bShowContractorInList" >
-					{{::deficiency.sContractors}}
-				</div>
-				<div class="cnpMobileListItem cnpMobileTagsInList"  ng-if="::deficiency.sTags != ''" style="margin-bottom: 8px;">
-					{{::deficiency.DescriptionTags}}
-				</div>
-				<div class="cnpMobileListItem cnpMobileLocationTagsInList" ng-if="::deficiency.sLocationTags != ''" >
-					{{::deficiency.LocationTags}}
-				</div>
-				
-			</div>
-		</div>
-		
-	</div>
-	</md-card>
-	<!-- <md-divider></md-divider> -->
-</div>
-	<div layout="row" style="width: 100%; margin-bottom: 30px;" flex>
-		<md-button flex ng-show="aDeficiencies.length !== 0" type="submit" class="md-button md-primary cnpMobileLargeButton notSelectable" ng-click="onShowMore()">Load more items ...</md-button>
-	</div>
-</div>
+
+
+</md-content>
 
 
 <!-- <md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="phasesSidenav">
@@ -251,18 +232,13 @@
 		</md-list-item>
 	</md-list>
 </md-sidenav> -->
-<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="unitsSidenav">
+<!-- <md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="unitsSidenav">
 	<md-list>
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
 	Units selection
 	</md-toolbar>
 	<div layout="row" layout-align="start center">
-		<!-- <md-button class="md-button cnpSidebarButton cnpSidebarButtonCenter" style="  border-right: 1px rgba(0,0,0,0.12) solid; min-height: 60px;">
-			Button
-		</md-button>
-		<md-button class="md-button cnpSidebarButton cnpSidebarButtonCenter" style="min-height: 60px;">
-			Another button
-		</md-button> -->
+
 		</div>
 		<md-divider></md-divider>
 		<md-list-item ng-repeat="project in aProjects">
@@ -279,7 +255,7 @@
 		</div>
 		</md-list-item>
 	</md-list>
-</md-sidenav>
+</md-sidenav> -->
 
 
 
