@@ -12,7 +12,7 @@
 	<md-subheader class="md-no-sticky">
 		{{ ::'global_dataSubheader' | translate }}
 	</md-subheader>
-	<div ng-repeat="sideMenuItem in aSideMenuItems">
+	<div ng-repeat="sideMenuItem in ::aSideMenuItems">
 		<md-button ng-click="onSideMenuItemClicked(sideMenuItem, $event)" class="md-button cnpSidebarButton cnpInputIcon cnpDefaultColor">
 			{{ ::sideMenuItem.sTitle | translate }}
 		</md-button>

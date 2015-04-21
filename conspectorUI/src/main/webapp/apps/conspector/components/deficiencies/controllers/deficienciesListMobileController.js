@@ -155,6 +155,10 @@ viewControllers.controller('deficienciesListMobileView', ['$scope', '$location',
                 }
                 
                 aData.results[i].sIconUrl = CONSTANTS.sAppAbsolutePath + "rest/file/v2/get/" + aData.results[i].TaskStatusDetails.AssociatedIconFileGuid;
+                aData.results[i].aDescriptionTags = utilsProvider.tagsStringToTagsArrayForUiSelect(aData.results[i].DescriptionTags);
+                aData.results[i].aLocationTags = utilsProvider.tagsStringToTagsArrayForUiSelect(aData.results[i].LocationTags);
+                aData.results[i].aContractorsTags = utilsProvider.tagsStringToTagsArrayForUiSelect(aData.results[i].AccountValues);
+            
             }
             // $scope.$apply( function() {
             //     $scope.aDeficiencies = aData.results;

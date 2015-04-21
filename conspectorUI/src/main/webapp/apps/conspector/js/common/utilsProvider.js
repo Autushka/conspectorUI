@@ -243,6 +243,20 @@ app.factory('utilsProvider', ['$mdToast', '$translate',
 				return aTags;
 			},
 
+			tagsStringToTagsArrayForUiSelect: function(sTags) {
+				var aTags = [];
+				var aTexts = [];
+				if (sTags === null || sTags === undefined || sTags === "") {
+					return aTags;
+				}
+				sTags = sTags.substring(0, sTags.length - 1); // remove last ';'
+				aTexts = sTags.split("; ");
+				for (var i = 0; i < aTexts.length; i++) {
+					aTags.push(aTexts[i]);
+				}
+				return aTags;
+			},
+
 			tagsArrayToTagsString: function(aTags) {
 				var sTags = "";
 				for (var i = 0; i < aTags.length; i++) {
