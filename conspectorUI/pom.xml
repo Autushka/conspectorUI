@@ -26,6 +26,16 @@
   </profiles>
 
   <repositories>
+  <repository>
+        <id>people.apache.snapshots</id>
+        <url>http://repository.apache.org/content/groups/snapshots-group/</url>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
     <repository>
       <id>GitHub mvn-repo releases</id>
       <url>https://github.com/Autushka/mvn-repo/raw/master/releases/</url>
@@ -35,10 +45,28 @@
       <url>https://github.com/Autushka/mvn-repo/raw/master/snapshots/</url>
     </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+        <id>apache.snapshots</id>
+        <name>Apache Snapshots</name>
+        <url>http://repository.apache.org/content/groups/snapshots-group/</url>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </pluginRepository>
+</pluginRepositories>
   
   <build>
     <finalName>conspector</finalName>
     <plugins>
+    <plugin>
+    <groupId>org.apache.tomcat.maven</groupId>
+    <artifactId>tomcat7-maven-plugin</artifactId>
+    <version>2.0-SNAPSHOT</version>
+</plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>

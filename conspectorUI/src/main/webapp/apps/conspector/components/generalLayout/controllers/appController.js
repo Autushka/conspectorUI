@@ -155,6 +155,7 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
 
         if (!bMobileMode) {
 
+
             cacheProvider.oUserProfile.aGloballySelectedPhasesGuids = aSelectedPhases;
             $scope.globalSelectedPhases = aSelectedPhases;
 
@@ -375,14 +376,14 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             $scope.selectedTabIndex = -1;
             $scope.$broadcast("$mdTabsPaginationChanged");
             $state.go('app.adminPanel.usersList');
-            $scope.onCloseMenu();
+            // $scope.onCloseMenu();
         };
 
         $scope.onProfileSettings = function() {
             $scope.selectedTabIndex = -1;
             $scope.$broadcast("$mdTabsPaginationChanged");
             $state.go('app.profileSettings.profileDetails');
-            $scope.onCloseMenu();
+            // $scope.onCloseMenu();
         };
 
         $scope.onOpenNotificationsMenu = function() {
@@ -409,25 +410,33 @@ viewControllers.controller('appView', ['$scope', '$rootScope', '$state', '$mdSid
             $timeout($mdSidenav('leftMenu').close, 300);
         };
 
+        $scope.hoverIn = function() {
+            $scope.bDisplayUserDropdownMenu = true;
+        }; 
+
+        $scope.hoverOut = function() {
+            $scope.bDisplayUserDropdownMenu = false;
+        };
+
         $scope.onChangeLanguage = function() {
             servicesProvider.changeLanguage();
 
             //need to tell user to refresh the page
-            $scope.onCloseMenu();
+            // $scope.onCloseMenu();
         };
 
         $scope.onSwitchCompanies = function() {
             $state.go('companySelection');
-            $scope.onCloseMenu();
+            // $scope.onCloseMenu();
         };
 
         $scope.onSwitchRoles = function() {
             $state.go('roleSelection');
-            $scope.onCloseMenu();
+            // $scope.onCloseMenu();
         };
 
         $scope.onLogOut = function() {
-            $scope.onCloseMenu();
+            // $scope.onCloseMenu();
             servicesProvider.logOut();
         };
 

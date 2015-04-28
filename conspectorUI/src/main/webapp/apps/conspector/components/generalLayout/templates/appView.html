@@ -1,7 +1,7 @@
 <div class="cnpAppView" layout="column" layout-align="start center" layout-fill>
-	<md-sidenav class="md-sidenav-left cnpSideNav" md-component-id="leftMenu" ng-swipe-left="onCloseMenu()">
+	<!-- <md-sidenav class="md-sidenav-left cnpSideNav" md-component-id="leftMenu" ng-swipe-left="onCloseMenu()">
 		
-		<!-- add md-content for smooth rendering when opening side panel -->
+		
 		 <md-list>
 		 <md-toolbar class="md-default-theme" layout="column" layout-align="center center">
 			Menu
@@ -48,12 +48,12 @@
 	</md-button>
 	 </md-list>
 		
-	</md-sidenav>
-		<md-toolbar md-scroll-shrink style="z-index: 5;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);">
+	</md-sidenav> -->
+		<md-toolbar style="z-index: 5;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);">
 			<div id="top" class="cnpHeader" layout="row"  layout-align="space-between center">
 				<div layout="row" layout-align="start center">
-					<div ng-click="onOpenMenu()" class="cnpInputIcon cnpMenuIcon notSelectable">
-					</div>
+					<!-- <div ng-click="onOpenMenu()" class="cnpInputIcon cnpMenuIcon notSelectable">
+					</div> -->
 					<img  class="cnpCompanyLogo" ng-src="{{$root.sLogoUrl}}"/>
 					<!-- ng if might cause issues... -->
 					<div
@@ -68,7 +68,7 @@
 						on-close="onGlobalUserPhasesChanged()"
 						max-labels="2"
 						directive-id="multiSelectFull"
-						ng-if="!bMobileMode"  >
+						  >
 					</div>
 				</div>
 				<div layout="row" layout-align="end center">
@@ -82,8 +82,31 @@
 							{{$root.iNotificationsNumber}}
 						</div>
 					</div>
-					<dr-avatar id="dirAvatar1" ng-if="!bMobileMode" ng-click="onProfileSettings()" user="oUserProfile" size="medium">
-					</dr-avatar>
+					<div class="notSelectable" ng-class="{'cnpUserDropdownMenuWrapper': !bDisplayUserDropdownMenu, 'cnpUserDropdownMenuWrapper active': bDisplayUserDropdownMenu}" ng-init="bDisplayUserDropdownMenu = false" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+						<div class="cnpUserDropdownMenu"  layout="column" layout-align="start center">
+							<div ng-if="bDisplaySwitchCompanies" ng-click="onSwitchCompanies()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
+								{{'app_switchCompanies' | translate}}
+							</div>
+							<div ng-if="bDisplaySwitchRoles" ng-click="onSwitchRoles()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
+								{{'app_switchRoles' | translate}}
+							</div>
+							<div ng-if="bDisplayAdminPanel" ng-click="onAdminPanel()" class="cnpLink cnpLinkHeaderInDownDown notSelectable">
+								{{'app_adminPanel' | translate}}
+							</div>
+							<div ng-if="bDisplayProfileSettings" class="cnpLink cnpLinkHeaderInDownDown" ng-click="onProfileSettings()" >
+								{{'profileSettings_profileDetails' | translate}}
+							</div>
+							<div ng-click="onChangeLanguage()" class="cnpLink cnpLinkHeaderInDownDown">
+								{{'signIn_languageCode' | translate}}
+							</div>
+							<div ng-click="onLogOut()" class="cnpLink cnpLinkHeaderInDownDown notSelectable" style="border-bottom-width: 0; padding-bottom:0;">
+								{{'app_logOut' | translate}}
+							</div>
+						</div>
+						{{::oUserProfile.sUserName}}
+					</div>
+					<!-- <dr-avatar id="dirAvatar1" ng-if="!bMobileMode" ng-click="onProfileSettings()" user="oUserProfile" size="medium">
+					</dr-avatar> -->
 				</div>
 			</div>
 		</md-toolbar>
@@ -91,33 +114,33 @@
 <!-- 	<md-content layout-fill class="cnpAppViewContentMobile">
 		<div ui-view> </div>
 	</md-content> -->
-		<div ui-view class="cnpAppViewContentMobile">
-	</div>
+		<!-- <div ui-view class="cnpAppViewContentMobile">
+	</div> -->
 
 <!-- 	<md-content ui-view layout-fill class="cnpAppViewContentMobile">
 	</md-content> -->
 
 	<!-- for webapp -->
-<!-- 	<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
-		<md-tab ng-repeat="tab in aTabs" md-on-select="onTabSelect(tab)" label="{{::tab.sTitle | translate}}">
+	<md-tabs class="cnpNavBar" md-selected="selectedTabIndex" md-stretch-tabs='auto' md-theme="conspectorColorPaletteNavbar">
+		<md-tab ng-repeat="tab in ::aTabs" md-on-select="onTabSelect(tab)" label="{{tab.sTitle | translate}}">
 		</md-tab>
 	</md-tabs>
-	<div ui-view class="cnpAppViewContent" ng-if="!bMobileMode">
-	</div> -->
+	<div ui-view class="cnpAppViewContent">
+	</div>
 
 	<md-sidenav class="md-sidenav-right cnpSideNav" md-component-id="globalRight" ng-swipe-right="onCloseNotificationsMenu()">
 	<md-list>
 	<md-toolbar class="md-default-theme" layout="column" layout-align="center center">
-	{{::'notificationsList_title' | translate}}
+	{{'notificationsList_title' | translate}}
 	</md-toolbar>
 	<!-- <md-subheader class="md-no-sticky">3 line item
 	</md-subheader> -->
 	<div layout="row" layout-align="start center">
 		<md-button class="md-button cnpSidebarButton cnpSidebarButtonCenter" ng-click="onMarkAllAsRead()" style="  border-right: 1px rgba(0,0,0,0.12) solid; min-height: 60px;">
-			{{::'global_markAllAsRead' | translate}}
+			{{'global_markAllAsRead' | translate}}
 		</md-button>
 		<md-button class="md-button cnpSidebarButton cnpSidebarButtonCenter" ng-click="onDismissAll()" style="min-height: 60px;">
-			{{::'global_dismissAll' | translate}}
+			{{'global_dismissAll' | translate}}
 		</md-button>
 		</div>
 		<md-divider></md-divider>
@@ -126,7 +149,7 @@
 				<div layout="row" layout-align="start center">
 				<dr-avatar id="dirAvatar2" user="::notification.ContactDetails.UserDetails.results[0]" size="small"></dr-avatar>
 					<div class="cnpNgTableNotificationText">
-						{{::notification.GeneralAttributes.CreatedBy}} <span>{{ notification.OperationNameEN | translate}}</span>
+						{{::notification.GeneralAttributes.CreatedBy}} <span>{{::notification.OperationNameEN | translate}}</span>
 					</div>
 				</div>
 				<div class="cnpNgTableCommentCreationDate" layout="row" layout-align="space-between center">

@@ -47,17 +47,17 @@
 					<tr class="ng-table-group notSelectable" >
 						<td colspan="{{$columns.length}}" style="overflow: visible; padding-left: 0; padding-right: 0" >
 							<div class="ng-table-group-cell notSelectable" ng-click="group.$hideRows = !group.$hideRows" ng-class="{ 'ng-table-group-cell-collapsed': group.$hideRows, 'ng-table-group-cell': !group.$hideRows }">
-								{{ group.value }}
+								{{ ::group.value }}
 							</div>
 							
 						</td>
 					</tr>
 					<tr ng-hide="group.$hideRows" ng-repeat="deficiency in group.data">
-						<td data-title="'global_actions' | translate" ng-class="deficiency.sPriorityDescriptionEN=='Severe' ? 'cnpPriorityItem': ''">
+						<td data-title="'global_actions' | translate" ng-class="::deficiency.sPriorityDescriptionEN=='Severe' ? 'cnpPriorityItem': ''">
 							<div layout="row" layout-align="center center" >
 								<div class="cnpInputIcon cnpViewDetailsIcon" ng-click="onDisplay(deficiency, $event)">
 								</div>
-								<div ng-if="bDisplayEditButtons" class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(deficiency)">
+								<div ng-if="::bDisplayEditButtons" class="cnpInputIcon cnpEditDetailsIcon"  ng-click="onEdit(deficiency)">
 								</div>
 							</div>
 						</td>
@@ -66,7 +66,7 @@
 								<div>
 									<span>
 										<a ng-click="onNavigateToUnitDetails(deficiency)">
-											{{deficiency.sUnit}}
+											{{::deficiency.sUnit}}
 										</a>
 									</span>
 								</div>
@@ -74,13 +74,13 @@
 						</td>
 						<td data-title="'global_status' | translate" sortable="'sStatusSortingSequence'">
 							<div layout="row" layout-align="center center" ng-click="onStatusChange(deficiency)">
-								<img class="cnpDeficiencyStatusIcon" ng-src="{{deficiency.sStatuseIconUrl}}"/>
+								<img class="cnpDeficiencyStatusIcon" ng-src="{{::deficiency.sStatuseIconUrl}}"/>
 							</div>
 						</td>
 						<td data-title="'global_contractors' | translate" sortable="'sContractors'" filter="{'sCleanedContractors': 'text'}">
 							<div layout="row" layout-align="start center">
 								<span>
-									{{deficiency.sContractors}}
+									{{::deficiency.sContractors}}
 								</span>
 							</div>
 						</td>
@@ -88,7 +88,7 @@
 							<div layout="row" layout-align="start center">
 								<div>
 									<span>
-										{{deficiency.sTags}}
+										{{::deficiency.sTags}}
 									</span>
 								</div>
 							</div>
@@ -97,7 +97,7 @@
 							<div layout="row" layout-align="start center">
 								<div>
 									<span>
-										{{deficiency.sLocationTags}}
+										{{::deficiency.sLocationTags}}
 									</span>
 								</div>
 							</div>
@@ -112,10 +112,22 @@
 								</div>
 						</td> -->
 						<td data-title="'global_comments' | translate" sortable="'iCommentsNumber'" filter="{'iCommentsNumber': 'text'}">
-							<div layout="row" layout-align="center center"
+							<!-- <div layout="row" layout-align="center center"
 								ng-class="{ 'cnpInputIcon cnpCommentsIcon cnpCommentsIconInDefList': deficiency.iCommentsNumber>0, 'cnpInputIcon cnpCommentsIcon cnpCommentsIconWithOpacity': deficiency.iCommentsNumber==0 }" ng-click="onDisplay(deficiency, $event)">
 								<a>
-									({{deficiency.iCommentsNumber}})
+									({{::deficiency.iCommentsNumber}})
+								</a>
+							</div> -->
+							<div layout="row" layout-align="center center" ng-if="::deficiency.iCommentsNumber>0"
+								class="cnpInputIcon cnpCommentsIcon cnpCommentsIconInDefList" ng-click="onDisplay(deficiency, $event)">
+								<a>
+									({{::deficiency.iCommentsNumber}})
+								</a>
+							</div>
+							<div layout="row" layout-align="center center" ng-if="::deficiency.iCommentsNumber==0"
+								class="cnpInputIcon cnpCommentsIcon cnpCommentsIconWithOpacity" ng-click="onDisplay(deficiency, $event)">
+								<a>
+									({{::deficiency.iCommentsNumber}})
 								</a>
 							</div>
 						</td>
@@ -123,7 +135,7 @@
 							<div layout="row" layout-align="center center"
 								ng-class="{ 'cnpInputIcon cnpImagesIcon cnpImagesIconInDefList': deficiency.iImagesNumber>0, 'cnpInputIcon cnpImagesIcon cnpImagesIconWithOpacity': deficiency.iImagesNumber==0 }" ng-click="onDisplayPhotoGallery(deficiency, $event)">
 								<a>
-									({{deficiency.iImagesNumber}})
+									({{::deficiency.iImagesNumber}})
 								</a>
 							</div>
 						</td>
@@ -133,7 +145,7 @@
 					<td colspan="{{$columns.length}}">
 						<div layout="row" layout-align="start center">
 							<div>
-								{{'global_noTableData' | translate}}
+								{{::'global_noTableData' | translate}}
 							</div>
 						</div>
 					</td>

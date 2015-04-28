@@ -25,7 +25,7 @@
 		
 		<!-- COMMON JS DEPENDENCIES -->
 		<script src="bower_components/jquery/dist/jquery.min.js"></script>
-		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular/angular.min.js"></script>
 		<script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
 		<script src="bower_components/angular-route/angular-route.min.js"></script>
 		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -53,10 +53,11 @@
 		<script src="apps/conspector/js/thirdParty/pubnub-angular.js"></script> 
 		<!-- was not able to find it as a bower component-->	
 
-		<!-- MOBILE JS DEPENDENCIES -->
+		<!-- MOBILE JS DEPENDENCIES </script> -->
 		<script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
-	    <!-- <script type="text/javascript" src="cordova.js"></script>
-	    // <script type="text/javascript" src="js/index.js"></script>	-->		
+		
+	    <script type="text/javascript" src="cordova.js"></script>
+	    <script type="text/javascript" src="js/index.js"></script>
 		
 		<!-- WEBAPP JS DEPENDENCIES -->
 		<script src="bower_components/isteven-angular-multiselect/angular-multi-select.js"></script>
@@ -93,13 +94,13 @@
 		<script src="apps/conspector/js/mainController.js"></script>
 
 
-		<!--MOBILE CONTROLLERS -->	
+		<!--MOBILE CONTROLLERS <script src="apps/conspector/components/deficiencies/controllers/deficienciesListMobileController.js"></script>-->	
 		
-		<script src="apps/conspector/components/deficiencies/controllers/deficienciesListMobileController.js"></script>
+		
 		<!--Minification starts here-->
 
 		<!--WEBAPP CONTROLLERS -->	
-		
+		<!--
 		<script src="apps/conspector/components/userManagement/controllers/signInController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/forgotPasswordController.js"></script>
 		<script src="apps/conspector/components/userManagement/controllers/companySelectionController.js"></script>
@@ -161,15 +162,15 @@
 		<script src="apps/conspector/directives/drAvatar.js"></script>
 		<script src="apps/conspector/directives/drDate.js"></script>
 	
-		
-  		<!--
+		-->
+  		
 		<%@page import="java.util.Random" %>
 		<%
 			Random rand = new Random();// needed to prevent caching of the minimized file
 			int n = rand.nextInt(1000);
 		%>		
  		<script src="dist/conspector.min.js?number=<%=n%>"></script> 
- 		-->
+ 	
 	
 	</head>
 	<body id="body" ng-controller="mainController" style="height: 100%; width: 100%; overflow: hidden;" ng-click="$root.hideGallery()">
