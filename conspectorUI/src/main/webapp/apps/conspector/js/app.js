@@ -1,4 +1,4 @@
-var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'tmh.dynamicLocale', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'cfp.loadingBar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngCordova', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ui.bootstrap', 'ngStorage', 'ngJsTree', 'ngSanitize', 'ui.select', 'ngTouch']);
+var app = angular.module('conspector', ['ui.router', 'viewControllers', 'pascalprecht.translate', 'tmh.dynamicLocale', 'ngCookies', 'ngTable', 'ngResource', 'ngMaterial', 'multi-select', 'angularFileUpload', 'colorpicker.module', "pubnub.angular.service", "ngTagsInput", 'cfp.loadingBar', 'ngAnimate', 'filtersProvider', 'ngMessages', 'ngQuickDate', 'textAngular', 'controlsProvider', 'ui.bootstrap', 'ngStorage', 'ngJsTree', 'ngSanitize', 'ui.select', 'ngTouch']);
 var viewControllers = angular.module('viewControllers', []);
 var bMobileMode = false;
 app.config(['cfpLoadingBarProvider',
@@ -91,50 +91,6 @@ app.config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/signIn");
 
-        if (bMobileMode) {
-            //STATES AND ROUTES FOR MOBILE MODE
-            $stateProvider.state('signIn', {
-                url: '/signIn',
-                templateUrl: 'apps/conspector/components/userManagement/templates/signInMobileView.html',
-                controller: 'signInView'
-            });
-            $stateProvider.state('forgotPassword', {
-                url: '/forgotPassword',
-                templateUrl: 'apps/conspector/components/userManagement/templates/forgotPasswordMobileView.html',
-                controller: 'forgotPasswordView'
-            });
-            $stateProvider.state('initialPasswordReset', {
-                url: '/initialPasswordReset',
-                templateUrl: 'apps/conspector/components/userManagement/templates/initialPasswordResetMobileView.html',
-                controller: 'initialPasswordResetView'
-            });
-            $stateProvider.state('companySelection', {
-                url: '/companySelection',
-                templateUrl: 'apps/conspector/components/userManagement/templates/companySelectionMobileView.html',
-                controller: 'companySelectionView'
-            });
-            $stateProvider.state('roleSelection', {
-                url: '/roleSelection',
-                templateUrl: 'apps/conspector/components/userManagement/templates/roleSelectionMobileView.html',
-                controller: 'roleSelectionView'
-            });
-            $stateProvider.state('resetPassword', {
-                url: '/resetPassword/:pr',
-                templateUrl: 'apps/conspector/components/userManagement/templates/passwordMobileResetView.html',
-                controller: 'passwordResetView'
-            });
-            $stateProvider.state('app', {
-                url: '/app',
-                templateUrl: 'apps/conspector/components/generalLayout/templates/appView.html',
-                controller: 'appView'
-            });
-            $stateProvider.state('app.deficienciesList', {
-                url: '/deficienciesList',
-                templateUrl: 'apps/conspector/components/deficiencies/templates/deficienciesListMobileView.html',
-                controller: 'deficienciesListMobileView'
-            });
-        } else {
-            //STATES AND ROUTES FOR WEBAPP
             $stateProvider.state('signIn', {
                 url: '/signIn',
                 templateUrl: 'apps/conspector/components/userManagement/templates/signInView.html',
@@ -436,6 +392,6 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: 'apps/conspector/components/profileSettings/templates/changePasswordView.html',
                 controller: 'changePasswordView'
             });
-        }
+        
     }
 ]);
